@@ -4,7 +4,7 @@ namespace Firststep\Blocks;
 
 use core\blocks\BaseBlock;
 
-class BasicForm extends BaseBlock {
+class BaseForm extends BaseBlock {
 
     private $title;
     private $subtitle;
