@@ -1,0 +1,24 @@
+{
+    "name": "buonzz/firststep",
+    "description": "My basic class that i use for every project",
+    "keywords": ["template", "design", "software"],
+    "license": "GPL3",
+    "authors": [
+        {
+            "name": "Fabio Mattei",
+            "email": "burattino@gmail.com"
+        }
+    ],
+    "type": "project",
+    "require": {
+		"php": ">=7.0"
+    },
+	"require-dev": {
+		"phpunit/phpunit": "5.2.*"
+    },
+	"autoload": {
+        "psr-4": {
+            "Firststep\\": "src/"
+        }
+    }
+}
