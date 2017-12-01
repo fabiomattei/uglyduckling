@@ -24,22 +24,12 @@ class BaseForm extends BaseBlock {
         return $out;
     }
 
-    function add_text_field( $name, $label, $placeholder, $value ) {
-        return '<div class="form-group">
-          <label class="col-md-12" for="'.$name.'">'.$label.'</label>
-          <div class="col-md-12">
-            <input type="text" id="'.$name.'" name="'.$name.'" class="form-control" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'">
-          </div>
-        </div>';
+    function addTextField( $name, $label, $placeholder, $value ) {
+        $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'">';
     }
 
-    function add_textarea_field( $name, $label, $value ) {
-        return '<div class="form-group">
-              <label class="col-md-12" for="'.$name.'">'.$label.'</label>
-              <div class="col-md-12">
-                <textarea class="form-control" rows="5" id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea>
-              </div>
-            </div>';
+    function addTextAreaField( $name, $label, $value ) {
+        $this->body .= '<label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea>';
     }
 
     function add_dropdown_field( $name, $label, $options, $value ) {
