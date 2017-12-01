@@ -42,13 +42,34 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   /**
   * Checking a textarea field is added to the form
   */
-  public function testItShowsAFormWithAaddTextAreaField(){
+  public function testItShowsAFormWithATextAreaField(){
 	$form = new Firststep\Blocks\BaseForm;
 	$form->addTextAreaField( 'myname', 'My label', 'My value');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><textarea id="myname" name="myname">My value</textarea>') !== false);
 	unset($form);
   }
   
+  /**
+  * Checking a dropdown field is added to the form
+  * the possible options are passed as an associative array where the key is the value of the option and the value 
+  * is the description of the option: array( '1' => 'Option 1', '2' => 'Option 2' )
+  * The value passed to the method is selected: 2 => Option 2
+  */
+  public function testItShowsAFormWithADropdownField(){
+	$form = new Firststep\Blocks\BaseForm;
+	$form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2');
+	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><select id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>') !== false);
+	unset($form);
+  }
   
+  /**
+  * Checking a file upload field is added to the form
+  */
+  public function testItShowsAFormWithAaddFileUploadField(){
+	$form = new Firststep\Blocks\BaseForm;
+	$form->addFileUploadField( 'myname', 'My label' );
+	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="file" id="myname" name="myname">') !== false);
+	unset($form);
+  }
   
 }

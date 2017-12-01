@@ -32,31 +32,16 @@ class BaseForm extends BaseBlock {
         $this->body .= '<label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea>';
     }
 
-    function add_dropdown_field( $name, $label, $options, $value ) {
-        $out = '<div class="form-group">
-              <label class="col-sm-12" for="'.$name.'">'.$label.'</label>
-              <div class="col-sm-12">
-                <select class="form-control" id="'.$name.'" name="'.$name.'">';
+    function addDropdownField( $name, $label, $options, $value ) {
+        $this->body .= '<label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
         foreach ($options as $key => $val) {
-            $out .= '<option value="'.$key.'" '.( $key==$value ? 'selected="selected"' : '' ).'>'.htmlspecialchars( $val ).'</option>';
+            $this->body .= '<option value="'.$key.'" '.( $key==$value ? 'selected="selected"' : '' ).'>'.htmlspecialchars( $val ).'</option>';
         }
-        $out .= '</select>
-              </div>
-            </div>';
-        return $out;
+        $this->body .= '</select>';
     }
 
-    function add_fileupload_field( $name, $label ) {
-        return '<div class="form-group">
-              <label class="col-sm-12" for="'.$name.'">'.$label.'</label>
-              <div class="col-sm-12">
-                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                  <div class="form-control" data-trigger="fileinput"> <i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                  <span class="input-group-addon btn btn-default btn-file"> <span class="fileinput-new">Select file</span> <span class="fileinput-exists">Change</span>
-                  <input type="file" id="'.$name.'" name="'.$name.'">
-                  </span> <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a> </div>
-              </div>
-            </div>';
+    function addFileUploadField( $name, $label ) {
+        $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'">';
     }
 
     function add_helping_text( $title, $text ) {
