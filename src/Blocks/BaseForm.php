@@ -2,34 +2,25 @@
 
 namespace Firststep\Blocks;
 
-use core\blocks\BaseBlock;
+use Firststep\Blocks\BaseBlock;
 
 class BaseForm extends BaseBlock {
 
     private $title;
     private $subtitle;
 
-    function __construct( $item ) {
-        $this->item = $item;
+    function __construct() {
+        $this->body = '';
     }
 
     function show() {
-        $out = '<!-- .row -->
-			<br /><br />
-			      <div class="row">
-			        <div class="col-sm-12">
-			          <div class="white-box">
-			            <h3 class="box-title m-b-0">' . $this->title . '</h3>';
+        $out = '<h3>' . $this->title . '</h3>';
         if ( $this->subtitle != '' ) {
-            $out .= '<p class="text-muted m-b-30 font-13">' . $this->subtitle . '</p>';
+            $out .= '<p>' . $this->subtitle . '</p>';
         }
         $out .= '<form action="" method="POST" class="form-horizontal">';
-        $out .= $this->main_form( $this->item );
-        $out .= '</form>
-			          </div>
-			        </div>
-			      </div>
-			      <!-- /.row -->';
+        $out .= $this->body;
+        $out .= '</form>';
         return $out;
     }
 

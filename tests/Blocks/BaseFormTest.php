@@ -1,12 +1,11 @@
+<?php 
+
 /**
-*  Corresponding Class to test YourClass class
+*  Testing the BaseForm class
 *
-*  For each class in your library, there should be a corresponding Unit-Test for it
-*  Unit-Tests should be as much as possible independent from other test going on.
-*
-*  @author yourname
+*  @author Fabio Mattei
 */
-class BaseBlockTest extends PHPUnit_Framework_TestCase{
+class BaseFormTest extends PHPUnit_Framework_TestCase{
 	
   /**
   * Just check if the YourClass has no syntax error 
@@ -16,9 +15,9 @@ class BaseBlockTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$var = new Firststep\YourClass;
-	$this->assertTrue(is_object($var));
-	unset($var);
+	$form = new Firststep\Blocks\BaseForm;
+	$this->assertTrue(is_object($form));
+	unset($form);
   }
   
   /**
@@ -28,10 +27,10 @@ class BaseBlockTest extends PHPUnit_Framework_TestCase{
   * any typo before you even use this library in a real project.
   *
   */
-  public function testMethod1(){
-	$var = new Firststep\YourClass;
-	$this->assertTrue($var->method1("hey") == 'Hello World');
-	unset($var);
+  public function testItShowsAnEmpyForm(){
+	$form = new Firststep\Blocks\BaseForm;
+	$this->assertTrue($form->show() == '<h3></h3><form action="" method="POST" class="form-horizontal"></form>');
+	unset($form);
   }
   
 }
