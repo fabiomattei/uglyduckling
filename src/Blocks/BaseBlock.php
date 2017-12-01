@@ -2,7 +2,7 @@
 
 namespace Firststep\Blocks;
 
-class BaseBlock {
+abstract class BaseBlock {
   
   	/**
 	 * Overwrite this method with the content you want your block to show 
