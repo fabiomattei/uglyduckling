@@ -65,11 +65,42 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   /**
   * Checking a file upload field is added to the form
   */
-  public function testItShowsAFormWithAaddFileUploadField(){
+  public function testItShowsAFormWithAFileUploadField(){
 	$form = new Firststep\Blocks\BaseForm;
 	$form->addFileUploadField( 'myname', 'My label' );
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="file" id="myname" name="myname">') !== false);
 	unset($form);
   }
+  
+  /**
+  * Checking a helping text is added to the form
+  */
+  public function testItShowsAFormWithAHelpingTextField(){
+	$form = new Firststep\Blocks\BaseForm;
+	$form->addHelpingText( 'Title', 'My description' );
+	$this->assertTrue(strpos($form->show(), '<h5>Title</h5><p>My description</p>') !== false);
+	unset($form);
+  }
+  
+  /**
+  * Checking a helping text is added to the form
+  */
+  public function testItShowsAFormWithAHiddenField(){
+	$form = new Firststep\Blocks\BaseForm;
+	$form->addHiddenField( 'myfield', 'My Value' );
+	$this->assertTrue(strpos($form->show(), '<input type="hidden" name="myfield" value="My Value">') !== false);
+	unset($form);
+  }
+  
+  /**
+  * Checking a helping text is added to the form
+  */
+  public function testItShowsAFormWithASubmitButton(){
+	$form = new Firststep\Blocks\BaseForm;
+	$form->addSubmitButton( 'myfield', 'My Value' );
+	$this->assertTrue(strpos($form->show(), '<input type="submit" name="myfield" value="My Value"/>') !== false);
+	unset($form);
+  }
+  
   
 }

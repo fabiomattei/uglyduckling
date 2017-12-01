@@ -44,21 +44,16 @@ class BaseForm extends BaseBlock {
         $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'">';
     }
 
-    function add_helping_text( $title, $text ) {
-        return '<div class="form-group">
-                  <label class="col-sm-12">'.$title.'</label>
-                  <div class="col-sm-12">
-                    <span class="help-block">'.$text.'</span> 
-				  </div>
-                </div>';
+    function addHelpingText( $title, $text ) {
+        $this->body .= '<h5>'.$title.'</h5><p>'.$text.'</p>';
     }
 
-    function add_hidden_field( $name, $value ) {
-        return '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars( $value ).'">';
+    function addHiddenField( $name, $value ) {
+        $this->body .= '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars( $value ).'">';
     }
 
-    function add_submit_button( $name='save', $value='Save' ) {
-        return '<input type="submit" name="'.$name.'" value="'.htmlspecialchars( $value ).'"/>';
+    function addSubmitButton( $name='save', $value='Save' ) {
+        $this->body .= '<input type="submit" name="'.$name.'" value="'.htmlspecialchars( $value ).'"/>';
     }
 
 }
