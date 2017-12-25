@@ -11,7 +11,8 @@
     ],
     "type": "project",
     "require": {
-		"php": ">=7.0"
+		"php": ">=7.0",
+        "wixel/gump": "dev-master"
     },
 	"require-dev": {
 		"phpunit/phpunit": "5.4.*"

@@ -12,16 +12,20 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct() {
+    public function __construct( $setup, $request, $homeRedirector ) {
+        $this->setup          = $setup;
+        $this->request        = $request;
+        $this->homeRedirector = $homeRedirector;
+
         // setting an array containing all parameters
         $this->parameters = array();
 
         // $this->messages = new Messages();
 
-        $this->title = APPNAMEFORPAGETITLE;
+        $this->title = $this->setup->getAppNameForPageTitle();
         $this->menucontainer = array();
         $this->topcontainer = array();
-        $this->messagescontainer = array($this->messages);
+        // $this->messagescontainer = array( $this->messages );
         $this->leftcontainer = array();
         $this->rightcontainer = array();
         $this->centralcontainer = array();
@@ -29,49 +33,27 @@ class Controller {
         $this->thirdcentralcontainer = array();
         $this->bottomcontainer = array();
         $this->sidebarcontainer = array();
-        $this->templateFile = PRIVATETEMPLATE;
+        $this->templateFile = $this->setup->getPrivateTemplateFileName();
 
         $this->addToHead = '';
         $this->addToFoot = '';
 
-        if (isset($_SESSION['msginfo'])) {
-            $this->messages->info = $_SESSION['msginfo'];
-            unset($_SESSION['msginfo']);
-        }
-        if (isset($_SESSION['msgwarning'])) {
-            $this->messages->warning = $_SESSION['msgwarning'];
-            unset($_SESSION['msgwarning']);
-        }
-        if (isset($_SESSION['msgerror'])) {
-            $this->messages->error = $_SESSION['msgerror'];
-            unset($_SESSION['msgerror']);
-        }
-        if (isset($_SESSION['msgsuccess'])) {
-            $this->messages->success = $_SESSION['msgsuccess'];
-            unset($_SESSION['msgsuccess']);
-        }
-        if (isset($_SESSION['flashvariable'])) {
-            $this->flashvariable = $_SESSION['flashvariable'];
-            unset($_SESSION['flashvariable']);
-        }
+        /*
+        $this->messages->info = $_SESSION['msginfo'];
+        $this->messages->warning = $_SESSION['msgwarning'];
+        $this->messages->error = $_SESSION['msgerror'];
+        $this->messages->success = $_SESSION['msgsuccess'];
+        $this->flashvariable = $_SESSION['flashvariable'];
+        here we sould be calling the end of round in globals object
+        */
 
         // $this->gump = new GUMP();
 
         if ( !$this->isSessionValid() ) {
-            header('Location: ' . BASEPATH . 'public/login.html');
-            die();
+            $this->homeRedirector->redirect();
         }
     }
 
-    /**
-     * Setting the object containing all request attributes
-     * 
-     * @param Firststep\Request\Request $request it contains all the attributes of the page
-     */
-    public function setRequest( $request ) {
-        $this->request = $request;
-    }
-	
 	public function setOffice( $office ) {
 		$this->office = $office;
 	}
@@ -299,7 +281,7 @@ class Controller {
      *
      * @param $request STRING containing URL complete of parameters
      */
-    public function setRequestedUrl($requestedUrl) {
+    public function setRequest($requestedUrl) {
         $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
         $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
         $_SESSION['request'] = $requestedUrl;

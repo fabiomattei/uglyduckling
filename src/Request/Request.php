@@ -6,21 +6,42 @@ namespace Firststep\Request;
 // use core\libs\gump\GUMP;
 
 class Request {
+
+    public $msgInfo = '';
+    public $loggedIn = false;
 	
 	function __construct() {
-		$this->msginfo = '';
-		$logged_in = false;
+		$this->msgInfo = '';
+        $this->loggedIn = false;
 	}
-	
-	/*
-	 * Container for variable $_SESSION['msginfo'];
-	 */
-	public function setMsgInfo( $msginfo ) {
-		$this->msginfo = $msginfo;
-	}
-		
-	public function getMsgInfo() {
-		return $this->msginfo;
-	}
+
+    /**
+     * @return string
+     */
+    public function getMsgInfo(): string {
+        return $this->msgInfo;
+    }
+
+    /**
+     * @param string $msgInfo
+     * Container for variable $_SESSION['msginfo'];
+     */
+    public function setMsgInfo(string $msgInfo) {
+        $this->msgInfo = $msgInfo;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn(): bool {
+        return $this->loggedIn;
+    }
+
+    /**
+     * @param bool $loggedIn
+     */
+    public function setLoggedIn(bool $loggedIn) {
+        $this->loggedIn = $loggedIn;
+    }
 
 }
