@@ -49,21 +49,9 @@ class Controller {
 
         // $this->gump = new GUMP();
 
-        if ( !$this->isSessionValid() ) {
+        if ( !$this->request->isSessionValid() ) {
             $this->homeRedirector->redirect();
         }
-    }
-
-	public function setOffice( $office ) {
-		$this->office = $office;
-	}
-
-    public function isGetRequest() {
-        return $_SERVER["REQUEST_METHOD"] == "GET";
-    }
-
-    public function isPostRequest() {
-        return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 
     /**
@@ -159,7 +147,7 @@ class Controller {
     public function showPage() {
         $time_start = microtime(true);
 
-        if ($this->isGetRequest()) {
+        if ($this->request->isGetRequest()) {
 			if ( $this->check_authorization_get_request() ) {
 	            if ( $this->check_get_request() ) {
 	                $this->getRequest();
@@ -190,41 +178,6 @@ class Controller {
         }
     }
 
-    private function isSessionValid() {
-        // check if user logged in
-        if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'])) {
-            return false;
-        }
-
-        // check if ip matches
-        if (!isset($_SESSION['ip']) || !isset($_SERVER['REMOTE_ADDR'])) {
-            return false;
-        }
-        if (!$_SESSION['ip'] === $_SERVER['REMOTE_ADDR']) {
-            return false;
-        }
-
-        // check user agent
-        if (!isset($_SESSION['user_agent']) || !isset($_SERVER['HTTP_USER_AGENT'])) {
-            return false;
-        }
-        if (!$_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']) {
-            return false;
-        }
-
-        // check elapsed time
-        $max_elapsed = 60 * 60 * 24; // 1 day
-        // return false if value is not set
-        if (!isset($_SESSION['last_login'])) {
-            return false;
-        }
-        if (!($_SESSION['last_login'] + $max_elapsed) >= time()) {
-            return false;
-        }
-
-        return true;
-    }
-
     // ** next section load textual messages for messages block
     function setSuccess($success) {
         $this->messages->setSuccess($success);
@@ -252,8 +205,8 @@ class Controller {
      * 
      * @param [string] $flashvariable [variable that last for a request in the same session]
      */
-    function setFlashVariable($flashvariable) {
-        $_SESSION['flashvariable'] = $flashvariable;
+    function setFlashVariable( $flashvariable ) {
+        $this->request->setSessionFlashVariable( $flashvariable );
     }
 
     /**
@@ -263,11 +216,12 @@ class Controller {
      * @return [string] [variable that last for a request in the same session]
      */
     function getFlashVariable() {
-        return $this->flashvariable;
+        return $this->request->getSessionFlashVariable();
     }
 
-    /*     * * functions for setting parameters array */
-
+    /**
+     * Function for setting parameters array
+     */
     public function setParameters($parameters) {
         if (is_array($parameters)) {
             $this->parameters = $parameters;
@@ -281,10 +235,8 @@ class Controller {
      *
      * @param $request STRING containing URL complete of parameters
      */
-    public function setRequest($requestedUrl) {
-        $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
-        $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
-        $_SESSION['request'] = $requestedUrl;
+    public function setRequest( $requestedUrl ) {
+        $this->request->setRequestedURL( $requestedUrl );
     }
 
     /**
