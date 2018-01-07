@@ -11,10 +11,11 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( $setup, $request, $homeRedirector ) {
+    public function __construct( $setup, $request, $homeRedirector, $urlredirector ) {
         $this->setup          = $setup;
         $this->request        = $request;
         $this->homeRedirector = $homeRedirector;
+        $this->urlredirector  = $urlredirector;
 
         // setting an array containing all parameters
         $this->parameters = array();
@@ -177,47 +178,6 @@ class Controller {
         }
     }
 
-    // ** next section load textual messages for messages block
-    function setSuccess($success) {
-        $this->messages->setSuccess($success);
-    }
-
-    function setError($error) {
-        $this->messages->setError($error);
-    }
-
-    function setInfo($info) {
-        $this->messages->setInfo($info);
-    }
-
-    function setWarning($warning) {
-        $this->messages->setWarning($warning);
-    }
-
-    /**
-     * This method give to the programmer the possibility of setting a flashvariable, a 
-     * variable that will be active up the the next call.
-     * This is ment to be used for instance to send variable from a GET form request to a 
-     * Post form request or in any case a variable is meant to last only to the next browser
-     * request.
-     * The variable as not a specific type, maybe it is better to use it with strings
-     * 
-     * @param [string] $flashvariable [variable that last for a request in the same session]
-     */
-    function setFlashVariable( $flashvariable ) {
-        $this->request->setSessionFlashVariable( $flashvariable );
-    }
-
-    /**
-     * This method return a variable set in the prevoius broser request.
-     * To have a better understanging look at setFlashVariable description
-     * 
-     * @return [string] [variable that last for a request in the same session]
-     */
-    function getFlashVariable() {
-        return $this->request->getSessionFlashVariable();
-    }
-
     /**
      * Function for setting parameters array
      */
@@ -228,32 +188,13 @@ class Controller {
     }
 
     /**
-     * Saving the request made to webserver
-     * It saves the STRING in $_SESSION['request'] variable and moves the previous request
-     * to STRING $_SESSION['prevrequest']
-     *
-     * @param $request STRING containing URL complete of parameters
-     */
-    public function setRequest( $requestedUrl ) {
-        $this->request->setRequestedURL( $requestedUrl );
-    }
-
-    /**
      * Redirect the script to $_SESSION['prevrequest'] with a header request
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToPreviousPage() {
-        if ($this->messages->info != '')
-            $_SESSION['msginfo'] = $this->messages->info;
-        if ($this->messages->warning != '')
-            $_SESSION['msgwarning'] = $this->messages->warning;
-        if ($this->messages->error != '')
-            $_SESSION['msgerror'] = $this->messages->error;
-        if ($this->messages->success != '')
-            $_SESSION['msgsuccess'] = $this->messages->success;
-        if (isset($this->flashvariable) AND $this->flashvariable != '')
-            $_SESSION['flashvariable'] = $this->flashvariable;
-        header('Location: ' . BASEPATH . $_SESSION['prevrequest']);
+        // avoid end of round here...
+        $this->urlredirector->setURL($this->request->getSecondRequestedURL());
+        $this->urlredirector->redirect();
     }
 
     /**
@@ -261,17 +202,9 @@ class Controller {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToSecondPreviousPage() {
-        if ($this->messages->info != '')
-            $_SESSION['msginfo'] = $this->messages->info;
-        if ($this->messages->warning != '')
-            $_SESSION['msgwarning'] = $this->messages->warning;
-        if ($this->messages->error != '')
-            $_SESSION['msgerror'] = $this->messages->error;
-        if ($this->messages->success != '')
-            $_SESSION['msgsuccess'] = $this->messages->success;
-        if (isset($this->flashvariable) AND $this->flashvariable != '')
-            $_SESSION['flashvariable'] = $this->flashvariable;
-        header('Location: ' . BASEPATH . $_SESSION['prevprevrequest']);
+        // avoid end of round here...
+        $this->urlredirector->setURL($this->request->getThirdRequestedURL());
+        $this->urlredirector->redirect();
     }
 
     /**
@@ -280,30 +213,8 @@ class Controller {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToPage($group = 'main', $action = '', $parameters = '', $extension = '.html') {
-        if ($this->messages->info != '')
-            $_SESSION['msginfo'] = $this->messages->info;
-        if ($this->messages->warning != '')
-            $_SESSION['msgwarning'] = $this->messages->warning;
-        if ($this->messages->error != '')
-            $_SESSION['msgerror'] = $this->messages->error;
-        if ($this->messages->success != '')
-            $_SESSION['msgsuccess'] = $this->messages->success;
-        if (isset($this->flashvariable) AND $this->flashvariable != '')
-            $_SESSION['flashvariable'] = $this->flashvariable;
-        header( 'Location: ' . make_url($group, $action, $parameters, $extension) );
-    }
-
-    /**
-     * Saving URL controller PATH in the controller
-     *
-     * @param $family      STRING coming from URL slicing
-     * @param $subfamily   STRING coming from URL slicing
-     * @param $aggregator  STRING coming from URL slicing
-     */
-    public function setControllerPath($family, $subfamily, $aggregator) {
-        $this->family = $family;
-        $this->subfamily = $subfamily;
-        $this->aggregator = $aggregator;
+        $this->urlredirector->setURL( make_url($group, $action, $parameters, $extension) );
+        $this->urlredirector->redirect();
     }
 
     // taken from page script

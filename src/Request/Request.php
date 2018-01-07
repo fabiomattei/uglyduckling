@@ -2,9 +2,6 @@
 
 namespace Firststep\Request;
 
-// use templates\blocks\message\Messages;
-// use core\libs\gump\GUMP;
-
 class Request {
 
 	function __construct() {
@@ -75,7 +72,11 @@ class Request {
     }
 
     /**
+     * This method return a variable set in the prevoius broser request.
+     * To have a better understanging look at setFlashVariable description
+     *
      * Get the session variable $_SESSION['flashvariable']
+     *
      * @return string
      */
     public function getSessionFlashVariable(): string {
@@ -84,7 +85,13 @@ class Request {
 
     /**
      * Set the session variable $_SESSION['flashvariable']
-     * @param string $flashvariable
+     * This method give to the programmer the possibility of setting a flashvariable, a
+     * variable that will be active up the the next call.
+     * This is ment to be used for instance to send variable from a GET form request to a
+     * Post form request or in any case a variable is meant to last only to the next browser
+     * request.
+     *
+     * @param string $flashvariable [variable that last for a request in the same session]
      */
     public function setSessionFlashVariable(string $flashvariable) {
         $_SESSION['flashvariable'] = $flashvariable;
@@ -155,6 +162,18 @@ class Request {
         $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
         $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
         $_SESSION['request'] = $requestedUrl;
+    }
+
+    public function getRequestedURL(): string {
+        return $_SESSION['request'];
+    }
+
+    public function getSecondRequestedURL(): string {
+        return $_SESSION['prevrequest'];
+    }
+
+    public function getThirdRequestedURL(): string {
+        return $_SESSION['prevprevrequest'];
     }
 
 }

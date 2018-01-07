@@ -11,6 +11,10 @@ namespace Firststep\Redirectors;
 
 class FakeRedirector implements Redirector {
 
+    public function setURL(string $url) {
+        // nothing to do here
+    }
+
     public function redirect() {
         echo 'Redirecting';
     }
