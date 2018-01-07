@@ -11,10 +11,11 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( $setup, $request, $urlredirector ) {
+    public function __construct( $setup, $request, $urlredirector, $logger ) {
         $this->setup          = $setup;
         $this->request        = $request;
         $this->urlredirector  = $urlredirector;
+        $this->logger         = $logger;
 
         // setting an array containing all parameters
         $this->parameters = array();
@@ -173,8 +174,7 @@ class Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $logger = new Logger();
-            $logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 
