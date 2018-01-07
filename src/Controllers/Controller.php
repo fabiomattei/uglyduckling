@@ -174,7 +174,7 @@ class Controller {
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
             $logger = new Logger();
-            $logger->write('WARNING TIME :: ' . $_SERVER["REQUEST_METHOD"] . ' ' . $_SERVER['PHP_SELF'] . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 

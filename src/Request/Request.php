@@ -116,6 +116,14 @@ class Request {
         return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 
+    public function getServerRequestMethod(): string {
+        return $_SERVER["REQUEST_METHOD"];
+    }
+
+    public function getServerPhpSelf(): string {
+        return $_SERVER["PHP_SELF"];
+    }
+
     public function isSessionValid() {
         // check if user logged in
         if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'])) {
@@ -175,5 +183,6 @@ class Request {
     public function getThirdRequestedURL(): string {
         return $_SESSION['prevprevrequest'];
     }
+
 
 }
