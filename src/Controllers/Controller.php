@@ -11,10 +11,9 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( $setup, $request, $homeRedirector, $urlredirector ) {
+    public function __construct( $setup, $request, $urlredirector ) {
         $this->setup          = $setup;
         $this->request        = $request;
-        $this->homeRedirector = $homeRedirector;
         $this->urlredirector  = $urlredirector;
 
         // setting an array containing all parameters
@@ -50,7 +49,8 @@ class Controller {
         // $this->gump = new GUMP();
 
         if ( !$this->request->isSessionValid() ) {
-            $this->homeRedirector->redirect();
+            $this->urlredirector->setURL($this->basepath . 'public/login.html');
+            $this->urlredirector->redirect();
         }
     }
 

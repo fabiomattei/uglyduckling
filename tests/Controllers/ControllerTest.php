@@ -15,7 +15,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$controller = new Firststep\Controllers\Controller( new Firststep\Setup\Setup(), new Firststep\Request\Request(), new Firststep\Redirectors\FakeRedirector(), new Firststep\Redirectors\FakeRedirector() );
+	$controller = new Firststep\Controllers\Controller( new Firststep\Setup\Setup(), new Firststep\Request\Request(), new Firststep\Redirectors\FakeRedirector() );
 	$this->assertTrue(is_object($controller));
 	unset($controller);
   }
