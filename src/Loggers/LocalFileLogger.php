@@ -8,7 +8,7 @@ namespace Firststep\Loggers;
  * Time: 18:56
  */
 
-class LocalFileLogger {
+class LocalFileLogger implements Logger {
 
     function __construct() {
         $this->logfile = 'logs/log'.date('Y-m-d').'.log';

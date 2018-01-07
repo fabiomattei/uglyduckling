@@ -8,7 +8,7 @@ namespace Firststep\Loggers;
  * Time: 18:58
  */
 
-class GaeLogger {
+class GaeLogger implements Logger {
 
     public function write($message, $file='', $line='') {
         $message = date("Y-m-d H:i:s") .' - '.$message;

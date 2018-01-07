@@ -8,7 +8,7 @@ namespace Firststep\Loggers;
  * Time: 19:01
  */
 
-class EchoLogger {
+class EchoLogger implements Logger {
 
     public function write($message, $file='', $line='') {
         $message = date("Y-m-d H:i:s") .' - '.$message;
