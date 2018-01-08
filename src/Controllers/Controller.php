@@ -3,6 +3,8 @@
 namespace Firststep\Controllers;
 
 // use templates\blocks\message\Messages;
+use Firststep\Exceptions\ErrorPageException;
+use Firststep\Exceptions\AuthorizationException;
 
 class Controller {
 
@@ -114,13 +116,13 @@ class Controller {
     }
 
     public function show_get_error_page() {
-        throw new \Exception('General malfuction!!!');
+        throw new ErrorPageException('Error page exception function show_get_error_page()');
     }
 
     public function show_post_error_page() {
-        throw new \Exception('General malfuction!!!');
+        throw new ErrorPageException('Error page exception function show_post_error_page()');
     }
-	
+
     /**
      * This method has to be implemented by inerithed class
 	 * It return true by defult for compatiblity issues
@@ -138,11 +140,11 @@ class Controller {
     }
 
     public function show_get_authorization_error_page() {
-        throw new \Exception('Authorization error!!!');
+        throw new AuthorizationException('Authorization exception function show_get_authorization_error_page()');
     }
 
     public function show_post_authorization_error_page() {
-        throw new \Exception('Authorization error!!!');
+        throw new AuthorizationException('Authorization exception function show_post_authorization_error_page()');
     }
 
     public function showPage() {
