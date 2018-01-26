@@ -5,6 +5,10 @@ namespace Firststep\Controllers;
 // use templates\blocks\message\Messages;
 use Firststep\Exceptions\ErrorPageException;
 use Firststep\Exceptions\AuthorizationException;
+use Firststep\Redirectors\Redirector;
+use Firststep\Loggers\Logger;
+use Firststep\Request\Request;
+use Firststep\Setup\Setup;
 
 class Controller {
 
@@ -13,7 +17,7 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( $setup, $request, $urlredirector, $logger ) {
+    public function __construct( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger ) {
         $this->setup          = $setup;
         $this->request        = $request;
         $this->urlredirector  = $urlredirector;
