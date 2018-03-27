@@ -6,9 +6,9 @@ services:
       - "8080:80"
     volumes:
       - .:/srv/app
-	links:
-	  - mariadb:mariadb
-mariadb:
+    links:
+      - mariadb:mariadb
+  mariadb:
     build: ./docker/mariadb
     ports:
       - "13306:3306"
