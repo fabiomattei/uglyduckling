@@ -19,10 +19,11 @@ class Controller {
     public $post_filter_rules = array();
 
     public function __construct( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger ) {
-        $this->setup          = $setup;
-        $this->request        = $request;
-        $this->urlredirector  = $urlredirector;
-        $this->logger         = $logger;
+        $this->setup         = $setup;
+        $this->request       = $request;
+        $this->urlredirector = $urlredirector;
+        $this->logger        = $logger;
+        $this->gump          = new GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
@@ -54,7 +55,7 @@ class Controller {
         here we sould be calling the end of round in globals object
         */
 
-        $this->gump = new GUMP();
+        
 
         if ( !$this->request->isSessionValid() ) {
             $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
