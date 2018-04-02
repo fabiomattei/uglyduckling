@@ -24,15 +24,15 @@ class BaseForm extends BaseBlock {
         return $out;
     }
 
-    function addTextField( $name, $label, $placeholder, $value ) {
+    function addTextField( string $name, string $label, string $placeholder, string $value ) {
         $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'">';
     }
 
-    function addTextAreaField( $name, $label, $value ) {
+    function addTextAreaField( string $name, string $label, string $value ) {
         $this->body .= '<label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea>';
     }
 
-    function addDropdownField( $name, $label, $options, $value ) {
+    function addDropdownField( string $name, string $label, array $options, string $value ) {
         $this->body .= '<label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
         foreach ($options as $key => $val) {
             $this->body .= '<option value="'.$key.'" '.( $key==$value ? 'selected="selected"' : '' ).'>'.htmlspecialchars( $val ).'</option>';
@@ -40,19 +40,19 @@ class BaseForm extends BaseBlock {
         $this->body .= '</select>';
     }
 
-    function addFileUploadField( $name, $label ) {
+    function addFileUploadField( string $name, string $label ) {
         $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'">';
     }
 
-    function addHelpingText( $title, $text ) {
+    function addHelpingText( string $title, string $text ) {
         $this->body .= '<h5>'.$title.'</h5><p>'.$text.'</p>';
     }
 
-    function addHiddenField( $name, $value ) {
+    function addHiddenField( string $name, string $value ) {
         $this->body .= '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars( $value ).'">';
     }
 
-    function addSubmitButton( $name='save', $value='Save' ) {
+    function addSubmitButton( string $name = 'save', string $value = 'Save' ) {
         $this->body .= '<input type="submit" name="'.$name.'" value="'.htmlspecialchars( $value ).'"/>';
     }
 
