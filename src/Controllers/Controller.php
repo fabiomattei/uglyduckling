@@ -9,6 +9,7 @@ use Firststep\Redirectors\Redirector;
 use Firststep\Loggers\Logger;
 use Firststep\Request\Request;
 use Firststep\Setup\Setup;
+use GUMP;
 
 class Controller {
 
@@ -53,12 +54,14 @@ class Controller {
         here we sould be calling the end of round in globals object
         */
 
-        // $this->gump = new GUMP();
+        $this->gump = new GUMP();
 
+        /*
         if ( !$this->request->isSessionValid() ) {
             $this->urlredirector->setURL($this->basepath . 'public/login.html');
             $this->urlredirector->redirect();
         }
+        */
     }
 
     /**
