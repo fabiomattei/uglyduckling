@@ -56,12 +56,10 @@ class Controller {
 
         $this->gump = new GUMP();
 
-        /*
         if ( !$this->request->isSessionValid() ) {
-            $this->urlredirector->setURL($this->basepath . 'public/login.html');
+            $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
             $this->urlredirector->redirect();
         }
-        */
     }
 
     /**

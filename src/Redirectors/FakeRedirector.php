@@ -9,6 +9,10 @@
 
 namespace Firststep\Redirectors;
 
+/**
+ * This class is a fake for testing porpuses
+ * It does not do anything
+ */
 class FakeRedirector implements Redirector {
 
     public function setURL(string $url) {
