@@ -13,7 +13,7 @@ class BaseForm extends BaseBlock {
         $this->body = '';
     }
 
-    function show() {
+    function show(): string {
         $out = '<h3>' . $this->title . '</h3>';
         if ( $this->subtitle != '' ) {
             $out .= '<p>' . $this->subtitle . '</p>';

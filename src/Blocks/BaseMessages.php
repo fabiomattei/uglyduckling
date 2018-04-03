@@ -13,7 +13,7 @@ class BaseMessages extends BaseBlock {
 		$this->error = '';
 	}
 	
-    function show() {
+    function show(): string {
 		$out = '';
 		if ($this->info != '') {
 			$out.= '<div class="alert alert-info">'.$this->info.'</div>';

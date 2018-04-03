@@ -45,6 +45,8 @@ class Controller {
 
         $this->addToHead = '';
         $this->addToFoot = '';
+        $this->subAddToHead = '';
+        $this->subAddToFoot = '';
 
         /*
         $this->messages->info = $_SESSION['msginfo'];
@@ -54,8 +56,6 @@ class Controller {
         $this->flashvariable = $_SESSION['flashvariable'];
         here we sould be calling the end of round in globals object
         */
-
-        
 
         if ( !$this->request->isSessionValid() ) {
             $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
