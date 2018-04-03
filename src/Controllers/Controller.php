@@ -245,11 +245,15 @@ class Controller {
                 foreach ($container as $obj) {
                     $this->addToHead .= $obj->addToHead();
                     $this->addToFoot .= $obj->addToFoot();
+                    $this->subAddToHead .= $obj->subAddToHead();
+                    $this->subAddToFoot .= $obj->subAddToFoot();
                 }
             }
             if (gettype($container) == 'object') {
                 $this->addToHead .= $container->addToHead();
                 $this->addToFoot .= $container->addToFoot();
+                $this->subAddToHead .= $container->subAddToHead();
+                $this->subAddToFoot .= $container->subAddToFoot();
             }
         }
     }
