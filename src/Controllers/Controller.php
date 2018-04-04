@@ -2,7 +2,7 @@
 
 namespace Firststep\Controllers;
 
-// use templates\blocks\message\Messages;
+use Firststep\Blocks\BaseMessages;
 use Firststep\Exceptions\ErrorPageException;
 use Firststep\Exceptions\AuthorizationException;
 use Firststep\Redirectors\Redirector;
@@ -18,22 +18,21 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger ) {
+    public function __construct( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
         $this->setup         = $setup;
         $this->request       = $request;
         $this->urlredirector = $urlredirector;
         $this->logger        = $logger;
+        $this->messages      = $messages;
         $this->gump          = new GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
 
-        // $this->messages = new Messages();
-
         $this->title = $this->setup->getAppNameForPageTitle();
         $this->menucontainer = array();
         $this->topcontainer = array();
-        // $this->messagescontainer = array( $this->messages );
+        $this->messagescontainer = array( $this->messages );
         $this->leftcontainer = array();
         $this->rightcontainer = array();
         $this->centralcontainer = array();
@@ -48,14 +47,12 @@ class Controller {
         $this->subAddToHead = '';
         $this->subAddToFoot = '';
 
-        /*
-        $this->messages->info = $_SESSION['msginfo'];
-        $this->messages->warning = $_SESSION['msgwarning'];
-        $this->messages->error = $_SESSION['msgerror'];
-        $this->messages->success = $_SESSION['msgsuccess'];
-        $this->flashvariable = $_SESSION['flashvariable'];
-        here we sould be calling the end of round in globals object
-        */
+        $this->messages->info = $this->request->getSessionMsgInfo();
+        $this->messages->warning = $this->request->getSessionMsgWarning();
+        $this->messages->error = $this->request->getSessionMsgError();
+        $this->messages->success = $this->request->getSessionMsgSuccess();
+        $this->flashvariable = $this->request->getSessionFlashVariable();
+        $this->request->endOfRound();
 
         if ( !$this->request->isSessionValid() ) {
             $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
@@ -184,6 +181,47 @@ class Controller {
         if (($time_end - $time_start) > 5) {
             $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
+    }
+
+    // ** next section load textual messages for messages block
+    function setSuccess( string $success ) {
+        $this->request->setSessionMsgSuccess( $success );
+    }
+
+    function setError( string $error ) {
+        $this->request->setSessionMsgError( $error );
+    }
+
+    function setInfo( string $info ) {
+        $this->request->setSessionMsgInfo( $info );
+    }
+
+    function setWarning( string $warning ) {
+        $this->request->setSessionMsgWarning( $warning );
+    }
+
+    /**
+     * This method give to the programmer the possibility of setting a flashvariable, a 
+     * variable that will be active up the the next call.
+     * This is ment to be used for instance to send variable from a GET form request to a 
+     * Post form request or in any case a variable is meant to last only to the next browser
+     * request.
+     * The variable as not a specific type, maybe it is better to use it with strings
+     * 
+     * @param [string] $flashvariable [variable that last for a request in the same session]
+     */
+    function setFlashVariable( string $flashvariable ) {
+        $this->request->setSessionFlashVariable( $flashvariable );
+    }
+
+    /**
+     * This method return a variable set in the prevoius broser request.
+     * To have a better understanging look at setFlashVariable description
+     * 
+     * @return [string] [variable that last for a request in the same session]
+     */
+    function getFlashVariable() : string {
+        return $this->request->getSessionFlashVariable();
     }
 
     /**

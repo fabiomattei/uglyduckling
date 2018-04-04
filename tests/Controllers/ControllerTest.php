@@ -19,7 +19,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase{
     new Firststep\Setup\Setup(), 
     new Firststep\Request\Request(), 
     new Firststep\Redirectors\FakeRedirector(), 
-    new Firststep\Loggers\EchoLogger() 
+    new Firststep\Loggers\EchoLogger(),
+    new Firststep\Blocks\BaseMessages
   );
 	$this->assertTrue(is_object($controller));
 	unset($controller);

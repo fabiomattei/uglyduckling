@@ -12,7 +12,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgInfo(): string {
-        return $_SESSION['msginfo'];
+        return $_SESSION['msginfo'] ?? '';
     }
 
     /**
@@ -28,7 +28,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgWarning(): string {
-        return $_SESSION['msgwarning'];
+        return $_SESSION['msgwarning'] ?? '';
     }
 
     /**
@@ -44,7 +44,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgError(): string {
-        return $_SESSION['msgerror'];
+        return $_SESSION['msgerror'] ?? '';
     }
 
     /**
@@ -60,7 +60,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgSuccess(): string {
-        return $_SESSION['msgsuccess'];
+        return $_SESSION['msgsuccess'] ?? '';
     }
 
     /**
@@ -80,7 +80,7 @@ class Request {
      * @return string
      */
     public function getSessionFlashVariable(): string {
-        return $_SESSION['flashvariable'];
+        return $_SESSION['flashvariable'] ?? '';
     }
 
     /**
