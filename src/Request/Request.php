@@ -12,7 +12,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgInfo(): string {
-        return $_SESSION['msginfo'] ?? '';
+        return $this->msginfo;
     }
 
     /**
@@ -20,7 +20,7 @@ class Request {
      * @param string $msgInfo
      */
     public function setSessionMsgInfo(string $msgInfo) {
-        $_SESSION['msginfo'] = $msgInfo;
+        $this->msginfo = $msgInfo;
     }
 
     /**
@@ -28,7 +28,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgWarning(): string {
-        return $_SESSION['msgwarning'] ?? '';
+        return $this->msgwarning;
     }
 
     /**
@@ -36,7 +36,7 @@ class Request {
      * @param string $msgWarning
      */
     public function setSessionMsgWarning(string $msgWarning) {
-        $_SESSION['msgwarning'] = $msgWarning;
+        $this->msgwarning = $msgWarning;
     }
 
     /**
@@ -44,7 +44,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgError(): string {
-        return $_SESSION['msgerror'] ?? '';
+        return $this->msgerror;
     }
 
     /**
@@ -52,7 +52,7 @@ class Request {
      * @param string $msgError
      */
     public function setSessionMsgError(string $msgError) {
-        $_SESSION['msgerror'] = $msgError;
+        $this->msgerror = $msgError;
     }
 
     /**
@@ -60,7 +60,7 @@ class Request {
      * @return string
      */
     public function getSessionMsgSuccess(): string {
-        return $_SESSION['msgsuccess'] ?? '';
+        return $this->msgsuccess;
     }
 
     /**
@@ -68,7 +68,7 @@ class Request {
      * @param string $msgSuccess
      */
     public function setSessionMsgSuccess(string $msgSuccess) {
-        $_SESSION['msgsuccess'] = $msgSuccess;
+        $this->msgsuccess = $msgSuccess;
     }
 
     /**
@@ -80,7 +80,7 @@ class Request {
      * @return string
      */
     public function getSessionFlashVariable(): string {
-        return $_SESSION['flashvariable'] ?? '';
+        return $this->flashvariable;
     }
 
     /**
@@ -94,18 +94,7 @@ class Request {
      * @param string $flashvariable [variable that last for a request in the same session]
      */
     public function setSessionFlashVariable(string $flashvariable) {
-        $_SESSION['flashvariable'] = $flashvariable;
-    }
-
-    /**
-     * Called to reset session variables at the end of the next page rendering
-     */
-    public function endOfRound() {
-        unset($_SESSION['msginfo']);
-        unset($_SESSION['msgwarning']);
-        unset($_SESSION['msgerror']);
-        unset($_SESSION['msgsuccess']);
-        unset($_SESSION['flashvariable']);
+        $this->flashvariable = $flashvariable;
     }
 
     public function isGetRequest(): bool {

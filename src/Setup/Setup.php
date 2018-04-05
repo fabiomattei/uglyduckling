@@ -18,7 +18,7 @@ class Setup {
 
     /**
      * @return string
-     */!!!';!!!';
+     */
 
 
     public function getAppNameForPageTitle(): string {

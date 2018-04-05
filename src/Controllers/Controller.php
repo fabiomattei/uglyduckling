@@ -52,7 +52,6 @@ class Controller {
         $this->messages->error = $this->request->getSessionMsgError();
         $this->messages->success = $this->request->getSessionMsgSuccess();
         $this->flashvariable = $this->request->getSessionFlashVariable();
-        $this->request->endOfRound();
 
         if ( !$this->request->isSessionValid() ) {
             $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');

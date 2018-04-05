@@ -1,15 +1,36 @@
 <?php
 
+session_start();
+
 require __DIR__ . '/../vendor/autoload.php';
 	
 echo 'Hello World!!!';
+
+$request = new Firststep\Request\Request();
+$request->setSessionMsgInfo( $_SESSION['msginfo'] ?? '' );
+$request->setSessionMsgWarning( $_SESSION['msgwarning'] ?? '' );
+$request->setSessionMsgError( $_SESSION['msgerror'] ?? '' );
+$request->setSessionMsgSuccess( $_SESSION['msgsuccess'] ?? '' );
+$request->setSessionFlashVariable( $_SESSION['flashvariable'] ?? '' );
+
+unset($_SESSION['msginfo']);
+unset($_SESSION['msgwarning']);
+unset($_SESSION['msgerror']);
+unset($_SESSION['msgsuccess']);
+unset($_SESSION['flashvariable']);
 	
 $controller = new Firststep\Controllers\Controller( 
     new Firststep\Setup\Setup(), 
-    new Firststep\Request\Request(), 
+    $request, 
     new Firststep\Redirectors\FakeRedirector(), 
     new Firststep\Loggers\EchoLogger(),
     new Firststep\Blocks\BaseMessages()
 );
+
+$_SESSION['msginfo'] = $request->getSessionMsgInfo();
+$_SESSION['msgwarning'] = $request->getSessionMsgWarning();
+$_SESSION['msgerror'] = $request->getSessionMsgError();
+$_SESSION['msgsuccess'] = $request->getSessionMsgSuccess();
+$_SESSION['flashvariable'] = $request->getSessionFlashVariable();
 
 echo 'Controller loaded!!!';
