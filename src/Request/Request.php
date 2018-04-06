@@ -97,20 +97,32 @@ class Request {
         $this->flashvariable = $flashvariable;
     }
 
+    public function setServerRequestMethod( string $serverRequestMethod ) {
+        $this->serverRequestMethod = $serverRequestMethod;
+    }
+
     public function isGetRequest(): bool {
-        return $_SERVER["REQUEST_METHOD"] == "GET";
+        return $this->serverRequestMethod == "GET";
     }
 
     public function isPostRequest(): bool {
-        return $_SERVER["REQUEST_METHOD"] == "POST";
+        return $this->serverRequestMethod == "POST";
     }
 
     public function getServerRequestMethod(): string {
-        return $_SERVER["REQUEST_METHOD"];
+        return $this->serverRequestMethod;
+    }
+
+    public function setServerPhpSelf( string $serverPhpSelf ) {
+        $this->serverPhpSelf = $serverPhpSelf;
     }
 
     public function getServerPhpSelf(): string {
-        return $_SERVER["PHP_SELF"];
+        return $this->serverPhpSelf;
+    }
+
+    public function setSessionLoggedId( string $loggedIn ) {
+        $this->loggedIn = $loggedIn;
     }
 
     public function isSessionValid() {
