@@ -13,6 +13,10 @@ class Request {
 	function __construct() {
 	}
 
+    public function setSecurityChecker( $securityChecker ) {
+        $this->securityChecker = $securityChecker;
+    }
+
     /**
      * Get the session variable $_SESSION['msginfo']
      * @return string
@@ -152,38 +156,14 @@ class Request {
     }
 
     public function isSessionValid() {
-        // check if user logged in
-        if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'])) {
-            return false;
-        }
-
-        // check if ip matches
-        if (!isset($_SESSION['ip']) || !isset($_SERVER['REMOTE_ADDR'])) {
-            return false;
-        }
-        if (!$_SESSION['ip'] === $_SERVER['REMOTE_ADDR']) {
-            return false;
-        }
-
-        // check user agent
-        if (!isset($_SESSION['user_agent']) || !isset($_SERVER['HTTP_USER_AGENT'])) {
-            return false;
-        }
-        if (!$_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']) {
-            return false;
-        }
-
-        // check elapsed time
-        $max_elapsed = 60 * 60 * 24; // 1 day
-        // return false if value is not set
-        if (!isset($_SESSION['last_login'])) {
-            return false;
-        }
-        if (!($_SESSION['last_login'] + $max_elapsed) >= time()) {
-            return false;
-        }
-
-        return true;
+        return $this->securityChecker->isSessionValid(
+            $this->sessionLoggedIn, 
+            $this->sessionIp, 
+            $this->sessionUserAgent, 
+            $this->sessionLastLogin, 
+            $this->serverRemoteAddr, 
+            $this->serverHttpUserAgent
+        );
     }
 
     /**

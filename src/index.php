@@ -13,10 +13,15 @@ $request->setSessionMsgError( $_SESSION['msgerror'] ?? '' );
 $request->setSessionMsgSuccess( $_SESSION['msgsuccess'] ?? '' );
 $request->setSessionFlashVariable( $_SESSION['flashvariable'] ?? '' );
 
-$request->setSessionLoggedId( $_SESSION['logged_in'] ?? '' ); // TODO check this
-$request->setSessionIp( $_SESSION['ip'] ?? '' );
-$request->setSessionUserAgent( $_SESSION['user_agent'] ?? '' );
-$request->setSessionLastLogin( $_SESSION['last_login'] ?? '' );
+if (isset($_SESSION['logged_in'])) {
+	$request->setSessionLoggedId( $_SESSION['logged_in'] ?? '' ); // TODO check this
+	$request->setSessionIp( $_SESSION['ip'] ?? '' );
+	$request->setSessionUserAgent( $_SESSION['user_agent'] ?? '' );
+	$request->setSessionLastLogin( $_SESSION['last_login'] ?? '' );
+	$request->setSecurityChecker( new Firststep\SecurityCheckers\PrivateSecurityChecker() );
+} else {
+	$request->setSecurityChecker( new Firststep\SecurityCheckers\PublicSecurityChecker() );
+}
 
 $request->setServerRequestMethod( $_SERVER["REQUEST_METHOD"] );
 $request->setServerPhpSelf( $_SERVER["PHP_SELF"] );

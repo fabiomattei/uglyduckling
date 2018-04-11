@@ -15,17 +15,18 @@ class ControllerTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$controller = new Firststep\Controllers\Controller( 
-    new Firststep\Setup\Setup(), 
-    new Firststep\Request\Request(), 
-    new Firststep\Redirectors\FakeRedirector(), 
-    new Firststep\Loggers\EchoLogger(),
-    new Firststep\Blocks\BaseMessages
-  );
-	$this->assertTrue(is_object($controller));
-	unset($controller);
+    $request = new Firststep\Request\Request();
+    $publicSecurityChecker = new Firststep\SecurityCheckers\PublicSecurityChecker();
+    $request->setSecurityChecker( $publicSecurityChecker );
+    $controller = new Firststep\Controllers\Controller( 
+      new Firststep\Setup\Setup(), 
+      $request, 
+      new Firststep\Redirectors\FakeRedirector(), 
+      new Firststep\Loggers\EchoLogger(),
+      new Firststep\Blocks\BaseMessages
+    );
+	  $this->assertTrue(is_object($controller));
+	  unset($controller);
   }
-
-
   
 }
