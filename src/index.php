@@ -12,9 +12,16 @@ $request->setSessionMsgWarning( $_SESSION['msgwarning'] ?? '' );
 $request->setSessionMsgError( $_SESSION['msgerror'] ?? '' );
 $request->setSessionMsgSuccess( $_SESSION['msgsuccess'] ?? '' );
 $request->setSessionFlashVariable( $_SESSION['flashvariable'] ?? '' );
+
 $request->setSessionLoggedId( $_SESSION['logged_in'] ?? '' ); // TODO check this
+$request->setSessionIp( $_SESSION['ip'] ?? '' );
+$request->setSessionUserAgent( $_SESSION['user_agent'] ?? '' );
+$request->setSessionLastLogin( $_SESSION['last_login'] ?? '' );
+
 $request->setServerRequestMethod( $_SERVER["REQUEST_METHOD"] );
 $request->setServerPhpSelf( $_SERVER["PHP_SELF"] );
+$request->setServerRemoteAddress( $_SERVER['REMOTE_ADDR'] );
+$request->setServerHttpUserAgent( $_SERVER['HTTP_USER_AGENT'] );
 
 unset($_SESSION['msginfo']);
 unset($_SESSION['msgwarning']);

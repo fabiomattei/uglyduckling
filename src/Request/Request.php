@@ -4,6 +4,12 @@ namespace Firststep\Request;
 
 class Request {
 
+    private $msginfo = '';
+    private $msgwarning = '';
+    private $msgerror = '';
+    private $msgsuccess = '';
+    private $flashvariable = '';
+
 	function __construct() {
 	}
 
@@ -121,8 +127,28 @@ class Request {
         return $this->serverPhpSelf;
     }
 
-    public function setSessionLoggedId( string $loggedIn ) {
-        $this->loggedIn = $loggedIn;
+    public function setServerRemoteAddress( string $serverRemoteAddr ) {
+        $this->serverRemoteAddr = $serverRemoteAddr;
+    }
+
+    public function setServerHttpUserAgent( string $serverHttpUserAgent ) {
+        $this->serverHttpUserAgent = $serverHttpUserAgent;
+    }
+
+    public function setSessionLoggedId( string $sessionLoggedIn ) {
+        $this->sessionLoggedIn = $sessionLoggedIn;
+    }
+
+    public function setSessionIp( string $sessionIp ) {
+        $this->sessionIp = $sessionIp;
+    }
+
+    public function setSessionUserAgent( string $sessionUserAgent ) {
+        $this->sessionUserAgent = $setSessionUserAgent;
+    }
+
+    public function setSessionLastLogin( string $sessionLastLogin ) {
+        $this->sessionLastLogin = $sessionLastLogin;
     }
 
     public function isSessionValid() {
