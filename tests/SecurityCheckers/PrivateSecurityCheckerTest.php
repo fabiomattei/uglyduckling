@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class PublicSecurityCheckerTest extends PHPUnit_Framework_TestCase{
+class PrivateSecurityCheckerTest extends PHPUnit_Framework_TestCase{
 	
   /**
   * Just check if the YourClass has no syntax error 
@@ -15,13 +15,13 @@ class PublicSecurityCheckerTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	 $checker = new Firststep\SecurityCheckers\PublicSecurityChecker();
+	 $checker = new Firststep\SecurityCheckers\PrivateSecurityChecker();
 	 $this->assertTrue(is_object($checker));
 	 unset($checker);
   }
 
   public function testIsSessionValid() {
-   $checker = new Firststep\SecurityCheckers\PublicSecurityChecker();
+   $checker = new Firststep\SecurityCheckers\PrivateSecurityChecker();
    $this->assertTrue($checker->isSessionValid(
     1, 
     ':: 1', 
