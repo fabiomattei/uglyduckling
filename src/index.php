@@ -8,8 +8,8 @@ echo 'Hello World!!!';
 
 $setup = new Firststep\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
-$setup->setPrivateTemplateFileName("template.php");
-$setup->setPublicTemplateFileName("public.php");
+$setup->setPrivateTemplateFileName('application.php');
+$setup->setPublicTemplateFileName('public.php');
 $setup->setBasePath("TODO");
 
 $request = new Firststep\Request\Request();
