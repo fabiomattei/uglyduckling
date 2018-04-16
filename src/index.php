@@ -6,6 +6,12 @@ require __DIR__ . '/../vendor/autoload.php';
 	
 echo 'Hello World!!!';
 
+$setup = new Firststep\Setup\Setup();
+$setup->setAppNameForPageTitle("Try app");
+$setup->setPrivateTemplateFileName("template.php");
+$setup->setPublicTemplateFileName("public.php");
+$setup->setBasePath("TODO");
+
 $request = new Firststep\Request\Request();
 $request->setSessionMsgInfo( $_SESSION['msginfo'] ?? '' );
 $request->setSessionMsgWarning( $_SESSION['msgwarning'] ?? '' );
@@ -35,7 +41,7 @@ unset($_SESSION['msgsuccess']);
 unset($_SESSION['flashvariable']);
 	
 $controller = new Firststep\Controllers\Controller( 
-    new Firststep\Setup\Setup(), 
+    $setup, 
     $request, 
     new Firststep\Redirectors\FakeRedirector(), 
     new Firststep\Loggers\EchoLogger(),
