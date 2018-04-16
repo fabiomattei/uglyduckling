@@ -15,7 +15,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$this->assertTrue(is_object($form));
 	unset($form);
   }
@@ -24,7 +24,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking empty form
   */
   public function testItShowsAnEmpyForm(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$this->assertTrue($form->show() == '<h3></h3><form action="" method="POST" class="form-horizontal"></form>');
 	unset($form);
   }
@@ -33,7 +33,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a text field is added to the form
   */
   public function testItShowsAFormWithATextField(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addTextField( 'myname', 'My label', 'My placeholder', 'My value');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">') !== false);
 	unset($form);
@@ -43,7 +43,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a textarea field is added to the form
   */
   public function testItShowsAFormWithATextAreaField(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addTextAreaField( 'myname', 'My label', 'My value');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><textarea id="myname" name="myname">My value</textarea>') !== false);
 	unset($form);
@@ -56,7 +56,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * The value passed to the method is selected: 2 => Option 2
   */
   public function testItShowsAFormWithADropdownField(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><select id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>') !== false);
 	unset($form);
@@ -66,7 +66,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a file upload field is added to the form
   */
   public function testItShowsAFormWithAFileUploadField(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addFileUploadField( 'myname', 'My label' );
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="file" id="myname" name="myname">') !== false);
 	unset($form);
@@ -76,7 +76,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a helping text is added to the form
   */
   public function testItShowsAFormWithAHelpingTextField(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addHelpingText( 'Title', 'My description' );
 	$this->assertTrue(strpos($form->show(), '<h5>Title</h5><p>My description</p>') !== false);
 	unset($form);
@@ -86,7 +86,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a helping text is added to the form
   */
   public function testItShowsAFormWithAHiddenField(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addHiddenField( 'myfield', 'My Value' );
 	$this->assertTrue(strpos($form->show(), '<input type="hidden" name="myfield" value="My Value">') !== false);
 	unset($form);
@@ -96,7 +96,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a helping text is added to the form
   */
   public function testItShowsAFormWithASubmitButton(){
-	$form = new Firststep\Blocks\BaseForm;
+	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addSubmitButton( 'myfield', 'My Value' );
 	$this->assertTrue(strpos($form->show(), '<input type="submit" name="myfield" value="My Value"/>') !== false);
 	unset($form);

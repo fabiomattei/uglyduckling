@@ -15,7 +15,7 @@ class BaseMessagesTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$form = new Firststep\Blocks\BaseMessages;
+	$form = new Firststep\Common\Blocks\BaseMessages;
 	$this->assertTrue(is_object($form));
 	unset($form);
   }
