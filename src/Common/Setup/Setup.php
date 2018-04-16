@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Setup;
+namespace Firststep\Common\Setup;
 
 class Setup {
 

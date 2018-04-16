@@ -1,21 +1,25 @@
 <?php
 
-namespace Firststep\Loggers;
+namespace Firststep\Common\Loggers;
 
 /**
- * Created fabio
+ * Created by fabio
  * Date: 07/01/2018
- * Time: 19:01
+ * Time: 18:56
  */
 
-class EchoLogger implements Logger {
+class LocalFileLogger implements Logger {
+
+    function __construct() {
+        $this->logfile = 'logs/log'.date('Y-m-d').'.log';
+    }
 
     public function write($message, $file='', $line='') {
         $message = date("Y-m-d H:i:s") .' - '.$message;
         $message .= $file=='' ? '' : " in $file";
         $message .= $line=='' ? '' : " on line $line";
         $message .= "\n";
-        echo '<b>Logger:</b> '.$message;
+        file_put_contents($this->logfile, $message, FILE_APPEND);
     }
 
 }

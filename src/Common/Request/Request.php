@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Request;
+namespace Firststep\Common\Request;
 
 class Request {
 

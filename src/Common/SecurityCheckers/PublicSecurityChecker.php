@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\SecurityCheckers;
+namespace Firststep\Common\SecurityCheckers;
 
 /**
  * Created fabio

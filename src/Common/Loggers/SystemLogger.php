@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Loggers;
+namespace Firststep\Common\Loggers;
 
 /**
  * Created fabio

@@ -6,7 +6,7 @@
  * Time: 18:26
  */
 
-namespace Firststep\Redirectors;
+namespace Firststep\Common\Redirectors;
 
 class URLRedirector implements Redirector {
 

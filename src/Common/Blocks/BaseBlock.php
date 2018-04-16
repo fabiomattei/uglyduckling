@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Blocks;
+namespace Firststep\Common\Blocks;
 
 abstract class BaseBlock {
   

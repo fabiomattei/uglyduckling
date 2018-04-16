@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Controllers;
+namespace Firststep\Common\Controllers;
 
 class PublicController extends Controller {
 

@@ -7,7 +7,7 @@
  * Time: 17.53
  */
 
-namespace Firststep\Redirectors;
+namespace Firststep\Common\Redirectors;
 
 /**
  * This class is a fake for testing porpuses

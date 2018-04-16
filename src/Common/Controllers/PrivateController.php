@@ -1,38 +1,26 @@
 <?php
 
-namespace Firststep\Controllers;
+namespace Firststep\Common\Controllers;
 
-use Firststep\Blocks\BaseMessages;
-use Firststep\Exceptions\ErrorPageException;
-use Firststep\Exceptions\AuthorizationException;
-use Firststep\Redirectors\Redirector;
-use Firststep\Loggers\Logger;
-use Firststep\Request\Request;
-use Firststep\Setup\Setup;
-use GUMP;
-
-class Controller {
+class PrivateController extends Controller {
 
     public $get_validation_rules = array();
     public $get_filter_rules = array();
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
-        $this->setup         = $setup;
-        $this->request       = $request;
-        $this->urlredirector = $urlredirector;
-        $this->logger        = $logger;
-        $this->messages      = $messages;
-        $this->gump          = new GUMP();
+    public function __construct() {
+        session_start();
 
         // setting an array containing all parameters
         $this->parameters = array();
 
-        $this->title = $this->setup->getAppNameForPageTitle();
+        $this->messages = new Messages();
+
+        $this->title = APPNAMEFORPAGETITLE;
         $this->menucontainer = array();
         $this->topcontainer = array();
-        $this->messagescontainer = array( $this->messages );
+        $this->messagescontainer = array($this->messages);
         $this->leftcontainer = array();
         $this->rightcontainer = array();
         $this->centralcontainer = array();
@@ -40,23 +28,48 @@ class Controller {
         $this->thirdcentralcontainer = array();
         $this->bottomcontainer = array();
         $this->sidebarcontainer = array();
-        $this->templateFile = $this->setup->getPrivateTemplateFileName();
+        $this->templateFile = PRIVATETEMPLATE;
 
         $this->addToHead = '';
         $this->addToFoot = '';
-        $this->subAddToHead = '';
-        $this->subAddToFoot = '';
 
-        $this->messages->info = $this->request->getSessionMsgInfo();
-        $this->messages->warning = $this->request->getSessionMsgWarning();
-        $this->messages->error = $this->request->getSessionMsgError();
-        $this->messages->success = $this->request->getSessionMsgSuccess();
-        $this->flashvariable = $this->request->getSessionFlashVariable();
+        $this->loadlinks();
 
-        if ( !$this->request->isSessionValid() ) {
-            $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
-            $this->urlredirector->redirect();
+        if (isset($_SESSION['msginfo'])) {
+            $this->messages->info = $_SESSION['msginfo'];
+            unset($_SESSION['msginfo']);
         }
+        if (isset($_SESSION['msgwarning'])) {
+            $this->messages->warning = $_SESSION['msgwarning'];
+            unset($_SESSION['msgwarning']);
+        }
+        if (isset($_SESSION['msgerror'])) {
+            $this->messages->error = $_SESSION['msgerror'];
+            unset($_SESSION['msgerror']);
+        }
+        if (isset($_SESSION['msgsuccess'])) {
+            $this->messages->success = $_SESSION['msgsuccess'];
+            unset($_SESSION['msgsuccess']);
+        }
+        if (isset($_SESSION['flashvariable'])) {
+            $this->flashvariable = $_SESSION['flashvariable'];
+            unset($_SESSION['flashvariable']);
+        }
+
+        $this->gump = new GUMP();
+
+        if (!$this->isSessionValid()) {
+            header('Location: ' . BASEPATH . 'public/login.html');
+            die();
+        }
+    }
+
+    public function isGetRequest() {
+        return $_SERVER["REQUEST_METHOD"] == "GET";
+    }
+
+    public function isPostRequest() {
+        return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 
     /**
@@ -118,13 +131,13 @@ class Controller {
     }
 
     public function show_get_error_page() {
-        throw new ErrorPageException('Error page exception function show_get_error_page()');
+        throw new \Exception('General malfuction!!!');
     }
 
     public function show_post_error_page() {
-        throw new ErrorPageException('Error page exception function show_post_error_page()');
+        throw new \Exception('General malfuction!!!');
     }
-
+	
     /**
      * This method has to be implemented by inerithed class
 	 * It return true by defult for compatiblity issues
@@ -142,17 +155,17 @@ class Controller {
     }
 
     public function show_get_authorization_error_page() {
-        throw new AuthorizationException('Authorization exception function show_get_authorization_error_page()');
+        throw new \Exception('Authorization error!!!');
     }
 
     public function show_post_authorization_error_page() {
-        throw new AuthorizationException('Authorization exception function show_post_authorization_error_page()');
+        throw new \Exception('Authorization error!!!');
     }
 
     public function showPage() {
         $time_start = microtime(true);
 
-        if ($this->request->isGetRequest()) {
+        if ($this->isGetRequest()) {
 			if ( $this->check_authorization_get_request() ) {
 	            if ( $this->check_get_request() ) {
 	                $this->getRequest();
@@ -178,25 +191,61 @@ class Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $logger = new Logger();
+            $logger->write('WARNING TIME :: ' . $_SERVER["REQUEST_METHOD"] . ' ' . $_SERVER['PHP_SELF'] . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 
+    private function isSessionValid() {
+        // check if user logged in
+        if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'])) {
+            return false;
+        }
+
+        // check if ip matches
+        if (!isset($_SESSION['ip']) || !isset($_SERVER['REMOTE_ADDR'])) {
+            return false;
+        }
+        if (!$_SESSION['ip'] === $_SERVER['REMOTE_ADDR']) {
+            return false;
+        }
+
+        // check user agent
+        if (!isset($_SESSION['user_agent']) || !isset($_SERVER['HTTP_USER_AGENT'])) {
+            return false;
+        }
+        if (!$_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']) {
+            return false;
+        }
+
+        // check elapsed time
+        $max_elapsed = 60 * 60 * 24; // 1 day
+        // return false if value is not set
+        if (!isset($_SESSION['last_login'])) {
+            return false;
+        }
+        if (!($_SESSION['last_login'] + $max_elapsed) >= time()) {
+            return false;
+        }
+
+        return true;
+    }
+
     // ** next section load textual messages for messages block
-    function setSuccess( string $success ) {
-        $this->request->setSessionMsgSuccess( $success );
+    function setSuccess($success) {
+        $this->messages->setSuccess($success);
     }
 
-    function setError( string $error ) {
-        $this->request->setSessionMsgError( $error );
+    function setError($error) {
+        $this->messages->setError($error);
     }
 
-    function setInfo( string $info ) {
-        $this->request->setSessionMsgInfo( $info );
+    function setInfo($info) {
+        $this->messages->setInfo($info);
     }
 
-    function setWarning( string $warning ) {
-        $this->request->setSessionMsgWarning( $warning );
+    function setWarning($warning) {
+        $this->messages->setWarning($warning);
     }
 
     /**
@@ -209,8 +258,8 @@ class Controller {
      * 
      * @param [string] $flashvariable [variable that last for a request in the same session]
      */
-    function setFlashVariable( string $flashvariable ) {
-        $this->request->setSessionFlashVariable( $flashvariable );
+    function setFlashVariable($flashvariable) {
+        $_SESSION['flashvariable'] = $flashvariable;
     }
 
     /**
@@ -219,13 +268,12 @@ class Controller {
      * 
      * @return [string] [variable that last for a request in the same session]
      */
-    function getFlashVariable() : string {
-        return $this->request->getSessionFlashVariable();
+    function getFlashVariable() {
+        return $this->flashvariable;
     }
 
-    /**
-     * Function for setting parameters array
-     */
+    /*     * * functions for setting parameters array */
+
     public function setParameters($parameters) {
         if (is_array($parameters)) {
             $this->parameters = $parameters;
@@ -233,13 +281,35 @@ class Controller {
     }
 
     /**
+     * Saving the request made to webserver
+     * It saves the STRING in $_SESSION['request'] variable and moves the previous request
+     * to STRING $_SESSION['prevrequest']
+     *
+     * @param $request STRING containing URL complete of parameters
+     */
+    public function setRequest($request) {
+        $this->request = $request;
+        $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
+        $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
+        $_SESSION['request'] = $request;
+    }
+
+    /**
      * Redirect the script to $_SESSION['prevrequest'] with a header request
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToPreviousPage() {
-        // avoid end of round here...
-        $this->urlredirector->setURL($this->request->getSecondRequestedURL());
-        $this->urlredirector->redirect();
+        if ($this->messages->info != '')
+            $_SESSION['msginfo'] = $this->messages->info;
+        if ($this->messages->warning != '')
+            $_SESSION['msgwarning'] = $this->messages->warning;
+        if ($this->messages->error != '')
+            $_SESSION['msgerror'] = $this->messages->error;
+        if ($this->messages->success != '')
+            $_SESSION['msgsuccess'] = $this->messages->success;
+        if (isset($this->flashvariable) AND $this->flashvariable != '')
+            $_SESSION['flashvariable'] = $this->flashvariable;
+        header('Location: ' . BASEPATH . $_SESSION['prevrequest']);
     }
 
     /**
@@ -247,9 +317,17 @@ class Controller {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToSecondPreviousPage() {
-        // avoid end of round here...
-        $this->urlredirector->setURL($this->request->getThirdRequestedURL());
-        $this->urlredirector->redirect();
+        if ($this->messages->info != '')
+            $_SESSION['msginfo'] = $this->messages->info;
+        if ($this->messages->warning != '')
+            $_SESSION['msgwarning'] = $this->messages->warning;
+        if ($this->messages->error != '')
+            $_SESSION['msgerror'] = $this->messages->error;
+        if ($this->messages->success != '')
+            $_SESSION['msgsuccess'] = $this->messages->success;
+        if (isset($this->flashvariable) AND $this->flashvariable != '')
+            $_SESSION['flashvariable'] = $this->flashvariable;
+        header('Location: ' . BASEPATH . $_SESSION['prevprevrequest']);
     }
 
     /**
@@ -258,8 +336,30 @@ class Controller {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToPage($group = 'main', $action = '', $parameters = '', $extension = '.html') {
-        $this->urlredirector->setURL( make_url($group, $action, $parameters, $extension) );
-        $this->urlredirector->redirect();
+        if ($this->messages->info != '')
+            $_SESSION['msginfo'] = $this->messages->info;
+        if ($this->messages->warning != '')
+            $_SESSION['msgwarning'] = $this->messages->warning;
+        if ($this->messages->error != '')
+            $_SESSION['msgerror'] = $this->messages->error;
+        if ($this->messages->success != '')
+            $_SESSION['msgsuccess'] = $this->messages->success;
+        if (isset($this->flashvariable) AND $this->flashvariable != '')
+            $_SESSION['flashvariable'] = $this->flashvariable;
+        header( 'Location: ' . make_url($group, $action, $parameters, $extension) );
+    }
+
+    /**
+     * Saving URL controller PATH in the controller
+     *
+     * @param $family      STRING coming from URL slicing
+     * @param $subfamily   STRING coming from URL slicing
+     * @param $aggregator  STRING coming from URL slicing
+     */
+    public function setControllerPath($family, $subfamily, $aggregator) {
+        $this->family = $family;
+        $this->subfamily = $subfamily;
+        $this->aggregator = $aggregator;
     }
 
     // taken from page script
@@ -282,16 +382,27 @@ class Controller {
                 foreach ($container as $obj) {
                     $this->addToHead .= $obj->addToHead();
                     $this->addToFoot .= $obj->addToFoot();
-                    $this->subAddToHead .= $obj->subAddToHead();
-                    $this->subAddToFoot .= $obj->subAddToFoot();
                 }
             }
             if (gettype($container) == 'object') {
                 $this->addToHead .= $container->addToHead();
                 $this->addToFoot .= $container->addToFoot();
-                $this->subAddToHead .= $container->subAddToHead();
-                $this->subAddToFoot .= $container->subAddToFoot();
             }
+        }
+    }
+
+    /**
+     * Load links directory from a file
+     */
+    function loadlinks() {
+
+        if (!isset($_SESSION['office']))
+            throw new \Exception('Office has not been set!!!');
+
+        $filepath = 'controllers/' . $_SESSION['office'] . '/links.php';
+
+        if (file_exists($filepath)) {
+            require_once $filepath;
         }
     }
 

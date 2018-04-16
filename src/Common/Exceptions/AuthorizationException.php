@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Exceptions;
+namespace Firststep\Common\Exceptions;
 
 /**
  * Created fabio
@@ -8,7 +8,7 @@ namespace Firststep\Exceptions;
  * Time: 09:25
  */
 
-class ErrorPageException extends Exception { }
+class AuthorizationException extends Exception { }
 
 /*
 

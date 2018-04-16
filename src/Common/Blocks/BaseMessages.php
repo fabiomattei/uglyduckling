@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Blocks;
+namespace Firststep\Common\Blocks;
 
-use Firststep\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseBlock;
 
 class BaseMessages extends BaseBlock {
 	

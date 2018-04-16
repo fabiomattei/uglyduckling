@@ -6,7 +6,7 @@
  * Time: 19:06
  */
 
-namespace Firststep\Loggers;
+namespace Firststep\Common\Loggers;
 
 interface Logger {
 

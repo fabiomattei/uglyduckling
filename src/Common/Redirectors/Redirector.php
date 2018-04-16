@@ -6,7 +6,7 @@
  * Time: 16.54
  */
 
-namespace Firststep\Redirectors;
+namespace Firststep\Common\Redirectors;
 
 interface Redirector {
 

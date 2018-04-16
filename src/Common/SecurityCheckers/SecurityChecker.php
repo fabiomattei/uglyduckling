@@ -5,7 +5,7 @@
  * Time: 10:30
  */
 
-namespace Firststep\SecurityCheckers;
+namespace Firststep\Common\SecurityCheckers;
 
 interface SecurityChecker {
 
