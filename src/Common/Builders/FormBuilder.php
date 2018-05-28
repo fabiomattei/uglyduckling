@@ -10,17 +10,8 @@ namespace Firststep\Common\Builders;
 
 class FormBuilder {
 
-    private $fields;
     private $form;
     private $xmlstring;
-    
-
-    /**
-     * @param mixed $fields
-     */
-    public function setFields($fields) {
-        $this->fields = $fields;
-    }
 
     /**
      * @param mixed $form
