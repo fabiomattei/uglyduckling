@@ -6,7 +6,7 @@
  * Time: 18.19
  */
 
-namespace core\html;
+namespace Firststep\Common\Builders;
 
 class InfoBuilder {
 

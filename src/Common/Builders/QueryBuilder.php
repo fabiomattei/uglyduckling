@@ -6,4 +6,8 @@
  * Time: 06:23
  */
 
+namespace Firststep\Common\Builders;
 
+class ListBuilder {
+	
+}
