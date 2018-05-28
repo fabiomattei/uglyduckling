@@ -6,13 +6,14 @@
  * Time: 20:02
  */
 
-namespace core\html;
+namespace Firststep\Common\Builders;
 
 class FormBuilder {
 
     private $fields;
     private $form;
     private $xmlstring;
+    
 
     /**
      * @param mixed $fields
