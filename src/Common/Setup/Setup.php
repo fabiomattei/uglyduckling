@@ -8,12 +8,14 @@ class Setup {
 	public $privateTemplateFileName;
 	public $publicTemplateFileName;
 	public $basePath;
+    public $pathtoapp;
 
 	public function __construct() {
 		$this->appNameForPageTitle = '';
 		$this->privateTemplateFileName = '';
 		$this->publicTemplateFileName = '';
 		$this->basePath = '';
+        $this->pathtoapp = '';
     }
 
     /**
@@ -72,6 +74,20 @@ class Setup {
      */
     public function setBasePath(string $basePath) {
         $this->basePath = $basePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToApp(): string {
+        return $this->pathtoapp;
+    }
+
+    /**
+     * @param string $basePath
+     */
+    public function setPathToApp(string $pathtoapp) {
+        $this->pathtoapp = $pathtoapp;
     }
 
 }

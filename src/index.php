@@ -10,9 +10,11 @@ $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
 $setup->setPrivateTemplateFileName('application.php');
 $setup->setPublicTemplateFileName('public.php');
-$setup->setBasePath("TODO");
+$setup->setBasePath('http://localhost:8888/uglyduckling/');
+$setup->setPathToApp('/uglyduckling/');
 
 $request = new Firststep\Common\Request\Request();
+$request->setServerRequestURI( $_SERVER['REQUEST_URI'] );
 $request->setSessionMsgInfo( $_SESSION['msginfo'] ?? '' );
 $request->setSessionMsgWarning( $_SESSION['msgwarning'] ?? '' );
 $request->setSessionMsgError( $_SESSION['msgerror'] ?? '' );
