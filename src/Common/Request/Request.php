@@ -40,7 +40,7 @@ class Request {
     * Restituisce poi le parti ottenute attraverso un array.
     *
     * Es. 'folder-subfolder/action/par1/par2/par3'
-    * Diventa array( 'folder', 'subfolder', 'action', array( 'par1', 'par2', 'par3' ) )
+    * Diventa array( 'action', array( 'par1', 'par2', 'par3' ) )
     */
     public function calculateSplittedURL() {
         $request2 = str_replace( '.html', '', $this->requestURI );
@@ -54,11 +54,11 @@ class Request {
 
         $this->action = $params[1];
         $this->parameters = array();
-        if ( isset( $params[2] ) ) { $parameters[] = $params[2]; }
-        if ( isset( $params[3] ) ) { $parameters[] = $params[3]; }
-        if ( isset( $params[4] ) ) { $parameters[] = $params[4]; }
-        if ( isset( $params[5] ) ) { $parameters[] = $params[5]; }
-        if ( isset( $params[6] ) ) { $parameters[] = $params[6]; }
+        if ( isset( $params[2] ) ) { $this->parameters[] = $params[2]; }
+        if ( isset( $params[3] ) ) { $this->parameters[] = $params[3]; }
+        if ( isset( $params[4] ) ) { $this->parameters[] = $params[4]; }
+        if ( isset( $params[5] ) ) { $this->parameters[] = $params[5]; }
+        if ( isset( $params[6] ) ) { $this->parameters[] = $params[6]; }
 
         if (!StringUtils::validate_string( $this->action ))
             throw new \Exception('Illegal access to spliturl!!!');

@@ -44,7 +44,7 @@ unset($_SESSION['flashvariable']);
 
 $router = new Firststep\Common\Router\Router;
 
-$controller = $router->getController( 'controllername' ); // TODO get it from $request
+$controller = $router->getController( $request->getAction() );
 $controller->makeAllPresets( 
     $setup, 
     $request, 
