@@ -41,6 +41,10 @@ unset($_SESSION['msgwarning']);
 unset($_SESSION['msgerror']);
 unset($_SESSION['msgsuccess']);
 unset($_SESSION['flashvariable']);
+
+$router = new Firststep\Common\Router\Router;
+
+$controller = $router->getController( 'controllername' );
 	
 $controller = new Firststep\Common\Controllers\Controller( 
     $setup, 

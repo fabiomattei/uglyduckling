@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class ControllerTest extends PHPUnit_Framework_TestCase{
+class ControllerTest extends PHPUnit_Framework_TestCase {
 	
   /**
   * Just check if the YourClass has no syntax error 
