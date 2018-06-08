@@ -18,7 +18,7 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function __construct( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
+    public function makeAllPresets( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
         $this->setup         = $setup;
         $this->request       = $request;
         $this->urlredirector = $urlredirector;

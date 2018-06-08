@@ -15,21 +15,28 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
   *
   */
   public function testIsThereAnySyntaxError(){
+    $controller = new Firststep\Common\Controllers\Controller;
+	  $this->assertTrue(is_object($controller));
+	  unset($controller);
+  }
+
+  public function testMakeAllPresets(){
     $setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
     $request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->setMethods(['isSessionValid'])->getMock();
     $redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
     $messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
     $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 
-    $controller = new Firststep\Common\Controllers\Controller( 
+    $controller = new Firststep\Common\Controllers\Controller;
+    $controller->makeAllPresets( 
       $setup, 
       $request, 
       $redirector, 
       $echologger,
       $messages 
     );
-	  $this->assertTrue(is_object($controller));
-	  unset($controller);
+    $this->assertTrue(is_object($controller));
+    unset($controller);
   }
   
 }

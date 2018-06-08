@@ -1,11 +1,11 @@
 <?php 
 
 /**
-*  Testing the Router class
+*  Testing the Request class
 *
 *  @author Fabio Mattei
 */
-class RouterTest extends PHPUnit_Framework_TestCase {
+class RequestTest extends PHPUnit_Framework_TestCase {
 	
   /**
   * Just check if the YourClass has no syntax error 
@@ -15,9 +15,9 @@ class RouterTest extends PHPUnit_Framework_TestCase {
   *
   */
   public function testIsThereAnySyntaxError(){
-    $router = new Firststep\Common\Router\Router;
-	  $this->assertTrue( is_object( $router ) );
-	  unset( $router );
+    $request = new Firststep\Common\Request\Request;
+	  $this->assertTrue( is_object( $request ) );
+	  unset( $request );
   }
   
 }
