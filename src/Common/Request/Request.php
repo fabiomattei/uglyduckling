@@ -2,6 +2,8 @@
 
 namespace Firststep\Common\Request;
 
+use Firststep\Common\Utils\StringUtils;
+
 class Request {
 
     private $msginfo = '';
@@ -16,6 +18,15 @@ class Request {
 
     public function setServerRequestURI( string $requestURI ) {
         $this->requestURI = $requestURI;
+        $this->calculateSplittedURL();
+    }
+
+    public function getAction() {
+        return $this->action;
+    }
+
+    public function getParameters() {
+        return $this->parameters;
     }
 
     /**
@@ -31,9 +42,8 @@ class Request {
     * Es. 'folder-subfolder/action/par1/par2/par3'
     * Diventa array( 'folder', 'subfolder', 'action', array( 'par1', 'par2', 'par3' ) )
     */
-    public function getSplittedURL() {
-        $request1 = substr( $this->requestURI, strlen( PATHTOAPP ) );
-        $request2 = str_replace( '.html', '', $request1 );
+    public function calculateSplittedURL() {
+        $request2 = str_replace( '.html', '', $this->requestURI );
         $request3 = str_replace( '.pdf', '', $request2 );
         $request  = preg_replace( '/\?.*/', '', $request3 );
 
@@ -42,25 +52,15 @@ class Request {
         #split the string by '/'
         $params = explode( '/', $request );
 
-        $folder = $params[0];
-        $subfolder = '';
-        if ( strpos( $folder, '-' ) !== FALSE ) {
-            $newfamily = explode( '-', $folder );
-            //print_r($newfamily);
-            $folder    = $newfamily[0];
-            $subfolder = $newfamily[1];
-        }
-        $action = $params[1];
-        $parameters = array();
+        $this->action = $params[1];
+        $this->parameters = array();
         if ( isset( $params[2] ) ) { $parameters[] = $params[2]; }
         if ( isset( $params[3] ) ) { $parameters[] = $params[3]; }
         if ( isset( $params[4] ) ) { $parameters[] = $params[4]; }
         if ( isset( $params[5] ) ) { $parameters[] = $params[5]; }
         if ( isset( $params[6] ) ) { $parameters[] = $params[6]; }
 
-        if ( validate_string( $folder ) AND validate_string( $subfolder ) AND validate_string( $action ) )
-            return array( $folder, $subfolder, $action, $parameters );
-        else 
+        if (!StringUtils::validate_string( $this->action ))
             throw new \Exception('Illegal access to spliturl!!!');
     }
 
