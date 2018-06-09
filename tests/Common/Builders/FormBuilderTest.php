@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 *  Testing the FormBuilder class
