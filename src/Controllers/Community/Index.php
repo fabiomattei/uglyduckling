@@ -4,9 +4,11 @@ namespace Firststep\Controllers\Community;
 
 use Firststep\Common\Controllers\Controller;
 
-use core\businesslogic\user\blocks\LoginForm;
-use core\businesslogic\user\dao\UserDao;
-use core\businesslogic\user\usecases\UserCanLogIn;
+use Firststep\Templates\Blocks\Menus\PublicMenu;
+use Firststep\Templates\Blocks\Login\LoginForm;
+
+//use core\businesslogic\user\dao\UserDao;
+//use core\businesslogic\user\usecases\UserCanLogIn;
 
 /**
 * 
@@ -19,8 +21,6 @@ class Index extends Controller {
 		if ( isset( $this->parameters[0] )  AND $this->parameters[0] != '' ) {
 			$error = 'error';
 		}
-		
-		block( 'public', 'publicmenu' );
 		
 		$this->title            = APPNAMEFORPAGETITLE . ' :: Access page';
 		$this->menucontainer    = array( new PublicMenu( 'login' ) );
