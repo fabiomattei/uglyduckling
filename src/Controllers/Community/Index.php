@@ -22,9 +22,9 @@ class Index extends Controller {
 			$error = 'error';
 		}
 		
-		$this->title            = APPNAMEFORPAGETITLE . ' :: Access page';
-		$this->menucontainer    = array( new PublicMenu( 'login' ) );
-		$this->centralcontainer = array( new LoginForm( $error ) );
+		$this->title            = $this->setup->getAppNameForPageTitle() . ' :: Access page';
+		$this->menucontainer    = array( new PublicMenu( $this->setup->getAppNameForPageTitle(), 'login' ) );
+		$this->centralcontainer = array( new LoginForm( $this->setup->getAppNameForPageTitle(), $error ) );
 		$this->templateFile     = 'login';
 	}
 	
