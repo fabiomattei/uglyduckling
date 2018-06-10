@@ -52,6 +52,10 @@ $controller->makeAllPresets(
     new Firststep\Common\Loggers\EchoLogger(),
     new Firststep\Common\Blocks\BaseMessages()
 );
+$controller->setParameters( $request->getParameters() );
+// $controller->setRequest( $request );
+// $controller->setControllerPath( OFFICE, CHAPTER, CONTROLLER );
+$controller->showPage();
 
 $_SESSION['msginfo'] = $request->getSessionMsgInfo();
 $_SESSION['msgwarning'] = $request->getSessionMsgWarning();

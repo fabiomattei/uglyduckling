@@ -2,15 +2,18 @@
 
 namespace Firststep\Common\Router;
 
+use Firststep\Controllers\Office\Inbox;
+use Firststep\Controllers\Community\Index;
+
 class Router {
 
     function getController( string $argument ) {
         switch ( $argument ) {
             case 'officeinbox':
-                return new Firststep\Controllers\Office\Inbox;
+                return new Inbox;
             
             default:
-                return new Firststep\Controllers\Community\Index;
+                return new Index;
         }
     }
 
