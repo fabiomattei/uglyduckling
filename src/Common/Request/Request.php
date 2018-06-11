@@ -242,5 +242,4 @@ class Request {
         return $_SESSION['prevprevrequest'];
     }
 
-
 }

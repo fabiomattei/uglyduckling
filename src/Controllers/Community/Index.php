@@ -46,14 +46,12 @@ class Index extends Controller {
 
 		if ($usecase->getUserCanLogIn()) {
 			$user = $dao->getOneByFields( array( 'usr_email' => $this->parameters['email'] ) );
-			$_SESSION['user_id']    = $user->usr_id;
-			$_SESSION['username']   = $user->usr_name;
-			$_SESSION['logged_in']  = true;
-		    $_SESSION['ip']         = $_SERVER['REMOTE_ADDR'];
-		    $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-			$_SESSION['last_login'] = time();
-			$_SESSION['office_id']  = $user->usr_usrofid;
-			$_SESSION['site_id']    = $user->usr_siteid;
+			$this->request->setSessionUserId( $user->usr_id );
+			$this->request->setSessionUsername( $user->usr_name );
+			$this->request->setSessionLoggedIn( true );
+			$this->request->setSessionIp( $_SERVER['REMOTE_ADDR'] );
+			$this->request->setSessionUserAgent( $_SERVER['HTTP_USER_AGENT'] );
+			$this->request->setSessionLastLogin( time() );
 			
 	        // redirecting to assets list
 			$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
