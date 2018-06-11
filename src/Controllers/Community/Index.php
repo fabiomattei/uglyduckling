@@ -6,13 +6,14 @@ use Firststep\Common\Controllers\Controller;
 
 use Firststep\Templates\Blocks\Menus\PublicMenu;
 use Firststep\Templates\Blocks\Login\LoginForm;
-
-//use core\businesslogic\user\dao\UserDao;
-//use core\businesslogic\user\usecases\UserCanLogIn;
+use Firststep\BusinessLogic\User\Daos\UserDao;
+use Firststep\BusinessLogic\User\UseCases\UserCanLogIn;
 
 /**
-* 
-*/
+ * This class cares about the login process.
+ * The get method cares about visualizing the interface, the post method cares about eventually allow 
+ * the user to log in or not
+ */
 class Index extends Controller {
 	
 	public function getRequest() {
