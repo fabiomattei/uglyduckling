@@ -15,7 +15,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
   *
   */
   public function testIsThereAnySyntaxError(){
-    $router = new Firststep\Common\Router\Router;
+    $router = new Firststep\Common\Router\Router( 'http://localhost:18080/' );
 	  $this->assertTrue( is_object( $router ) );
 	  unset( $router );
   }

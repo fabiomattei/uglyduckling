@@ -10,7 +10,7 @@ $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
 $setup->setPrivateTemplateFileName('application.php');
 $setup->setPublicTemplateFileName('public.php');
-$setup->setBasePath('http://localhost:8888/uglyduckling/');
+$setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
 
 $request = new Firststep\Common\Request\Request();
@@ -42,10 +42,11 @@ unset($_SESSION['msgerror']);
 unset($_SESSION['msgsuccess']);
 unset($_SESSION['flashvariable']);
 
-$router = new Firststep\Common\Router\Router;
+$router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 
 $controller = $router->getController( $request->getAction() );
-$controller->makeAllPresets( 
+$controller->makeAllPresets(
+	$router,
     $setup, 
     $request, 
     new Firststep\Common\Redirectors\FakeRedirector(), 

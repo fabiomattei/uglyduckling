@@ -9,6 +9,7 @@ use Firststep\Common\Redirectors\Redirector;
 use Firststep\Common\Loggers\Logger;
 use Firststep\Common\Request\Request;
 use Firststep\Common\Setup\Setup;
+use Firststep\Common\Router\Router;
 use GUMP;
 
 class Controller {
@@ -18,7 +19,8 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function makeAllPresets( Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
+    public function makeAllPresets( Router $router, Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
+		$this->router        = $router;
         $this->setup         = $setup;
         $this->request       = $request;
         $this->urlredirector = $urlredirector;

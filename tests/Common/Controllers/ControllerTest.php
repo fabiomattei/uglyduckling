@@ -21,6 +21,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testMakeAllPresets(){
+		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock(); 
 		$request->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
@@ -29,7 +30,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
 		$controller = new Firststep\Common\Controllers\Controller;
-		$controller->makeAllPresets( 
+		$controller->makeAllPresets(
+			$router,
 			$setup, 
 			$request, 
 			$redirector, 

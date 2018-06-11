@@ -8,6 +8,7 @@ use Firststep\Templates\Blocks\Menus\PublicMenu;
 use Firststep\Templates\Blocks\Login\LoginForm;
 use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\BusinessLogic\User\UseCases\UserCanLogIn;
+use Firststep\Common\Router\Router;
 
 /**
  * This class cares about the login process.
@@ -51,15 +52,14 @@ class Index extends Controller {
 		    $_SESSION['ip']         = $_SERVER['REMOTE_ADDR'];
 		    $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 			$_SESSION['last_login'] = time();
-			$_SESSION['office']     = 'bureau'; // Organization::get_office_slug( $user->usr_usrofid ); // used for calculating urls
 			$_SESSION['office_id']  = $user->usr_usrofid;
 			$_SESSION['site_id']    = $user->usr_siteid;
 			
 	        // redirecting to assets list
-			$this->redirectToPage( 'main', 'index' );
+			$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
 		} else {
 	        // redirecting to assets list
-			$this->redirectToPage( 'main', 'login' );
+			$this->redirectToPage( $this->router->make_url( Router::ROUTE_COMMUNITY_LOGIN ) );
 		}
 	}
 	
