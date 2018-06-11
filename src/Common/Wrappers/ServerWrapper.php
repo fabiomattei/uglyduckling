@@ -1,8 +1,6 @@
 <?php
 
-namespace Firststep\Common\Request;
-
-use Firststep\Common\Wrappers;
+namespace Firststep\Common\Wrappers;
 
 class ServerWrapper {
 	
@@ -14,10 +12,6 @@ class ServerWrapper {
         return $_SERVER["PHP_SELF"];
     }
 	
-    public function getServerRequestMethod(): string {
-        return $_SERVER["REQUEST_METHOD"];
-    }
-
     public function setServerRemoteAddress(): string {
         return $_SERVER['REMOTE_ADDR'];
     }

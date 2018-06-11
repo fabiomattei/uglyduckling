@@ -1,8 +1,6 @@
 <?php
 
-namespace Firststep\Common\Request;
-
-use Firststep\Common\Wrappers;
+namespace Firststep\Common\Wrappers;
 
 class SessionWrapper {
 	

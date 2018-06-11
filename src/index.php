@@ -6,6 +6,9 @@ require __DIR__ . '/../vendor/autoload.php';
 	
 echo 'Hello World!!!';
 
+$severWrapper = new Firststep\Common\Wrappers\ServerWrapper;
+$sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
+
 $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
 $setup->setPrivateTemplateFileName('application.php');
