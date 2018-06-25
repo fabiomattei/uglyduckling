@@ -14,37 +14,8 @@ class BasicDao {
     const DB_TABLE_UPDATED_FIELD_NAME = 'abstract';
     const DB_TABLE_CREATED_FLIED_NAME = 'abstract';
 
-    function __construct( $PDO = '' ) {
-        // if no database connection has been passed I try to make a new connection through the
-        // values in the settings
-        if ($PDO == '') {
-            try {
-                $this->DBH = new PDO(DBHOST . DBNAME, DBUSERNAME, DBPASSWORD);
-                $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new \Exception('General malfuction!!!');
-            }
-        } else {
-            // I can use the passed connection
-            $this->DBH = $PDO;
-        }
-    }
-
-    /**
-     * Setter method for database connection
-     */
-    public function setDBH($DBH) {
+    function __construct( $DBH ) {
         $this->DBH = $DBH;
-    }
-
-    /**
-     * Database connection getter
-     * I can use the already made connection for next database call
-     */
-    public function getDBH() {
-        return $this->DBH;
     }
 
     /**

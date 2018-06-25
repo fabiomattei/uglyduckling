@@ -40,8 +40,8 @@ class Index extends Controller {
     );
 	
 	public function postRequest() {
-		$dao = new UserDao();
-		$usecase = new UserCanLogIn( $this->parameters, $dao );
+		$userDao = new UserDao( $this->dbconnection );
+		$usecase = new UserCanLogIn( $this->parameters, $userDao );
 		$usecase->performAction();
 
 		if ($usecase->getUserCanLogIn()) {
