@@ -2,7 +2,7 @@
 
 namespace Firststep\BusinessLogic\User\Daos;
 
-use Common\Database\BasicDao;
+use Firststep\Common\Database\BasicDao;
 use PDO;
 use stdClass;
 

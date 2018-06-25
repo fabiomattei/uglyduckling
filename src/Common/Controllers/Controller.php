@@ -10,6 +10,7 @@ use Firststep\Common\Loggers\Logger;
 use Firststep\Common\Request\Request;
 use Firststep\Common\Setup\Setup;
 use Firststep\Common\Router\Router;
+use Firststep\Common\Database\DBConnection;
 use GUMP;
 
 class Controller {
@@ -19,10 +20,11 @@ class Controller {
     public $post_validation_rules = array();
     public $post_filter_rules = array();
 
-    public function makeAllPresets( Router $router, Setup $setup, Request $request, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
+    public function makeAllPresets( Router $router, Setup $setup, Request $request, DBConnection $dbconnection, Redirector $urlredirector, Logger $logger, BaseMessages $messages ) {
 		$this->router        = $router;
         $this->setup         = $setup;
         $this->request       = $request;
+		$this->dbconnection  = $dbconnection;
         $this->urlredirector = $urlredirector;
         $this->logger        = $logger;
         $this->messages      = $messages;

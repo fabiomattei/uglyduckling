@@ -16,6 +16,13 @@ $setup->setPublicTemplateFileName('public.php');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
 
+$dbconnection = Firststep\Common\Database\DBConnection( 
+	'mysql:host=127.0.0.1:3306;dbname=',
+	'uglyduckling',
+	'root',
+	'root'
+);
+
 $request = new Firststep\Common\Request\Request();
 $request->setServerRequestURI( $_SERVER['REQUEST_URI'] );
 $request->setSessionMsgInfo( $_SESSION['msginfo'] ?? '' );
@@ -51,7 +58,8 @@ $controller = $router->getController( $request->getAction() );
 $controller->makeAllPresets(
 	$router,
     $setup, 
-    $request, 
+    $request,
+	$dbconnection,
     new Firststep\Common\Redirectors\FakeRedirector(), 
     new Firststep\Common\Loggers\EchoLogger(),
     new Firststep\Common\Blocks\BaseMessages()
