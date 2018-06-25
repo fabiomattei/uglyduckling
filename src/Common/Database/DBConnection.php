@@ -10,14 +10,10 @@ use PDO;
 class DBConnection {
 
     function __construct( string $host, string $dbname, string $username, string $password ) {
-        try {
-            $this->DBH = new PDO($host . $dbname, $username, $password);
-            $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
-        }
+		$this->host = $host;
+		$this->dbname = $dbname;
+		$this->username = $username;
+		$this->password = $password;
     }
 	
     /**
@@ -25,7 +21,15 @@ class DBConnection {
      * I can use the already made connection for next database call
      */
     public function getDBH() {
-        return $this->DBH;
+        try {
+            $this->DBH = new PDO($this->host . $this->dbname, $this->username, $this->password);
+            $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			return $this->DBH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }   
     }
 
 }
