@@ -1,21 +1,24 @@
 <?php
 
-namespace core\businesslogic\user\usecases;
+namespace Firststep\BusinessLogic\User\UseCases;
 
 class UserCanLogIn {
-
-	function __construct( $parameters, $userDao ) { // $formdata = $_POST
-		$this->userDao    = $userDao;
+	
+	public function setParameters( $parameters ) {
 		$this->parameters = $parameters;
 	}
 	
-	function performAction() {
+	public function setUserDao( $userDao ) {
+		$this->userDao = $userDao;
+	}
+	
+	public function performAction() {
 		$this->userCanLogIn = $this->userDao->checkEmailAndPassword(
 									  $this->parameters['email'],
 									  $this->parameters['password'] );
 	}
 	
-	function getUserCanLogIn() {
+	public function getUserCanLogIn() {
 		return $this->userCanLogIn;
 	}
 	

@@ -14,8 +14,15 @@ class BasicDao {
     const DB_TABLE_UPDATED_FIELD_NAME = 'abstract';
     const DB_TABLE_CREATED_FLIED_NAME = 'abstract';
 
-    function __construct( $DBH ) {
-        $this->DBH = $DBH;
+    function __construct() {
+		// epnty as you see
+    }
+	
+    /**
+     * Database connection handler setter
+     */
+    public function setDBH( $DBH ) {
+		$this->DBH = $DBH;
     }
 
     /**

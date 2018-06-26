@@ -17,6 +17,11 @@ use Firststep\Common\Router\Router;
  */
 class Index extends Controller {
 	
+    function __construct() {
+		$this->userDao = new UserDao();
+		$this->userCanLogIn = new UserCanLogIn();
+    }
+	
 	public function getRequest() {
 		$error = '';
 		
@@ -40,14 +45,14 @@ class Index extends Controller {
     );
 	
 	public function postRequest() {
-		$userDao = new UserDao( $this->dbconnection );
-		$usecase = new UserCanLogIn( $this->parameters, $userDao );
-		$usecase->performAction();
+		$this->userCanLogIn->setUserDao( $this->userDao );
+		$this->userCanLogIn->setParameters( $this->parameters );
+		$this->userCanLogIn->performAction();
 
-		if ($usecase->getUserCanLogIn()) {
+		if ($this->userCanLogIn->getUserCanLogIn()) {
 			$user = $dao->getOneByFields( array( 'usr_email' => $this->parameters['email'] ) );
 			$this->request->setSessionUserId( $user->usr_id );
-			$this->request->setSessionUsername( $user->usr_name );
+			$this->request->setSessionUsernaame( $user->usr_name );
 			$this->request->setSessionLoggedIn( true );
 			$this->request->setSessionIp( $_SERVER['REMOTE_ADDR'] );
 			$this->request->setSessionUserAgent( $_SERVER['HTTP_USER_AGENT'] );
