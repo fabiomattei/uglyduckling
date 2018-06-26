@@ -257,12 +257,10 @@ class Controller {
     }
 
     /**
-     * Redirect the script to a selected page
-     * it creates the url using the library function make_url form loaders.php
-     * It send flash messages to new controller [info, warning, error, success]
+     * Redirect the script to a selected url
      */
-    public function redirectToPage($group = 'main', $action = '', $parameters = '', $extension = '.html') {
-        $this->urlredirector->setURL( make_url($group, $action, $parameters, $extension) );
+    public function redirectToPage( $url ) {
+        $this->urlredirector->setURL( $url );
         $this->urlredirector->redirect();
     }
 

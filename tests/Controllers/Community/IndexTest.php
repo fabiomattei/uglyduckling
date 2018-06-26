@@ -68,9 +68,8 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		);
 		$controller->userCanLogIn = $this->getMockBuilder(Firststep\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
 		$controller->userCanLogIn->expects($this->once())->method('getUserCanLogIn')->will($this->returnValue(false));
+		$router->expects($this->once())->method('make_url');
 		$controller->postRequest();
-		
-		// $this->assertTrue(strpos($controller->centralcontainer[0]->show(), 'Sign in to continue to') !== false);
 	}
 
 }
