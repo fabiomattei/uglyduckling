@@ -50,13 +50,13 @@ class Index extends Controller {
 		$this->userCanLogIn->performAction();
 
 		if ($this->userCanLogIn->getUserCanLogIn()) {
-			$user = $dao->getOneByFields( array( 'usr_email' => $this->parameters['email'] ) );
-			$this->request->setSessionUserId( $user->usr_id );
-			$this->request->setSessionUsernaame( $user->usr_name );
-			$this->request->setSessionLoggedIn( true );
-			$this->request->setSessionIp( $_SERVER['REMOTE_ADDR'] );
-			$this->request->setSessionUserAgent( $_SERVER['HTTP_USER_AGENT'] );
-			$this->request->setSessionLastLogin( time() );
+			$user = $this->userDao->getOneByFields( array( 'usr_email' => $this->parameters['email'] ) );
+			$this->sessionWrapper->setSessionUserId( $user->usr_id );
+			$this->sessionWrapper->setSessionUsername( $user->usr_name );
+			$this->sessionWrapper->setSessionLoggedIn( true );
+			$this->sessionWrapper->setSessionIp( $_SERVER['REMOTE_ADDR'] );
+			$this->sessionWrapper->setSessionUserAgent( $_SERVER['HTTP_USER_AGENT'] );
+			$this->sessionWrapper->setSessionLastLogin( time() );
 			
 	        // redirecting to assets list
 			$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );

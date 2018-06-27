@@ -25,6 +25,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock(); 
 		$request->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
+		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock(); 		
+		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
@@ -35,6 +37,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$router,
 			$setup, 
 			$request,
+			$severWrapper,
+			$sessionWrapper,
 			$dbconnection,
 			$redirector, 
 			$echologger,

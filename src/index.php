@@ -59,6 +59,8 @@ $controller->makeAllPresets(
 	$router,
     $setup, 
     $request,
+	$severWrapper,
+	$sessionWrapper,
 	$dbconnection,
     new Firststep\Common\Redirectors\FakeRedirector(), 
     new Firststep\Common\Loggers\EchoLogger(),

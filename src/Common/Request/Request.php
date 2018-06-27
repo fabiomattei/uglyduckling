@@ -158,54 +158,6 @@ class Request {
         $this->flashvariable = $flashvariable;
     }
 
-    public function setServerRequestMethod( string $serverRequestMethod ) {
-        $this->serverRequestMethod = $serverRequestMethod;
-    }
-
-    public function isGetRequest(): bool {
-        return $this->serverRequestMethod == "GET";
-    }
-
-    public function isPostRequest(): bool {
-        return $this->serverRequestMethod == "POST";
-    }
-
-    public function getServerRequestMethod(): string {
-        return $this->serverRequestMethod;
-    }
-
-    public function setServerPhpSelf( string $serverPhpSelf ) {
-        $this->serverPhpSelf = $serverPhpSelf;
-    }
-
-    public function getServerPhpSelf(): string {
-        return $this->serverPhpSelf;
-    }
-
-    public function setServerRemoteAddress( string $serverRemoteAddr ) {
-        $this->serverRemoteAddr = $serverRemoteAddr;
-    }
-
-    public function setServerHttpUserAgent( string $serverHttpUserAgent ) {
-        $this->serverHttpUserAgent = $serverHttpUserAgent;
-    }
-
-    public function setSessionLoggedId( string $sessionLoggedIn ) {
-        $this->sessionLoggedIn = $sessionLoggedIn;
-    }
-
-    public function setSessionIp( string $sessionIp ) {
-        $this->sessionIp = $sessionIp;
-    }
-
-    public function setSessionUserAgent( string $sessionUserAgent ) {
-        $this->sessionUserAgent = $setSessionUserAgent;
-    }
-
-    public function setSessionLastLogin( string $sessionLastLogin ) {
-        $this->sessionLastLogin = $sessionLastLogin;
-    }
-
     public function isSessionValid() {
         return $this->securityChecker->isSessionValid(
             $this->sessionLoggedIn, 
