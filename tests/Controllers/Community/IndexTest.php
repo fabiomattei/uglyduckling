@@ -24,9 +24,10 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock(); 
-		$request->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock(); 		
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
+		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
+		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
@@ -39,6 +40,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 			$request,
 			$severWrapper,
 			$sessionWrapper,
+			$securityChecker,
 			$dbconnection,
 			$redirector, 
 			$echologger,
@@ -53,10 +55,11 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$router->expects($this->once())->method('make_url')->will($this->returnValue(''));
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
-		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock(); 
-		$request->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
+		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock();
 		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock(); 		
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
+		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
+		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
@@ -69,6 +72,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 			$request,
 			$severWrapper,
 			$sessionWrapper,
+			$securityChecker,
 			$dbconnection,
 			$redirector, 
 			$echologger,
@@ -84,10 +88,11 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$router->expects($this->once())->method('make_url')->will($this->returnValue(''));
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
-		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock(); 
-		$request->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
+		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock();
 		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock();
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
+		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
+		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$sessionWrapper->expects($this->once())->method('setSessionUserId');
 		$sessionWrapper->expects($this->once())->method('setSessionUsername');
 		$sessionWrapper->expects($this->once())->method('setSessionLoggedIn');
@@ -106,6 +111,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 			$request,
 			$severWrapper,
 			$sessionWrapper,
+			$securityChecker,
 			$dbconnection,
 			$redirector, 
 			$echologger,

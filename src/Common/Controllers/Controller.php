@@ -13,6 +13,7 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\DBConnection;
 use Firststep\Common\Wrappers\ServerWrapper;
 use Firststep\Common\Wrappers\SessionWrapper;
+use Firststep\Common\SecurityCheckers\SecurityChecker;
 use GUMP;
 
 class Controller {
@@ -28,21 +29,23 @@ class Controller {
 		Request $request, 
 		ServerWrapper $serverWrapper,
 		SessionWrapper $sessionWrapper,
+		SecurityChecker $securityChecker,
 		DBConnection $dbconnection, 
 		Redirector $urlredirector, 
 		Logger $logger, 
 		BaseMessages $messages 
 		) {
-		$this->router         = $router;
-        $this->setup          = $setup;
-        $this->request        = $request;
-		$this->serverWrapper  = $serverWrapper;
-		$this->sessionWrapper = $sessionWrapper;
-		$this->dbconnection   = $dbconnection;
-        $this->urlredirector  = $urlredirector;
-        $this->logger         = $logger;
-        $this->messages       = $messages;
-        $this->gump           = new GUMP();
+		$this->router          = $router;
+        $this->setup           = $setup;
+        $this->request         = $request;
+		$this->serverWrapper   = $serverWrapper;
+		$this->sessionWrapper  = $sessionWrapper;
+		$this->securityChecker = $securityChecker;
+		$this->dbconnection    = $dbconnection;
+        $this->urlredirector   = $urlredirector;
+        $this->logger          = $logger;
+        $this->messages        = $messages;
+        $this->gump            = new GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
@@ -71,9 +74,15 @@ class Controller {
         $this->messages->success = $this->request->getSessionMsgSuccess();
         $this->flashvariable = $this->request->getSessionFlashVariable();
 
-        if ( !$this->request->isSessionValid() ) {
-            $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
-            $this->urlredirector->redirect();
+        if ( !$this->securityChecker->isSessionValid( 
+			$this->sessionWrapper->getSessionLoggedIn(), 
+            $this->sessionWrapper->getSessionIp(),
+            $this->sessionWrapper->getSessionUserAgent(),
+            $this->sessionWrapper->getSessionLastLogin(),
+            $this->serverWrapper->getServerRemoteAddress(),
+            $this->serverWrapper->getServerHttpUserAgent() ) ) {
+            	$this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
+            	$this->urlredirector->redirect();
         }
     }
 

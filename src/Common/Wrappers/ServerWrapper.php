@@ -12,7 +12,7 @@ class ServerWrapper {
         return $_SERVER["PHP_SELF"];
     }
 	
-    public function setServerRemoteAddress(): string {
+    public function getServerRemoteAddress(): string {
         return $_SERVER['REMOTE_ADDR'];
     }
 

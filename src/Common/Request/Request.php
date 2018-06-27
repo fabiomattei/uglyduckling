@@ -64,10 +64,6 @@ class Request {
             throw new \Exception('Illegal access to spliturl!!!');
     }
 
-    public function setSecurityChecker( $securityChecker ) {
-        $this->securityChecker = $securityChecker;
-    }
-
     /**
      * Get the session variable $_SESSION['msginfo']
      * @return string
@@ -156,17 +152,6 @@ class Request {
      */
     public function setSessionFlashVariable(string $flashvariable) {
         $this->flashvariable = $flashvariable;
-    }
-
-    public function isSessionValid() {
-        return $this->securityChecker->isSessionValid(
-            $this->sessionLoggedIn, 
-            $this->sessionIp, 
-            $this->sessionUserAgent, 
-            $this->sessionLastLogin, 
-            $this->serverRemoteAddr, 
-            $this->serverHttpUserAgent
-        );
     }
 
 }
