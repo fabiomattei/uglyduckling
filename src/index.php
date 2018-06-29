@@ -16,7 +16,7 @@ $setup->setPublicTemplateFileName('public.php');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
 
-$dbconnection = Firststep\Common\Database\DBConnection( 
+$dbconnection = new Firststep\Common\Database\DBConnection( 
 	'mysql:host=127.0.0.1:3306;dbname=',
 	'uglyduckling',
 	'root',
@@ -26,26 +26,38 @@ $dbconnection = Firststep\Common\Database\DBConnection(
 $request = new Firststep\Common\Request\Request();
 $request->setServerRequestURI( $severWrapper->getRequestURI() );
 
-if ( isset( $_SESSION['logged_in'] ) ) {
-	$request->setSecurityChecker( new Firststep\Common\SecurityCheckers\PrivateSecurityChecker() );
-} else {
-	$request->setSecurityChecker( new Firststep\Common\SecurityCheckers\PublicSecurityChecker() );
-}
-
 $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 
 $controller = $router->getController( $request->getAction() );
-$controller->makeAllPresets(
-	$router,
-    $setup, 
-    $request,
-	$severWrapper,
-	$sessionWrapper,
-	$dbconnection,
-    new Firststep\Common\Redirectors\FakeRedirector(), 
-    new Firststep\Common\Loggers\EchoLogger(),
-    new Firststep\Common\Blocks\BaseMessages()
-);
+
+if ( isset( $_SESSION['logged_in'] ) ) {
+	$controller->makeAllPresets(
+		$router,
+    	$setup, 
+    	$request,
+		$severWrapper,
+		$sessionWrapper,
+		new Firststep\Common\SecurityCheckers\PrivateSecurityChecker(),
+		$dbconnection,
+    	new Firststep\Common\Redirectors\FakeRedirector(), 
+    	new Firststep\Common\Loggers\EchoLogger(),
+    	new Firststep\Common\Blocks\BaseMessages()
+	);
+} else {
+	$controller->makeAllPresets(
+		$router,
+    	$setup, 
+    	$request,
+		$severWrapper,
+		$sessionWrapper,
+		new Firststep\Common\SecurityCheckers\PublicSecurityChecker(),
+		$dbconnection,
+    	new Firststep\Common\Redirectors\FakeRedirector(), 
+    	new Firststep\Common\Loggers\EchoLogger(),
+    	new Firststep\Common\Blocks\BaseMessages()
+	);
+}
+
 $controller->setParameters( $request->getParameters() );
 // $controller->setRequest( $request );
 // $controller->setControllerPath( OFFICE, CHAPTER, CONTROLLER );

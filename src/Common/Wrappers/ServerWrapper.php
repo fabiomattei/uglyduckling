@@ -4,6 +4,10 @@ namespace Firststep\Common\Wrappers;
 
 class ServerWrapper {
 	
+    public function getRequestMethod() {
+        return $_SERVER["REQUEST_METHOD"];
+    }
+
     public function getRequestURI(): string {
         return $_SERVER['REQUEST_URI'];
     }
@@ -18,6 +22,14 @@ class ServerWrapper {
 
     public function getHttpUserAgent(): string {
         return $_SERVER['HTTP_USER_AGENT'];
+    }
+
+    public function isGetRequest() {
+        return $_SERVER["REQUEST_METHOD"] == "GET";
+    }
+
+    public function isPostRequest() {
+        return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 	
 }
