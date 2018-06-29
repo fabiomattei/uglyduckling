@@ -4,19 +4,19 @@ namespace Firststep\Common\Wrappers;
 
 class ServerWrapper {
 	
-    public function getServerRequestMethod(): string {
+    public function getRequestURI(): string {
         return $_SERVER['REQUEST_URI'];
     }
 
-    public function getServerPhpSelf(): string {
+    public function getPhpSelf(): string {
         return $_SERVER["PHP_SELF"];
     }
 	
-    public function getServerRemoteAddress(): string {
+    public function getRemoteAddress(): string {
         return $_SERVER['REMOTE_ADDR'];
     }
 
-    public function getServerHttpUserAgent(): string {
+    public function getHttpUserAgent(): string {
         return $_SERVER['HTTP_USER_AGENT'];
     }
 	

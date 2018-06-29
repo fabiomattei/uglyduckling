@@ -51,7 +51,56 @@ class SessionWrapper {
 	public function getSessionLastLogin() {
 		return $_SESSION['last_login'];
 	}
+
+	public function setmMsgInfo( $msginfo ) {
+		$_SESSION['msginfo'] = $msginfo;
+	}
 	
+	public function getMsgInfo() {
+		return $_SESSION['msginfo'];
+	}
+
+	public function setMsgWarning( $msgwarning ) {
+		$_SESSION['msgwarning'] = $msgwarning;
+	}
+	
+	public function getMsgWarning() {
+		return $_SESSION['msgwarning'];
+	}
+
+	public function setMsgError( $msgerror ) {
+		$_SESSION['msgerror'] = $msgerror;
+	}
+	
+	public function getMsgError() {
+		return $_SESSION['msgerror'];
+	}
+
+	public function setMsgSuccess( $msgsuccess ) {
+		$_SESSION['msgsuccess'] = $msgsuccess;
+	}
+	
+	public function getMsgSuccess() {
+		return $_SESSION['msgsuccess'];
+	}
+
+	public function setFlashVariable( $flashvariable ) {
+		$_SESSION['flashvariable'] = $flashvariable;
+	}
+	
+	public function getFlashVariable() {
+		return $_SESSION['flashvariable'];
+	}
+
+	public function endOfRound() {
+		unset($_SESSION['msginfo']);
+		unset($_SESSION['msgwarning']);
+		unset($_SESSION['msgerror']);
+		unset($_SESSION['msgsuccess']);
+		unset($_SESSION['flashvariable']);
+	}
+
+
     /**
      * Saving the request made to webserver
      * It saves the STRING in $_SESSION['request'] variable and moves the previous request

@@ -90,6 +90,8 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock();
 		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock();
+		$severWrapper->expects($this->any())->method('getRemoteAddress');
+		$severWrapper->expects($this->any())->method('getHttpUserAgent');
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
 		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
 		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
@@ -117,10 +119,15 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 			$echologger,
 			$messages 
 		);
+		$controller->setParameters( array( 'email' => '' ) );
 		$controller->userCanLogIn = $this->getMockBuilder(Firststep\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
 		$controller->userCanLogIn->expects($this->once())->method('getUserCanLogIn')->will($this->returnValue(true));
+
+		$user = new stdClass();
+		$user->usr_id = 1;
+		$user->usr_name = "fabio";
 		$controller->userDao = $this->getMockBuilder(Firststep\BusinessLogic\User\Daos\UserDao::class)->getMock();
-		$controller->userDao->expects($this->once())->method('getOneByFields');
+		$controller->userDao->expects($this->once())->method('getOneByFields')->will($this->returnValue($user));
 		$router->expects($this->once())->method('make_url');
 		$controller->postRequest();
 	}

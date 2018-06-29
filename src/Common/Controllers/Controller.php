@@ -68,19 +68,19 @@ class Controller {
         $this->subAddToHead = '';
         $this->subAddToFoot = '';
 
-        $this->messages->info = $this->request->getSessionMsgInfo();
-        $this->messages->warning = $this->request->getSessionMsgWarning();
-        $this->messages->error = $this->request->getSessionMsgError();
-        $this->messages->success = $this->request->getSessionMsgSuccess();
-        $this->flashvariable = $this->request->getSessionFlashVariable();
+        $this->messages->info = $this->sessionWrapper->getMsgInfo();
+        $this->messages->warning = $this->sessionWrapper->getMsgWarning();
+        $this->messages->error = $this->sessionWrapper->getMsgError();
+        $this->messages->success = $this->sessionWrapper->getMsgSuccess();
+        $this->flashvariable = $this->sessionWrapper->getFlashVariable();
 
         if ( !$this->securityChecker->isSessionValid( 
 			$this->sessionWrapper->getSessionLoggedIn(), 
             $this->sessionWrapper->getSessionIp(),
             $this->sessionWrapper->getSessionUserAgent(),
             $this->sessionWrapper->getSessionLastLogin(),
-            $this->serverWrapper->getServerRemoteAddress(),
-            $this->serverWrapper->getServerHttpUserAgent() ) ) {
+            $this->serverWrapper->getRemoteAddress(),
+            $this->serverWrapper->getHttpUserAgent() ) ) {
             	$this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
             	$this->urlredirector->redirect();
         }
@@ -211,19 +211,19 @@ class Controller {
 
     // ** next section load textual messages for messages block
     function setSuccess( string $success ) {
-        $this->request->setSessionMsgSuccess( $success );
+        $this->sessionWrapper->setMsgSuccess( $success );
     }
 
     function setError( string $error ) {
-        $this->request->setSessionMsgError( $error );
+        $this->sessionWrapper->setMsgError( $error );
     }
 
     function setInfo( string $info ) {
-        $this->request->setSessionMsgInfo( $info );
+        $this->sessionWrapper->setMsgInfo( $info );
     }
 
     function setWarning( string $warning ) {
-        $this->request->setSessionMsgWarning( $warning );
+        $this->sessionWrapper->setMsgWarning( $warning );
     }
 
     /**
@@ -237,7 +237,7 @@ class Controller {
      * @param [string] $flashvariable [variable that last for a request in the same session]
      */
     function setFlashVariable( string $flashvariable ) {
-        $this->request->setSessionFlashVariable( $flashvariable );
+        $this->sessionWrapper->setFlashVariable( $flashvariable );
     }
 
     /**
@@ -247,7 +247,7 @@ class Controller {
      * @return [string] [variable that last for a request in the same session]
      */
     function getFlashVariable() : string {
-        return $this->request->getSessionFlashVariable();
+        return $this->sessionWrapper->getFlashVariable();
     }
 
     /**

@@ -54,8 +54,8 @@ class Index extends Controller {
 			$this->sessionWrapper->setSessionUserId( $user->usr_id );
 			$this->sessionWrapper->setSessionUsername( $user->usr_name );
 			$this->sessionWrapper->setSessionLoggedIn( true );
-			$this->sessionWrapper->setSessionIp( $_SERVER['REMOTE_ADDR'] );
-			$this->sessionWrapper->setSessionUserAgent( $_SERVER['HTTP_USER_AGENT'] );
+			$this->sessionWrapper->setSessionIp( $this->serverWrapper->getRemoteAddress() );
+			$this->sessionWrapper->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
 			$this->sessionWrapper->setSessionLastLogin( time() );
 			
 	        // redirecting to assets list
