@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class Inbox extends Controller {
+class Dashboard extends Controller {
 	
 	function __construct($argument) {
 		# code...
