@@ -30,7 +30,7 @@ $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 
 $controller = $router->getController( $request->getAction() );
 
-if ( isset( $_SESSION['logged_in'] ) ) {
+if ( $sessionWrapper->isUserLoggedIn() ) {
 	$controller->makeAllPresets(
 		$router,
     	$setup, 

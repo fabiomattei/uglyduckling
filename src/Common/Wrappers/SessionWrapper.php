@@ -92,6 +92,17 @@ class SessionWrapper {
 		return $_SESSION['flashvariable'];
 	}
 
+	/**
+	 * Check the session variables to see if the user opening the page has logged in to the system
+	 */
+	public function isUserLoggedIn() {
+		return isset( $_SESSION['logged_in'] );
+	}
+
+	/**
+	 * Reset all session variables at the end of the page rendering in order to be ready for the next
+	 * page loading
+	 */
 	public function endOfRound() {
 		unset($_SESSION['msginfo']);
 		unset($_SESSION['msgwarning']);
@@ -114,14 +125,23 @@ class SessionWrapper {
         $_SESSION['request'] = $requestedUrl;
     }
 
+    /**
+     * Return the current requested URL
+     */
     public function getRequestedURL(): string {
         return $_SESSION['request'];
     }
 
+    /**
+     * Return the previous requested URL
+     */
     public function getSecondRequestedURL(): string {
         return $_SESSION['prevrequest'];
     }
 
+    /**
+     * Return the second previous requested URL
+     */
     public function getThirdRequestedURL(): string {
         return $_SESSION['prevprevrequest'];
     }
