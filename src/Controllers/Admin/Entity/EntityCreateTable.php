@@ -1,13 +1,13 @@
 <?php
 
-namespace Firststep\Controllers\Admin\Form;
+namespace Firststep\Controllers\Admin\Entity;
 
 use Firststep\Common\Controllers\Controller;
 
 /**
  * 
  */
-class FormCreateTable extends Controller {
+class EntityCreateTable extends Controller {
 	
 	function __construct($argument) {
 		# code...
