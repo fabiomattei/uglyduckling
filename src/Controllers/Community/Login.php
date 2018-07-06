@@ -58,10 +58,11 @@ class Login extends Controller {
 			$this->sessionWrapper->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
 			$this->sessionWrapper->setSessionLastLogin( time() );
 			
-	        // redirecting to assets list
-			$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
+	        // redirecting to main page
+			// $this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
+			$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_MENU ) );
 		} else {
-	        // redirecting to assets list
+	        // redirecting to main page
 			$this->redirectToPage( $this->router->make_url( Router::ROUTE_COMMUNITY_LOGIN ) );
 		}
 	}

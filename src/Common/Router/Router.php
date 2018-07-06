@@ -4,20 +4,23 @@ namespace Firststep\Common\Router;
 
 use Firststep\Controllers\Office\Inbox;
 use Firststep\Controllers\Community\Login;
+use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
 
 class Router {
 	
 	const ROUTE_OFFICE_INBOX = 'officeinbox';
 	const ROUTE_COMMUNITY_LOGIN = 'communitylogin';
+	const ROUTE_ADMIN_DASHBOARD = 'admindashboard';
 	
 	public function __construct( $basepath ) {
 		$this->basepath = $basepath;
 	}
 
-    function getController( string $argument ) {
-        switch ( $argument ) {
+    function getController( string $action ) {
+        switch ( $action ) {
             case ROUTE_OFFICE_INBOX: return new Inbox;
 			case ROUTE_COMMUNITY_LOGIN: return new Login;
+			case ROUTE_ADMIN_DASHBOARD: return new AdminDashboard;
             default: return new Login;
         }
     }
