@@ -5,6 +5,8 @@ services:
     build: ./
     ports:
       - "18080:80"
+    networks:
+      - firststepnet
     volumes:
       - .:/var/www/html
     links:
@@ -16,6 +18,16 @@ services:
       - /var/data/db:/var/lib/mysql
     ports:
       - "13306:3306"
+    networks:
+      - firststepnet
     environment:
       - MYSQL_DATABASE=firststep
       - MYSQL_ROOT_PASSWORD=password
+
+volumes:
+     mariadb:
+       driver: "local"
+
+networks:
+     firststepnet:
+         driver: bridge
