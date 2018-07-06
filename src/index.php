@@ -31,6 +31,7 @@ $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 $controller = $router->getController( $request->getAction() );
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
+	// settings for logged in user
 	$controller->makeAllPresets(
 		$router,
     	$setup, 
@@ -44,6 +45,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Firststep\Common\Blocks\BaseMessages()
 	);
 } else {
+	// settings for user that has not logged in the system
 	$controller->makeAllPresets(
 		$router,
     	$setup, 

@@ -60,7 +60,7 @@ class Login extends Controller {
 			
 	        // redirecting to main page
 			// $this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
-			$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_MENU ) );
+			$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_DASHBOARD ) );
 		} else {
 	        // redirecting to main page
 			$this->redirectToPage( $this->router->make_url( Router::ROUTE_COMMUNITY_LOGIN ) );
