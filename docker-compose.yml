@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   phpinfo:
     build: ./
     ports:
@@ -8,8 +9,11 @@ services:
       - .:/var/www/html
     links:
       - mariadb:mariadb
+
   mariadb:
     build: ./docker/mariadb
+    volumes:
+      - /var/data/db:/var/lib/mysql
     ports:
       - "13306:3306"
     environment:
