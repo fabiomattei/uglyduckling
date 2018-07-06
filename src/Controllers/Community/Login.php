@@ -15,7 +15,7 @@ use Firststep\Common\Router\Router;
  * The get method cares about visualizing the interface, the post method cares about eventually allow 
  * the user to log in or not
  */
-class Index extends Controller {
+class Login extends Controller {
 	
     function __construct() {
 		$this->userDao = new UserDao();

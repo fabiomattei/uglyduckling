@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class IndexTest extends PHPUnit_Framework_TestCase {
+class LoginTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	* Just check if the YourClass has no syntax error 
@@ -15,7 +15,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError() {
-		$controller = new Firststep\Controllers\Community\Index;
+		$controller = new Firststep\Controllers\Community\Login;
 		$this->assertTrue(is_object($controller));
 		unset($controller);
 	}
@@ -33,7 +33,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
-		$controller = new Firststep\Controllers\Community\Index;
+		$controller = new Firststep\Controllers\Community\Login;
 		$controller->makeAllPresets(
 			$router,
 			$setup, 
@@ -65,7 +65,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
-		$controller = new Firststep\Controllers\Community\Index;
+		$controller = new Firststep\Controllers\Community\Login;
 		$controller->makeAllPresets(
 			$router,
 			$setup, 
@@ -106,7 +106,7 @@ class IndexTest extends PHPUnit_Framework_TestCase {
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
-		$controller = new Firststep\Controllers\Community\Index;
+		$controller = new Firststep\Controllers\Community\Login;
 		$controller->makeAllPresets(
 			$router,
 			$setup, 

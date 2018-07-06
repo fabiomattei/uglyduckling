@@ -3,7 +3,7 @@
 namespace Firststep\Common\Router;
 
 use Firststep\Controllers\Office\Inbox;
-use Firststep\Controllers\Community\Index;
+use Firststep\Controllers\Community\Login;
 
 class Router {
 	
@@ -17,8 +17,8 @@ class Router {
     function getController( string $argument ) {
         switch ( $argument ) {
             case ROUTE_OFFICE_INBOX: return new Inbox;
-			case ROUTE_COMMUNITY_LOGIN: return new Index;
-            default: return new Index;
+			case ROUTE_COMMUNITY_LOGIN: return new Login;
+            default: return new Login;
         }
     }
 	
