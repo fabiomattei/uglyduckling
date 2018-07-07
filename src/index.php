@@ -17,10 +17,10 @@ $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
 
 $dbconnection = new Firststep\Common\Database\DBConnection( 
-	'mysql:host=127.0.0.1:3306;dbname=',
-	'uglyduckling',
+	'mysql:host=0.0.0.0:13306;dbname=',
+	'firststep',
 	'root',
-	'root'
+	'password'
 );
 
 $request = new Firststep\Common\Request\Request();
