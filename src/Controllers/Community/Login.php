@@ -3,7 +3,6 @@
 namespace Firststep\Controllers\Community;
 
 use Firststep\Common\Controllers\Controller;
-
 use Firststep\Templates\Blocks\Menus\PublicMenu;
 use Firststep\Templates\Blocks\Login\LoginForm;
 use Firststep\BusinessLogic\User\Daos\UserDao;
@@ -45,6 +44,7 @@ class Login extends Controller {
     );
 	
 	public function postRequest() {
+		$this->userDao->setDBH( $this->dbconnection->getDBH() );
 		$this->userCanLogIn->setUserDao( $this->userDao );
 		$this->userCanLogIn->setParameters( $this->parameters );
 		$this->userCanLogIn->performAction();

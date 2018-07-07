@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/var/www/html
     links:
-      - mariadb:mariadb
+      - mariadb
 
   mariadb:
     build: ./docker/mariadb
@@ -24,6 +24,23 @@ services:
       - MYSQL_DATABASE=firststep
       - MYSQL_ROOT_PASSWORD=password
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - mariadb
+    ports:
+      - 8183:80
+    networks:
+      - firststepnet
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: password
+      PMA_ARBITRARY: 1
+
 networks:
      firststepnet:
          driver: bridge
+
+

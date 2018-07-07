@@ -9,6 +9,9 @@ use PDO;
  */
 class DBConnection {
 
+    /**
+     * Setting up the database connection
+     */
     function __construct( string $host, string $dbname, string $username, string $password ) {
 		$this->host = $host;
 		$this->dbname = $dbname;
