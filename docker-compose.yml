@@ -15,7 +15,7 @@ services:
   mariadb:
     build: ./docker/mariadb
     volumes:
-      - /var/data/db:/var/lib/mysql
+      - ./data:/var/lib/mysql
     ports:
       - "13306:3306"
     networks:
@@ -23,10 +23,6 @@ services:
     environment:
       - MYSQL_DATABASE=firststep
       - MYSQL_ROOT_PASSWORD=password
-
-volumes:
-     mariadb:
-       driver: "local"
 
 networks:
      firststepnet:
