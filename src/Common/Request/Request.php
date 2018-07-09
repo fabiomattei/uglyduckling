@@ -64,4 +64,8 @@ class Request {
             throw new \Exception('Illegal access to spliturl!!!');
     }
 
+    public function getInfo(): string {
+        return '[Request] requestURI:'.$this->requestURI.' Action: '.$this->action;
+    }
+
 }

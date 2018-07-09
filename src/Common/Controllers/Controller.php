@@ -320,4 +320,19 @@ class Controller {
         }
     }
 
+/*
+        $this->router          = $router;
+        $this->setup           = $setup;
+        $this->request         = $request;
+        $this->serverWrapper   = $serverWrapper;
+        $this->sessionWrapper  = $sessionWrapper;
+        $this->securityChecker = $securityChecker;
+        $this->dbconnection    = $dbconnection;
+        $this->urlredirector   = $urlredirector;
+        $this->logger          = $logger;
+*/
+    public function getInfo(): string {
+        return '<br>'.$this->router->getInfo().'<br>'.$this->request->getInfo().'<br>';
+    }
+
 }

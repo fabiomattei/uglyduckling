@@ -18,11 +18,13 @@ class Router {
 
     function getController( string $action ) {
         switch ( $action ) {
-            case ROUTE_OFFICE_INBOX: return new Inbox;
-			case ROUTE_COMMUNITY_LOGIN: return new Login;
-			case ROUTE_ADMIN_DASHBOARD: return new AdminDashboard;
-            default: return new Login;
+            case self::ROUTE_OFFICE_INBOX:    $controller = new Inbox; break;
+			case self::ROUTE_COMMUNITY_LOGIN: $controller = new Login; break;
+			case self::ROUTE_ADMIN_DASHBOARD: $controller = new AdminDashboard; break;
+            default: $controller = new Login; break;
         }
+        $this->controllerCalled = 'Router Action: '.$action.' Controller Called: '.get_class($controller);
+        return $controller;
     }
 	
 	/**
@@ -42,6 +44,10 @@ class Router {
 		} else {
 	        return $this->basepath.$action.( $parameters == '' ? '' : '/'.$parameters ).$extension;
 	    }
+	}
+
+	public function getInfo() : string {
+		return '[Router] BasePath: '.$this->basepath.$this->controllerCalled;
 	}
 
 }

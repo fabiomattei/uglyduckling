@@ -9,8 +9,8 @@ $sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
 
 $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
-$setup->setPrivateTemplateFileName('application.php');
-$setup->setPublicTemplateFileName('public.php');
+$setup->setPrivateTemplateFileName('application');
+$setup->setPublicTemplateFileName('public');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
 
@@ -57,8 +57,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Firststep\Common\Blocks\BaseMessages()
 	);
 }
-
 $controller->setParameters( $request->getParameters() );
+
 // $controller->setRequest( $request );
 // $controller->setControllerPath( OFFICE, CHAPTER, CONTROLLER );
 $controller->showPage();
@@ -66,3 +66,4 @@ $controller->showPage();
 $sessionWrapper->endOfRound();
 
 echo 'Controller: ' . get_class( $controller );
+echo $controller->getInfo();
