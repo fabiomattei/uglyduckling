@@ -25,5 +25,17 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame( $router->make_url( 'Dashobard' ), 'http://localhost:18080/Dashobard.html' );
         unset( $router );
 	}
-  
+
+	public function testReturnLoginControllerIfCalledWithNoAction() {
+		$router = new Firststep\Common\Router\Router( 'http://localhost:18080/' );
+		$this->assertSame( get_class( $router->getController( '' ) ), 'Firststep\Controllers\Community\Login' );
+        unset( $router );
+	}
+ 	
+ 	public function testReturnAdminDashboardControllerIfCalledWithActionadmindashboard() {
+		$router = new Firststep\Common\Router\Router( 'http://localhost:18080/' );
+		$this->assertSame( get_class( $router->getController( 'admindashboard' ) ), 'Firststep\Controllers\Admin\Dashboard\AdminDashboard' );
+        unset( $router );
+	}
+   
 }

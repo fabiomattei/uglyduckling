@@ -23,7 +23,6 @@ class Router {
 			case self::ROUTE_ADMIN_DASHBOARD: $controller = new AdminDashboard; break;
             default: $controller = new Login; break;
         }
-        $this->controllerCalled = 'Router Action: '.$action.' Controller Called: '.get_class($controller);
         return $controller;
     }
 	
@@ -47,7 +46,7 @@ class Router {
 	}
 
 	public function getInfo() : string {
-		return '[Router] BasePath: '.$this->basepath.$this->controllerCalled;
+		return '[Router] BasePath: '.$this->basepath;
 	}
 
 }
