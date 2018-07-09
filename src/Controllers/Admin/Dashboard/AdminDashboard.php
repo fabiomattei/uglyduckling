@@ -19,8 +19,6 @@ class AdminDashboard extends Controller {
 		$this->title            = $this->setup->getAppNameForPageTitle() . ' :: Admin dashboard';
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), 'admindashboard' ) );
 		$this->centralcontainer = array();
-		echo "ci sono";
-		// $this->templateFile     = 'login';
 	}
 
 }
