@@ -37,16 +37,10 @@ class Router {
 	 * @return       string     The url well formed
 	 */
 	function make_url( $action = '', $parameters = '', $extension = '.html' ) {
-		if ( $chapter == 'main' AND $action == '' ) {
+		if ( $action == '' ) {
 			return $this->basepath;
-		}
-		if ( $chapter != 'main' AND $action == '' ) {
-			return $this->basepath.'/index.html';
-		}
-	    if ( $chapter == 'main' ) {
+		} else {
 	        return $this->basepath.$action.( $parameters == '' ? '' : '/'.$parameters ).$extension;
-	    } else {
-	        return $this->basepath.$chapter.'/'.$action.( $parameters == '' ? '' : '/'.$parameters ).$extension;
 	    }
 	}
 

@@ -3,8 +3,6 @@
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
-	
-echo 'Hello World!!!';
 
 $severWrapper = new Firststep\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
@@ -40,7 +38,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		$sessionWrapper,
 		new Firststep\Common\SecurityCheckers\PrivateSecurityChecker(),
 		$dbconnection,
-    	new Firststep\Common\Redirectors\FakeRedirector(), 
+    	new Firststep\Common\Redirectors\URLRedirector(), 
     	new Firststep\Common\Loggers\EchoLogger(),
     	new Firststep\Common\Blocks\BaseMessages()
 	);
@@ -54,7 +52,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		$sessionWrapper,
 		new Firststep\Common\SecurityCheckers\PublicSecurityChecker(),
 		$dbconnection,
-    	new Firststep\Common\Redirectors\FakeRedirector(), 
+    	new Firststep\Common\Redirectors\URLRedirector(), 
     	new Firststep\Common\Loggers\EchoLogger(),
     	new Firststep\Common\Blocks\BaseMessages()
 	);
