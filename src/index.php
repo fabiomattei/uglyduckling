@@ -65,4 +65,4 @@ $controller->showPage();
 
 $sessionWrapper->endOfRound();
 
-echo 'Controller loaded!!!';
+echo 'Controller: ' . get_class( $controller );

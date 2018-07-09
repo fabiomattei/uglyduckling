@@ -81,8 +81,8 @@ class Controller {
             $this->sessionWrapper->getSessionLastLogin(),
             $this->serverWrapper->getRemoteAddress(),
             $this->serverWrapper->getHttpUserAgent() ) ) {
-            	$this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
-            	$this->urlredirector->redirect();
+            $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
+            $this->urlredirector->redirect();
         }
     }
 

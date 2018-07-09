@@ -16,7 +16,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
      */
     public function testIsThereAnySyntaxError(){
         $request = new Firststep\Common\Request\Request;
-	      $this->assertTrue( is_object( $request ) );
+	    $this->assertTrue( is_object( $request ) );
         unset( $request );
     }
 

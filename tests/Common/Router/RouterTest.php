@@ -19,5 +19,11 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( is_object( $router ) );
 		unset( $router );
 	}
+
+	public function testMakeUrlOnlyWithAnAction() {
+		$router = new Firststep\Common\Router\Router( 'http://localhost:18080/' );
+		$this->assertSame( $router->make_url( 'Dashobard' ), 'http://localhost:18080/Dashobard.html' );
+        unset( $router );
+	}
   
 }
