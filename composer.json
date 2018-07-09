@@ -12,7 +12,8 @@
     "type": "project",
     "require": {
 		"php": ">=7.0",
-        "wixel/gump": "dev-master"
+        "wixel/gump": "dev-master",
+        "twbs/bootstrap": "4.1.1"
     },
 	"require-dev": {
 		"phpunit/phpunit": "5.4.*"
