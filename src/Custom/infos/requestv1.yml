@@ -1,0 +1,10 @@
+entity: carv1
+	version: 1
+	fields:
+		description: textarea
+		amount:      int
+		duedate:     date
+	validation:
+		description: max_len,2500
+		amount:      required|numeric
+		duedate:     max_len,10

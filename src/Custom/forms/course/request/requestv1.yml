@@ -1,0 +1,39 @@
+name: request
+metadata:
+  - type: form
+  - version: 1
+title: My new form
+parameters:
+  - type: int
+	validation: required|int
+	name: id
+fieds:
+  - type: textarea
+	validation: max_len,2500
+	name: name
+	row: 1
+	width: 6
+  - type: int
+	validation: required|numeric
+	name: amount
+	row: 1
+	width: 6
+  - type: date
+	validation: max_len,10
+	name: duedate
+	row: 1
+	width: 12
+logics:
+  - update:
+	  entity: request
+	  fields:
+		  - field: fieldname
+		    operation: add
+			value: amount
+		  - field: field2name
+		    operation: overwrite
+			value: name
+	  conditions:
+		  - field: id
+		    operator: =
+			value: id
