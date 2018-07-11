@@ -3,10 +3,6 @@ metadata:
   - type: info
   - version: 1
 title: My new info panel
-parameters:
-  - type: int
-	validation: required|int
-	name: id
 fieds:
   - type: textarea
 	validation: max_len,2500
@@ -26,3 +22,23 @@ fieds:
   - type: hidden
     validation: required|int
 	name: id
+request:
+  parameters:
+    - type: int
+  	validation: required|int
+  	name: id
+query:
+  mainentity: mysqltablename
+  joins:
+    - tablename: mysecondtable
+      joinon: myifled_1 = myfield2
+    - tablename: mythirdtable
+      joinon: myifled_2 = myfield3
+  conditions:
+    - field: id
+  	operator: =
+  	value: id
+  fields:
+    - myt_field1
+    - myt_field2
+    - myt_field3

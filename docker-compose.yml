@@ -23,6 +23,8 @@ services:
     environment:
       - MYSQL_DATABASE=firststep
       - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=userp
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

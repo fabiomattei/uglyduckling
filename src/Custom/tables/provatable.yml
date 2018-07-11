@@ -7,12 +7,6 @@ headlines:
   - title 1
   - title 2
   - title 3
-mainentity: mysqltablename
-joins:
-  - tablename: mysecondtable
-    joinon: myifled_1 = myfield2
-  - tablename: mythirdtable
-    joinon: myifled_2 = myfield3
 fields:
   - myt_field1
   - myt_field2
@@ -28,3 +22,23 @@ actions:
     parameters:
   - name: id
     value: idfield_1
+request:
+  parameters:
+    - type: int
+  	validation: required|int
+  	name: id
+query:
+  mainentity: mysqltablename
+  joins:
+    - tablename: mysecondtable
+      joinon: myifled_1 = myfield2
+    - tablename: mythirdtable
+      joinon: myifled_2 = myfield3
+  conditions:
+    - field: id
+  	operator: =
+  	value: id
+  fields:
+    - myt_field1
+    - myt_field2
+    - myt_field3
