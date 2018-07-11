@@ -12,24 +12,13 @@ class AdminMenu extends BaseBlock {
 	}
 	
     function show(): string {
-		$out = '
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-      <a class="navbar-brand" href="' . BASEPATH . '">' . $this->appname . '</a>
-      <ul class="nav navbar-nav">
-        <li class="nav-item '.( $this->active == 'home' ? 'active' : '').'">
-          <a class="nav-link" href="' . BASEPATH . 'public/index.html">Admin <span class="sr-only">(current)</span></a>
+		$out = '<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">' . $this->appname . '</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
         </li>
-        <li class="nav-item '.( $this->active == 'about' ? 'active' : '').'">
-          <a class="nav-link" href="#">Admin</a>
-        </li>
-        <li class="nav-item '.( $this->active == 'contact' ? 'active' : '').'">
-          <a class="nav-link" href="#">Admin</a>
-        </li>
-        <li class="nav-item '.( $this->active == 'login' ? 'active' : '').' pull-xs-right">
-          <a class="nav-link" href="' . BASEPATH . 'public/login.html">Admin</a>
-        </li>
-      </ul>
-    </nav>';
+      </ul>';
         return $out; 
     }
 	
