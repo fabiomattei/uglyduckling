@@ -1,10 +1,28 @@
-entity: carv1
-	version: 1
-	fields:
-		description: textarea
-		amount:      int
-		duedate:     date
-	validation:
-		description: max_len,2500
-		amount:      required|numeric
-		duedate:     max_len,10
+name: requestv1
+metadata:
+  - type: info
+  - version: 1
+title: My new info panel
+parameters:
+  - type: int
+	validation: required|int
+	name: id
+fieds:
+  - type: textarea
+	validation: max_len,2500
+	name: name
+	row: 1
+	width: 6
+  - type: int
+	validation: required|numeric
+	name: amount
+	row: 1
+	width: 6
+  - type: date
+	validation: max_len,10
+	name: duedate
+	row: 1
+	width: 12
+  - type: hidden
+    validation: required|int
+	name: id

@@ -1,30 +1,30 @@
-table: provatable
-  metadata:
-    - type: table
-    - version: 1
-  title: Mt table
-  headlines:
-    - title 1
-    - title 2
-    - title 3
-  mainentity: mysqltablename
-  joins:
-    - tablename: mysecondtable
-      joinon: myifled_1 = myfield2
-    - tablename: mythirdtable
-      joinon: myifled_2 = myfield3
-  fields:
-    - myt_field1
-    - myt_field2
-    - myt_field3
-  actions:
-    - action: edit
-      entity: mysqltablename
-      parameters:
-        - name: id
-          value: idfield_1
-    - action: delete
-      entity: mysqltablename
-      parameters:
-        - name: id
-          value: idfield_1
+name: provatable
+metadata:
+  - type: table
+  - version: 1
+title: Mt table
+headlines:
+  - title 1
+  - title 2
+  - title 3
+mainentity: mysqltablename
+joins:
+  - tablename: mysecondtable
+    joinon: myifled_1 = myfield2
+  - tablename: mythirdtable
+    joinon: myifled_2 = myfield3
+fields:
+  - myt_field1
+  - myt_field2
+  - myt_field3
+actions:
+  - action: edit
+    entity: mysqltablename
+    parameters:
+  - name: id
+    value: idfield_1
+  - action: delete
+    entity: mysqltablename
+    parameters:
+  - name: id
+    value: idfield_1
