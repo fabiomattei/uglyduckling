@@ -23,6 +23,9 @@ fieds:
 	name: duedate
 	row: 1
 	width: 12
+  - type: hidden
+    validation: required|int
+	name: id
 logics:
   - update:
 	  entity: request
