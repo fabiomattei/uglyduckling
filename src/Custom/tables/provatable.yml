@@ -1,7 +1,9 @@
 table: provatable
-  version: 1
+  metadata:
+    - type: table
+    - version: 1
   title: Mt table
-  tabletitles:
+  headlines:
     - title 1
     - title 2
     - title 3
