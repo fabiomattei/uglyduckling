@@ -33,7 +33,7 @@ class Controller {
 		SecurityChecker $securityChecker,
 		DBConnection $dbconnection, 
 		Redirector $urlredirector,
-		JsonLoader $yamlloader,
+		JsonLoader $jsonloader,
 		Logger $logger, 
 		BaseMessages $messages 
 		) {
@@ -45,7 +45,7 @@ class Controller {
 		$this->securityChecker = $securityChecker;
 		$this->dbconnection    = $dbconnection;
         $this->urlredirector   = $urlredirector;
-		$this->yamlloader      = $yamlloader;
+		$this->jsonloader      = $jsonloader;
         $this->logger          = $logger;
         $this->messages        = $messages;
         $this->gump            = new GUMP();
@@ -77,7 +77,7 @@ class Controller {
         $this->messages->success = $this->sessionWrapper->getMsgSuccess();
         $this->flashvariable = $this->sessionWrapper->getFlashVariable();
 		
-		$this->yamlloader->loadIndex();
+		$this->jsonloader->loadIndex();
 
         if ( !$this->securityChecker->isSessionValid( 
 			$this->sessionWrapper->getSessionLoggedIn(), 
@@ -326,14 +326,7 @@ class Controller {
     }
 
 /*
-        $this->router          = $router;
-        $this->setup           = $setup;
-        $this->request         = $request;
-        $this->serverWrapper   = $serverWrapper;
-        $this->sessionWrapper  = $sessionWrapper;
         $this->securityChecker = $securityChecker;
-        $this->dbconnection    = $dbconnection;
-        $this->urlredirector   = $urlredirector;
         $this->logger          = $logger;
 */
     public function getInfo(): string {

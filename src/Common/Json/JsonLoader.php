@@ -20,7 +20,8 @@ class JsonLoader {
 	public function loadIndex() {
 		$handle = fopen($this->indexpath, 'r');
 		$data = fread($handle,filesize($this->indexpath));
-		var_dump( json_decode($data) );
+		// var_dump( json_decode($data) );
+		/*
 		switch (json_last_error()) {
         	case JSON_ERROR_NONE:
         	    echo ' - No errors';
@@ -44,6 +45,7 @@ class JsonLoader {
         	    echo ' - Unknown error';
         	break;
     	}
+		*/
 	}
 	
 }
