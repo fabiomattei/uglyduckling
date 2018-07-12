@@ -9,6 +9,6 @@
       { "path":"infos/index.yml", "name":"index" },
       { "path":"menus/index.yml", "name":"index" },
       { "path":"reports/index.yml", "name":"index" },
-      { "path":"tables/index.yml", "name":"index" },
-  ],
-}
+      { "path":"tables/index.yml", "name":"index" }
+  ]
+ }
