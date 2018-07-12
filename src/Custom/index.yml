@@ -1,21 +1,14 @@
-name: index
-metadata:
-  - type: index
-  - version: 1
-scripts:
-  - path: dashboards/index.yml
-    type: index
-  - path: entities/index.yml
-    type: index
-  - path: forms/index.yml
-    type: index
-  - path: groups/index.yml
-    type: index
-  - path: infos/index.yml
-    type: index
-  - path: menus/index.yml
-    type: index
-  - path: reports/index.yml
-    type: index
-  - path: tables/index.yml
-    type: index
+{ 
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+      { "path":"dashboards/index.yml", "name":"index" },
+      { "path":"entities/index.yml", "name":"index" },
+      { "path":"forms/index.yml", "name":"index" },
+      { "path":"groups/index.yml", "name":"index" },
+      { "path":"infos/index.yml", "name":"index" },
+      { "path":"menus/index.yml", "name":"index" },
+      { "path":"reports/index.yml", "name":"index" },
+      { "path":"tables/index.yml", "name":"index" },
+  ],
+}
