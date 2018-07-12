@@ -1,0 +1,21 @@
+name: index
+metadata:
+  - type: index
+  - version: 1
+scripts:
+  - path: dashboards/index.yml
+    type: index
+  - path: entities/index.yml
+    type: index
+  - path: forms/index.yml
+    type: index
+  - path: groups/index.yml
+    type: index
+  - path: infos/index.yml
+    type: index
+  - path: menus/index.yml
+    type: index
+  - path: reports/index.yml
+    type: index
+  - path: tables/index.yml
+    type: index

@@ -9,6 +9,7 @@ class Setup {
 	public $publicTemplateFileName;
 	public $basePath;
     public $pathtoapp;
+	public $yamlpath;
 
 	public function __construct() {
 		$this->appNameForPageTitle = '';
@@ -16,6 +17,7 @@ class Setup {
 		$this->publicTemplateFileName = '';
 		$this->basePath = '';
         $this->pathtoapp = '';
+		$this->yamlpath = '';
     }
 
     /**
@@ -88,6 +90,20 @@ class Setup {
      */
     public function setPathToApp(string $pathtoapp) {
         $this->pathtoapp = $pathtoapp;
+    }
+	
+    /**
+     * @return string
+     */
+    public function getYamlPath(): string {
+        return $this->yamlpath;
+    }
+
+    /**
+     * @param string $yamlpath
+     */
+    public function setYamlPath(string $yamlpath) {
+        $this->yamlpath = $yamlpath;
     }
 
 }
