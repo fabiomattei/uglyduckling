@@ -50,32 +50,31 @@ class JsonLoader {
 	}
 	
 	/**
-	 * Decoding json string
-	 * TODO thrwo exception
+	 * Decoding json string with error control
 	 */
 	public function json_decode_with_error_control( $data ) {
 		$loadeddata = json_decode($data);
 		switch (json_last_error()) {
         	case JSON_ERROR_NONE:
-        	    echo ' - No errors';
+        	    // throw new \Exception(' - No errors');
         	break;
         	case JSON_ERROR_DEPTH:
-        	    echo ' - Maximum stack depth exceeded';
+        	    throw new \Exception(' - Maximum stack depth exceeded');
         	break;
         	case JSON_ERROR_STATE_MISMATCH:
-        	    echo ' - Underflow or the modes mismatch';
+        	    throw new \Exception(' - Underflow or the modes mismatch');
         	break;
         	case JSON_ERROR_CTRL_CHAR:
-        	    echo ' - Unexpected control character found';
+        	    throw new \Exception(' - Unexpected control character found');
         	break;
         	case JSON_ERROR_SYNTAX:
-        	    echo ' - Syntax error, malformed JSON';
+        	    throw new \Exception(' - Syntax error, malformed JSON');
         	break;
         	case JSON_ERROR_UTF8:
-        	    echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+        	    throw new \Exception(' - Malformed UTF-8 characters, possibly incorrectly encoded');
         	break;
         	default:
-        	    echo ' - Unknown error';
+        	    throw new \Exception(' - Unknown error');
         	break;
     	}
 		return $loadeddata;
