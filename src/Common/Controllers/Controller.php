@@ -10,6 +10,7 @@ use Firststep\Common\Loggers\Logger;
 use Firststep\Common\Request\Request;
 use Firststep\Common\Setup\Setup;
 use Firststep\Common\Router\Router;
+use Firststep\Common\Yaml\YamlLoader;
 use Firststep\Common\Database\DBConnection;
 use Firststep\Common\Wrappers\ServerWrapper;
 use Firststep\Common\Wrappers\SessionWrapper;
@@ -31,7 +32,8 @@ class Controller {
 		SessionWrapper $sessionWrapper,
 		SecurityChecker $securityChecker,
 		DBConnection $dbconnection, 
-		Redirector $urlredirector, 
+		Redirector $urlredirector,
+		YamlLoader $yamlloader,
 		Logger $logger, 
 		BaseMessages $messages 
 		) {
@@ -43,6 +45,7 @@ class Controller {
 		$this->securityChecker = $securityChecker;
 		$this->dbconnection    = $dbconnection;
         $this->urlredirector   = $urlredirector;
+		$this->yamlloader      = $yamlloader;
         $this->logger          = $logger;
         $this->messages        = $messages;
         $this->gump            = new GUMP();
@@ -73,6 +76,8 @@ class Controller {
         $this->messages->error = $this->sessionWrapper->getMsgError();
         $this->messages->success = $this->sessionWrapper->getMsgSuccess();
         $this->flashvariable = $this->sessionWrapper->getFlashVariable();
+		
+		$this->yamlloader->loadIndex();
 
         if ( !$this->securityChecker->isSessionValid( 
 			$this->sessionWrapper->getSessionLoggedIn(), 

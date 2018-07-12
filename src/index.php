@@ -29,6 +29,9 @@ $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 
 $controller = $router->getController( $request->getAction() );
 
+$yamlLoader = new Firststep\Common\Yaml\YamlLoader();
+$yamlLoader->setIndexPath($setup->getYamlPath());
+
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
 	$controller->makeAllPresets(
@@ -39,7 +42,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		$sessionWrapper,
 		new Firststep\Common\SecurityCheckers\PrivateSecurityChecker(),
 		$dbconnection,
-    	new Firststep\Common\Redirectors\URLRedirector(), 
+    	new Firststep\Common\Redirectors\URLRedirector(),
+		$yamlLoader,
     	new Firststep\Common\Loggers\EchoLogger(),
     	new Firststep\Common\Blocks\BaseMessages()
 	);
@@ -53,7 +57,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		$sessionWrapper,
 		new Firststep\Common\SecurityCheckers\PublicSecurityChecker(),
 		$dbconnection,
-    	new Firststep\Common\Redirectors\URLRedirector(), 
+    	new Firststep\Common\Redirectors\URLRedirector(),
+		$yamlLoader,
     	new Firststep\Common\Loggers\EchoLogger(),
     	new Firststep\Common\Blocks\BaseMessages()
 	);
