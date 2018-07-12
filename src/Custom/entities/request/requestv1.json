@@ -1,0 +1,12 @@
+{ 
+  "name": "requestv1",
+  "metadata": { "type":"entity", "version": "1" },
+  "form": {
+    "title": "My new info panel",
+    "fields": [
+        { "type":"VARCHAR(255)", "validation":"max_len,2500", "name":"name" , "default":"" },
+        { "type":"INT", "validation":"required|numeric", "name":"amount", "default":"0" },
+        { "type":"DATE", "validation":"max_len,10", "name":"duedate" }
+    ]
+  }
+}

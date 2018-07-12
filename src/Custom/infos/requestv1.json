@@ -1,0 +1,32 @@
+{ 
+  "name": "requestv1",
+  "metadata": { "type":"info", "version": "1" },
+  "form": {
+    "title": "My new info panel",
+    "fields": [
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "value":"myt_field1", "row":"1", "width":"6" },
+        { "type":"int", "validation":"required|numeric", "name":"amount", "value":"myt_field1", "row":"1", "width":"6" },
+        { "type":"date", "validation":"max_len,10", "name":"duedate", "value":"myt_field1", "row":"2", "width":"12" }
+    ]
+  },
+  "request": {
+    "parameters": [
+      { "type":"int", "validation":"required|int", "name":"id" },
+    ]
+  },
+  "query": {
+    "fields": [
+      "name",
+      "amount",
+      "duedate",
+    ],
+    "mainentity":"mysqltablename",
+    "joins":[
+      { "tablename":"mysecondtable", "joinon": "myifled_1 = myfield2" },
+      { "tablename":"mythirdtable", "joinon": "myifled_2 = myfield3" },
+    ],
+    "conditions": [
+      { "field": "id", "operator": "=", "value": "id" }
+    ]
+  }
+}

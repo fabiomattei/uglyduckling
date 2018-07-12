@@ -1,0 +1,53 @@
+{ 
+  "name": "provatable",
+  "metadata": { "type":"table", "version": "1" },
+  "table": {
+    "title": "My table",
+    "headlines": [
+        { "name":"title 1" },
+        { "name":"title 2" },
+        { "name":"title 3" }
+    ],
+    "fields": [
+        { "name":"myt_field1" },
+        { "name":"myt_field2" },
+        { "name":"myt_field3" }
+    ],
+    "actions": [
+        { "action":"edit", "entity":"mysqltablename", "parameters":[{"id":"idfield_1"}, {"id2":"idfield_2"}] },
+        { "action":"delete", "entity":"mysqltablename", "parameters":[{"id":"idfield_1"}, {"id2":"idfield_2"}] }
+    ]
+  },
+  "logics": [
+    {  "type": "update",
+      "entity": "request",
+      "fields": [
+        { "field": "fieldname", "operation": "add", "value": "amount" },
+        { "field": "field2name", "operation": "overwrite", "value": "name" }
+      ],
+      "conditions": [
+        { "field": "id", "operator": "=", "value": "id" }
+      ]
+    }
+  ],
+  "request": {
+    "parameters": [
+      { "type":"int", "validation":"required|int", "name":"id" }
+    ]
+  },
+  "query": {
+    "fields": [
+      "myt_field1",
+      "myt_field2",
+      "myt_field3"
+    ],
+    "mainentity":"mysqltablename",
+    "joins":[
+      { "tablename":"mysecondtable", "joinon": "myifled_1 = myfield2" },
+      { "tablename":"mythirdtable", "joinon": "myifled_2 = myfield3" }
+    ],
+    "conditions": [
+      { "field": "id", "operator": "=", "value": "id" }
+    ]
+  }
+}
