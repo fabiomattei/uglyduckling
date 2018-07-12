@@ -1,0 +1,45 @@
+{ 
+	"name": "request",
+	"metadata": { "type":"form", "version": "1" },
+	"form": {
+		"title": "My new form",
+		"fields": [
+    		{ "type":"textarea", "validation":"max_len,2500", "name":"name", "value":"myt_field1", "row":"1", "width":"6" },
+    		{ "type":"int", "validation":"required|numeric", "name":"amount", "value":"myt_field1", "row":"1", "width":"6" },
+    		{ "type":"date", "validation":"max_len,10", "name":"duedate", "value":"myt_field1", "row":"2", "width":"12" },
+    		{ "type":"hidden", "validation":"required|int", "name":"id", "value":"myt_field1", "row":"0", "width":"0" },
+		],
+	},
+	"logics": [
+		{  "type": "update",
+			"entity": "request",
+			"fields": [
+				{ "field": "fieldname", "operation": "add", "value": "amount" }
+				{ "field": "field2name", "operation": "overwrite", "value": "name" }
+			],
+			"conditions": [
+				{ "field": "id", "operator": "=", "value": "id" }
+			],
+		}
+	],
+	"request": {
+		"parameters": [
+			{ "type":"int", "validation":"required|int", "name":"id" },
+		]
+	},
+	"query": {
+		"fields": [
+			"myt_field1",
+			"myt_field2",
+			"myt_field3",
+		],
+		"mainentity":"mysqltablename",
+		"joins":[
+			{ "tablename":"mysecondtable", "joinon": "myifled_1 = myfield2" },
+			{ "tablename":"mythirdtable", "joinon": "myifled_2 = myfield3" },
+		],
+		"conditions": [
+			{ "field": "id", "operator": "=", "value": "id" }
+		],
+	}
+}
