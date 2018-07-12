@@ -10,7 +10,7 @@ use Firststep\Common\Loggers\Logger;
 use Firststep\Common\Request\Request;
 use Firststep\Common\Setup\Setup;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Yaml\YamlLoader;
+use Firststep\Common\Json\JsonLoader;
 use Firststep\Common\Database\DBConnection;
 use Firststep\Common\Wrappers\ServerWrapper;
 use Firststep\Common\Wrappers\SessionWrapper;
@@ -33,7 +33,7 @@ class Controller {
 		SecurityChecker $securityChecker,
 		DBConnection $dbconnection, 
 		Redirector $urlredirector,
-		YamlLoader $yamlloader,
+		JsonLoader $yamlloader,
 		Logger $logger, 
 		BaseMessages $messages 
 		) {

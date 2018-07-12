@@ -29,7 +29,7 @@ $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 
 $controller = $router->getController( $request->getAction() );
 
-$yamlLoader = new Firststep\Common\Yaml\YamlLoader();
+$yamlLoader = new Firststep\Common\Json\JsonLoader();
 $yamlLoader->setIndexPath($setup->getYamlPath());
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
