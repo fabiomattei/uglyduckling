@@ -3,11 +3,13 @@
 namespace Firststep\Common\Json;
 
 /**
-* Description
-*/
+ * JsonLoader makes an index of all available resources and load the 
+ * resource if needed
+ */
 class JsonLoader {
 	
 	private $indexpath;
+	private $resourcesIndex = array();
 	
 	function __construct() {
 		// empty as you see
@@ -17,11 +19,42 @@ class JsonLoader {
 		$this->indexpath = $indexpath;
 	}
 	
-	public function loadIndex() {
-		$handle = fopen($this->indexpath, 'r');
-		$data = fread($handle,filesize($this->indexpath));
-		// var_dump( json_decode($data) );
-		/*
+	public function loadIndex( $indexPath = '' ) {
+		if ($indexPath == '') {
+			$indexPath = $this->indexpath;
+		}
+		if (file_exists ( $indexPath )) {
+			$handle = fopen($indexPath, 'r');
+			$data = fread($handle,filesize($indexPath));
+			$loadedfile = $this->json_decode_with_error_control($data);
+			foreach ($loadedfile->scripts as $key) {
+				if($key->type == 'index') {
+					$this->loadIndex( $key->path );
+				} else {
+					$this->resourcesIndex[$key->name] = $key->path;
+				}
+			}
+		}
+		// var_dump( $this->resourcesIndex );	
+	}
+	
+	/**
+	 * Load a resource from file specified with array index
+	 */
+	public function loadResource( $name = '' ) {
+		if (array_key_exists($name, $this->resourcesIndex)) {
+		    return $this->resourcesIndex[$name];
+		} else {
+			return array();
+		}
+	}
+	
+	/**
+	 * Decoding json string
+	 * TODO thrwo exception
+	 */
+	public function json_decode_with_error_control( $data ) {
+		$loadeddata = json_decode($data);
 		switch (json_last_error()) {
         	case JSON_ERROR_NONE:
         	    echo ' - No errors';
@@ -45,7 +78,7 @@ class JsonLoader {
         	    echo ' - Unknown error';
         	break;
     	}
-		*/
+		return $loadeddata;
 	}
 	
 }

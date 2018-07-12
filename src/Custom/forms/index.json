@@ -1,0 +1,7 @@
+{ 
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+      { "path":".Custom/forms/course/request/requestv1.json", "type":"form", "name":"requestv1" }
+  ]
+ }

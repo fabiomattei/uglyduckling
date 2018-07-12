@@ -13,7 +13,7 @@ $setup->setPrivateTemplateFileName('application');
 $setup->setPublicTemplateFileName('public');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
-$setup->setYamlPath('./Custom/index.yml');
+$setup->setYamlPath('./Custom/index.json');
 
 $dbconnection = new Firststep\Common\Database\DBConnection( 
 	'mysql:host=mariadb:3306;dbname=',
