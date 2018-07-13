@@ -24,7 +24,7 @@ class TableBuilder {
 
     /**
      * @param mixed $entities
-	 * the $entities variable contains all values for the form
+	 * the $entities variable contains all values for the table
      */
     public function setEntities($entities) {
         $this->entities = $entities;
