@@ -70,55 +70,55 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testFormContainsTextArea(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->form );
+		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
-		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, '<textarea class="form-control" rows="5" id="name" name="name">') !== false);
+		$block = $form->createForm();
+		$this->assertTrue(strpos($block->show(), '<textarea id="name" name="name">') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsCurrencyField(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->form );
+		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
-		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, '<input type="number" name="amount"') !== false);
+		$block = $form->createForm();
+		$this->assertTrue(strpos($block->show(), '<input type="number" id="amount" name="amount" value="10" placeholder="" min="0" step="0.01">') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsDateField(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->form );
+		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
-		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, '<input type="text" class="form-control datepicker" name="duedate"') !== false);
+		$block = $form->createForm();
+		$this->assertTrue(strpos($block->show(), '><input type="text" class="datepicker" id="duedate" name="duedate"') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsTextAreaWithData(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->form );
+		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
-		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, 'name="name">prova</textarea>') !== false);
+		$block = $form->createForm();
+		$this->assertTrue(strpos($block->show(), 'name="name">prova</textarea>') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsCurrencyFieldWithData(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->form );
+		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
-		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, '<input type="number" name="amount" value="10"') !== false);
+		$block = $form->createForm();
+		$this->assertTrue(strpos($block->show(), 'name="amount" value="10" placeholder=""') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsDateFieldWithData(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->form );
+		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
-		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, '<input type="text" class="form-control datepicker" name="duedate" value="26/06/2017"') !== false);
+		$block = $form->createForm();
+		$this->assertTrue(strpos($block->show(), 'name="duedate" value="26/06/2017"') !== false);
 		unset($form);
 	}
 

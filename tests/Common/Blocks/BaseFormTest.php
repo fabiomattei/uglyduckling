@@ -34,7 +34,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithATextField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addTextField( 'myname', 'My label', 'My placeholder', 'My value');
+	$form->addTextField( 'myname', 'My label', 'My placeholder', 'My value', '6');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">') !== false);
 	unset($form);
   }
@@ -44,7 +44,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithATextAreaField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addTextAreaField( 'myname', 'My label', 'My value');
+	$form->addTextAreaField( 'myname', 'My label', 'My value', '6');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><textarea id="myname" name="myname">My value</textarea>') !== false);
 	unset($form);
   }
@@ -57,7 +57,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithADropdownField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2');
+	$form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2', '6');
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><select id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>') !== false);
 	unset($form);
   }
@@ -67,7 +67,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithAFileUploadField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addFileUploadField( 'myname', 'My label' );
+	$form->addFileUploadField( 'myname', 'My label', '6' );
 	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="file" id="myname" name="myname">') !== false);
 	unset($form);
   }
@@ -77,7 +77,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithAHelpingTextField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addHelpingText( 'Title', 'My description' );
+	$form->addHelpingText( 'Title', 'My description', '6' );
 	$this->assertTrue(strpos($form->show(), '<h5>Title</h5><p>My description</p>') !== false);
 	unset($form);
   }

@@ -16,13 +16,9 @@ class JsonBlockFormParser {
 	}
 	
 	public static function parse( $resource, $entity ) {
-		$this->formBuilder->setForm($resource);
+		$this->formBuilder->setFormStructure($resource);
 		$this->formBuilder->setEntity($resource);
-		$block = new EmptyBlock;
-		$block->setHtml($this->formBuilder->createBodyStructure());
-		$block->setAddToHead($this->formBuilder->create_addToHead());
-		$block->setAddToFoot($this->formBuilder->create_addToFoot());
-		return $block;
+		return $this->formBuilder->createForm();
 	}
 	
 }

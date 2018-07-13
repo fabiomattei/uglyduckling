@@ -2,8 +2,8 @@
 
 /**
  * User: fabio
- * Date: 29/05/2017
- * Time: 20:02
+ * Date: 13/07/2018
+ * Time: 12:00
  */
 
 namespace Firststep\Common\Builders;
@@ -12,16 +12,14 @@ use Firststep\Common\Blocks\BaseForm;
 
 class FormBuilder {
 
-	// TODO take away hmtl and use BaseForm instead
-
-    private $form;
+    private $formStructure;
     private $entity;
 
     /**
-     * @param mixed $form
+     * @param mixed $formStructure
      */
-    public function setForm($form) {
-        $this->form = $form;
+    public function setFormStructure($formStructure) {
+        $this->formStructure = $formStructure;
     }
 
     /**
@@ -32,74 +30,27 @@ class FormBuilder {
         $this->entity = $entity;
     }
 
-    public function createBodyStructure() {
-        $out = '';
-        foreach ($this->form->rows as $row) {
-            $out .= '<div class="row">';
-            foreach ($row->fields as $field) {
+    public function createForm() {
+		$formBlock = new BaseForm;
+		$formBlock->setTitle($this->formStructure->title);
+		foreach ($this->formStructure->rows as $row) {
+			$formBlock->addRow();
+			foreach ($row->fields as $field) {
 				$fieldname = $field->value;
-				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? htmlspecialchars($this->entity->$fieldname) : '' ) );
-                $out .= '<div class="'.$field->width.'">';
-                $out .= '<label class="col-md-12" for="'.$field->name.'">'.$field->label.'</label>';
-
-                if ($field->type == 'textarea') {
-                    $out .= '<textarea class="form-control" rows="5" id="'.$field->name.'" name="'.$field->name.'">'.$value.'</textarea>';
+				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? $this->entity->$fieldname : '' ) );
+                if ($field->type === 'textarea') {
+                    $formBlock->addTextAreaField($field->name, $field->label, $value, $field->width);
                 }
-                if ($field->type == 'currency') {
-                    $out .= '<input type="number" name="'.$field->name.'" value="'.$value.'" min="0" step="0.01" >';
+                if ($field->type === 'currency') {
+                    $formBlock->addCurrencyField($field->name, $field->label, '',$value, $field->width);
                 }
-                if ($field->type == 'date') {
-                    $out .= '<input type="text" class="form-control datepicker" name="'.$field->name.'" value="'.date( 'd/m/Y', strtotime($value) ).'">';
+                if ($field->type === 'date') {
+                    $formBlock->addDateField($field->name, $field->label, $value, $field->width);
                 }
-
-                $out .= '</div>';
-            }
-            $out .= '</div><!-- row '.$row->row.' -->';
-        }
-        return $out;
-    }
-
-    public function create_addToHead() {
-        $adddate = false;
-
-        foreach ($this->form->rows as $row) {
-            foreach ($row->fields as $field) {
-                if ($field->type == 'date') {
-                    $adddate = true;
-                }
-            }
-        }
-
-        $out = '';
-        if ($adddate) {
-            $out .= '<link rel="stylesheet" href="assets/lib/jquery-ui/jquery-ui.css">';
-        }
-
-        return $out;
-    }
-
-    public function create_addToFoot() {
-        $adddate = false;
-
-        foreach ($this->form->rows as $row) {
-            foreach ($row->fields as $field) {
-                if ($field->type == 'date') {
-                    $adddate = true;
-                }
-            }
-        }
-
-        $out = '';
-        if ($adddate) {
-            $out .= '<script src="assets/lib/jquery-ui/jquery-ui.min.js"></script>
- 		   	            <script>
-  		  		            $(function() {
-    				            $( ".datepicker" ).datepicker({ dateFormat: "dd/mm/yy" });
-  				            });
-  			            </script>';
-        }
-
-        return $out;
+			}
+			$formBlock->closeRow('row '.$row->row);
+		}
+        return $formBlock;
     }
 
 }

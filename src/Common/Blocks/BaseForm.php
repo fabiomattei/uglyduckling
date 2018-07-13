@@ -11,7 +11,16 @@ class BaseForm extends BaseBlock {
 
     function __construct() {
         $this->body = '';
+		$this->adddate = false;
     }
+	
+	function setTitle( string $title ) {
+		$this->title = $title;
+	}
+	
+	function setSubTitle( string $subTitle ) {
+		$this->subTitle = $subTitle;
+	}
 
     function show(): string {
         $out = '<h3>' . $this->title . '</h3>';
@@ -24,28 +33,37 @@ class BaseForm extends BaseBlock {
         return $out;
     }
 
-    function addTextField( string $name, string $label, string $placeholder, string $value ) {
-        $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'">';
+    function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {
+        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'"></div>';
     }
 
-    function addTextAreaField( string $name, string $label, string $value ) {
-        $this->body .= '<label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea>';
+    function addTextAreaField( string $name, string $label, string $value, string $width ) {
+        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea></div>';
     }
 
-    function addDropdownField( string $name, string $label, array $options, string $value ) {
-        $this->body .= '<label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
+    function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
+        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
         foreach ($options as $key => $val) {
             $this->body .= '<option value="'.$key.'" '.( $key==$value ? 'selected="selected"' : '' ).'>'.htmlspecialchars( $val ).'</option>';
         }
-        $this->body .= '</select>';
+        $this->body .= '</select></div>';
+    }
+	
+	function addCurrencyField( string $name, string $label, string $placeholder, string $value, string $width ) {
+		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="number" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'" min="0" step="0.01"></div>';
+	}
+	
+	function addDateField( string $name, string $label, string $value, string $width ) {
+		$this->adddate = true;
+		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="text" class="datepicker" id="'.$name.'" name="'.$name.'" value="'.date( 'd/m/Y', strtotime($value) ).'" ></div>';
+	}
+
+    function addFileUploadField( string $name, string $label, string $width ) {
+        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'"></div>';
     }
 
-    function addFileUploadField( string $name, string $label ) {
-        $this->body .= '<label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'">';
-    }
-
-    function addHelpingText( string $title, string $text ) {
-        $this->body .= '<h5>'.$title.'</h5><p>'.$text.'</p>';
+    function addHelpingText( string $title, string $text, string $width ) {
+        $this->body .= '<div class="'.$width.'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
     }
 
     function addHiddenField( string $name, string $value ) {
@@ -54,6 +72,35 @@ class BaseForm extends BaseBlock {
 
     function addSubmitButton( string $name = 'save', string $value = 'Save' ) {
         $this->body .= '<input type="submit" name="'.$name.'" value="'.htmlspecialchars( $value ).'"/>';
+    }
+	
+	function addRow() {
+		$this->body .= '<div class="row">';
+	}
+	
+	function closeRow( string $comment = '' ) {
+		$this->body .= '</div>  <!-- '.$comment.' -->';
+	}
+	
+    function addToHead(): string {
+        $out = '';
+        if ($this->adddate) {
+            $out .= '<link rel="stylesheet" href="assets/lib/jquery-ui/jquery-ui.css">';
+        }
+        return $out;
+    }
+
+    function addToFoot(): string {
+        $out = '';
+        if ($this->adddate) {
+            $out .= '<script src="assets/lib/jquery-ui/jquery-ui.min.js"></script>
+ 		   	            <script>
+  		  		            $(function() {
+    				            $( ".datepicker" ).datepicker({ dateFormat: "dd/mm/yy" });
+  				            });
+  			            </script>';
+        }
+        return $out;
     }
 
 }
