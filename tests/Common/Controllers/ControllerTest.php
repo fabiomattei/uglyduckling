@@ -30,6 +30,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
+		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
@@ -42,7 +43,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$sessionWrapper,
 			$securityChecker,
 			$dbconnection,
-			$redirector, 
+			$redirector,
+			$jsonLoader,
 			$echologger,
 			$messages 
 		);
