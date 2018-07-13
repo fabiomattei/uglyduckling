@@ -15,7 +15,7 @@ class JsonBlockParser {
 		if ($resource->metadata->type == 'form') {
 			return JsonBlockFormParser::parse($resource->form, $entity);
 		}
-		if ($resource->metadata->type == 'form') {
+		if ($resource->metadata->type == 'info') {
 			return JsonBlockInfoParser::parse($resource->info, $entity);
 		}
 		return new EmptyBlock;
