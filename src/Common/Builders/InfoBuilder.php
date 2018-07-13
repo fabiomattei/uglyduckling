@@ -2,63 +2,55 @@
 
 /**
  * User: Fabio Mattei
- * Date: 30/05/17
- * Time: 18.19
+ * Date: 13/07/18
+ * Time: 18.15
  */
 
 namespace Firststep\Common\Builders;
 
+use Firststep\Common\Blocks\BaseInfo;
+
 class InfoBuilder {
 
-    private $fields;
-    private $info;
-    private $xmlstring;
+    private $infoStructure;
+    private $entity;
 
     /**
-     * @param mixed $fields
+     * @param mixed $infoStructure
      */
-    public function setFields($fields) {
-        $this->fields = $fields;
+    public function setFormStructure($infoStructure) {
+        $this->infoStructure = $infoStructure;
     }
 
     /**
-     * @param mixed $form
+     * @param mixed $entity
+	 * the $entity variable contains all values for the form
      */
-    public function setInfo($info) {
-        $this->info = $info;
+    public function setEntity($entity) {
+        $this->entity = $entity;
     }
 
-    /**
-     * @param mixed $xmlstring
-     */
-    public function setXmlstring($xmlstring) {
-        $this->xmlstring = $xmlstring;
-    }
-
-    public function createBodyStructure() {
-        $entity = ( $this->xmlstring == null ? null : simplexml_load_string( $this->xmlstring ) );
-        $out = '';
-        foreach ($this->info as $row => $fields) {
-            $out .= '<div class="row">';
-            foreach ($fields as $fieldname => $properties) {
-                $out .= '<div class="'.$properties['width'].'">';
-                $out .= '<label class="col-md-12" for="'.$fieldname.'">'.$properties['label'].'</label>';
-
-                if ($properties['type'] == 'textarea') {
-                    $out .= ( $entity == null ? '' : ( isset($entity->$fieldname) ? htmlspecialchars($entity->$fieldname) : '' ) );
+    public function createInfo() {
+		$formBlock = new BaseInfo;
+		$formBlock->setTitle($this->infoStructure->title);
+		foreach ($this->infoStructure->rows as $row) {
+			$formBlock->addRow();
+			foreach ($row->fields as $field) {
+				$fieldname = $field->value;
+				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? $this->entity->$fieldname : '' ) );
+                if ($field->type === 'textarea') {
+                    $formBlock->addTextAreaField($field->label, $value, $field->width);
                 }
-                if ($properties['type'] == 'currency') {
-                    $out .= ( $entity == null ? '' : ( isset($entity->$fieldname) ? htmlspecialchars($entity->$fieldname) : '' ) );
+                if ($field->type === 'currency') {
+                    $formBlock->addCurrencyField($field->label, $value, $field->width);
                 }
-                if ($properties['type'] == 'date') {
-                    $out .= ( $entity == null ? '' : ( isset($entity->$fieldname) ? htmlspecialchars( date( 'd/m/Y', strtotime($entity->$fieldname) ) ) : '' ) );
+                if ($field->type === 'date') {
+                    $formBlock->addDateField($field->label, $value, $field->width);
                 }
-
-                $out .= '</div>';
-            }
-            $out .= '</div><!-- row '.$row.' -->';
-        }
-        return $out;
+			}
+			$formBlock->closeRow('row '.$row->row);
+		}
+        return $formBlock;
     }
 
 }
