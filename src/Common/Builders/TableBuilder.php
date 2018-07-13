@@ -8,6 +8,6 @@
 
 namespace Firststep\Common\Builders;
 
-class ListBuilder {
+class TableBuilder {
 	
 }
