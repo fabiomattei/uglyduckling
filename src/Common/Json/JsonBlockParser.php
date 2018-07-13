@@ -3,6 +3,7 @@
 namespace Firststep\Common\Json;
 
 use Firststep\Common\Json\JsonBlockFormParser;
+use Firststep\Common\Blocks\EmptyBlock;
 
 /**
  * JsonLoader makes an index of all available resources and load the 
@@ -14,7 +15,7 @@ class JsonBlockParser {
 		if ($resource->metadata->type == 'form') {
 			return JsonBlockFormParser::parse($resource->form, $entity);
 		}
-		return array( 'html' => '', 'addToHead' => '', 'addToFoot' => '' );
+		return new EmptyBlock;
 	}
 	
 }

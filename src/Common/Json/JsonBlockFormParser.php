@@ -3,6 +3,7 @@
 namespace Firststep\Common\Json;
 
 use Firststep\Common\Builders\FormBuilder;
+use Firststep\Common\Blocks\EmptyBlock;
 
 /**
  * JsonLoader makes an index of all available resources and load the 
@@ -17,10 +18,11 @@ class JsonBlockFormParser {
 	public static function parse( $resource, $entity ) {
 		$this->formBuilder->setForm($resource);
 		$this->formBuilder->setEntity($resource);
-		$html = $this->formBuilder->createBodyStructure();
-		$addToHead = $this->formBuilder->create_addToHead();
-		$addToFoot = $this->formBuilder->create_addToFoot();
-		return array( 'html' => $html, 'addToHead' => $addToHead, 'addToFoot' => $addToFoot );
+		$block = new EmptyBlock;
+		$block->setHtml($this->formBuilder->createBodyStructure());
+		$block->setAddToHead($this->formBuilder->create_addToHead());
+		$block->setAddToFoot($this->formBuilder->create_addToFoot());
+		return $block;
 	}
 	
 }
