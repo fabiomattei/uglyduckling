@@ -3,7 +3,6 @@
 namespace Firststep\Common\Json;
 
 use Firststep\Common\Builders\FormBuilder;
-use Firststep\Common\Blocks\EmptyBlock;
 
 /**
  * JsonLoader makes an index of all available resources and load the 
