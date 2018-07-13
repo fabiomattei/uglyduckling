@@ -18,18 +18,6 @@
         { "action":"delete", "entity":"mysqltablename", "parameters":[{"id":"idfield_1"}, {"id2":"idfield_2"}] }
     ]
   },
-  "logics": [
-    {  "type": "update",
-      "entity": "request",
-      "fields": [
-        { "field": "fieldname", "operation": "add", "value": "amount" },
-        { "field": "field2name", "operation": "overwrite", "value": "name" }
-      ],
-      "conditions": [
-        { "field": "id", "operator": "=", "value": "id" }
-      ]
-    }
-  ],
   "request": {
     "parameters": [
       { "type":"int", "validation":"required|int", "name":"id" }

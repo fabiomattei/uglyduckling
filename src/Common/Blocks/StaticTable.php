@@ -33,8 +33,16 @@ class StaticTable extends BaseBlock {
   function closeTHead() {
     $this->html .= '</thead>';
   }
+  
+  function addTBody() {
+    $this->html .= '<tbody>';
+  }
 
-  function addTitleColumn(string $value) {
+  function closeTBody() {
+    $this->html .= '</tbody>';
+  }
+
+  function addHeadLineColumn(string $value) {
     $this->html .= '<th>'.$value.'</th>';
   }
 

@@ -3,6 +3,8 @@
 namespace Firststep\Common\Json;
 
 use Firststep\Common\Json\JsonBlockFormParser;
+use Firststep\Common\Json\JsonBlockInfoParser;
+use Firststep\Common\Json\JsonBlockTableParser;
 use Firststep\Common\Blocks\EmptyBlock;
 
 /**
@@ -17,6 +19,9 @@ class JsonBlockParser {
 		}
 		if ($resource->metadata->type == 'info') {
 			return JsonBlockInfoParser::parse($resource->info, $entity);
+		}
+		if ($resource->metadata->type == 'table') {
+			return JsonBlockTableParser::parse($resource->title, $entity);
 		}
 		return new EmptyBlock;
 	}
