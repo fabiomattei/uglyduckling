@@ -2,22 +2,19 @@
 
 namespace Firststep\Common\Json;
 
+use Firststep\Common\Json\JsonBlockFormParser;
+
 /**
  * JsonLoader makes an index of all available resources and load the 
  * resource if needed
  */
 class JsonBlockParser {
 	
-	public static function parseResourceForBlock( $resource ) {
-		
-		
-		$par_rules = array();
-		$par_filters = array();
-		foreach ($resource->request->parameters as $key) {
-			$par_rules[$key->name]   = $key->validation;
-			$par_filters[$key->name] = 'trim';
+	public static function parseResourceForBlock( $resource, $entity ) {
+		if ($resource->metadata->type == 'form') {
+			return JsonBlockFormParser::parse($resource->form, $entity);
 		}
-		return array( 'rules' => $par_rules, 'filters' => $par_filters );
+		return array( 'html' => '', 'addToHead' => '', 'addToFoot' => '' );
 	}
 	
 }

@@ -15,15 +15,12 @@ class JsonBlockFormParser {
 	}
 	
 	public static function parse( $resource, $entity ) {
-		if ($resource->metadata->type == 'form') {
-			$this->formBuilder->setForm($resource->form);
-			$this->formBuilder->setEntity($resource->form);
-			$html = $this->formBuilder->createBodyStructure();
-			$addToHead = $this->formBuilder->create_addToHead();
-			$addToFoot = $this->formBuilder->create_addToFoot();
-			return array( 'html' => $html, 'addToHead' => $addToHead, 'addToFoot' => $addToFoot );
-		}
-		return array( 'html' => '', 'addToHead' => '', 'addToFoot' => '' );
+		$this->formBuilder->setForm($resource);
+		$this->formBuilder->setEntity($resource);
+		$html = $this->formBuilder->createBodyStructure();
+		$addToHead = $this->formBuilder->create_addToHead();
+		$addToFoot = $this->formBuilder->create_addToFoot();
+		return array( 'html' => $html, 'addToHead' => $addToHead, 'addToFoot' => $addToFoot );
 	}
 	
 }

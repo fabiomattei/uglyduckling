@@ -3,6 +3,7 @@
 namespace Firststep\Controllers\Office;
 
 use Firststep\Common\Controllers\Controller;
+use Firststep\Common\Json\JsonBlockParser;
 
 /**
  * 
@@ -44,10 +45,8 @@ class Resource extends Controller {
         }
 
 		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Admin dashboard';
-		// $this->menucontainer          = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), 'admindashboard' ) );
-		// $this->leftcontainer          = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), 'admindashboard' ) );
-		$this->centralcontainer = array();
-		// $this->secondcentralcontainer = array( new StaticTable );
+		$entity = new stdClass; // prepare query
+		$this->centralcontainer = JsonBlockParser::parseResourceForBlock( $this->resource, $entity );
 	}
 	
 	public function internalGetRequest() {
