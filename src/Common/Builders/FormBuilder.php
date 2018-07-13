@@ -58,9 +58,9 @@ class FormBuilder {
     public function create_addToHead() {
         $adddate = false;
 
-        foreach ($this->form as $row => $fields) {
-            foreach ($fields as $fieldname => $properties) {
-                if ($properties['type'] == 'date') {
+        foreach ($this->form->rows as $row) {
+            foreach ($row->fields as $field) {
+                if ($field->type == 'date') {
                     $adddate = true;
                 }
             }
@@ -77,13 +77,11 @@ class FormBuilder {
     public function create_addToFoot() {
         $adddate = false;
 
-        foreach ($this->form as $row => $fields) {
-            foreach ($fields as $fieldname => $properties) {
-
-                if ($properties['type'] == 'date') {
+        foreach ($this->form->rows as $row) {
+            foreach ($row->fields as $field) {
+                if ($field->type == 'date') {
                     $adddate = true;
                 }
-
             }
         }
 

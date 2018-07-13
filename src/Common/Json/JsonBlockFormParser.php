@@ -10,16 +10,20 @@ use Firststep\Common\Builders\FormBuilder;
  */
 class JsonBlockFormParser {
 	
-	public static function parse( $resource ) {
-		
-		
-		$par_rules = array();
-		$par_filters = array();
-		foreach ($resource->request->parameters as $key) {
-			$par_rules[$key->name]   = $key->validation;
-			$par_filters[$key->name] = 'trim';
+	__construct() {
+		$this->formBuilder = new FormBuilder();
+	}
+	
+	public static function parse( $resource, $entity ) {
+		if ($resource->metadata->type == 'form') {
+			$this->formBuilder->setForm($resource->form);
+			$this->formBuilder->setEntity($resource->form);
+			$html = $this->formBuilder->createBodyStructure();
+			$addToHead = $this->formBuilder->create_addToHead();
+			$addToFoot = $this->formBuilder->create_addToFoot();
+			return array( 'html' => $html, 'addToHead' => $addToHead, 'addToFoot' => $addToFoot );
 		}
-		return array( 'rules' => $par_rules, 'filters' => $par_filters );
+		return array( 'html' => '', 'addToHead' => '', 'addToFoot' => '' );
 	}
 	
 }
