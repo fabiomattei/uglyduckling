@@ -11,7 +11,7 @@ namespace Firststep\Common\Builders;
 class FormBuilder {
 
     private $form;
-    private $xmlstring;
+    private $entity;
 
     /**
      * @param mixed $form
@@ -21,34 +21,36 @@ class FormBuilder {
     }
 
     /**
-     * @param mixed $xmlstring
+     * @param mixed $entity
+	 * the $entity variable contains all values for the form
      */
-    public function setXmlstring($xmlstring) {
-        $this->xmlstring = $xmlstring;
+    public function setEntity($entity) {
+        $this->entity = $entity;
     }
 
     public function createBodyStructure() {
-        $entity = ( $this->xmlstring == null ? null : simplexml_load_string( $this->xmlstring ) );
         $out = '';
-        foreach ($this->form as $row => $fields) {
+        foreach ($this->form->rows as $row) {
             $out .= '<div class="row">';
-            foreach ($fields as $fieldname => $properties) {
-                $out .= '<div class="'.$properties['width'].'">';
-                $out .= '<label class="col-md-12" for="'.$fieldname.'">'.$properties['label'].'</label>';
+            foreach ($row->fields as $field) {
+				$fieldname = $field->value;
+				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? htmlspecialchars($this->entity->$fieldname) : '' ) );
+                $out .= '<div class="'.$field->width.'">';
+                $out .= '<label class="col-md-12" for="'.$field->name.'">'.$field->label.'</label>';
 
-                if ($properties['type'] == 'textarea') {
-                    $out .= '<textarea class="form-control" rows="5" id="'.$fieldname.'" name="'.$fieldname.'">'.( $entity == null ? '' : ( isset($entity->$fieldname) ? htmlspecialchars($entity->$fieldname) : '' ) ).'</textarea>';
+                if ($field->type == 'textarea') {
+                    $out .= '<textarea class="form-control" rows="5" id="'.$field->name.'" name="'.$field->name.'">'.$value.'</textarea>';
                 }
-                if ($properties['type'] == 'currency') {
-                    $out .= '<input type="number" name="'.$fieldname.'" value="'.( $entity == null ? '' : ( isset($entity->$fieldname) ? htmlspecialchars($entity->$fieldname) : '' ) ).'" min="0" step="0.01" >';
+                if ($field->type == 'currency') {
+                    $out .= '<input type="number" name="'.$field->name.'" value="'.$value.'" min="0" step="0.01" >';
                 }
-                if ($properties['type'] == 'date') {
-                    $out .= '<input type="text" class="form-control datepicker" name="'.$fieldname.'" value="'.( $entity == null ? '' : ( isset($entity->$fieldname) ? htmlspecialchars( date( 'd/m/Y', strtotime($entity->$fieldname) ) ) : '' ) ).'">';
+                if ($field->type == 'date') {
+                    $out .= '<input type="text" class="form-control datepicker" name="'.$field->name.'" value="'.date( 'd/m/Y', strtotime($value) ).'">';
                 }
 
                 $out .= '</div>';
             }
-            $out .= '</div><!-- row '.$row.' -->';
+            $out .= '</div><!-- row '.$row->row.' -->';
         }
         return $out;
     }
@@ -58,17 +60,15 @@ class FormBuilder {
 
         foreach ($this->form as $row => $fields) {
             foreach ($fields as $fieldname => $properties) {
-
                 if ($properties['type'] == 'date') {
                     $adddate = true;
                 }
-
             }
         }
 
         $out = '';
         if ($adddate) {
-            $out .= '<link rel="stylesheet" href="'.BASEPATH.'assets/lib/jquery-ui/jquery-ui.css">';
+            $out .= '<link rel="stylesheet" href="assets/lib/jquery-ui/jquery-ui.css">';
         }
 
         return $out;
@@ -89,7 +89,7 @@ class FormBuilder {
 
         $out = '';
         if ($adddate) {
-            $out .= '<script src="'.BASEPATH.'assets/lib/jquery-ui/jquery-ui.min.js"></script>
+            $out .= '<script src="assets/lib/jquery-ui/jquery-ui.min.js"></script>
  		   	            <script>
   		  		            $(function() {
     				            $( ".datepicker" ).datepicker({ dateFormat: "dd/mm/yy" });

@@ -3,11 +3,22 @@
 	"metadata": { "type":"form", "version": "1" },
 	"form": {
 		"title": "My new form",
-		"fields": [
-    		{ "type":"textarea", "validation":"max_len,2500", "name":"name", "value":"myt_field1", "row":"1", "width":"6" },
-    		{ "type":"int", "validation":"required|numeric", "name":"amount", "value":"myt_field1", "row":"1", "width":"6" },
-    		{ "type":"date", "validation":"max_len,10", "name":"duedate", "value":"myt_field1", "row":"2", "width":"12" },
-    		{ "type":"hidden", "validation":"required|int", "name":"id", "value":"myt_field1", "row":"0", "width":"0" }
+		"submitTitle": "Save",
+		"rows": [
+			{ 
+				"row":"1",
+				"fields": [
+					{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "value":"myt_field1", "width":"6" },
+					{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "value":"myt_field1", "width":"6" }
+				]
+			},
+			{ 
+				"row":"2",
+				"fields": [
+					{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"myt_field1", "width":"12" },
+					{ "type":"hidden", "validation":"required|int", "name":"id", "value":"myt_field1", "width":"0" }
+				]
+			}
 		]
 	},
 	"logics": [

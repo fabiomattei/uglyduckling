@@ -7,29 +7,53 @@
 */
 class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
-    private $formarray = array(
-        1 => array(
-            'description' => array(
-                'type'  => 'textarea',
-                'label' => 'Description:',
-                'width' => 'col-sm-12'
-            )
-        ),
-        2 => array(
-            'amount' => array(
-                'type'  => 'currency',
-                'label' => 'Amount (&euro;):',
-                'width' => 'col-sm-6'
-            ),
-            'duedate' => array(
-                'type'  => 'date',
-                'label' => 'Due date:',
-                'width' => 'col-sm-6'
-            )
-        )
-    );
+    private $form;
+	private $entity;
 	
-	private $xmlString = '<?xml version="1.0" encoding="UTF-8" ?><nodes><description>prova</description><amount>10</amount><duedate>2017-06-26</duedate></nodes>';
+	protected function setUp() {
+		$this->entity = new stdClass;
+	    $this->entity->fl_id   = 3;	
+	    $this->entity->fl_name = 'prova';
+		$this->entity->fl_amount = 10;
+		$this->entity->fl_duedate = '2017-06-26';
+		
+		$this->form = new stdClass;
+		$this->form->title = "My new form";
+		$this->form->submitTitle = "Save";
+		$this->form->rows = array();
+		$this->form->rows[0] = new stdClass;
+		$this->form->rows[0]->row = 1;
+		$this->form->rows[0]->fields = array();
+		$this->form->rows[0]->fields[0] = new stdClass;
+		$this->form->rows[0]->fields[0]->type = 'textarea';
+		$this->form->rows[0]->fields[0]->validation = 'max_len,2500';
+		$this->form->rows[0]->fields[0]->name = 'name';
+		$this->form->rows[0]->fields[0]->label = 'Name';
+		$this->form->rows[0]->fields[0]->value = 'fl_name';
+		$this->form->rows[0]->fields[0]->width = 6;
+		$this->form->rows[0]->fields[1] = new stdClass;
+		$this->form->rows[0]->fields[1]->type = 'currency';
+		$this->form->rows[0]->fields[1]->validation = 'required|numeric';
+		$this->form->rows[0]->fields[1]->name = 'amount';
+		$this->form->rows[0]->fields[1]->label = 'Amount';
+		$this->form->rows[0]->fields[1]->value = 'fl_amount';
+		$this->form->rows[0]->fields[1]->width = 6;
+		$this->form->rows[1] = new stdClass;
+		$this->form->rows[1]->row = 2;
+		$this->form->rows[1]->fields = array();
+		$this->form->rows[1]->fields[0] = new stdClass;
+		$this->form->rows[1]->fields[0]->type = 'date';
+		$this->form->rows[1]->fields[0]->validation = 'max_len,10';
+		$this->form->rows[1]->fields[0]->name = 'duedate';
+		$this->form->rows[1]->fields[0]->label = 'Due date';
+		$this->form->rows[1]->fields[0]->value = 'fl_duedate';
+		$this->form->rows[1]->fields[0]->width = 12;
+		$this->form->rows[1]->fields[1] = new stdClass;
+		$this->form->rows[1]->fields[1]->type = 'hidden';
+		$this->form->rows[1]->fields[1]->validation = 'required|numeric';
+		$this->form->rows[1]->fields[1]->name = 'id';
+		$this->form->rows[1]->fields[1]->value = 'fl_id';
+	}
 	
 	/**
 	* Just check if the YourClass has no syntax error 
@@ -46,17 +70,17 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testFormContainsTextArea(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->formarray );
-		$form->setXmlstring( $this->xmlString );
+		$form->setForm( $this->form );
+		$form->setEntity( $this->entity );
 		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, '<textarea class="form-control" rows="5" id="description" name="description">') !== false);
+		$this->assertTrue(strpos($html, '<textarea class="form-control" rows="5" id="name" name="name">') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsCurrencyField(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->formarray );
-		$form->setXmlstring( $this->xmlString );
+		$form->setForm( $this->form );
+		$form->setEntity( $this->entity );
 		$html = $form->createBodyStructure();
 		$this->assertTrue(strpos($html, '<input type="number" name="amount"') !== false);
 		unset($form);
@@ -64,8 +88,8 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testFormContainsDateField(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->formarray );
-		$form->setXmlstring( $this->xmlString );
+		$form->setForm( $this->form );
+		$form->setEntity( $this->entity );
 		$html = $form->createBodyStructure();
 		$this->assertTrue(strpos($html, '<input type="text" class="form-control datepicker" name="duedate"') !== false);
 		unset($form);
@@ -73,17 +97,17 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testFormContainsTextAreaWithData(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->formarray );
-		$form->setXmlstring( $this->xmlString );
+		$form->setForm( $this->form );
+		$form->setEntity( $this->entity );
 		$html = $form->createBodyStructure();
-		$this->assertTrue(strpos($html, 'name="description">prova</textarea>') !== false);
+		$this->assertTrue(strpos($html, 'name="name">prova</textarea>') !== false);
 		unset($form);
 	}
 	
 	public function testFormContainsCurrencyFieldWithData(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->formarray );
-		$form->setXmlstring( $this->xmlString );
+		$form->setForm( $this->form );
+		$form->setEntity( $this->entity );
 		$html = $form->createBodyStructure();
 		$this->assertTrue(strpos($html, '<input type="number" name="amount" value="10"') !== false);
 		unset($form);
@@ -91,8 +115,8 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testFormContainsDateFieldWithData(){
 		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setForm( $this->formarray );
-		$form->setXmlstring( $this->xmlString );
+		$form->setForm( $this->form );
+		$form->setEntity( $this->entity );
 		$html = $form->createBodyStructure();
 		$this->assertTrue(strpos($html, '<input type="text" class="form-control datepicker" name="duedate" value="26/06/2017"') !== false);
 		unset($form);

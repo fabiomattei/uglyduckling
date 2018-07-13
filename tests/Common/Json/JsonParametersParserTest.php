@@ -28,7 +28,7 @@ class JsonParametersParserTest extends PHPUnit_Framework_TestCase {
         unset( $parser );
     }
 	
-    public function testOnceWeSetRequestItGetsTheAction(){
+    public function testParseResourceForParametersValidationRoules(){
 		$resource = json_decode($this->json);
 		$parameters = Firststep\Common\Json\JsonParametersParser::parseResourceForParametersValidationRoules($resource);
         $this->assertNotEmpty($parameters['rules']);
