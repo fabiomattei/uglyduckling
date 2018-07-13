@@ -42,7 +42,7 @@ class FormBuilder {
                     $formBlock->addTextAreaField($field->name, $field->label, $value, $field->width);
                 }
                 if ($field->type === 'currency') {
-                    $formBlock->addCurrencyField($field->name, $field->label, '',$value, $field->width);
+                    $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value, $field->width);
                 }
                 if ($field->type === 'date') {
                     $formBlock->addDateField($field->name, $field->label, $value, $field->width);

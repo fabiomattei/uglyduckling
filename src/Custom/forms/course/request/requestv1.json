@@ -8,7 +8,7 @@
 			{ 
 				"row":"1",
 				"fields": [
-					{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "value":"myt_field1", "width":"6" },
+					{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"myt_field1", "width":"6" },
 					{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "value":"myt_field1", "width":"6" }
 				]
 			},

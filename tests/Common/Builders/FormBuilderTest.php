@@ -29,6 +29,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->form->rows[0]->fields[0]->validation = 'max_len,2500';
 		$this->form->rows[0]->fields[0]->name = 'name';
 		$this->form->rows[0]->fields[0]->label = 'Name';
+		$this->form->rows[0]->fields[0]->placeholder = 'Name';
 		$this->form->rows[0]->fields[0]->value = 'fl_name';
 		$this->form->rows[0]->fields[0]->width = 6;
 		$this->form->rows[0]->fields[1] = new stdClass;
@@ -36,6 +37,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->form->rows[0]->fields[1]->validation = 'required|numeric';
 		$this->form->rows[0]->fields[1]->name = 'amount';
 		$this->form->rows[0]->fields[1]->label = 'Amount';
+		$this->form->rows[0]->fields[1]->placeholder = '0.00';
 		$this->form->rows[0]->fields[1]->value = 'fl_amount';
 		$this->form->rows[0]->fields[1]->width = 6;
 		$this->form->rows[1] = new stdClass;
@@ -82,7 +84,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
 		$block = $form->createForm();
-		$this->assertTrue(strpos($block->show(), '<input type="number" id="amount" name="amount" value="10" placeholder="" min="0" step="0.01">') !== false);
+		$this->assertTrue(strpos($block->show(), '<input type="number" id="amount" name="amount" value="10" placeholder="0.00" min="0" step="0.01">') !== false);
 		unset($form);
 	}
 	
@@ -109,7 +111,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		$form->setFormStructure( $this->form );
 		$form->setEntity( $this->entity );
 		$block = $form->createForm();
-		$this->assertTrue(strpos($block->show(), 'name="amount" value="10" placeholder=""') !== false);
+		$this->assertTrue(strpos($block->show(), 'name="amount" value="10" placeholder="0.00"') !== false);
 		unset($form);
 	}
 	
