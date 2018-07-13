@@ -6,7 +6,7 @@ use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Templates\Blocks\Graphs\LineGraph;
-use Firststep\Templates\Blocks\Tables\StaticTable;
+use Firststep\Common\Blocks\StaticTable;
 
 /**
  * 

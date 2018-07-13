@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Templates\Blocks\Tables;
+namespace Firststep\Common\Blocks;
 
 use Firststep\Common\Blocks\BaseBlock;
 
@@ -8,11 +8,11 @@ class StaticTable extends BaseBlock {
 
   private $html;
   private $title;
-	
-	function __construct() {
+  
+  function __construct() {
     $this->html = '';
     $this->title = '';
-	}
+  }
 
   function setTitle( string $title ) {
     $this->title = $title;
