@@ -8,7 +8,11 @@
 
 namespace Firststep\Common\Builders;
 
+use Firststep\Common\Blocks\BaseForm;
+
 class FormBuilder {
+
+	// TODO take away hmtl and use BaseForm instead
 
     private $form;
     private $entity;
