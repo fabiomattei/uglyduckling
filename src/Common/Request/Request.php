@@ -34,7 +34,7 @@ class Request {
     *
     * @return array               an array containing the results
     *
-    * @throws\Exception    in case of empty request
+    * @throws \Exception    in case of empty request
     *
     * Prende una stringa e la divide nelle sue parti.
     * Restituisce poi le parti ottenute attraverso un array.
@@ -61,7 +61,7 @@ class Request {
         if ( isset( $params[6] ) ) { $this->parameters[] = $params[6]; }
 
         if (!StringUtils::validate_string( $this->action ))
-            throw new \Exception('Illegal access to spliturl!!!');
+            throw new \Exception('Illegal access to calculateSplittedURL!!!');
     }
 
     public function getInfo(): string {

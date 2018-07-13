@@ -41,11 +41,16 @@ class JsonLoader {
 	/**
 	 * Load a resource from file specified with array index
 	 */
-	public function loadResource( $name = '' ) {
-		if (array_key_exists($name, $this->resourcesIndex)) {
-		    return $this->resourcesIndex[$name];
+	public function loadResource( $key = '' ) {
+		if (array_key_exists($key, $this->resourcesIndex)) {
+			if (file_exists ( $this->resourcesIndex[$key] )) {
+				$handle = fopen($this->resourcesIndex[$key], 'r');
+				return $this->json_decode_with_error_control(fread($handle,filesize($this->resourcesIndex[$key])));
+			} else {
+				throw new \Exception('[JsonLoader] :: File associated to resource does not exists!!!');
+			}
 		} else {
-			return array();
+			throw new \Exception('[JsonLoader] :: Resource undefined in array index!!!');
 		}
 	}
 	
@@ -59,22 +64,22 @@ class JsonLoader {
         	    // throw new \Exception(' - No errors');
         	break;
         	case JSON_ERROR_DEPTH:
-        	    throw new \Exception(' - Maximum stack depth exceeded');
+        	    throw new \Exception('[JsonLoader] :: Maximum stack depth exceeded');
         	break;
         	case JSON_ERROR_STATE_MISMATCH:
-        	    throw new \Exception(' - Underflow or the modes mismatch');
+        	    throw new \Exception('[JsonLoader] :: Underflow or the modes mismatch');
         	break;
         	case JSON_ERROR_CTRL_CHAR:
-        	    throw new \Exception(' - Unexpected control character found');
+        	    throw new \Exception('[JsonLoader] :: Unexpected control character found');
         	break;
         	case JSON_ERROR_SYNTAX:
-        	    throw new \Exception(' - Syntax error, malformed JSON');
+        	    throw new \Exception('[JsonLoader] :: Syntax error, malformed JSON');
         	break;
         	case JSON_ERROR_UTF8:
-        	    throw new \Exception(' - Malformed UTF-8 characters, possibly incorrectly encoded');
+        	    throw new \Exception('[JsonLoader] :: Malformed UTF-8 characters, possibly incorrectly encoded');
         	break;
         	default:
-        	    throw new \Exception(' - Unknown error');
+        	    throw new \Exception('[JsonLoader] :: Unknown error');
         	break;
     	}
 		return $loadeddata;

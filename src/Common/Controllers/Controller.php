@@ -76,8 +76,6 @@ class Controller {
         $this->messages->error = $this->sessionWrapper->getMsgError();
         $this->messages->success = $this->sessionWrapper->getMsgSuccess();
         $this->flashvariable = $this->sessionWrapper->getFlashVariable();
-		
-		$this->jsonloader->loadIndex();
 
         if ( !$this->securityChecker->isSessionValid( 
 			$this->sessionWrapper->getSessionLoggedIn(), 
