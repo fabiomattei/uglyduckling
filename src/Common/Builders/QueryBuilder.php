@@ -54,6 +54,15 @@ class QueryBuilder {
     		if ($join->type == 'left') {
     			$query .= ' LEFT JOIN ';	
     		}
+    		if ($join->type == 'right') {
+    			$query .= ' RIGHT JOIN ';	
+    		}
+    		if ($join->type == 'inner') {
+    			$query .= ' INNER JOIN ';	
+    		}
+    		if ($join->type == 'outer') {
+    			$query .= ' FULL OUTER JOIN ';	
+    		}
     		if ($join->type == 'join') {
     			$query .= ' JOIN ';	
     		}
