@@ -24,15 +24,16 @@
     ]
   },
   "query": {
+    "type":"select",
     "fields": [
       "myt_field1",
       "myt_field2",
       "myt_field3"
     ],
-    "mainentity":"mysqltablename",
+    "entity":"mysqltablename",
     "joins":[
-      { "tablename":"mysecondtable", "joinon": "myifled_1 = myfield2" },
-      { "tablename":"mythirdtable", "joinon": "myifled_2 = myfield3" }
+      { "type":"LEFT JOIN", "entity":"mysecondtable", "joinon": "myifled_1 = myfield2" },
+      { "type":"LEFT JOIN", "entity":"mythirdtable", "joinon": "myifled_2 = myfield3" }
     ],
     "conditions": [
       { "field": "id", "operator": "=", "value": "id" }

@@ -10,7 +10,7 @@ use Firststep\Common\Builders\FormBuilder;
  */
 class JsonBlockFormParser {
 	
-	__construct() {
+	function __construct() {
 		$this->formBuilder = new FormBuilder();
 	}
 	

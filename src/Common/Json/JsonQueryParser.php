@@ -2,7 +2,7 @@
 
 namespace Firststep\Common\Json;
 
-use Firststep\Common\Builders\InfoBuilder;
+use Firststep\Common\Builders\QueryBuilder;
 
 /**
  * JsonLoader makes an index of all available resources and load the 
@@ -11,13 +11,13 @@ use Firststep\Common\Builders\InfoBuilder;
 class JsonBlockInfoParser {
 	
 	function __construct() {
-		$this->infoBuilder = new InfoBuilder();
+		$this->queryBuilder = new QueryBuilder();
 	}
 	
 	public static function parse( $resource, $entity ) {
-		$this->infoBuilder->setFormStructure($resource);
-		$this->infoBuilder->setEntity($resource);
-		return $this->infoBuilder->createInfo();
+		$this->queryBuilder->setQueryStructure($resource);
+		$this->queryBuilder->setEntity($resource);
+		return $this->queryBuilder->createQuery();
 	}
 	
 }
