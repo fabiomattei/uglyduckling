@@ -21,36 +21,36 @@ class QueryBuilder {
     }
 
     /**
-     * @param mixed $entity
-	 * the $entity variable contains all values for the form
+     * @param mixed $parameters
+	 * the $parameters variable contains all values for the query
      */
-    public function setEntity($entity) {
-        $this->entity = $entity;
+    public function setParameters($parameters) {
+        $this->parameters = $parameters;
     }
 
     public function createQuery() {
-		if($queryStructure->type === 'query') {
+		if($this->queryStructure->type === 'select') {
 			return $this->select();
 		}
-		if($queryStructure->type === 'insert') {
+		if($this->queryStructure->type === 'insert') {
 			return $this->insert();
 		}
-		if($queryStructure->type === 'update') {
+		if($this->queryStructure->type === 'update') {
 			return $this->update();
 		}
-		if($queryStructure->type === 'delete') {
+		if($this->queryStructure->type === 'delete') {
 			return $this->delete();
 		} 
     }
 
     public function select() {
     	$query = 'SELECT ';
-    	foreach ($queryStructure->fields as $field) {
+    	foreach ($this->queryStructure->fields as $field) {
     		$query .= $field.', ';
     	}
     	$query=rtrim($query,', ');
-    	$query .= ' FROM '.$queryStructure->entity;
-    	foreach ($queryStructure->joins as $join) {
+    	$query .= ' FROM '.$this->queryStructure->entity.' ';
+    	foreach ($this->queryStructure->joins as $join) {
     		if ($join->type == 'left') {
     			$query .= ' LEFT JOIN ';	
     		}
@@ -68,12 +68,13 @@ class QueryBuilder {
     		}
     		$query .= $join->entity.' ON '.$join->joinon;
     	}
-    	if (count($queryStructure->conditions)>0) {
+    	if (count($this->queryStructure->conditions)>0) {
     		$query .= ' WHERE ';
     	}
-    	foreach ($queryStructure->conditions as $cond) {
-    		$query .= $cond->field.' '.$cond->operator.' '.$cond->value;
+    	foreach ($this->queryStructure->conditions as $cond) {
+    		$query .= $cond->field.' '.$cond->operator.' ?, ';
     	}
+        $query=rtrim($query,', ');
         return $query;
     }
 
