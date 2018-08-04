@@ -80,4 +80,16 @@ class QueryBuilder {
     	# code...
     }
 
+    public function tableExists() {
+        # code...
+    }
+
+    public function create() {
+        # code...
+    }
+
+    public function count() {
+        # code...
+    }
+
 }
