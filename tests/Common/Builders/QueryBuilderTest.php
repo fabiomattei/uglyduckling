@@ -54,34 +54,13 @@ class QuryBuilderTest extends PHPUnit_Framework_TestCase {
 		$query->setQueryStructure( $this->query );
 		$query->setParameters( $this->parameters );
 		$sqlquery = $query->createQuery();
-		echo $sqlquery;
 		$this->assertContains('SELECT', $sqlquery);
 		$this->assertContains('myt_field1, myt_field2, myt_field3', $sqlquery);
 		$this->assertContains('FROM mysqltablename', $sqlquery);
 		$this->assertContains('JOIN mysecondtable ON myifled_1 = myfield2', $sqlquery);
 		$this->assertContains('LEFT JOIN mythirdtable ON myifled_2 = myfield3', $sqlquery);
 		$this->assertContains('WHERE id = ?', $sqlquery);
-		unset($form);
+		unset($query);
 	}
-	
-	/*
-	public function testFormContainsCurrencyField(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setFormStructure( $this->form );
-		$form->setEntity( $this->entity );
-		$block = $form->createForm();
-		$this->assertTrue(strpos($block->show(), '<input type="number" id="amount" name="amount" value="10" placeholder="0.00" min="0" step="0.01">') !== false);
-		unset($form);
-	}
-	
-	public function testFormContainsDateField(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-		$form->setFormStructure( $this->form );
-		$form->setEntity( $this->entity );
-		$block = $form->createForm();
-		$this->assertTrue(strpos($block->show(), '><input type="text" class="datepicker" id="duedate" name="duedate"') !== false);
-		unset($form);
-	}
-	*/
 
 }
