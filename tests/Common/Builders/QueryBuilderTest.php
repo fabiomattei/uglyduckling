@@ -59,8 +59,10 @@ class QuryBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('FROM mysqltablename', $sqlquery);
 		$this->assertContains('JOIN mysecondtable ON myifled_1 = myfield2', $sqlquery);
 		$this->assertContains('LEFT JOIN mythirdtable ON myifled_2 = myfield3', $sqlquery);
-		$this->assertContains('WHERE id = ?', $sqlquery);
+		$this->assertContains('WHERE id = :id', $sqlquery);
 		unset($query);
 	}
+
+
 
 }

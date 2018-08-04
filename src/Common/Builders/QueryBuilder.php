@@ -11,7 +11,7 @@ namespace Firststep\Common\Builders;
 class QueryBuilder {
 	
     private $queryStructure;
-    private $entity;
+    private $parameters;
 
     /**
      * @param mixed $queryStructure
@@ -72,7 +72,7 @@ class QueryBuilder {
     		$query .= ' WHERE ';
     	}
     	foreach ($this->queryStructure->conditions as $cond) {
-    		$query .= $cond->field.' '.$cond->operator.' ?, ';
+    		$query .= $cond->field.' '.$cond->operator.' :'.$cond->value.', ';
     	}
         $query=rtrim($query,', ');
         return $query;
