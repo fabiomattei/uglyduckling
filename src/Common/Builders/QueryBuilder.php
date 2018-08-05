@@ -90,8 +90,26 @@ class QueryBuilder {
     	# code...
     }
 
+	/**
+     * You can use show tables like this to see if a single table exists:
+     * 
+     * mysql> show tables like "test1";
+     * which would return:
+     * 
+     * +------------------------+
+     * | Tables_in_test (test1) |
+     * +------------------------+
+     * | test1                  |
+     * +------------------------+
+     * 1 row in set (0.00 sec)
+     * 
+     * If you ran show tables on a table that didn't exist you would get this:
+     * 
+     * mysql> show tables like "test3";
+     * Empty set (0.01 sec)
+	 */
     public function tableExists() {
-        # code...
+        return 'show tables like `'.$this->queryStructure->tablename.'`;';
     }
 
     public function create() {
