@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class QuryBuilderTest extends PHPUnit_Framework_TestCase {
+class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 	
     private $query;
 	private $parameters;
