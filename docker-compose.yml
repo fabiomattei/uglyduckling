@@ -37,12 +37,12 @@ services:
       - firststepnet
     environment:
       PMA_HOST: mariadb
-      PMA_USER: root
-      PMA_PASSWORD: password
+      PMA_USER: user
+      PMA_PASSWORD: userp
       PMA_ARBITRARY: 1
 
 networks:
-     firststepnet:
-         driver: bridge
+    firststepnet:
+        driver: bridge
 
 

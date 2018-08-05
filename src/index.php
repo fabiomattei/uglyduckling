@@ -18,8 +18,8 @@ $setup->setJsonPath('./Custom/index.json');
 $dbconnection = new Firststep\Common\Database\DBConnection( 
 	'mysql:host=mariadb:3306;dbname=',
 	'firststep',
-	'root',
-	'password'
+	'user',
+	'userp'
 );
 
 $request = new Firststep\Common\Request\Request();
