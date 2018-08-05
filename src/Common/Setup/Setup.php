@@ -9,7 +9,7 @@ class Setup {
 	public $publicTemplateFileName;
 	public $basePath;
     public $pathtoapp;
-	public $yamlpath;
+	public $jsonPath;
 
 	public function __construct() {
 		$this->appNameForPageTitle = '';
@@ -17,7 +17,7 @@ class Setup {
 		$this->publicTemplateFileName = '';
 		$this->basePath = '';
         $this->pathtoapp = '';
-		$this->yamlpath = '';
+		$this->jsonPath = '';
     }
 
     /**
@@ -95,15 +95,15 @@ class Setup {
     /**
      * @return string
      */
-    public function getYamlPath(): string {
-        return $this->yamlpath;
+    public function getJsonPath(): string {
+        return $this->jsonPath;
     }
 
     /**
      * @param string $yamlpath
      */
-    public function setYamlPath(string $yamlpath) {
-        $this->yamlpath = $yamlpath;
+    public function setJsonPath(string $jsonPath) {
+        $this->jsonPath = $jsonPath;
     }
 
 }

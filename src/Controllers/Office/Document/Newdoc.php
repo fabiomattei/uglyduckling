@@ -1,13 +1,13 @@
 <?php
 
-namespace Firststep\Controllers\Office;
+namespace Firststep\Controllers\Office\Document;
 
 use Firststep\Common\Controllers\Controller;
 
 /**
  * 
  */
-class Report extends Controller {
+class Newdoc extends Controller {
 	
 	function __construct($argument) {
 		# code...

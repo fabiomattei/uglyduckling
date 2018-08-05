@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Controllers\Office;
+namespace Firststep\Controllers\Office\Document;
 
 use Firststep\Common\Controllers\Controller;
 use Firststep\Common\Json\JsonBlockParser;

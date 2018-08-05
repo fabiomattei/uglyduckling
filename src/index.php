@@ -13,7 +13,7 @@ $setup->setPrivateTemplateFileName('application');
 $setup->setPublicTemplateFileName('public');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
-$setup->setYamlPath('./Custom/index.json');
+$setup->setJsonPath('./Custom/index.json');
 
 $dbconnection = new Firststep\Common\Database\DBConnection( 
 	'mysql:host=mariadb:3306;dbname=',
@@ -30,7 +30,7 @@ $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 $controller = $router->getController( $request->getAction() );
 
 $yamlLoader = new Firststep\Common\Json\JsonLoader();
-$yamlLoader->setIndexPath($setup->getYamlPath());
+$yamlLoader->setIndexPath($setup->getJsonPath());
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user

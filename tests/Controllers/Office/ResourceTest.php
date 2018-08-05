@@ -15,7 +15,7 @@ class ResourceTest extends PHPUnit_Framework_TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError() {
-		$controller = new Firststep\Controllers\Office\Resource;
+		$controller = new Firststep\Controllers\Office\Document\Resource;
 		$this->assertTrue(is_object($controller));
 		unset($controller);
 	}
