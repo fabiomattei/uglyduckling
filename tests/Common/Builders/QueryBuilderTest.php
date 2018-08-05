@@ -34,6 +34,22 @@ class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->query->conditions[0]->value = "id";
 
 		$this->parameters = new stdClass;
+		
+		$this->create = new stdClass;
+		$this->create->tablename = 'requestv1';
+		$this->create->engine = 'InnoDB DEFAULT';
+		$this->create->charset = 'utf8';
+		$this->create->collate = 'utf8_bin';
+		$this->create->fields = array();
+		$this->create->fields[0] = new stdClass;
+		$this->create->fields[0]->type = 'VARCHAR(255)';
+		$this->create->fields[0]->name = 'name';
+		$this->create->fields[1] = new stdClass;
+		$this->create->fields[1]->type = 'INT';
+		$this->create->fields[1]->name = 'amount';
+		$this->create->fields[2] = new stdClass;
+		$this->create->fields[2]->type = 'DATE';
+		$this->create->fields[2]->name = 'duedate';
 	}
 	
 	/**
@@ -62,7 +78,19 @@ class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('WHERE id = :id', $sqlquery);
 		unset($query);
 	}
-
-
+	
+	public function testCreateTable(){
+		$query = new Firststep\Common\Builders\QueryBuilder;
+		$query->setQueryStructure( $this->create );
+		$sqlquery = $query->create();
+		$this->assertContains('CREATE', $sqlquery);
+		$this->assertContains('`requestv1`', $sqlquery);
+		$this->assertContains('`name` VARCHAR(255),', $sqlquery);
+		$this->assertContains('`duedate` DATE)', $sqlquery);
+		$this->assertContains('ENGINE=InnoDB DEFAULT', $sqlquery);
+		$this->assertContains('CHARSET=utf8', $sqlquery);
+		$this->assertContains('COLLATE=utf8_bin', $sqlquery);
+		unset($query);
+	}
 
 }

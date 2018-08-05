@@ -4,9 +4,12 @@
   "entity": {
     "title": "Request v1",
     "tablename": "requestv1",
+	"engine": "InnoDB DEFAULT",
+	"charset": "utf8",
+	"collate": "utf8_bin",
     "fields": [
-        { "type":"VARCHAR(255)", "validation":"max_len,2500", "name":"name" , "default":"" },
-        { "type":"INT", "validation":"required|numeric", "name":"amount", "default":"0" },
+        { "type":"VARCHAR(255)", "validation":"max_len,2500", "name":"name" },
+        { "type":"INT", "validation":"required|numeric", "name":"amount" },
         { "type":"DATE", "validation":"max_len,10", "name":"duedate" }
     ]
   }

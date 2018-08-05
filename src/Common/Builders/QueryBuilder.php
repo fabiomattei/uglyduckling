@@ -95,9 +95,15 @@ class QueryBuilder {
     }
 
     public function create() {
-        # code...
+        $query = 'CREATE TABLE `'.$this->queryStructure->tablename.'` (';
+    	foreach ($this->queryStructure->fields as $field) {
+    		$query .= '`'.$field->name.'` '.$field->type.', ';
+    	}
+		$query=rtrim($query,', ');
+		$query .= ') ENGINE='.$this->queryStructure->engine.' CHARSET='.$this->queryStructure->charset.' COLLATE='.$this->queryStructure->collate.';';
+		return $query;
     }
-
+	
     public function count() {
         # code...
     }
