@@ -60,7 +60,12 @@ class Login extends Controller {
 			
 	        // redirecting to main page
 			// $this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
-			$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_DASHBOARD ) );
+			if ( $user->usr_usrofid == 99 ) {
+				$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_DASHBOARD ) );
+			} else {
+				$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_GATE ) );
+			}
+			
 		} else {
 	        // redirecting to main page
 			$this->redirectToPage( $this->router->make_url( Router::ROUTE_COMMUNITY_LOGIN ) );
