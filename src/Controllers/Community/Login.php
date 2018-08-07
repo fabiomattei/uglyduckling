@@ -50,7 +50,7 @@ class Login extends Controller {
 		$this->userCanLogIn->performAction();
 
 		if ($this->userCanLogIn->getUserCanLogIn()) {
-			$user = $this->userDao->getOneByFields( array( 'usr_email' => $this->parameters['email'] ) );
+			$user = $this->userDao->getOneByFields( array( 'usr_email' => $this->postParameters['email'] ) );
 			$this->sessionWrapper->setSessionUserId( $user->usr_id );
 			$this->sessionWrapper->setSessionUsername( $user->usr_name );
 			$this->sessionWrapper->setSessionLoggedIn( true );

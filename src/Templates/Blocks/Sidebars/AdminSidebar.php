@@ -3,27 +3,29 @@
 namespace Firststep\Templates\Blocks\Sidebars;
 
 use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Router\Router;
 
 class AdminSidebar extends BaseBlock {
 	
-	function __construct( string $appname, string $active = 'home' ) {
+	function __construct( string $appname, string $active = 'home', $router ) {
 		$this->appname = $appname;
 		$this->active = $active;
+		$this->router = $router;
 	}
 	
     function show(): string {
 		$out = '<div class="sidebar-sticky">
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_DASHBOARD ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_DASHBOARD ).'">
                       <span data-feather="home"></span>
                       Dashboard <span class="sr-only">(current)</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_ENTITY_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_ENTITY_LIST ).'">
                       <span data-feather="file"></span>
-                      Orders
+                      Entities
                     </a>
                   </li>
                   <li class="nav-item">
