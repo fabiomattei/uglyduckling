@@ -23,6 +23,8 @@ class Controller {
     public $get_filter_rules = array();
     public $post_validation_rules = array();
     public $post_filter_rules = array();
+    public $post_get_validation_rules = array();
+    public $post_get_filter_rules = array();
 
     public function makeAllPresets( 
 		Router $router, 
@@ -111,12 +113,12 @@ class Controller {
         if ( count( $this->get_validation_rules ) == 0 ) {
             return true;
         } else {
-            $parms = $this->gump->sanitize($this->parameters);
+            $parms = $this->gump->sanitize( $this->getParameters );
             $this->gump->validation_rules( $this->get_validation_rules );
             $this->gump->filter_rules( $this->get_filter_rules );
-            $this->parameters = $this->gump->run( $parms );
+            $this->getParameters = $this->gump->run( $parms );
 			$this->unvalidated_parameters = $parms;
-            if ( $this->parameters === false ) {
+            if ( $this->getParameters === false ) {
 				$this->readableErrors = $this->gump->get_readable_errors(true);
                 return false;
             } else {
@@ -133,17 +135,35 @@ class Controller {
         if ( count( $this->post_validation_rules ) == 0 ) {
             return true;
         } else {
-            $parms = $this->gump->sanitize( $_POST );
+			$out = false;
+			
+			// checking get parameters in post request
+            $parms = $this->gump->sanitize( $this->getParameters );
+            $this->gump->validation_rules( $this->post_get_validation_rules );
+            $this->gump->filter_rules( $this->post_get_filter_rules );
+            $this->getParameters = $this->gump->run( $parms );
+			$this->unvalidated_parameters = $parms;
+            if ( $this->getParameters === false ) {
+				$this->readableErrors = $this->gump->get_readable_errors(true);
+                $out = false;
+            } else {
+                $out = true;
+            }
+
+			// checking post parameters in post request			
+            $parms = $this->gump->sanitize( $this->postParameters );
             $this->gump->validation_rules( $this->post_validation_rules );
             $this->gump->filter_rules( $this->post_filter_rules );
-            $this->parameters = $this->gump->run( $parms );
+            $this->postParameters = $this->gump->run( $parms );
 			$this->unvalidated_parameters = $parms;
-            if ( $this->parameters === false ) {
+            if ( $this->postParameters === false ) {
 				$this->readableErrors = $this->gump->get_readable_errors(true);
-                return false;
+                $out = false;
             } else {
-                return true;
+                $out = true;
             }
+			
+			return $out;
         }
     }
 
@@ -256,9 +276,18 @@ class Controller {
     /**
      * Function for setting parameters array
      */
-    public function setParameters($parameters) {
+    public function setGetParameters( $parameters ) {
         if (is_array($parameters)) {
-            $this->parameters = $parameters;
+            $this->getParameters = $parameters;
+        }
+    }
+	
+    /**
+     * Function for setting parameters array
+     */
+    public function setPostParameters( $parameters ) {
+        if (is_array($parameters)) {
+            $this->postParameters = $parameters;
         }
     }
 

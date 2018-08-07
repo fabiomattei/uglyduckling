@@ -63,7 +63,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Firststep\Common\Blocks\BaseMessages()
 	);
 }
-$controller->setParameters( $request->getParameters() );
+$controller->setGetParameters( $_GET );
+$controller->setPostParameters( $_POST );
 
 // $controller->setRequest( $request );
 // $controller->setControllerPath( OFFICE, CHAPTER, CONTROLLER );

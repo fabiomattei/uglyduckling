@@ -25,10 +25,6 @@ class Request {
         return $this->action;
     }
 
-    public function getParameters() {
-        return $this->parameters;
-    }
-
     /**
     * @param $request             a string containing the request
     *
@@ -51,14 +47,7 @@ class Request {
     
         #split the string by '/'
         $params = explode( '/', $request );
-
         $this->action = $params[1];
-        $this->parameters = array();
-        if ( isset( $params[2] ) ) { $this->parameters[] = $params[2]; }
-        if ( isset( $params[3] ) ) { $this->parameters[] = $params[3]; }
-        if ( isset( $params[4] ) ) { $this->parameters[] = $params[4]; }
-        if ( isset( $params[5] ) ) { $this->parameters[] = $params[5]; }
-        if ( isset( $params[6] ) ) { $this->parameters[] = $params[6]; }
 
         if (!StringUtils::validate_string( $this->action ))
             throw new \Exception('Illegal access to calculateSplittedURL!!!');

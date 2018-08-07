@@ -46,7 +46,7 @@ class Login extends Controller {
 	public function postRequest() {
 		$this->userDao->setDBH( $this->dbconnection->getDBH() );
 		$this->userCanLogIn->setUserDao( $this->userDao );
-		$this->userCanLogIn->setParameters( $this->parameters );
+		$this->userCanLogIn->setParameters( $this->postParameters );
 		$this->userCanLogIn->performAction();
 
 		if ($this->userCanLogIn->getUserCanLogIn()) {
