@@ -125,7 +125,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 			$echologger,
 			$messages 
 		);
-		$controller->setParameters( array( 'email' => '' ) );
+		$controller->setPostParameters( array( 'email' => '' ) );
 		$controller->userCanLogIn = $this->getMockBuilder(Firststep\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
 		$controller->userCanLogIn->expects($this->once())->method('getUserCanLogIn')->will($this->returnValue(true));
 

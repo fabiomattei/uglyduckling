@@ -44,7 +44,7 @@ class Router {
 		if ( $action == '' ) {
 			return $this->basepath;
 		} else {
-	        return $this->basepath.$action.( $parameters == '' ? '' : '/'.$parameters ).$extension;
+	        return $this->basepath.$action.$extension.( $parameters == '' ? '' : '?'.$parameters );
 	    }
 	}
 

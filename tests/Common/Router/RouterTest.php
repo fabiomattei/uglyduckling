@@ -22,7 +22,13 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testMakeUrlOnlyWithAnAction() {
 		$router = new Firststep\Common\Router\Router( 'http://localhost:18080/' );
-		$this->assertSame( $router->make_url( 'Dashobard' ), 'http://localhost:18080/Dashobard.html' );
+		$this->assertSame( $router->make_url( 'dashboard' ), 'http://localhost:18080/dashboard.html' );
+        unset( $router );
+	}
+	
+	public function testMakeUrlWithActionAndParameters() {
+		$router = new Firststep\Common\Router\Router( 'http://localhost:18080/' );
+		$this->assertSame( $router->make_url( 'dashboard', 'id=0&par=1' ), 'http://localhost:18080/dashboard.html?id=0&par=1' );
         unset( $router );
 	}
 

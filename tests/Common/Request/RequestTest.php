@@ -22,18 +22,15 @@ class RequestTest extends PHPUnit_Framework_TestCase {
 
     public function testOnceWeSetRequestItGetsTheAction(){
         $request = new Firststep\Common\Request\Request;
-        $request->setServerRequestURI( '/action/par1/par2/par3.html' );
+        $request->setServerRequestURI( '/action.html' );
         $this->assertTrue( $request->getAction() == 'action' );
         unset( $request );
     }
-
-    public function testOnceWeSetRequestItGetsTheParameters(){
+	
+    public function testOnceWeSetRequestItGetsTheActionEvenIfParametersAreThere(){
         $request = new Firststep\Common\Request\Request;
-        $request->setServerRequestURI( '/action/par1/par2/par3.html' );
-        $this->assertTrue( count($request->getParameters()) == 3 );
-        $this->assertTrue( $request->getParameters()[0] == 'par1' );
-        $this->assertTrue( $request->getParameters()[1] == 'par2' );
-        $this->assertTrue( $request->getParameters()[2] == 'par3' );
+        $request->setServerRequestURI( '/action.html?id=0&action=mystring' );
+        $this->assertTrue( $request->getAction() == 'action' );
         unset( $request );
     }
   
