@@ -12,4 +12,8 @@ class ColWidth extends BaseBlock {
 	const LARGE       = 'col-lg-';      // >= 992px
 	const EXTRA_LARGE = 'col-xl-';      // >= 1200px
 	
+	public function get( $type, $width ) {
+		return $type.$width;
+	}
+	
 }
