@@ -25,8 +25,6 @@ class EntityList extends Controller {
 	
     /**
      * @throws GeneralException
-     *
-     * $this->getParameters['res'] resource key index
      */
 	public function getRequest() {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Entites list';

@@ -62,6 +62,10 @@ class BaseInfo extends BaseBlock {
         $this->body .= '<div class="'.$width.'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
     }
 	
+    function addParagraph( string $text, string $width ) {
+        $this->body .= '<div class="'.$width.'"><p>'.$text.'</p></div>';
+    }
+	
 	function addRow() {
 		$this->body .= '<div class="row">';
 	}

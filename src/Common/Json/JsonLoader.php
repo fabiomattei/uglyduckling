@@ -53,10 +53,10 @@ class JsonLoader {
 	 * Load a resource from file specified with array index
 	 */
 	public function loadResource( $key = '' ) {
-		if (array_key_exists($key, $this->resourcesIndex)) {
-			if (file_exists ( $this->resourcesIndex[$key] )) {
-				$handle = fopen($this->resourcesIndex[$key], 'r');
-				return $this->json_decode_with_error_control(fread($handle,filesize($this->resourcesIndex[$key])));
+		if ( array_key_exists( $key, $this->resourcesIndex ) ) {
+			if ( file_exists( $this->resourcesIndex[$key]->path ) ) {
+				$handle = fopen($this->resourcesIndex[$key]->path, 'r');
+				return $this->json_decode_with_error_control(fread($handle,filesize($this->resourcesIndex[$key]->path)));
 			} else {
 				throw new \Exception('[JsonLoader] :: File associated to resource does not exists!!!');
 			}
