@@ -7,6 +7,7 @@ use Firststep\Controllers\Office\Manager\Gate;
 use Firststep\Controllers\Community\Login;
 use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
 use Firststep\Controllers\Admin\Entity\EntityList;
+use Firststep\Controllers\Admin\Entity\EntityView;
 
 class Router {
 	
@@ -15,6 +16,7 @@ class Router {
 	const ROUTE_COMMUNITY_LOGIN = 'communitylogin';
 	const ROUTE_ADMIN_DASHBOARD = 'admindashboard';
 	const ROUTE_ADMIN_ENTITY_LIST = 'adminentitylist';
+	const ROUTE_ADMIN_ENTITY_VIEW = 'adminentityview';
 	
 	public function __construct( $basepath ) {
 		$this->basepath = $basepath;
@@ -27,6 +29,7 @@ class Router {
 			case self::ROUTE_COMMUNITY_LOGIN:   $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:   $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_ENTITY_LIST: $controller = new EntityList; break;
+			case self::ROUTE_ADMIN_ENTITY_VIEW: $controller = new EntityView; break;
             default: $controller = new Login; break;
         }
         return $controller;

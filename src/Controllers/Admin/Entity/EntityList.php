@@ -3,8 +3,11 @@
 namespace Firststep\Controllers\Admin\Entity;
 
 use Firststep\Common\Controllers\Controller;
+use Firststep\Templates\Blocks\Menus\AdminMenu;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
+use Firststep\Common\Router\Router;
 
 /**
  * This class gives a list of all entities loaded in to the system
@@ -44,11 +47,14 @@ class EntityList extends Controller {
 				$table->addRow();
 				$table->addColumn($res->name);
 				$table->addColumn($res->type);
+				$table->addColumn( $this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$res->name )  );
 				$table->closeRow();
 			}
 		}
 		$table->closeTBody();
 		
+		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $table );
 	}
 
