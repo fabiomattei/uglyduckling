@@ -49,6 +49,10 @@ class StaticTable extends BaseBlock {
   function addColumn(string $value) {
     $this->html .= '<td>'.htmlspecialchars( $value ).'</td>';
   }
+  
+  function addUnfilteredColumn(string $value) {
+    $this->html .= '<td>'.$value.'</td>';
+  }
 
   function addColumnDate(string $value) {
     $this->html .= '<td>'.date( 'd/m/Y', strtotime( htmlspecialchars( $value ) ) ).'</td>';

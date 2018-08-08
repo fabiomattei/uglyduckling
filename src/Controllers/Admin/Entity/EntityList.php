@@ -7,6 +7,7 @@ use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
+use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 
 /**
@@ -47,7 +48,7 @@ class EntityList extends Controller {
 				$table->addRow();
 				$table->addColumn($res->name);
 				$table->addColumn($res->type);
-				$table->addColumn( $this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$res->name )  );
+				$table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
 				$table->closeRow();
 			}
 		}
