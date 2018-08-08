@@ -6,7 +6,7 @@ use Firststep\Controllers\Office\Document\Inbox;
 use Firststep\Controllers\Office\Manager\Gate;
 use Firststep\Controllers\Community\Login;
 use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
-use Firststep\Controllers\Admin\Entity;
+use Firststep\Controllers\Admin\Entity\EntityList;
 
 class Router {
 	

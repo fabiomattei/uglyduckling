@@ -1,6 +1,7 @@
 <?php
 
 namespace Firststep\Common\Json;
+use stdClass;
 
 /**
  * JsonLoader makes an index of all available resources and load the 
@@ -31,11 +32,21 @@ class JsonLoader {
 				if($key->type == 'index') {
 					$this->loadIndex( $key->path );
 				} else {
-					$this->resourcesIndex[$key->name] = $key->path;
+					$this->resourcesIndex[$key->name] = new stdClass;
+					$this->resourcesIndex[$key->name]->path = $key->path;
+					$this->resourcesIndex[$key->name]->type = $key->type;
+					$this->resourcesIndex[$key->name]->name = $key->name;
 				}
 			}
 		}
 		// var_dump( $this->resourcesIndex );	
+	}
+	
+	/**
+	 * Gives a list of resources loaded
+	 */
+	public function getResourcesIndex() {
+		return $this->resourcesIndex;
 	}
 	
 	/**
