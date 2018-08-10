@@ -77,6 +77,26 @@ class QueryExecuter {
             $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
+	
+    /**
+     * It gets all rows contained in a table
+     */
+    function executeTableExists( $query ) {
+        try {
+			$out = false;
+            $STH = $this->DBH->query( $query );
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+			
+			foreach ($STH as $table) {
+				$out = true;
+			}
+            
+            return $out;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
 
     /**
      * Insert a row in the database.

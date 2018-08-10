@@ -39,6 +39,9 @@ class EntityView extends Controller {
 		$info = new BaseInfo;
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
+		
+		// $tableExists = $this->querybuilder
+			
 		$info->addParagraph( 'Table exists: ', '' );
 		
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );

@@ -108,8 +108,8 @@ class QueryBuilder {
      * mysql> show tables like "test3";
      * Empty set (0.01 sec)
 	 */
-    public function tableExists() {
-        return 'show tables like `'.$this->queryStructure->tablename.'`;';
+    public function tableExists( $tablename ) {
+        return 'SHOW TABLES LIKE `' . $tablename . '`;';
     }
 
     public function create() {
