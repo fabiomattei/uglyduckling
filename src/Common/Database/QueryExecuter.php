@@ -90,7 +90,6 @@ class QueryExecuter {
 			foreach ($STH as $table) {
 				$out = true;
 			}
-            
             return $out;
         } catch (PDOException $e) {
             $logger = new Logger();

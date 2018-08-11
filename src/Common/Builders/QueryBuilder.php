@@ -109,7 +109,7 @@ class QueryBuilder {
      * Empty set (0.01 sec)
 	 */
     public function tableExists( $tablename ) {
-        return 'SHOW TABLES LIKE `' . $tablename . '`;';
+        return 'SHOW TABLES LIKE \'' . $tablename . '\';';
     }
 
     public function create() {
