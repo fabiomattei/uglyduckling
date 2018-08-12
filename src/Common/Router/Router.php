@@ -8,6 +8,8 @@ use Firststep\Controllers\Community\Login;
 use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
 use Firststep\Controllers\Admin\Entity\EntityList;
 use Firststep\Controllers\Admin\Entity\EntityView;
+use Firststep\Controllers\Admin\Entity\EntityCreateTable;
+use Firststep\Controllers\Admin\Entity\EntityDropTable;
 
 class Router {
 	
@@ -17,6 +19,8 @@ class Router {
 	const ROUTE_ADMIN_DASHBOARD = 'admindashboard';
 	const ROUTE_ADMIN_ENTITY_LIST = 'adminentitylist';
 	const ROUTE_ADMIN_ENTITY_VIEW = 'adminentityview';
+	const ROUTE_ADMIN_ENTITY_CREATE_TABLE = 'adminentitycreatetable';
+	const ROUTE_ADMIN_ENTITY_DROP_TABLE = 'adminentitydroptable';
 	
 	public function __construct( $basepath ) {
 		$this->basepath = $basepath;
@@ -24,12 +28,14 @@ class Router {
 
     function getController( string $action ) {
         switch ( $action ) {
-            case self::ROUTE_OFFICE_INBOX:      $controller = new Inbox; break;
-			case self::ROUTE_OFFICE_GATE:       $controller = new Gate; break;
-			case self::ROUTE_COMMUNITY_LOGIN:   $controller = new Login; break;
-			case self::ROUTE_ADMIN_DASHBOARD:   $controller = new AdminDashboard; break;
-			case self::ROUTE_ADMIN_ENTITY_LIST: $controller = new EntityList; break;
-			case self::ROUTE_ADMIN_ENTITY_VIEW: $controller = new EntityView; break;
+            case self::ROUTE_OFFICE_INBOX:              $controller = new Inbox; break;
+			case self::ROUTE_OFFICE_GATE:               $controller = new Gate; break;
+			case self::ROUTE_COMMUNITY_LOGIN:           $controller = new Login; break;
+			case self::ROUTE_ADMIN_DASHBOARD:           $controller = new AdminDashboard; break;
+			case self::ROUTE_ADMIN_ENTITY_LIST:         $controller = new EntityList; break;
+			case self::ROUTE_ADMIN_ENTITY_VIEW:         $controller = new EntityView; break;
+			case self::ROUTE_ADMIN_ENTITY_CREATE_TABLE: $controller = new EntityCreateTable; break;
+			case self::ROUTE_ADMIN_ENTITY_DROP_TABLE:   $controller = new EntityDropTable; break;
             default: $controller = new Login; break;
         }
         return $controller;

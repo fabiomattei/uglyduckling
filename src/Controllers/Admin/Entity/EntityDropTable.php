@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class EntityVersionList extends Controller {
+class EntityDropTable extends Controller {
 	
 	function __construct($argument) {
 		# code...
