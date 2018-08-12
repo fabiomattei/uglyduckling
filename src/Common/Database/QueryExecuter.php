@@ -98,7 +98,7 @@ class QueryExecuter {
     }
 	
     /**
-     * It gets all rows contained in a table
+     * It creates a table
      */
     function executeTableCreate( $query ) {
         try {
@@ -110,7 +110,7 @@ class QueryExecuter {
     }
 	
     /**
-     * It gets all rows contained in a table
+     * It drops a table
      */
     function executeTableDrop( $query ) {
         try {

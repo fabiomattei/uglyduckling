@@ -113,7 +113,7 @@ class QueryBuilder {
     }
 	
     public function tableDrop( $tablename ) {
-        return 'DROP TABLE \'' . $tablename . '\';';
+        return 'DROP TABLE ' . $tablename . ';';
     }
 
     public function create() {

@@ -3,6 +3,14 @@
 namespace Firststep\Controllers\Admin\Entity;
 
 use Firststep\Common\Controllers\Controller;
+use Firststep\Templates\Blocks\Menus\AdminMenu;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
+use Firststep\Common\Json\JsonBlockParser;
+use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\Button;
+use Firststep\Common\Router\Router;
+use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Builders\QueryBuilder;
 
 /**
  * 
@@ -34,15 +42,16 @@ class EntityCreateTable extends Controller {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity create';
 		
 		$info = new BaseInfo;
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 
-		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists($this->resource->entity->tablename) );
+		$this->queryBuilder->setQueryStructure( $this->resource->entity );
+		$this->queryExecuter->executeTableCreate( $this->queryBuilder->create() );
 			
-		$info->addParagraph( 'Table exists: '.( $tableExists ? 'true' : 'false'), '' );
+		$info->addParagraph( 'Table created! ', '' );
 		
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );

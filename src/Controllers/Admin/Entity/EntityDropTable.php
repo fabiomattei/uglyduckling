@@ -3,6 +3,14 @@
 namespace Firststep\Controllers\Admin\Entity;
 
 use Firststep\Common\Controllers\Controller;
+use Firststep\Templates\Blocks\Menus\AdminMenu;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
+use Firststep\Common\Json\JsonBlockParser;
+use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\Button;
+use Firststep\Common\Router\Router;
+use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Builders\QueryBuilder;
 
 /**
  * 
@@ -39,6 +47,8 @@ class EntityDropTable extends Controller {
 		$info = new BaseInfo;
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
+		
+		echo $this->queryBuilder->tableDrop($this->resource->entity->tablename);
 
 		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->entity->tablename) );
 			
