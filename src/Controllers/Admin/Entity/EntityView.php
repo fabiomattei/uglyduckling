@@ -50,7 +50,10 @@ class EntityView extends Controller {
 
 		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists($this->resource->entity->tablename) );
 			
-		$info->addParagraph( 'Table exists: '.( $tableExists ? 'true' : 'false'), '' );
+		$info->addParagraph( 'Table exists: '.( $tableExists ? 
+			'true  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_DROP_TABLE, 'res='.$res->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) : 
+			'false  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_CREATE_TABLE, 'res='.$res->name ), 'Create', Button::COLOR_GRAY.' '.Button::SMALL )
+		), '' );
 		
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
