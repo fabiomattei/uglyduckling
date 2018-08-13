@@ -49,7 +49,7 @@ class AdminSidebar extends BaseBlock {
                   <li class="nav-item">
                     <a class="nav-link" href="#">
                       <span data-feather="users"></span>
-                      Customers
+                      Users
                     </a>
                   </li>
                 </ul>
