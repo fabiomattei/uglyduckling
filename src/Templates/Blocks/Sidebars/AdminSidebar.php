@@ -29,6 +29,18 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_TABLE_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_TABLE_LIST ).'">
+                      <span data-feather="layers"></span>
+                      Tables
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_REPORT_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_REPORT_LIST ).'">
+                      <span data-feather="bar-chart-2"></span>
+                      Reports
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" href="#">
                       <span data-feather="shopping-cart"></span>
                       Products
@@ -38,18 +50,6 @@ class AdminSidebar extends BaseBlock {
                     <a class="nav-link" href="#">
                       <span data-feather="users"></span>
                       Customers
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span data-feather="bar-chart-2"></span>
-                      Reports
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span data-feather="layers"></span>
-                      Integrations
                     </a>
                   </li>
                 </ul>

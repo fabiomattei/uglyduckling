@@ -10,6 +10,8 @@ use Firststep\Controllers\Admin\Entity\EntityList;
 use Firststep\Controllers\Admin\Entity\EntityView;
 use Firststep\Controllers\Admin\Entity\EntityCreateTable;
 use Firststep\Controllers\Admin\Entity\EntityDropTable;
+use Firststep\Controllers\Admin\Table\TableList;
+use Firststep\Controllers\Admin\Report\ReportList;
 
 class Router {
 	
@@ -21,6 +23,8 @@ class Router {
 	const ROUTE_ADMIN_ENTITY_VIEW = 'adminentityview';
 	const ROUTE_ADMIN_ENTITY_CREATE_TABLE = 'adminentitycreatetable';
 	const ROUTE_ADMIN_ENTITY_DROP_TABLE = 'adminentitydroptable';
+	const ROUTE_ADMIN_TABLE_LIST = 'admintablelist';
+	const ROUTE_ADMIN_REPORT_LIST = 'adminreportlist';
 	
 	public function __construct( $basepath ) {
 		$this->basepath = $basepath;
@@ -36,6 +40,9 @@ class Router {
 			case self::ROUTE_ADMIN_ENTITY_VIEW:         $controller = new EntityView; break;
 			case self::ROUTE_ADMIN_ENTITY_CREATE_TABLE: $controller = new EntityCreateTable; break;
 			case self::ROUTE_ADMIN_ENTITY_DROP_TABLE:   $controller = new EntityDropTable; break;
+			case self::ROUTE_ADMIN_TABLE_LIST:          $controller = new TableList; break;
+			case self::ROUTE_ADMIN_REPORT_LIST:         $controller = new ReportList; break;
+			
             default: $controller = new Login; break;
         }
         return $controller;
