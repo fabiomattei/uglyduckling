@@ -3,7 +3,6 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\Controller;
-
 use Firststep\Templates\Blocks\Menus\GateMenu;
 use Firststep\Templates\Blocks\Sidebars\GateSidebar;
 use Firststep\Templates\Blocks\Graphs\LineGraph;
@@ -22,7 +21,7 @@ class Gate extends Controller {
 	public function getRequest() {
 		$info = new BaseInfo;
 		$info->setTitle( 'Links: ' );
-		$info->addParagraph( 'Table: '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_DROP_TABLE, 'res=requesttable' ), 'Table', Button::COLOR_GRAY.' '.Button::SMALL ), '');
+		$info->addParagraph( 'Table: '.Button::get($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, 'res=requesttable' ), 'Table', Button::COLOR_GRAY.' '.Button::SMALL ), '');
 		
 		
 		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Manager dashboard';

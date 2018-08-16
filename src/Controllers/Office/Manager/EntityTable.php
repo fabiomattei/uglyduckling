@@ -2,6 +2,17 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
+use Firststep\Common\Controllers\Controller;
+use Firststep\Templates\Blocks\Menus\AdminMenu;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
+use Firststep\Common\Json\JsonBlockParser;
+use Firststep\Common\Blocks\StaticTable;
+use Firststep\Common\Blocks\Button;
+use Firststep\Common\Router\Router;
+use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Builders\QueryBuilder;
+use Firststep\Common\Builders\TableBuilder;
+
 /**
  * User: fabio
  * Date: 16/08/2018
@@ -15,6 +26,7 @@ class EntityTable extends Controller {
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
+		$this->tableBuilder = new TableBuilder;
     }
 	
     /**
@@ -29,34 +41,16 @@ class EntityTable extends Controller {
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Entites list';
+		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+		$this->tableBuilder->setTableStructure( $this->resource->table );
+		$this->tableBuilder->setEntities( array() );
 		
-		$table = new StaticTable;
-		$table->setTitle('Entities list');
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		
-		$table->addTHead();
-		$table->addRow();
-		$table->addHeadLineColumn('Name');
-		$table->addHeadLineColumn('Type');
-		$table->addHeadLineColumn(''); // adding one more for actions
-		$table->closeRow();
-		$table->closeTHead();
-		
-		$table->addTBody();
-		foreach ( $this->jsonloader->getResourcesIndex() as $res ) {
-			if ( $res->type === 'entity' ) {
-				$table->addRow();
-				$table->addColumn($res->name);
-				$table->addColumn($res->type);
-				$table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
-				$table->closeRow();
-			}
-		}
-		$table->closeTBody();
 		
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
-		$this->centralcontainer = array( $table );
+		$this->centralcontainer = array( $this->tableBuilder->createTable() );
 	}
 
 }

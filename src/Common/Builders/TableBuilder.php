@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Builders;
 
-namespace Firststep\Common\Blocks\StaticTable;
+use Firststep\Common\Blocks\StaticTable;
 
 class TableBuilder {
 	
@@ -37,7 +37,7 @@ class TableBuilder {
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
 		foreach ($this->tableStructure->headlines as $th) {
-			$tableBlock->addHeadLineColumn($th);
+			$tableBlock->addHeadLineColumn($th->name);
 		}
 		$tableBlock->addHeadLineColumn(''); // adding one more for actions
 		$tableBlock->closeRow();
