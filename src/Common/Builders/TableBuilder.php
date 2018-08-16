@@ -49,7 +49,7 @@ class TableBuilder {
 			print_r($entity);
 			$tableBlock->addRow();
 			foreach ($this->tableStructure->fields as $field) {
-				$tableBlock->addColumn($entity->{$field});
+				$tableBlock->addColumn($entity->{$field->name});
 			}
 			foreach ($this->tableStructure->actions as $action) {
 				// TODO solve the link issue
