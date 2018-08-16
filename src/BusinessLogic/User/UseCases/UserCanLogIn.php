@@ -19,7 +19,7 @@ class UserCanLogIn {
 	}
 	
 	public function getUserCanLogIn() {
-		return $this->userCanLogIn;
+		return ( (isset($this->parameters['email']) AND isset($this->parameters['password']) ) ? $this->userCanLogIn : false );
 	}
 	
 }

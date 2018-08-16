@@ -53,7 +53,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(strpos($controller->centralcontainer[0]->show(), 'Sign in to continue to') !== false);
 	}
 	
-	public function testPostRequest() {
+	public function testPostRequestWithNoPostParameters() {
 		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$router->expects($this->once())->method('make_url')->will($this->returnValue(''));
 		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
@@ -82,6 +82,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 			$echologger,
 			$messages 
 		);
+		$controller->setPostParameters( array() );
 		$controller->userCanLogIn = $this->getMockBuilder(Firststep\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
 		$controller->userCanLogIn->expects($this->once())->method('getUserCanLogIn')->will($this->returnValue(false));
 		$router->expects($this->once())->method('make_url');
@@ -132,6 +133,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$user = new stdClass();
 		$user->usr_id = 1;
 		$user->usr_name = "fabio";
+		$user->usr_usrofid = 99;
 		$controller->userDao = $this->getMockBuilder(Firststep\BusinessLogic\User\Daos\UserDao::class)->getMock();
 		$controller->userDao->expects($this->once())->method('getOneByFields')->will($this->returnValue($user));
 		$router->expects($this->once())->method('make_url');
