@@ -42,8 +42,13 @@ class EntityTable extends Controller {
      */
 	public function getRequest() {
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+		
+		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+		$entities = $this->queryExecuter->executeQuery( $this->resource->query );
+		print_r($entities);
+		
 		$this->tableBuilder->setTableStructure( $this->resource->table );
-		$this->tableBuilder->setEntities( array() );
+		$this->tableBuilder->setEntities( $entities );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		

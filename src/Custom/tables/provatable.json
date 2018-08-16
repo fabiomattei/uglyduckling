@@ -30,6 +30,13 @@
       "amount",
       "duedate"
     ],
-    "entity":"entityrequestv1"
+    "entity":"mysqltablename",
+    "joins":[
+      { "type":"join", "entity":"mysecondtable", "joinon": "myifled_1 = myfield2" },
+      { "type":"left", "entity":"mythirdtable", "joinon": "myifled_2 = myfield3" }
+    ],
+    "conditions": [
+      { "field": "id", "operator": "=", "value": "id" }
+    ]
   }
 }
