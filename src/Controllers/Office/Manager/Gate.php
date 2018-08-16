@@ -10,7 +10,9 @@ use Firststep\Templates\Blocks\Graphs\LineGraph;
 use Firststep\Common\Blocks\StaticTable;
 
 /**
- * 
+ * User: fabio
+ * Date: 16/08/2018
+ * Time: 12:02
  */
 class Gate extends Controller {
 	
