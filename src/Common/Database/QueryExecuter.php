@@ -3,6 +3,7 @@
 namespace Firststep\Common\Database;
 
 use PDO;
+use Firststep\Common\Builders\QueryBuilder;
 
 /**
  * It executes queries on the database
@@ -63,13 +64,19 @@ class QueryExecuter {
      */
     function executeSelect() {
         try {
+			$this->queryBuilder = new QueryBuilder;
+			$this->queryBuilder->setQueryStructure( $this->queryStructure );
+			$this->queryBuilder->setParameters( $this->parameters );
+			echo "query ".$this->queryBuilder->createQuery();
             $STH = $this->DBH->query($this->queryBuilder->createQuery());
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
-            foreach ($this->queryStructure->conditions as $cond) {
-                $par =& $this->parameters[$value];
-                $STH->bindParam($cond->value, $par);
-            }
+			if ( isset($this->queryStructure->conditions) ) {
+            	foreach ($this->queryStructure->conditions as $cond) {
+                	$par =& $this->parameters[$value];
+               		$STH->bindParam($cond->value, $par);
+            	}
+			}
             
             return $STH;
         } catch (PDOException $e) {

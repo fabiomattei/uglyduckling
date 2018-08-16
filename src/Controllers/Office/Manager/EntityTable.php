@@ -44,8 +44,10 @@ class EntityTable extends Controller {
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		$entities = $this->queryExecuter->executeQuery( $this->resource->query );
-		print_r($entities);
+	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+	    $this->queryExecuter->setQueryStructure( $this->resource->query );
+	    // $this->queryExecuter->setParameters( $parameters )
+		$entities = $this->queryExecuter->executeQuery();
 		
 		$this->tableBuilder->setTableStructure( $this->resource->table );
 		$this->tableBuilder->setEntities( $entities );

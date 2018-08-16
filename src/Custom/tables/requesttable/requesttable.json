@@ -9,9 +9,9 @@
         { "name":"title 3" }
     ],
     "fields": [
-        { "name":"myt_field1" },
-        { "name":"myt_field2" },
-        { "name":"myt_field3" }
+        { "name":"name" },
+        { "name":"amount" },
+        { "name":"duedate" }
     ],
     "actions": [
         { "action":"edit", "entity":"mysqltablename", "parameters":[{"id":"idfield_1"}, {"id2":"idfield_2"}] },
@@ -30,6 +30,6 @@
       "amount",
       "duedate"
     ],
-    "entity":"entityrequestv1"
+    "entity":"requestv1"
   }
 }

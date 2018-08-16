@@ -50,30 +50,36 @@ class QueryBuilder {
     	}
     	$query=rtrim($query,', ');
     	$query .= ' FROM '.$this->queryStructure->entity.' ';
-    	foreach ($this->queryStructure->joins as $join) {
-    		if ($join->type == 'left') {
-    			$query .= ' LEFT JOIN ';	
+		
+		if ( isset( $this->queryStructure->joins ) ) {
+    		foreach ($this->queryStructure->joins as $join) {
+    			if ($join->type == 'left') {
+    				$query .= ' LEFT JOIN ';	
+    			}
+    			if ($join->type == 'right') {
+    				$query .= ' RIGHT JOIN ';	
+    			}
+    			if ($join->type == 'inner') {
+    				$query .= ' INNER JOIN ';	
+    			}
+    			if ($join->type == 'outer') {
+    				$query .= ' FULL OUTER JOIN ';	
+    			}
+    			if ($join->type == 'join') {
+    				$query .= ' JOIN ';	
+    			}
+    			$query .= $join->entity.' ON '.$join->joinon;
     		}
-    		if ($join->type == 'right') {
-    			$query .= ' RIGHT JOIN ';	
-    		}
-    		if ($join->type == 'inner') {
-    			$query .= ' INNER JOIN ';	
-    		}
-    		if ($join->type == 'outer') {
-    			$query .= ' FULL OUTER JOIN ';	
-    		}
-    		if ($join->type == 'join') {
-    			$query .= ' JOIN ';	
-    		}
-    		$query .= $join->entity.' ON '.$join->joinon;
-    	}
+		}
+		
     	if (count($this->queryStructure->conditions)>0) {
     		$query .= ' WHERE ';
     	}
-    	foreach ($this->queryStructure->conditions as $cond) {
-    		$query .= $cond->field.' '.$cond->operator.' :'.$cond->value.', ';
-    	}
+		if ( isset( $this->queryStructure->conditions ) ) {
+    		foreach ($this->queryStructure->conditions as $cond) {
+    			$query .= $cond->field.' '.$cond->operator.' :'.$cond->value.', ';
+    		}
+		}
         $query=rtrim($query,', ');
         return $query;
     }
