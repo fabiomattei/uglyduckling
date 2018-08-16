@@ -1,13 +1,13 @@
 <?php
 
-namespace Firststep\Controllers\Admin\Form;
+namespace Firststep\Controllers\Admin;
 
 use Firststep\Common\Controllers\Controller;
 
 /**
  * 
  */
-class FormCreateTable extends Controller {
+class DocumentView extends Controller {
 	
 	function __construct($argument) {
 		# code...

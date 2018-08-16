@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class FormList extends Controller {
+class DocumentList extends Controller {
 	
 	function __construct($argument) {
 		# code...
