@@ -15,8 +15,8 @@ use Firststep\Common\Builders\QueryBuilder;
 /**
  * 
  */
-class EntityCreateTable extends Controller {
-	
+class EntityDropTable extends Controller {
+
 	function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
@@ -42,16 +42,17 @@ class EntityCreateTable extends Controller {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity create';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity drop';
 		
 		$info = new BaseInfo;
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
+		
+		echo $this->queryBuilder->tableDrop($this->resource->entity->tablename);
 
-		$this->queryBuilder->setQueryStructure( $this->resource->entity );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->create() );
+		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->entity->tablename) );
 			
-		$info->addParagraph( 'Table created! ', '' );
+		$info->addParagraph( 'Table Dropped ', '' );
 		
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );

@@ -96,6 +96,30 @@ class QueryExecuter {
             $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
+	
+    /**
+     * It creates a table
+     */
+    function executeTableCreate( $query ) {
+        try {
+            $STH = $this->DBH->query( $query );
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+	
+    /**
+     * It drops a table
+     */
+    function executeTableDrop( $query ) {
+        try {
+            $STH = $this->DBH->query( $query );
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
 
     /**
      * Insert a row in the database.

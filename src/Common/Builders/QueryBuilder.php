@@ -111,6 +111,10 @@ class QueryBuilder {
     public function tableExists( $tablename ) {
         return 'SHOW TABLES LIKE \'' . $tablename . '\';';
     }
+	
+    public function tableDrop( $tablename ) {
+        return 'DROP TABLE ' . $tablename . ';';
+    }
 
     public function create() {
         $query = 'CREATE TABLE `'.$this->queryStructure->tablename.'` (';

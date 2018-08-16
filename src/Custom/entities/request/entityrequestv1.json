@@ -1,5 +1,5 @@
 { 
-  "name": "requestv1",
+  "name": "entityrequestv1",
   "metadata": { "type":"entity", "version": "1" },
   "entity": {
     "title": "Request v1",
