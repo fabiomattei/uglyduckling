@@ -1,5 +1,5 @@
 { 
-  "name": "provatable",
+  "name": "requesttable",
   "metadata": { "type":"table", "version": "1" },
   "table": {
     "title": "My table",

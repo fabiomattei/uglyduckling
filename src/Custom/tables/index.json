@@ -1,0 +1,7 @@
+{ 
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+      { "path":"./Custom/tables/requesttable/requesttable.json", "type":"table", "name":"requesttable" }
+  ]
+ }

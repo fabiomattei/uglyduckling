@@ -7,7 +7,7 @@ namespace Firststep\Controllers\Office\Manager;
  * Date: 16/08/2018
  * Time: 12:02
  */
-class Table extends Controller {
+class EntityTable extends Controller {
 
 	public $get_validation_rules = array( 'res' => 'required|max_len,50' );
     public $get_filter_rules     = array( 'res' => 'trim' );
