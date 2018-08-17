@@ -22,7 +22,7 @@ class Gate extends Controller {
 		$info = new BaseInfo;
 		$info->setTitle( 'Links: ' );
 		$info->addParagraph( 'Table: '.Button::get($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, 'res=requesttable' ), 'Table', Button::COLOR_GRAY.' '.Button::SMALL ), '');
-		
+		$info->addParagraph( 'Form: '.Button::get($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res=formrequestv1' ), 'Form', Button::COLOR_GRAY.' '.Button::SMALL ), '');
 		
 		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Manager dashboard';
 		$this->menucontainer          = array( new GateMenu( $this->setup->getAppNameForPageTitle(), 'admindashboard' ) );

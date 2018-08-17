@@ -45,8 +45,6 @@ class TableBuilder {
 		
 		$tableBlock->addTBody();
 		foreach ($this->entities as $entity) {
-			echo "e 1";
-			print_r($entity);
 			$tableBlock->addRow();
 			foreach ($this->tableStructure->fields as $field) {
 				$tableBlock->addColumn($entity->{$field->name});

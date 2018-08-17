@@ -5,6 +5,7 @@ namespace Firststep\Common\Router;
 use Firststep\Controllers\Office\Document\Inbox;
 use Firststep\Controllers\Office\Manager\Gate;
 use Firststep\Controllers\Office\Manager\EntityTable;
+use Firststep\Controllers\Office\Manager\EntityForm;
 use Firststep\Controllers\Community\Login;
 use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
 use Firststep\Controllers\Admin\Entity\EntityList;
@@ -19,6 +20,7 @@ class Router {
 	const ROUTE_OFFICE_INBOX              = 'officeinbox';
 	const ROUTE_OFFICE_GATE               = 'officegate';
 	const ROUTE_OFFICE_ENTITY_TABLE       = 'officeentitytable';
+	const ROUTE_OFFICE_ENTITY_FORM        = 'officeentityform';
 	const ROUTE_COMMUNITY_LOGIN           = 'communitylogin';
 	const ROUTE_ADMIN_DASHBOARD           = 'admindashboard';
 	const ROUTE_ADMIN_ENTITY_LIST         = 'adminentitylist';
@@ -37,6 +39,7 @@ class Router {
             case self::ROUTE_OFFICE_INBOX:              $controller = new Inbox; break;
 			case self::ROUTE_OFFICE_GATE:               $controller = new Gate; break;
 			case self::ROUTE_OFFICE_ENTITY_TABLE:       $controller = new EntityTable; break;
+			case self::ROUTE_OFFICE_ENTITY_FORM:        $controller = new EntityForm; break;
 			case self::ROUTE_COMMUNITY_LOGIN:           $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:           $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_ENTITY_LIST:         $controller = new EntityList; break;
