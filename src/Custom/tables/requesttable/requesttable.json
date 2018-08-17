@@ -14,8 +14,8 @@
         { "name":"duedate" }
     ],
     "actions": [
-        { "lable":"Edit", "action":"edit", "resource":"entityform", "parameters":[{"name":"id", "value":"name"}] },
-        { "lable":"Edit", "action":"delete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"name"}] }
+        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
+        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
     ]
   },
   "request": {
@@ -26,7 +26,8 @@
   "query": {
     "type":"select",
     "fields": [
-      "name",
+      "id",
+	  "name",
       "amount",
       "duedate"
     ],

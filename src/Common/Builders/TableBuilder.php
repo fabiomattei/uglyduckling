@@ -55,9 +55,9 @@ class TableBuilder {
 			}
 			$links = '';
 			foreach ( $this->tableStructure->actions as $action ) {
-				$links .= LinkBuilder::get( $router, $action->lable, $action->action, $action->resource, $action->parameters, $entity );
+				$links .= LinkBuilder::get( $this->router, $action->lable, $action->action, $action->resource, $action->parameters, $entity );
 			}
-			$tableBlock->addColumn( $links );
+			$tableBlock->addUnfilteredColumn( $links );
 			$tableBlock->closeRow();
 		}
 		$tableBlock->closeTBody();

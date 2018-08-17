@@ -9,6 +9,7 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Router\Router;
+use Firststep\Common\Blocks\Button;
 
 class LinkBuilder {
 
@@ -17,7 +18,7 @@ class LinkBuilder {
         foreach ($parameters as $par) {
             $url_parameters .= $par->name.'='.$entity->{$par->value}.'&';
         }
-        $url_parameters = rtrim($url_parameters, '?');
+        $url_parameters = rtrim($url_parameters, '&');
         switch ( $action ) {
             case 'entitytable':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL); 

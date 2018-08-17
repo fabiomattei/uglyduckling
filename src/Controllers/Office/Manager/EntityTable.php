@@ -49,6 +49,7 @@ class EntityTable extends Controller {
 	    // $this->queryExecuter->setParameters( $parameters )
 		$entities = $this->queryExecuter->executeQuery();
 		
+		$this->tableBuilder->setRouter( $this->router );
 		$this->tableBuilder->setTableStructure( $this->resource->table );
 		$this->tableBuilder->setEntities( $entities );
 		
