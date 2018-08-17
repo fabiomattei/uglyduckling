@@ -50,6 +50,8 @@ class EntityCreateTable extends Controller {
 
 		$this->queryBuilder->setQueryStructure( $this->resource->entity );
 		$this->queryExecuter->executeTableCreate( $this->queryBuilder->create() );
+		$this->queryExecuter->executeTableCreate( $this->queryBuilder->primarykey() );
+		$this->queryExecuter->executeTableCreate( $this->queryBuilder->autoincrement() );
 			
 		$info->addParagraph( 'Table created! ', '' );
 		
