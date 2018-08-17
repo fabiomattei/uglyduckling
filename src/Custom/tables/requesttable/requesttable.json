@@ -14,8 +14,8 @@
         { "name":"duedate" }
     ],
     "actions": [
-        { "action":"edit", "entity":"mysqltablename", "parameters":[{"id":"idfield_1"}, {"id2":"idfield_2"}] },
-        { "action":"delete", "entity":"mysqltablename", "parameters":[{"id":"idfield_1"}, {"id2":"idfield_2"}] }
+        { "lable":"Edit", "action":"edit", "resource":"entityform", "parameters":[{"name":"id", "value":"name"}] },
+        { "lable":"Edit", "action":"delete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"name"}] }
     ]
   },
   "request": {

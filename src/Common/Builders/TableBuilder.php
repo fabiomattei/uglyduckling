@@ -30,6 +30,10 @@ class TableBuilder {
         $this->entities = $entities;
     }
 
+    public function setRouter( $router ) {
+    	$this->router = $router;
+    }
+
     public function createTable() {
 		$tableBlock = new StaticTable;
 		$tableBlock->setTitle($this->tableStructure->title);
@@ -49,9 +53,11 @@ class TableBuilder {
 			foreach ($this->tableStructure->fields as $field) {
 				$tableBlock->addColumn($entity->{$field->name});
 			}
-			foreach ($this->tableStructure->actions as $action) {
-				// TODO solve the link issue
+			$links = '';
+			foreach ( $this->tableStructure->actions as $action ) {
+				$links .= LinkBuilder::get( $router, $action->lable, $action->action, $action->resource, $action->parameters, $entity );
 			}
+			$tableBlock->addColumn( $links );
 			$tableBlock->closeRow();
 		}
 		$tableBlock->closeTBody();
