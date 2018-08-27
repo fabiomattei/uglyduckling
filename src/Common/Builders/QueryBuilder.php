@@ -81,6 +81,7 @@ class QueryBuilder {
     		}
 		}
         $query=rtrim($query,', ');
+        $query.=';';
         return $query;
     }
 

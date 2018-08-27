@@ -67,6 +67,10 @@ class QueryExecuter {
 			$this->queryBuilder = new QueryBuilder;
 			$this->queryBuilder->setQueryStructure( $this->queryStructure );
 			$this->queryBuilder->setParameters( $this->parameters );
+
+echo($this->queryBuilder->createQuery());
+print_r($this->queryStructure->conditions);
+            
             $STH = $this->DBH->query($this->queryBuilder->createQuery());
             $STH->setFetchMode(PDO::FETCH_OBJ);
 

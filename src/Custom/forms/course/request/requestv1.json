@@ -35,21 +35,19 @@
 	],
 	"request": {
 		"parameters": [
-			{ "type":"int", "validation":"required|int", "name":"1" }
+			{ "type":"integer", "validation":"required|integer", "name":"id" }
 		]
 	},
 	"query": {
-		"fields": [
-			"myt_field1",
-			"myt_field2",
-			"myt_field3"
-		],
-		"mainentity":"mysqltablename",
-		"joins":[
-			{ "tablename":"mysecondtable", "joinon": "myifled_1 = myfield2" },
-			{ "tablename":"mythirdtable", "joinon": "myifled_2 = myfield3" }
-		],
-		"conditions": [
+		"type":"select",
+    		"fields": [
+      		"id",
+	  		"name",
+      		"amount",
+      		"duedate"
+    		],
+    	"entity":"requestv1",
+		"conditions":[
 			{ "field": "id", "operator": "=", "value": "id" }
 		]
 	}

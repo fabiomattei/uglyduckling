@@ -12,6 +12,8 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\FormBuilder;
+use Firststep\Common\Builders\ValidationBuilder;
+use Gump;
 
 /**
  * User: fabio
@@ -28,36 +30,101 @@ class EntityForm extends Controller {
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
     }
-	
-    /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-		$this->jsonloader->loadIndex();
-		parent::showPage(); 
+
+    public function loadResource() {
+    	$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
     }
 	
     /**
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
-		
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    // $this->queryExecuter->setParameters( $parameters )
+	    $this->queryExecuter->setParameters( $this->internalGetParameters );
+	    echo "ecco";
+
 		$entity = $this->queryExecuter->executeQuery();
 		
+		print_r($entity);
+
 		$this->formBuilder->setFormStructure( $this->resource->form );
 		$this->formBuilder->setEntity( $entity );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
-		
-		
+	
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 	}
+
+	/**
+     * check the parameters sent through the url and check if they are ok from
+     * the point of view of the validation rules
+     */
+    public function second_check_get_request() {
+    	$this->secondGump = new Gump;
+
+    	$val = new ValidationBuilder;
+    	$validation_rules = $val->postValidationRoules( $this->resource->request->parameters );
+    	$filter_rules = $val->postValidationFilters( $this->resource->request->parameters );
+
+        if ( count( $validation_rules ) == 0 ) {
+            return true;
+        } else {
+            $parms = $this->secondGump->sanitize( $this->getParameters );
+            $this->secondGump->validation_rules( $validation_rules );
+            $this->secondGump->filter_rules( $filter_rules );
+            $this->internalGetParameters = $this->secondGump->run( $parms );
+			$this->unvalidated_parameters = $parms;
+            if ( $this->internalGetParameters === false ) {
+				$this->readableErrors = $this->secondGump->get_readable_errors(true);
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    public function showPage() {
+        $time_start = microtime(true);
+
+        $this->jsonloader->loadIndex();
+
+        if ($this->serverWrapper->isGetRequest()) {
+			if ( $this->check_authorization_get_request() ) {
+	            if ( $this->check_get_request() ) {
+	            	$this->loadResource();
+	            	if ( $this->second_check_get_request() ) {
+	            		$this->getRequest();	
+	            	} else {
+	                	$this->show_get_error_page();
+	            	}
+	            } else {
+	                $this->show_get_error_page();
+	            }
+			} else {
+				$this->check_authorization_get_request();
+			}
+        } else {
+			if ( $this->check_authorization_post_request() ) {
+	            if ( $this->check_post_request() ) {
+	                $this->postRequest();
+	            } else {
+	                $this->show_post_error_page();
+	            }
+			} else {
+				$this->check_authorization_post_request();
+			}
+        }
+
+        $this->loadTemplate();
+
+        $time_end = microtime(true);
+        if (($time_end - $time_start) > 5) {
+            $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+        }
+    }
 
 }
