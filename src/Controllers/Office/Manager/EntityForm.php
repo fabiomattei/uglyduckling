@@ -43,10 +43,9 @@ class EntityForm extends Controller {
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    $this->queryExecuter->setQueryStructure( $this->resource->query );
 	    $this->queryExecuter->setParameters( $this->internalGetParameters );
-	    echo "ecco";
 
-		$entity = $this->queryExecuter->executeQuery();
-		
+		$result = $this->queryExecuter->executeQuery();
+		$entity = $result->fetch();
 		print_r($entity);
 
 		$this->formBuilder->setFormStructure( $this->resource->form );

@@ -37,7 +37,7 @@ class FormBuilder {
 			$formBlock->addRow();
 			foreach ($row->fields as $field) {
 				$fieldname = $field->value;
-				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? $this->entity->$fieldname : '' ) );
+				$value = ($this->entity == null ? '' : ( isset($this->entity->{$fieldname}) ? $this->entity->{$fieldname} : '' ) );
                 if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value, $field->width);
                 }

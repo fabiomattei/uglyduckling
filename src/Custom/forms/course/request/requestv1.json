@@ -8,14 +8,14 @@
 			{ 
 				"row":"1",
 				"fields": [
-					{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"myt_field1", "width":"6" },
-					{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"myt_field1", "width":"6" }
+					{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6" },
+					{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6" }
 				]
 			},
 			{ 
 				"row":"2",
 				"fields": [
-					{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"myt_field1", "width":"12" },
+					{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12" },
 					{ "type":"hidden", "validation":"required|int", "name":"id", "value":"myt_field1", "width":"0" }
 				]
 			}

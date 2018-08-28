@@ -2,6 +2,8 @@
 
 namespace Firststep\Common\Exceptions;
 
+use Exception;
+
 /**
  * Created fabio
  * Date: 08/01/2018

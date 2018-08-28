@@ -67,19 +67,18 @@ class QueryExecuter {
 			$this->queryBuilder = new QueryBuilder;
 			$this->queryBuilder->setQueryStructure( $this->queryStructure );
 			$this->queryBuilder->setParameters( $this->parameters );
-
-echo($this->queryBuilder->createQuery());
-print_r($this->queryStructure->conditions);
             
-            $STH = $this->DBH->query($this->queryBuilder->createQuery());
+            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
 			if ( isset($this->queryStructure->conditions) ) {
             	foreach ($this->queryStructure->conditions as $cond) {
-                	$par =& $this->parameters[$value];
-               		$STH->bindParam($cond->value, $par);
+                	$par =& $this->parameters[$cond->value];
+               		$STH->bindParam(':'.$cond->value, $par);
             	}
 			}
+
+            $STH->execute();
             
             return $STH;
         } catch (PDOException $e) {
