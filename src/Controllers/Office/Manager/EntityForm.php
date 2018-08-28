@@ -46,7 +46,6 @@ class EntityForm extends Controller {
 
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
-		print_r($entity);
 
 		$this->formBuilder->setFormStructure( $this->resource->form );
 		$this->formBuilder->setEntity( $entity );
