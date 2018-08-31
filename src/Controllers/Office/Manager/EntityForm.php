@@ -16,7 +16,7 @@ use Firststep\Common\Builders\ValidationBuilder;
 use Gump;
 
 /**
- * User: fabio
+ * User: Fabio
  * Date: 17/08/2018
  * Time: 07:07
  */
@@ -84,6 +84,27 @@ class EntityForm extends Controller {
             }
         }
     }
+	
+	public function postRequest() {
+		/*
+		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+	    $this->queryExecuter->setQueryStructure( $this->resource->query );
+	    $this->queryExecuter->setParameters( $this->internalGetParameters );
+
+		$result = $this->queryExecuter->executeQuery();
+		$entity = $result->fetch();
+		*/
+
+		$this->formBuilder->setFormStructure( $this->resource->form );
+		$this->formBuilder->setEntity( $entity );
+		
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
+	
+		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->centralcontainer = array( $this->formBuilder->createForm() );
+	}
 
     public function showPage() {
         $time_start = microtime(true);
@@ -124,5 +145,7 @@ class EntityForm extends Controller {
             $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
+	
+	
 
 }

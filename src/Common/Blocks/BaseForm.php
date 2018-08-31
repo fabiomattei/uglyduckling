@@ -8,10 +8,12 @@ class BaseForm extends BaseBlock {
 
     private $title;
     private $subtitle;
+    private $action;
 
     function __construct() {
         $this->body = '';
 		$this->adddate = false;
+		$this->action = '';
     }
 	
 	function setTitle( string $title ) {
@@ -21,13 +23,17 @@ class BaseForm extends BaseBlock {
 	function setSubTitle( string $subTitle ) {
 		$this->subTitle = $subTitle;
 	}
+	
+	function setAction( string $action ) {
+		$this->action = $action;
+	}
 
     function show(): string {
         $out = '<h3>' . $this->title . '</h3>';
         if ( $this->subtitle != '' ) {
             $out .= '<p>' . $this->subtitle . '</p>';
         }
-        $out .= '<form action="" method="POST" class="form-horizontal">';
+        $out .= '<form action="'.$this->action.'" method="POST" class="form-horizontal">';
         $out .= $this->body;
         $out .= '</form>';
         return $out;
