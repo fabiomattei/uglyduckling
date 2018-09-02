@@ -2,7 +2,7 @@
 
 /**
  * User: fabio
- * Date: 4/08/2018
+ * Date: 04/08/2018
  * Time: 20:59
  */
 
@@ -12,36 +12,36 @@ class ValidationBuilder {
 	
 	public function getValidationRoules( $parameters ) {
 		$rules = array();
-		$parnum = 0;
-		foreach ($parameters as $par) {
-			$rules[$parnum] = $par->validation;
-			$parnum++;
-		}
-		return $rules;
-	}
-	
-	public function getValidationFilters( $parameters ) {
-		$filters = array();
-		$parnum = 0;
-		foreach ($parameters as $par) {
-			$filters[$parnum] = 'trim';
-			$parnum++;
-		}
-		return $filters;
-	}
-	
-	public function postValidationRoules( $parameters ) {
-		$rules = array();
 		foreach ($parameters as $par) {
 			$rules[$par->name] = $par->validation;
 		}
 		return $rules;
 	}
 	
-	public function postValidationFilters( $parameters ) {
+	public function getValidationFilters( $parameters ) {
 		$filters = array();
 		foreach ($parameters as $par) {
 			$filters[$par->name] = 'trim';
+		}
+		return $filters;
+	}
+
+	public function postValidationRoules( $rows ) {
+		$rules = array();
+		foreach ($rows as $row) {
+			foreach ( $row->fields as $field ) {
+				$rules[$field->name] = $field->validation;
+			}
+		}
+		return $rules;
+	}
+	
+	public function postValidationFilters( $rows ) {
+		$filters = array();
+		foreach ($rows as $row) {
+			foreach ( $row->fields as $field ) {
+				$filters[$field->name] = 'trim';
+			}
 		}
 		return $filters;
 	}

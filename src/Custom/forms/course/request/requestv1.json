@@ -16,7 +16,7 @@
 				"row":"2",
 				"fields": [
 					{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12" },
-					{ "type":"hidden", "validation":"required|int", "name":"id", "value":"myt_field1", "width":"0" }
+					{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id" }
 				]
 			}
 		]

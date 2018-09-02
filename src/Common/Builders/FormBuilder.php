@@ -56,9 +56,15 @@ class FormBuilder {
                 if ($field->type === 'date') {
                     $formBlock->addDateField($field->name, $field->label, $value, $field->width);
                 }
+                if ($field->type === 'hidden') {
+                    $formBlock->addHiddenField($field->name, $value);
+                }
 			}
 			$formBlock->closeRow('row '.$row->row);
 		}
+        $formBlock->addRow();
+        $formBlock->addSubmitButton( 'save', $this->formStructure->submitTitle );
+        $formBlock->closeRow('row save');
         return $formBlock;
     }
 
