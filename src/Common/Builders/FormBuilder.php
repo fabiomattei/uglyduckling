@@ -30,9 +30,18 @@ class FormBuilder {
         $this->entity = $entity;
     }
 
+    /**
+     * Set the complete URL for the form action
+     * @param action $action
+     */
+    public function setAction( $action ) {
+        $this->action = $action;
+    }
+
     public function createForm() {
 		$formBlock = new BaseForm;
 		$formBlock->setTitle($this->formStructure->title);
+        $formBlock->setAction( $this->action );
 		foreach ($this->formStructure->rows as $row) {
 			$formBlock->addRow();
 			foreach ($row->fields as $field) {
