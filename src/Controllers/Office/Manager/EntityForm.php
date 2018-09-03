@@ -87,25 +87,18 @@ class EntityForm extends Controller {
     }
 	
 	public function postRequest() {
-		/*
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setParameters( $this->internalGetParameters );
 
-		$result = $this->queryExecuter->executeQuery();
-		$entity = $result->fetch();
-		*/
+		foreach ($this->resource->logics as $logic) {
+			print_r($logic);
+			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+	    	$this->queryExecuter->setQueryStructure( $logic );
+	    	$this->queryExecuter->setParameters( $this->postParameters );
 
-		$this->formBuilder->setFormStructure( $this->resource->form );
-		$this->formBuilder->setEntity( $entity );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ) );
-		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
-	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
-		$this->centralcontainer = array( $this->formBuilder->createForm() );
+			$this->queryExecuter->executeQuery();
+		}
+
+		$this->redirectToPreviousPage();
 	}
 
 	/**
@@ -184,6 +177,5 @@ class EntityForm extends Controller {
     public function show_second_get_error_page() {
         throw new ErrorPageException('Error page exception function show_get_error_page()');
     }
-	
 
 }

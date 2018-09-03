@@ -90,7 +90,25 @@ class QueryBuilder {
     }
 
 	public function update() {
-    	# code...
+        $query = 'UPDATE ';
+        $query .= $this->queryStructure->entity.' SET ';
+
+        foreach ($this->queryStructure->fields as $field) {
+            $query .= $field->field.' '.$field->operator.' :'.$field->value.', ';
+        }
+        $query=rtrim($query,', ');
+        
+        if (count($this->queryStructure->conditions)>0) {
+            $query .= ' WHERE ';
+        }
+        if ( isset( $this->queryStructure->conditions ) ) {
+            foreach ($this->queryStructure->conditions as $cond) {
+                $query .= $cond->field.' '.$cond->operator.' :'.$cond->value.', ';
+            }
+        }
+        $query=rtrim($query,', ');
+        $query.=';';
+        return $query;
     }
 
     public function delete() {

@@ -23,10 +23,11 @@
 	},
 	"logics": [
 		{  "type": "update",
-			"entity": "request",
+			"entity": "requestv1",
 			"fields": [
-				{ "field": "fieldname", "operation": "add", "value": "amount" },
-				{ "field": "field2name", "operation": "overwrite", "value": "name" }
+				{ "field": "name", "operator": "=", "value": "name" },
+				{ "field": "amount", "operator": "=", "value": "amount" },
+				{ "field": "duedate", "operator": "=", "value": "duedate" }
 			],
 			"conditions": [
 				{ "field": "id", "operator": "=", "value": "id" }

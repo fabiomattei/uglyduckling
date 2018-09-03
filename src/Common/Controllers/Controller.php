@@ -297,7 +297,7 @@ class Controller {
      */
     public function redirectToPreviousPage() {
         // avoid end of round here...
-        $this->urlredirector->setURL($this->request->getSecondRequestedURL());
+        $this->urlredirector->setURL($this->sessionWrapper->getSecondRequestedURL());
         $this->urlredirector->redirect();
     }
 
@@ -307,7 +307,7 @@ class Controller {
      */
     public function redirectToSecondPreviousPage() {
         // avoid end of round here...
-        $this->urlredirector->setURL($this->request->getThirdRequestedURL());
+        $this->urlredirector->setURL($this->sessionWrapper->getThirdRequestedURL());
         $this->urlredirector->redirect();
     }
 

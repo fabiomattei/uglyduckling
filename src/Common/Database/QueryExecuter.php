@@ -177,7 +177,41 @@ class QueryExecuter {
      * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
      *
      */
-    function update($id, $fields) {
+    function update() {
+        try {
+            $this->queryBuilder = new QueryBuilder;
+            $this->queryBuilder->setQueryStructure( $this->queryStructure );
+            $this->queryBuilder->setParameters( $this->parameters );
+            
+            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+
+            if ( isset($this->queryStructure->fields) ) {
+                foreach ($this->queryStructure->fields as $field) {
+                    $par =& $this->parameters[$field->value];
+                    $STH->bindParam(':'.$field->value, $par);
+                }
+            }
+
+            if ( isset($this->queryStructure->conditions) ) {
+                foreach ($this->queryStructure->conditions as $cond) {
+                    $par =& $this->parameters[$cond->value];
+                    $STH->bindParam(':'.$cond->value, $par);
+                }
+            }
+
+            $STH->execute();
+            
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+
+
+
+
+
+
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';

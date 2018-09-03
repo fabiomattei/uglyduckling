@@ -66,8 +66,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 $controller->setGetParameters( $_GET );
 $controller->setPostParameters( $_POST );
 
-// $controller->setRequest( $request );
-// $controller->setControllerPath( OFFICE, CHAPTER, CONTROLLER );
+$sessionWrapper->setRequestedURL( $severWrapper->getRequestURI() );
 $controller->showPage();
 
 $sessionWrapper->endOfRound();
