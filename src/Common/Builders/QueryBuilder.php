@@ -86,7 +86,22 @@ class QueryBuilder {
     }
 
     public function insert() {
-    	# code...
+        $query = 'INSERT INTO ';
+        $query .= $this->queryStructure->entity.' (';
+
+        foreach ($this->queryStructure->fields as $field) {
+            $query .= $field->field.', ';
+        }
+        $query=rtrim($query,', ');
+		$query .= ' ) VALUES (';
+		
+        foreach ($this->queryStructure->fields as $field) {
+            $query .= ':'.$field->value.', ';
+        }
+        $query=rtrim($query,', ');
+		
+        $query.=');';
+        return $query;
     }
 
 	public function update() {
@@ -112,7 +127,20 @@ class QueryBuilder {
     }
 
     public function delete() {
-    	# code...
+        $query = 'DELETE FROM ';
+        $query .= $this->queryStructure->entity.' ';
+		
+        if (count($this->queryStructure->conditions)>0) {
+            $query .= ' WHERE ';
+        }
+        if ( isset( $this->queryStructure->conditions ) ) {
+            foreach ($this->queryStructure->conditions as $cond) {
+                $query .= $cond->field.' '.$cond->operator.' :'.$cond->value.', ';
+            }
+        }
+        $query=rtrim($query,', ');
+        $query.=';';
+        return $query;
     }
 
 	/**
