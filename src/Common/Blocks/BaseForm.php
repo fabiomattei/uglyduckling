@@ -60,8 +60,12 @@ class BaseForm extends BaseBlock {
 	}
 	
 	function addDateField( string $name, string $label, string $value, string $width ) {
+		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="date" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" ></div>';
+	}
+	
+	function addDateField_oldstyle( string $name, string $label, string $value, string $width ) {
 		$this->adddate = true;
-		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="text" class="datepicker" id="'.$name.'" name="'.$name.'" value="'.date( 'd/m/Y', strtotime($value) ).'" ></div>';
+		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="date" class="datepicker" id="'.$name.'" name="'.$name.'" value="'.date( 'd/m/Y', strtotime($value) ).'" ></div>';
 	}
 
     function addFileUploadField( string $name, string $label, string $width ) {

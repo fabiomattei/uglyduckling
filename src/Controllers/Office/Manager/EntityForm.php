@@ -90,7 +90,6 @@ class EntityForm extends Controller {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
 		foreach ($this->resource->logics as $logic) {
-			print_r($logic);
 			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    	$this->queryExecuter->setQueryStructure( $logic );
 	    	$this->queryExecuter->setParameters( $this->postParameters );
