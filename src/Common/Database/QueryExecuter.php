@@ -206,31 +206,6 @@ class QueryExecuter {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
-
-
-
-
-
-
-        $presentmoment = date('Y-m-d H:i:s', time());
-
-        $filedslist = '';
-        foreach ($fields as $key => $value) {
-            $filedslist .= $key . ' = :' . $key . ', ';
-        }
-        $filedslist = substr($filedslist, 0, -2);
-        try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id');
-            foreach ($fields as $key => &$value) {
-                $STH->bindParam($key, $value);
-            }
-            $STH->bindParam(':id', $id);
-            $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
-        }
     }
 
     /**
