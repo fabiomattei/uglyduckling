@@ -1,0 +1,45 @@
+{ 
+  "name": "requestexport",
+  "metadata": { "type":"table", "version": "1" },
+  "table": {
+    "title": "My table",
+    "headlines": [
+        { "name":"Name" },
+        { "name":"Amount" },
+        { "name":"Due date" }
+    ],
+    "fields": [
+        { "name":"name" },
+        { "name":"amount" },
+        { "name":"duedate" }
+    ]
+  },
+  "aggregation": [
+    { "label":"Total amount", "operator": "+", "field":"amount" },	
+  ],
+  "form": {
+  	"title": "Serch between all requests",
+  	"submitTitle": "Search",
+  	"rows": [
+  		{ 
+  			"row":"1",
+  			"fields": [
+  				{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12" }
+  			]
+  		}
+  	]
+  },
+  "query": {
+    "type":"select",
+    "fields": [
+      "id",
+	  "name",
+      "amount",
+      "duedate"
+    ],
+    "entity":"requestv1",
+	"conditions": [
+		{ "field": "name", "operator": "=", "value": "name" }
+	]
+  }
+}
