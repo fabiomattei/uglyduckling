@@ -1,0 +1,58 @@
+{ 
+	"name": "subscriptionv1",
+	"metadata": { "type":"docuemtn", "version": "1" },
+	"allowedgroups": [ "administrationgroup", "teachergroup" ],
+	"title": [ "name", "amount" ],
+	"form": {
+		"title": "My new form",
+		"submitTitle": "Save",
+		"rows": [
+			{ 
+				"row":"1",
+				"fields": [
+					{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6" },
+					{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6" }
+				]
+			},
+			{ 
+				"row":"2",
+				"fields": [
+					{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12" },
+					{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id" }
+				]
+			}
+		]
+	},
+	"logics": [
+		{
+		"oninsert": [
+			{  	"type": "update",
+				"entity": "requestv1",
+				"fields": [
+					{ "field": "name", "operator": "=", "value": "name" },
+					{ "field": "amount", "operator": "=", "value": "amount" },
+					{ "field": "duedate", "operator": "=", "value": "duedate" }
+				],
+				"conditions": [
+					{ "field": "id", "operator": "=", "value": "id" }
+				]
+			}
+		],
+		"onupdate": [],
+		"ondelete": []
+		}
+	],
+	"query": {
+		"type":"select",
+    		"fields": [
+      		"id",
+	  		"name",
+      		"amount",
+      		"duedate"
+    		],
+    	"entity":"requestv1",
+		"conditions":[
+			{ "field": "id", "operator": "=", "value": "id" }
+		]
+	}
+}
