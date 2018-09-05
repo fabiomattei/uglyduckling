@@ -1,6 +1,6 @@
 { 
 	"name": "subscriptionv1",
-	"metadata": { "type":"docuemtn", "version": "1" },
+	"metadata": { "type":"document", "version": "1" },
 	"allowedgroups": [ "administrationgroup", "teachergroup" ],
 	"title": [ "name", "amount" ],
 	"form": {
@@ -41,18 +41,5 @@
 		"onupdate": [],
 		"ondelete": []
 		}
-	],
-	"query": {
-		"type":"select",
-    		"fields": [
-      		"id",
-	  		"name",
-      		"amount",
-      		"duedate"
-    		],
-    	"entity":"requestv1",
-		"conditions":[
-			{ "field": "id", "operator": "=", "value": "id" }
-		]
-	}
+	]
 }
