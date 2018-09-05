@@ -1,6 +1,7 @@
 { 
   "name": "requestexport",
-  "metadata": { "type":"table", "version": "1" },
+  "metadata": { "type":"report", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup" ],
   "table": {
     "title": "My table",
     "headlines": [
