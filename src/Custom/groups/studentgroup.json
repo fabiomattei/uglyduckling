@@ -1,0 +1,32 @@
+{ 
+  "name": "studentgroup",
+  "metadata": { "type":"group", "version": "1" },
+  "dashboard": [
+      { "resource":"mydashboardv1" }
+  ],
+  "resources": [
+    "myscript1",
+    "myscript2",
+    "myscript3"
+  ],
+  "menu": [
+    {
+      "title":"My perfect dashboard",
+      "resource":"mydashboardv1"
+    },
+    {
+      "title":"Management",
+      "submenu": [
+            {
+              "title":"My perfect dashboard",
+              "resource":"mydashboardv1"
+            },
+            {
+              "title":"My perfect dashboard",
+              "resource":"mydashboardv1"
+            }
+      ]
+    }
+     
+  ]
+}

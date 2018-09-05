@@ -1,6 +1,6 @@
 { 
-  "name": "group",
-  "metadata": { "type":"index", "version": "1" },
+  "name": "administrationgroup",
+  "metadata": { "type":"group", "version": "1" },
   "dashboard": [
       { "resource":"mydashboardv1" }
   ],
