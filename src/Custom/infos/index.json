@@ -1,0 +1,7 @@
+{ 
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+      { "path":"./Custom/infos/request/inforequestv1.json", "type":"info", "name":"inforequestv1" }
+  ]
+ }

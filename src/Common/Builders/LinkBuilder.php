@@ -26,6 +26,9 @@ class LinkBuilder {
             case 'entityform':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
+            case 'entityinfo':
+                return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+                break;
             
             default:
                 return '#';

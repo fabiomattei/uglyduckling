@@ -15,8 +15,9 @@
         { "name":"duedate" }
     ],
     "actions": [
+        { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] },
         { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
-        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
+        { "lable":"Delete", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
     ]
   },
   "request": {
