@@ -1,5 +1,5 @@
 { 
-  "name": "requestexport",
+  "name": "requestexportv1",
   "metadata": { "type":"export", "version": "1" },
   "allowedgroups": [ "administrationgroup", "teachergroup" ],
   "table": {
