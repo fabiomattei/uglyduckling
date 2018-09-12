@@ -29,6 +29,12 @@ class LinkBuilder {
             case 'entityinfo':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
+            case 'entitysearch':
+                return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+                break;
+            case 'entityexport':
+                return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+                break;
             
             default:
                 return '#';
