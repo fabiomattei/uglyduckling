@@ -1,5 +1,5 @@
 { 
-	"name": "subscriptionv1",
+	"name": "documentsubscriptionv1",
 	"metadata": { "type":"document", "version": "1" },
 	"allowedgroups": [ "administrationgroup", "teachergroup" ],
 	"title": [ "name", "amount" ],
