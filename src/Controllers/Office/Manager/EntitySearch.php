@@ -12,6 +12,7 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\InfoBuilder;
+use Firststep\Common\Builders\TableBuilder;
 use Firststep\Common\Builders\ValidationBuilder;
 use Gump;
 
@@ -28,7 +29,8 @@ class EntitySearch extends Controller {
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
-		$this->infoBuilder = new InfoBuilder;
+		$this->formBuilder = new FormBuilder;
+		$this->tableBuilder = new TableBuilder;
     }
 
     public function loadResource() {
@@ -47,14 +49,20 @@ class EntitySearch extends Controller {
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
 
-		$this->infoBuilder->setFormStructure( $this->resource->form );
-		$this->infoBuilder->setEntity( $entity );
+		$this->formBuilder->setFormStructure( $this->resource->form );
+		$this->formBuilder->setEntity( $entity );
+		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ) );
+
+		$this->tableBuilder->setRouter( $this->router );
+		$this->tableBuilder->setTableStructure( $this->resource->table );
+		$this->tableBuilder->setEntities( array() );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
 	
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
-		$this->centralcontainer = array( $this->infoBuilder->createInfo() );
+		$this->centralcontainer = array( $this->formBuilder->createForm() );
+		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
 	}
 
 	/**
@@ -62,21 +70,69 @@ class EntitySearch extends Controller {
      * the point of view of the validation rules
      */
     public function second_check_get_request() {
+    	if (isset($this->resource->request->parameters)) {
+    		$this->secondGump = new Gump;
+
+    		$val = new ValidationBuilder;
+    		$validation_rules = $val->getValidationRoules( $this->resource->request->parameters );
+    		$filter_rules = $val->getValidationFilters( $this->resource->request->parameters );
+
+        	if ( count( $validation_rules ) == 0 ) {
+            	return true;
+        	} else {
+            	$parms = $this->secondGump->sanitize( $this->getParameters );
+            	$this->secondGump->validation_rules( $validation_rules );
+            	$this->secondGump->filter_rules( $filter_rules );
+            	$this->internalGetParameters = $this->secondGump->run( $parms );
+				$this->unvalidated_parameters = $parms;
+            	if ( $this->internalGetParameters === false ) {
+					$this->readableErrors = $this->secondGump->get_readable_errors(true);
+                	return false;
+            	} else {
+                	return true;
+            	}
+        	}
+    	} else {
+    		// there are no parameters apart from the resource
+    		return true;
+    	}
+    	
+    }
+	
+	public function postRequest() {
+		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+
+		foreach ($this->resource->logics as $logic) {
+			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+	    	$this->queryExecuter->setQueryStructure( $logic );
+	    	$this->queryExecuter->setParameters( $this->postParameters );
+
+			$this->queryExecuter->executeQuery();
+		}
+
+		$this->redirectToPreviousPage();
+	}
+
+	/**
+     * check the parameters sent through the url and check if they are ok from
+     * the point of view of the validation rules
+     */
+    public function check_post_request() {
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
-    	$validation_rules = $val->getValidationRoules( $this->resource->request->parameters );
-    	$filter_rules = $val->getValidationFilters( $this->resource->request->parameters );
+    	$validation_rules = $val->postValidationRoules( $this->resource->form->rows );
+    	$filter_rules = $val->postValidationFilters( $this->resource->form->rows );
 
         if ( count( $validation_rules ) == 0 ) {
             return true;
         } else {
-            $parms = $this->secondGump->sanitize( $this->getParameters );
+            $parms = $this->secondGump->sanitize( $this->postParameters );
             $this->secondGump->validation_rules( $validation_rules );
             $this->secondGump->filter_rules( $filter_rules );
-            $this->internalGetParameters = $this->secondGump->run( $parms );
+            $this->postParameters = $this->secondGump->run( $parms );
 			$this->unvalidated_parameters = $parms;
-            if ( $this->internalGetParameters === false ) {
+            if ( $this->postParameters === false ) {
 				$this->readableErrors = $this->secondGump->get_readable_errors(true);
                 return false;
             } else {
