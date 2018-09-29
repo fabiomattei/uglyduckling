@@ -9,6 +9,7 @@ use Firststep\Controllers\Office\Manager\EntityForm;
 use Firststep\Controllers\Office\Manager\EntityInfo;
 use Firststep\Controllers\Office\Manager\EntitySearch;
 use Firststep\Controllers\Office\Manager\EntityExport;
+use Firststep\Controllers\Office\Manager\EntityLogic;
 use Firststep\Controllers\Community\Login;
 use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
 use Firststep\Controllers\Admin\Entity\EntityList;
@@ -27,6 +28,7 @@ class Router {
 	const ROUTE_OFFICE_ENTITY_INFO        = 'officeentityinfo';
 	const ROUTE_OFFICE_ENTITY_SEARCH      = 'officeentitysearch';
 	const ROUTE_OFFICE_ENTITY_EXPORT      = 'officeentityexport';
+	const ROUTE_OFFICE_ENTITY_LOGIC       = 'officeentitylogic';
 	const ROUTE_COMMUNITY_LOGIN           = 'communitylogin';
 	const ROUTE_ADMIN_DASHBOARD           = 'admindashboard';
 	const ROUTE_ADMIN_ENTITY_LIST         = 'adminentitylist';
@@ -49,6 +51,7 @@ class Router {
 			case self::ROUTE_OFFICE_ENTITY_INFO:        $controller = new EntityInfo; break;
 			case self::ROUTE_OFFICE_ENTITY_SEARCH:      $controller = new EntitySearch; break;
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:      $controller = new EntityExport; break;
+			case self::ROUTE_OFFICE_ENTITY_LOGIC:       $controller = new EntityLogic; break;
 			case self::ROUTE_COMMUNITY_LOGIN:           $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:           $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_ENTITY_LIST:         $controller = new EntityList; break;
