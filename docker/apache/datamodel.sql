@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb
--- Creato il: Set 29, 2018 alle 09:39
+-- Creato il: Set 29, 2018 alle 09:49
 -- Versione del server: 10.1.21-MariaDB-1~jessie
 -- Versione PHP: 7.2.6
 
@@ -122,8 +122,7 @@ INSERT INTO `requestv1` (`id`, `name`, `amount`, `duedate`) VALUES
 
 CREATE TABLE `user` (
   `usr_id` bigint(20) NOT NULL,
-  `usr_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `usr_usrofid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `usr_defaultgroup` varchar(80) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `usr_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   `usr_surname` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   `usr_email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
@@ -137,9 +136,9 @@ CREATE TABLE `user` (
 -- Dump dei dati per la tabella `user`
 --
 
-INSERT INTO `user` (`usr_id`, `usr_siteid`, `usr_usrofid`, `usr_name`, `usr_surname`, `usr_email`, `usr_hashedpsw`, `usr_password_updated`, `usr_updated`, `usr_created`) VALUES
-(1, 1, 99, 'Admin', '', 'admin', '$2y$10$lisaKfP5VQ6.UM.AdN8C1u696UZnnVGc.eSDytaTC3eFtIf9XLM7q', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 1, 1, 'Manager', '', 'manager', '$2y$10$YmsVMDQrYjnEdbkqfB5pNuLzyeMQep0C/ahaRWQSs/AN63/U5SXTW', '2018-08-07 00:00:00', '2018-08-07 00:00:00', '2018-08-07 00:00:00');
+INSERT INTO `user` (`usr_id`, `usr_defaultgroup`, `usr_name`, `usr_surname`, `usr_email`, `usr_hashedpsw`, `usr_password_updated`, `usr_updated`, `usr_created`) VALUES
+(1, 'administrationgroup', 'Admin', '', 'admin', '$2y$10$lisaKfP5VQ6.UM.AdN8C1u696UZnnVGc.eSDytaTC3eFtIf9XLM7q', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'administrationgroup', 'Manager', '', 'manager', '$2y$10$YmsVMDQrYjnEdbkqfB5pNuLzyeMQep0C/ahaRWQSs/AN63/U5SXTW', '2018-08-07 00:00:00', '2018-08-07 00:00:00', '2018-08-07 00:00:00');
 
 -- --------------------------------------------------------
 
