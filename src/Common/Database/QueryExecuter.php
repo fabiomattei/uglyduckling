@@ -222,15 +222,27 @@ class QueryExecuter {
      * Example:
      * const DB_TABLE_PK = 'stp_id';
      */
-    function delete( $id ) {
+    function delete() {
         try {
-            $STH = $this->DBH->prepare('DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $this::DB_TABLE_PK . ' = :id');
-            $STH->bindParam(':id', $id);
+            $this->queryBuilder = new QueryBuilder;
+            $this->queryBuilder->setQueryStructure( $this->queryStructure );
+            $this->queryBuilder->setParameters( $this->parameters );
+            
+            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+
+            if ( isset($this->queryStructure->conditions) ) {
+                foreach ($this->queryStructure->conditions as $cond) {
+                    $par =& $this->parameters[$cond->value];
+                    $STH->bindParam(':'.$cond->value, $par);
+                }
+            }
+
             $STH->execute();
+            
+            return $STH;
         } catch (PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
         }
     }
 
