@@ -1,0 +1,19 @@
+{ 
+  "name": "deletereportv1",
+  "metadata": { "type":"logic", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup" ],
+  "request": {
+    "parameters": [
+      { "type":"integer", "validation":"required|integer", "name":"id" }
+    ]
+  },
+  "logics": [
+    {  
+      "type": "delete",
+      "entity": "requestv1",
+      "conditions": [
+        { "field": "id", "operator": "=", "value": "id" }
+      ]
+    }
+  ]
+}
