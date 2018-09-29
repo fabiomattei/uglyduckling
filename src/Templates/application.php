@@ -20,7 +20,7 @@
     <?php echo isset($this->addToHead) ? $this->addToHead : '' ?>
   </head>
   <body>
-	  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+	  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-md">
 		<?php 
 		if (isset($this->menucontainer)) {
 			if (is_array($this->menucontainer)) {
