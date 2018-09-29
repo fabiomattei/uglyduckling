@@ -16,11 +16,11 @@
     ]
   },
   "aggregation": [
-    { "label":"Total amount", "operator": "+", "field":"amount" },	
+    { "label":"Total amount", "operator": "+", "field":"amount" }	
   ],
   "form": {
-  	"title": "Serch between all requests",
-  	"submitTitle": "Search",
+  	"title": "Search and export",
+  	"submitTitle": "Export",
   	"rows": [
   		{ 
   			"row":"1",
@@ -34,13 +34,13 @@
     "type":"select",
     "fields": [
       "id",
-	  "name",
+	    "name",
       "amount",
       "duedate"
     ],
     "entity":"requestv1",
-	"conditions": [
-		{ "field": "name", "operator": "=", "value": "name" }
-	]
+	  "conditions": [
+		  { "field": "name", "operator": "=", "value": "name" }
+	  ]
   }
 }
