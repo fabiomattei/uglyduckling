@@ -142,30 +142,26 @@ class QueryExecuter {
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
     function insert($fields) {
-        $presentmoment = date('Y-m-d H:i:s', time());
-
-        $filedslist = '';
-        $filedsarguments = '';
-        foreach ($fields as $key => $value) {
-            $filedslist .= $key . ', ';
-            $filedsarguments .= ':' . $key . ', ';
-        }
-        $filedslist = substr($filedslist, 0, -2);
-        $filedsarguments = substr($filedsarguments, 0, -2);
         try {
-            $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO ' . $this::DB_TABLE . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")');
-            foreach ($fields as $key => &$value) {
-                $STH->bindParam($key, $value);
+            $this->queryBuilder = new QueryBuilder;
+            $this->queryBuilder->setQueryStructure( $this->queryStructure );
+            $this->queryBuilder->setParameters( $this->parameters );
+            
+            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+
+            if ( isset($this->queryStructure->fields) ) {
+                foreach ($this->queryStructure->fields as $field) {
+                    $par =& $this->parameters[$field->value];
+                    $STH->bindParam(':'.$field->value, $par);
+                }
             }
+
             $STH->execute();
-            $inserted_id = $this->DBH->lastInsertId();
-            $this->DBH->commit();
-            return $inserted_id;
+            
+            return $STH;
         } catch (PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
         }
     }
 
