@@ -17,7 +17,9 @@
     "actions": [
         { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] },
         { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
-        { "lable":"Delete", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
+        { "lable":"Delete", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] },
+        { "lable":"Search", "action":"entitysearch", "resource":"searchreportv1", "parameters":[{}] },
+        { "lable":"Export", "action":"entityexport", "resource":"requestexportv1", "parameters":[{}] }
     ]
   },
   "request": {
