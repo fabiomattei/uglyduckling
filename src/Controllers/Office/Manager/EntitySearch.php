@@ -51,13 +51,13 @@ class EntitySearch extends Controller {
 
 		$this->formBuilder->setFormStructure( $this->resource->form );
 		$this->formBuilder->setEntity( $entity );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ) );
+		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
 
 		$this->tableBuilder->setRouter( $this->router );
 		$this->tableBuilder->setTableStructure( $this->resource->table );
 		$this->tableBuilder->setEntities( array() );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
 	
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
@@ -101,16 +101,27 @@ class EntitySearch extends Controller {
 	
 	public function postRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+		$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+	    $this->queryExecuter->setQueryStructure( $this->resource->query );
+	    $this->queryExecuter->setParameters( $this->postParameters );
+		$this->queryExecuter->executeQuery();
 
-		foreach ($this->resource->logics as $logic) {
-			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    	$this->queryExecuter->setQueryStructure( $logic );
-	    	$this->queryExecuter->setParameters( $this->postParameters );
+		$result = $this->queryExecuter->executeQuery();
 
-			$this->queryExecuter->executeQuery();
-		}
+		$this->formBuilder->setFormStructure( $this->resource->form );
+		$this->formBuilder->setEntity( $entity );
+		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
 
-		$this->redirectToPreviousPage();
+		$this->tableBuilder->setRouter( $this->router );
+		$this->tableBuilder->setTableStructure( $this->resource->table );
+		$this->tableBuilder->setEntities( $result );
+		
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
+	
+		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->centralcontainer = array( $this->formBuilder->createForm() );
+		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
 	}
 
 	/**
