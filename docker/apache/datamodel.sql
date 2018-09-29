@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb
--- Creato il: Ago 07, 2018 alle 13:14
+-- Creato il: Set 29, 2018 alle 09:39
 -- Versione del server: 10.1.21-MariaDB-1~jessie
 -- Versione PHP: 7.2.6
 
@@ -21,208 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `firststep`
 --
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `asset`
---
-
-CREATE TABLE `asset` (
-  `as_id` int(10) UNSIGNED NOT NULL,
-  `as_prsid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `as_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `as_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `as_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `as_archived` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `as_hash` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_base_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_family_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_status` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_deleted` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `as_title` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_notes` text COLLATE utf8_bin NOT NULL,
-  `as_data` longtext COLLATE utf8_bin NOT NULL,
-  `as_iind1` int(11) NOT NULL DEFAULT '0',
-  `as_iind2` int(11) NOT NULL DEFAULT '0',
-  `as_iind3` int(11) NOT NULL DEFAULT '0',
-  `as_iind4` int(11) NOT NULL DEFAULT '0',
-  `as_iind5` int(11) NOT NULL DEFAULT '0',
-  `as_tind1` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_tind2` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_tind3` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_tind4` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_tind5` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `as_dind1` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `as_dind2` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `as_dateind1` date NOT NULL,
-  `as_dateind2` date NOT NULL,
-  `as_timeind1` time NOT NULL,
-  `as_timeind2` time NOT NULL,
-  `as_updated` datetime NOT NULL,
-  `as_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `assetmovementsbook`
---
-
-CREATE TABLE `assetmovementsbook` (
-  `asmb_id` int(10) UNSIGNED NOT NULL,
-  `asmb_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `asmb_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `asmb_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `asmb_asid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `asmb_movement` int(11) NOT NULL DEFAULT '0',
-  `asmb_updated` datetime NOT NULL,
-  `asmb_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `forminstance`
---
-
-CREATE TABLE `forminstance` (
-  `fi_id` int(10) UNSIGNED NOT NULL,
-  `fi_prsid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_owner` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_main` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_archived` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_hash` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_base_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_family_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_flowslug` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_status` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_deleted` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_title` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_notes` text COLLATE utf8_bin NOT NULL,
-  `fi_data` longtext COLLATE utf8_bin NOT NULL,
-  `fi_iind1` int(11) NOT NULL DEFAULT '0',
-  `fi_iind2` int(11) NOT NULL DEFAULT '0',
-  `fi_iind3` int(11) NOT NULL DEFAULT '0',
-  `fi_iind4` int(11) NOT NULL DEFAULT '0',
-  `fi_iind5` int(11) NOT NULL DEFAULT '0',
-  `fi_tind1` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind2` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind3` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind4` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind5` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_dind1` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `fi_dind2` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `fi_dateind1` date NOT NULL,
-  `fi_dateind2` date NOT NULL,
-  `fi_timeind1` time NOT NULL,
-  `fi_timeind2` time NOT NULL,
-  `fi_updated` datetime NOT NULL,
-  `fi_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dump dei dati per la tabella `forminstance`
---
-
-INSERT INTO `forminstance` (`fi_id`, `fi_prsid`, `fi_siteid`, `fi_usrid`, `fi_offid`, `fi_owner`, `fi_main`, `fi_archived`, `fi_hash`, `fi_slug`, `fi_base_slug`, `fi_family_slug`, `fi_flowslug`, `fi_status`, `fi_deleted`, `fi_title`, `fi_notes`, `fi_data`, `fi_iind1`, `fi_iind2`, `fi_iind3`, `fi_iind4`, `fi_iind5`, `fi_tind1`, `fi_tind2`, `fi_tind3`, `fi_tind4`, `fi_tind5`, `fi_dind1`, `fi_dind2`, `fi_dateind1`, `fi_dateind2`, `fi_timeind1`, `fi_timeind2`, `fi_updated`, `fi_created`) VALUES
-(1, 1, 0, 0, 0, 0, 0, 0, 'btUDjoyXRZz2qavHHs9Fanw6iatRvsIXR8PgpvQ6PZ90dlYclCxyqfbvXiGOn8mxtJZ5HkRVLIDb', 'expensev1', 'expense', 'expense', '', 'received', 0, 'prova richiesta', '', '<?xml version=\"1.0\" encoding=\"UTF-8\" ?><nodes><description>prova richiesta</description><amount>2</amount><duedate>2017-05-09</duedate></nodes>', 0, 0, 0, 0, 0, '', '', '', '', '', '2.00', '0.00', '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', '2017-05-09 18:44:14', '2017-05-09 18:44:14'),
-(2, 2, 0, 0, 0, 0, 1, 0, 'tzmASxS2xLLXTuLfEDONYZOJBfVvjrUpcvyjwfjq31JZAvl7wGmUjyxQBycQhOVtqoJ145g2jlQJ', 'expensev1', 'expense', 'expense', '', '', 0, 'povra 10 &euro; ', '', '<?xml version=\"1.0\" encoding=\"UTF-8\" ?><nodes><description>povra</description><amount>10</amount><duedate>2017-06-26</duedate></nodes>', 0, 0, 0, 0, 0, 'povra', '', '', '', '', '10.00', '0.00', '2017-06-26', '2017-06-26', '15:15:53', '15:15:53', '2017-06-26 15:15:53', '2017-06-26 15:15:53'),
-(3, 3, 0, 0, 0, 0, 1, 0, 'Xt5q7W3KruNDR1vl3XmSdlkkKEIO3TlWQRrAz6NqsyduIiF78jgj1u9LEuw5MwpzosUM7XSfwWCk', 'expensev1', 'expense', 'expense', '', '', 0, 'xxx 0.04 &euro; ', '', '<?xml version=\"1.0\" encoding=\"UTF-8\" ?><nodes><description>xxx</description><amount>0.04</amount><duedate>2018-03-04</duedate></nodes>', 0, 0, 0, 0, 0, 'xxx', '', '', '', '', '0.04', '0.00', '2018-03-04', '2018-03-04', '21:03:09', '21:03:09', '2018-03-04 21:03:09', '2018-03-04 21:03:09');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `planning`
---
-
-CREATE TABLE `planning` (
-  `pl_id` int(10) UNSIGNED NOT NULL,
-  `pl_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_type` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_startdate` date NOT NULL,
-  `pl_endingdate` date NOT NULL,
-  `pl_monday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_tuesday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_wednesday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_thursday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_friday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_saturday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_sunday` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_dayofmonth` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pl_paperdata` longtext COLLATE utf8_bin NOT NULL,
-  `pl_paperslug` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `pl_papertitle` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `pl_updated` datetime NOT NULL,
-  `pl_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `process`
---
-
-CREATE TABLE `process` (
-  `pr_id` int(10) UNSIGNED NOT NULL,
-  `pr_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pr_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pr_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pr_chapter_slug` varchar(255) NOT NULL DEFAULT '',
-  `pr_base_slug` varchar(255) NOT NULL DEFAULT '',
-  `pr_slug` varchar(255) NOT NULL DEFAULT '',
-  `pr_deleted` tinyint(4) NOT NULL DEFAULT '0',
-  `pr_closed` tinyint(4) NOT NULL DEFAULT '0',
-  `pr_title` varchar(255) NOT NULL DEFAULT '',
-  `pr_laststep` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `pr_updated` datetime NOT NULL,
-  `pr_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dump dei dati per la tabella `process`
---
-
-INSERT INTO `process` (`pr_id`, `pr_siteid`, `pr_offid`, `pr_usrid`, `pr_chapter_slug`, `pr_base_slug`, `pr_slug`, `pr_deleted`, `pr_closed`, `pr_title`, `pr_laststep`, `pr_updated`, `pr_created`) VALUES
-(1, 0, 0, 0, 'expense', 'expense', 'expenseprocessv1', 0, 0, 'prova richiesta', 1, '2017-05-09 18:44:14', '2017-05-09 18:44:14'),
-(2, 0, 0, 0, 'expense', 'expense', 'expenseprocessv1', 0, 0, 'povra 10 &euro; ', 1, '2017-06-26 15:15:53', '2017-06-26 15:15:53'),
-(3, 0, 0, 0, 'expense', 'expense', 'expenseprocessv1', 0, 0, 'xxx 0.04 &euro; ', 1, '2018-03-04 21:03:09', '2018-03-04 21:03:09');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `processstep`
---
-
-CREATE TABLE `processstep` (
-  `prs_id` int(10) UNSIGNED NOT NULL,
-  `prs_prid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `prs_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `prs_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `prs_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `prs_title` varchar(255) NOT NULL DEFAULT '',
-  `prs_step` tinyint(4) NOT NULL DEFAULT '0',
-  `prs_sent` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `prs_completed` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `prs_updated` datetime NOT NULL,
-  `prs_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dump dei dati per la tabella `processstep`
---
-
-INSERT INTO `processstep` (`prs_id`, `prs_prid`, `prs_siteid`, `prs_offid`, `prs_usrid`, `prs_title`, `prs_step`, `prs_sent`, `prs_completed`, `prs_updated`, `prs_created`) VALUES
-(1, 1, 1, 1, 1, 'prova richiesta', 1, 0, 0, '2017-05-09 18:44:14', '2017-05-09 18:44:14'),
-(2, 2, 1, 1, 1, 'povra 10 &euro; ', 1, 0, 0, '2017-06-26 15:15:53', '2017-06-26 15:15:53'),
-(3, 3, 1, 1, 1, 'xxx 0.04 &euro; ', 1, 0, 0, '2018-03-04 21:03:09', '2018-03-04 21:03:09');
 
 -- --------------------------------------------------------
 
@@ -299,97 +97,22 @@ CREATE TABLE `projecttask` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `pwarchive`
+-- Struttura della tabella `requestv1`
 --
 
-CREATE TABLE `pwarchive` (
-  `fi_id` int(10) UNSIGNED NOT NULL,
-  `fi_prsid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_owner` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_hash` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_base_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_family_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_flowslug` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_status` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_deleted` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fi_title` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_notes` text COLLATE utf8_bin NOT NULL,
-  `fi_data` longtext COLLATE utf8_bin NOT NULL,
-  `fi_iind1` int(11) NOT NULL DEFAULT '0',
-  `fi_iind2` int(11) NOT NULL DEFAULT '0',
-  `fi_iind3` int(11) NOT NULL DEFAULT '0',
-  `fi_iind4` int(11) NOT NULL DEFAULT '0',
-  `fi_iind5` int(11) NOT NULL DEFAULT '0',
-  `fi_tind1` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind2` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind3` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind4` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_tind5` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `fi_dind1` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `fi_dind2` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `fi_dateind1` date NOT NULL,
-  `fi_dateind2` date NOT NULL,
-  `fi_timeind1` time NOT NULL,
-  `fi_timeind2` time NOT NULL,
-  `fi_updated` datetime NOT NULL,
-  `fi_created` datetime NOT NULL
+CREATE TABLE `requestv1` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `duedate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- --------------------------------------------------------
-
 --
--- Struttura della tabella `pwownerlog`
+-- Dump dei dati per la tabella `requestv1`
 --
 
-CREATE TABLE `pwownerlog` (
-  `pwol_id` int(10) UNSIGNED NOT NULL,
-  `pwol_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwol_pwpid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwol_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwol_starting_owner_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwol_ending_owner_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwol_note` text NOT NULL,
-  `pwol_updated` datetime NOT NULL,
-  `pwol_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `pwstatuslog`
---
-
-CREATE TABLE `pwstatuslog` (
-  `rpsl_id` int(10) UNSIGNED NOT NULL,
-  `rpsl_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `rpsl_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `rpsl_pwpid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `rpsl_starting_state_slug` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `rpsl_ending_state_slug` varchar(255) COLLATE utf8_bin NOT NULL,
-  `rpsl_note` text COLLATE utf8_bin NOT NULL,
-  `rpsl_updated` datetime NOT NULL,
-  `rpsl_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `pwvisibility`
---
-
-CREATE TABLE `pwvisibility` (
-  `pwv_id` int(10) UNSIGNED NOT NULL,
-  `pwv_siteid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwv_pwpid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwv_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwv_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `pwv_updated` datetime NOT NULL,
-  `pwv_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+INSERT INTO `requestv1` (`id`, `name`, `amount`, `duedate`) VALUES
+(1, 'Fabio', 13, '2018-08-25');
 
 -- --------------------------------------------------------
 
@@ -421,79 +144,20 @@ INSERT INTO `user` (`usr_id`, `usr_siteid`, `usr_usrofid`, `usr_name`, `usr_surn
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `useroffice`
+-- Struttura della tabella `usergroup`
 --
 
-CREATE TABLE `useroffice` (
-  `usroff_id` int(10) UNSIGNED NOT NULL,
-  `usroff_usrid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `usroff_offid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `usroff_default` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `usroff_updated` datetime NOT NULL,
-  `usroff_created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `usroffice`
---
-
-CREATE TABLE `usroffice` (
-  `usrof_id` int(10) UNSIGNED NOT NULL,
-  `usrof_slug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `usrof_name` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `usrof_description` text COLLATE utf8_bin NOT NULL,
+CREATE TABLE `usergroup` (
+  `ug_id` int(10) UNSIGNED NOT NULL,
+  `ug_groupslug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ug_userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `usrof_updated` datetime NOT NULL,
   `usrof_created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dump dei dati per la tabella `usroffice`
---
-
-INSERT INTO `usroffice` (`usrof_id`, `usrof_slug`, `usrof_name`, `usrof_description`, `usrof_updated`, `usrof_created`) VALUES
-(1, 'admin', 'Admin', '', '2016-05-05 00:00:00', '2016-05-05 00:00:00');
-
---
 -- Indici per le tabelle scaricate
 --
-
---
--- Indici per le tabelle `asset`
---
-ALTER TABLE `asset`
-  ADD PRIMARY KEY (`as_id`);
-
---
--- Indici per le tabelle `assetmovementsbook`
---
-ALTER TABLE `assetmovementsbook`
-  ADD PRIMARY KEY (`asmb_id`);
-
---
--- Indici per le tabelle `forminstance`
---
-ALTER TABLE `forminstance`
-  ADD PRIMARY KEY (`fi_id`);
-
---
--- Indici per le tabelle `planning`
---
-ALTER TABLE `planning`
-  ADD PRIMARY KEY (`pl_id`);
-
---
--- Indici per le tabelle `process`
---
-ALTER TABLE `process`
-  ADD PRIMARY KEY (`pr_id`);
-
---
--- Indici per le tabelle `processstep`
---
-ALTER TABLE `processstep`
-  ADD PRIMARY KEY (`prs_id`);
 
 --
 -- Indici per le tabelle `projectfile`
@@ -520,28 +184,10 @@ ALTER TABLE `projecttask`
   ADD PRIMARY KEY (`prjtk_id`);
 
 --
--- Indici per le tabelle `pwarchive`
+-- Indici per le tabelle `requestv1`
 --
-ALTER TABLE `pwarchive`
-  ADD PRIMARY KEY (`fi_id`);
-
---
--- Indici per le tabelle `pwownerlog`
---
-ALTER TABLE `pwownerlog`
-  ADD PRIMARY KEY (`pwol_id`);
-
---
--- Indici per le tabelle `pwstatuslog`
---
-ALTER TABLE `pwstatuslog`
-  ADD PRIMARY KEY (`rpsl_id`);
-
---
--- Indici per le tabelle `pwvisibility`
---
-ALTER TABLE `pwvisibility`
-  ADD PRIMARY KEY (`pwv_id`);
+ALTER TABLE `requestv1`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indici per le tabelle `user`
@@ -550,56 +196,14 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`usr_id`);
 
 --
--- Indici per le tabelle `useroffice`
+-- Indici per le tabelle `usergroup`
 --
-ALTER TABLE `useroffice`
-  ADD PRIMARY KEY (`usroff_id`);
-
---
--- Indici per le tabelle `usroffice`
---
-ALTER TABLE `usroffice`
-  ADD PRIMARY KEY (`usrof_id`);
+ALTER TABLE `usergroup`
+  ADD PRIMARY KEY (`ug_id`);
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
 --
-
---
--- AUTO_INCREMENT per la tabella `asset`
---
-ALTER TABLE `asset`
-  MODIFY `as_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `assetmovementsbook`
---
-ALTER TABLE `assetmovementsbook`
-  MODIFY `asmb_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `forminstance`
---
-ALTER TABLE `forminstance`
-  MODIFY `fi_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT per la tabella `planning`
---
-ALTER TABLE `planning`
-  MODIFY `pl_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `process`
---
-ALTER TABLE `process`
-  MODIFY `pr_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT per la tabella `processstep`
---
-ALTER TABLE `processstep`
-  MODIFY `prs_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `projectfile`
@@ -626,28 +230,10 @@ ALTER TABLE `projecttask`
   MODIFY `prjtk_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `pwarchive`
+-- AUTO_INCREMENT per la tabella `requestv1`
 --
-ALTER TABLE `pwarchive`
-  MODIFY `fi_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `pwownerlog`
---
-ALTER TABLE `pwownerlog`
-  MODIFY `pwol_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `pwstatuslog`
---
-ALTER TABLE `pwstatuslog`
-  MODIFY `rpsl_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `pwvisibility`
---
-ALTER TABLE `pwvisibility`
-  MODIFY `pwv_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `requestv1`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `user`
@@ -656,16 +242,10 @@ ALTER TABLE `user`
   MODIFY `usr_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT per la tabella `useroffice`
+-- AUTO_INCREMENT per la tabella `usergroup`
 --
-ALTER TABLE `useroffice`
-  MODIFY `usroff_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `usroffice`
---
-ALTER TABLE `usroffice`
-  MODIFY `usrof_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `usergroup`
+  MODIFY `ug_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
