@@ -53,6 +53,7 @@ class Login extends Controller {
 			$user = $this->userDao->getOneByFields( array( 'usr_email' => $this->postParameters['email'] ) );
 			$this->sessionWrapper->setSessionUserId( $user->usr_id );
 			$this->sessionWrapper->setSessionUsername( $user->usr_name );
+			$this->sessionWrapper->setSessionGroup( $user->usr_defaultgroup );
 			$this->sessionWrapper->setSessionLoggedIn( true );
 			$this->sessionWrapper->setSessionIp( $this->serverWrapper->getRemoteAddress() );
 			$this->sessionWrapper->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );

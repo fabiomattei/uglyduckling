@@ -19,6 +19,14 @@ class SessionWrapper {
 	public function getSessionUsename() {
 		return $_SESSION['username'];
 	}
+
+	public function setSessionGroup( $group ) {
+		$_SESSION['group'] = $group;
+	}
+	
+	public function getSessionGroup() {
+		return $_SESSION['group'];
+	}
 	
 	public function setSessionLoggedIn( $logged_in ) {
 		$_SESSION['logged_in'] = $logged_in;
