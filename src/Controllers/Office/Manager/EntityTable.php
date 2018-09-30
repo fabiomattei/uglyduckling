@@ -44,7 +44,6 @@ class EntityTable extends Controller {
 	public function getRequest() {
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-		print_r($menuresource);
 		$menubuilder = new MenuBuilder( $menuresource, $this->router );
 		
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );

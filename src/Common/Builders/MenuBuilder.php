@@ -9,6 +9,7 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\BaseMenu;
+use stdClass;
 
 class MenuBuilder {
 
@@ -37,10 +38,17 @@ class MenuBuilder {
         $menu->addButtonToggler();
         foreach ($this->menuStructure->menu as $menuitem) {
             if (isset($menuitem->submenu)) {
+                $submenuItems = array();
+                foreach ($menuitem->submenu as $item) {
+                    $mi = new stdClass;
+                    $mi->label = $item->label;
+                    $mi->url = LinkBuilder::getURL( $this->router, $item->action, $item->resource );
+                    $submenuItems[] = $mi;
+                }
                 $menu->addNavItemWithDropdown( $menuitem->label, 
                     LinkBuilder::getURL( $this->router, $menuitem->action, $menuitem->resource ), 
                     false, false, 
-                    $menuitem->submenu 
+                    $submenuItems 
                 );
             } else {
                 $menu->addNavItem( $menuitem->label, 

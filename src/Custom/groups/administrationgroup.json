@@ -3,12 +3,14 @@
   "metadata": { "type":"group", "version": "1" },
   "home": { "label":"My app", "action":"#" },
   "menu": [
-    { "label":"Info", "action":"entityinfo", "resource":"inforequestv1" },
+    { "label":"Home", "action":"entityinfo", "resource":"inforequestv1" },
     {
       "label":"Requests",
       "submenu": [
-            { "label":"Info", "action":"entityinfo", "resource":"inforequestv1" },
-            { "label":"Info 2", "action":"entityinfo", "resource":"inforequestv1" }
+            { "label":"New", "action":"entityform", "resource":"formrequestv1" },
+            { "label":"Table", "action":"entitytable", "resource":"requesttable" },
+            { "label":"Search", "action":"entitysearch", "resource":"searchreportv1" },
+            { "label":"Export", "action":"entityexport", "resource":"requestexportv1" }
       ]
     }
   ]
