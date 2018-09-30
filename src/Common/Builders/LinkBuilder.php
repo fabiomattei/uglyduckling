@@ -43,6 +43,34 @@ class LinkBuilder {
                 return '#';
                 break;
         }
+    } 
+
+    static function getURL( $router, $action, $resource ) {
+        $url_parameters = 'res='.$resource;
+        switch ( $action ) {
+            case 'entitytable':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, $url_parameters ); 
+                break;
+            case 'entityform':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, $url_parameters );
+                break;
+            case 'entityinfo':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, $url_parameters );
+                break;
+            case 'entitysearch':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, $url_parameters );
+                break;
+            case 'entityexport':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
+                break;
+            case 'entitylogic':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
+                break;
+            
+            default:
+                return '#';
+                break;
+        }
     }    
 
 }

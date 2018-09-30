@@ -13,36 +13,44 @@ use Firststep\Common\Blocks\BaseMenu;
 class MenuBuilder {
 
     private $menuStructure;
+    private $router;
+
+    function __construct( $menuStructure, $router ) {
+        $this->menuStructure = $menuStructure;
+        $this->router = $router;
+    }
 
     /**
      * @param mixed $infoStructure
      */
-    public function setMenuStructure($menuStructure) {
+    public function setMenuStructure( $menuStructure ) {
         $this->menuStructure = $menuStructure;
     }
 
+    function setRouter( $router ) {
+        $this->router = $router;
+    }
+
     public function createMenu() {
-        // TODO this
-		$formBlock = new BaseInfo;
-		$formBlock->setTitle($this->infoStructure->title);
-		foreach ($this->infoStructure->rows as $row) {
-			$formBlock->addRow();
-			foreach ($row->fields as $field) {
-				$fieldname = $field->value;
-				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? $this->entity->$fieldname : '' ) );
-                if ($field->type === 'textarea') {
-                    $formBlock->addTextAreaField($field->label, $value, $field->width);
-                }
-                if ($field->type === 'currency') {
-                    $formBlock->addCurrencyField($field->label, $value, $field->width);
-                }
-                if ($field->type === 'date') {
-                    $formBlock->addDateField($field->label, $value, $field->width);
-                }
-			}
-			$formBlock->closeRow('row '.$row->row);
-		}
-        return $formBlock;
+		$menu = new BaseMenu;
+        $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
+        $menu->addButtonToggler();
+        foreach ($this->menuStructure->menu as $menuitem) {
+            if (isset($menuitem->submenu)) {
+                $menu->addNavItemWithDropdown( $menuitem->label, 
+                    LinkBuilder::getURL( $this->router, $menuitem->action, $menuitem->resource ), 
+                    false, false, 
+                    $menuitem->submenu 
+                );
+            } else {
+                $menu->addNavItem( $menuitem->label, 
+                    LinkBuilder::getURL( $this->router, $menuitem->action, $menuitem->resource ), 
+                    false, false 
+                );
+            }
+        }
+
+        return $menu;
     }
 
 }

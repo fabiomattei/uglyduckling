@@ -12,6 +12,7 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\TableBuilder;
+use Firststep\Common\Builders\MenuBuilder;
 
 /**
  * User: fabio
@@ -42,6 +43,9 @@ class EntityTable extends Controller {
      */
 	public function getRequest() {
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		print_r($menuresource);
+		$menubuilder = new MenuBuilder( $menuresource, $this->router );
 		
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
@@ -55,8 +59,7 @@ class EntityTable extends Controller {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		
-		
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->menucontainer    = array( $menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->tableBuilder->createTable() );
 	}

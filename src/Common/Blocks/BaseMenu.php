@@ -14,7 +14,7 @@ class BaseMenu extends BaseBlock {
         $this->dropdownCounter = 1;
     }
 
-    function addTitle( string $title, string $url ) {
+    function addBrand( string $brand, string $url ) {
         $this->brand = '<a class="navbar-brand" href="' . $url . '">' . $title . '</a>';    
     }
 

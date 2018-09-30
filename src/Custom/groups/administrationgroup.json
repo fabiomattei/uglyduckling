@@ -1,16 +1,14 @@
 { 
   "name": "administrationgroup",
   "metadata": { "type":"group", "version": "1" },
-  "home": [
-      { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] }
-  ],
+  "home": { "label":"My app", "action":"#" },
   "menu": [
-    { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] },
+    { "label":"Info", "action":"entityinfo", "resource":"inforequestv1" },
     {
-      "lable":"Requests",
+      "label":"Requests",
       "submenu": [
-            { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] },
-            { "lable":"Info 2", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] }
+            { "label":"Info", "action":"entityinfo", "resource":"inforequestv1" },
+            { "label":"Info 2", "action":"entityinfo", "resource":"inforequestv1" }
       ]
     }
   ]
