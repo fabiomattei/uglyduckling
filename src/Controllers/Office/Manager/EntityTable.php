@@ -2,7 +2,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Controllers\Controller;
+use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
@@ -19,23 +19,12 @@ use Firststep\Common\Builders\MenuBuilder;
  * Date: 16/08/2018
  * Time: 12:02
  */
-class EntityTable extends Controller {
-
-	public $get_validation_rules = array( 'res' => 'required|max_len,50' );
-    public $get_filter_rules     = array( 'res' => 'trim' );
+class EntityTable extends ManagerEntityController {
 
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->tableBuilder = new TableBuilder;
-    }
-	
-    /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-		$this->jsonloader->loadIndex();
-		parent::showPage(); 
     }
 	
     /**
