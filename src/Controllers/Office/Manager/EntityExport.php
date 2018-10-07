@@ -3,7 +3,6 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
@@ -13,8 +12,7 @@ use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\FormBuilder;
 use Firststep\Common\Builders\TableBuilder;
-use Firststep\Common\Builders\ValidationBuilder;
-use Gump;
+use Firststep\Common\Builders\MenuBuilder;
 
 /**
  * User: Fabio
@@ -28,6 +26,7 @@ class EntityExport extends ManagerEntityController {
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
 		$this->tableBuilder = new TableBuilder;
+		$this->menubuilder = new MenuBuilder;
     }
 	
     /**
@@ -51,8 +50,12 @@ class EntityExport extends ManagerEntityController {
 		$this->tableBuilder->setEntities( array() );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
+
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
 	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
@@ -75,9 +78,13 @@ class EntityExport extends ManagerEntityController {
 		$this->tableBuilder->setTableStructure( $this->resource->table );
 		$this->tableBuilder->setEntities( $result );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
+
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
 	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->menucontainer    = array($this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );

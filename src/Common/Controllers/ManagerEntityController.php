@@ -58,6 +58,7 @@ class ManagerEntityController extends Controller {
      * It return true by defult for compatiblity issues
      */
     public function check_authorization_get_request() {
+        if(!isset($this->resource->allowedgroups)) return false;
         return in_array($this->sessionWrapper->getSessionGroup(), $this->resource->allowedgroups);
     }
 

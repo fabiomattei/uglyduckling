@@ -23,7 +23,7 @@ class EntityTable extends ManagerEntityController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->tableBuilder = new TableBuilder;
-		$this->menubuilder = new MenuBuilder();
+		$this->menubuilder = new MenuBuilder;
     }
 	
     /**
@@ -31,8 +31,8 @@ class EntityTable extends ManagerEntityController {
      */
 	public function getRequest() {
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+		
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 		

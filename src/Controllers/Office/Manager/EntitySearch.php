@@ -3,18 +3,15 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
-use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\FormBuilder;
 use Firststep\Common\Builders\TableBuilder;
-use Firststep\Common\Builders\ValidationBuilder;
-use Gump;
+use Firststep\Common\Builders\MenuBuilder;
 
 /**
  * User: Fabio
@@ -28,6 +25,7 @@ class EntitySearch extends ManagerEntityController {
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
 		$this->tableBuilder = new TableBuilder;
+		$this->menubuilder = new MenuBuilder();
     }
 
     /**
@@ -38,6 +36,10 @@ class EntitySearch extends ManagerEntityController {
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    $this->queryExecuter->setQueryStructure( $this->resource->query );
 	    $this->queryExecuter->setParameters( $this->internalGetParameters );
+	    $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
 
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
@@ -52,7 +54,7 @@ class EntitySearch extends ManagerEntityController {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
 	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
@@ -67,6 +69,10 @@ class EntitySearch extends ManagerEntityController {
 
 		$result = $this->queryExecuter->executeQuery();
 
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
+
 		$this->formBuilder->setFormStructure( $this->resource->form );
 		$this->formBuilder->setEntity( $entity );
 		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
@@ -77,7 +83,7 @@ class EntitySearch extends ManagerEntityController {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
 	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );

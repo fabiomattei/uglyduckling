@@ -1,6 +1,7 @@
 { 
   "name": "inforequestv1",
   "metadata": { "type":"info", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup" ],
   "form": {
     "title": "My new info panel",
     "rows": [

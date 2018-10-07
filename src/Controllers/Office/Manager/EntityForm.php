@@ -3,7 +3,6 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
@@ -12,8 +11,7 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\FormBuilder;
-use Firststep\Common\Builders\ValidationBuilder;
-use Gump;
+use Firststep\Common\Builders\MenuBuilder;
 
 /**
  * User: Fabio
@@ -26,6 +24,7 @@ class EntityForm extends ManagerEntityController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
+		$this->menubuilder = new MenuBuilder;
     }
 
     /**
@@ -45,8 +44,12 @@ class EntityForm extends ManagerEntityController {
 		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ) );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
-	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
+		
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 	}
@@ -62,7 +65,7 @@ class EntityForm extends ManagerEntityController {
 			$this->queryExecuter->executeQuery();
 		}
 
-		$this->redirectToPreviousPage();
+		$this->redirectToSecondPreviousPage();
 	}
 
     public function show_second_get_error_page() {

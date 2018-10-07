@@ -3,17 +3,14 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockParser;
-use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\InfoBuilder;
-use Firststep\Common\Builders\ValidationBuilder;
-use Gump;
+use Firststep\Common\Builders\MenuBuilder;
 
 /**
  * User: Fabio
@@ -26,12 +23,17 @@ class EntityInfo extends ManagerEntityController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->infoBuilder = new InfoBuilder;
+		$this->menubuilder = new MenuBuilder;
     }
 
     /**
      * @throws GeneralException
      */
 	public function getRequest() {
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
+
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    $this->queryExecuter->setQueryStructure( $this->resource->query );
@@ -45,7 +47,7 @@ class EntityInfo extends ManagerEntityController {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
 	
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->infoBuilder->createInfo() );
 	}
