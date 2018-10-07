@@ -3,9 +3,7 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
@@ -25,6 +23,7 @@ class EntityTable extends ManagerEntityController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->tableBuilder = new TableBuilder;
+		$this->menubuilder = new MenuBuilder();
     }
 	
     /**
@@ -33,7 +32,9 @@ class EntityTable extends ManagerEntityController {
 	public function getRequest() {
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-		$menubuilder = new MenuBuilder( $menuresource, $this->router );
+
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->router );
 		
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
@@ -47,7 +48,7 @@ class EntityTable extends ManagerEntityController {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		
-		$this->menucontainer    = array( $menubuilder->createMenu() );
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->tableBuilder->createTable() );
 	}

@@ -23,9 +23,7 @@
     ]
   },
   "request": {
-    "parameters": [
-      { "type":"int", "validation":"required|int", "name":"id" }
-    ]
+    "parameters": []
   },
   "query": {
     "type":"select",

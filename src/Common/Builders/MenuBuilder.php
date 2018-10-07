@@ -16,11 +16,6 @@ class MenuBuilder {
     private $menuStructure;
     private $router;
 
-    function __construct( $menuStructure, $router ) {
-        $this->menuStructure = $menuStructure;
-        $this->router = $router;
-    }
-
     /**
      * @param mixed $infoStructure
      */
@@ -28,7 +23,7 @@ class MenuBuilder {
         $this->menuStructure = $menuStructure;
     }
 
-    function setRouter( $router ) {
+    public function setRouter( $router ) {
         $this->router = $router;
     }
 

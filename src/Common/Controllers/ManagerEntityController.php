@@ -27,6 +27,9 @@ class ManagerEntityController extends Controller {
      * the point of view of the validation rules
      */
     public function second_check_get_request() {
+        // checking if resource defines any get parameter
+        if(!isset($this->resource->request) OR !isset($this->resource->request->parameters)) return true; 
+
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
