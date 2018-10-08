@@ -1,11 +1,11 @@
 # todo list
 
-Fare protocollo scambio dati
-* Scambiare form via get
-* Scambiare dati di risposta via post
-* Ack via post di ritorno
+Implement protocol for data/form exchange
+* Expose/Query form using GET
+* Form fill via POST
+* ACK via POST
 
-Fare gestione documenti (stati created, sent)
+Documents management (possible status: created, sent)
 * New
 * Edit
 * List
@@ -17,9 +17,9 @@ Office management
 * Calendar (death line, milestone)
 * Note
 
-Multilingue
+Multilingual
 
 Future 
-Documenti che si attivano con evento o con scadenza
-Documenti precampionati da db
+Documents activated by an event or a death line
+Documents prepopulated by DB
 
