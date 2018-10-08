@@ -1,7 +1,8 @@
 { 
 	"name": "documentsubscriptionv1",
 	"metadata": { "type":"document", "version": "1" },
-	"allowedgroups": [ "administrationgroup", "teachergroup" ],
+	"sourcegroups": [ "public" ],
+	"destinationgroups": [ "administrationgroup", "teachergroup" ],
 	"title": [ "name", "amount" ],
 	"form": {
 		"title": "My new form",
@@ -22,6 +23,17 @@
 				]
 			}
 		]
+	},
+	"table": {
+    	"title": "My table",
+    	"headlines": [
+        	{ "name":"Name" },
+        	{ "name":"Amount" }
+    	],
+    	"fields": [
+        	{ "name":"name" },
+        	{ "name":"amount" }
+    	]
 	},
 	"logics": [
 		{
