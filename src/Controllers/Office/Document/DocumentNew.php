@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class Newdoc extends Controller {
+class DocumentNew extends Controller {
 	
 	function __construct($argument) {
 		# code...

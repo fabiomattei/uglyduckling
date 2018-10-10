@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class Search extends Controller {
+class DocumentSearch extends Controller {
 	
 	function __construct($argument) {
 		# code...

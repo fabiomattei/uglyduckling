@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class Edit extends Controller {
+class DocumentEdit extends Controller {
 	
 	function __construct($argument) {
 		# code...
