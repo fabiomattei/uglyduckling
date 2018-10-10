@@ -42,9 +42,17 @@ class FormBuilder {
 		$formBlock = new BaseForm;
 		$formBlock->setTitle($this->formStructure->title);
         $formBlock->setAction( $this->action );
-		foreach ($this->formStructure->rows as $row) {
+		$maxrows = $this->calculateMaxumumRowsNumber($this->formStructure->fields);
+		$fieldRows = array();
+		
+		foreach ($this->formStructure->fields as $field) {
+			if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
+			$fieldRows[$field->row][] = $field;
+		}
+		
+		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
-			foreach ($row->fields as $field) {
+			foreach ($row as $field) {
 				$fieldname = $field->value;
 				$value = ($this->entity == null ? '' : ( isset($this->entity->{$fieldname}) ? $this->entity->{$fieldname} : '' ) );
                 if ($field->type === 'textarea') {
@@ -67,5 +75,13 @@ class FormBuilder {
         $formBlock->closeRow('row save');
         return $formBlock;
     }
+	
+	public function calculateMaxumumRowsNumber() {
+		$max = 1;
+		foreach ($this->formStructure->fields as $field) {
+			if ( $field->row > $max ) $max = $field->row;
+		}
+		return $max;
+	}
 
 }

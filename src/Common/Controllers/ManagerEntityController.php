@@ -113,7 +113,7 @@ class ManagerEntityController extends Controller {
 	                	$this->show_second_get_error_page();
 	            	}
                 } else {
-                    $this->show_get_error_page();
+                    $this->show_get_authorization_error_page();
                 }
             } else {
                 $this->show_get_error_page();
@@ -128,7 +128,7 @@ class ManagerEntityController extends Controller {
                             $this->show_post_error_page();
                         }
                     } else {
-                        $this->check_authorization_post_request();
+                        $this->show_post_authorization_error_page();
                     }
             } else {
                 $this->show_post_error_page();

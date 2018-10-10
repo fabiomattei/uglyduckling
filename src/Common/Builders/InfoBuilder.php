@@ -33,9 +33,17 @@ class InfoBuilder {
     public function createInfo() {
 		$formBlock = new BaseInfo;
 		$formBlock->setTitle($this->infoStructure->title);
-		foreach ($this->infoStructure->rows as $row) {
+		$maxrows = $this->calculateMaxumumRowsNumber($this->formStructure->fields);
+		$fieldRows = array();
+		
+		foreach ($this->infoStructure->fields as $field) {
+			if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
+			$fieldRows[$field->row][] = $field;
+		}
+		
+		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
-			foreach ($row->fields as $field) {
+			foreach ($row as $field) {
 				$fieldname = $field->value;
 				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? $this->entity->$fieldname : '' ) );
                 if ($field->type === 'textarea') {
@@ -52,5 +60,13 @@ class InfoBuilder {
 		}
         return $formBlock;
     }
+	
+	public function calculateMaxumumRowsNumber() {
+		$max = 1;
+		foreach ($this->formStructure->fields as $field) {
+			if ( $field->row > $max ) $max = $field->row;
+		}
+		return $max;
+	}
 
 }

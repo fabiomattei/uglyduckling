@@ -8,7 +8,7 @@ namespace Firststep\Common\Exceptions;
  * Time: 09:25
  */
 
-class AuthorizationException extends Exception { }
+class AuthorizationException extends \Exception { }
 
 /*
 
