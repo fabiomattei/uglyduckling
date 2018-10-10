@@ -4,15 +4,10 @@
   "allowedgroups": [ "administrationgroup", "teachergroup" ],
   "table": {
     "title": "My table",
-    "headlines": [
-        { "name":"Name" },
-        { "name":"Amount" },
-        { "name":"Due date" }
-    ],
     "fields": [
-        { "name":"name" },
-        { "name":"amount" },
-        { "name":"duedate" }
+        { "headline":"Name", "name":"name" },
+        { "headline":"Amount", "name":"amount" },
+        { "headline":"Due date", "name":"duedate" }
     ],
     "actions": [
         { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "value":"id"}] },

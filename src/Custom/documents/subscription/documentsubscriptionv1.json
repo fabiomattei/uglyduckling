@@ -32,13 +32,9 @@
     },
 	"table": {
     	"title": "My table",
-    	"headlines": [
-        	{ "name":"Name" },
-        	{ "name":"Amount" }
-    	],
     	"fields": [
-        	{ "name":"name" },
-        	{ "name":"amount" }
+        	{ "headline":"Name", "name":"name" },
+        	{ "headline":"Amount", "name":"amount" }
     	]
 	},
 	"logics": [

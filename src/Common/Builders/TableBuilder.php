@@ -40,8 +40,8 @@ class TableBuilder {
 		
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
-		foreach ($this->tableStructure->headlines as $th) {
-			$tableBlock->addHeadLineColumn($th->name);
+		foreach ($this->tableStructure->fields as $field) {
+			$tableBlock->addHeadLineColumn($field->headline);
 		}
 		$tableBlock->addHeadLineColumn(''); // adding one more for actions
 		$tableBlock->closeRow();
