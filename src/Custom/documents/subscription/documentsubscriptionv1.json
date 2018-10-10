@@ -1,9 +1,10 @@
 { 
 	"name": "documentsubscriptionv1",
+	"title": "Subscription for to ski class",
 	"metadata": { "type":"document", "version": "1" },
 	"sourcegroups": [ "public" ],
 	"destinationgroups": [ "administrationgroup", "teachergroup" ],
-	"title": [ "name", "amount" ],
+	"object": [ "name", "amount" ],
 	"fields": [
 		{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
 		{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1"  },
@@ -11,7 +12,7 @@
 		{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id", "row":"2" }
 	],
 	"entity": {
-        "tablename": "requestv1",
+        "tablename": "documentsubscriptionv1",
 	    "engine": "InnoDB DEFAULT",
 	    "charset": "utf8",
 	    "collate": "utf8_bin",
