@@ -61,6 +61,9 @@ class InfoBuilder {
         return $formBlock;
     }
 	
+	/**
+	 * It checks all fields contained in the json description file and get the maximum row number
+	 */
 	public function calculateMaxumumRowsNumber() {
 		$max = 1;
 		foreach ($this->formStructure->fields as $field) {
