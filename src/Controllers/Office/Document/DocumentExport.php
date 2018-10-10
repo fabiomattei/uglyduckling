@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class DocumentReport extends Controller {
+class DocumentExport extends Controller {
 	
 	function __construct($argument) {
 		# code...
