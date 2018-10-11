@@ -7,7 +7,7 @@ use Firststep\Common\Controllers\Controller;
 /**
  * 
  */
-class DocumentView extends Controller {
+class AdminDocumentView extends Controller {
 	
 	function __construct($argument) {
 		# code...

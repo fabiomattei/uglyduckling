@@ -9,8 +9,7 @@ use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
+use Firststep\Common\Database\DocumentDao;
 use Firststep\Common\Builders\MenuBuilder;
 
 /**
@@ -21,8 +20,7 @@ use Firststep\Common\Builders\MenuBuilder;
 class DocumentInbox extends Controller {
 	
     function __construct() {
-		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
+		$this->documentDao = new DocumentDao;
 		$this->menubuilder = new MenuBuilder;
     }
 	
@@ -65,21 +63,25 @@ class DocumentInbox extends Controller {
 					// I need to query the database to check if I have any document at the right status
 					// for any document this user has access to
 					
-					$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-				    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-				    $this->queryExecuter->setQueryStructure( $this->resource->query );
-				    $this->queryExecuter->setParameters( $parameters )
-					$entities = $this->queryExecuter->executeQuery();
-					
-					
-					
-					$table->addRow();
-					$table->addColumn($res->name);
-					$table->addColumn($resource->title);
-					$table->addUnfilteredColumn( 
-						Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) 
+					$this->documentDao->setDBH( $this->dbconnection->getDBH() );
+					$this->documentDao->setTableName( $resource->name );
+					$entities = $this->documentDao->getByFields( 
+						array( DocumentDao::DB_TABLE_STATUS_FIELD_NAME => DocumentDao::DOC_STATUS_RECEIVED ) 
 					);
-					$table->closeRow();
+					
+					foreach ( $entities as $doc ) {
+						$table->addRow();
+						$object = '';
+						foreach ( $resource->object as $obj ) {
+							$object = $doc->{$obj}.' ';
+						}
+						$table->addColumn($object);
+						$table->addColumn($resource->title);
+						$table->addUnfilteredColumn( 
+							Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$resource->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) 
+						);
+						$table->closeRow();
+					}
 				}
 			}
 		}
