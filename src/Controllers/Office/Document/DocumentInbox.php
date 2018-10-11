@@ -69,6 +69,7 @@ class DocumentInbox extends Controller {
 						array( DocumentDao::DB_TABLE_STATUS_FIELD_NAME => DocumentDao::DOC_STATUS_RECEIVED ) 
 					);
 					
+					
 					foreach ( $entities as $doc ) {
 						$table->addRow();
 						$object = '';

@@ -38,6 +38,24 @@ class LinkBuilder {
             case 'entitylogic':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
+	        case 'officedocumentinbox':
+	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+	            break;
+		    case 'officedocumentdelete':
+		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+		        break;
+	        case 'officedocumentedit':
+	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+	            break;
+	        case 'officedocumentexport':
+	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+	            break;
+		    case 'officedocumentnew':
+		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+		        break;
+			case 'officedocumentsearch':
+			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+			    break;
             
             default:
                 return '#';
@@ -66,6 +84,27 @@ class LinkBuilder {
             case 'entitylogic':
                 return $router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
                 break;
+	        case 'officedocumentinbox':
+	            return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX );
+	            break;
+		    case 'officedocumentinbox':
+		        return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX, $url_parameters );
+		        break;
+			case 'officedocumentdelete':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters );
+			    break;
+			case 'officedocumentedit':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters );
+			    break;
+			case 'officedocumentexport':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters );
+			    break;
+			case 'officedocumentnew':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters );
+			    break;
+			case 'officedocumentsearch':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters );
+			    break;
             
             default:
                 return '#';

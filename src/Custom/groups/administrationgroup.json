@@ -12,6 +12,12 @@
             { "label":"Search", "action":"entitysearch", "resource":"searchreportv1" },
             { "label":"Export", "action":"entityexport", "resource":"requestexportv1" }
       ]
+    },
+    {
+      "label":"Documents",
+      "submenu": [
+            { "label":"In Box", "action":"officedocumentinbox" }
+      ]
     }
   ]
 }

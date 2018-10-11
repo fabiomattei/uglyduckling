@@ -35,6 +35,7 @@ class Router {
 	const ROUTE_OFFICE_ENTITY_SEARCH      = 'officeentitysearch';
 	const ROUTE_OFFICE_ENTITY_EXPORT      = 'officeentityexport';
 	const ROUTE_OFFICE_ENTITY_LOGIC       = 'officeentitylogic';
+	const ROUTE_OFFICE_DOCUMENT_DELETE    = 'officedocumentdelete';
 	const ROUTE_OFFICE_DOCUMENT_EDIT      = 'officedocumentedit';
 	const ROUTE_OFFICE_DOCUMENT_EXPORT    = 'officedocumentexport';
 	const ROUTE_OFFICE_DOCUMENT_INBOX     = 'officedocumentinbox';
