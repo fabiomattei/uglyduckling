@@ -85,10 +85,10 @@ class Router {
 			case self::ROUTE_ADMIN_ENTITY_VIEW:           $controller = new EntityView; break;
 			case self::ROUTE_ADMIN_ENTITY_CREATE_TABLE:   $controller = new EntityCreateTable; break;
 			case self::ROUTE_ADMIN_ENTITY_DROP_TABLE:     $controller = new EntityDropTable; break;
-			case self::ROUTE_ADMIN_DOCUMENT_LIST:         $controller = new EntityList; break;
-			case self::ROUTE_ADMIN_DOCUMENT_VIEW:         $controller = new EntityView; break;
-			case self::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE: $controller = new EntityCreateTable; break;
-			case self::ROUTE_ADMIN_DOCUMENT_DROP_TABLE:   $controller = new EntityDropTable; break;
+			case self::ROUTE_ADMIN_DOCUMENT_LIST:         $controller = new AdminDocumentsList; break;
+			case self::ROUTE_ADMIN_DOCUMENT_VIEW:         $controller = new AdminDocumentView; break;
+			case self::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE: $controller = new AdminDocumentCreateTable; break;
+			case self::ROUTE_ADMIN_DOCUMENT_DROP_TABLE:   $controller = new AdminDocumentDropTable; break;
 			case self::ROUTE_ADMIN_TABLE_LIST:            $controller = new TableList; break;
 			case self::ROUTE_ADMIN_REPORT_LIST:           $controller = new ReportList; break;
 			

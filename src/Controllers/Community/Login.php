@@ -61,7 +61,7 @@ class Login extends Controller {
 			
 	        // redirecting to main page
 			// $this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
-			if ( $user->usr_usrofid == 99 ) {
+			if ( $user->usr_defaultgroup == 'administrationgroup' ) {
 				$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_DASHBOARD ) );
 			} else {
 				$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_GATE ) );

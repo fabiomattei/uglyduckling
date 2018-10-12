@@ -1,13 +1,19 @@
 <?php
 
-namespace Firststep\Controllers\Admin;
+namespace Firststep\Controllers\Admin\Document;
 
 use Firststep\Common\Controllers\Controller;
+use Firststep\Templates\Blocks\Menus\AdminMenu;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
+use Firststep\Common\Json\JsonBlockParser;
+use Firststep\Common\Blocks\StaticTable;
+use Firststep\Common\Blocks\Button;
+use Firststep\Common\Router\Router;
 
 /**
  * 
  */
-class AdminDocumentsList extends extends Controller {
+class AdminDocumentsList extends Controller {
 	
     /**
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.

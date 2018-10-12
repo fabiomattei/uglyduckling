@@ -2,6 +2,7 @@
   "name": "index",
   "metadata": { "type":"index", "version": "1" },
   "scripts": [
-      { "path":"./Custom/groups/administrationgroup.json", "type":"group", "name":"administrationgroup" }
+      { "path":"./Custom/groups/administrationgroup.json", "type":"group", "name":"administrationgroup" },
+	  { "path":"./Custom/groups/managergroup.json", "type":"group", "name":"managergroup" }
   ]
  }

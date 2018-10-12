@@ -29,6 +29,12 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_DOCUMENT_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_LIST ).'">
+                      <span data-feather="file"></span>
+                      Documents
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_TABLE_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_TABLE_LIST ).'">
                       <span data-feather="layers"></span>
                       Tables
