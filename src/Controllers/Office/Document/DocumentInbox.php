@@ -69,7 +69,7 @@ class DocumentInbox extends Controller {
 						array( DocumentDao::DB_TABLE_STATUS_FIELD_NAME => DocumentDao::DOC_STATUS_RECEIVED ) 
 					);
 					
-					
+					// printing all found entities in the table
 					foreach ( $entities as $doc ) {
 						$table->addRow();
 						$object = '';
