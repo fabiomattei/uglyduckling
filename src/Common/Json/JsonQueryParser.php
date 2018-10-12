@@ -8,15 +8,15 @@ use Firststep\Common\Builders\QueryBuilder;
  * JsonLoader makes an index of all available resources and load the 
  * resource if needed
  */
-class JsonBlockInfoParser {
+class JsonQueryParser {
 	
 	function __construct() {
 		$this->queryBuilder = new QueryBuilder();
 	}
 	
-	public static function parse( $resource, $entity ) {
+	public static function parse( $resource ) {
 		$this->queryBuilder->setQueryStructure($resource);
-		$this->queryBuilder->setEntity($resource);
+		// $this->queryBuilder->setEntity($resource);
 		return $this->queryBuilder->createQuery();
 	}
 	

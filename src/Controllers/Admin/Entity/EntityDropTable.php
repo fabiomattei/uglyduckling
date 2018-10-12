@@ -47,8 +47,6 @@ class EntityDropTable extends Controller {
 		$info = new BaseInfo;
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
-		
-		echo $this->queryBuilder->tableDrop($this->resource->entity->tablename);
 
 		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->entity->tablename) );
 			

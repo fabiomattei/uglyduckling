@@ -42,20 +42,18 @@ class AdminDocumentDropTable extends Controller {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity drop';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin document drop table';
 		
 		$info = new BaseInfo;
-		$info->setTitle( 'Entity name: '.$this->resource->name );
-		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
-		
-		echo $this->queryBuilder->tableDrop($this->resource->entity->tablename);
+		$info->setTitle( 'Document name: '.$this->resource->name );
+		$info->addParagraph( 'Table name: '.$this->resource->name, '' );
 
-		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->entity->tablename) );
+		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->name) );
 			
 		$info->addParagraph( 'Table Dropped ', '' );
 		
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST, $this->router ) );
 		$this->centralcontainer = array( $info );
 	}
 
