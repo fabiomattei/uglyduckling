@@ -27,6 +27,8 @@ class JsonCreateQueryParser {
 		
 		$fields = array();
 		$fields['id'] = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'primary' );
+		$fields['sourceuserid'] = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'foreignkey' );
+		$fields['sourcegroup'] = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'textfield' );
 		foreach ( $resource->fields as $field ) {
 			if ( isset( $field->dbtype ) ) {
 				$fields[$field->name] = $field->dbtype;

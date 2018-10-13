@@ -27,6 +27,7 @@ class DatabaseDefaults {
 		    case 'date': return 'DATE';
 			case 'datetime': return 'DATETIME';
 			case 'numeric': return 'INT(11)';
+			case 'foreignkey': return 'INT(11) UNSIGNED';
 		}
 		return 'It is not possible to define a field type in DatabaseDefaults, type given: '.$fieldType;
 	}
