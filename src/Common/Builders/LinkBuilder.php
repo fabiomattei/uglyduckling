@@ -53,6 +53,9 @@ class LinkBuilder {
 		    case 'officedocumentnew':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
+			case 'officedocumentnewlist':
+			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW_LIST ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+			    break;
 			case 'officedocumentsearch':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
@@ -102,6 +105,9 @@ class LinkBuilder {
 			case 'officedocumentnew':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters );
 			    break;
+			case 'officedocumentnewlist':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW_LIST );
+			    break;
 			case 'officedocumentsearch':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters );
 			    break;
@@ -111,5 +117,4 @@ class LinkBuilder {
                 break;
         }
     }    
-
 }

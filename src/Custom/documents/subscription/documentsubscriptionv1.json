@@ -2,8 +2,8 @@
 	"name": "documentsubscriptionv1",
 	"title": "Subscription for to ski class",
 	"metadata": { "type":"document", "version": "1" },
-	"sourcegroups": [ "public" ],
-	"destinationgroups": [ "administrationgroup", "teachergroup" ],
+	"sourcegroups": [ "public", "managergroup" ],
+	"destinationgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
 	"object": [ "name", "amount" ],
 	"fields": [
 		{ "type":"textarea", "dbtype":"TEXT", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },

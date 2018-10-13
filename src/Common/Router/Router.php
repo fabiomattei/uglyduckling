@@ -15,6 +15,7 @@ use Firststep\Controllers\Office\Document\DocumentExport;
 use Firststep\Controllers\Office\Document\DocumentInbox;
 use Firststep\Controllers\Office\Document\DocumentInfo;
 use Firststep\Controllers\Office\Document\DocumentNew;
+use Firststep\Controllers\Office\Document\DocumentNewList;
 use Firststep\Controllers\Office\Document\DocumentSearch;
 use Firststep\Controllers\Community\Login;
 use Firststep\Controllers\Admin\Dashboard\AdminDashboard;
@@ -45,6 +46,7 @@ class Router {
 	const ROUTE_OFFICE_DOCUMENT_INBOX       = 'officedocumentinbox';
 	const ROUTE_OFFICE_DOCUMENT_INFO        = 'officedocumentinfo';
 	const ROUTE_OFFICE_DOCUMENT_NEW         = 'officedocumentnew';
+	const ROUTE_OFFICE_DOCUMENT_NEW_LIST    = 'officedocumentnewlist';
 	const ROUTE_OFFICE_DOCUMENT_SEARCH      = 'officedocumentsearch';
 	const ROUTE_COMMUNITY_LOGIN             = 'communitylogin';
 	const ROUTE_ADMIN_DASHBOARD             = 'admindashboard';
@@ -78,6 +80,7 @@ class Router {
 			case self::ROUTE_OFFICE_DOCUMENT_INBOX:       $controller = new DocumentInbox; break;
 			case self::ROUTE_OFFICE_DOCUMENT_INFO:        $controller = new DocumentInfo; break;
 			case self::ROUTE_OFFICE_DOCUMENT_NEW:         $controller = new DocumentNew; break;
+			case self::ROUTE_OFFICE_DOCUMENT_NEW_LIST:    $controller = new DocumentNewList; break;
 			case self::ROUTE_OFFICE_DOCUMENT_SEARCH:      $controller = new DocumentSearch; break;
 			case self::ROUTE_COMMUNITY_LOGIN:             $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:             $controller = new AdminDashboard; break;
