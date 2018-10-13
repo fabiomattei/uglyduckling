@@ -70,8 +70,8 @@ class ManagerEntityController extends Controller {
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
-    	$validation_rules = $val->postValidationRoules( $this->resource->form->rows );
-    	$filter_rules = $val->postValidationFilters( $this->resource->form->rows );
+    	$validation_rules = $val->postValidationRoules( $this->resource->form->fields );
+    	$filter_rules = $val->postValidationFilters( $this->resource->form->fields );
 
         if ( count( $validation_rules ) == 0 ) {
             return true;
