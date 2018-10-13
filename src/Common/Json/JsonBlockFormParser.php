@@ -3,6 +3,7 @@
 namespace Firststep\Common\Json;
 
 use Firststep\Common\Builders\FormBuilder;
+use Firststep\Common\Builders\FormBuilderDocumentV1;
 
 /**
  * JsonLoader makes an index of all available resources and load the 
@@ -19,8 +20,8 @@ class JsonBlockFormParser {
 			return $formBuilder->createForm();
 		}
 		if ( $resource->metadata->type === 'document' ) {
-			$formBuilder = new FormBuilder;
-			$formBuilder->setFormStructure( $resource->form );
+			$formBuilder = new FormBuilderDocumentV1;
+			$formBuilder->setFormStructure( $resource );
 			$formBuilder->setEntity($entity);
 			$formBuilder->setAction( $action );
 			return $formBuilder->createForm();
