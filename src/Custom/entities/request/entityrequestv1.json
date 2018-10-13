@@ -4,18 +4,18 @@
   "entity": {
     "title": "Request v1",
     "tablename": "requestv1",
-	  "engine": "InnoDB DEFAULT",
-	  "charset": "utf8",
-	  "collate": "utf8_bin",
+	"engine": "InnoDB DEFAULT",
+	"charset": "utf8",
+	"collate": "utf8_bin",
     "fields": [
-		    { "type":"int(10) UNSIGNED NOT NULL", "validation":"required|numeric", "name":"id" },
-        { "type":"VARCHAR(255)", "validation":"max_len,2500", "name":"name" },
-        { "type":"INT", "validation":"required|numeric", "name":"amount" },
-        { "type":"DATE", "validation":"max_len,10", "name":"duedate" }
+		{ "type":"int(10) UNSIGNED NOT NULL", "name":"id" },
+        { "type":"VARCHAR(255)", "name":"name" },
+        { "type":"INT", "name":"amount" },
+        { "type":"DATE", "name":"duedate" }
     ],
-	  "primary":"id",
-	  "alter": [
-		  { "type":"int(10) UNSIGNED NOT NULL AUTO_INCREMENT", "name":"id" }
-	  ]
+	"primary":"id",
+	"alter": [
+		{ "type":"int(10) UNSIGNED NOT NULL AUTO_INCREMENT", "name":"id" }
+	]
   }
 }

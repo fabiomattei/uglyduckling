@@ -45,10 +45,10 @@ class AdminDocumentView extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
 		
 		$info = new BaseInfo;
-		$info->setTitle( 'Entity name: '.$this->resource->name );
+		$info->setTitle( 'Document name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 
-		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists($this->resource->entity->tablename) );
+		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists( $this->resource->name ) );
 			
 		$info->addParagraph( 'Table exists: '.( $tableExists ? 
 			'true  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) : 

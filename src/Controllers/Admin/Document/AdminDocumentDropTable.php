@@ -48,7 +48,7 @@ class AdminDocumentDropTable extends Controller {
 		$info->setTitle( 'Document name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->name, '' );
 
-		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->name) );
+		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop( $this->resource->name ) );
 			
 		$info->addParagraph( 'Table Dropped ', '' );
 		

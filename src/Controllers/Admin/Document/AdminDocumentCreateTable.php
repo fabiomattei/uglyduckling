@@ -10,7 +10,7 @@ use Firststep\Common\Blocks\BaseInfo;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
+use Firststep\Common\Json\JsonCreateQueryParser;
 
 /**
  * 
@@ -19,7 +19,7 @@ class AdminDocumentCreateTable extends Controller {
 	
 	function __construct() {
 		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
+		$this->jsonCreateQueryParser = new JsonCreateQueryParser;
     }
 	
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
@@ -42,21 +42,22 @@ class AdminDocumentCreateTable extends Controller {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity create';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin document create';
 		
 		$info = new BaseInfo;
-		$info->setTitle( 'Entity name: '.$this->resource->name );
+		$info->setTitle( 'Document name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
+		
+		list( $create, $addPrimaryKey, $addAutoIncrement) = $this->jsonCreateQueryParser->parse( $this->resource );
 
-		$this->queryBuilder->setQueryStructure( $this->resource->entity );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->create() );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->primarykey() );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->autoincrement() );
+		$this->queryExecuter->executeTableCreate( $create );
+		$this->queryExecuter->executeTableCreate( $addPrimaryKey );
+		$this->queryExecuter->executeTableCreate( $addAutoIncrement );
 			
 		$info->addParagraph( 'Table created! ', '' );
 		
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST, $this->router ) );
 		$this->centralcontainer = array( $info );
 	}
 

@@ -6,27 +6,10 @@
 	"destinationgroups": [ "administrationgroup", "teachergroup" ],
 	"object": [ "name", "amount" ],
 	"fields": [
-		{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
+		{ "type":"textarea", "dbtype":"TEXT", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
 		{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1"  },
-		{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
-		{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id", "row":"2" }
+		{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" }
 	],
-	"entity": {
-        "tablename": "documentsubscriptionv1",
-	    "engine": "InnoDB DEFAULT",
-	    "charset": "utf8",
-	    "collate": "utf8_bin",
-        "fields": [
-		  { "type":"int(10) UNSIGNED NOT NULL", "validation":"required|numeric", "name":"id" },
-          { "type":"VARCHAR(255)", "validation":"max_len,2500", "name":"name" },
-          { "type":"INT", "validation":"required|numeric", "name":"amount" },
-          { "type":"DATE", "validation":"max_len,10", "name":"duedate" }
-        ],
-	    "primary":"id",
-	    "alter": [
-	  	  { "type":"int(10) UNSIGNED NOT NULL AUTO_INCREMENT", "name":"id" }
-	    ]
-    },
 	"table": {
     	"title": "My table",
     	"fields": [
