@@ -4,7 +4,7 @@ namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockParser;
+use Firststep\Common\Json\JsonBlockFormParser;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
@@ -23,7 +23,7 @@ class EntityForm extends ManagerEntityController {
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
-		$this->formBuilder = new FormBuilder;
+		$this->jsonBlockFormParser = new JsonBlockFormParser;
 		$this->menubuilder = new MenuBuilder;
     }
 
@@ -39,9 +39,11 @@ class EntityForm extends ManagerEntityController {
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
 
-		$this->formBuilder->setFormStructure( $this->resource->form );
-		$this->formBuilder->setEntity( $entity );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ) );
+		$formBlock = $this->jsonBlockFormParser->parse( 
+			$this->resource, 
+			$entity,
+			$this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] )
+		);
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
 
@@ -51,7 +53,7 @@ class EntityForm extends ManagerEntityController {
 		
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
-		$this->centralcontainer = array( $this->formBuilder->createForm() );
+		$this->centralcontainer = array( $formBlock );
 	}
 	
 	public function postRequest() {

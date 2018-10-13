@@ -1,7 +1,7 @@
 { 
 	"name": "formrequestv1",
 	"metadata": { "type":"form", "version": "1" },
-	"allowedgroups": [ "administrationgroup", "teachergroup" ],
+	"allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
 	"form": {
 		"title": "My new form",
 		"submitTitle": "Save",
