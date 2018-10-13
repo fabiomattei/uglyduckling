@@ -119,7 +119,7 @@ class ManagerEntityController extends Controller {
                 $this->show_get_error_page();
             }
         } else {
-            if ( $this->check_get_request() ) {
+            if ( $this->check_post_request() ) {
 	            $this->loadResource();
                     if ( $this->check_authorization_post_request() ) {
                         if ( $this->check_post_request() ) {
