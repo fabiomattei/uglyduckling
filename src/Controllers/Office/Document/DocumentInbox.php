@@ -56,7 +56,7 @@ class DocumentInbox extends Controller {
 		$table->addTBody();
 		foreach ( $this->jsonloader->getResourcesIndex() as $res ) {
 			if ( $res->type === 'document' ) {
-				$resource = $this->jsonloader->loadResource( $res->path );
+				$resource = $this->jsonloader->loadResource( $res->name );
 				
 				if ( in_array( $this->sessionWrapper->getSessionGroup(), $resource->destinationgroups ) ) {
 					// This user can access the documents because he belongs to the right groups

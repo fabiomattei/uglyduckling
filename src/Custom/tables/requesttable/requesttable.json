@@ -1,7 +1,7 @@
 { 
   "name": "requesttable",
   "metadata": { "type":"table", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup" ],
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "table": {
     "title": "My table",
     "fields": [
