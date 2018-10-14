@@ -74,7 +74,7 @@ class DocumentOutbox extends Controller {
 						$table->addRow();
 						$object = '';
 						foreach ( $resource->object as $obj ) {
-							$object = $doc->{$obj}.' ';
+							$object .= $doc->{$obj}.' ';
 						}
 						$table->addColumn($object);
 						$table->addColumn($resource->title);

@@ -364,6 +364,56 @@ class DocumentDao {
             throw new \Exception('General malfuction!!!');
         }
     }
+	
+    /**
+     * Getting all documents related to a specifing group as a source
+	 */
+    public function getGroupDraft( $requestedfieldlist, $groupname ) {
+		$fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_DRAFT . '" ' .
+				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
+            $STH = $this->DBH->prepare($query);
+			$STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+	
+    /**
+     * Getting all documents related to a specifing user as a source
+	 */
+    public function getUserGroupDraft( $requestedfieldlist, $groupname, $userid ) {
+		$fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_DRAFT . '" ' .
+				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ' .
+				' AND ' . $this::DB_TABLE_SOURCE_ID_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_ID_FIELD_NAME.' ' . ';';
+            $STH = $this->DBH->prepare($query);
+			$STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
+			$STH->bindParam($this::DB_TABLE_SOURCE_ID_FIELD_NAME, $userid);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
 
     /**
      * This function allows user to get a set of elements from a table.

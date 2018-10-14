@@ -41,7 +41,7 @@ class DocumentNewList extends Controller {
 		$this->menubuilder->setRouter( $this->router );
 		
 		$table = new StaticTable;
-		$table->setTitle('Received documents');
+		$table->setTitle('List of all possible documents');
 		
 		$table->addTHead();
 		$table->addRow();
