@@ -41,6 +41,18 @@ class LinkBuilder {
 	        case 'officedocumentinbox':
 	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 	            break;
+		    case 'officedocumentoutbox':
+		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+		        break;
+			case 'officedocumentoutboxuser':
+			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+			    break;
+			case 'officedocumentdraft':
+			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+			    break;
+			case 'officedocumentdraftuser':
+			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT_USER ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+			    break;				
 		    case 'officedocumentdelete':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
@@ -93,6 +105,18 @@ class LinkBuilder {
 		    case 'officedocumentinbox':
 		        return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX, $url_parameters );
 		        break;
+			case 'officedocumentoutbox':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX, $url_parameters );
+			    break;
+			case 'officedocumentoutboxuser':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER, $url_parameters );
+			    break;
+			case 'officedocumentdraft':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT, $url_parameters );
+			    break;
+			case 'officedocumentdraftuser':
+			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT_USER, $url_parameters );
+			    break;
 			case 'officedocumentdelete':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters );
 			    break;

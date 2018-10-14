@@ -44,6 +44,10 @@ class Router {
 	const ROUTE_OFFICE_DOCUMENT_EDIT        = 'officedocumentedit';
 	const ROUTE_OFFICE_DOCUMENT_EXPORT      = 'officedocumentexport';
 	const ROUTE_OFFICE_DOCUMENT_INBOX       = 'officedocumentinbox';
+	const ROUTE_OFFICE_DOCUMENT_OUTBOX      = 'officedocumentoutbox';
+	const ROUTE_OFFICE_DOCUMENT_OUTBOX_USER = 'officedocumentoutboxuser';
+	const ROUTE_OFFICE_DOCUMENT_DRAFT       = 'officedocumentdraft';
+	const ROUTE_OFFICE_DOCUMENT_DRAFT_USER  = 'officedocumentdraftuser';
 	const ROUTE_OFFICE_DOCUMENT_INFO        = 'officedocumentinfo';
 	const ROUTE_OFFICE_DOCUMENT_NEW         = 'officedocumentnew';
 	const ROUTE_OFFICE_DOCUMENT_NEW_LIST    = 'officedocumentnewlist';
@@ -78,6 +82,10 @@ class Router {
 			case self::ROUTE_OFFICE_DOCUMENT_EDIT:        $controller = new DocumentEdit; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EXPORT:      $controller = new DocumentExport; break;
 			case self::ROUTE_OFFICE_DOCUMENT_INBOX:       $controller = new DocumentInbox; break;
+			case self::ROUTE_OFFICE_DOCUMENT_OUTBOX:      $controller = new DocumentOutbox; break;
+			case self::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER: $controller = new DocumentOutboxUser; break;
+			case self::ROUTE_OFFICE_DOCUMENT_DRAFT:       $controller = new DocumentDraft; break;
+			case self::ROUTE_OFFICE_DOCUMENT_DRAFT_USER:  $controller = new DocumentDraftUser; break;
 			case self::ROUTE_OFFICE_DOCUMENT_INFO:        $controller = new DocumentInfo; break;
 			case self::ROUTE_OFFICE_DOCUMENT_NEW:         $controller = new DocumentNew; break;
 			case self::ROUTE_OFFICE_DOCUMENT_NEW_LIST:    $controller = new DocumentNewList; break;
