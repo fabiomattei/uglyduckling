@@ -11,9 +11,13 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\MenuBuilder;
+use Firststep\Common\Database\DocumentDao;
 
 /**
- * 
+ * This class cares about the creation of a new istance of a selected document
+ * The document selected is passed in the get parameter "res"
+ * This class creates the form in order to fill the data in the GET call and 
+ * apply the changes to the database in the POST call
  */
 class DocumentNew extends ManagerDocumentSenderController {
 
@@ -22,6 +26,7 @@ class DocumentNew extends ManagerDocumentSenderController {
 		$this->queryBuilder = new QueryBuilder;
 		$this->jsonBlockFormParser = new JsonBlockFormParser;
 		$this->menubuilder = new MenuBuilder;
+		$this->documentDao = new DocumentDao;
     }
 
     /**
@@ -51,9 +56,25 @@ class DocumentNew extends ManagerDocumentSenderController {
 	}
 	
 	public function postRequest() {
+		// updating the document table
+		$this->documentDao->setDBH( $this->dbconnection->getDBH() );
+		$this->documentDao->setTableName( $this->resource->name );
+		
+		// removing save button from parameters and adding user id and user group
+		$queryparameters = $this->postParameters;
+		$queryparameters['sourceuserid'] = $this->sessionWrapper->getSessionUserId();
+		$queryparameters['sourcegroup'] = $this->sessionWrapper->getSessionGroup();
+		unset( $queryparameters['save'] );
+		
+		// saving in database
+		$this->documentDao->insert( $queryparameters );
+		
+		// applying the possible logics
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+		
+		print_r($this->postParameters);
 
-		foreach ($this->resource->logics as $logic) {
+		foreach ( $this->resource->logics->oninsert as $logic ) {
 			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    	$this->queryExecuter->setQueryStructure( $logic );
 	    	$this->queryExecuter->setParameters( $this->postParameters );

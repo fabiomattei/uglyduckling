@@ -17,23 +17,19 @@
         	{ "headline":"Amount", "name":"amount" }
     	]
 	},
-	"logics": [
-		{
+	"logics": {
 		"oninsert": [
-			{  	"type": "update",
+			{  	
+				"type": "insert",
 				"entity": "requestv1",
 				"fields": [
 					{ "field": "name", "operator": "=", "value": "name" },
 					{ "field": "amount", "operator": "=", "value": "amount" },
 					{ "field": "duedate", "operator": "=", "value": "duedate" }
-				],
-				"conditions": [
-					{ "field": "id", "operator": "=", "value": "id" }
 				]
 			}
 		],
 		"onupdate": [],
 		"ondelete": []
-		}
-	]
+	}
 }

@@ -103,7 +103,7 @@ class DocumentDao {
      * EX.
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
-    function insert($fields) {
+    function insert( $fields ) {
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';
@@ -116,7 +116,7 @@ class DocumentDao {
         $filedsarguments = substr($filedsarguments, 0, -2);
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO ' . $this->tablename . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")');
+            $STH = $this->DBH->prepare('INSERT INTO ' . $this->tablename . ' (' . $filedslist . ', ' . $this::DB_TABLE_STATUS_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FIELD_NAME . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ') VALUES (' . $filedsarguments . ', "' . $this::DOC_STATUS_DRAFT . '", "' . $presentmoment . '", "' . $presentmoment . '")');
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
