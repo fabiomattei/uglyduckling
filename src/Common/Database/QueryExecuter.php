@@ -141,7 +141,7 @@ class QueryExecuter {
      * EX.
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
-    function insert($fields) {
+    function insert() {
         try {
             $this->queryBuilder = new QueryBuilder;
             $this->queryBuilder->setQueryStructure( $this->queryStructure );

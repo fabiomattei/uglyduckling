@@ -71,8 +71,6 @@ class DocumentNew extends ManagerDocumentSenderController {
 		
 		// applying the possible logics
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		
-		print_r($this->postParameters);
 
 		foreach ( $this->resource->logics->oninsert as $logic ) {
 			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
