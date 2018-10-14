@@ -17,6 +17,10 @@
       "label":"Documents",
       "submenu": [
             { "label":"In Box", "action":"officedocumentinbox" },
+			{ "label":"Out Box", "action":"officedocumentoutbox" },
+			{ "label":"My Out Box", "action":"officedocumentoutboxuser" },
+			{ "label":"Draft", "action":"officedocumentdraft" },
+			{ "label":"My Draft", "action":"officedocumentdraftuser" },
 			{ "label":"New", "action":"officedocumentnewlist" }
       ]
     }

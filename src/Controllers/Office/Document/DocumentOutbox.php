@@ -42,8 +42,10 @@ class DocumentOutbox extends Controller {
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 		
+		$this->documentDao->setDBH( $this->dbconnection->getDBH() );
+		
 		$table = new StaticTable;
-		$table->setTitle('Received documents');
+		$table->setTitle('Out Box');
 		
 		$table->addTHead();
 		$table->addRow();
@@ -65,9 +67,7 @@ class DocumentOutbox extends Controller {
 					
 					$this->documentDao->setDBH( $this->dbconnection->getDBH() );
 					$this->documentDao->setTableName( $resource->name );
-					$entities = $this->documentDao->getByFields( 
-						array( DocumentDao::DB_TABLE_STATUS_FIELD_NAME => DocumentDao::DOC_STATUS_RECEIVED ) 
-					);
+					$entities = $this->documentDao->getGroupOutbox( $resource->object, $this->sessionWrapper->getSessionGroup() );
 					
 					// printing all found entities in the table
 					foreach ( $entities as $doc ) {

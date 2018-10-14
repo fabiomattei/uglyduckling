@@ -42,8 +42,10 @@ class DocumentInbox extends Controller {
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 		
+		$this->documentDao->setDBH( $this->dbconnection->getDBH() );
+		
 		$table = new StaticTable;
-		$table->setTitle('Received documents');
+		$table->setTitle('In Box');
 		
 		$table->addTHead();
 		$table->addRow();
@@ -63,7 +65,6 @@ class DocumentInbox extends Controller {
 					// I need to query the database to check if I have any document at the right status
 					// for any document this user has access to
 					
-					$this->documentDao->setDBH( $this->dbconnection->getDBH() );
 					$this->documentDao->setTableName( $resource->name );
 					$entities = $this->documentDao->getByFields( 
 						array( DocumentDao::DB_TABLE_STATUS_FIELD_NAME => DocumentDao::DOC_STATUS_RECEIVED ) 

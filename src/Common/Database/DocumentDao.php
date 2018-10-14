@@ -10,12 +10,14 @@ use PDO;
 class DocumentDao {
 
 	/* I set few costants with fields name, this allows me to record when the document changed status */
-	const DB_TABLE_STATUS_FIELD_NAME  = 'docstatus';
-	const DB_TABLE_CREATED_FIELD_NAME  = 'doccreated';
-    const DB_TABLE_UPDATED_FIELD_NAME  = 'docupdated';
-	const DB_TABLE_SENT_FIELD_NAME     = 'docsent';
-    const DB_TABLE_RECEIVED_FIELD_NAME = 'docreceived';
-	const DB_TABLE_REJECTED_FIELD_NAME = 'docrejected';
+	const DB_TABLE_SOURCE_ID_FIELD_NAME    = 'sourceuserid';
+	const DB_TABLE_SOURCE_GROUP_FIELD_NAME = 'sourcegroup'; 
+	const DB_TABLE_STATUS_FIELD_NAME       = 'docstatus';
+	const DB_TABLE_CREATED_FIELD_NAME      = 'doccreated';
+    const DB_TABLE_UPDATED_FIELD_NAME      = 'docupdated';
+	const DB_TABLE_SENT_FIELD_NAME         = 'docsent';
+    const DB_TABLE_RECEIVED_FIELD_NAME     = 'docreceived';
+	const DB_TABLE_REJECTED_FIELD_NAME     = 'docrejected';
 	
 	/* Possible document status */
 	const DOC_STATUS_DRAFT = 'DRAFT';
@@ -308,6 +310,60 @@ class DocumentDao {
             throw new \Exception('General malfuction!!!');
         }
     }
+	
+    /**
+     * Getting all documents related to a specifing group as a source
+	 */
+    public function getGroupOutbox( $requestedfieldlist, $groupname ) {
+		$fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SEND . '" ' .
+				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
+				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
+				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
+            $STH = $this->DBH->prepare($query);
+			$STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+	
+    /**
+     * Getting all documents related to a specifing user as a source
+	 */
+    public function getUserGroupOutbox( $requestedfieldlist, $groupname, $userid ) {
+		$fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SEND . '" ' .
+				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
+				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
+				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ' .
+				' AND ' . $this::DB_TABLE_SOURCE_ID_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_ID_FIELD_NAME.' ' . ';';
+            $STH = $this->DBH->prepare($query);
+			$STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
+			$STH->bindParam($this::DB_TABLE_SOURCE_ID_FIELD_NAME, $userid);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
 
     /**
      * This function allows user to get a set of elements from a table.
@@ -418,10 +474,6 @@ class DocumentDao {
             return array();
         }
     }
-	
-	
-	
-
 
     /**
      * This is the basic function for getting one element from a table.
