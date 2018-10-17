@@ -22,7 +22,7 @@ class JsonBlockFormParser {
 		if ( $resource->metadata->type === 'document' ) {
 			$formBuilder = new FormBuilderDocumentV1;
 			$formBuilder->setFormStructure( $resource );
-			$formBuilder->setEntity($entity);
+			$formBuilder->setEntity( $entity );
 			$formBuilder->setAction( $action );
 			return $formBuilder->createForm();
 		}

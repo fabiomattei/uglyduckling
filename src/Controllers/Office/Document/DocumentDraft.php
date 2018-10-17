@@ -79,8 +79,9 @@ class DocumentDraft extends Controller {
 						$table->addColumn($object);
 						$table->addColumn($resource->title);
 						$table->addUnfilteredColumn( 
-							Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, 'id='.$doc->id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) .' ' .
-							Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEND, 'id='.$doc->id ), 'Send', Button::COLOR_GRAY.' '.Button::SMALL ) 
+							Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, 'res='.$resource->name.'&id='.$doc->id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) .' ' .
+							Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEND, 'res='.$resource->name.'&id='.$doc->id ), 'Send', Button::COLOR_GRAY.' '.Button::SMALL ) .' ' .
+							Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, 'res='.$resource->name.'&id='.$doc->id ), 'Del', Button::COLOR_GRAY.' '.Button::SMALL ) 
 						);
 						$table->closeRow();
 					}

@@ -39,13 +39,6 @@ class DocumentDao {
 		$this->tablename = $tablename;
 	}
 	
-	/**
-	 * Setting Private Key field name 
-	 */
-	public function setPK( $pk ) {
-		$this->pk = $pk;
-	}
-	
     /**
      * Database connection handler setter
      */
@@ -73,10 +66,10 @@ class DocumentDao {
      * if no corresponding row is found it gives the empty object
      * calling the getEmpty method (null object).
      */
-    function getById($id) {
+    function getById( $id ) {
         try {
-            $STH = $this->DBH->prepare('SELECT * from ' . $this->tablename . ' WHERE ' . $this->pk . ' = :id');
-            $STH->bindParam(':id', $id);
+            $STH = $this->DBH->prepare('SELECT * from ' . $this->tablename . ' WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
+            $STH->bindParam( ':id' , $id );
             $STH->execute();
 
             # setting the fetch mode
@@ -151,7 +144,7 @@ class DocumentDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this->pk . ' = :id');
+            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
