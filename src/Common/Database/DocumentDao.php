@@ -10,6 +10,7 @@ use PDO;
 class DocumentDao {
 
 	/* I set few costants with fields name, this allows me to record when the document changed status */
+	const DB_TABLE_ID_FIELD_NAME           = 'id';
 	const DB_TABLE_SOURCE_ID_FIELD_NAME    = 'sourceuserid';
 	const DB_TABLE_SOURCE_GROUP_FIELD_NAME = 'sourcegroup'; 
 	const DB_TABLE_STATUS_FIELD_NAME       = 'docstatus';
@@ -317,7 +318,7 @@ class DocumentDao {
     public function getGroupOutbox( $requestedfieldlist, $groupname ) {
 		$fields = $this->organizeRequestedFields( $requestedfieldlist );
         try {
-            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
             $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SEND . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
@@ -343,7 +344,7 @@ class DocumentDao {
     public function getUserGroupOutbox( $requestedfieldlist, $groupname, $userid ) {
 		$fields = $this->organizeRequestedFields( $requestedfieldlist );
         try {
-            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
             $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SEND . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
@@ -371,7 +372,7 @@ class DocumentDao {
     public function getGroupDraft( $requestedfieldlist, $groupname ) {
 		$fields = $this->organizeRequestedFields( $requestedfieldlist );
         try {
-            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
             $query .= 'WHERE ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_DRAFT . '" ' .
 				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
             $STH = $this->DBH->prepare($query);
@@ -395,7 +396,7 @@ class DocumentDao {
     public function getUserGroupDraft( $requestedfieldlist, $groupname, $userid ) {
 		$fields = $this->organizeRequestedFields( $requestedfieldlist );
         try {
-            $query = 'SELECT ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
             $query .= 'WHERE ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_DRAFT . '" ' .
 				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ' .
 				' AND ' . $this::DB_TABLE_SOURCE_ID_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_ID_FIELD_NAME.' ' . ';';

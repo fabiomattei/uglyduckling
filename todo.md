@@ -1,25 +1,27 @@
 # todo list
 
-Implement protocol for data/form exchange
+# Implement user management
+
+# Implement protocol for data/form exchange
 * Expose/Query form using GET
 * Form fill via POST
 * ACK via POST
 
-Documents management (possible status: created, sent)
-* New
+# Documents management (possible status: created, sent)
+* New (done)
 * Edit
-* List
+* List (done)
 * Search
 * Export
 
-Office management 
+# Office management 
 * Task
 * Calendar (death line, milestone)
 * Note
 
-Multilingual
+# Multilingual
 
-Future 
-Documents activated by an event or a death line
-Documents prepopulated by DB
+# Future 
+* Documents activated by an event or a death line
+* Documents prepopulated by DB
 
