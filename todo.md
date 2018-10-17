@@ -7,10 +7,12 @@
 * Form fill via POST
 * ACK via POST
 
-# Documents management (possible status: created, sent)
+# Documents management
 * New (done)
-* Edit
+* Edit (done)
 * List (done)
+* Send
+* Accept, Reject
 * Search
 * Export
 
