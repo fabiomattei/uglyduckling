@@ -12,6 +12,7 @@
 * Edit (done)
 * List (done)
 * Send
+* Delete
 * Accept, Reject
 * Search
 * Export
