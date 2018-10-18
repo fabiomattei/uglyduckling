@@ -17,7 +17,7 @@ use Firststep\Common\Database\DocumentDao;
 /**
  * 
  */
-class DocumentSend extends ManagerDocumentSenderController {
+class DocumentAccept extends ManagerDocumentSenderController {
 	
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;

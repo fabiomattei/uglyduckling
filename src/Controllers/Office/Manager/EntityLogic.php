@@ -41,8 +41,4 @@ class EntityLogic extends ManagerEntityController {
         $this->redirectToPreviousPage();
 	}
 
-    public function show_second_get_error_page() {
-        throw new ErrorPageException('Error page exception function show_get_error_page()');
-    }
-
 }

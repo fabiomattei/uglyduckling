@@ -10,6 +10,7 @@ use Firststep\Controllers\Office\Manager\EntityInfo;
 use Firststep\Controllers\Office\Manager\EntitySearch;
 use Firststep\Controllers\Office\Manager\EntityExport;
 use Firststep\Controllers\Office\Manager\EntityLogic;
+use Firststep\Controllers\Office\Document\DocumentAccept;
 use Firststep\Controllers\Office\Document\DocumentEdit;
 use Firststep\Controllers\Office\Document\DocumentExport;
 use Firststep\Controllers\Office\Document\DocumentInbox;
@@ -20,6 +21,7 @@ use Firststep\Controllers\Office\Document\DocumentDraftUser;
 use Firststep\Controllers\Office\Document\DocumentInfo;
 use Firststep\Controllers\Office\Document\DocumentNew;
 use Firststep\Controllers\Office\Document\DocumentNewList;
+use Firststep\Controllers\Office\Document\DocumentReject;
 use Firststep\Controllers\Office\Document\DocumentSearch;
 use Firststep\Controllers\Office\Document\DocumentSend;
 use Firststep\Controllers\Community\Login;
@@ -45,6 +47,7 @@ class Router {
 	const ROUTE_OFFICE_ENTITY_SEARCH        = 'officeentitysearch';
 	const ROUTE_OFFICE_ENTITY_EXPORT        = 'officeentityexport';
 	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitylogic';
+	const ROUTE_OFFICE_DOCUMENT_ACCEPT      = 'officedocumentaccept';
 	const ROUTE_OFFICE_DOCUMENT_DELETE      = 'officedocumentdelete';
 	const ROUTE_OFFICE_DOCUMENT_EDIT        = 'officedocumentedit';
 	const ROUTE_OFFICE_DOCUMENT_EXPORT      = 'officedocumentexport';
@@ -56,6 +59,7 @@ class Router {
 	const ROUTE_OFFICE_DOCUMENT_INFO        = 'officedocumentinfo';
 	const ROUTE_OFFICE_DOCUMENT_NEW         = 'officedocumentnew';
 	const ROUTE_OFFICE_DOCUMENT_NEW_LIST    = 'officedocumentnewlist';
+	const ROUTE_OFFICE_DOCUMENT_REJECT      = 'officedocumentreject';
 	const ROUTE_OFFICE_DOCUMENT_SEARCH      = 'officedocumentsearch';
 	const ROUTE_OFFICE_DOCUMENT_SEND        = 'officedocumentsend';
 	const ROUTE_COMMUNITY_LOGIN             = 'communitylogin';
@@ -85,6 +89,7 @@ class Router {
 			case self::ROUTE_OFFICE_ENTITY_SEARCH:        $controller = new EntitySearch; break;
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
 			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityLogic; break;
+			case self::ROUTE_OFFICE_DOCUMENT_ACCEPT:      $controller = new DocumentAccept; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EDIT:        $controller = new DocumentEdit; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EXPORT:      $controller = new DocumentExport; break;
 			case self::ROUTE_OFFICE_DOCUMENT_INBOX:       $controller = new DocumentInbox; break;
@@ -95,6 +100,7 @@ class Router {
 			case self::ROUTE_OFFICE_DOCUMENT_INFO:        $controller = new DocumentInfo; break;
 			case self::ROUTE_OFFICE_DOCUMENT_NEW:         $controller = new DocumentNew; break;
 			case self::ROUTE_OFFICE_DOCUMENT_NEW_LIST:    $controller = new DocumentNewList; break;
+			case self::ROUTE_OFFICE_DOCUMENT_REJECT:      $controller = new DocumentReject; break;
 			case self::ROUTE_OFFICE_DOCUMENT_SEARCH:      $controller = new DocumentSearch; break;
 			case self::ROUTE_OFFICE_DOCUMENT_SEND:        $controller = new DocumentSend; break;
 			case self::ROUTE_COMMUNITY_LOGIN:             $controller = new Login; break;

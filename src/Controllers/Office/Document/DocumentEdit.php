@@ -84,7 +84,7 @@ class DocumentEdit extends ManagerDocumentSenderController {
 		// applying the possible logics
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-		foreach ( $this->resource->logics->onupdate as $logic ) {
+		foreach ( $this->resource->onupdate->logics as $logic ) {
 			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    	$this->queryExecuter->setQueryStructure( $logic );
 	    	$this->queryExecuter->setParameters( $this->postParameters );

@@ -41,6 +41,9 @@ class LinkBuilder {
 	        case 'officedocumentinbox':
 	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 	            break;
+			case 'officedocumentaccept':
+				return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPT ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+				break;
 		    case 'officedocumentoutbox':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
@@ -65,6 +68,9 @@ class LinkBuilder {
 		    case 'officedocumentnew':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
+			case 'officedocumentreject':
+			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+			    break;
 			case 'officedocumentnewlist':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW_LIST ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
@@ -102,8 +108,8 @@ class LinkBuilder {
 	        case 'officedocumentinbox':
 	            return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX );
 	            break;
-		    case 'officedocumentinbox':
-		        return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX, $url_parameters );
+		    case 'officedocumentaccept':
+		        return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPT, $url_parameters );
 		        break;
 			case 'officedocumentoutbox':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX, $url_parameters );
@@ -129,6 +135,9 @@ class LinkBuilder {
 			case 'officedocumentnew':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters );
 			    break;
+			case 'officedocumentreject':
+				return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters );
+				break;
 			case 'officedocumentnewlist':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW_LIST );
 			    break;
