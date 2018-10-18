@@ -16,7 +16,7 @@
     {
       "label":"Documents",
       "submenu": [
-            { "label":"In Box", "action":"officedocumentinbox" }
+            { "label":"In Box", "action":"documentinbox" }
       ]
     }
   ]

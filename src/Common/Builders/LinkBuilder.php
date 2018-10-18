@@ -38,43 +38,43 @@ class LinkBuilder {
             case 'entitylogic':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
-	        case 'officedocumentinbox':
+	        case 'documentinbox':
 	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 	            break;
-			case 'officedocumentaccept':
+			case 'documentaccept':
 				return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPT ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 				break;
-		    case 'officedocumentoutbox':
+		    case 'documentoutbox':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
-			case 'officedocumentoutboxuser':
+			case 'documentoutboxuser':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
-			case 'officedocumentdraft':
+			case 'documentdraft':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
-			case 'officedocumentdraftuser':
+			case 'documentdraftuser':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT_USER ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;				
-		    case 'officedocumentdelete':
+		    case 'documentdelete':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
-	        case 'officedocumentedit':
+	        case 'documentedit':
 	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 	            break;
-	        case 'officedocumentexport':
+	        case 'documentexport':
 	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 	            break;
-		    case 'officedocumentnew':
+		    case 'documentnew':
 		        return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
-			case 'officedocumentreject':
+			case 'documentreject':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
-			case 'officedocumentnewlist':
+			case 'documentnewlist':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW_LIST ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
-			case 'officedocumentsearch':
+			case 'documentsearch':
 			    return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
             
@@ -105,43 +105,43 @@ class LinkBuilder {
             case 'entitylogic':
                 return $router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
                 break;
-	        case 'officedocumentinbox':
+	        case 'documentinbox':
 	            return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX );
 	            break;
-		    case 'officedocumentaccept':
+		    case 'documentaccept':
 		        return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPT, $url_parameters );
 		        break;
-			case 'officedocumentoutbox':
+			case 'documentoutbox':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX, $url_parameters );
 			    break;
-			case 'officedocumentoutboxuser':
+			case 'documentoutboxuser':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER, $url_parameters );
 			    break;
-			case 'officedocumentdraft':
+			case 'documentdraft':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT, $url_parameters );
 			    break;
-			case 'officedocumentdraftuser':
+			case 'documentdraftuser':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT_USER, $url_parameters );
 			    break;
-			case 'officedocumentdelete':
+			case 'documentdelete':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters );
 			    break;
-			case 'officedocumentedit':
+			case 'documentedit':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters );
 			    break;
-			case 'officedocumentexport':
+			case 'documentexport':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters );
 			    break;
-			case 'officedocumentnew':
+			case 'documentnew':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters );
 			    break;
-			case 'officedocumentreject':
+			case 'documentreject':
 				return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters );
 				break;
-			case 'officedocumentnewlist':
+			case 'documentnewlist':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW_LIST );
 			    break;
-			case 'officedocumentsearch':
+			case 'documentsearch':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters );
 			    break;
             
