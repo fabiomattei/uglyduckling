@@ -1,6 +1,6 @@
 { 
 	"name": "documentsubscriptionv1",
-	"title": "Subscription for to ski class",
+	"title": "Subscription to ski class",
 	"metadata": { "type":"document", "version": "1" },
 	"sourcegroups": [ "public", "managergroup" ],
 	"destinationgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
@@ -17,8 +17,8 @@
         	{ "headline":"Amount", "name":"amount" }
     	]
 	},
-	"logics": {
-		"oninsert": [
+	"oninsert": {
+		"logics": [
 			{  	
 				"type": "insert",
 				"entity": "requestv1",
@@ -28,8 +28,18 @@
 					{ "field": "duedate", "operator": "=", "value": "duedate" }
 				]
 			}
-		],
-		"onupdate": [],
-		"ondelete": []
-	}
+		], 
+		"updates": [
+			{
+				"body":[ "name", "amount" ],
+				"type":"new Subscription to ski class",
+				"destinationgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+				"action": { "action":"documentinfo", "resource":"documentsubscriptionv1", "parameters":[{"name":"id", "value":"id"}] }
+			}
+		]
+	},
+	"onupdate": {},
+	"onaccept": {},
+	"onreject": {},
+	"ondelete": {}
 }
