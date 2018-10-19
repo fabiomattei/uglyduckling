@@ -17,6 +17,10 @@
 * Search
 * Export
 
+# Active ajax jquery
+* interface for view
+* interface for list
+
 # Office management 
 * Task
 * Calendar (death line, milestone)
