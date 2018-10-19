@@ -21,6 +21,10 @@
 * interface for view
 * interface for list
 
+# Notifications
+* browser notifications
+* internal notification
+
 # Office management 
 * Task
 * Calendar (death line, milestone)
