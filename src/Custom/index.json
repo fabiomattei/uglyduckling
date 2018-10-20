@@ -10,6 +10,7 @@
       { "path":"./Custom/groups/index.json", "type":"index" },
       { "path":"./Custom/infos/index.json", "type":"index" },
       { "path":"./Custom/logics/index.json", "type":"index" },
+      { "path":"./Custom/panels/index.json", "type":"index" },
       { "path":"./Custom/search/index.json", "type":"index" },
       { "path":"./Custom/tables/index.json", "type":"index" }
   ]
