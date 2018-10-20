@@ -22,7 +22,7 @@ class DocumentDao {
 	
 	/* Possible document status */
 	const DOC_STATUS_DRAFT = 'DRAFT';
-	const DOC_STATUS_SEND = 'SEND';
+	const DOC_STATUS_SENT = 'SENT';
 	const DOC_STATUS_RECEIVED = 'RECEIVED';
 	const DOC_STATUS_REJECTED = 'REJECTED';
 
@@ -144,7 +144,7 @@ class DocumentDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
+            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $this::DB_TABLE_STATUS_FIELD_NAME . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
@@ -158,39 +158,19 @@ class DocumentDao {
     }
 
     /**
-     * This method allow to update many rows of a single table at the same time
+     * Is set all necessary fields in order to obtain a sent document
      *
-     * @param $conditionsfields :: array of fields to put in where clause
-     * $tododao->getByFields( array( 'open' => '0' ) );
-     * this will get all the row having the field open = 0
+     * Th updates the status field and the date sent field
      *
-     * you can set more then a search parameter (evaluated in AND)
-     * $tododao->getByFields( array( 'open' => '0', 'handling' => '1' ) );
-     *
-     * @param $fields :: array of fields to update
-     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
+     * @param $id
+     * @throws \Exception
      */
-    function updateByFields($conditionsfields, $fields) {
-        $conditionslist = $this->organizeConditionsFields($conditionsfields);
+    function updateSend( $id ) {
         $presentmoment = date('Y-m-d H:i:s', time());
-        $filedslist = '';
-        foreach ($fields as $key => $value) {
-            $filedslist .= $key . ' = :' . $key . ', ';
-        }
-        $filedslist = substr($filedslist, 0, -2);
-        try {
-            $query = 'UPDATE ' . $this->tablename . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" ';
-            if ($conditionslist != '') {
-                $query .= 'WHERE ' . $conditionslist . ' ';
-            }
 
-            $STH = $this->DBH->prepare($query);
-            foreach ($fields as $key => &$value) {
-                $STH->bindParam($key, $value);
-            }
-            foreach ($conditionsfields as $key => &$value) {
-                $STH->bindParam($key, $value);
-            }
+        try {
+            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $this::DB_TABLE_STATUS_FIELD_NAME . ' = "' . $this::DOC_STATUS_SENT . '", ' . $this::DB_TABLE_SENT_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
+            $STH->bindParam(':id', $id);
             $STH->execute();
         } catch (PDOException $e) {
             $logger = new Logger();
@@ -308,7 +288,7 @@ class DocumentDao {
 		$fields = $this->organizeRequestedFields( $requestedfieldlist );
         try {
             $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
-            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SEND . '" ' .
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SENT . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
 				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
@@ -334,7 +314,7 @@ class DocumentDao {
 		$fields = $this->organizeRequestedFields( $requestedfieldlist );
         try {
             $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
-            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SEND . '" ' .
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SENT . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
 				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ' .
@@ -342,6 +322,30 @@ class DocumentDao {
             $STH = $this->DBH->prepare($query);
 			$STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
 			$STH->bindParam($this::DB_TABLE_SOURCE_ID_FIELD_NAME, $userid);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * Getting all documents related to a specifing group as a source
+     */
+    public function getGroupInbox( $requestedfieldlist, $groupname ) {
+        $fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SENT . '") ' .
+                ' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
+            $STH = $this->DBH->prepare($query);
+            $STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
             $STH->execute();
 
             # setting the fetch mode

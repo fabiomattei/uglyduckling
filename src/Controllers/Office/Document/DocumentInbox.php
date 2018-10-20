@@ -66,9 +66,11 @@ class DocumentInbox extends Controller {
 					// for any document this user has access to
 					
 					$this->documentDao->setTableName( $resource->name );
-					$entities = $this->documentDao->getByFields( 
-						array( DocumentDao::DB_TABLE_STATUS_FIELD_NAME => DocumentDao::DOC_STATUS_RECEIVED ) 
-					);
+					$entities = $this->documentDao->getGroupInbox(
+                        $resource->object,
+                        $this->sessionWrapper->getSessionGroup(),
+                        $this->sessionWrapper->getSessionUserId()
+                    );
 					
 					// printing all found entities in the table
 					foreach ( $entities as $doc ) {

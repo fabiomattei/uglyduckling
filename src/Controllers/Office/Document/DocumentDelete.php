@@ -3,15 +3,8 @@
 namespace Firststep\Controllers\Office\Document;
 
 use Firststep\Common\Controllers\ManagerDocumentSenderController;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockParser;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
-use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
-use Firststep\Common\Builders\ValidationBuilder;
 use Firststep\Common\Database\DocumentDao;
 
 /**

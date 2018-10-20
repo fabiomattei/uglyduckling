@@ -39,6 +39,7 @@
 		]
 	},
 	"onupdate": {},
+	"onsend": {},
 	"onaccept": {},
 	"onreject": {},
 	"ondelete": {}
