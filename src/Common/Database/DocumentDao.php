@@ -200,22 +200,18 @@ class DocumentDao {
     }
 
     /**
-     * This is the basic function for one row from a table specifying the primary key
-     * of the row you want to delete.
-     * Once you created a instance of the DAO object you can do for example:
-     *
-     * $tododao->delete( 15 );
-     * this will delete the row having the primary key set to 15.
-     *
-     * Remeber that you need to set the primary key in the tabledao.php file
-     * in a costant named DB_TABLE_PK
+     * This method cares about the deletion of a row from the table
      *
      * Example:
-     * const DB_TABLE_PK = 'stp_id';
+     *
+     * $documentDao->delete( 15 );
+     * this will delete the row having the primary key set to 15.
+     *
+     * The primary key field name is stored in the costant: DB_TABLE_ID_FIELD_NAME
      */
     function delete( $id ) {
         try {
-            $STH = $this->DBH->prepare('DELETE FROM ' . $this->tablename . ' WHERE ' . $this->pk . ' = :id');
+            $STH = $this->DBH->prepare('DELETE FROM ' . $this->tablename . ' WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
             $STH->bindParam(':id', $id);
             $STH->execute();
         } catch (PDOException $e) {

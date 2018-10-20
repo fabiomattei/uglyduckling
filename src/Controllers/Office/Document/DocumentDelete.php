@@ -15,7 +15,11 @@ use Firststep\Common\Builders\ValidationBuilder;
 use Firststep\Common\Database\DocumentDao;
 
 /**
- * 
+ * This class handle the deleting of a document entity instance
+ *
+ * It needs two parameters:
+ * $_GET['res'] the resource type of the document
+ * $_GET['id'] the id of the document
  */
 class DocumentDelete extends ManagerDocumentSenderController {
 
@@ -41,13 +45,16 @@ class DocumentDelete extends ManagerDocumentSenderController {
 		// applying the possible logics
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-		foreach ( $this->resource->ondelete->logics as $logic ) {
-			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    	$this->queryExecuter->setQueryStructure( $logic );
-	    	$this->queryExecuter->setParameters( $this->getParameters );
+        // if there are logics to implement
+        if ( isset($this->resource->ondelete->logics) ) {
+            foreach ($this->resource->ondelete->logics as $logic) {
+                $this->queryExecuter->setQueryBuilder($this->queryBuilder);
+                $this->queryExecuter->setQueryStructure($logic);
+                $this->queryExecuter->setParameters($this->getParameters);
 
-			$this->queryExecuter->executeQuery();
-		}
+                $this->queryExecuter->executeQuery();
+            }
+        }
 
         $this->redirectToPreviousPage();
 	}

@@ -8,6 +8,10 @@ use Firststep\Common\Controllers\ManagerEntityController;
  * User: Fabio
  * Date: 07/10/2018
  * Time: 07:53
+ *
+ * This class inherits all from the parent class, it defines two methods in order to
+ * check if a specific user has the credentials to perform the operation is attempting
+ * to perform.
  */
 class ManagerDocumentSenderController  extends ManagerEntityController {
 

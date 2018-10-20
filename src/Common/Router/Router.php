@@ -11,6 +11,7 @@ use Firststep\Controllers\Office\Manager\EntitySearch;
 use Firststep\Controllers\Office\Manager\EntityExport;
 use Firststep\Controllers\Office\Manager\EntityLogic;
 use Firststep\Controllers\Office\Document\DocumentAccept;
+use Firststep\Controllers\Office\Document\DocumentDelete;
 use Firststep\Controllers\Office\Document\DocumentEdit;
 use Firststep\Controllers\Office\Document\DocumentExport;
 use Firststep\Controllers\Office\Document\DocumentInbox;
@@ -90,6 +91,7 @@ class Router {
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
 			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityLogic; break;
 			case self::ROUTE_OFFICE_DOCUMENT_ACCEPT:      $controller = new DocumentAccept; break;
+            case self::ROUTE_OFFICE_DOCUMENT_DELETE:      $controller = new DocumentDelete; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EDIT:        $controller = new DocumentEdit; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EXPORT:      $controller = new DocumentExport; break;
 			case self::ROUTE_OFFICE_DOCUMENT_INBOX:       $controller = new DocumentInbox; break;
