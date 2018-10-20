@@ -17,6 +17,8 @@
       "label":"Documents",
       "submenu": [
             { "label":"In Box", "action":"documentinbox" },
+            { "label":"Accepted Box", "action":"documentacceptedbox" },
+            { "label":"Rejected Box", "action":"documentrejectedbox" },
 			{ "label":"Out Box", "action":"documentoutbox" },
 			{ "label":"My Out Box", "action":"documentoutboxuser" },
 			{ "label":"Draft", "action":"documentdraft" },

@@ -17,13 +17,13 @@ class DocumentDao {
 	const DB_TABLE_CREATED_FIELD_NAME      = 'doccreated';
     const DB_TABLE_UPDATED_FIELD_NAME      = 'docupdated';
 	const DB_TABLE_SENT_FIELD_NAME         = 'docsent';
-    const DB_TABLE_RECEIVED_FIELD_NAME     = 'docreceived';
+    const DB_TABLE_ACCEPTED_FIELD_NAME     = 'docaccepted';
 	const DB_TABLE_REJECTED_FIELD_NAME     = 'docrejected';
 	
 	/* Possible document status */
 	const DOC_STATUS_DRAFT = 'DRAFT';
 	const DOC_STATUS_SENT = 'SENT';
-	const DOC_STATUS_RECEIVED = 'RECEIVED';
+    const DOC_STATUS_ACCEPTED = 'ACCEPTED';
 	const DOC_STATUS_REJECTED = 'REJECTED';
 
 	/**
@@ -144,7 +144,7 @@ class DocumentDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $this::DB_TABLE_STATUS_FIELD_NAME . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
+            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
@@ -180,6 +180,50 @@ class DocumentDao {
     }
 
     /**
+     * Is set all necessary fields in order to obtain an accepted document
+     *
+     * Th updates the status field and the date sent field
+     *
+     * @param $id
+     * @throws \Exception
+     */
+    function updateAccept( $id ) {
+        $presentmoment = date('Y-m-d H:i:s', time());
+
+        try {
+            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $this::DB_TABLE_STATUS_FIELD_NAME . ' = "' . $this::DOC_STATUS_ACCEPTED . '", ' . $this::DB_TABLE_SENT_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
+            $STH->bindParam(':id', $id);
+            $STH->execute();
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * Is set all necessary fields in order to obtain a rejected document
+     *
+     * Th updates the status field and the date sent field
+     *
+     * @param $id
+     * @throws \Exception
+     */
+    function updateReject( $id ) {
+        $presentmoment = date('Y-m-d H:i:s', time());
+
+        try {
+            $STH = $this->DBH->prepare('UPDATE ' . $this->tablename . ' SET ' . $this::DB_TABLE_STATUS_FIELD_NAME . ' = "' . $this::DOC_STATUS_REJECTED . '", ' . $this::DB_TABLE_SENT_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
+            $STH->bindParam(':id', $id);
+            $STH->execute();
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
      * This method cares about the deletion of a row from the table
      *
      * Example:
@@ -193,38 +237,6 @@ class DocumentDao {
         try {
             $STH = $this->DBH->prepare('DELETE FROM ' . $this->tablename . ' WHERE ' . $this::DB_TABLE_ID_FIELD_NAME . ' = :id');
             $STH->bindParam(':id', $id);
-            $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
-        }
-    }
-
-    /**
-     * This function deletes a set of row from a table depending from the
-     * parameters you set when calling it.
-     *
-     * $tododao->delete( array( 'open' => '0', 'handling' => '1' ) );
-     * this will delete the row having the field open set to 0 and the field handling set to 1.
-     *
-     * Remeber that you need to set the table name in the tabledao.php file
-     * in a costant named DB_TABLE
-     *
-     * Example:
-     * const DB_TABLE = 'mytablename';
-     */
-    function deleteByFields( $fields ) {
-        $filedslist = '';
-        foreach ($fields as $key => $value) {
-            $filedslist .= $key . ' = :' . $key . ' AND ';
-        }
-        $filedslist = substr($filedslist, 0, -4);
-        try {
-            $STH = $this->DBH->prepare('DELETE FROM ' . $this->tablename . ' WHERE ' . $filedslist);
-            foreach ($fields as $key => &$value) {
-                $STH->bindParam($key, $value);
-            }
             $STH->execute();
         } catch (PDOException $e) {
             $logger = new Logger();
@@ -289,11 +301,59 @@ class DocumentDao {
         try {
             $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
             $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SENT . '" ' .
-				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
+				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_ACCEPTED . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
 				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
             $STH = $this->DBH->prepare($query);
 			$STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * Getting all documents related to a specifing group as a source
+     */
+    public function getGroupAcceptedBox( $requestedfieldlist, $groupname ) {
+        $fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_ACCEPTED . '") ' .
+                ' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
+            $STH = $this->DBH->prepare($query);
+            $STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * Getting all documents related to a specifing group as a source
+     */
+    public function getGroupRejectedBox( $requestedfieldlist, $groupname ) {
+        $fields = $this->organizeRequestedFields( $requestedfieldlist );
+        try {
+            $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
+            $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
+                ' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ;';
+            $STH = $this->DBH->prepare($query);
+            $STH->bindParam($this::DB_TABLE_SOURCE_GROUP_FIELD_NAME, $groupname);
             $STH->execute();
 
             # setting the fetch mode
@@ -315,7 +375,7 @@ class DocumentDao {
         try {
             $query = 'SELECT ' . $this::DB_TABLE_ID_FIELD_NAME . ', ' . $fields . ' FROM ' . $this->tablename . ' ';
             $query .= 'WHERE (' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_SENT . '" ' .
-				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_RECEIVED . '" ' .
+				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_ACCEPTED . '" ' .
 				' OR ' . $this::DB_TABLE_STATUS_FIELD_NAME . '="' . $this::DOC_STATUS_REJECTED .'") ' .
 				' AND ' . $this::DB_TABLE_SOURCE_GROUP_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_GROUP_FIELD_NAME.' ' .
 				' AND ' . $this::DB_TABLE_SOURCE_ID_FIELD_NAME . '= :'.$this::DB_TABLE_SOURCE_ID_FIELD_NAME.' ' . ';';

@@ -15,6 +15,8 @@ use Firststep\Controllers\Office\Document\DocumentDelete;
 use Firststep\Controllers\Office\Document\DocumentEdit;
 use Firststep\Controllers\Office\Document\DocumentExport;
 use Firststep\Controllers\Office\Document\DocumentInbox;
+use Firststep\Controllers\Office\Document\DocumentAcceptedBox;
+use Firststep\Controllers\Office\Document\DocumentRejectedBox;
 use Firststep\Controllers\Office\Document\DocumentOutbox;
 use Firststep\Controllers\Office\Document\DocumentOutboxUser;
 use Firststep\Controllers\Office\Document\DocumentDraft;
@@ -53,6 +55,8 @@ class Router {
 	const ROUTE_OFFICE_DOCUMENT_EDIT        = 'officedocumentedit';
 	const ROUTE_OFFICE_DOCUMENT_EXPORT      = 'officedocumentexport';
 	const ROUTE_OFFICE_DOCUMENT_INBOX       = 'officedocumentinbox';
+    const ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX = 'documentacceptedbox';
+    const ROUTE_OFFICE_DOCUMENT_REJECTEDBOX = 'documentrejectedbox';
 	const ROUTE_OFFICE_DOCUMENT_OUTBOX      = 'officedocumentoutbox';
 	const ROUTE_OFFICE_DOCUMENT_OUTBOX_USER = 'officedocumentoutboxuser';
 	const ROUTE_OFFICE_DOCUMENT_DRAFT       = 'officedocumentdraft';
@@ -75,7 +79,7 @@ class Router {
 	const ROUTE_ADMIN_DOCUMENT_DROP_TABLE   = 'admindocumentdroptable';
 	const ROUTE_ADMIN_TABLE_LIST            = 'admintablelist';
 	const ROUTE_ADMIN_REPORT_LIST           = 'adminreportlist';
-	
+
 	public function __construct( $basepath ) {
 		$this->basepath = $basepath;
 	}
@@ -95,6 +99,8 @@ class Router {
 			case self::ROUTE_OFFICE_DOCUMENT_EDIT:        $controller = new DocumentEdit; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EXPORT:      $controller = new DocumentExport; break;
 			case self::ROUTE_OFFICE_DOCUMENT_INBOX:       $controller = new DocumentInbox; break;
+            case self::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX: $controller = new DocumentAcceptedBox; break;
+            case self::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX: $controller = new DocumentRejectedBox(); break;
 			case self::ROUTE_OFFICE_DOCUMENT_OUTBOX:      $controller = new DocumentOutbox; break;
 			case self::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER: $controller = new DocumentOutboxUser; break;
 			case self::ROUTE_OFFICE_DOCUMENT_DRAFT:       $controller = new DocumentDraft; break;

@@ -41,6 +41,12 @@ class LinkBuilder {
 	        case 'documentinbox':
 	            return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_INBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 	            break;
+            case 'documentacceptedbox':
+                return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+                break;
+            case 'documentrejectedbox':
+                return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+                break;
 			case 'documentaccept':
 				return Button::get($router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPT ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
 				break;
@@ -114,6 +120,12 @@ class LinkBuilder {
 			case 'documentoutbox':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX, $url_parameters );
 			    break;
+            case 'documentacceptedbox':
+                return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX, $url_parameters );
+                break;
+            case 'documentrejectedbox':
+                return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX, $url_parameters );
+                break;
 			case 'documentoutboxuser':
 			    return $router->make_url( Router::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER, $url_parameters );
 			    break;

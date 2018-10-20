@@ -40,7 +40,7 @@ class JsonCreateQueryParser {
 		$fields[ DocumentDao::DB_TABLE_CREATED_FIELD_NAME ]  = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'datetime' );
 		$fields[ DocumentDao::DB_TABLE_UPDATED_FIELD_NAME ]  = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'datetime' );
 		$fields[ DocumentDao::DB_TABLE_SENT_FIELD_NAME ]     = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'datetime' );
-		$fields[ DocumentDao::DB_TABLE_RECEIVED_FIELD_NAME ] = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'datetime' );
+		$fields[ DocumentDao::DB_TABLE_ACCEPTED_FIELD_NAME ] = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'datetime' );
 		$fields[ DocumentDao::DB_TABLE_REJECTED_FIELD_NAME ] = DatabaseDefaults::getCorrespondingDatabaseFieldType( 'datetime' );
 		
 		$this->createQueryBuilder->setFields( $fields );

@@ -63,7 +63,6 @@ class DocumentNewList extends Controller {
 					$table->addRow();
 					$table->addColumn($resource->title);
 					$table->addUnfilteredColumn( 
-						Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, 'res='.$resource->name ), 'New', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
 						Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, 'res='.$resource->name ), 'New', Button::COLOR_GRAY.' '.Button::SMALL )
 					);
 					$table->closeRow();
