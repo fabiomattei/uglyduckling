@@ -1,0 +1,7 @@
+{ 
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+      { "path":"./Custom/panels/graph1.json", "type":"panel", "name":"graph1" }
+  ]
+}

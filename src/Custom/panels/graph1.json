@@ -1,0 +1,35 @@
+{ 
+  "name": "graph1",
+  "metadata": { "type":"panel", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup" ],
+  "table": {
+    "title": "My table",
+    "headlines": [
+        { "name":"Name" },
+        { "name":"Amount" },
+        { "name":"Due date" }
+    ],
+    "fields": [
+        { "name":"name" },
+        { "name":"amount" },
+        { "name":"duedate" }
+    ],
+    "actions": [
+        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
+        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
+    ]
+  },
+  "query": {
+    "type":"select",
+    "fields": [
+      "id",
+	    "name",
+      "amount",
+      "duedate"
+    ],
+    "entity":"requestv1",
+	  "conditions": [
+		  { "field": "name", "operator": "=", "value": "name" }
+	  ]
+  }
+}
