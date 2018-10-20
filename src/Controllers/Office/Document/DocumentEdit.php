@@ -5,8 +5,6 @@ namespace Firststep\Controllers\Office\Document;
 use Firststep\Common\Controllers\ManagerDocumentSenderController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockFormParser;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
@@ -84,13 +82,16 @@ class DocumentEdit extends ManagerDocumentSenderController {
 		// applying the possible logics
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-		foreach ( $this->resource->onupdate->logics as $logic ) {
-			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    	$this->queryExecuter->setQueryStructure( $logic );
-	    	$this->queryExecuter->setParameters( $this->postParameters );
+		// if there are logics to implement
+		if ( isset($this->resource->onupdate->logics) ) {
+            foreach ( $this->resource->onupdate->logics as $logic ) {
+                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                $this->queryExecuter->setQueryStructure( $logic );
+                $this->queryExecuter->setParameters( $this->postParameters );
 
-			$this->queryExecuter->executeQuery();
-		}
+                $this->queryExecuter->executeQuery();
+            }
+        }
 
 		$this->redirectToSecondPreviousPage();
 	}

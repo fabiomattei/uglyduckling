@@ -17,7 +17,9 @@ use Firststep\Common\Database\DocumentDao;
 /**
  * 
  */
-class DocumentSend extends ManagerDocumentSenderController {
+class DocumentDelete extends ManagerDocumentSenderController {
+
+    private $documentDao;
 	
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
@@ -34,7 +36,7 @@ class DocumentSend extends ManagerDocumentSenderController {
 		$this->documentDao->setTableName( $this->resource->name );
 		
 		// deleting from database
-		$this->documentDao->delete( $this->getParameters['id'] )
+		$this->documentDao->delete( $this->getParameters['id'] );
 		
 		// applying the possible logics
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );

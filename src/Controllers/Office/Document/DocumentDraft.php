@@ -3,9 +3,6 @@
 namespace Firststep\Controllers\Office\Document;
 
 use Firststep\Common\Controllers\Controller;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
@@ -36,7 +33,7 @@ class DocumentDraft extends Controller {
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: In box';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Drafted documents';
 	
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
@@ -45,7 +42,7 @@ class DocumentDraft extends Controller {
 		$this->documentDao->setDBH( $this->dbconnection->getDBH() );
 	
 		$table = new StaticTable;
-		$table->setTitle('Out Box');
+		$table->setTitle('Drafted documents');
 	
 		$table->addTHead();
 		$table->addRow();
