@@ -75,6 +75,22 @@ class UserDao extends BasicDao {
 			$logger->write($e->getMessage(), __FILE__, __LINE__);
 		}
 	}
+
+	function updatePassword($id, $password) {
+	    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $presentmoment = date('Y-m-d H:i:s', time());
+
+        try {
+            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET usr_hashedpsw = :hashedpsw, usr_password_updated = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id');
+            $STH->bindParam(':hashedpsw', $hashedPassword);
+            $STH->bindParam(':id', $id);
+            $STH->execute();
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
 	
 	// ****************
 	// Static section

@@ -51,7 +51,7 @@ class UserView extends Controller {
             '6'
         );
         $info->addTextField('Default group: ', $user->usr_defaultgroup, '6' );
-        $info->addTextField('Email: ', $user->usr_defaultgroup, '6' );
+        $info->addTextField('Email: ', $user->usr_email, '6' );
         $info->addDateField('Password updated: ', $user->usr_password_updated 	, '6' );
         $info->addDateField('User created: ', $user->usr_updated , '6' );
         $info->addDateField('User updated: ', $user->usr_created, '6' );
