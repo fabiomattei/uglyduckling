@@ -17,7 +17,7 @@ class UserDao extends BasicDao {
 	Elenco campi
 	Fields list
 	usr_id                     Primary Key
-	usr_usrofid                FK usroffice :: usrof_id  // id of user main office
+	usr_defaultgroup
 	usr_siteid
 	usr_name
 	usr_surname
