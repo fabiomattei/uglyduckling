@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by IntelliJ IDEA.
  * User: fabio
@@ -8,17 +9,24 @@
 
 namespace Firststep\Controllers\Admin\User;
 
+use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\Common\Controllers\Controller;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
+use Firststep\Templates\Blocks\Menus\AdminMenu;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 
 /**
  * This class gives a list of all entities loaded in to the system
  */
 class UserList extends Controller {
+
+    private $userDao;
+
+    public function __construct() {
+        $this->userDao = new UserDao;
+    }
 
     /**
      * @throws GeneralException
@@ -38,16 +46,20 @@ class UserList extends Controller {
         $table->closeRow();
         $table->closeTHead();
 
+        $this->userDao->setDBH( $this->dbconnection->getDBH() );
+        $users = $this->userDao->getAll();
+
         $table->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $res ) {
-            if ( $res->type === 'entity' ) {
-                $table->addRow();
-                $table->addColumn($res->name);
-                $table->addColumn($res->surname);
-                $table->addColumn($res->surname);
-                $table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
-                $table->closeRow();
-            }
+        foreach ( $users as $user ) {
+            $table->addRow();
+            $table->addColumn( $user->usr_name );
+            $table->addColumn( $user->usr_surname );
+            $table->addColumn( $user->usr_defaultgroup );
+            $table->addUnfilteredColumn(
+                Button::get($this->router->make_url( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+                Button::get($this->router->make_url( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+            );
+            $table->closeRow();
         }
         $table->closeTBody();
 

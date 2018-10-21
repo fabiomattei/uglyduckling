@@ -6,6 +6,8 @@
  * Time: 10:39
  */
 
+namespace Firststep\Controllers\Admin\User;
+
 /**
  * This class gives a list of all entities loaded in to the system
  */
