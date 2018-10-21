@@ -5,3 +5,17 @@
  * Date: 21/10/2018
  * Time: 10:40
  */
+
+/**
+ * This class gives a list of all entities loaded in to the system
+ */
+class UserView extends Controller {
+
+    /**
+     * @throws GeneralException
+     */
+    public function getRequest() {
+
+    }
+
+}

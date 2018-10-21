@@ -53,7 +53,7 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_USER_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_USER_LIST ).'">
                       <span data-feather="users"></span>
                       Users
                     </a>
