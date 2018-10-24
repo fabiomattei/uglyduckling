@@ -1,0 +1,26 @@
+{
+  "name": "requesttable",
+  "metadata": { "type":"table", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "table": {
+    "title": "My table",
+    "fields": [
+      { "headline":"Name", "sqlfield":"name" },
+      { "headline":"Amount", "sqlfield":"amount" },
+      { "headline":"Due date", "sqlfield":"duedate" }
+    ],
+    "actions": [
+      { "lable":"Info", "action":"entityinfo", "resource":"inforequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+      { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+      { "lable":"Delete", "action":"entitylogic", "resource":"deletereportv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+      { "lable":"Search", "action":"entitysearch", "resource":"searchreportv1", "parameters":[{}] },
+      { "lable":"Export", "action":"entityexport", "resource":"requestexportv1", "parameters":[{}] }
+    ]
+  },
+  "request": {
+    "parameters": []
+  },
+  "query": {
+    "sql":"select id, name, amount, duedate FROM requestv1;"
+  }
+}
