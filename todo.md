@@ -8,12 +8,6 @@
 * ACK via POST
 
 # Documents management
-* New (done)
-* Edit (done)
-* List (done)
-* Send
-* Delete
-* Accept, Reject
 * Search
 * Export
 
@@ -35,4 +29,3 @@
 # Future 
 * Documents activated by an event or a death line
 * Documents prepopulated by DB
-

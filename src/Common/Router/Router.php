@@ -2,7 +2,6 @@
 
 namespace Firststep\Common\Router;
 
-use Firststep\Controllers\Office\Document\Inbox;
 use Firststep\Controllers\Office\Manager\Gate;
 use Firststep\Controllers\Office\Manager\EntityTable;
 use Firststep\Controllers\Office\Manager\EntityForm;
@@ -39,10 +38,15 @@ use Firststep\Controllers\Admin\Document\AdminDocumentCreateTable;
 use Firststep\Controllers\Admin\Document\AdminDocumentDropTable;
 use Firststep\Controllers\Admin\Table\TableList;
 use Firststep\Controllers\Admin\Report\ReportList;
+use Firststep\Controllers\Admin\User\UserDelete;
+use Firststep\Controllers\Admin\User\UserEdit;
+use Firststep\Controllers\Admin\User\UserEditPassword;
+use Firststep\Controllers\Admin\User\UserList;
+use Firststep\Controllers\Admin\User\UserNew;
+use Firststep\Controllers\Admin\User\UserView;
 
 class Router {
-	
-	const ROUTE_OFFICE_INBOX                = 'officeinbox';
+
 	const ROUTE_OFFICE_GATE                 = 'officegate';
 	const ROUTE_OFFICE_ENTITY_TABLE         = 'officeentitytable';
 	const ROUTE_OFFICE_ENTITY_FORM          = 'officeentityform';
@@ -79,6 +83,12 @@ class Router {
 	const ROUTE_ADMIN_DOCUMENT_DROP_TABLE   = 'admindocumentdroptable';
 	const ROUTE_ADMIN_TABLE_LIST            = 'admintablelist';
 	const ROUTE_ADMIN_REPORT_LIST           = 'adminreportlist';
+    const ROUTE_ADMIN_USER_DELETE           = 'adminuserdelete';
+    const ROUTE_ADMIN_USER_EDIT             = 'adminuseredit';
+    const ROUTE_ADMIN_USER_EDIT_PASSWORD    = 'adminusereditpassword';
+    const ROUTE_ADMIN_USER_LIST             = 'adminuserlist';
+    const ROUTE_ADMIN_USER_NEW              = 'adminusernew';
+    const ROUTE_ADMIN_USER_VIEW             = 'adminuserview';
 
 	public function __construct( $basepath ) {
 		$this->basepath = $basepath;
@@ -86,7 +96,6 @@ class Router {
 
     function getController( string $action ) {
         switch ( $action ) {
-            case self::ROUTE_OFFICE_INBOX:                $controller = new Inbox; break;
 			case self::ROUTE_OFFICE_GATE:                 $controller = new Gate; break;
 			case self::ROUTE_OFFICE_ENTITY_TABLE:         $controller = new EntityTable; break;
 			case self::ROUTE_OFFICE_ENTITY_FORM:          $controller = new EntityForm; break;
@@ -123,7 +132,13 @@ class Router {
 			case self::ROUTE_ADMIN_DOCUMENT_DROP_TABLE:   $controller = new AdminDocumentDropTable; break;
 			case self::ROUTE_ADMIN_TABLE_LIST:            $controller = new TableList; break;
 			case self::ROUTE_ADMIN_REPORT_LIST:           $controller = new ReportList; break;
-			
+            case self::ROUTE_ADMIN_USER_DELETE:           $controller = new UserDelete; break;
+            case self::ROUTE_ADMIN_USER_EDIT:             $controller = new UserEdit; break;
+            case self::ROUTE_ADMIN_USER_EDIT_PASSWORD:    $controller = new UserEditPassword; break;
+            case self::ROUTE_ADMIN_USER_LIST:             $controller = new UserList; break;
+            case self::ROUTE_ADMIN_USER_NEW:              $controller = new UserNew; break;
+            case self::ROUTE_ADMIN_USER_VIEW:             $controller = new UserView; break;
+
             default: $controller = new Login; break;
         }
         return $controller;
