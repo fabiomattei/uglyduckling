@@ -17,16 +17,9 @@
     ]
   },
   "query": {
-    "type":"select",
-        "fields": [
-          "id",
-          "name",
-          "amount",
-          "duedate"
-        ],
-      "entity":"requestv1",
-    "conditions":[
-      { "field": "id", "operator": "=", "value": "id" }
+    "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
+    "parameters":[
+      { "field": ":id", "getparameter": "id" }
     ]
   }
 }
