@@ -2,24 +2,26 @@
   "name": "inforequestv1",
   "metadata": { "type":"info", "version": "1" },
   "allowedgroups": [ "administrationgroup", "teachergroup" ],
-  "form": {
-    "title": "My new info panel",
-    "fields": [
-		{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
+  "get": {
+    "request": {
+      "parameters": [
+        { "type":"integer", "validation":"required|integer", "name":"id" }
+      ]
+    },
+    "query": {
+      "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
+      "parameters":[
+        { "placeholder": ":id", "getparameter": "id" }
+      ]
+    },
+    "info": {
+      "title": "My new info panel",
+      "fields": [
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
         { "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
         { "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
         { "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id" }
-    ]
-  },
-  "request": {
-    "parameters": [
-      { "type":"int", "validation":"required|numeric", "name":"id" }
-    ]
-  },
-  "query": {
-    "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
-    "parameters":[
-      { "field": ":id", "getparameter": "id" }
-    ]
+      ]
+    }
   }
 }

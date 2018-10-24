@@ -2,36 +2,40 @@
 	"name": "formrequestv1",
 	"metadata": { "type":"form", "version": "1" },
 	"allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
-	"form": {
-		"title": "My new form",
-		"submitTitle": "Save",
-		"fields": [
-			{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
-			{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
-			{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
-			{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id", "row":"2" }
-		]
-	},
-	"logics": [
-		{
-			"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate FROM requestv1 WHERE id=:id;",
+	"get": {
+		"request": {
+			"parameters": [
+				{ "type":"integer", "validation":"required|integer", "name":"id" }
+			]
+		},
+		"query": {
+			"sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
 			"parameters":[
-				{ "field": ":id", "postparameter": "id" },
-				{ "field": ":name", "postparameter": "name" },
-				{ "field": ":amount", "postparameter": "amount" },
-				{ "field": ":duedate", "postparameter": "duedate" }
+				{ "placeholder": ":id", "getparameter": "id" }
+			]
+		},
+		"form": {
+			"title": "My new form",
+			"submitTitle": "Save",
+			"fields": [
+				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
+				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
+				{ "type":"date", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
+				{ "type":"hidden", "name":"id", "value":"id", "row":"2" }
 			]
 		}
-	],
-	"request": {
-		"parameters": [
-			{ "type":"integer", "validation":"required|integer", "name":"id" }
-		]
 	},
-	"query": {
-		"sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
-		"parameters":[
-			{ "field": ":id", "getparameter": "id" }
+	"post": {
+		"logics": [
+			{
+				"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate FROM requestv1 WHERE id=:id;",
+				"parameters":[
+					{ "placeholder": ":id", "postparameter": "id", "validation":"required|numeric" },
+					{ "placeholder": ":name", "postparameter": "name", "validation":"max_len,2500" },
+					{ "placeholder": ":amount", "postparameter": "amount", "validation":"required|numeric" },
+					{ "placeholder": ":duedate", "postparameter": "duedate", "validation":"max_len,10" }
+				]
+			}
 		]
 	}
 }
