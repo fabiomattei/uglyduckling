@@ -24,10 +24,10 @@ class EntityLogic extends ManagerEntityController {
 	public function getRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-        foreach ($this->resource->logics as $logic) {
+        foreach ($this->resource->get->logics as $logic) {
             $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
             $this->queryExecuter->setQueryStructure( $logic );
-            $this->queryExecuter->setParameters( $this->internalGetParameters );
+            $this->queryExecuter->setGetParameters( $this->internalGetParameters );
             $this->queryExecuter->executeQuery();
         }
 

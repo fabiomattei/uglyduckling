@@ -1,7 +1,7 @@
 { 
   "name": "deletereportv1",
   "metadata": { "type":"logic", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup" ],
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "get": {
     "request": {
       "parameters": [
