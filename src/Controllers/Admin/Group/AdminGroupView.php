@@ -44,15 +44,18 @@ class AdminGroupView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin group view';
 
         $info = new BaseInfo;
-        $info->setTitle( 'Document name: '.$this->resource->name );
-        $info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
+        $info->setTitle( 'Group name: '.$this->resource->name );
 
-        $tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists( $this->resource->name ) );
+        $info->addParagraph( 'Users: '.$this->resource->entity->tablename, '' );
 
+        $info->addParagraph( 'Resources: '.$this->resource->entity->tablename, '' );
+
+        /*
         $info->addParagraph( 'Table exists: '.( $tableExists ?
                 'true  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) :
                 'false  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE, 'res='.$this->resource->name ), 'Create', Button::COLOR_GRAY.' '.Button::SMALL )
             ), '' );
+        */
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST, $this->router ) );

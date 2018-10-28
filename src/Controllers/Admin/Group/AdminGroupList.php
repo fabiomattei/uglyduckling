@@ -29,7 +29,7 @@ class AdminGroupList extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Documents list';
 
         $table = new StaticTable;
-        $table->setTitle('Documents list');
+        $table->setTitle('Groups list');
 
         $table->addTHead();
         $table->addRow();
@@ -45,7 +45,7 @@ class AdminGroupList extends Controller {
                 $table->addRow();
                 $table->addColumn($res->name);
                 $table->addColumn($res->type);
-                $table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
+                $table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_GROUP_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
                 $table->closeRow();
             }
         }

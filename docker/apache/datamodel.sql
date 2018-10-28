@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb
--- Creato il: Set 29, 2018 alle 09:49
+-- Creato il: Ott 28, 2018 alle 11:54
 -- Versione del server: 10.1.21-MariaDB-1~jessie
 -- Versione PHP: 7.2.6
 
@@ -21,6 +21,43 @@ SET time_zone = "+00:00";
 --
 -- Database: `firststep`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `documentsubscriptionv1`
+--
+
+CREATE TABLE `documentsubscriptionv1` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `sourceuserid` int(11) UNSIGNED DEFAULT NULL,
+  `sourcegroup` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `name` text COLLATE utf8_bin,
+  `amount` decimal(16,2) DEFAULT NULL,
+  `duedate` date DEFAULT NULL,
+  `docstatus` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `doccreated` datetime DEFAULT NULL,
+  `docupdated` datetime DEFAULT NULL,
+  `docsent` datetime DEFAULT NULL,
+  `docreceived` datetime DEFAULT NULL,
+  `docrejected` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dump dei dati per la tabella `documentsubscriptionv1`
+--
+
+INSERT INTO `documentsubscriptionv1` (`id`, `sourceuserid`, `sourcegroup`, `name`, `amount`, `duedate`, `docstatus`, `doccreated`, `docupdated`, `docsent`, `docreceived`, `docrejected`) VALUES
+(1, NULL, NULL, 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:25:20', '2018-10-14 09:25:20', NULL, NULL, NULL),
+(2, 2, 'managergroup', 'Ginoa', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:30:07', '2018-10-17 14:23:04', NULL, NULL, NULL),
+(3, 2, 'managergroup', 'Ginob', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:31:30', '2018-10-17 14:23:56', NULL, NULL, NULL),
+(4, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:31:50', '2018-10-14 09:31:50', NULL, NULL, NULL),
+(5, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:32:03', '2018-10-14 09:32:03', NULL, NULL, NULL),
+(6, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:32:20', '2018-10-14 09:32:20', NULL, NULL, NULL),
+(7, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:33:12', '2018-10-14 09:33:12', NULL, NULL, NULL),
+(8, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:34:20', '2018-10-14 09:34:20', NULL, NULL, NULL),
+(9, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:41:04', '2018-10-14 09:41:04', NULL, NULL, NULL),
+(10, 2, 'managergroup', 'Gino', '12.00', '2018-10-20', 'DRAFT', '2018-10-14 09:42:05', '2018-10-14 09:42:05', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,7 +149,8 @@ CREATE TABLE `requestv1` (
 --
 
 INSERT INTO `requestv1` (`id`, `name`, `amount`, `duedate`) VALUES
-(1, 'Fabio', 13, '2018-08-25');
+(1, 'Fabio', 13, '2018-08-25'),
+(4, 'Gino', 12, '2018-10-20');
 
 -- --------------------------------------------------------
 
@@ -137,7 +175,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`usr_id`, `usr_defaultgroup`, `usr_name`, `usr_surname`, `usr_email`, `usr_hashedpsw`, `usr_password_updated`, `usr_updated`, `usr_created`) VALUES
-(1, 'administrationgroup', 'Admin', '', 'admin', '$2y$10$lisaKfP5VQ6.UM.AdN8C1u696UZnnVGc.eSDytaTC3eFtIf9XLM7q', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(1, 'administrationgroup', 'Admin', '', 'admin', '$2y$10$gUWxjdAJRE.KyWqEZh4w1.kRDAumgVamek.BBq.Li2CMkK7GGeeV2', '2018-10-28 10:04:49', '2018-10-21 10:13:39', '2018-10-21 00:00:00'),
 (2, 'managergroup', 'Manager', '', 'manager', '$2y$10$YmsVMDQrYjnEdbkqfB5pNuLzyeMQep0C/ahaRWQSs/AN63/U5SXTW', '2018-08-07 00:00:00', '2018-08-07 00:00:00', '2018-08-07 00:00:00');
 
 -- --------------------------------------------------------
@@ -150,13 +188,19 @@ CREATE TABLE `usergroup` (
   `ug_id` int(10) UNSIGNED NOT NULL,
   `ug_groupslug` varchar(80) COLLATE utf8_bin NOT NULL DEFAULT '',
   `ug_userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `usrof_updated` datetime NOT NULL,
-  `usrof_created` datetime NOT NULL
+  `ug_updated` datetime NOT NULL,
+  `ug_created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Indici per le tabelle scaricate
 --
+
+--
+-- Indici per le tabelle `documentsubscriptionv1`
+--
+ALTER TABLE `documentsubscriptionv1`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indici per le tabelle `projectfile`
@@ -205,6 +249,12 @@ ALTER TABLE `usergroup`
 --
 
 --
+-- AUTO_INCREMENT per la tabella `documentsubscriptionv1`
+--
+ALTER TABLE `documentsubscriptionv1`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT per la tabella `projectfile`
 --
 ALTER TABLE `projectfile`
@@ -232,7 +282,7 @@ ALTER TABLE `projecttask`
 -- AUTO_INCREMENT per la tabella `requestv1`
 --
 ALTER TABLE `requestv1`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `user`
