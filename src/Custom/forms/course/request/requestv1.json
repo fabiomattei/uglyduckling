@@ -18,10 +18,10 @@
 			"title": "My new form",
 			"submitTitle": "Save",
 			"fields": [
-				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
-				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
-				{ "type":"date", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
-				{ "type":"hidden", "name":"id", "value":"id", "row":"2" }
+				{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
+				{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
+				{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
+				{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id", "row":"2" }
 			]
 		}
 	},
@@ -30,10 +30,10 @@
 			{
 				"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate FROM requestv1 WHERE id=:id;",
 				"parameters":[
-					{ "placeholder": ":id", "postparameter": "id", "validation":"required|numeric" },
-					{ "placeholder": ":name", "postparameter": "name", "validation":"max_len,2500" },
-					{ "placeholder": ":amount", "postparameter": "amount", "validation":"required|numeric" },
-					{ "placeholder": ":duedate", "postparameter": "duedate", "validation":"max_len,10" }
+					{ "placeholder": ":id", "postparameter": "id" },
+					{ "placeholder": ":name", "postparameter": "name" },
+					{ "placeholder": ":amount", "postparameter": "amount" },
+					{ "placeholder": ":duedate", "postparameter": "duedate" }
 				]
 			}
 		]

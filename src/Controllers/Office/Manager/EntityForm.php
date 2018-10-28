@@ -5,8 +5,6 @@ namespace Firststep\Controllers\Office\Manager;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockFormParser;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
@@ -18,6 +16,11 @@ use Firststep\Common\Builders\MenuBuilder;
  * Time: 07:07
  */
 class EntityForm extends ManagerEntityController {
+
+    private $queryExecuter;
+    private $queryBuilder;
+    private $jsonBlockFormParser;
+    private $menubuilder;
 
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
@@ -32,14 +35,14 @@ class EntityForm extends ManagerEntityController {
 	public function getRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setParameters( $this->internalGetParameters );
+	    $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+	    $this->queryExecuter->setGetParameters( $this->internalGetParameters );
 
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
 
 		$formBlock = $this->jsonBlockFormParser->parse( 
-			$this->resource, 
+			$this->resource,
 			$entity,
 			$this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] )
 		);
@@ -58,10 +61,10 @@ class EntityForm extends ManagerEntityController {
 	public function postRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-		foreach ($this->resource->logics as $logic) {
+		foreach ($this->resource->post->logics as $logic) {
 			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    	$this->queryExecuter->setQueryStructure( $logic );
-	    	$this->queryExecuter->setParameters( $this->postParameters );
+	    	$this->queryExecuter->setPostParameters( $this->postParameters );
 
 			$this->queryExecuter->executeQuery();
 		}
