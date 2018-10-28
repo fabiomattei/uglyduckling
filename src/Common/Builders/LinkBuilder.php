@@ -16,7 +16,7 @@ class LinkBuilder {
     static function get( $router, $lable, $action, $resource, $parameters, $entity ) {
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
-            $url_parameters .= $par->name.'='.$entity->{$par->value}.'&';
+            $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
         }
         $url_parameters = rtrim($url_parameters, '&');
         switch ( $action ) {
