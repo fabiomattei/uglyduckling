@@ -8,10 +8,12 @@ class StaticTable extends BaseBlock {
 
   private $html;
   private $title;
+  private $buttons;
   
   function __construct() {
     $this->html = '';
     $this->title = '';
+    $this->buttons = '';
   }
 
   function setTitle( string $title ) {
@@ -67,7 +69,11 @@ class StaticTable extends BaseBlock {
   }
 	
   function show(): string {
-    return '<h2>'.$this->title.'</h2><div class="table-responsive"><table class="table table-striped table-sm">'.$this->html.'</table></div>'; 
+    return '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3"><h2>'.$this->title.'</h2><div class="btn-toolbar mb-2 mb-md-0"><div class="btn-group mr-2">'.$this->buttons.'</div></div></div><div class="table-responsive"><table class="table table-striped table-sm">'.$this->html.'</table></div>';
+  }
+
+  function addButton(string $label, string $url ) {
+    $this->buttons .= '<a class="btn btn-sm btn-outline-secondary" href="'.$url.'">'.$label.'</a>';
   }
 	
 }

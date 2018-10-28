@@ -49,6 +49,7 @@ class AdminGroupView extends Controller {
 
         $userTable = new StaticTable;
         $userTable->setTitle("Users");
+        $userTable->addButton('New', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER ));
         $userTable->addTHead();
         $userTable->addRow();
         $userTable->addHeadLineColumn('Name');
@@ -95,8 +96,8 @@ class AdminGroupView extends Controller {
             ), '' );
         */
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST, $this->router ) );
+        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->router ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $userTable );
         $this->thirdcentralcontainer = array( $resourcesTable );
