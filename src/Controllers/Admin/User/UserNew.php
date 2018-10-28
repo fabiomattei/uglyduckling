@@ -38,7 +38,6 @@ class UserNew extends Controller {
 
         $form = new BaseForm;
         $form->setTitle( 'New user: ' );
-        $form->addTextField('usr_defaultgroup', 'Default group:', '', '', '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addSubmitButton('save', 'Save');
 
@@ -48,11 +47,9 @@ class UserNew extends Controller {
     }
 
     public $post_validation_rules = array(
-        'usr_defaultgroup' => 'required|alpha_numeric|max_len,100',
         'usr_email' => 'required|valid_email'
     );
     public $post_filter_rules     = array(
-        'usr_defaultgroup' => 'trim|sanitize_string',
         'usr_email' => 'trim|sanitize_email'
     );
 
@@ -64,7 +61,6 @@ class UserNew extends Controller {
     public function postRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
         $this->userDao->insert( array(
-                'usr_defaultgroup' => $this->postParameters['usr_defaultgroup'],
                 'usr_email' => $this->postParameters['usr_email']
             )
         );
@@ -81,7 +77,6 @@ class UserNew extends Controller {
 
         $form = new BaseForm;
         $form->setTitle( 'New user: ' );
-        $form->addTextField('usr_defaultgroup', 'Default group:', '', '', '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addSubmitButton('save', 'Save');
 

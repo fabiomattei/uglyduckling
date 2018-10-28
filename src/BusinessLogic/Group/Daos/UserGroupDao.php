@@ -39,7 +39,7 @@ class UserGroupDao extends BasicDao {
         $query = 'SELECT UG.*, U.usr_id, U.usr_name, U.usr_surname FROM '.$this::DB_TABLE.' as UG '.
             ' LEFT JOIN user as U ON UG.ug_userid = U.usr_id '.
             ' WHERE UG.ug_groupslug = :groupslug '.
-            ' ORDER BY U.usr_name, U.usr_surname  ';  // trick to have the offices at the top of the list
+            ' ORDER BY U.usr_name, U.usr_surname  ';
         try {
             $STH = $this->DBH->prepare( $query );
             $STH->bindParam( ':groupslug', $slug );
@@ -56,5 +56,30 @@ class UserGroupDao extends BasicDao {
             $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
 	}
+
+    public function makeListForDropdownByUserId( int $usrid ) {
+        $query = 'SELECT * FROM '.$this::DB_TABLE.
+            ' WHERE ug_userid = :usrid'.
+            ' ORDER BY ug_groupslug  ';
+        try {
+            $STH = $this->DBH->prepare( $query );
+            $STH->bindParam( ':usrid', $usrid );
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            $groupsForDropDown = array();
+            foreach ($STH as $gr) {
+                $groupsForDropDown[$gr->ug_groupslug] = $gr->ug_groupslug;
+            }
+
+            return $groupsForDropDown;
+        }
+        catch(PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
 
 }

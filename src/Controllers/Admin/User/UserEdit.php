@@ -8,6 +8,7 @@
 
 namespace Firststep\Controllers\Admin\User;
 
+use Firststep\BusinessLogic\Group\Daos\UserGroupDao;
 use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
@@ -21,9 +22,11 @@ use Firststep\Common\Router\Router;
 class UserEdit extends Controller {
 
     private $userDao;
+    private $userGroupDao;
 
     public function __construct() {
         $this->userDao = new UserDao;
+        $this->userGroupDao = new UserGroupDao();
     }
 
     public $get_validation_rules = array( 'id' => 'required|numeric' );
@@ -36,13 +39,15 @@ class UserEdit extends Controller {
      */
     public function getRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
+        $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
+
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit';
 
         $form = new BaseForm;
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addTextField('usr_defaultgroup', 'Default group:', '', $user->usr_defaultgroup, '6' );
+        $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
         $form->addHiddenField('usr_id', $user->usr_id);
         $form->addSubmitButton('save', 'Save');
@@ -81,6 +86,8 @@ class UserEdit extends Controller {
 
     public function show_post_error_page() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
+        $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
+
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
         $this->messages->setError($this->readableErrors);
@@ -89,7 +96,7 @@ class UserEdit extends Controller {
 
         $form = new BaseForm;
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addTextField('usr_defaultgroup', 'Default group:', '', $user->usr_defaultgroup, '6' );
+        $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
         $form->addHiddenField('usr_id', $user->usr_id);
         $form->addSubmitButton('save', 'Save');
