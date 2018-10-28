@@ -1,5 +1,5 @@
 {
-  "name": "requesttable",
+  "name": "requesttablev1",
   "metadata": { "type":"table", "version": "1" },
   "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "get": {
