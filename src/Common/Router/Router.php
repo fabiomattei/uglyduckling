@@ -38,6 +38,7 @@ use Firststep\Controllers\Admin\Document\AdminDocumentCreateTable;
 use Firststep\Controllers\Admin\Document\AdminDocumentDropTable;
 use Firststep\Controllers\Admin\Table\TableList;
 use Firststep\Controllers\Admin\Report\ReportList;
+use Firststep\Controllers\Admin\Group\AdminGroupList;
 use Firststep\Controllers\Admin\User\UserDelete;
 use Firststep\Controllers\Admin\User\UserEdit;
 use Firststep\Controllers\Admin\User\UserEditPassword;
@@ -86,6 +87,7 @@ class Router {
     const ROUTE_ADMIN_USER_DELETE           = 'adminuserdelete';
     const ROUTE_ADMIN_USER_EDIT             = 'adminuseredit';
     const ROUTE_ADMIN_USER_EDIT_PASSWORD    = 'adminusereditpassword';
+    const ROUTE_ADMIN_GROUP_LIST            = 'admingrouplist';
     const ROUTE_ADMIN_USER_LIST             = 'adminuserlist';
     const ROUTE_ADMIN_USER_NEW              = 'adminusernew';
     const ROUTE_ADMIN_USER_VIEW             = 'adminuserview';
@@ -135,6 +137,7 @@ class Router {
             case self::ROUTE_ADMIN_USER_DELETE:           $controller = new UserDelete; break;
             case self::ROUTE_ADMIN_USER_EDIT:             $controller = new UserEdit; break;
             case self::ROUTE_ADMIN_USER_EDIT_PASSWORD:    $controller = new UserEditPassword; break;
+            case self::ROUTE_ADMIN_GROUP_LIST:            $controller = new AdminGroupList; break;
             case self::ROUTE_ADMIN_USER_LIST:             $controller = new UserList; break;
             case self::ROUTE_ADMIN_USER_NEW:              $controller = new UserNew; break;
             case self::ROUTE_ADMIN_USER_VIEW:             $controller = new UserView; break;
