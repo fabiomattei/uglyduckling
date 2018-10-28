@@ -81,7 +81,12 @@ class QueryExecuter {
      */
     function executeSql() {
         try {
-            // echo $this->queryStructure->sql;
+            //echo $this->queryStructure->sql;
+            //echo "GET";
+            //print_r($this->getParameters);
+            //echo "POST";
+            //print_r($this->postParameters);
+
             $STH = $this->DBH->prepare( $this->queryStructure->sql );
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
@@ -90,7 +95,7 @@ class QueryExecuter {
                     if ( isset( $this->getParameters[$cond->getparameter] ) ) {
                         $par =& $this->getParameters[$cond->getparameter];
                     } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-                        $par =& $this->postParameters[$cond->getparameter];
+                        $par =& $this->postParameters[$cond->postparameter];
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
                     }

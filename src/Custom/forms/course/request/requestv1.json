@@ -18,17 +18,25 @@
 			"title": "My new form",
 			"submitTitle": "Save",
 			"fields": [
-				{ "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
-				{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
-				{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
-				{ "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id", "row":"2" }
+				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
+				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
+				{ "type":"date", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
+				{ "type":"hidden", "name":"id", "value":"id", "row":"2" }
 			]
 		}
 	},
 	"post": {
+		"request": {
+			"postparameters": [
+				{ "validation":"required|numeric", "name":"id" },
+				{ "validation":"max_len,2500", "name":"name" },
+				{ "validation":"required|numeric", "name":"amount" },
+				{ "validation":"max_len,10", "name":"duedate" }
+			]
+		},
 		"logics": [
 			{
-				"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate FROM requestv1 WHERE id=:id;",
+				"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate WHERE id=:id;",
 				"parameters":[
 					{ "placeholder": ":id", "postparameter": "id" },
 					{ "placeholder": ":name", "postparameter": "name" },
