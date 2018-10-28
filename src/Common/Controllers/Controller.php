@@ -25,6 +25,17 @@ class Controller {
     public $post_filter_rules = array();
     public $post_get_validation_rules = array();
     public $post_get_filter_rules = array();
+    public $router;
+    public $setup;
+    public $request;
+    public $serverWrapper;
+    public $sessionWrapper;
+    public $securityChecker;
+    public $dbconnection;
+    public $urlredirector;
+    public $jsonloader;
+    public $logger;
+    public $messages;
 
     public function makeAllPresets( 
 		Router $router, 

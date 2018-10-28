@@ -20,6 +20,12 @@ use Firststep\Common\Router\Router;
  */
 class UserEditPassword extends Controller {
 
+    /* Defining constants in order to avoid any problem due to typos */
+    const FIELD_USR_ID = 'usr_id';
+    const FIELD_OLD_PASSWORD = 'usr_old_password';
+    const FIELD_NEW_PASSWORD = 'usr_new_password';
+    const FIELD_RETYPE_NEW_PASSWORD = 'usr_retype_new_password';
+
     private $userDao;
 
     public function __construct() {
@@ -42,10 +48,10 @@ class UserEditPassword extends Controller {
 
         $form = new BaseForm;
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addPasswordField('usr_old_password', 'Old password:', '6' );
-        $form->addPasswordField('usr_new_password', 'New password:', '6' );
-        $form->addPasswordField('usr_retype_password', 'Retype new password:', '6' );
-        $form->addHiddenField('usr_id', $user->usr_id);
+        $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
+        $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
+        $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
+        $form->addHiddenField(UserEditPassword::FIELD_USR_ID, $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
@@ -54,16 +60,16 @@ class UserEditPassword extends Controller {
     }
 
     public $post_validation_rules = array(
-        'usr_id' => 'required|numeric',
-        'usr_old_password' => 'required|max_len,100|min_len,3',
-        'usr_new_password' => 'required|max_len,100|min_len,6',
-        'usr_retype_password' => 'required|max_len,100|min_len,6',
+        UserEditPassword::FIELD_USR_ID => 'required|numeric',
+        UserEditPassword::FIELD_OLD_PASSWORD => 'required|max_len,100|min_len,3',
+        UserEditPassword::FIELD_NEW_PASSWORD => 'required|max_len,100|min_len,6',
+        UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'required|max_len,100|min_len,6',
     );
     public $post_filter_rules     = array(
-        'usr_id' => 'trim',
-        'usr_old_password' => 'trim',
-        'usr_new_password' => 'trim',
-        'usr_retype_password' => 'trim'
+        UserEditPassword::FIELD_USR_ID => 'trim',
+        UserEditPassword::FIELD_OLD_PASSWORD => 'trim',
+        UserEditPassword::FIELD_NEW_PASSWORD => 'trim',
+        UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'trim'
     );
 
     /**
@@ -72,11 +78,11 @@ class UserEditPassword extends Controller {
     public function postRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
 
-        $user = $this->userDao->getById( $this->postParameters['usr_id'] );
+        $user = $this->userDao->getById( $this->postParameters[UserEditPassword::FIELD_USR_ID] );
 
-        if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->parameters['usr_old_password'] ) ) {
-            if ( $this->parameters['usr_new_password'] == $this->parameters['usr_retype_password'] ) {
-                $this->userDao->updatePassword( $this->postParameters['usr_id'], $this->postParameters['usr_new_password']);
+        if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->parameters[UserEditPassword::FIELD_OLD_PASSWORD] ) ) {
+            if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
+                $this->userDao->updatePassword( $this->postParameters[UserEditPassword::FIELD_USR_ID], $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
                 $this->setSuccess("Password successfully updated");
                 $this->redirectToSecondPreviousPage();
             } else {
@@ -84,7 +90,7 @@ class UserEditPassword extends Controller {
                 $this->redirectToPreviousPage();
             }
         } else {
-            $this->setError("The old password do not match");
+            $this->setError("The old password does not match");
             $this->redirectToPreviousPage();
         }
     }
@@ -99,10 +105,10 @@ class UserEditPassword extends Controller {
 
         $form = new BaseForm;
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addPasswordField('usr_old_password', 'Old password:', '6' );
-        $form->addPasswordField('usr_new_password', 'New password:', '6' );
-        $form->addPasswordField('usr_retype_password', 'Retype new password:', '6' );
-        $form->addHiddenField('usr_id', $user->usr_id);
+        $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
+        $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
+        $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
+        $form->addHiddenField(UserEditPassword::FIELD_USR_ID, $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
