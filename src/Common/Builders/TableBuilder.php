@@ -51,7 +51,7 @@ class TableBuilder {
 		foreach ($this->entities as $entity) {
 			$tableBlock->addRow();
 			foreach ($this->tableStructure->fields as $field) {
-				$tableBlock->addColumn($entity->{$field->name});
+				$tableBlock->addColumn($entity->{$field->sqlfield});
 			}
 			$links = '';
 			foreach ( $this->tableStructure->actions as $action ) {

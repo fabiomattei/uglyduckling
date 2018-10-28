@@ -56,7 +56,33 @@ class QueryExecuter {
         }
         if($this->queryStructure->type === 'delete') {
             return $this->delete();
-        } 
+        }
+        return $this->executeSql();
+    }
+
+    /**
+     * It gets all rows contained in a table
+     */
+    function executeSql() {
+        try {
+            // echo $this->queryStructure->sql;
+            $STH = $this->DBH->prepare( $this->queryStructure->sql );
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            if ( isset($this->queryStructure->parameters) ) {
+                foreach ($this->queryStructure->parameters as $cond) {
+                    $par =& $this->parameters[$cond->getparameter];
+                    $STH->bindParam($cond->placeholder, $par);
+                }
+            }
+
+            $STH->execute();
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
     }
 
     /**
@@ -67,7 +93,7 @@ class QueryExecuter {
 			$this->queryBuilder = new QueryBuilder;
 			$this->queryBuilder->setQueryStructure( $this->queryStructure );
 			$this->queryBuilder->setParameters( $this->parameters );
-            
+
             $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
@@ -79,7 +105,7 @@ class QueryExecuter {
 			}
 
             $STH->execute();
-            
+
             return $STH;
         } catch (PDOException $e) {
             $logger = new Logger();
