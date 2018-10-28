@@ -44,6 +44,22 @@ class QueryExecuter {
         $this->parameters = $parameters;
     }
 
+    /**
+     * @param mixed $getParameters
+     * the $parameters variable contains all values for the query
+     */
+    public function setGetParameters( array $getParameters ) {
+        $this->getParameters = $getParameters;
+    }
+
+    /**
+     * @param mixed $postParameters
+     * the $parameters variable contains all values for the query
+     */
+    public function setPostParameters( array $postParameters ) {
+        $this->postParameters = $postParameters;
+    }
+
     public function executeQuery() {
         if($this->queryStructure->type === 'select') {
             return $this->executeSelect();
@@ -71,7 +87,13 @@ class QueryExecuter {
 
             if ( isset($this->queryStructure->parameters) ) {
                 foreach ($this->queryStructure->parameters as $cond) {
-                    $par =& $this->parameters[$cond->getparameter];
+                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
+                        $par =& $this->getParameters[$cond->getparameter];
+                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
+                        $par =& $this->postParameters[$cond->getparameter];
+                    } elseif ( isset( $cond->constant ) ) {
+                        $par =& $cond->constant;
+                    }
                     $STH->bindParam($cond->placeholder, $par);
                 }
             }
