@@ -33,7 +33,7 @@ class EntityExport extends ManagerEntityController {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setParameters( $this->internalGetParameters );
+	    $this->queryExecuter->setGetParameters( $this->internalGetParameters );
 
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
@@ -61,15 +61,11 @@ class EntityExport extends ManagerEntityController {
     public function postRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setParameters( $this->postParameters );
+	    $this->queryExecuter->setQueryStructure( $this->resource->post->query );
+	    $this->queryExecuter->setPostParameters( $this->postParameters );
 		$this->queryExecuter->executeQuery();
 
 		$result = $this->queryExecuter->executeQuery();
-
-		$this->formBuilder->setFormStructure( $this->resource->form );
-		$this->formBuilder->setEntity( $entity );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
 
 		$this->tableBuilder->setRouter( $this->router );
 		$this->tableBuilder->setTableStructure( $this->resource->table );
