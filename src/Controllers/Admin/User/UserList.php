@@ -36,6 +36,7 @@ class UserList extends Controller {
 
         $table = new StaticTable;
         $table->setTitle('Users list');
+        $table->addButton( 'New user', $this->router->make_url( Router::ROUTE_ADMIN_USER_NEW ) );
 
         $table->addTHead();
         $table->addRow();

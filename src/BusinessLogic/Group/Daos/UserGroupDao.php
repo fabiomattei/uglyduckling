@@ -40,7 +40,6 @@ class UserGroupDao extends BasicDao {
             ' LEFT JOIN user as U ON UG.ug_userid = U.usr_id '.
             ' WHERE UG.ug_groupslug = :groupslug '.
             ' ORDER BY U.usr_name, U.usr_surname  ';  // trick to have the offices at the top of the list
-        echo $query;
         try {
             $STH = $this->DBH->prepare( $query );
             $STH->bindParam( ':groupslug', $slug );
