@@ -8,7 +8,7 @@
       "label":"Requests",
       "submenu": [
             { "label":"New", "action":"entityform", "resource":"formrequestv1" },
-            { "label":"Table", "action":"entitytable", "resource":"requesttable" },
+            { "label":"Table", "action":"entitytable", "resource":"requesttablev1" },
             { "label":"Search", "action":"entitysearch", "resource":"searchreportv1" },
             { "label":"Export", "action":"entityexport", "resource":"requestexportv1" }
       ]

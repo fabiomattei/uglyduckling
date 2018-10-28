@@ -5,9 +5,7 @@
   "get": {
     "request": {
       "parameters": []
-    }
-  },
-  "post": {
+    },
     "query": {
       "sql": "select id, name, amount, duedate FROM requestv1;"
     },

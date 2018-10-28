@@ -5,7 +5,6 @@ namespace Firststep\Controllers\Admin\Report;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockParser;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;

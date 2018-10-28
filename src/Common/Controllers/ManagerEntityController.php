@@ -3,8 +3,6 @@
 namespace Firststep\Common\Controllers;
 
 use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Json\JsonBlockParser;
-use Firststep\Common\Router\Router;
 use Firststep\Common\Builders\ValidationBuilder;
 use Gump;
 

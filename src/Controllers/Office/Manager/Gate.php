@@ -21,7 +21,7 @@ class Gate extends Controller {
 	public function getRequest() {
 		$info = new BaseInfo;
 		$info->setTitle( 'Links: ' );
-		$info->addParagraph( 'Table: '.Button::get($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, 'res=requesttable' ), 'Table', Button::COLOR_GRAY.' '.Button::SMALL ), '');
+		$info->addParagraph( 'Table: '.Button::get($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, 'res=requesttablev1' ), 'Table', Button::COLOR_GRAY.' '.Button::SMALL ), '');
 		$info->addParagraph( 'Form: '.Button::get($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res=formrequestv1' ), 'Form', Button::COLOR_GRAY.' '.Button::SMALL ), '');
 		
 		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Manager dashboard';

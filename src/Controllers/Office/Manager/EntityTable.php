@@ -4,8 +4,6 @@ namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
@@ -38,12 +36,12 @@ class EntityTable extends ManagerEntityController {
 		
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
+	    $this->queryExecuter->setQueryStructure( $this->resource->get->query );
 	    // $this->queryExecuter->setParameters( $parameters )
 		$entities = $this->queryExecuter->executeQuery();
 		
 		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->table );
+		$this->tableBuilder->setTableStructure( $this->resource->get->table );
 		$this->tableBuilder->setEntities( $entities );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';

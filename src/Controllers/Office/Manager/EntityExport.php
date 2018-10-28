@@ -4,9 +4,6 @@ namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockParser;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
