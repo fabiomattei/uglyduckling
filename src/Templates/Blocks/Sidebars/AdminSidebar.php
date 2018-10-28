@@ -12,7 +12,9 @@ class AdminSidebar extends BaseBlock {
 		$this->active = $active;
 		$this->router = $router;
 	}
-	
+
+	// icons list here: https://feathericons.com/
+
     function show(): string {
 		$out = '<div class="sidebar-sticky">
                 <ul class="nav flex-column">
@@ -43,13 +45,37 @@ class AdminSidebar extends BaseBlock {
                   <li class="nav-item">
                     <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_REPORT_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_REPORT_LIST ).'">
                       <span data-feather="bar-chart-2"></span>
-                      Reports
+                      Exports
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_REPORT_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_REPORT_LIST ).'">
+                      <span data-feather="search"></span>
+                      Searches
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">
-                      <span data-feather="shopping-cart"></span>
-                      Products
+                      <span data-feather="edit"></span>
+                      Forms
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <span data-feather="cpu"></span>
+                      Logics
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <span data-feather="target"></span>
+                      Dashboards
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <span data-feather="eye"></span>
+                      Infos
                     </a>
                   </li>
                   <li class="nav-item">
@@ -65,40 +91,7 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                 </ul>
-
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                  <span>Saved reports</span>
-                  <a class="d-flex align-items-center text-muted" href="#">
-                    <span data-feather="plus-circle"></span>
-                  </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span data-feather="file-text"></span>
-                      Current month
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span data-feather="file-text"></span>
-                      Last quarter
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span data-feather="file-text"></span>
-                      Social engagement
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">
-                      <span data-feather="file-text"></span>
-                      Year-end sale
-                    </a>
-                  </li>
-                </ul>
-              </div>';
+                </div>';
         return $out; 
     }
 	

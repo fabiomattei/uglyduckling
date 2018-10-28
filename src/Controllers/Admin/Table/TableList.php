@@ -41,7 +41,7 @@ class TableList extends Controller {
 		
 		$table->addTBody();
 		foreach ( $this->jsonloader->getResourcesIndex() as $res ) {
-			if ( $res->type === 'list' ) {
+			if ( $res->type === 'table' ) {
 				$table->addRow();
 				$table->addColumn($res->name);
 				$table->addColumn($res->type);

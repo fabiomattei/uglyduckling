@@ -29,7 +29,7 @@ class ReportList extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Reports list';
 		
 		$table = new StaticTable;
-		$table->setTitle('Reports list');
+		$table->setTitle('Exports list');
 		
 		$table->addTHead();
 		$table->addRow();
@@ -41,7 +41,7 @@ class ReportList extends Controller {
 		
 		$table->addTBody();
 		foreach ( $this->jsonloader->getResourcesIndex() as $res ) {
-			if ( $res->type === 'report' ) {
+			if ( $res->type === 'export' ) {
 				$table->addRow();
 				$table->addColumn($res->name);
 				$table->addColumn($res->type);
