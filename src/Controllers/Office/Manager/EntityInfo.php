@@ -34,13 +34,13 @@ class EntityInfo extends ManagerEntityController {
 
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setParameters( $this->internalGetParameters );
+	    $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+	    $this->queryExecuter->setGetParameters( $this->internalGetParameters );
 
 		$result = $this->queryExecuter->executeQuery();
 		$entity = $result->fetch();
 
-		$this->infoBuilder->setFormStructure( $this->resource->form );
+		$this->infoBuilder->setFormStructure( $this->resource->get->info );
 		$this->infoBuilder->setEntity( $entity );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';

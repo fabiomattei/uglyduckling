@@ -1,7 +1,7 @@
 { 
   "name": "inforequestv1",
   "metadata": { "type":"info", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup" ],
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "get": {
     "request": {
       "parameters": [

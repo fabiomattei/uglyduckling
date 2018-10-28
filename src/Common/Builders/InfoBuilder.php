@@ -66,7 +66,7 @@ class InfoBuilder {
 	 */
 	public function calculateMaxumumRowsNumber() {
 		$max = 1;
-		foreach ($this->formStructure->fields as $field) {
+		foreach ($this->infoStructure->fields as $field) {
 			if ( $field->row > $max ) $max = $field->row;
 		}
 		return $max;
