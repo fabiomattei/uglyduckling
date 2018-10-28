@@ -2,36 +2,46 @@
   "name": "searchreportv1",
   "metadata": { "type":"search", "version": "1" },
   "allowedgroups": [ "administrationgroup", "teachergroup" ],
-  "get": {
-    "table": {
-      "title": "My table",
-      "fields": [
-        { "headline": "Name", "name":"name" },
-        { "headline": "Amount", "name":"amount" },
-        { "headline": "Due date", "name":"duedate" }
-      ],
-      "actions": [
-        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
-        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
-      ]
-    },
-    "form": {
-      "title": "Serch between all requests",
-      "submitTitle": "Search",
-      "fields": [
-        {
-          "row":"1",
-          "fields": [
-            { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12" }
-          ]
-        }
-      ]
-    },
-    "query": {
-      "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
-      "parameters":[
-        { "placeholder": ":id", "getparameter": "id" }
-      ]
-    }
+  "table": {
+    "title": "My table",
+    "headlines": [
+      { "name":"Name" },
+      { "name":"Amount" },
+      { "name":"Due date" }
+    ],
+    "fields": [
+      { "name":"name" },
+      { "name":"amount" },
+      { "name":"duedate" }
+    ],
+    "actions": [
+      { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
+      { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
+    ]
+  },
+  "form": {
+    "title": "Serch between all requests",
+    "submitTitle": "Search",
+    "rows": [
+      {
+        "row":"1",
+        "fields": [
+          { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12" }
+        ]
+      }
+    ]
+  },
+  "query": {
+    "type":"select",
+    "fields": [
+      "id",
+      "name",
+      "amount",
+      "duedate"
+    ],
+    "entity":"requestv1",
+    "conditions": [
+      { "field": "name", "operator": "=", "value": "name" }
+    ]
   }
 }
