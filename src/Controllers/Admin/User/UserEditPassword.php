@@ -61,7 +61,7 @@ class UserEditPassword extends Controller {
 
     public $post_validation_rules = array(
         UserEditPassword::FIELD_USR_ID => 'required|numeric',
-        UserEditPassword::FIELD_OLD_PASSWORD => 'required|max_len,100|min_len,3',
+        UserEditPassword::FIELD_OLD_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_NEW_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'required|max_len,100|min_len,6',
     );
@@ -80,7 +80,7 @@ class UserEditPassword extends Controller {
 
         $user = $this->userDao->getById( $this->postParameters[UserEditPassword::FIELD_USR_ID] );
 
-        if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->parameters[UserEditPassword::FIELD_OLD_PASSWORD] ) ) {
+        if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->postParameters[UserEditPassword::FIELD_OLD_PASSWORD] ) ) {
             if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
                 $this->userDao->updatePassword( $this->postParameters[UserEditPassword::FIELD_USR_ID], $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
                 $this->setSuccess("Password successfully updated");

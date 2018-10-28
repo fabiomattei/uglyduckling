@@ -46,10 +46,9 @@ class UserDao extends BasicDao {
 	}
 	
 	/**
-	 * In order to save the password it uses the algorithms greated by the community
+	 * In order to save the password it uses the algorithms created by the community
 	 * password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
 	 * password_verify('rasmuslerdorf', $hash)
-	 *
 	 */
 	function checkEmailAndPassword($email, $password) {
 		try {
@@ -65,8 +64,8 @@ class UserDao extends BasicDao {
                 return false;
             }
 			
-			// To correct the password
-			// echo 'Password: '.password_hash($password, PASSWORD_DEFAULT).' ???? '.$obj->usr_hashedpsw;
+			// To fix some password issue:
+			// echo 'Password: '.$password.' password hash:'.password_hash($password, PASSWORD_DEFAULT).' dbpassword hash:'.$obj->usr_hashedpsw;
 			
 			return password_verify($password, $obj->usr_hashedpsw);
 		}
