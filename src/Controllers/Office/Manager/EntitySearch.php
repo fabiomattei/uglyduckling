@@ -18,6 +18,12 @@ use Firststep\Common\Builders\MenuBuilder;
  */
 class EntitySearch extends ManagerEntityController {
 
+    private $queryExecuter;
+    private $queryBuilder;
+    private $formBuilder;
+    private $tableBuilder;
+    private $menubuilder;
+
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
@@ -61,22 +67,19 @@ class EntitySearch extends ManagerEntityController {
 	public function postRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setParameters( $this->postParameters );
-		$this->queryExecuter->executeQuery();
-
+	    $this->queryExecuter->setQueryStructure( $this->resource->post->query );
+	    $this->queryExecuter->setPostParameters( $this->postParameters );
 		$result = $this->queryExecuter->executeQuery();
 
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
-		$this->formBuilder->setFormStructure( $this->resource->form );
-		$this->formBuilder->setEntity( $entity );
+		$this->formBuilder->setFormStructure( $this->resource->post->form );
 		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
 
 		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->table );
+		$this->tableBuilder->setTableStructure( $this->resource->post->table );
 		$this->tableBuilder->setEntities( $result );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';

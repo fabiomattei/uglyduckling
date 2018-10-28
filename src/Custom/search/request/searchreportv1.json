@@ -14,8 +14,8 @@
         { "headline": "Due date", "sqlfield":"duedate" }
       ],
       "actions": [
-        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
-        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
+        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "sqlfield":"id"}] }
       ]
     },
     "form": {
@@ -30,25 +30,20 @@
     "table": {
       "title": "My table",
       "fields": [
-        { "headline": "Name", "name":"name" },
-        { "headline": "Amount", "name":"amount" },
-        { "headline": "Due date", "name":"duedate" }
+        { "headline": "Name", "sqlfield":"name" },
+        { "headline": "Amount", "sqlfield":"amount" },
+        { "headline": "Due date", "sqlfield":"duedate" }
       ],
       "actions": [
-        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "value":"id"}] },
-        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "value":"id"}] }
+        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "sqlfield":"id"}] }
       ]
     },
     "form": {
       "title": "Serch between all requests",
       "submitTitle": "Search",
       "fields": [
-        {
-          "row":"1",
-          "fields": [
-            { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12" }
-          ]
-        }
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" }
       ]
     },
     "query": {
