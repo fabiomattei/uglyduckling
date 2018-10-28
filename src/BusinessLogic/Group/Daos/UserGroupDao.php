@@ -34,51 +34,27 @@ class UserGroupDao extends BasicDao {
 		$empty->ug_created   = date( 'Y-m-d' );
 		return $empty;
 	}
-	
-	/**
-	 * In order to save the password it uses the algorithms created by the community
-	 * password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
-	 * password_verify('rasmuslerdorf', $hash)
-	 */
-	function checkEmailAndPassword($email, $password) {
-		try {
-			$STH = $this->DBH->prepare('SELECT usr_hashedpsw FROM user WHERE usr_email = :email;');
-			$STH->bindParam(':email', $email, PDO::PARAM_STR);
-			$STH->execute();
-			
-            $STH->setFetchMode(PDO::FETCH_OBJ);
-            $obj = $STH->fetch();
 
-            // user with given email does not exist
-            if ($obj == null) {
-                return false;
-            }
-			
-			// To fix some password issue:
-			// echo 'Password: '.$password.' password hash:'.password_hash($password, PASSWORD_DEFAULT).' dbpassword hash:'.$obj->usr_hashedpsw;
-			
-			return password_verify($password, $obj->usr_hashedpsw);
-		}
-		catch(PDOException $e) {
-			$logger = new Logger();
-			$logger->write($e->getMessage(), __FILE__, __LINE__);
-		}
-	}
-
-	function updatePassword($id, $password) {
-	    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $presentmoment = date('Y-m-d H:i:s', time());
-
+	function getUsersByGroupSlug( string $slug ) {
+        $query = 'SELECT UG.*, U.usr_id, U.usr_name, U.usr_surname FROM '.$this::DB_TABLE.' as UG '.
+            ' LEFT JOIN user as U ON UG.ug_userid = U.usr_id '.
+            ' WHERE UG.ug_groupslug = :groupslug '.
+            ' ORDER BY U.usr_name, U.usr_surname  ';  // trick to have the offices at the top of the list
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET usr_hashedpsw = :hashedpsw, usr_password_updated = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id');
-            $STH->bindParam(':hashedpsw', $hashedPassword);
-            $STH->bindParam(':id', $id);
+            $STH = $this->DBH->prepare( $query );
+            $STH->bindParam( ':groupslug', $slug, PDO::PARAM_STR );
+
             $STH->execute();
-        } catch (PDOException $e) {
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        }
+        catch(PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
         }
-    }
+	}
 
 }

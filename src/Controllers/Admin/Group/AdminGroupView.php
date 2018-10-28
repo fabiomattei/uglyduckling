@@ -2,14 +2,14 @@
 
 namespace Firststep\Controllers\Admin\Group;
 
+use Firststep\BusinessLogic\Group\Daos\UserGroupDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
 
 /**
  *
@@ -17,8 +17,7 @@ use Firststep\Common\Builders\QueryBuilder;
 class AdminGroupView extends Controller {
 
     function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
+        $this->userGroupDao = new UserGroupDao;
     }
 
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
@@ -38,7 +37,7 @@ class AdminGroupView extends Controller {
      * $this->getParameters['res'] resource key index
      */
     public function getRequest() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+        $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
         $this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin group view';
@@ -46,9 +45,48 @@ class AdminGroupView extends Controller {
         $info = new BaseInfo;
         $info->setTitle( 'Group name: '.$this->resource->name );
 
-        $info->addParagraph( 'Users: '.$this->resource->entity->tablename, '' );
+        $users = $this->userGroupDao->getUsersByGroupSlug( $this->resource->name );
 
-        $info->addParagraph( 'Resources: '.$this->resource->entity->tablename, '' );
+        $userTable = new StaticTable;
+        $userTable->setTitle("Users");
+        $userTable->addTHead();
+        $userTable->addRow();
+        $userTable->addHeadLineColumn('Name');
+        $userTable->addHeadLineColumn(''); // adding one more for actions
+        $userTable->closeRow();
+        $userTable->closeTHead();
+        $userTable->addTBody();
+        foreach ( $users as $res ) {
+            if ( $res->type === 'group' ) {
+                $userTable->addRow();
+                $userTable->addColumn($res->usr_name.' '.$res->usr_surname);
+                $userTable->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_GROUP_VIEW, 'res='.$res->name ), 'Remove', Button::COLOR_GRAY.' '.Button::SMALL ) );
+                $userTable->closeRow();
+            }
+        }
+        $userTable->closeTBody();
+
+        $resourcesTable = new StaticTable;
+        $resourcesTable->setTitle("Resources this group has access to");
+        $resourcesTable->addTHead();
+        $resourcesTable->addRow();
+        $resourcesTable->addHeadLineColumn('Name');
+        $resourcesTable->addHeadLineColumn('Path');
+        $resourcesTable->addHeadLineColumn('Type'); // adding one more for actions
+        $resourcesTable->closeRow();
+        $resourcesTable->closeTHead();
+        $resourcesTable->addTBody();
+        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->jsonloader->loadResource( $reskey );
+            if ( isset($tmpres->allowedgroups) AND in_array( $this->resource->name, $tmpres->allowedgroups) ) {
+                $resourcesTable->addRow();
+                $resourcesTable->addColumn($reskey);
+                $resourcesTable->addColumn($resvalue->path);
+                $resourcesTable->addColumn($resvalue->type);
+                $resourcesTable->closeRow();
+            }
+        }
+        $resourcesTable->closeTBody();
 
         /*
         $info->addParagraph( 'Table exists: '.( $tableExists ?
@@ -60,6 +98,8 @@ class AdminGroupView extends Controller {
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST, $this->router ) );
         $this->centralcontainer = array( $info );
+        $this->secondcentralcontainer = array( $userTable );
+        $this->thirdcentralcontainer = array( $resourcesTable );
     }
 
 }
