@@ -41,7 +41,7 @@ class AdminDocumentView extends Controller {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
+		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin document view';
 		
 		$info = new BaseInfo;
 		$info->setTitle( 'Document name: '.$this->resource->name );
