@@ -10,8 +10,8 @@ class UserGroupDao extends BasicDao {
 	
 	const DB_TABLE = 'usergroup';
 	const DB_TABLE_PK = 'ug_id';
-    const DB_TABLE_UPDATED_FIELD_NAME = 'usr_updated';
-    const DB_TABLE_CREATED_FLIED_NAME = 'usr_created';
+    const DB_TABLE_UPDATED_FIELD_NAME = 'ug_updated';
+    const DB_TABLE_CREATED_FLIED_NAME = 'ug_created';
 	
 	/*
 	  Fields list
@@ -40,9 +40,10 @@ class UserGroupDao extends BasicDao {
             ' LEFT JOIN user as U ON UG.ug_userid = U.usr_id '.
             ' WHERE UG.ug_groupslug = :groupslug '.
             ' ORDER BY U.usr_name, U.usr_surname  ';  // trick to have the offices at the top of the list
+        echo $query;
         try {
             $STH = $this->DBH->prepare( $query );
-            $STH->bindParam( ':groupslug', $slug, PDO::PARAM_STR );
+            $STH->bindParam( ':groupslug', $slug );
 
             $STH->execute();
 

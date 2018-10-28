@@ -51,6 +51,18 @@ class BaseForm extends BaseBlock {
         $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea></div>';
     }
 
+    /**
+     * @param string $name
+     * @param string $label
+     * @param array $options
+     * @param string $value
+     * @param string $width
+     *
+     * Add a drop down field to the form
+     *
+     * Options must be given in the format:
+     *   array( 'optvalue1' => 'opt label 1', 'optvalue2' => 'opt label 2' )
+     */
     function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
         $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
         foreach ($options as $key => $val) {

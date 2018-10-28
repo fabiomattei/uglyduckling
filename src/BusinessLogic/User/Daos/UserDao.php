@@ -44,6 +44,30 @@ class UserDao extends BasicDao {
 		$empty->usr_password_updated = date( 'Y-m-d' );
 		return $empty;
 	}
+
+
+	public function makeListForDropdown() {
+        $query = 'SELECT U.usr_id, U.usr_name, U.usr_surname FROM '.$this::DB_TABLE.' as U '.
+            ' ORDER BY U.usr_name, U.usr_surname  ';  // trick to have the offices at the top of the list
+        try {
+            $STH = $this->DBH->prepare( $query );
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            $usersForDropDown = array();
+            foreach ($STH as $user) {
+                $usersForDropDown[$user->usr_id] = $user->usr_name.' '.$user->usr_surname;
+            }
+
+            return $usersForDropDown;
+        }
+        catch(PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
 	
 	/**
 	 * In order to save the password it uses the algorithms created by the community

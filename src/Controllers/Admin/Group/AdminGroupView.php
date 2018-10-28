@@ -49,7 +49,7 @@ class AdminGroupView extends Controller {
 
         $userTable = new StaticTable;
         $userTable->setTitle("Users");
-        $userTable->addButton('New', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER ));
+        $userTable->addButton('Add', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
         $userTable->addTHead();
         $userTable->addRow();
         $userTable->addHeadLineColumn('Name');
@@ -58,12 +58,10 @@ class AdminGroupView extends Controller {
         $userTable->closeTHead();
         $userTable->addTBody();
         foreach ( $users as $res ) {
-            if ( $res->type === 'group' ) {
-                $userTable->addRow();
-                $userTable->addColumn($res->usr_name.' '.$res->usr_surname);
-                $userTable->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_GROUP_VIEW, 'res='.$res->name ), 'Remove', Button::COLOR_GRAY.' '.Button::SMALL ) );
-                $userTable->closeRow();
-            }
+            $userTable->addRow();
+            $userTable->addColumn($res->usr_name.' '.$res->usr_surname);
+            $userTable->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_GROUP_REMOVE_USER, 'res='.$this->resource->name.'&usrid='.$res->usr_id ), 'Remove', Button::COLOR_GRAY.' '.Button::SMALL ) );
+            $userTable->closeRow();
         }
         $userTable->closeTBody();
 
@@ -88,13 +86,6 @@ class AdminGroupView extends Controller {
             }
         }
         $resourcesTable->closeTBody();
-
-        /*
-        $info->addParagraph( 'Table exists: '.( $tableExists ?
-                'true  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) :
-                'false  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE, 'res='.$this->resource->name ), 'Create', Button::COLOR_GRAY.' '.Button::SMALL )
-            ), '' );
-        */
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->router ) );
