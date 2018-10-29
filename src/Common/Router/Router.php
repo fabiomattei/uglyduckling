@@ -37,6 +37,7 @@ use Firststep\Controllers\Admin\Document\AdminDocumentView;
 use Firststep\Controllers\Admin\Document\AdminDocumentCreateTable;
 use Firststep\Controllers\Admin\Document\AdminDocumentDropTable;
 use Firststep\Controllers\Admin\Table\TableList;
+use Firststep\Controllers\Admin\Table\AdminTableView;
 use Firststep\Controllers\Admin\Report\ReportList;
 use Firststep\Controllers\Admin\Group\AdminGroupAddUser;
 use Firststep\Controllers\Admin\Group\AdminGroupList;
@@ -86,6 +87,7 @@ class Router {
 	const ROUTE_ADMIN_DOCUMENT_CREATE_TABLE = 'admindocumentcreatetable';
 	const ROUTE_ADMIN_DOCUMENT_DROP_TABLE   = 'admindocumentdroptable';
 	const ROUTE_ADMIN_TABLE_LIST            = 'admintablelist';
+    const ROUTE_ADMIN_TABLE_VIEW            = 'admintableview';
 	const ROUTE_ADMIN_REPORT_LIST           = 'adminreportlist';
     const ROUTE_ADMIN_GROUP_ADD_USER        = 'admingroupadduser';
 	const ROUTE_ADMIN_GROUP_LIST            = 'admingrouplist';
@@ -139,6 +141,7 @@ class Router {
 			case self::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE: $controller = new AdminDocumentCreateTable; break;
 			case self::ROUTE_ADMIN_DOCUMENT_DROP_TABLE:   $controller = new AdminDocumentDropTable; break;
 			case self::ROUTE_ADMIN_TABLE_LIST:            $controller = new TableList; break;
+            case self::ROUTE_ADMIN_TABLE_VIEW:            $controller = new AdminTableView(); break;
 			case self::ROUTE_ADMIN_REPORT_LIST:           $controller = new ReportList; break;
             case self::ROUTE_ADMIN_GROUP_ADD_USER:        $controller = new AdminGroupAddUser(); break;
             case self::ROUTE_ADMIN_GROUP_LIST:            $controller = new AdminGroupList; break;

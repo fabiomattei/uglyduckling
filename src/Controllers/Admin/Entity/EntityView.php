@@ -45,7 +45,7 @@ class EntityView extends Controller {
 		
 		$info = new BaseInfo;
 		$info->setTitle( 'Entity name: '.$this->resource->name );
-		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
+		$info->addParagraph( 'Database table name: '.$this->resource->entity->tablename, '' );
 
 		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists($this->resource->entity->tablename) );
 			
