@@ -18,10 +18,10 @@
 			"title": "My new form",
 			"submitTitle": "Save",
 			"fields": [
-				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
-				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
-				{ "type":"date", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
-				{ "type":"hidden", "name":"id", "value":"id", "row":"2" }
+				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
+				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
+				{ "type":"date", "name":"duedate", "label":"Due date", "sqlfield":"duedate", "width":"12", "row":"2" },
+				{ "type":"hidden", "name":"id", "sqlfield":"id", "row":"2" }
 			]
 		}
 	},

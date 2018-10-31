@@ -32,6 +32,8 @@ use Firststep\Controllers\Admin\Entity\EntityList;
 use Firststep\Controllers\Admin\Entity\EntityView;
 use Firststep\Controllers\Admin\Entity\EntityCreateTable;
 use Firststep\Controllers\Admin\Entity\EntityDropTable;
+use Firststep\Controllers\Admin\Forms\AdminFormsList;
+use Firststep\Controllers\Admin\Forms\AdminFormView;
 use Firststep\Controllers\Admin\Document\AdminDocumentsList;
 use Firststep\Controllers\Admin\Document\AdminDocumentView;
 use Firststep\Controllers\Admin\Document\AdminDocumentCreateTable;
@@ -82,6 +84,8 @@ class Router {
 	const ROUTE_ADMIN_ENTITY_VIEW           = 'adminentityview';
 	const ROUTE_ADMIN_ENTITY_CREATE_TABLE   = 'adminentitycreatetable';
 	const ROUTE_ADMIN_ENTITY_DROP_TABLE     = 'adminentitydroptable';
+    const ROUTE_ADMIN_FORM_LIST             = 'adminformslist';
+    const ROUTE_ADMIN_FORM_VIEW             = 'adminformview';
 	const ROUTE_ADMIN_DOCUMENT_LIST         = 'admindocumentlist';
 	const ROUTE_ADMIN_DOCUMENT_VIEW         = 'admindocumentview';
 	const ROUTE_ADMIN_DOCUMENT_CREATE_TABLE = 'admindocumentcreatetable';
@@ -136,6 +140,8 @@ class Router {
 			case self::ROUTE_ADMIN_ENTITY_VIEW:           $controller = new EntityView; break;
 			case self::ROUTE_ADMIN_ENTITY_CREATE_TABLE:   $controller = new EntityCreateTable; break;
 			case self::ROUTE_ADMIN_ENTITY_DROP_TABLE:     $controller = new EntityDropTable; break;
+            case self::ROUTE_ADMIN_FORM_LIST:             $controller = new AdminFormsList; break;
+            case self::ROUTE_ADMIN_FORM_VIEW:             $controller = new AdminFormView; break;
 			case self::ROUTE_ADMIN_DOCUMENT_LIST:         $controller = new AdminDocumentsList; break;
 			case self::ROUTE_ADMIN_DOCUMENT_VIEW:         $controller = new AdminDocumentView; break;
 			case self::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE: $controller = new AdminDocumentCreateTable; break;
