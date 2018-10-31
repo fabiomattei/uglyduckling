@@ -6,9 +6,9 @@
 	"destinationgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
 	"object": [ "name", "amount" ],
 	"fields": [
-		{ "type":"textarea", "dbtype":"TEXT", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
-		{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1"  },
-		{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" }
+		{ "type":"textarea", "dbtype":"TEXT", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
+		{ "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1"  },
+		{ "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "sqlfield":"duedate", "width":"12", "row":"2" }
 	],
 	"table": {
     	"title": "My table",

@@ -42,7 +42,7 @@ class DocumentEdit extends ManagerDocumentSenderController {
 		$idfield->type = 'hidden';
 		$idfield->validation = 'required|numeric';
 		$idfield->name = 'id';
-		$idfield->value = 'id';
+		$idfield->sqlfield = 'id';
 		$idfield->row = 1;
 		$this->resource->fields[] = $idfield; 
 
