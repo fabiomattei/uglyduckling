@@ -4,9 +4,8 @@
   "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "title":"Manager dashboard",
   "panels":[
-  	{ "panel":"graph1", "row":"1", "width":"6" },
-  	{ "panel":"graph6", "row":"1", "width":"6" },
-  	{ "panel":"table1", "row":"2", "width":"6" },
-  	{ "panel":"table3", "row":"2", "width":"6" }
+  	{ "resource":"requestchartv1", "row":"1", "width":"6" },
+  	{ "panel":"requesttablev1", "row":"1", "width":"6" },
+    { "panel":"inforequestv1", "row":"2", "width":"6" }
   ]
 }
