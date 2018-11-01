@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by fabio
+ * Created by Fabio
  * Date: 01/11/18
  * Time: 9.34
  */
@@ -16,11 +16,6 @@ use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\MenuBuilder;
 
-/**
- * User: Fabio
- * Date: 11/09/2018
- * Time: 22:34
- */
 class EntityChart extends ManagerEntityController {
 
     private $queryExecuter;
@@ -31,7 +26,7 @@ class EntityChart extends ManagerEntityController {
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
-        $this->chartjsBuilder = new ChartjsBuilder();
+        $this->chartjsBuilder = new ChartjsBuilder;
         $this->menubuilder = new MenuBuilder;
     }
 
@@ -46,11 +41,11 @@ class EntityChart extends ManagerEntityController {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
         $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        $this->queryExecuter->setGetParameters( $this->internalGetParameters );
+        // $this->queryExecuter->setGetParameters( $this->internalGetParameters ); TODO check, if there are no parameters it gets null instead of an array
 
         $result = $this->queryExecuter->executeQuery();
 
-        $this->chartjsBuilder->setFormStructure( $this->resource->get->info );
+        $this->chartjsBuilder->setChartStructure( $this->resource->get->chart );
         $this->chartjsBuilder->setEntities( $result );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office chart';

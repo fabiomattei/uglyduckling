@@ -4,9 +4,7 @@
   "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "get": {
     "request": {
-      "parameters": [
-        { "type":"integer", "validation":"required|integer", "name":"id" }
-      ]
+      "parameters": []
     },
     "query": {
       "sql":"select amount, duedate FROM requestv1;",

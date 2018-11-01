@@ -32,7 +32,8 @@ class ChartjsBuilder {
 
     public function createChart() {
         $chartBlock = new BaseChart;
-
+        $chartBlock->setStructure($this->chartStructure);
+        $chartBlock->setData($this->entities);
         return $chartBlock;
     }
 
