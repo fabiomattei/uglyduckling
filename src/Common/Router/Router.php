@@ -3,6 +3,7 @@
 namespace Firststep\Common\Router;
 
 use Firststep\Controllers\Office\Manager\Gate;
+use Firststep\Controllers\Office\Manager\EntityChart;
 use Firststep\Controllers\Office\Manager\EntityTable;
 use Firststep\Controllers\Office\Manager\EntityForm;
 use Firststep\Controllers\Office\Manager\EntityInfo;
@@ -62,6 +63,7 @@ use Firststep\Controllers\Admin\User\UserView;
 class Router {
 
 	const ROUTE_OFFICE_GATE                 = 'officegate';
+    const ROUTE_OFFICE_ENTITY_CHART         = 'officeentitychart';
 	const ROUTE_OFFICE_ENTITY_TABLE         = 'officeentitytable';
 	const ROUTE_OFFICE_ENTITY_FORM          = 'officeentityform';
 	const ROUTE_OFFICE_ENTITY_INFO          = 'officeentityinfo';
@@ -125,6 +127,7 @@ class Router {
     function getController( string $action ) {
         switch ( $action ) {
 			case self::ROUTE_OFFICE_GATE:                 $controller = new Gate; break;
+            case self::ROUTE_OFFICE_ENTITY_CHART:         $controller = new EntityChart; break;
 			case self::ROUTE_OFFICE_ENTITY_TABLE:         $controller = new EntityTable; break;
 			case self::ROUTE_OFFICE_ENTITY_FORM:          $controller = new EntityForm; break;
 			case self::ROUTE_OFFICE_ENTITY_INFO:          $controller = new EntityInfo; break;

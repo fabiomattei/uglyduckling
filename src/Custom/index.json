@@ -2,6 +2,7 @@
   "name": "index",
   "metadata": { "type":"index", "version": "1" },
   "scripts": [
+      { "path":"./Custom/charts/index.json", "type":"index" },
       { "path":"./Custom/dashboards/index.json", "type":"index" },
       { "path":"./Custom/documents/index.json", "type":"index" },
       { "path":"./Custom/entities/index.json", "type":"index" },

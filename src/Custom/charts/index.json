@@ -1,0 +1,7 @@
+{
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+    { "path":"./Custom/charts/request/requestchartv1.json", "type":"chart", "name":"requestchartv1" }
+  ]
+}
