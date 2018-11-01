@@ -45,6 +45,8 @@ use Firststep\Controllers\Admin\Group\AdminGroupAddUser;
 use Firststep\Controllers\Admin\Group\AdminGroupList;
 use Firststep\Controllers\Admin\Group\AdminGroupRemoveUser;
 use Firststep\Controllers\Admin\Group\AdminGroupView;
+use Firststep\Controllers\Admin\Info\AdminInfoList;
+use Firststep\Controllers\Admin\Info\AdminInfoView;
 use Firststep\Controllers\Admin\Logics\AdminLogicsList;
 use Firststep\Controllers\Admin\Logics\AdminLogicView;
 use Firststep\Controllers\Admin\User\UserDelete;
@@ -99,6 +101,8 @@ class Router {
 	const ROUTE_ADMIN_GROUP_LIST            = 'admingrouplist';
     const ROUTE_ADMIN_GROUP_REMOVE_USER     = 'admingroupremoveuser';
     const ROUTE_ADMIN_GROUP_VIEW            = 'admingroupview';
+    const ROUTE_ADMIN_INFO_LIST             = 'admininfolist';
+    const ROUTE_ADMIN_INFO_VIEW             = 'admininfoview';
     const ROUTE_ADMIN_LOGIC_LIST            = 'adminlogiclist';
     const ROUTE_ADMIN_LOGIC_VIEW            = 'adminlogicview';
     const ROUTE_ADMIN_USER_DELETE           = 'adminuserdelete';
@@ -157,6 +161,8 @@ class Router {
             case self::ROUTE_ADMIN_GROUP_LIST:            $controller = new AdminGroupList; break;
             case self::ROUTE_ADMIN_GROUP_REMOVE_USER:     $controller = new AdminGroupRemoveUser(); break;
             case self::ROUTE_ADMIN_GROUP_VIEW:            $controller = new AdminGroupView; break;
+            case self::ROUTE_ADMIN_INFO_LIST:             $controller = new AdminInfoList; break;
+            case self::ROUTE_ADMIN_INFO_VIEW:             $controller = new AdminInfoView; break;
             case self::ROUTE_ADMIN_LOGIC_LIST:            $controller = new AdminLogicsList; break;
             case self::ROUTE_ADMIN_LOGIC_VIEW:            $controller = new AdminLogicView; break;
             case self::ROUTE_ADMIN_USER_DELETE:           $controller = new UserDelete; break;
