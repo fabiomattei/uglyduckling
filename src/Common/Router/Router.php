@@ -2,6 +2,7 @@
 
 namespace Firststep\Common\Router;
 
+use Firststep\Controllers\Office\Manager\EntityDashboard;
 use Firststep\Controllers\Office\Manager\Gate;
 use Firststep\Controllers\Office\Manager\EntityChart;
 use Firststep\Controllers\Office\Manager\EntityTable;
@@ -70,6 +71,7 @@ class Router {
 	const ROUTE_OFFICE_ENTITY_SEARCH        = 'officeentitysearch';
 	const ROUTE_OFFICE_ENTITY_EXPORT        = 'officeentityexport';
 	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitylogic';
+    const ROUTE_OFFICE_ENTITY_DASHBOARD     = 'officeentitydashboard';
 	const ROUTE_OFFICE_DOCUMENT_ACCEPT      = 'officedocumentaccept';
 	const ROUTE_OFFICE_DOCUMENT_DELETE      = 'officedocumentdelete';
 	const ROUTE_OFFICE_DOCUMENT_EDIT        = 'officedocumentedit';
@@ -134,6 +136,7 @@ class Router {
 			case self::ROUTE_OFFICE_ENTITY_SEARCH:        $controller = new EntitySearch; break;
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
 			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityLogic; break;
+            case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new EntityDashboard; break;
 			case self::ROUTE_OFFICE_DOCUMENT_ACCEPT:      $controller = new DocumentAccept; break;
             case self::ROUTE_OFFICE_DOCUMENT_DELETE:      $controller = new DocumentDelete; break;
 			case self::ROUTE_OFFICE_DOCUMENT_EDIT:        $controller = new DocumentEdit; break;

@@ -3,7 +3,7 @@
   "metadata": { "type":"group", "version": "1" },
   "home": { "label":"My app", "action":"#" },
   "menu": [
-    { "label":"Home", "action":"entityinfo", "resource":"inforequestv1" },
+    { "label":"Home", "action":"entitydashboard", "resource":"managermaindashboard" },
     {
       "label":"Requests",
       "submenu": [

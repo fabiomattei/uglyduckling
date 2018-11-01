@@ -20,6 +20,9 @@ class LinkBuilder {
         }
         $url_parameters = rtrim($url_parameters, '&');
         switch ( $action ) {
+            case 'entitydashboard':
+                return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
+                break;
             case 'entitychart':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, $url_parameters ), $lable, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
@@ -96,6 +99,9 @@ class LinkBuilder {
     static function getURL( $router, $action, $resource ) {
         $url_parameters = 'res='.$resource;
         switch ( $action ) {
+            case 'entitydashboard':
+                return $router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                break;
             case 'entitychart':
                 return $router->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, $url_parameters );
                 break;
