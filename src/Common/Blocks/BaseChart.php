@@ -35,14 +35,12 @@ class BaseChart extends BaseBlock {
     }
 
     function setData($data) {
-        $toadd = array();
         foreach ( $data as $dt ) {
             foreach ($this->chartdataglue as $dg) {
-                if(!isset($toadd[$dg->placeholder])) $toadd[$dg->placeholder] = array();
-                $toadd[$dg->placeholder][] = $dt->{$dg->sqlfield};
+                if(!isset($this->glue[$dg->placeholder])) $this->glue[$dg->placeholder] = array();
+                $this->glue[$dg->placeholder][] = $dt->{$dg->sqlfield};
             }
         }
-        $this->glue = $toadd;
     }
 
     function addToHead(): string {
