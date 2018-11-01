@@ -6,13 +6,8 @@
     "form": {
       "title": "Search and export",
       "submitTitle": "Export",
-      "rows": [
-        {
-          "row":"1",
-          "fields": [
-            { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12" }
-          ]
-        }
+      "fields": [
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" }
       ]
     }
   },
