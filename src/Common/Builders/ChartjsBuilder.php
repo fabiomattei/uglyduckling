@@ -14,6 +14,7 @@ class ChartjsBuilder {
 
     private $chartStructure;
     private $entities;
+    private $chartdataglue;
 
     /**
      * @param mixed $chartStructure
@@ -30,9 +31,14 @@ class ChartjsBuilder {
         $this->entities = $entities;
     }
 
+    public function setChartDataGlue($chartdataglue) {
+        $this->chartdataglue = $chartdataglue;
+    }
+
     public function createChart() {
         $chartBlock = new BaseChart;
         $chartBlock->setStructure($this->chartStructure);
+        $chartBlock->setChartDataGlue($this->chartdataglue);
         $chartBlock->setData($this->entities);
         return $chartBlock;
     }

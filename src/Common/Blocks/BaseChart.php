@@ -15,24 +15,34 @@ class BaseChart extends BaseBlock {
     private $lables;
     private $dataset;
     private $structure;
+    private $chartdataglue;
+    private $glue;
 
     function __construct() {
         $this->lables = '';
         $this->dataset = '';
         $this->structure = '';
+        $this->chartdataglue = array();
+        $this->glue = array();
     }
 
     function setStructure($structure) {
         $this->structure = $structure;
     }
 
+    function setChartDataGlue($chartDataGlue) {
+        $this->chartdataglue = $chartDataGlue;
+    }
+
     function setData($data) {
+        $toadd = array();
         foreach ( $data as $dt ) {
-            //$lables[] = $dt->;
-            //$dataset[] = $dt->;
+            foreach ($this->chartdataglue as $dg) {
+                if(!isset($toadd[$dg->placeholder])) $toadd[$dg->placeholder] = array();
+                $toadd[$dg->placeholder][] = $dt->{$dg->sqlfield};
+            }
         }
-        //$this->lables = implode(',',$lables);
-        //$this->dataset = implode(',',$dataset);
+        $this->glue = $toadd;
     }
 
     function addToHead(): string {
@@ -41,12 +51,12 @@ class BaseChart extends BaseBlock {
     }
 
     function show(): string {
-        //print_r($this->structure->data->datasets);
-        //$this->structure->data->datasets[0]->data = $this->dataset;
+        $this->structure->data->labels = $this->glue['#labels'];
+        $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
         return "<canvas id=\"myChart\" width=\"400\" height=\"400\"></canvas>
                 <script>
                     var ctx = document.getElementById(\"myChart\").getContext('2d');
-                    var myChart = new Chart(ctx, ".json_encode($this->structure).");
+                    var myChart = new Chart(ctx, ".json_encode( $this->structure ).");
                 </script>";
     }
 
