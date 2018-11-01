@@ -49,7 +49,7 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_EXPORT_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_EXPORT_LIST ).'">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_SEARCH_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_SEARCH_LIST).'">
                       <span data-feather="search"></span>
                       Searches
                     </a>

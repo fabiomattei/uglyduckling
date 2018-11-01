@@ -50,6 +50,8 @@ use Firststep\Controllers\Admin\Info\AdminInfoList;
 use Firststep\Controllers\Admin\Info\AdminInfoView;
 use Firststep\Controllers\Admin\Logics\AdminLogicsList;
 use Firststep\Controllers\Admin\Logics\AdminLogicView;
+use Firststep\Controllers\Admin\Search\AdminSearchList;
+use Firststep\Controllers\Admin\Search\AdminSearchView;
 use Firststep\Controllers\Admin\User\UserDelete;
 use Firststep\Controllers\Admin\User\UserEdit;
 use Firststep\Controllers\Admin\User\UserEditPassword;
@@ -107,6 +109,8 @@ class Router {
     const ROUTE_ADMIN_INFO_VIEW             = 'admininfoview';
     const ROUTE_ADMIN_LOGIC_LIST            = 'adminlogiclist';
     const ROUTE_ADMIN_LOGIC_VIEW            = 'adminlogicview';
+    const ROUTE_ADMIN_SEARCH_LIST           = 'adminsearchlist';
+    const ROUTE_ADMIN_SEARCH_VIEW           = 'adminsearchview';
     const ROUTE_ADMIN_USER_DELETE           = 'adminuserdelete';
     const ROUTE_ADMIN_USER_EDIT             = 'adminuseredit';
     const ROUTE_ADMIN_USER_EDIT_PASSWORD    = 'adminusereditpassword';
@@ -168,6 +172,8 @@ class Router {
             case self::ROUTE_ADMIN_INFO_VIEW:             $controller = new AdminInfoView; break;
             case self::ROUTE_ADMIN_LOGIC_LIST:            $controller = new AdminLogicsList; break;
             case self::ROUTE_ADMIN_LOGIC_VIEW:            $controller = new AdminLogicView; break;
+            case self::ROUTE_ADMIN_SEARCH_LIST:           $controller = new AdminSearchList; break;
+            case self::ROUTE_ADMIN_SEARCH_VIEW:           $controller = new AdminSearchView; break;
             case self::ROUTE_ADMIN_USER_DELETE:           $controller = new UserDelete; break;
             case self::ROUTE_ADMIN_USER_EDIT:             $controller = new UserEdit; break;
             case self::ROUTE_ADMIN_USER_EDIT_PASSWORD:    $controller = new UserEditPassword; break;
