@@ -29,8 +29,8 @@ class CardBlock extends BaseBlock {
         $this->block = $block;
     }
 
-    function setWidth( $width ) {
-        $this->width = $width;
+    function setWidth( int $width ) {
+        $this->width = ColWidth::getWidth(ColWidth::MEDIUM, $width);
     }
 
     /**
@@ -48,12 +48,13 @@ class CardBlock extends BaseBlock {
     }
 
     function show(): string {
-        return '<div class="card" style="'.$this->width.'">
+        return '<div class="'.$this->width.'"><div class="card">
   <div class="card-body">
     '.($this->title === '' ? '' : '<h5 class="card-title">'.$this->title.'</h5>').'
     '.($this->subtitle === '' ? '' : '<h6 class="card-subtitle mb-2 text-muted">'.$this->subtitle.'</h6>').'
     '.$this->block->show().'
   </div>
+</div>
 </div>';
     }
 

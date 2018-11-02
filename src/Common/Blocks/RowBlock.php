@@ -27,7 +27,12 @@ class RowBlock extends BaseBlock {
     }
 
     function show(): string {
-        return parent::show();
+        $body = '<div class="row">';
+        foreach ($this->blocks as $bl) {
+            $body .= $bl->show();
+        }
+        $body .= '</div> <!-- end row --!>';
+        return $body;
     }
 
     function addToHead(): string {

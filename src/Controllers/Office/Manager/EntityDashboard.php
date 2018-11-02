@@ -2,7 +2,9 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
+use Firststep\Common\Blocks\EmptyBlock;
 use Firststep\Common\Blocks\RowBlock;
+use Firststep\Common\Builders\PanelBuilder;
 use Firststep\Common\Controllers\Controller;
 
 use Firststep\Common\Controllers\ManagerEntityController;
@@ -37,21 +39,23 @@ class EntityDashboard extends ManagerEntityController {
             $fieldRows[$panel->row][] = $panel;
         }
 
-        $centralcontainer = array();
+        $rowcontainer = array();
 
         foreach ($fieldRows as $row) {
             $rowBlock = new RowBlock;
-            foreach ($row as $panels) {
-                $rowBlock->addBlock($panels);
+            foreach ($row as $panel) {
+                $rowBlock->addBlock( PanelBuilder::getPanel($panel) );
             }
-            $centralcontainer[] = $rowBlock;
+            $rowcontainer[] = $rowBlock;
         }
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = array( $centralcontainer );
+        $this->centralcontainer = ( isset($rowcontainer[0]) ? $rowcontainer[0] : array() );
+        $this->secondcentralcontainer = ( isset($rowcontainer[1]) ? $rowcontainer[1] : array() );
+        $this->thirdcentralcontainer = ( isset($rowcontainer[2]) ? $rowcontainer[2] : array() );
     }
 
     public function show_second_get_error_page() {

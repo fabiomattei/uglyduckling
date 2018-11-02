@@ -11,8 +11,19 @@ class EmptyBlock extends BaseBlock {
 	private $addToFoot;
 	private $subAddToHead;
 	private $subAddToFoot;
-	
-	public function setHtml( $html='' ) {
+
+    /**
+     * EmptyBlock constructor.
+     */
+    public function __construct() {
+        $this->html = '';
+        $this->addToHead = '';
+        $this->addToFoot = '';
+        $this->subAddToHead = '';
+        $this->subAddToFoot = '';
+    }
+
+    public function setHtml( $html='' ) {
 		$this->html = $html;
 	}
 	
