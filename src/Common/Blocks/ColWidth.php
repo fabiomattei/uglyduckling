@@ -15,5 +15,9 @@ class ColWidth extends BaseBlock {
 	public function get( $type, $width ) {
 		return $type.$width;
 	}
+
+	public static function getWidth($type, $width ) {
+        return $type.$width;
+    }
 	
 }
