@@ -99,6 +99,7 @@ class QueryExecuter {
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
                     }
+                    // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
                 }
             }

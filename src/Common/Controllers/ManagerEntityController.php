@@ -56,7 +56,7 @@ class ManagerEntityController extends Controller {
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_get_request() {
+    public function check_authorization_get_request(): bool {
         if(!isset($this->resource->allowedgroups)) return false;
         return in_array($this->sessionWrapper->getSessionGroup(), $this->resource->allowedgroups);
     }
@@ -93,7 +93,8 @@ class ManagerEntityController extends Controller {
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_post_request() {
+    public function check_authorization_post_request(): bool {
+        if(!isset($this->resource->allowedgroups)) return false;
         return in_array($this->sessionWrapper->getSessionGroup(), $this->resource->allowedgroups);
     }
 

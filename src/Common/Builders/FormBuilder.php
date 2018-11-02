@@ -9,43 +9,74 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\BaseForm;
+use Firststep\Common\Database\QueryExecuter;
 
 class FormBuilder {
 
-    private $formStructure;
-    private $entity;
+    private $queryExecuter;
+    private $queryBuilder;
+    private $resource;
+    private $router;
+    private $dbconnection;
+    private $parameters;
+    private $action;
 
     /**
-     * @param mixed $formStructure
+     * InfoBuilder constructor.
      */
-    public function setFormStructure($formStructure) {
-        $this->formStructure = $formStructure;
+    public function __construct() {
+        $this->queryExecuter = new QueryExecuter;
+        $this->queryBuilder = new QueryBuilder;
+    }
+
+    public function setRouter( $router ) {
+        $this->router = $router;
     }
 
     /**
-     * @param mixed $entity
-	 * the $entity variable contains all values for the form
+     * @param mixed $parameters
      */
-    public function setEntity($entity) {
-        $this->entity = $entity;
+    public function setParameters($parameters) {
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @param mixed $resource
+     */
+    public function setResource($resource) {
+        $this->resource = $resource;
+    }
+
+    /**
+     * @param mixed $dbconnection
+     */
+    public function setDbconnection($dbconnection) {
+        $this->dbconnection = $dbconnection;
     }
 
     /**
      * Set the complete URL for the form action
      * @param action $action
      */
-    public function setAction( $action ) {
+    public function setAction( string $action ) {
         $this->action = $action;
     }
 
     public function createForm() {
+        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+        if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
+
+        $result = $this->queryExecuter->executeQuery();
+        $entity = $result->fetch();
+
 		$formBlock = new BaseForm;
-		$formBlock->setTitle($this->formStructure->title);
-        $formBlock->setAction( $this->action );
-		$maxrows = $this->calculateMaxumumRowsNumber($this->formStructure->fields);
+		$formBlock->setTitle($this->resource->get->form->title ?? '');
+        $formBlock->setAction( $this->action ?? '');
 		$fieldRows = array();
 		
-		foreach ($this->formStructure->fields as $field) {
+		foreach ($this->resource->get->form->fields as $field) {
 			if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
 			$fieldRows[$field->row][] = $field;
 		}
@@ -54,7 +85,7 @@ class FormBuilder {
 			$formBlock->addRow();
 			foreach ($row as $field) {
 				$fieldname = $field->sqlfield;
-				$value = ($this->entity == null ? '' : ( isset($this->entity->{$fieldname}) ? $this->entity->{$fieldname} : '' ) );
+				$value = ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
                 if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value, $field->width);
                 }
@@ -71,20 +102,9 @@ class FormBuilder {
 			$formBlock->closeRow('row '.$row->row);
 		}
         $formBlock->addRow();
-        $formBlock->addSubmitButton( 'save', $this->formStructure->submitTitle );
+        $formBlock->addSubmitButton( 'save', $this->resource->get->form->submitTitle );
         $formBlock->closeRow('row save');
         return $formBlock;
     }
-	
-	/**
-	 * It checks all fields contained in the json description file and get the maximum row number
-	 */
-	public function calculateMaxumumRowsNumber() {
-		$max = 1;
-		foreach ($this->formStructure->fields as $field) {
-			if ( $field->row > $max ) $max = $field->row;
-		}
-		return $max;
-	}
 
 }

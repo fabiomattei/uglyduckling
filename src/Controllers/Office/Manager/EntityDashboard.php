@@ -38,7 +38,8 @@ class EntityDashboard extends ManagerEntityController {
         $this->panelBuilder->setDbconnection($this->dbconnection);
         $this->panelBuilder->setRouter($this->router);
         $this->panelBuilder->setJsonloader($this->jsonloader);
-        $this->panelBuilder->setParameters($this->internalGetParameters);
+        $this->panelBuilder->setParameters($this->getParameters);
+        $this->panelBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
         $fieldRows = array();
 

@@ -16,9 +16,11 @@ class PanelBuilder {
     private $parameters;
     private $router;
     private $dbconnection;
+    private $action;
     private $tableBuilder;
     private $chartjsBuilder;
     private $infoBuilder;
+    private $formBuilder;
 
     /**
      * PanelBuilder constructor.
@@ -28,6 +30,8 @@ class PanelBuilder {
         $this->tableBuilder = new TableBuilder;
         $this->chartjsBuilder = new ChartjsBuilder;
         $this->infoBuilder = new InfoBuilder;
+        $this->formBuilder = new FormBuilder;
+        $this->action = '';
     }
 
 
@@ -59,6 +63,13 @@ class PanelBuilder {
         $this->dbconnection = $dbconnection;
     }
 
+    /**
+     * @param mixed $action
+     */
+    public function setAction(string $action) {
+        $this->action = $action;
+    }
+
     function getPanel($panel) {
         $panelBlock = new CardBlock;
         $panelBlock->setTitle($panel->title ?? '');
@@ -88,6 +99,15 @@ class PanelBuilder {
             $this->infoBuilder->setParameters( $this->parameters );
             $this->infoBuilder->setDbconnection( $this->dbconnection );
             $panelBlock->setBlock($this->infoBuilder->createInfo());
+        }
+
+        if ($resource->metadata->type == 'form') {
+            $this->formBuilder->setRouter( $this->router );
+            $this->formBuilder->setResource( $resource );
+            $this->formBuilder->setParameters( $this->parameters );
+            $this->formBuilder->setDbconnection( $this->dbconnection );
+            $this->formBuilder->setAction( $this->action );
+            $panelBlock->setBlock($this->formBuilder->createForm());
         }
 
         return $panelBlock;

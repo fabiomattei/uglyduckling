@@ -2,12 +2,12 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockFormParser;
-use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Builders\FormBuilder;
 use Firststep\Common\Builders\QueryBuilder;
+use Firststep\Common\Controllers\ManagerEntityController;
+use Firststep\Common\Database\QueryExecuter;
+use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
+use Firststep\Common\Router\Router;
 use Firststep\Common\Builders\MenuBuilder;
 
 /**
@@ -17,45 +17,37 @@ use Firststep\Common\Builders\MenuBuilder;
  */
 class EntityForm extends ManagerEntityController {
 
+    private $menubuilder;
+    private $formBuilder;
     private $queryExecuter;
     private $queryBuilder;
-    private $jsonBlockFormParser;
-    private $menubuilder;
 
     function __construct() {
-		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
-		$this->jsonBlockFormParser = new JsonBlockFormParser;
+		$this->formBuilder = new FormBuilder;
 		$this->menubuilder = new MenuBuilder;
+        $this->queryExecuter = new QueryExecuter;
+        $this->queryBuilder = new QueryBuilder;
     }
 
     /**
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-	    $this->queryExecuter->setGetParameters( $this->internalGetParameters );
-
-		$result = $this->queryExecuter->executeQuery();
-		$entity = $result->fetch();
-
-		$formBlock = $this->jsonBlockFormParser->parse( 
-			$this->resource,
-			$entity,
-			$this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] )
-		);
-		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office form';
 
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
-		
+
+        $this->formBuilder->setRouter( $this->router );
+        $this->formBuilder->setResource( $this->resource );
+        $this->formBuilder->setParameters( $this->internalGetParameters );
+        $this->formBuilder->setDbconnection( $this->dbconnection );
+        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
+
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
-		$this->centralcontainer = array( $formBlock );
+		$this->centralcontainer = array( $this->formBuilder->createForm() );
 	}
 	
 	public function postRequest() {
