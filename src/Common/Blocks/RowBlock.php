@@ -22,6 +22,10 @@ class RowBlock extends BaseBlock {
         $this->blocks = array();
     }
 
+    function addBlock($block) {
+        $this->blocks[] = $block;
+    }
+
     function show(): string {
         return parent::show();
     }

@@ -2,6 +2,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
+use Firststep\Common\Blocks\RowBlock;
 use Firststep\Common\Controllers\Controller;
 
 use Firststep\Common\Controllers\ManagerEntityController;
@@ -29,22 +30,28 @@ class EntityDashboard extends ManagerEntityController {
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setRouter( $this->router );
 
-        //$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        //$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-        //$this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        //$this->queryExecuter->setGetParameters( $this->internalGetParameters );
+        $fieldRows = array();
 
-        //$result = $this->queryExecuter->executeQuery();
-        //$entity = $result->fetch();
+        foreach ($this->resource->panels as $panel) {
+            if( !array_key_exists($panel->row, $fieldRows) ) $fieldRows[$panel->row] = array();
+            $fieldRows[$panel->row][] = $panel;
+        }
 
-        //$this->infoBuilder->setFormStructure( $this->resource->get->info );
-        //$this->infoBuilder->setEntity( $entity );
+        $centralcontainer = array();
+
+        foreach ($fieldRows as $row) {
+            $rowBlock = new RowBlock;
+            foreach ($row as $panels) {
+                $rowBlock->addBlock($panels);
+            }
+            $centralcontainer[] = $rowBlock;
+        }
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = array();
+        $this->centralcontainer = array( $centralcontainer );
     }
 
     public function show_second_get_error_page() {
