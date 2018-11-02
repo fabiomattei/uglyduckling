@@ -63,7 +63,7 @@ class InfoBuilder {
         $entity = $result->fetch();
 
 		$formBlock = new BaseInfo;
-		$formBlock->setTitle($this->resource->get->info->title);
+		$formBlock->setTitle($this->resource->get->info->title ?? '');
 		$fieldRows = array();
 		
 		foreach ($this->resource->get->info->fields as $field) {

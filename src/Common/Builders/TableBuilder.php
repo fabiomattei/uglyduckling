@@ -59,7 +59,7 @@ class TableBuilder {
         $entities = $this->queryExecuter->executeQuery();
 
 		$tableBlock = new StaticTable;
-		$tableBlock->setTitle($this->resource->get->table->title);
+		$tableBlock->setTitle($this->resource->get->table->title ?? '');
 		
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
