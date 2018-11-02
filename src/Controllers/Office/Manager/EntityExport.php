@@ -2,6 +2,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
+use Firststep\Common\Builders\ExcelBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
@@ -21,12 +22,14 @@ class EntityExport extends ManagerEntityController {
     private $formBuilder;
     private $pdfBuilder;
     private $menubuilder;
+    private $excelBuilder;
 
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
 		$this->pdfBuilder = new PDFBuilder;
+        $this->excelBuilder = new ExcelBuilder;
 		$this->menubuilder = new MenuBuilder;
     }
 	
@@ -49,15 +52,30 @@ class EntityExport extends ManagerEntityController {
 	}
 
     public function postRequest() {
-        $this->pdfBuilder->setResource( $this->resource );
-        $this->pdfBuilder->setParameters( $this->postParameters );
-        $this->pdfBuilder->setDbconnection( $this->dbconnection );
+        $this->templateFile = $this->setup->getEmptyTemplateFileName();
+	    if ($this->resource->documenttype == 'pdf' ) {
+            $this->pdfBuilder->setResource( $this->resource );
+            $this->pdfBuilder->setParameters( $this->postParameters );
+            $this->pdfBuilder->setDbconnection( $this->dbconnection );
 
-        $mpdf = new \Mpdf\Mpdf();
-        $mpdf->WriteHTML($this->pdfBuilder->createTable());
-        $mpdf->Output();
-        //$mpdf->Output( 'activitites.pdf', 'D');
-        exit;
+            $mpdf = new \Mpdf\Mpdf();
+            $mpdf->WriteHTML($this->pdfBuilder->createTable());
+            $mpdf->Output();
+            //$mpdf->Output( 'activitites.pdf', 'D');
+            exit;
+        } else {
+            $this->excelBuilder->setResource( $this->resource );
+            $this->excelBuilder->setParameters( $this->postParameters );
+            $this->excelBuilder->setDbconnection( $this->dbconnection );
+
+            // Redirect output to a client’s web browser (Excel5)
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="shifthandover.xls"');
+
+	        $writer = $this->excelBuilder->getWriter();
+            // $writer->save('hello world.xlsx');
+            $writer->save("php://output");
+        }
 	}
 
 }

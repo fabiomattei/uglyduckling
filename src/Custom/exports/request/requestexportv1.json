@@ -1,6 +1,7 @@
 { 
   "name": "requestexportv1",
   "metadata": { "type":"export", "version": "1" },
+  "documenttype":"xls",
   "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "get": {
     "form": {

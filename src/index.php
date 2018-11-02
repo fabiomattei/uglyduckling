@@ -11,6 +11,7 @@ $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
 $setup->setPrivateTemplateFileName('application');
 $setup->setPublicTemplateFileName('public');
+$setup->setEmptyTemplateFileName('empty');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
 $setup->setJsonPath('./Custom/index.json');

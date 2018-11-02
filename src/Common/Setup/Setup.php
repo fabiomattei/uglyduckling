@@ -7,6 +7,7 @@ class Setup {
 	public $appNameForPageTitle;
 	public $privateTemplateFileName;
 	public $publicTemplateFileName;
+	public $emptyTemplateFileName;
 	public $basePath;
     public $pathtoapp;
 	public $jsonPath;
@@ -62,6 +63,20 @@ class Setup {
      */
     public function setPublicTemplateFileName(string $publicTemplateFileName) {
         $this->publicTemplateFileName = $publicTemplateFileName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmptyTemplateFileName(): string {
+        return $this->emptyTemplateFileName;
+    }
+
+    /**
+     * @param string $privateTemplateFileName
+     */
+    public function setEmptyTemplateFileName(string $emptyTemplateFileName) {
+        $this->emptyTemplateFileName = $emptyTemplateFileName;
     }
 
     /**
