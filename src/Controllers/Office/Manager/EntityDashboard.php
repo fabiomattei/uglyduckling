@@ -2,11 +2,8 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Blocks\EmptyBlock;
 use Firststep\Common\Blocks\RowBlock;
 use Firststep\Common\Builders\PanelBuilder;
-use Firststep\Common\Controllers\Controller;
-
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
@@ -14,7 +11,9 @@ use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\MenuBuilder;
 
 /**
- * 
+ * User: Fabio Mattei
+ * Date: 31/10/2018
+ * Time: 08:10
  */
 class EntityDashboard extends ManagerEntityController {
 
@@ -65,6 +64,22 @@ class EntityDashboard extends ManagerEntityController {
         $this->centralcontainer = ( isset($rowcontainer[0]) ? $rowcontainer[0] : array() );
         $this->secondcentralcontainer = ( isset($rowcontainer[1]) ? $rowcontainer[1] : array() );
         $this->thirdcentralcontainer = ( isset($rowcontainer[2]) ? $rowcontainer[2] : array() );
+    }
+
+    public function postRequest() {
+        $this->postresource = $this->jsonloader->loadResource( $this->getParameters['postres'] );
+
+        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+
+        foreach ($this->postresource->post->logics as $logic) {
+            $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+            $this->queryExecuter->setQueryStructure( $logic );
+            $this->queryExecuter->setPostParameters( $this->postParameters );
+
+            $this->queryExecuter->executeQuery();
+        }
+
+        $this->redirectToPreviousPage();
     }
 
     public function show_second_get_error_page() {

@@ -106,7 +106,7 @@ class PanelBuilder {
             $this->formBuilder->setResource( $resource );
             $this->formBuilder->setParameters( $this->parameters );
             $this->formBuilder->setDbconnection( $this->dbconnection );
-            $this->formBuilder->setAction( $this->action );
+            $this->formBuilder->setAction( $this->action .'&postres='.$resource->name );
             $panelBlock->setBlock($this->formBuilder->createForm());
         }
 
