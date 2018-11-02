@@ -1,7 +1,7 @@
 <?php
+
 /**
- * Created by IntelliJ IDEA.
- * User: fabio
+ * Created by Fabio Mattei
  * Date: 01/11/18
  * Time: 10.15
  */
@@ -9,37 +9,62 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\BaseChart;
+use Firststep\Common\Database\QueryExecuter;
 
 class ChartjsBuilder {
 
-    private $chartStructure;
-    private $entities;
-    private $chartdataglue;
+    private $queryExecuter;
+    private $queryBuilder;
+    private $resource;
+    private $router;
+    private $dbconnection;
+    private $parameters;
 
     /**
-     * @param mixed $chartStructure
+     * ChartjsBuilder constructor.
      */
-    public function setChartStructure($chartStructure) {
-        $this->chartStructure = $chartStructure;
+    public function __construct() {
+        $this->queryExecuter = new QueryExecuter;
+        $this->queryBuilder = new QueryBuilder;
+    }
+
+
+    public function setRouter( $router ) {
+        $this->router = $router;
     }
 
     /**
-     * @param mixed $entities
-     * the $entities variable contains all values for the table
+     * @param mixed $parameters
      */
-    public function setEntities($entities) {
-        $this->entities = $entities;
+    public function setParameters($parameters) {
+        $this->parameters = $parameters;
     }
 
-    public function setChartDataGlue($chartdataglue) {
-        $this->chartdataglue = $chartdataglue;
+    /**
+     * @param mixed $resource
+     */
+    public function setResource($resource) {
+        $this->resource = $resource;
+    }
+
+    /**
+     * @param mixed $dbconnection
+     */
+    public function setDbconnection($dbconnection) {
+        $this->dbconnection = $dbconnection;
     }
 
     public function createChart() {
+        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+        if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+        $entities = $this->queryExecuter->executeQuery();
+
         $chartBlock = new BaseChart;
-        $chartBlock->setStructure($this->chartStructure);
-        $chartBlock->setChartDataGlue($this->chartdataglue);
-        $chartBlock->setData($this->entities);
+        $chartBlock->setStructure($this->resource->get->chart);
+        $chartBlock->setChartDataGlue($this->resource->get->chartdataglue);
+        $chartBlock->setData($entities);
         return $chartBlock;
     }
 

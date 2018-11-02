@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by Fabio
+ * Created by Fabio Mattei
  * Date: 01/11/18
  * Time: 9.34
  */
@@ -12,20 +12,14 @@ use Firststep\Common\Builders\ChartjsBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\MenuBuilder;
 
 class EntityChart extends ManagerEntityController {
 
-    private $queryExecuter;
-    private $queryBuilder;
     private $chartjsBuilder;
     private $menubuilder;
 
     function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
         $this->chartjsBuilder = new ChartjsBuilder;
         $this->menubuilder = new MenuBuilder;
     }
@@ -38,16 +32,10 @@ class EntityChart extends ManagerEntityController {
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setRouter( $this->router );
 
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        // $this->queryExecuter->setGetParameters( $this->internalGetParameters ); TODO check, if there are no parameters it gets null instead of an array
-
-        $result = $this->queryExecuter->executeQuery();
-
-        $this->chartjsBuilder->setChartStructure( $this->resource->get->chart );
-        $this->chartjsBuilder->setEntities( $result );
-        $this->chartjsBuilder->setChartDataGlue( $this->resource->get->chartdataglue );
+        $this->chartjsBuilder->setRouter( $this->router );
+        $this->chartjsBuilder->setResource( $this->resource );
+        $this->chartjsBuilder->setParameters( $this->internalGetParameters );
+        $this->chartjsBuilder->setDbconnection( $this->dbconnection );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office chart';
 

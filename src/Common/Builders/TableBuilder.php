@@ -13,12 +13,12 @@ use Firststep\Common\Database\QueryExecuter;
 
 class TableBuilder {
 
-    private $parameters;
     private $queryExecuter;
     private $queryBuilder;
     private $resource;
     private $router;
     private $dbconnection;
+    private $parameters;
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
