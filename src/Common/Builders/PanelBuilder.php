@@ -9,6 +9,7 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\CardBlock;
+use Firststep\Common\Router\Router;
 
 class PanelBuilder {
 
@@ -107,6 +108,15 @@ class PanelBuilder {
             $this->formBuilder->setParameters( $this->parameters );
             $this->formBuilder->setDbconnection( $this->dbconnection );
             $this->formBuilder->setAction( $this->action .'&postres='.$resource->name );
+            $panelBlock->setBlock($this->formBuilder->createForm());
+        }
+
+        if ($resource->metadata->type == 'search') {
+            $this->formBuilder->setRouter( $this->router );
+            $this->formBuilder->setResource( $resource );
+            $this->formBuilder->setParameters( $this->parameters );
+            $this->formBuilder->setDbconnection( $this->dbconnection );
+            $this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$resource->name ) );
             $panelBlock->setBlock($this->formBuilder->createForm());
         }
 

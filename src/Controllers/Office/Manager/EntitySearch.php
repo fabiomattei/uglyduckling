@@ -36,25 +36,18 @@ class EntitySearch extends ManagerEntityController {
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-	    if ( isset( $this->internalGetParameters ) ) {
-            $this->queryExecuter->setGetParameters( $this->internalGetParameters );
-        }
 	    $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
-		$result = $this->queryExecuter->executeQuery();
+        $this->formBuilder->setResource( $this->resource );
+        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
-		$this->formBuilder->setFormStructure( $this->resource->get->form );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
-
-		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->get->table );
-		$this->tableBuilder->setEntities( $result );
+        $this->tableBuilder->setRouter( $this->router );
+        $this->tableBuilder->setResource( $this->resource );
+        $this->tableBuilder->setParameters( $this->internalGetParameters );
+        $this->tableBuilder->setDbconnection( $this->dbconnection );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
 	
@@ -65,22 +58,24 @@ class EntitySearch extends ManagerEntityController {
 	}
 	
 	public function postRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->post->query );
-	    $this->queryExecuter->setPostParameters( $this->postParameters );
-		$result = $this->queryExecuter->executeQuery();
+		//$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+		//$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+	    //$this->queryExecuter->setQueryStructure( $this->resource->post->query );
+	    //$this->queryExecuter->setPostParameters( $this->postParameters );
+		//$result = $this->queryExecuter->executeQuery();
 
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
-		$this->formBuilder->setFormStructure( $this->resource->post->form );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ) );
+        $this->formBuilder->setResource( $this->resource );
+        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
-		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->post->table );
-		$this->tableBuilder->setEntities( $result );
+        $this->tableBuilder->setRouter( $this->router );
+        $this->tableBuilder->setResource( $this->resource );
+        $this->tableBuilder->setParameters( $this->postParameters );
+        $this->tableBuilder->setDbconnection( $this->dbconnection );
+        $this->tableBuilder->setMethod(TableBuilder::POST_METHOD);
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
 	
@@ -89,9 +84,5 @@ class EntitySearch extends ManagerEntityController {
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
 	}
-
-    public function show_second_get_error_page() {
-        throw new ErrorPageException('Error page exception function show_get_error_page()');
-    }
 
 }

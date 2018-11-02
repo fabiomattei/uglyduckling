@@ -1,7 +1,7 @@
 <?php
 
 /**
- * User: fabio
+ * User: Fabio Mattei
  * Date: 13/07/2018
  * Time: 20:39
  */
@@ -13,17 +13,29 @@ use Firststep\Common\Database\QueryExecuter;
 
 class TableBuilder {
 
+    const GET_METHOD = 'GET';
+    const POST_METHOD = 'POST';
     private $queryExecuter;
     private $queryBuilder;
     private $resource;
     private $router;
     private $dbconnection;
     private $parameters;
+    private $method;
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
         $this->query = '';
+        $this->method = self::GET_METHOD;
+    }
+
+    /**
+     * @param string $method
+     * refers to http method: GET or POST
+     */
+    public function setMethod(string $method) {
+        $this->method = $method;
     }
 
     public function setRouter( $router ) {
@@ -54,16 +66,29 @@ class TableBuilder {
     public function createTable() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+
+
+        if ($this->method === self::GET_METHOD) {
+            $query = $this->resource->get->query;
+            $table = $this->resource->get->table;
+            if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+        } else {
+            $query = $this->resource->post->query;
+            $table = $this->resource->post->table;
+            if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
+        }
+
+        $this->queryExecuter->setQueryStructure( $query );
+
+
         $entities = $this->queryExecuter->executeQuery();
 
 		$tableBlock = new StaticTable;
-		$tableBlock->setTitle($this->resource->get->table->title ?? '');
+		$tableBlock->setTitle($table->title ?? '');
 		
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
-		foreach ($this->resource->get->table->fields as $field) {
+		foreach ($table->fields as $field) {
 			$tableBlock->addHeadLineColumn($field->headline);
 		}
 		$tableBlock->addHeadLineColumn(''); // adding one more for actions
@@ -73,11 +98,11 @@ class TableBuilder {
 		$tableBlock->addTBody();
 		foreach ($entities as $entity) {
 			$tableBlock->addRow();
-			foreach ($this->resource->get->table->fields as $field) {
+			foreach ($table->fields as $field) {
 				$tableBlock->addColumn($entity->{$field->sqlfield});
 			}
 			$links = '';
-			foreach ( $this->resource->get->table->actions as $action ) {
+			foreach ( $table->actions as $action ) {
 				$links .= LinkBuilder::get( $this->router, $action->lable, $action->action, $action->resource, $action->parameters, $entity );
 			}
 			$tableBlock->addUnfilteredColumn( $links );

@@ -65,7 +65,7 @@ class FormBuilder {
     public function createForm() {
         // If there is a query I look for data to fill the form,
         // if there is not query I do not
-        if (isset($this->resource->get->query)) {
+        if ( isset($this->resource->get->query) AND isset($this->dbconnection) ) {
             $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
             $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
             $this->queryExecuter->setQueryStructure( $this->resource->get->query );

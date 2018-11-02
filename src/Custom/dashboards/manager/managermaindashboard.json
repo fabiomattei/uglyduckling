@@ -7,6 +7,7 @@
   	{ "title":"My chart", "resource":"requestchartv1", "row":"1", "width":"6" },
   	{ "title":"My table", "resource":"smallrequesttablev1", "row":"1", "width":"6" },
     { "title":"Last request inserted", "resource":"lastinforequestv1", "row":"2", "width":"6" },
-    { "title":"New request", "resource":"newformrequestv1", "row":"2", "width":"6" }
+    { "title":"New request", "resource":"newformrequestv1", "row":"2", "width":"6" },
+    { "title":"Search a report", "resource":"searchreportv1", "row":"2", "width":"6" }
   ]
 }
