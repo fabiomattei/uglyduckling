@@ -63,7 +63,6 @@ use Firststep\Controllers\Admin\User\UserView;
 
 class Router {
 
-	const ROUTE_OFFICE_GATE                 = 'officegate';
     const ROUTE_OFFICE_ENTITY_CHART         = 'officeentitychart';
 	const ROUTE_OFFICE_ENTITY_TABLE         = 'officeentitytable';
 	const ROUTE_OFFICE_ENTITY_FORM          = 'officeentityform';
@@ -128,7 +127,6 @@ class Router {
 
     function getController( string $action ) {
         switch ( $action ) {
-			case self::ROUTE_OFFICE_GATE:                 $controller = new Gate; break;
             case self::ROUTE_OFFICE_ENTITY_CHART:         $controller = new EntityChart; break;
 			case self::ROUTE_OFFICE_ENTITY_TABLE:         $controller = new EntityTable; break;
 			case self::ROUTE_OFFICE_ENTITY_FORM:          $controller = new EntityForm; break;

@@ -36,7 +36,7 @@
 	  <div class="container-fluid">
 	        <div class="row">
 	          <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-	  			<?PHP 
+	  			<?php
 	  			if (isset($this->leftcontainer)) {
 	  				if (is_array($this->leftcontainer)) {
 	  					foreach ($this->leftcontainer as $bl) {
