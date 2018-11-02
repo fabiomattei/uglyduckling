@@ -142,4 +142,9 @@ class ManagerEntityController extends Controller {
             $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
+
+    public function show_second_get_error_page() {
+        throw new \Exception('Mismatch with get parameters');
+    }
+
 }

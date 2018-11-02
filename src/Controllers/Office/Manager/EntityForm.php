@@ -64,8 +64,4 @@ class EntityForm extends ManagerEntityController {
 		$this->redirectToSecondPreviousPage();
 	}
 
-    public function show_second_get_error_page() {
-        throw new ErrorPageException('Error page exception function show_get_error_page()');
-    }
-
 }

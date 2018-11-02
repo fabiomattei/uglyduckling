@@ -63,13 +63,19 @@ class FormBuilder {
     }
 
     public function createForm() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
+        // If there is a query I look for data to fill the form,
+        // if there is not query I do not
+        if (isset($this->resource->get->query)) {
+            $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+            $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+            $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+            if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
 
-        $result = $this->queryExecuter->executeQuery();
-        $entity = $result->fetch();
+            $result = $this->queryExecuter->executeQuery();
+            $entity = $result->fetch();
+        } else {
+            $entity = new \stdClass();
+        }
 
 		$formBlock = new BaseForm;
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
