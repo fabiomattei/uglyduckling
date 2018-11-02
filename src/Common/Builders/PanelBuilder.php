@@ -18,6 +18,7 @@ class PanelBuilder {
     private $dbconnection;
     private $tableBuilder;
     private $chartjsBuilder;
+    private $infoBuilder;
 
     /**
      * PanelBuilder constructor.
@@ -26,6 +27,7 @@ class PanelBuilder {
     public function __construct() {
         $this->tableBuilder = new TableBuilder;
         $this->chartjsBuilder = new ChartjsBuilder;
+        $this->infoBuilder = new InfoBuilder;
     }
 
 
@@ -78,6 +80,14 @@ class PanelBuilder {
             $this->chartjsBuilder->setParameters( $this->parameters );
             $this->chartjsBuilder->setDbconnection( $this->dbconnection );
             $panelBlock->setBlock($this->chartjsBuilder->createChart());
+        }
+
+        if ($resource->metadata->type == 'info') {
+            $this->infoBuilder->setRouter( $this->router );
+            $this->infoBuilder->setResource( $resource );
+            $this->infoBuilder->setParameters( $this->parameters );
+            $this->infoBuilder->setDbconnection( $this->dbconnection );
+            $panelBlock->setBlock($this->infoBuilder->createInfo());
         }
 
         return $panelBlock;

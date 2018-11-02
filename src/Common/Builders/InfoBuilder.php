@@ -9,34 +9,64 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Database\QueryExecuter;
 
 class InfoBuilder {
 
-    private $infoStructure;
-    private $entity;
+    private $queryExecuter;
+    private $queryBuilder;
+    private $resource;
+    private $router;
+    private $dbconnection;
+    private $parameters;
 
     /**
-     * @param mixed $infoStructure
+     * InfoBuilder constructor.
      */
-    public function setFormStructure($infoStructure) {
-        $this->infoStructure = $infoStructure;
+    public function __construct() {
+        $this->queryExecuter = new QueryExecuter;
+        $this->queryBuilder = new QueryBuilder;
+    }
+
+    public function setRouter( $router ) {
+        $this->router = $router;
     }
 
     /**
-     * @param mixed $entity
-	 * the $entity variable contains all values for the form
+     * @param mixed $parameters
      */
-    public function setEntity($entity) {
-        $this->entity = $entity;
+    public function setParameters($parameters) {
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @param mixed $resource
+     */
+    public function setResource($resource) {
+        $this->resource = $resource;
+    }
+
+    /**
+     * @param mixed $dbconnection
+     */
+    public function setDbconnection($dbconnection) {
+        $this->dbconnection = $dbconnection;
     }
 
     public function createInfo() {
+        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+        if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+
+        $result = $this->queryExecuter->executeQuery();
+        $entity = $result->fetch();
+
 		$formBlock = new BaseInfo;
-		$formBlock->setTitle($this->infoStructure->title);
-		$maxrows = $this->calculateMaxumumRowsNumber($this->formStructure->fields);
+		$formBlock->setTitle($this->resource->get->info->title);
 		$fieldRows = array();
 		
-		foreach ($this->infoStructure->fields as $field) {
+		foreach ($this->resource->get->info->fields as $field) {
 			if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
 			$fieldRows[$field->row][] = $field;
 		}
@@ -45,7 +75,7 @@ class InfoBuilder {
 			$formBlock->addRow();
 			foreach ($row as $field) {
 				$fieldname = $field->value;
-				$value = ($this->entity == null ? '' : ( isset($this->entity->$fieldname) ? $this->entity->$fieldname : '' ) );
+				$value = ($entity == null ? '' : ( isset($entity->$fieldname) ? $entity->$fieldname : '' ) );
                 if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->label, $value, $field->width);
                 }
@@ -60,16 +90,5 @@ class InfoBuilder {
 		}
         return $formBlock;
     }
-	
-	/**
-	 * It checks all fields contained in the json description file and get the maximum row number
-	 */
-	public function calculateMaxumumRowsNumber() {
-		$max = 1;
-		foreach ($this->infoStructure->fields as $field) {
-			if ( $field->row > $max ) $max = $field->row;
-		}
-		return $max;
-	}
 
 }
