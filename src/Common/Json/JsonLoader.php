@@ -61,7 +61,7 @@ class JsonLoader {
 				throw new \Exception('[JsonLoader] :: File associated to resource does not exists!!!');
 			}
 		} else {
-			throw new \Exception('[JsonLoader] :: Resource undefined in array index!!!');
+			throw new \Exception('[JsonLoader] :: Resource '.$key.' undefined in array index!!!');
 		}
 	}
 	

@@ -2,6 +2,7 @@
   "name": "index",
   "metadata": { "type":"index", "version": "1" },
   "scripts": [
-      { "path":"./Custom/tables/requesttable/requesttablev1.json", "type":"table", "name":"requesttablev1" }
+      { "path":"./Custom/tables/requesttable/requesttablev1.json", "type":"table", "name":"requesttablev1" },
+      { "path":"./Custom/tables/requesttable/smallrequesttablev1.json", "type":"table", "name":"smallrequesttablev1" }
   ]
  }

@@ -18,10 +18,13 @@ use Firststep\Common\Builders\MenuBuilder;
  */
 class EntityDashboard extends ManagerEntityController {
 
+    private $panelBuilder;
+
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
+        $this->panelBuilder = new PanelBuilder;
     }
 
     /**
@@ -31,6 +34,11 @@ class EntityDashboard extends ManagerEntityController {
         $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setRouter( $this->router );
+
+        $this->panelBuilder->setDbconnection($this->dbconnection);
+        $this->panelBuilder->setRouter($this->router);
+        $this->panelBuilder->setJsonloader($this->jsonloader);
+        $this->panelBuilder->setParameters($this->internalGetParameters);
 
         $fieldRows = array();
 
@@ -44,7 +52,7 @@ class EntityDashboard extends ManagerEntityController {
         foreach ($fieldRows as $row) {
             $rowBlock = new RowBlock;
             foreach ($row as $panel) {
-                $rowBlock->addBlock( PanelBuilder::getPanel($panel) );
+                $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
             }
             $rowcontainer[] = $rowBlock;
         }
