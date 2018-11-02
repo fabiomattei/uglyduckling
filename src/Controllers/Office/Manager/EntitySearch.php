@@ -5,8 +5,6 @@ namespace Firststep\Controllers\Office\Manager;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\FormBuilder;
 use Firststep\Common\Builders\TableBuilder;
 use Firststep\Common\Builders\MenuBuilder;
@@ -18,18 +16,14 @@ use Firststep\Common\Builders\MenuBuilder;
  */
 class EntitySearch extends ManagerEntityController {
 
-    private $queryExecuter;
-    private $queryBuilder;
     private $formBuilder;
     private $tableBuilder;
     private $menubuilder;
 
     function __construct() {
-		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
 		$this->tableBuilder = new TableBuilder;
-		$this->menubuilder = new MenuBuilder();
+		$this->menubuilder = new MenuBuilder;
     }
 
     /**
@@ -58,12 +52,6 @@ class EntitySearch extends ManagerEntityController {
 	}
 	
 	public function postRequest() {
-		//$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		//$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    //$this->queryExecuter->setQueryStructure( $this->resource->post->query );
-	    //$this->queryExecuter->setPostParameters( $this->postParameters );
-		//$result = $this->queryExecuter->executeQuery();
-
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );

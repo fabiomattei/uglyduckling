@@ -18,6 +18,10 @@ use Firststep\Common\Builders\MenuBuilder;
  */
 class EntityExport extends ManagerEntityController {
 
+    private $formBuilder;
+    private $tableBuilder;
+    private $menubuilder;
+
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
@@ -30,21 +34,8 @@ class EntityExport extends ManagerEntityController {
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->query );
-	    $this->queryExecuter->setGetParameters( $this->internalGetParameters );
-
-		$result = $this->queryExecuter->executeQuery();
-		$entity = $result->fetch();
-
-		$this->formBuilder->setFormStructure( $this->resource->form );
-		$this->formBuilder->setEntity( $entity );
-		$this->formBuilder->setAction( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ) );
-
-		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->table );
-		$this->tableBuilder->setEntities( array() );
+        $this->formBuilder->setResource( $this->resource );
+        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
 
@@ -55,7 +46,6 @@ class EntityExport extends ManagerEntityController {
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
-		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
 	}
 
     public function postRequest() {
@@ -82,9 +72,5 @@ class EntityExport extends ManagerEntityController {
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
 	}
-
-    public function show_second_get_error_page() {
-        throw new ErrorPageException('Error page exception function show_get_error_page()');
-    }
 
 }
