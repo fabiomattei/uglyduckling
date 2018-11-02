@@ -8,7 +8,7 @@ use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\FormBuilder;
-use Firststep\Common\Builders\TableBuilder;
+use Firststep\Common\Builders\PDFBuilder;
 use Firststep\Common\Builders\MenuBuilder;
 
 /**
@@ -19,14 +19,14 @@ use Firststep\Common\Builders\MenuBuilder;
 class EntityExport extends ManagerEntityController {
 
     private $formBuilder;
-    private $tableBuilder;
+    private $pdfBuilder;
     private $menubuilder;
 
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormBuilder;
-		$this->tableBuilder = new TableBuilder;
+		$this->pdfBuilder = new PDFBuilder;
 		$this->menubuilder = new MenuBuilder;
     }
 	
@@ -49,28 +49,15 @@ class EntityExport extends ManagerEntityController {
 	}
 
     public function postRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->post->query );
-	    $this->queryExecuter->setPostParameters( $this->postParameters );
-		$this->queryExecuter->executeQuery();
+        $this->pdfBuilder->setResource( $this->resource );
+        $this->pdfBuilder->setParameters( $this->postParameters );
+        $this->pdfBuilder->setDbconnection( $this->dbconnection );
 
-		$result = $this->queryExecuter->executeQuery();
-
-		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->table );
-		$this->tableBuilder->setEntities( $result );
-		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
-
-		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
-	
-		$this->menucontainer    = array($this->menubuilder->createMenu() );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
-		$this->centralcontainer = array( $this->formBuilder->createForm() );
-		$this->secondcentralcontainer = array( $this->tableBuilder->createTable() );
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($this->pdfBuilder->createTable());
+        $mpdf->Output();
+        //$mpdf->Output( 'activitites.pdf', 'D');
+        exit;
 	}
 
 }
