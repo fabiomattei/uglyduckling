@@ -92,7 +92,17 @@ class FormBuilder {
 			foreach ($row as $field) {
 				$fieldname = $field->sqlfield;
 				$value = ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
-                if ($field->type === 'textarea') {
+                if ($field->type === 'text') {
+                    $formBlock->addTextField($field->name, $field->label, $field->placeholder, $value, $field->width);
+                }
+                if ($field->type === 'dropdown') {
+                    $options = array();
+                    foreach ($field->options as $op) {
+                        $options[$op->value] = $op->label;
+                    }
+                    $formBlock->addDropdownField($field->name, $field->label, $options, $value, $field->width);
+                }
+				if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value, $field->width);
                 }
                 if ($field->type === 'currency') {
