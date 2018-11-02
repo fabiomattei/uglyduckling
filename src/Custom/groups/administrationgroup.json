@@ -2,6 +2,8 @@
   "name": "administrationgroup",
   "metadata": { "type":"group", "version": "1" },
   "home": { "label":"My app", "action":"#" },
+  "defaultdashboard": "managermaindashboard",
+  "home": { "label":"My app", "action":"#" },
   "menu": [
     { "label":"Home", "action":"entityinfo", "resource":"inforequestv1" },
     {

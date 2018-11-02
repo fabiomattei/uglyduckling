@@ -30,8 +30,8 @@ $router = new Firststep\Common\Router\Router( $setup->getBasePath() );
 
 $controller = $router->getController( $request->getAction() );
 
-$yamlLoader = new Firststep\Common\Json\JsonLoader();
-$yamlLoader->setIndexPath($setup->getJsonPath());
+$jsonloader = new Firststep\Common\Json\JsonLoader();
+$jsonloader->setIndexPath($setup->getJsonPath());
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
@@ -44,7 +44,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		new Firststep\Common\SecurityCheckers\PrivateSecurityChecker(),
 		$dbconnection,
     	new Firststep\Common\Redirectors\URLRedirector(),
-		$yamlLoader,
+		$jsonloader,
     	new Firststep\Common\Loggers\EchoLogger(),
     	new Firststep\Common\Blocks\BaseMessages()
 	);
@@ -59,7 +59,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		new Firststep\Common\SecurityCheckers\PublicSecurityChecker(),
 		$dbconnection,
     	new Firststep\Common\Redirectors\URLRedirector(),
-		$yamlLoader,
+		$jsonloader,
     	new Firststep\Common\Loggers\EchoLogger(),
     	new Firststep\Common\Blocks\BaseMessages()
 	);
