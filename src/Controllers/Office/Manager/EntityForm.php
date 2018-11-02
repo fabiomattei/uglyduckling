@@ -46,7 +46,7 @@ class EntityForm extends ManagerEntityController {
         $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
 
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->leftcontainer    = array();
 		$this->centralcontainer = array( $this->formBuilder->createForm() );
 	}
 	

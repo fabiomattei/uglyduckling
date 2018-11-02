@@ -41,7 +41,7 @@ class EntityTable extends ManagerEntityController {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->leftcontainer    = array();
 		$this->centralcontainer = array( $this->tableBuilder->createTable() );
 	}
 
