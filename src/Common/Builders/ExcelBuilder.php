@@ -54,33 +54,32 @@ class ExcelBuilder {
 
         $table = $this->resource->post->table;
 
-        //$tableBlock = new BaseTable;
-        //$tableBlock->setTitle($table->title ?? '');
-//
-        //$tableBlock->addTHead();
-        //$tableBlock->addRow();
-        //foreach ($table->fields as $field) {
-        //    $tableBlock->addHeadLineColumn($field->headline);
-        //}
-        //$tableBlock->closeRow();
-        //$tableBlock->closeTHead();
-//
-        //$tableBlock->addTBody();
-        //foreach ($entities as $entity) {
-        //    $tableBlock->addRow();
-        //    foreach ($table->fields as $field) {
-        //        $tableBlock->addColumn($entity->{$field->sqlfield});
-        //    }
-        //    $tableBlock->closeRow();
-        //}
-        //$tableBlock->closeTBody();
-
         $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
+
+        // Add titles
+        $col = 1;
+        foreach ($table->fields as $field) {
+            $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $field->headline);
+            $col++;
+        }
+
+        $row = 1;
+        foreach ($entities as $entity) {
+            $col = 1;
+            foreach ($table->fields as $field) {
+                $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $entity->{$field->sqlfield});
+                $col++;
+            }
+            $row++;
+        }
+
+        // Rename worksheet
+        $spreadsheet->getActiveSheet()->setTitle($this->resource->filename);
+
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $spreadsheet->setActiveSheetIndex(0);
 
         $writer = new Xlsx($spreadsheet);
-        $writer->save('hello world.xlsx');
 
         return $writer;
     }

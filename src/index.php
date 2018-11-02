@@ -72,5 +72,5 @@ $controller->showPage();
 
 $sessionWrapper->endOfRound();
 
-echo 'Controller: ' . get_class( $controller );
+// echo 'Controller: ' . get_class( $controller );
 echo $controller->getInfo();

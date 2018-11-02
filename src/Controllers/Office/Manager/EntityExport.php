@@ -61,7 +61,7 @@ class EntityExport extends ManagerEntityController {
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->WriteHTML($this->pdfBuilder->createTable());
             $mpdf->Output();
-            //$mpdf->Output( 'activitites.pdf', 'D');
+            //$mpdf->Output( $this->resource->filename.'.pdf', 'D');
             exit;
         } else {
             $this->excelBuilder->setResource( $this->resource );
@@ -70,12 +70,17 @@ class EntityExport extends ManagerEntityController {
 
             // Redirect output to a client’s web browser (Excel5)
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="shifthandover.xls"');
+            header('Content-Disposition: attachment;filename="'.$this->resource->filename.'.xlsx"');
 
 	        $writer = $this->excelBuilder->getWriter();
-            // $writer->save('hello world.xlsx');
+            // $writer->save($this->resource->filename.'.xlsx');
             $writer->save("php://output");
         }
 	}
+
+	// Overriding method in order to avoid any output
+    public function getInfo(): string {
+        return '';
+    }
 
 }
