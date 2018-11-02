@@ -9,38 +9,61 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\StaticTable;
+use Firststep\Common\Database\QueryExecuter;
 
 class TableBuilder {
-	
-    private $tableStructure;
-    private $entities;
 
-    /**
-     * @param mixed $tableStructure
-     */
-    public function setTableStructure($tableStructure) {
-        $this->tableStructure = $tableStructure;
-    }
+    private $parameters;
+    private $queryExecuter;
+    private $queryBuilder;
+    private $resource;
+    private $router;
+    private $dbconnection;
 
-    /**
-     * @param mixed $entities
-	 * the $entities variable contains all values for the table
-     */
-    public function setEntities($entities) {
-        $this->entities = $entities;
+    function __construct() {
+        $this->queryExecuter = new QueryExecuter;
+        $this->queryBuilder = new QueryBuilder;
+        $this->query = '';
     }
 
     public function setRouter( $router ) {
     	$this->router = $router;
     }
 
+    /**
+     * @param mixed $parameters
+     */
+    public function setParameters($parameters) {
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @param mixed $resource
+     */
+    public function setResource($resource) {
+        $this->resource = $resource;
+    }
+
+    /**
+     * @param mixed $dbconnection
+     */
+    public function setDbconnection($dbconnection) {
+        $this->dbconnection = $dbconnection;
+    }
+
     public function createTable() {
+        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+        if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+        $entities = $this->queryExecuter->executeQuery();
+
 		$tableBlock = new StaticTable;
-		$tableBlock->setTitle($this->tableStructure->title);
+		$tableBlock->setTitle($this->resource->get->table->title);
 		
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
-		foreach ($this->tableStructure->fields as $field) {
+		foreach ($this->resource->get->table->fields as $field) {
 			$tableBlock->addHeadLineColumn($field->headline);
 		}
 		$tableBlock->addHeadLineColumn(''); // adding one more for actions
@@ -48,13 +71,13 @@ class TableBuilder {
 		$tableBlock->closeTHead();
 		
 		$tableBlock->addTBody();
-		foreach ($this->entities as $entity) {
+		foreach ($entities as $entity) {
 			$tableBlock->addRow();
-			foreach ($this->tableStructure->fields as $field) {
+			foreach ($this->resource->get->table->fields as $field) {
 				$tableBlock->addColumn($entity->{$field->sqlfield});
 			}
 			$links = '';
-			foreach ( $this->tableStructure->actions as $action ) {
+			foreach ( $this->resource->get->table->actions as $action ) {
 				$links .= LinkBuilder::get( $this->router, $action->lable, $action->action, $action->resource, $action->parameters, $entity );
 			}
 			$tableBlock->addUnfilteredColumn( $links );

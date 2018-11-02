@@ -5,21 +5,20 @@ namespace Firststep\Controllers\Office\Manager;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Builders\TableBuilder;
 use Firststep\Common\Builders\MenuBuilder;
 
 /**
- * User: fabio
+ * User: Fabio Mattei
  * Date: 16/08/2018
  * Time: 12:02
  */
 class EntityTable extends ManagerEntityController {
 
+    private $tableBuilder;
+    private $menubuilder;
+
     function __construct() {
-		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
 		$this->tableBuilder = new TableBuilder;
 		$this->menubuilder = new MenuBuilder;
     }
@@ -33,17 +32,12 @@ class EntityTable extends ManagerEntityController {
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
-		
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-	    // $this->queryExecuter->setParameters( $parameters )
-		$entities = $this->queryExecuter->executeQuery();
-		
+
 		$this->tableBuilder->setRouter( $this->router );
-		$this->tableBuilder->setTableStructure( $this->resource->get->table );
-		$this->tableBuilder->setEntities( $entities );
-		
+        $this->tableBuilder->setResource( $this->resource );
+		$this->tableBuilder->setParameters( $this->internalGetParameters );
+		$this->tableBuilder->setDbconnection( $this->dbconnection );
+
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
