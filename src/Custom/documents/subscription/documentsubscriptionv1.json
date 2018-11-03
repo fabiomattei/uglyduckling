@@ -19,14 +19,13 @@
 	},
 	"oninsert": {
 		"logics": [
-			{  	
-				"type": "insert",
-				"entity": "requestv1",
-				"fields": [
-					{ "field": "name", "operator": "=", "value": "name" },
-					{ "field": "amount", "operator": "=", "value": "amount" },
-					{ "field": "duedate", "operator": "=", "value": "duedate" }
-				]
+			{  
+				"sql":"INSERT INTO requestv1 (name, amount, duedate) VALUES (:name, :amount, :duedate);",
+        		"parameters":[
+          			{ "placeholder": ":name", "postparameter": "name" },
+          			{ "placeholder": ":amount", "postparameter": "amount" },
+          			{ "placeholder": ":duedate", "postparameter": "duedate" }
+        		]
 			}
 		], 
 		"updates": [
