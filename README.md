@@ -59,7 +59,7 @@ I know what you are thinking about: this is not general enough, what if I need t
 Well, you can always get back to your old way, and program a controller a view, maybe made of partials, connect and ORM, write down your model and... so on and so on and so on...
 
 But, let's be straight, do you really need it? How often do you do that?
-I often found mysel to just fill a table with the results of just one query, maybe with few joined tables.
+I often found mysel filling a table with the results of just one query, maybe with few joined tables.
 
 
 
