@@ -8,7 +8,7 @@ Do you really need a framework when the code you write looks always the same, wi
 
 I don't think so!
 
-I have been writing web applications for many years. What were those applications doing? They were thanking data from a form, 
+I have been writing web applications for many years. What were those applications doing? They were thaking data from a form, 
 saving that data in a database and then editing that data in another form and showing that data in a table or in a diagram ad 
 sometimes they were deleting that data (not very often to be fair).
 
@@ -28,19 +28,16 @@ I put all this information in a json file and this came out:
 
 ```json
 {
-  "name": "requesttablev1",
-  "metadata": { "type":"table", "version": "1" },
-    "query": {
-      "sql": "select id, name, amount, duedate FROM requestv1;"
-    },
-    "table": {
-      "title": "My table",
-      "fields": [
-        {"headline": "Name", "sqlfield": "name"},
-        {"headline": "Amount", "sqlfield": "amount"},
-        {"headline": "Due date", "sqlfield": "duedate"}
-      ]
-    }
+  "query": {
+    "sql": "select id, name, amount, duedate FROM requestv1;"
+  },
+  "table": {
+    "title": "My table",
+    "fields": [
+      {"headline": "Name", "sqlfield": "name"},
+      {"headline": "Amount", "sqlfield": "amount"},
+      {"headline": "Due date", "sqlfield": "duedate"}
+    ]
   }
 }
 ```
@@ -61,7 +58,75 @@ Well, you can always get back to your old way, and program a controller a view, 
 But, let's be straight, do you really need it? How often do you do that?
 I often found mysel filling a table with the results of just one query, maybe with few joined tables.
 
+### Let's add some link
 
+What if I need to add a link to some supported action to the table?
+I defined that in the json format too.
 
+```json
+{
+  "query": {
+    "sql": "select id, name, amount, duedate FROM requestv1;"
+  },
+  "table": {
+    "title": "My table",
+    "fields": [
+      {"headline": "Name", "sqlfield": "name"},
+      {"headline": "Amount", "sqlfield": "amount"},
+      {"headline": "Due date", "sqlfield": "duedate"}
+    ],
+    "actions": [
+      {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+      {"label": "Edit", "action": "entityform", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+      {"label": "Delete", "action": "entitylogic", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] }
+    ]
+  }
+}
+```
+
+A link is defined from a label (the user need to see what is clicking) an action and few parameters maybe coming from the SQL query.
+
+If you are wondering what a resource is, it is a index to find a specific json configuration file, like this one, in the system.
+There are resources for forms, for pdf exports, for data charts, for whatever you need.
+And if you need more you can always define a new template, this is an open source project after all.
+
+### Let's finish up the json file
+
+There are few things to do in order to complete the file.
+We neet to give it a name so we can find it between al the resources.
+We need to add some metadata, in case in the future we need to add more features.
+
+The system supports the concept of allowed groups to access a specific resource, this explains the "allowedgroups" array.
+
+```json
+{
+  "name": "requesttablev1",
+  "metadata": { "type":"table", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "get": {
+    "request": {
+      "parameters": []
+    },
+    "query": {
+      "sql": "select id, name, amount, duedate FROM requestv1;"
+    },
+    "table": {
+      "title": "My table",
+      "fields": [
+        {"headline": "Name", "sqlfield": "name"},
+        {"headline": "Amount", "sqlfield": "amount"},
+        {"headline": "Due date", "sqlfield": "duedate"}
+      ],
+      "actions": [
+        {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Edit", "action": "entityform", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Delete", "action": "entitylogic", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] }
+      ]
+    }
+  }
+}
+```
+
+That's it.
 
 
