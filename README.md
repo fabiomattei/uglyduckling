@@ -1,36 +1,47 @@
 First Step Core module
 ======================
 
-This is the set of classes that I use for every project.
-I am trying to keep them all together in order to avoid confusion.
+### The best code is the code you don't need to write
 
+I wrote this code in order to avoid to write over and over agian the same stuff.
+Do you really need a framework when the code you write looks always the same, with small almost not-existents changes?
 
+I don't think so!
 
+I have been writing web applications for many years. What were those applications doing? They were thanking data from a form, 
+saving that data in a database and then editing that data in another form and showing that data in a table or in a graph ad 
+sometimes they were deleting that data (not very often to be fair).
 
-## docker commands
+Well, I have done that over and over again, form after form, ORM after ORM, MVC after MVC.
 
-To build:
-* docker-compose up --build
+I felt lost and bored.
 
-To stop:
-* docker-compose stop
+I have learned many framework to speed up my process, I read many books: the new thing, so exiting!
 
-To stop everything:
-* docker-compose down
+Then I started to notice that my work was repeatable and those frameworks were slowing me down.
 
-To run:
-* docker-compose up -d
+So I started to wonder: What do I nood to do to make for example a table cotaining data taken from a database?
+The answer was: I need to make a SQL query, I need to define the structure of the table and I need to put the results of the query on the table. That's it.
+I need this three things, nothig more than that.
 
-To run a single service: (in /var/apps)
-* docker-compose up -d db
-* docker-compose up -d phpmyadmin
-* docker-compose up -d server
+I put all this information in a json file and this came out:
 
-To restart I can do:
-* docker-compose stop
-* docker-compose up -d
+{
+  "name": "requesttablev1",
+  "metadata": { "type":"table", "version": "1" },
+    "query": {
+      "sql": "select id, name, amount, duedate FROM requestv1;"
+    },
+    "table": {
+      "title": "My table",
+      "fields": [
+        {"headline": "Name", "sqlfield": "name"},
+        {"headline": "Amount", "sqlfield": "amount"},
+        {"headline": "Due date", "sqlfield": "duedate"}
+      ]
+    }
+  }
+}
 
-If first restart does not work, I can do: 
-* docker-compose down
-* docker-compose up -d
+No ORM, no MVC, no framework.
 
