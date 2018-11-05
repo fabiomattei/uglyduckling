@@ -26,6 +26,7 @@ I need this three things, nothig more than that.
 
 I put all this information in a json file and this came out:
 
+```json
 {
   "name": "requesttablev1",
   "metadata": { "type":"table", "version": "1" },
@@ -42,6 +43,7 @@ I put all this information in a json file and this came out:
     }
   }
 }
+```
 
 No ORM, no MVC, no framework.
 
