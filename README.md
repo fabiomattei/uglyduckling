@@ -47,3 +47,21 @@ I put all this information in a json file and this came out:
 
 No ORM, no MVC, no framework.
 
+I know I used SQL and not an ORM but I like SQL! SQL haven't changed in ages, and this means that it works!
+It is not sad to be old!
+
+I gave a title to the table and in the fields array I defined the headlines and the sql fields that were taken from the query in order to fill the cells of that table.
+How many times have you solved this same simple problem?
+Have you ever done it writing less code?
+If that is true please let me know!
+
+I know what you are thinking about: this is not general enough, what if I need to make calculations or generalize some logic or do something more complicated?
+Well, you can always get back to your old way, and program a controller a view, maybe made of partials, connect and ORM, write down your model and... so on and so on and so on...
+
+But, let's be straight, do you really need it? How often do you do that?
+I often found mysel to just fill a table with the results of just one query, maybe with few joined tables.
+
+
+
+
+
