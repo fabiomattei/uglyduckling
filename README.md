@@ -127,6 +127,7 @@ The system supports the concept of allowed groups to access a specific resource,
 }
 ```
 
-That's it.
+If you can use the standard templates you can make an entire application just filling the src/Custom folder with all the resources you need. Open that folder and have a look so see how the other resources are defined.
+ 
 
 
