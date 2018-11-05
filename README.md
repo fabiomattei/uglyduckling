@@ -1,5 +1,5 @@
-First Step Core module
-======================
+Notes
+=====
 
 ### The best code is the code you don't need to write
 
