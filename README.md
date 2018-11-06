@@ -98,6 +98,8 @@ We need to add some metadata, in case in the future we need to add more features
 
 The system supports the concept of allowed groups to access a specific resource, this explains the "allowedgroups" array.
 
+There is a get section in this file, it is there because all this configurations are for a GET request.
+
 ```json
 {
   "name": "requesttablev1",
@@ -127,7 +129,7 @@ The system supports the concept of allowed groups to access a specific resource,
 }
 ```
 
-If you can use the standard templates you can make an entire application just filling the src/Custom folder with all the resources you need. Open that folder and have a look so see how the other resources are defined.
+If you can use the standard templates you can make an entire application just filling the src/Custom folder with all the resources you need. Open that folder and have a look so you can see how the other resources are defined.
  
 
 
