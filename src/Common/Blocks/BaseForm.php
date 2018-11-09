@@ -3,6 +3,7 @@
 namespace Firststep\Common\Blocks;
 
 use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\ColWidth;
 
 class BaseForm extends BaseBlock {
 
@@ -40,15 +41,15 @@ class BaseForm extends BaseBlock {
     }
 
     function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {
-        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'"></div>';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'"></div>';
     }
 
     function addPasswordField( string $name, string $label, string $width ) {
-        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="password" id="'.$name.'" name="'.$name.'"></div>';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="password" id="'.$name.'" name="'.$name.'"></div>';
     }
 
     function addTextAreaField( string $name, string $label, string $value, string $width ) {
-        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea></div>';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><textarea id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea></div>';
     }
 
     /**
@@ -64,7 +65,7 @@ class BaseForm extends BaseBlock {
      *   array( 'optvalue1' => 'opt label 1', 'optvalue2' => 'opt label 2' )
      */
     function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
-        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><select id="'.$name.'" name="'.$name.'">';
         foreach ($options as $key => $val) {
             $this->body .= '<option value="'.$key.'" '.( $key==$value ? 'selected="selected"' : '' ).'>'.htmlspecialchars( $val ).'</option>';
         }
@@ -72,24 +73,24 @@ class BaseForm extends BaseBlock {
     }
 	
 	function addCurrencyField( string $name, string $label, string $placeholder, string $value, string $width ) {
-		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="number" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'" min="0" step="0.01"></div>';
+		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="number" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'" min="0" step="0.01"></div>';
 	}
 	
 	function addDateField( string $name, string $label, string $value, string $width ) {
-		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="date" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" ></div>';
+		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="date" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" ></div>';
 	}
 	
 	function addDateField_oldstyle( string $name, string $label, string $value, string $width ) {
 		$this->adddate = true;
-		$this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="date" class="datepicker" id="'.$name.'" name="'.$name.'" value="'.date( 'd/m/Y', strtotime($value) ).'" ></div>';
+		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="date" class="datepicker" id="'.$name.'" name="'.$name.'" value="'.date( 'd/m/Y', strtotime($value) ).'" ></div>';
 	}
 
     function addFileUploadField( string $name, string $label, string $width ) {
-        $this->body .= '<div class="'.$width.'"><label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'"></div>';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'"></div>';
     }
 
     function addHelpingText( string $title, string $text, string $width ) {
-        $this->body .= '<div class="'.$width.'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
     }
 
     function addHiddenField( string $name, string $value ) {

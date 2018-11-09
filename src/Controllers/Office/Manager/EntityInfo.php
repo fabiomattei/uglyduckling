@@ -3,8 +3,6 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Router\Router;
 use Firststep\Common\Builders\InfoBuilder;
 use Firststep\Common\Builders\MenuBuilder;
 
