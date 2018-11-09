@@ -103,7 +103,7 @@ class TableBuilder {
 			}
 			$links = '';
 			foreach ( $table->actions as $action ) {
-				$links .= LinkBuilder::get( $this->router, $action->lable, $action->action, $action->resource, $action->parameters, $entity );
+				$links .= LinkBuilder::get( $this->router, $action->label, $action->action, $action->resource, $action->parameters, $entity );
 			}
 			$tableBlock->addUnfilteredColumn( $links );
 			$tableBlock->closeRow();

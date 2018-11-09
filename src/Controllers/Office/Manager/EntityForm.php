@@ -6,7 +6,6 @@ use Firststep\Common\Builders\FormBuilder;
 use Firststep\Common\Builders\QueryBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Builders\MenuBuilder;
 
