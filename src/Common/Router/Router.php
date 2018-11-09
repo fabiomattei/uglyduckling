@@ -3,7 +3,6 @@
 namespace Firststep\Common\Router;
 
 use Firststep\Controllers\Office\Manager\EntityDashboard;
-use Firststep\Controllers\Office\Manager\Gate;
 use Firststep\Controllers\Office\Manager\EntityChart;
 use Firststep\Controllers\Office\Manager\EntityTable;
 use Firststep\Controllers\Office\Manager\EntityForm;

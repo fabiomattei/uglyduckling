@@ -11,12 +11,13 @@ class JsonLoader {
 	
 	private $indexpath;
 	private $resourcesIndex = array();
-	
-	function __construct() {
-		// empty as you see
-	}
-	
-	public function setIndexPath( $indexpath ) {
+
+    /**
+     * Set the path of the file containing the main index of the json structure
+     *
+     * @param string $indexpath
+     */
+	public function setIndexPath( string $indexpath ) {
 		$this->indexpath = $indexpath;
 	}
 	
@@ -41,18 +42,15 @@ class JsonLoader {
 		}
 		// var_dump( $this->resourcesIndex );	
 	}
-	
-	/**
-	 * Gives a list of resources loaded
-	 */
-	public function getResourcesIndex() {
-		return $this->resourcesIndex;
-	}
-	
-	/**
-	 * Load a resource from file specified with array index
-	 */
-	public function loadResource( $key = '' ) {
+
+    /**
+     * Load a resource from file specified with array index
+     *
+     * @param string $key
+     * @return mixed, a php structure that mirrors the json structure
+     * @throws \Exception
+     */
+	public function loadResource( string $key = '' ) {
 		if ( array_key_exists( $key, $this->resourcesIndex ) ) {
 			if ( file_exists( $this->resourcesIndex[$key]->path ) ) {
 				$handle = fopen($this->resourcesIndex[$key]->path, 'r');
@@ -64,11 +62,26 @@ class JsonLoader {
 			throw new \Exception('[JsonLoader] :: Resource '.$key.' undefined in array index!!!');
 		}
 	}
-	
-	/**
-	 * Decoding json string with error control
-	 */
-	public function json_decode_with_error_control( $data ) {
+
+    /**
+     * Decode json string with error control
+     *
+     * based on json_decode, it build a php structure based on the json structure.
+     * throws exceptions
+     *
+     * @param $data string that contains the json structure
+     *
+     * @return mixed, a php structure that mirrors the json structure
+     *
+     * @throws \Exception after the error check
+     * JSON_ERROR_DEPTH
+     * JSON_ERROR_STATE_MISMATCH
+     * JSON_ERROR_CTRL_CHAR
+     * JSON_ERROR_SYNTAX
+     * JSON_ERROR_UTF8
+     *
+     */
+	public function json_decode_with_error_control( string $data ) {
 		$loadeddata = json_decode($data);
 		switch (json_last_error()) {
         	case JSON_ERROR_NONE:
