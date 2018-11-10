@@ -20,6 +20,8 @@ class AdminDashboard extends Controller {
 		$this->leftcontainer          = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->router ) );
 		$this->centralcontainer       = array( new LineGraph );
 		$this->secondcentralcontainer = array( new StaticTable );
+
+		$this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
 	}
 
 }

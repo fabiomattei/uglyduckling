@@ -10,6 +10,7 @@ $sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
 $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
 $setup->setPrivateTemplateFileName('application');
+$setup->setPrivateTemplateWithSidebarFileName('applicationwithsidebar');
 $setup->setPublicTemplateFileName('public');
 $setup->setEmptyTemplateFileName('empty');
 $setup->setBasePath('http://localhost:18080/');

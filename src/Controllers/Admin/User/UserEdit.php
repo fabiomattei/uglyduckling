@@ -55,6 +55,8 @@ class UserEdit extends Controller {
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->router ) );
         $this->centralcontainer = array( $form );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
     public $post_validation_rules = array(

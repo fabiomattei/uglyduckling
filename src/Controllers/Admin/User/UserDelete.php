@@ -42,6 +42,8 @@ class UserDelete extends Controller {
         $this->userDao->delete( $this->getParameters['usrid'] );
 
         $this->redirectToPreviousPage();
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
 }

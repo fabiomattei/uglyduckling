@@ -53,6 +53,8 @@ class AdminDocumentDropTable extends Controller {
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DOCUMENT_LIST, $this->router ) );
 		$this->centralcontainer = array( $info );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
 	}
 
 }

@@ -57,6 +57,8 @@ class AdminFormsList extends Controller {
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST, $this->router ) );
         $this->centralcontainer = array( $table );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
 }

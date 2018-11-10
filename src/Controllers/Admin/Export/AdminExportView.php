@@ -92,6 +92,8 @@ class AdminExportView extends Controller {
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsFormTable );
         $this->thirdcentralcontainer = array( $fieldsTable );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
 }

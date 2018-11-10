@@ -92,6 +92,8 @@ class AdminGroupView extends Controller {
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $userTable );
         $this->thirdcentralcontainer = array( $resourcesTable );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
 }

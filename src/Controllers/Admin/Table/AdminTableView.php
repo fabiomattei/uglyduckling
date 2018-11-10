@@ -86,6 +86,8 @@ class AdminTableView extends Controller {
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsTable );
         $this->thirdcentralcontainer = array( $actionsTable );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
 }

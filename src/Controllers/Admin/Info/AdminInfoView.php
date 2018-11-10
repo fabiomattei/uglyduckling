@@ -94,6 +94,8 @@ class AdminInfoView extends Controller {
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $parametersTable );
         $this->thirdcentralcontainer = array( $fieldsTable );
+
+        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
 
 }

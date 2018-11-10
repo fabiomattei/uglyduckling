@@ -6,6 +6,7 @@ class Setup {
 
 	public $appNameForPageTitle;
 	public $privateTemplateFileName;
+    public $privateTemplateWithSidebarFileName;
 	public $publicTemplateFileName;
 	public $emptyTemplateFileName;
 	public $basePath;
@@ -15,6 +16,7 @@ class Setup {
 	public function __construct() {
 		$this->appNameForPageTitle = '';
 		$this->privateTemplateFileName = '';
+		$this->privateTemplateWithSidebarFileName = '';
 		$this->publicTemplateFileName = '';
 		$this->basePath = '';
         $this->pathtoapp = '';
@@ -49,6 +51,20 @@ class Setup {
      */
     public function setPrivateTemplateFileName(string $privateTemplateFileName) {
         $this->privateTemplateFileName = $privateTemplateFileName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrivateTemplateWithSidebarFileName(): string {
+        return $this->privateTemplateWithSidebarFileName;
+    }
+
+    /**
+     * @param string $privateTemplateWithSidebarFileName
+     */
+    public function setPrivateTemplateWithSidebarFileName(string $privateTemplateWithSidebarFileName) {
+        $this->privateTemplateWithSidebarFileName = $privateTemplateWithSidebarFileName;
     }
 
     /**
