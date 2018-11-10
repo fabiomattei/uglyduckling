@@ -1,7 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-      { "path":"./Custom/documents/subscription/documentsubscriptionv1.json", "type":"document", "name":"documentsubscriptionv1" }
-  ]
- }

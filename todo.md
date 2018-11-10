@@ -1,25 +1,27 @@
 # todo list
 
-# Implement user management
+### custom controllers and routers
 
-# Implement protocol for data/form exchange
+### custom resources in php indexed with json resource
+
+### Implement protocol for data/form exchange
 * Expose/Query form using GET
 * Form fill via POST
 * ACK via POST
 
-# Documents management
+### Documents management
 * Search
 * Export
 
-# Active ajax jquery
+### Active ajax jquery
 * interface for view
 * interface for list
 
-# Notifications
+### Notifications
 * browser notifications
 * internal notification
 
-# Office management 
+### Office management 
 * Task
 * Calendar (death line, milestone)
 * Note
@@ -29,3 +31,8 @@
 # Future 
 * Documents activated by an event or a death line
 * Documents prepopulated by DB
+
+
+# done
+
+### Implement user management

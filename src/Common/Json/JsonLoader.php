@@ -20,7 +20,15 @@ class JsonLoader {
 	public function setIndexPath( string $indexpath ) {
 		$this->indexpath = $indexpath;
 	}
-	
+
+    /**
+     * Load the main index file from a given path and it creates
+     * an internal structure, the software can search from
+     * in order to find a json resource
+     *
+     * @param string $indexPath
+     * @throws \Exception
+     */
 	public function loadIndex( $indexPath = '' ) {
 		if ($indexPath == '') {
 			$indexPath = $this->indexpath;

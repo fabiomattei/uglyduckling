@@ -14,7 +14,7 @@ $setup->setPublicTemplateFileName('public');
 $setup->setEmptyTemplateFileName('empty');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
-$setup->setJsonPath('./Custom/index.json');
+$setup->setJsonPath('./Custom/Json/index.json');
 
 $dbconnection = new Firststep\Common\Database\DBConnection( 
 	'mysql:host=mariadb:3306;dbname=',

@@ -1,7 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-      { "path":"./Custom/search/request/searchreportv1.json", "type":"search", "name":"searchreportv1" }
-  ]
-}

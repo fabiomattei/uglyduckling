@@ -1,0 +1,18 @@
+{ 
+  "name": "index",
+  "metadata": { "type":"index", "version": "1" },
+  "scripts": [
+      { "path":"./Custom/Json/charts/index.json", "type":"index" },
+      { "path":"./Custom/Json/dashboards/index.json", "type":"index" },
+      { "path":"./Custom/Json/documents/index.json", "type":"index" },
+      { "path":"./Custom/Json/entities/index.json", "type":"index" },
+      { "path":"./Custom/Json/exports/index.json", "type":"index" },
+      { "path":"./Custom/Json/forms/index.json", "type":"index" },
+      { "path":"./Custom/Json/groups/index.json", "type":"index" },
+      { "path":"./Custom/Json/infos/index.json", "type":"index" },
+      { "path":"./Custom/Json/logics/index.json", "type":"index" },
+      { "path":"./Custom/Json/panels/index.json", "type":"index" },
+      { "path":"./Custom/Json/search/index.json", "type":"index" },
+      { "path":"./Custom/Json/tables/index.json", "type":"index" }
+  ]
+ }

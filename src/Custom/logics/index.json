@@ -1,7 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-      { "path":"./Custom/logics/request/deletereportv1.json", "type":"logic", "name":"deletereportv1" }
-  ]
-}

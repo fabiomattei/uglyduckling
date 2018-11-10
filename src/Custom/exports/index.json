@@ -1,7 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-      { "path":"./Custom/exports/request/requestexportv1.json", "type":"export", "name":"requestexportv1" }
-  ]
- }
