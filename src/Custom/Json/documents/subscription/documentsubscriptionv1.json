@@ -27,8 +27,8 @@
           			{ "placeholder": ":duedate", "postparameter": "duedate" }
         		]
 			}
-		], 
-		"updates": [
+		],
+		"notifications": [
 			{
 				"body":[ "name", "amount" ],
 				"type":"new Subscription to ski class",
