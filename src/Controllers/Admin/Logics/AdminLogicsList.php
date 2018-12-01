@@ -32,7 +32,7 @@ class AdminLogicsList extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Forms list';
 
         $table = new StaticTable;
-        $table->setTitle('Forms list');
+        $table->setTitle('Logics list');
 
         $table->addTHead();
         $table->addRow();
@@ -43,7 +43,7 @@ class AdminLogicsList extends Controller {
         $table->closeTHead();
 
         $table->addTBody();
-        foreach ( $this->jsonloader->getResourcesByType( 'info' ) as $res ) {
+        foreach ( $this->jsonloader->getResourcesByType( 'logic' ) as $res ) {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);

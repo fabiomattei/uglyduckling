@@ -72,6 +72,13 @@ class JsonLoader {
 	}
 
     /**
+     * Return the index of all resources loaded from the main index
+     */
+    public function getResourcesIndex() {
+        return $this->resourcesIndex;
+    }
+
+    /**
      * Return resources of a given type
      *
      * Type can be: chart, dashboard, document, entity, export, index, info, form, group, logic, table

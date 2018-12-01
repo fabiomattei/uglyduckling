@@ -74,9 +74,9 @@ class AdminTableView extends Controller {
         $actionsTable->addTBody();
         foreach ( $this->resource->get->table->actions as $action ) {
             $actionsTable->addRow();
-            $actionsTable->addColumn($action->lable);
-            $actionsTable->addColumn($action->action);
-            $actionsTable->addColumn($action->resource);
+            $actionsTable->addColumn($action->label ?? '');
+            $actionsTable->addColumn($action->action ?? '');
+            $actionsTable->addColumn($action->resource ?? '');
             $actionsTable->closeRow();
         }
         $actionsTable->closeTBody();

@@ -39,7 +39,7 @@ class AdminLogicView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin form view';
 
         $info = new BaseInfo;
-        $info->setTitle( 'Form name: '.$this->resource->name );
+        $info->setTitle( 'Logic name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
 
         $fieldsTable = new StaticTable;
@@ -69,6 +69,7 @@ class AdminLogicView extends Controller {
         $actionsTable->closeRow();
         $actionsTable->closeTHead();
         $actionsTable->addTBody();
+        print_r($this->resource->get->logics);
         foreach ( $this->resource->get->logics as $logic ) {
             $actionsTable->addRow();
             $actionsTable->addColumn($logic->sql ?? 'Undefined');
