@@ -57,7 +57,7 @@ class InfoBuilder {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
         $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+        if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
 
         $result = $this->queryExecuter->executeQuery();
         $entity = $result->fetch();
