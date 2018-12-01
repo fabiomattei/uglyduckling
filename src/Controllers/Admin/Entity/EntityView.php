@@ -6,6 +6,7 @@ use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
@@ -53,11 +54,66 @@ class EntityView extends Controller {
 			'true  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) : 
 			'false  '.Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_CREATE_TABLE, 'res='.$this->resource->name ), 'Create', Button::COLOR_GRAY.' '.Button::SMALL )
 		), '' );
+
+        $resourcesTable = new StaticTable;
+        $resourcesTable->setTitle("Called from resources");
+        $resourcesTable->addTHead();
+        $resourcesTable->addRow();
+        $resourcesTable->addHeadLineColumn('Name');
+        $resourcesTable->addHeadLineColumn('Type');
+        $resourcesTable->addHeadLineColumn('SQL');
+        $resourcesTable->closeRow();
+        $resourcesTable->closeTHead();
+        $resourcesTable->addTBody();
+        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->jsonloader->loadResource( $reskey );
+            if ( isset($tmpres->get->query) AND strpos($tmpres->get->query->sql, $this->resource->entity->tablename) !== false )
+            {
+                $resourcesTable->addRow();
+                $resourcesTable->addColumn($reskey);
+                $resourcesTable->addColumn($tmpres->metadata->type);
+                $resourcesTable->addColumn($tmpres->get->query->sql);
+                $resourcesTable->closeRow();
+            }
+            if ( isset($tmpres->post->query) AND strpos($tmpres->post->query->sql, $this->resource->entity->tablename) !== false )
+            {
+                $resourcesTable->addRow();
+                $resourcesTable->addColumn($reskey);
+                $resourcesTable->addColumn($tmpres->metadata->type);
+                $resourcesTable->addColumn($tmpres->post->query->sql);
+                $resourcesTable->closeRow();
+            }
+            if (isset($tmpres->get->logics)) {
+                foreach ( $tmpres->get->logics as $logic ) {
+                    if ( isset($logic->sql) AND strpos($logic->sql, $this->resource->entity->tablename) !== false )
+                    {
+                        $resourcesTable->addRow();
+                        $resourcesTable->addColumn($reskey);
+                        $resourcesTable->addColumn($tmpres->metadata->type);
+                        $resourcesTable->addColumn($logic->sql);
+                        $resourcesTable->closeRow();
+                    }
+                }
+            }
+            if (isset($tmpres->post->logics)) {
+                foreach ( $tmpres->post->logics as $logic ) {
+                    if ( isset($logic->sql) AND strpos($logic->sql, $this->resource->entity->tablename) !== false )
+                    {
+                        $resourcesTable->addRow();
+                        $resourcesTable->addColumn($reskey);
+                        $resourcesTable->addColumn($tmpres->metadata->type);
+                        $resourcesTable->addColumn($logic->sql);
+                        $resourcesTable->closeRow();
+                    }
+                }
+            }
+        }
+        $resourcesTable->closeTBody();
 		
 		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
 		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
 		$this->centralcontainer = array( $info );
-
+        $this->secondcentralcontainer = array( $resourcesTable );
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
 	}
 
