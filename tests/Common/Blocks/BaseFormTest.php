@@ -35,7 +35,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithATextField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addTextField( 'myname', 'My label', 'My placeholder', 'My value', '6');
-	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><div class="form-group col-md-6"><label for="myname">My label</label><input class="form-control" type="text" id="myname" name="myname" value="My value" placeholder="My placeholder"></div></form>') !== false);
 	unset($form);
   }
   
@@ -45,7 +45,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithATextAreaField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addTextAreaField( 'myname', 'My label', 'My value', '6');
-	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><textarea id="myname" name="myname">My value</textarea>') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><div class="form-group col-md-6"><label for="myname">My label</label><textarea class="form-control" id="myname" name="myname">My value</textarea></div></form>') !== false);
 	unset($form);
   }
   
@@ -58,7 +58,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithADropdownField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2', '6');
-	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><select id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><div class="form-group col-md-6"><label for="myname">My label</label><select class="form-control" id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select></div></form>') !== false);
 	unset($form);
   }
   
@@ -68,7 +68,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithAFileUploadField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addFileUploadField( 'myname', 'My label', '6' );
-	$this->assertTrue(strpos($form->show(), '<label for="myname">My label</label><input type="file" id="myname" name="myname">') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><div class="form-group col-md-6"><label for="myname">My label</label><input class="form-control" type="file" id="myname" name="myname"></div></form>') !== false);
 	unset($form);
   }
   
@@ -78,7 +78,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithAHelpingTextField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addHelpingText( 'Title', 'My description', '6' );
-	$this->assertTrue(strpos($form->show(), '<h5>Title</h5><p>My description</p>') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><div class="form-group col-md-6"><h5>Title</h5><p>My description</p></div></form>') !== false);
 	unset($form);
   }
   
@@ -88,7 +88,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithAHiddenField(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addHiddenField( 'myfield', 'My Value' );
-	$this->assertTrue(strpos($form->show(), '<input type="hidden" name="myfield" value="My Value">') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><input type="hidden" name="myfield" value="My Value"></form>') !== false);
 	unset($form);
   }
   
@@ -98,9 +98,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   public function testItShowsAFormWithASubmitButton(){
 	$form = new Firststep\Common\Blocks\BaseForm;
 	$form->addSubmitButton( 'myfield', 'My Value' );
-	$this->assertTrue(strpos($form->show(), '<input type="submit" name="myfield" value="My Value"/>') !== false);
+	$this->assertTrue(strpos($form->show(), '<h3></h3><form action="" method="POST" class="form-horizontal"><input class="form-control" type="submit" name="myfield" value="My Value"/></form>') !== false);
 	unset($form);
   }
-  
   
 }
