@@ -87,10 +87,13 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testFormContainsTextArea(){
+
+
 		$form = new Firststep\Common\Builders\FormBuilder;
         $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
+        $queryExecuter->expects($this->once())->method('executeSql')->will($this->returnValue(true));
         $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
 
         $form->setRouter($router);
