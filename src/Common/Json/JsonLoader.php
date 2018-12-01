@@ -72,6 +72,23 @@ class JsonLoader {
 	}
 
     /**
+     * Return resources of a given type
+     *
+     * Type can be: chart, dashboard, document, entity, export, index, info, form, group, logic, table
+     *
+     * @param string $type
+     */
+	public function getResourcesByType( string $type ) {
+	    $out = array();
+        foreach ( $this->resourcesIndex as $res ) {
+            if ( $res->type === $type ) {
+                $out[] = $res;
+            }
+        }
+        return $out;
+    }
+
+    /**
      * Decode json string with error control
      *
      * based on json_decode, it build a php structure based on the json structure.

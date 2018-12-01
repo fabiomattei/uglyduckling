@@ -40,14 +40,12 @@ class AdminDocumentsList extends Controller {
 		$table->closeTHead();
 		
 		$table->addTBody();
-		foreach ( $this->jsonloader->getResourcesIndex() as $res ) {
-			if ( $res->type === 'document' ) {
-				$table->addRow();
-				$table->addColumn($res->name);
-				$table->addColumn($res->type);
-				$table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
-				$table->closeRow();
-			}
+        foreach ( $this->jsonloader->getResourcesByType( 'document' ) as $res ) {
+			$table->addRow();
+			$table->addColumn($res->name);
+			$table->addColumn($res->type);
+			$table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_DOCUMENT_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
+			$table->closeRow();
 		}
 		$table->closeTBody();
 		
