@@ -22,13 +22,22 @@ class EntityLogic extends ManagerEntityController {
      * @throws GeneralException
      */
 	public function getRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-
-        foreach ($this->resource->get->logics as $logic) {
-            $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-            $this->queryExecuter->setQueryStructure( $logic );
-            $this->queryExecuter->setGetParameters( $this->internalGetParameters );
-            $this->queryExecuter->executeQuery();
+        $conn = $this->dbconnection->getDBH();
+        try {
+            $conn->beginTransaction();
+            $this->queryExecuter->setDBH( $conn );
+            foreach ($this->resource->get->logics as $logic) {
+                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                $this->queryExecuter->setQueryStructure( $logic );
+                $this->queryExecuter->setGetParameters( $this->internalGetParameters );
+                $this->queryExecuter->executeQuery();
+            }
+            $conn->commit();
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
 
         $this->redirectToPreviousPage();

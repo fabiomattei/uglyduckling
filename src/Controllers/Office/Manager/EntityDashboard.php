@@ -69,14 +69,22 @@ class EntityDashboard extends ManagerEntityController {
     public function postRequest() {
         $this->postresource = $this->jsonloader->loadResource( $this->getParameters['postres'] );
 
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-
-        foreach ($this->postresource->post->logics as $logic) {
-            $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-            $this->queryExecuter->setQueryStructure( $logic );
-            $this->queryExecuter->setPostParameters( $this->postParameters );
-
-            $this->queryExecuter->executeQuery();
+        $conn = $this->dbconnection->getDBH();
+        try {
+            $conn->beginTransaction();
+            $this->queryExecuter->setDBH( $conn );
+            foreach ($this->postresource->post->logics as $logic) {
+                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                $this->queryExecuter->setQueryStructure( $logic );
+                $this->queryExecuter->setPostParameters( $this->postParameters );
+                $this->queryExecuter->executeQuery();
+            }
+            $conn->commit();
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
 
         $this->redirectToPreviousPage();

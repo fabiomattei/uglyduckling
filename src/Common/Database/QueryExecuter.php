@@ -77,9 +77,11 @@ class QueryExecuter {
     }
 
     /**
-     * It gets all rows contained in a table
+     * Perform a SELECT query on the database
+     *
+     * @return mixed
      */
-    function executeSql() {
+    function executeSqlSelect() {
         try {
             //echo $this->queryStructure->sql;
             //echo "GET";
@@ -106,10 +108,154 @@ class QueryExecuter {
 
             $STH->execute();
 
+            // $STH->debugDumpParams();
+
+            return $STH;
+        } catch (\PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
+    /**
+     * It makes an INSERT query in the database and it returnd the id of the inserted row
+     * using the function lastInsertId
+     *
+     * @return mixed
+     */
+    function executeSqlInsert() {
+        //echo $this->queryStructure->sql;
+        //echo "GET";
+        //print_r($this->getParameters);
+            //echo "POST";
+            //print_r($this->postParameters);
+
+            $STH = $this->DBH->prepare( $this->queryStructure->sql );
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            if ( isset($this->queryStructure->parameters) ) {
+                foreach ($this->queryStructure->parameters as $cond) {
+                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
+                        $par =& $this->getParameters[$cond->getparameter];
+                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
+                        $par =& $this->postParameters[$cond->postparameter];
+                    } elseif ( isset( $cond->constant ) ) {
+                        $par =& $cond->constant;
+                    }
+                    // echo "$cond->placeholder, $par";
+                    $STH->bindParam($cond->placeholder, $par);
+                }
+            }
+
+            $STH->execute();
+
+            // $STH->debugDumpParams();
+
+            return $this->DBH->lastInsertId();
+    }
+
+    /**
+     * Performs an UPDATE query to the database
+     *
+     * @return mixed
+     */
+    function executeSqlUpdate() {
+        try {
+            //echo $this->queryStructure->sql;
+            //echo "GET";
+            //print_r($this->getParameters);
+            //echo "POST";
+            //print_r($this->postParameters);
+
+            $STH = $this->DBH->prepare( $this->queryStructure->sql );
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            if ( isset($this->queryStructure->parameters) ) {
+                foreach ($this->queryStructure->parameters as $cond) {
+                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
+                        $par =& $this->getParameters[$cond->getparameter];
+                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
+                        $par =& $this->postParameters[$cond->postparameter];
+                    } elseif ( isset( $cond->constant ) ) {
+                        $par =& $cond->constant;
+                    }
+                    // echo "$cond->placeholder, $par";
+                    $STH->bindParam($cond->placeholder, $par);
+                }
+            }
+
+            $STH->execute();
+
+            // $STH->debugDumpParams();
+
             return $STH;
         } catch (PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
+    /**
+     * Perform a DELETE query to the database
+     *
+     * @return mixed
+     */
+    function executeSqlDelete() {
+        try {
+            //echo $this->queryStructure->sql;
+            //echo "GET";
+            //print_r($this->getParameters);
+            //echo "POST";
+            //print_r($this->postParameters);
+
+            $STH = $this->DBH->prepare( $this->queryStructure->sql );
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            if ( isset($this->queryStructure->parameters) ) {
+                foreach ($this->queryStructure->parameters as $cond) {
+                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
+                        $par =& $this->getParameters[$cond->getparameter];
+                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
+                        $par =& $this->postParameters[$cond->postparameter];
+                    } elseif ( isset( $cond->constant ) ) {
+                        $par =& $cond->constant;
+                    }
+                    // echo "$cond->placeholder, $par";
+                    $STH->bindParam($cond->placeholder, $par);
+                }
+            }
+
+            $STH->execute();
+
+            // $STH->debugDumpParams();
+
+            return $STH;
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
+    /**
+     * Call the specific function for performing the query depeding from the text of the SQL query.
+     * If the text contains
+     *   "SELECT"  calls executeSqlSelect
+     *   "INSERT"  calls executeSqlInsert
+     *   "UPDATE"  calls executeSqlUpdate
+     *   "DELETE"  calls executeSqlDelete
+     */
+    function executeSql() {
+        if ( strpos(strtoupper($this->queryStructure->sql), 'SELECT') !== false ) {
+            return $this->executeSqlSelect();
+        }
+        if ( strpos(strtoupper($this->queryStructure->sql), 'INSERT') !== false ) {
+            return $this->executeSqlInsert();
+        }
+        if ( strpos(strtoupper($this->queryStructure->sql), 'UPDATE') !== false ) {
+            return $this->executeSqlUpdate();
+        }
+        if ( strpos(strtoupper($this->queryStructure->sql), 'DELETE') !== false ) {
+            return $this->executeSqlDelete();
         }
     }
 

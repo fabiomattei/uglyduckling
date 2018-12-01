@@ -35,4 +35,25 @@ class DBConnection {
         }   
     }
 
+    /**
+     * Begin a transaction, turning off autocommit
+     */
+    public function beginTransaction() {
+        $this->DBH->beginTransaction();
+    }
+
+    /**
+     * Commits a transaction
+     */
+    public function commit() {
+        $this->DBH->commit();
+    }
+
+    /**
+     * Recognize mistake and roll back changes, after that put the Database connection in autocommit mode
+     */
+    public function rollBack() {
+        $this->DBH->rollBack();
+    }
+
 }

@@ -50,15 +50,24 @@ class EntityForm extends ManagerEntityController {
 	}
 	
 	public function postRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+        $conn = $this->dbconnection->getDBH();
+        try {
+            $conn->beginTransaction();
+            $this->queryExecuter->setDBH($conn);
+            foreach ($this->resource->post->logics as $logic) {
+                $this->queryExecuter->setQueryBuilder($this->queryBuilder);
+                $this->queryExecuter->setQueryStructure($logic);
+                $this->queryExecuter->setPostParameters($this->postParameters);
 
-		foreach ($this->resource->post->logics as $logic) {
-			$this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-	    	$this->queryExecuter->setQueryStructure( $logic );
-	    	$this->queryExecuter->setPostParameters( $this->postParameters );
-
-			$this->queryExecuter->executeQuery();
-		}
+                $this->queryExecuter->executeQuery();
+            }
+            $conn->commit();
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
 
 		$this->redirectToSecondPreviousPage();
 	}
