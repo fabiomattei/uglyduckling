@@ -55,6 +55,24 @@ class FormBuilder {
     }
 
     /**
+     * Setting method for testing purposes
+     *
+     * @param $queryExecuter
+     */
+    public function setQueryExecuter( $queryExecuter ) {
+        $this->queryExecuter = $queryExecuter;
+    }
+
+    /**
+     * Setting method for testing purposes
+     *
+     * @param $queryBuilder
+     */
+    public function setQueryBuilder( $queryBuilder ) {
+        $this->queryBuilder = $queryBuilder;
+    }
+
+    /**
      * Set the complete URL for the form action
      * @param action $action
      */
