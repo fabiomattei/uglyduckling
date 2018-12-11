@@ -17,7 +17,7 @@ class ManagerDocumentReceiverController  extends ManagerEntityController {
      */
     public function check_authorization_get_request() {
         if( !isset( $this->resource->destinationgroups ) ) return false;
-        return in_array( $this->sessionWrapper->getSessionGroup(), $this->resource->destinationgroups );
+        return $this->sessionWrapper->getSessionGroup() === $resource->destinationgroup;
     }
 
     /**
@@ -25,7 +25,7 @@ class ManagerDocumentReceiverController  extends ManagerEntityController {
      * It return true by defult for compatiblity issues
      */
     public function check_authorization_post_request() {
-        return in_array( $this->sessionWrapper->getSessionGroup(), $this->resource->destinationgroups );
+        return $this->sessionWrapper->getSessionGroup() === $resource->destinationgroup;
     }
 
 }

@@ -57,7 +57,7 @@ class DocumentDraft extends Controller {
 			if ( $res->type === 'document' ) {
 				$resource = $this->jsonloader->loadResource( $res->name );
 			
-				if ( in_array( $this->sessionWrapper->getSessionGroup(), $resource->destinationgroups ) ) {
+				if ( $this->sessionWrapper->getSessionGroup() === $resource->destinationgroup ) {
 					// This user can access the documents because he belongs to the right groups
 					// I need to query the database to check if I have any document at the right status
 					// for any document this user has access to
