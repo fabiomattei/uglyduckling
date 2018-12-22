@@ -15,7 +15,7 @@ use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 
-class AdminLogicsList extends Controller {
+class AdminTransactionsList extends Controller {
 
     /**
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.

@@ -15,7 +15,7 @@ use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
 use Firststep\Common\Router\Router;
 
-class AdminLogicView extends Controller {
+class AdminTransactionView extends Controller {
 
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
     public $get_filter_rules     = array( 'res' => 'trim' );
