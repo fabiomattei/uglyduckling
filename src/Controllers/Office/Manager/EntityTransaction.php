@@ -11,7 +11,7 @@ use Firststep\Common\Builders\QueryBuilder;
  * Date: 29/09/2018
  * Time: 05:57
  */
-class EntityLogic extends ManagerEntityController {
+class EntityTransaction extends ManagerEntityController {
 
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;

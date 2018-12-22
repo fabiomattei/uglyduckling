@@ -9,7 +9,7 @@ use Firststep\Controllers\Office\Manager\EntityForm;
 use Firststep\Controllers\Office\Manager\EntityInfo;
 use Firststep\Controllers\Office\Manager\EntitySearch;
 use Firststep\Controllers\Office\Manager\EntityExport;
-use Firststep\Controllers\Office\Manager\EntityLogic;
+use Firststep\Controllers\Office\Manager\EntityTransaction;
 use Firststep\Controllers\Office\Document\DocumentAccept;
 use Firststep\Controllers\Office\Document\DocumentDelete;
 use Firststep\Controllers\Office\Document\DocumentEdit;
@@ -132,7 +132,7 @@ class Router {
 			case self::ROUTE_OFFICE_ENTITY_INFO:          $controller = new EntityInfo; break;
 			case self::ROUTE_OFFICE_ENTITY_SEARCH:        $controller = new EntitySearch; break;
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
-			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityLogic; break;
+			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityTransaction; break;
             case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new EntityDashboard; break;
 			case self::ROUTE_OFFICE_DOCUMENT_ACCEPT:      $controller = new DocumentAccept; break;
             case self::ROUTE_OFFICE_DOCUMENT_DELETE:      $controller = new DocumentDelete; break;
