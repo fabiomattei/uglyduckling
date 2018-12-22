@@ -68,7 +68,7 @@ class Router {
 	const ROUTE_OFFICE_ENTITY_INFO          = 'officeentityinfo';
 	const ROUTE_OFFICE_ENTITY_SEARCH        = 'officeentitysearch';
 	const ROUTE_OFFICE_ENTITY_EXPORT        = 'officeentityexport';
-	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitylogic';
+	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitytransaction';
     const ROUTE_OFFICE_ENTITY_DASHBOARD     = 'officeentitydashboard';
 	const ROUTE_OFFICE_DOCUMENT_ACCEPT      = 'officedocumentaccept';
 	const ROUTE_OFFICE_DOCUMENT_DELETE      = 'officedocumentdelete';
@@ -109,8 +109,8 @@ class Router {
     const ROUTE_ADMIN_GROUP_VIEW            = 'admingroupview';
     const ROUTE_ADMIN_INFO_LIST             = 'admininfolist';
     const ROUTE_ADMIN_INFO_VIEW             = 'admininfoview';
-    const ROUTE_ADMIN_LOGIC_LIST            = 'adminlogiclist';
-    const ROUTE_ADMIN_LOGIC_VIEW            = 'adminlogicview';
+    const ROUTE_ADMIN_LOGIC_LIST            = 'admintransactionlist';
+    const ROUTE_ADMIN_LOGIC_VIEW            = 'admintransactionview';
     const ROUTE_ADMIN_SEARCH_LIST           = 'adminsearchlist';
     const ROUTE_ADMIN_SEARCH_VIEW           = 'adminsearchview';
     const ROUTE_ADMIN_USER_DELETE           = 'adminuserdelete';

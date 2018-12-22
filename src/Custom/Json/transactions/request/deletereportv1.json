@@ -1,6 +1,6 @@
 { 
   "name": "deletereportv1",
-  "metadata": { "type":"logic", "version": "1" },
+  "metadata": { "type":"transaction", "version": "1" },
   "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
   "get": {
     "request": {

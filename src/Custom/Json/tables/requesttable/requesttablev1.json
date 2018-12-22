@@ -19,7 +19,7 @@
       "actions": [
         {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
         {"label": "Edit", "action": "entityform", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Delete", "action": "entitylogic", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Delete", "action": "entitytransaction", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
         {"label": "Search", "action": "entitysearch", "resource": "searchreportv1", "parameters":[{}] },
         {"label": "Export", "action": "entityexport", "resource": "requestexportv1", "parameters":[{}] }
       ]

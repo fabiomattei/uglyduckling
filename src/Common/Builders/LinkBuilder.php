@@ -41,7 +41,7 @@ class LinkBuilder {
             case 'entityexport':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
-            case 'entitylogic':
+            case 'entitytransaction':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
 	        case 'documentinbox':
@@ -120,7 +120,7 @@ class LinkBuilder {
             case 'entityexport':
                 return $router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
                 break;
-            case 'entitylogic':
+            case 'entitytransaction':
                 return $router->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
                 break;
 	        case 'documentinbox':

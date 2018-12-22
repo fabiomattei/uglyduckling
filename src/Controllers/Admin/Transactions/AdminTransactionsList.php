@@ -43,7 +43,7 @@ class AdminTransactionsList extends Controller {
         $table->closeTHead();
 
         $table->addTBody();
-        foreach ( $this->jsonloader->getResourcesByType( 'logic' ) as $res ) {
+        foreach ( $this->jsonloader->getResourcesByType( 'transaction' ) as $res ) {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
