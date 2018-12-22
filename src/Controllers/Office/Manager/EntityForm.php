@@ -54,11 +54,10 @@ class EntityForm extends ManagerEntityController {
         try {
             $conn->beginTransaction();
             $this->queryExecuter->setDBH($conn);
+            $this->queryExecuter->setQueryBuilder($this->queryBuilder);
+            $this->queryExecuter->setPostParameters($this->postParameters);
             foreach ($this->resource->post->transactions as $transaction) {
-                $this->queryExecuter->setQueryBuilder($this->queryBuilder);
                 $this->queryExecuter->setQueryStructure($transaction);
-                $this->queryExecuter->setPostParameters($this->postParameters);
-
                 $this->queryExecuter->executeQuery();
             }
             $conn->commit();

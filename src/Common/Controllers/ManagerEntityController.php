@@ -16,6 +16,7 @@ class ManagerEntityController extends Controller {
 	public $get_validation_rules = array( 'res' => 'required|max_len,50' );
     public $get_filter_rules     = array( 'res' => 'trim' );
     protected $resource;
+    protected $internalGetParameters;
 
     public function loadResource() {
     	$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );

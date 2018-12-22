@@ -36,6 +36,8 @@ class Controller {
     public $jsonloader;
     public $logger;
     public $messages;
+    public $getParameters;
+    public $postParameters;
 
     public function makeAllPresets( 
 		Router $router, 
