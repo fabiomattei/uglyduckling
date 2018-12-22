@@ -79,9 +79,9 @@ class AdminFormView extends Controller {
         $actionsTable->closeRow();
         $actionsTable->closeTHead();
         $actionsTable->addTBody();
-        foreach ( $this->resource->post->transactions as $logic ) {
+        foreach ( $this->resource->post->transactions as $transaction ) {
             $actionsTable->addRow();
-            $actionsTable->addColumn($logic->sql ?? 'Undefined');
+            $actionsTable->addColumn($transaction->sql ?? 'Undefined');
             $actionsTable->closeRow();
         }
         $actionsTable->closeTBody();

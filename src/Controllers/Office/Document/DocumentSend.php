@@ -36,9 +36,9 @@ class DocumentSend extends ManagerDocumentSenderController {
 
         // if there are transactions to implement
         if ( isset($this->resource->onsend->transactions) ) {
-            foreach ($this->resource->onsend->transactions as $logic) {
+            foreach ($this->resource->onsend->transactions as $transaction) {
                 $this->queryExecuter->setQueryBuilder($this->queryBuilder);
-                $this->queryExecuter->setQueryStructure($logic);
+                $this->queryExecuter->setQueryStructure($transaction);
                 $this->queryExecuter->setParameters($this->getParameters);
 
                 $this->queryExecuter->executeQuery();

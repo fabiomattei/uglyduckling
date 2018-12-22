@@ -70,9 +70,9 @@ class AdminTransactionView extends Controller {
         $actionsTable->closeTHead();
         $actionsTable->addTBody();
         print_r($this->resource->get->transactions);
-        foreach ( $this->resource->get->transactions as $logic ) {
+        foreach ( $this->resource->get->transactions as $transaction ) {
             $actionsTable->addRow();
-            $actionsTable->addColumn($logic->sql ?? 'Undefined');
+            $actionsTable->addColumn($transaction->sql ?? 'Undefined');
             $actionsTable->closeRow();
         }
         $actionsTable->closeTBody();

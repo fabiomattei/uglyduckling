@@ -36,9 +36,9 @@ class DocumentReject extends ManagerDocumentSenderController {
 
         // if there are transactions to implement
         if ( isset($this->resource->onreject->transactions) ) {
-            foreach ($this->resource->onreject->transactions as $logic) {
+            foreach ($this->resource->onreject->transactions as $transaction) {
                 $this->queryExecuter->setQueryBuilder($this->queryBuilder);
-                $this->queryExecuter->setQueryStructure($logic);
+                $this->queryExecuter->setQueryStructure($transaction);
                 $this->queryExecuter->setParameters($this->getParameters);
 
                 $this->queryExecuter->executeQuery();

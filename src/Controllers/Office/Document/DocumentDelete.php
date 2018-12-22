@@ -40,9 +40,9 @@ class DocumentDelete extends ManagerDocumentSenderController {
 
         // if there are transactions to implement
         if ( isset($this->resource->ondelete->transactions) ) {
-            foreach ($this->resource->ondelete->transactions as $logic) {
+            foreach ($this->resource->ondelete->transactions as $transaction) {
                 $this->queryExecuter->setQueryBuilder($this->queryBuilder);
-                $this->queryExecuter->setQueryStructure($logic);
+                $this->queryExecuter->setQueryStructure($transaction);
                 $this->queryExecuter->setParameters($this->getParameters);
 
                 $this->queryExecuter->executeQuery();

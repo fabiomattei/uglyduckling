@@ -84,25 +84,25 @@ class EntityView extends Controller {
                 $resourcesTable->closeRow();
             }
             if (isset($tmpres->get->transactions)) {
-                foreach ( $tmpres->get->transactions as $logic ) {
-                    if ( isset($logic->sql) AND strpos($logic->sql, $this->resource->entity->tablename) !== false )
+                foreach ( $tmpres->get->transactions as $transaction ) {
+                    if ( isset($transaction->sql) AND strpos($transaction->sql, $this->resource->entity->tablename) !== false )
                     {
                         $resourcesTable->addRow();
                         $resourcesTable->addColumn($reskey);
                         $resourcesTable->addColumn($tmpres->metadata->type);
-                        $resourcesTable->addColumn($logic->sql);
+                        $resourcesTable->addColumn($transaction->sql);
                         $resourcesTable->closeRow();
                     }
                 }
             }
             if (isset($tmpres->post->transactions)) {
-                foreach ( $tmpres->post->transactions as $logic ) {
-                    if ( isset($logic->sql) AND strpos($logic->sql, $this->resource->entity->tablename) !== false )
+                foreach ( $tmpres->post->transactions as $transaction ) {
+                    if ( isset($transaction->sql) AND strpos($transaction->sql, $this->resource->entity->tablename) !== false )
                     {
                         $resourcesTable->addRow();
                         $resourcesTable->addColumn($reskey);
                         $resourcesTable->addColumn($tmpres->metadata->type);
-                        $resourcesTable->addColumn($logic->sql);
+                        $resourcesTable->addColumn($transaction->sql);
                         $resourcesTable->closeRow();
                     }
                 }

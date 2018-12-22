@@ -74,9 +74,9 @@ class DocumentNew extends ManagerDocumentSenderController {
 
         // if there are transactions to implement
 		if ( isset( $this->resource->oninsert->transactions ) ) {
-            foreach ( $this->resource->oninsert->transactions as $logic ) {
+            foreach ( $this->resource->oninsert->transactions as $transaction ) {
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-                $this->queryExecuter->setQueryStructure( $logic );
+                $this->queryExecuter->setQueryStructure( $transaction );
                 $this->queryExecuter->setParameters( $this->postParameters );
 
                 $this->queryExecuter->executeQuery();
