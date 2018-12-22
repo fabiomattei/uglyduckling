@@ -11,7 +11,6 @@
       { "path":"./Custom/Json/groups/index.json", "type":"index" },
       { "path":"./Custom/Json/infos/index.json", "type":"index" },
       { "path":"./Custom/Json/transactions/index.json", "type":"index" },
-      { "path":"./Custom/Json/panels/index.json", "type":"index" },
       { "path":"./Custom/Json/search/index.json", "type":"index" },
       { "path":"./Custom/Json/tables/index.json", "type":"index" }
   ]

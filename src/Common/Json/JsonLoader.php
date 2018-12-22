@@ -38,7 +38,7 @@ class JsonLoader {
 			$data = fread($handle,filesize($indexPath));
 			$loadedfile = $this->json_decode_with_error_control($data);
 			foreach ($loadedfile->scripts as $key) {
-				if($key->type == 'index') {
+				if($key->type === 'index') {
 					$this->loadIndex( $key->path );
 				} else {
 					$this->resourcesIndex[$key->name] = new stdClass;
@@ -70,6 +70,32 @@ class JsonLoader {
 			throw new \Exception('[JsonLoader] :: Resource '.$key.' undefined in array index!!!');
 		}
 	}
+
+    /**
+     * Given the key of a specific resource id checks if the resource is defined and it returns the action to link it
+     *
+     * @param string $resource_key
+     * @return string
+     * @throws \Exception
+     */
+	public function getActionRelatedToResource( string $resource_key ): string {
+        if ( array_key_exists( $resource_key, $this->resourcesIndex ) ) {
+            switch ( $this->resourcesIndex[$resource_key]->type ) {
+                case 'index': return '';
+                case 'dashboard': return 'entitydashboard';
+                case 'table': return 'entitytable';
+                case 'form': return 'entityform';
+                case 'info': return 'entityinfo';
+                case 'search': return 'entitysearch';
+                case 'export': return 'entityexport';
+                case 'chart': return 'entitychart';
+                case 'transaction': return 'entitytransaction';
+            }
+
+        } else {
+            throw new \Exception('[JsonLoader] :: It is not possible to assocate an action to Resource: '.$resource_key);
+        }
+    }
 
     /**
      * Return the index of all resources loaded from the main index
