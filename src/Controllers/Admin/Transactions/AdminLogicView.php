@@ -6,7 +6,7 @@
  * Time: 5.14
  */
 
-namespace Firststep\Controllers\Admin\Logics;
+namespace Firststep\Controllers\Admin\Transactions;
 
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Controllers\Controller;
