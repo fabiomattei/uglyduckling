@@ -1,54 +1,54 @@
-{ 
-	"name": "formrequestv1",
-	"metadata": { "type":"form", "version": "1" },
-	"allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
-	"get": {
-		"request": {
-			"parameters": [
-				{ "type":"integer", "validation":"required|integer", "name":"id" }
-			]
-		},
-		"query": {
-			"sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
-			"parameters":[
-				{ "placeholder": ":id", "getparameter": "id" }
-			]
-		},
-		"form": {
-			"title": "My editing form",
-			"submitTitle": "Save",
-			"fields": [
-				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
-				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
-				{ "type":"date", "name":"duedate", "label":"Due date", "sqlfield":"duedate", "width":"6", "row":"2" },
-				{ "type":"dropdown", "name":"category", "label":"Category", "sqlfield":"category", "width":"6", "row":"2", "options":[
-					{ "value":"High", "Label":"High" },
-					{ "value":"Medium", "Label":"Medium" },
-					{ "value":"Low", "Label":"Low" }
-				]},
-				{ "type":"hidden", "name":"id", "sqlfield":"id", "row":"2" }
-			]
-		}
-	},
-	"post": {
-		"request": {
-			"postparameters": [
-				{ "validation":"required|numeric", "name":"id" },
-				{ "validation":"max_len,2500", "name":"name" },
-				{ "validation":"required|numeric", "name":"amount" },
-				{ "validation":"max_len,10", "name":"duedate" }
-			]
-		},
-		"transactions": [
-			{
-				"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate WHERE id=:id;",
-				"parameters":[
-					{ "placeholder": ":id", "postparameter": "id" },
-					{ "placeholder": ":name", "postparameter": "name" },
-					{ "placeholder": ":amount", "postparameter": "amount" },
-					{ "placeholder": ":duedate", "postparameter": "duedate" }
-				]
-			}
-		]
-	}
+{
+  "name": "formrequestv1",
+  "metadata": { "type":"form", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "get": {
+    "request": {
+      "parameters": [
+        { "type":"integer", "validation":"required|integer", "name":"id" }
+      ]
+    },
+    "query": {
+      "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=:id;",
+      "parameters":[
+        { "placeholder": ":id", "getparameter": "id" }
+      ]
+    },
+    "form": {
+      "title": "My editing form",
+      "submitTitle": "Save",
+      "fields": [
+        { "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
+        { "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
+        { "type":"date", "name":"duedate", "label":"Due date", "sqlfield":"duedate", "width":"6", "row":"2" },
+        { "type":"dropdown", "name":"category", "label":"Category", "sqlfield":"category", "width":"6", "row":"2", "options":[
+          { "value":"High", "Label":"High" },
+          { "value":"Medium", "Label":"Medium" },
+          { "value":"Low", "Label":"Low" }
+        ]},
+        { "type":"hidden", "name":"id", "sqlfield":"id", "row":"2" }
+      ]
+    }
+  },
+  "post": {
+    "request": {
+      "postparameters": [
+        { "validation":"required|numeric", "name":"id" },
+        { "validation":"max_len,2500", "name":"name" },
+        { "validation":"required|numeric", "name":"amount" },
+        { "validation":"max_len,10", "name":"duedate" }
+      ]
+    },
+    "transactions": [
+      {
+        "sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate WHERE id=:id;",
+        "parameters":[
+          { "placeholder": ":id", "postparameter": "id" },
+          { "placeholder": ":name", "postparameter": "name" },
+          { "placeholder": ":amount", "postparameter": "amount" },
+          { "placeholder": ":duedate", "postparameter": "duedate" }
+        ]
+      }
+    ]
+  }
 }
