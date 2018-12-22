@@ -61,7 +61,7 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" '.( $this->active === Router::ROUTE_ADMIN_LOGIC_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_LOGIC_LIST ).'">
+                    <a class="nav-link" '.( $this->active === Router::ROUTE_ADMIN_TRANSACTION_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_TRANSACTION_LIST ).'">
                       <span data-feather="cpu"></span>
                       Logics
                     </a>

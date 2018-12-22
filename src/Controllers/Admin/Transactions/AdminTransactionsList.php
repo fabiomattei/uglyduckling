@@ -47,13 +47,13 @@ class AdminTransactionsList extends Controller {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
-            $table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_LOGIC_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
+            $table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_TRANSACTION_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
             $table->closeRow();
         }
         $table->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_LOGIC_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_LOGIC_LIST, $this->router ) );
+        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_TRANSACTION_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_TRANSACTION_LIST, $this->router ) );
         $this->centralcontainer = array( $table );
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();

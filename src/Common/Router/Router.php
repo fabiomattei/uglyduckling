@@ -109,8 +109,8 @@ class Router {
     const ROUTE_ADMIN_GROUP_VIEW            = 'admingroupview';
     const ROUTE_ADMIN_INFO_LIST             = 'admininfolist';
     const ROUTE_ADMIN_INFO_VIEW             = 'admininfoview';
-    const ROUTE_ADMIN_LOGIC_LIST            = 'admintransactionlist';
-    const ROUTE_ADMIN_LOGIC_VIEW            = 'admintransactionview';
+    const ROUTE_ADMIN_TRANSACTION_LIST      = 'admintransactionlist';
+    const ROUTE_ADMIN_TRANSACTION_VIEW      = 'admintransactionview';
     const ROUTE_ADMIN_SEARCH_LIST           = 'adminsearchlist';
     const ROUTE_ADMIN_SEARCH_VIEW           = 'adminsearchview';
     const ROUTE_ADMIN_USER_DELETE           = 'adminuserdelete';
@@ -173,8 +173,8 @@ class Router {
             case self::ROUTE_ADMIN_GROUP_VIEW:            $controller = new AdminGroupView; break;
             case self::ROUTE_ADMIN_INFO_LIST:             $controller = new AdminInfoList; break;
             case self::ROUTE_ADMIN_INFO_VIEW:             $controller = new AdminInfoView; break;
-            case self::ROUTE_ADMIN_LOGIC_LIST:            $controller = new AdminTransactionsList; break;
-            case self::ROUTE_ADMIN_LOGIC_VIEW:            $controller = new AdminTransactionView; break;
+            case self::ROUTE_ADMIN_TRANSACTION_LIST:      $controller = new AdminTransactionsList; break;
+            case self::ROUTE_ADMIN_TRANSACTION_VIEW:      $controller = new AdminTransactionView; break;
             case self::ROUTE_ADMIN_SEARCH_LIST:           $controller = new AdminSearchList; break;
             case self::ROUTE_ADMIN_SEARCH_VIEW:           $controller = new AdminSearchView; break;
             case self::ROUTE_ADMIN_USER_DELETE:           $controller = new UserDelete; break;
