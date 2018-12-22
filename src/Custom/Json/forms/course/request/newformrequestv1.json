@@ -25,7 +25,7 @@
         { "validation":"max_len,10", "name":"duedate" }
       ]
     },
-    "logics": [
+    "transactions": [
       {
         "sql":"INSERT INTO requestv1 (name, amount, duedate) VALUES (:name, :amount, :duedate);",
         "parameters":[

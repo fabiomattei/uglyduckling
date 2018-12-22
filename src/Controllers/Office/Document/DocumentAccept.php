@@ -31,12 +31,12 @@ class DocumentAccept extends ManagerDocumentSenderController {
         // deleting from database
         $this->documentDao->updateAccept( $this->getParameters['id'] );
 
-        // applying the possible logics
+        // applying the possible transactions
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-        // if there are logics to implement
-        if ( isset($this->resource->onaccept->logics) ) {
-            foreach ($this->resource->onaccept->logics as $logic) {
+        // if there are transactions to implement
+        if ( isset($this->resource->onaccept->transactions) ) {
+            foreach ($this->resource->onaccept->transactions as $logic) {
                 $this->queryExecuter->setQueryBuilder($this->queryBuilder);
                 $this->queryExecuter->setQueryStructure($logic);
                 $this->queryExecuter->setParameters($this->getParameters);

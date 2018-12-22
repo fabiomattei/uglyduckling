@@ -73,7 +73,7 @@ class EntityDashboard extends ManagerEntityController {
         try {
             $conn->beginTransaction();
             $this->queryExecuter->setDBH( $conn );
-            foreach ($this->postresource->post->logics as $logic) {
+            foreach ($this->postresource->post->transactions as $logic) {
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setQueryStructure( $logic );
                 $this->queryExecuter->setPostParameters( $this->postParameters );

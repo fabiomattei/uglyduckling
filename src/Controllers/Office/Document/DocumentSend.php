@@ -31,12 +31,12 @@ class DocumentSend extends ManagerDocumentSenderController {
         // deleting from database
         $this->documentDao->updateSend( $this->getParameters['id'] );
 
-        // applying the possible logics
+        // applying the possible transactions
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-        // if there are logics to implement
-        if ( isset($this->resource->onsend->logics) ) {
-            foreach ($this->resource->onsend->logics as $logic) {
+        // if there are transactions to implement
+        if ( isset($this->resource->onsend->transactions) ) {
+            foreach ($this->resource->onsend->transactions as $logic) {
                 $this->queryExecuter->setQueryBuilder($this->queryBuilder);
                 $this->queryExecuter->setQueryStructure($logic);
                 $this->queryExecuter->setParameters($this->getParameters);

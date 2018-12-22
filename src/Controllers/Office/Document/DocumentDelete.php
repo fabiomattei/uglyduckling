@@ -35,12 +35,12 @@ class DocumentDelete extends ManagerDocumentSenderController {
 		// deleting from database
 		$this->documentDao->delete( $this->getParameters['id'] );
 		
-		// applying the possible logics
+		// applying the possible transactions
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-        // if there are logics to implement
-        if ( isset($this->resource->ondelete->logics) ) {
-            foreach ($this->resource->ondelete->logics as $logic) {
+        // if there are transactions to implement
+        if ( isset($this->resource->ondelete->transactions) ) {
+            foreach ($this->resource->ondelete->transactions as $logic) {
                 $this->queryExecuter->setQueryBuilder($this->queryBuilder);
                 $this->queryExecuter->setQueryStructure($logic);
                 $this->queryExecuter->setParameters($this->getParameters);

@@ -79,7 +79,7 @@ class AdminFormView extends Controller {
         $actionsTable->closeRow();
         $actionsTable->closeTHead();
         $actionsTable->addTBody();
-        foreach ( $this->resource->post->logics as $logic ) {
+        foreach ( $this->resource->post->transactions as $logic ) {
             $actionsTable->addRow();
             $actionsTable->addColumn($logic->sql ?? 'Undefined');
             $actionsTable->closeRow();

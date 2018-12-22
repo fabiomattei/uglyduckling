@@ -26,7 +26,7 @@ class EntityTransaction extends ManagerEntityController {
         try {
             $conn->beginTransaction();
             $this->queryExecuter->setDBH( $conn );
-            foreach ($this->resource->get->logics as $logic) {
+            foreach ($this->resource->get->transactions as $logic) {
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setQueryStructure( $logic );
                 $this->queryExecuter->setGetParameters( $this->internalGetParameters );

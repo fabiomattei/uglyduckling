@@ -58,7 +58,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 				{ "validation":"max_len,10", "name":"duedate" }
 			]
 		},
-		"logics": [
+		"transactions": [
 			{
 				"sql":"UPDATE requestv1 SET name=:name, amount=:amount, duedate=:duedate WHERE id=:id;",
 				"parameters":[

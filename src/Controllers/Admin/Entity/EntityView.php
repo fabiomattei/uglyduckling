@@ -83,8 +83,8 @@ class EntityView extends Controller {
                 $resourcesTable->addColumn($tmpres->post->query->sql);
                 $resourcesTable->closeRow();
             }
-            if (isset($tmpres->get->logics)) {
-                foreach ( $tmpres->get->logics as $logic ) {
+            if (isset($tmpres->get->transactions)) {
+                foreach ( $tmpres->get->transactions as $logic ) {
                     if ( isset($logic->sql) AND strpos($logic->sql, $this->resource->entity->tablename) !== false )
                     {
                         $resourcesTable->addRow();
@@ -95,8 +95,8 @@ class EntityView extends Controller {
                     }
                 }
             }
-            if (isset($tmpres->post->logics)) {
-                foreach ( $tmpres->post->logics as $logic ) {
+            if (isset($tmpres->post->transactions)) {
+                foreach ( $tmpres->post->transactions as $logic ) {
                     if ( isset($logic->sql) AND strpos($logic->sql, $this->resource->entity->tablename) !== false )
                     {
                         $resourcesTable->addRow();

@@ -69,12 +69,12 @@ class DocumentNew extends ManagerDocumentSenderController {
 		// saving in database
 		$this->documentDao->insert( $queryparameters );
 		
-		// applying the possible logics
+		// applying the possible transactions
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 
-        // if there are logics to implement
-		if ( isset( $this->resource->oninsert->logics ) ) {
-            foreach ( $this->resource->oninsert->logics as $logic ) {
+        // if there are transactions to implement
+		if ( isset( $this->resource->oninsert->transactions ) ) {
+            foreach ( $this->resource->oninsert->transactions as $logic ) {
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setQueryStructure( $logic );
                 $this->queryExecuter->setParameters( $this->postParameters );
