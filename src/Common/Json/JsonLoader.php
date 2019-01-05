@@ -124,14 +124,14 @@ class JsonLoader {
     /**
      * Decode json string with error control
      *
-     * based on json_decode, it build a php structure based on the json structure.
+     * based on json_decode, it builds a php structure based on the json structure.
      * throws exceptions
      *
      * @param $data string that contains the json structure
      *
      * @return mixed, a php structure that mirrors the json structure
      *
-     * @throws \Exception after the error check
+     * @throws \InvalidArgumentException after the error check
      * JSON_ERROR_DEPTH
      * JSON_ERROR_STATE_MISMATCH
      * JSON_ERROR_CTRL_CHAR
@@ -146,22 +146,22 @@ class JsonLoader {
         	    // throw new \Exception(' - No errors');
         	break;
         	case JSON_ERROR_DEPTH:
-        	    throw new \Exception('[JsonLoader] :: Maximum stack depth exceeded');
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Maximum stack depth exceeded ::'. json_last_error_msg());
         	break;
         	case JSON_ERROR_STATE_MISMATCH:
-        	    throw new \Exception('[JsonLoader] :: Underflow or the modes mismatch');
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Underflow or the modes mismatch ::'. json_last_error_msg());
         	break;
         	case JSON_ERROR_CTRL_CHAR:
-        	    throw new \Exception('[JsonLoader] :: Unexpected control character found');
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unexpected control character found ::'. json_last_error_msg());
         	break;
         	case JSON_ERROR_SYNTAX:
-        	    throw new \Exception('[JsonLoader] :: Syntax error, malformed JSON');
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Syntax error, malformed JSON ::'. json_last_error_msg());
         	break;
         	case JSON_ERROR_UTF8:
-        	    throw new \Exception('[JsonLoader] :: Malformed UTF-8 characters, possibly incorrectly encoded');
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Malformed UTF-8 characters, possibly incorrectly encoded ::'. json_last_error_msg());
         	break;
         	default:
-        	    throw new \Exception('[JsonLoader] :: Unknown error');
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unknown error ::'. json_last_error_msg());
         	break;
     	}
 		return $loadeddata;
