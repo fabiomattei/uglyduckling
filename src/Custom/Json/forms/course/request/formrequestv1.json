@@ -49,6 +49,13 @@
           { "placeholder": ":duedate", "postparameter": "duedate" }
         ]
       }
-    ]
+    ],
+    "messages": [
+      { "type":"success", "body": "Thank you for inserting :name ", "parameters":[{ "placeholder": ":name", "postparameter": "name" }]}
+    ],
+    "sessionupdates": [
+      { "type":"long", "sessionparameter":"siteid", "postparameter":"riskcenterid" }
+    ],
+    "redirect": { "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] }
   }
 }
