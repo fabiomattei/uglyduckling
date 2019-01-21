@@ -87,13 +87,11 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testFormContainsTextArea(){
-
-
 		$form = new Firststep\Common\Builders\FormBuilder;
         $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-        $queryExecuter->expects($this->once())->method('executeSql')->will($this->returnValue(true));
+		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
         $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
 
         $form->setRouter($router);
@@ -103,7 +101,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
         $form->setQueryExecuter( $queryExecuter );
         $form->setQueryBuilder( $queryBuilder );
 		$block = $form->createForm();
-		$this->assertTrue(strpos($block->show(), '<textarea id="name" name="name">') !== false);
+		$this->assertContains('<textarea class="form-control" id="name" name="name"></textarea>', $block->show());
 		unset($form);
 	}
 	
