@@ -53,6 +53,24 @@ class InfoBuilder {
         $this->dbconnection = $dbconnection;
     }
 
+    /**
+     * Setting method for testing purposes
+     *
+     * @param $queryExecuter
+     */
+    public function setQueryExecuter( $queryExecuter ) {
+        $this->queryExecuter = $queryExecuter;
+    }
+
+    /**
+     * Setting method for testing purposes
+     *
+     * @param $queryBuilder
+     */
+    public function setQueryBuilder( $queryBuilder ) {
+        $this->queryBuilder = $queryBuilder;
+    }
+
     public function createInfo() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
