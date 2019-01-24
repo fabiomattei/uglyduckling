@@ -85,10 +85,11 @@ class InfoBuilder {
 		$fieldRows = array();
 		
 		foreach ($this->resource->get->info->fields as $field) {
-			if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
-			$fieldRows[$field->row][] = $field;
+			if( !array_key_exists(($field->row ?? 1), $fieldRows) ) $fieldRows[$field->row] = array();
+			$fieldRows[($field->row ?? 1)][] = $field;
 		}
 		
+        $rowcounter = 1;
 		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
 			foreach ($row as $field) {
@@ -104,7 +105,8 @@ class InfoBuilder {
                     $formBlock->addDateField($field->label, $value, $field->width);
                 }
 			}
-			$formBlock->closeRow('row '.$row->row);
+			$formBlock->closeRow('row '.$rowcounter);
+            $rowcounter++;
 		}
         return $formBlock;
     }
