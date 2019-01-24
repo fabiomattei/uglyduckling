@@ -35,7 +35,6 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 	public function testGetValidationRoules(){
 		$val = new Firststep\Common\Builders\ValidationBuilder;
 		$rules = $val->getValidationRoules( $this->parameters );
-		print_r($rules);
 		$this->assertCount(2, $rules);
 		$this->assertContains('required|numeric', $rules['id']);
 		$this->assertContains('maxlength,15', $rules['name']);

@@ -19,7 +19,7 @@ class ManagerDocumentSenderController  extends ManagerEntityController {
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_get_request() {
+    public function check_authorization_get_request(): bool {
         if( !isset( $this->resource->sourcegroups ) ) return false;
         return in_array( $this->sessionWrapper->getSessionGroup(), $this->resource->sourcegroups );
     }
@@ -28,7 +28,7 @@ class ManagerDocumentSenderController  extends ManagerEntityController {
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_post_request() {
+    public function check_authorization_post_request(): bool {
         return in_array( $this->sessionWrapper->getSessionGroup(), $this->resource->sourcegroups );
     }
 
