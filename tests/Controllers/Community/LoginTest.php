@@ -26,8 +26,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock(); 
 		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock(); 		
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
+		$sessionWrapper->expects($this->any())->method('getSessionGroup')->will($this->returnValue('manager'));
 		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
-		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
@@ -60,6 +60,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock();
 		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock(); 		
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
+		$sessionWrapper->expects($this->any())->method('getSessionGroup')->will($this->returnValue('manager'));
 		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
 		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
@@ -98,6 +99,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$severWrapper->expects($this->any())->method('getRemoteAddress');
 		$severWrapper->expects($this->any())->method('getHttpUserAgent');
 		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
+		$sessionWrapper->expects($this->any())->method('getSessionGroup')->will($this->returnValue('manager'));
 		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
 		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
 		$sessionWrapper->expects($this->once())->method('setSessionUserId');
@@ -109,6 +111,9 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
+		$e = new stdClass; 
+		$e->defaultdashboard='defaultdashboard';
+		$jsonLoader->expects($this->once())->method('loadResource')->will($this->returnValue( $e ));
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
@@ -134,6 +139,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$user->usr_id = 1;
 		$user->usr_name = "fabio";
 		$user->usr_usrofid = 99;
+		$user->usr_defaultgroup = 'manager';
 		$controller->userDao = $this->getMockBuilder(Firststep\BusinessLogic\User\Daos\UserDao::class)->getMock();
 		$controller->userDao->expects($this->once())->method('getOneByFields')->will($this->returnValue($user));
 		$router->expects($this->once())->method('make_url');
