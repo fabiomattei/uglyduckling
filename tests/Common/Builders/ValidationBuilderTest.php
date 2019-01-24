@@ -35,9 +35,10 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 	public function testGetValidationRoules(){
 		$val = new Firststep\Common\Builders\ValidationBuilder;
 		$rules = $val->getValidationRoules( $this->parameters );
+		print_r($rules);
 		$this->assertCount(2, $rules);
-		$this->assertContains('required|numeric', $rules[0]);
-		$this->assertContains('maxlength,15', $rules[1]);
+		$this->assertContains('required|numeric', $rules['id']);
+		$this->assertContains('maxlength,15', $rules['name']);
 		unset($val);
 	}
 	
@@ -45,8 +46,8 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 		$val = new Firststep\Common\Builders\ValidationBuilder;
 		$filters = $val->getValidationFilters( $this->parameters );
 		$this->assertCount(2, $filters);
-		$this->assertContains('trim', $filters[0]);
-		$this->assertContains('trim', $filters[1]);
+		$this->assertContains('trim', $filters['id']);
+		$this->assertContains('trim', $filters['name']);
 		unset($val);
 	}
 	
