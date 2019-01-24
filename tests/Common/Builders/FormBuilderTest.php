@@ -41,9 +41,9 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
 				{ "type":"date", "name":"duedate", "label":"Due date", "sqlfield":"duedate", "width":"6", "row":"2" },
 				{ "type":"dropdown", "name":"category", "label":"Category", "sqlfield":"category", "width":"6", "row":"2", "options":[
-					{ "value":"High", "Label":"High" },
-					{ "value":"Medium", "Label":"Medium" },
-					{ "value":"Low", "Label":"Low" }
+					{ "value":"High", "label":"High" },
+					{ "value":"Medium", "label":"Medium" },
+					{ "value":"Low", "label":"Low" }
 				]},
 				{ "type":"hidden", "name":"id", "sqlfield":"id", "row":"2" }
 			]

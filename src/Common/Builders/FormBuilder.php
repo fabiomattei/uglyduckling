@@ -105,6 +105,7 @@ class FormBuilder {
 			$fieldRows[$field->row][] = $field;
 		}
 		
+        $rowcounter = 1;
 		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
 			foreach ($row as $field) {
@@ -133,7 +134,8 @@ class FormBuilder {
                     $formBlock->addHiddenField($field->name, $value);
                 }
 			}
-			$formBlock->closeRow('row '.$row->row);
+			$formBlock->closeRow('row '.$rowcounter);
+            $rowcounter++;
 		}
         $formBlock->addRow();
         $formBlock->addSubmitButton( 'save', $this->resource->get->form->submitTitle );
