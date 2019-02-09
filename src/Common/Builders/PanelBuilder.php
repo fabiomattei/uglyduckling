@@ -22,6 +22,7 @@ class PanelBuilder {
     private $chartjsBuilder;
     private $infoBuilder;
     private $formBuilder;
+    private $htmlTemplateLoader;
 
     /**
      * PanelBuilder constructor.
@@ -103,6 +104,7 @@ class PanelBuilder {
         }
 
         if ($resource->metadata->type == 'form') {
+            $this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             $this->formBuilder->setRouter( $this->router );
             $this->formBuilder->setResource( $resource );
             $this->formBuilder->setParameters( $this->parameters );
@@ -130,6 +132,10 @@ class PanelBuilder {
         }
 
         return $panelBlock;
+    }
+
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
 }

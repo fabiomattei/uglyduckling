@@ -7,17 +7,24 @@
 */
 class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	
-    private $form;
-	private $entity;
+    protected $form;
+	protected $entity;
+	protected $htmlTemplateLoader;
+	protected $queryExecuter;
 	
 	protected function setUp() {
+        $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
+        $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
+        $this->form = new Firststep\Common\Builders\FormBuilder;
+        $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
+
 		$this->entity = new stdClass;
 	    $this->entity->fl_id   = 3;	
 	    $this->entity->fl_name = 'prova';
 		$this->entity->fl_amount = 10;
 		$this->entity->fl_duedate = '2017-06-26';
 
-		$this->form = json_decode('{ 
+		$this->jsonform = json_decode('{ 
 	"name": "formrequestv1",
 	"metadata": { "type":"form", "version": "1" },
 	"allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
@@ -71,6 +78,18 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		]
 	}
 }');
+
+        $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
+        $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
+        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
+
+        $this->form->setRouter($router);
+        $this->form->setParameters( array( 'id' => '1' ) );
+        $this->form->setResource( $this->jsonform );
+        $this->form->setDbconnection( $dbconnection );
+        $this->form->setQueryExecuter( $this->queryExecuter );
+        $this->form->setQueryBuilder( $queryBuilder );
 	}
 	
 	/**
@@ -81,142 +100,57 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-		$this->assertTrue(is_object($form));
-		unset($form);
+		$this->assertTrue(is_object($this->form));
+		unset($this->form);
 	}
 
     public function testFormContainsFormTag(){
-        $form = new Firststep\Common\Builders\FormBuilder;
-        $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-        $queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-        $form->setResource( $this->form );
-        $form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-        $block = $form->createForm();
+        $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
+        $block = $this->form->createForm();
         $this->assertContains('<form', $block->show());
-        unset($form);
+        unset($this->form);
     }
 	
 	public function testFormContainsTextArea(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-        $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-		$form->setResource( $this->form );
-		$form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-		$block = $form->createForm();
+        $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
+        $block = $this->form->createForm();
 		$this->assertContains('<textarea class="form-control" id="name" name="name"></textarea>', $block->show());
-		unset($form);
+		unset($this->form);
 	}
 	
 	public function testFormContainsCurrencyField(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-		$form->setResource( $this->form );
-		$form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-		$block = $form->createForm();
+        $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
+        $block = $this->form->createForm();
 		$this->assertContains('<input class="form-control" type="number" id="amount" name="amount" value="" placeholder="10.0" min="0" step="0.01">', $block->show());
-		unset($form);
+		unset($this->form);
 	}
 	
 	public function testFormContainsDateField(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-		$form->setResource( $this->form );
-		$form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-		$block = $form->createForm();
+        $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
+        $block = $this->form->createForm();
 		$this->assertContains('<input class="form-control" type="date" id="duedate" name="duedate" value="" >', $block->show());
-		unset($form);
+		unset($this->form);
 	}
 	
 	public function testFormContainsTextAreaWithData(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->name = 'prova'; return $e; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-		$form->setResource( $this->form );
-		$form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-		$block = $form->createForm();
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->name = 'prova'; return $e; }}));
+		$block = $this->form->createForm();
 		$this->assertContains('name="name">prova</textarea>', $block->show());
-		unset($form);
+		unset($this->form);
 	}
 	
 	public function testFormContainsCurrencyFieldWithData(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->amount = 10; return $e; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-		$form->setResource( $this->form );
-		$form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-		$block = $form->createForm();
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->amount = 10; return $e; }}));
+		$block = $this->form->createForm();
 		$this->assertContains('name="amount" value="10" placeholder="10.0"', $block->show());
-		unset($form);
+		unset($this->form);
 	}
 	
 	public function testFormContainsDateFieldWithData(){
-		$form = new Firststep\Common\Builders\FormBuilder;
-$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->duedate = '26/06/2017'; return $e; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
-
-        $form->setRouter($router);
-        $form->setParameters( array( 'id' => '1' ) );
-		$form->setResource( $this->form );
-		$form->setDbconnection( $dbconnection );
-        $form->setQueryExecuter( $queryExecuter );
-        $form->setQueryBuilder( $queryBuilder );
-		$block = $form->createForm();
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->duedate = '26/06/2017'; return $e; }}));
+		$block = $this->form->createForm();
 		$this->assertContains('name="duedate" value="26/06/2017"', $block->show());
-		unset($form);
+		unset($this->form);
 	}
 
 }

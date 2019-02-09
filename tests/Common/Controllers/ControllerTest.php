@@ -32,6 +32,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
+        $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
 		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
 		$controller = new Firststep\Common\Controllers\Controller;
@@ -46,7 +47,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$redirector,
 			$jsonLoader,
 			$echologger,
-			$messages 
+			$messages,
+            $htmlTemplateBuilder
 		);
 		$this->assertTrue(is_object($controller));
 		unset($controller);

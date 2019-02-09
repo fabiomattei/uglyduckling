@@ -42,6 +42,7 @@ class EntityForm extends ManagerEntityController {
         $this->formBuilder->setResource( $this->resource );
         $this->formBuilder->setParameters( $this->internalGetParameters );
         $this->formBuilder->setDbconnection( $this->dbconnection );
+        $this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
 
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );

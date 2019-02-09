@@ -11,6 +11,7 @@ class BaseForm extends BaseBlock {
     private $subtitle;
     private $action;
     private $body;
+    private $htmlTemplateLoader;
 
     function __construct() {
         $this->body = '';
@@ -32,7 +33,7 @@ class BaseForm extends BaseBlock {
 	}
 
     function show(): string {
-        $file = file_get_contents('Templates/HTML/Form/body.html');
+        $file = $this->htmlTemplateLoader->loadTemplate('Form/body.html');
         return str_replace(array('${title}', '${subtitle}', '${action}', '${body}'), array($this->title, $this->subtitle, $this->action, $this->body), $file);
     }
 
@@ -124,6 +125,10 @@ class BaseForm extends BaseBlock {
   			            </script>';
         }
         return $out;
+    }
+
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
 }

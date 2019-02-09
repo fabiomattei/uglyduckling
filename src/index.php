@@ -7,7 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $severWrapper = new Firststep\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
 $htmlTemplateLoader = new Firststep\Common\Utils\HtmlTemplateLoader;
-$htmlTemplateLoader->setPath('src/Templates/HTML/');
+$htmlTemplateLoader->setPath('Templates/HTML/');
 
 $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");

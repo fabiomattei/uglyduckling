@@ -20,6 +20,7 @@ class FormBuilder {
     private $dbconnection;
     private $parameters;
     private $action;
+    private $htmlTemplateLoader;
 
     /**
      * InfoBuilder constructor.
@@ -72,6 +73,10 @@ class FormBuilder {
         $this->queryBuilder = $queryBuilder;
     }
 
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
+    }
+
     /**
      * Set the complete URL for the form action
      * @param action $action
@@ -96,6 +101,7 @@ class FormBuilder {
         }
 
 		$formBlock = new BaseForm;
+        $formBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
         $formBlock->setAction( $this->action ?? '');
 		$fieldRows = array();

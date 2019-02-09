@@ -6,6 +6,16 @@
 *  @author Fabio Mattei
 */
 class BaseFormTest extends PHPUnit_Framework_TestCase{
+
+    private $htmlTemplateLoader;
+    private $form;
+
+    protected function setUp() {
+        $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
+        $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
+        $this->form = new Firststep\Common\Blocks\BaseForm;
+        $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
+    }
 	
   /**
   * Just check if the YourClass has no syntax error 
@@ -15,17 +25,15 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$this->assertTrue(is_object($form));
-	unset($form);
+	$this->assertTrue(is_object($this->form));
+	unset($this->form);
   }
   
   /**
   * Checking empty form
   */
   public function testItShowsAnEmpyForm(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$this->assertContains('<form action="" method="POST" class="form-horizontal">', $form->show());
+	$this->assertContains('<form action="" method="POST" class="form-horizontal">', $this->form->show());
 	unset($form);
   }
   
@@ -33,9 +41,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a text field is added to the form
   */
   public function testItShowsAFormWithATextField(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addTextField( 'myname', 'My label', 'My placeholder', 'My value', '6');
-	$this->assertContains('<label for="myname">My label</label><input class="form-control" type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">', $form->show());
+	$this->form->addTextField( 'myname', 'My label', 'My placeholder', 'My value', '6');
+	$this->assertContains('<label for="myname">My label</label><input class="form-control" type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">', $this->form->show());
 	unset($form);
   }
   
@@ -43,9 +50,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a textarea field is added to the form
   */
   public function testItShowsAFormWithATextAreaField(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addTextAreaField( 'myname', 'My label', 'My value', '6');
-	$this->assertContains('<label for="myname">My label</label><textarea class="form-control" id="myname" name="myname">My value</textarea>', $form->show());
+	$this->form->addTextAreaField( 'myname', 'My label', 'My value', '6');
+	$this->assertContains('<label for="myname">My label</label><textarea class="form-control" id="myname" name="myname">My value</textarea>', $this->form->show());
 	unset($form);
   }
   
@@ -56,9 +62,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * The value passed to the method is selected: 2 => Option 2
   */
   public function testItShowsAFormWithADropdownField(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2', '6');
-	$this->assertContains('<label for="myname">My label</label><select class="form-control" id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>', $form->show());
+	$this->form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2', '6');
+	$this->assertContains('<label for="myname">My label</label><select class="form-control" id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>', $this->form->show());
 	unset($form);
   }
   
@@ -66,9 +71,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a file upload field is added to the form
   */
   public function testItShowsAFormWithAFileUploadField(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addFileUploadField( 'myname', 'My label', '6' );
-	$this->assertContains('<label for="myname">My label</label><input class="form-control" type="file" id="myname" name="myname">', $form->show());
+	$this->form->addFileUploadField( 'myname', 'My label', '6' );
+	$this->assertContains('<label for="myname">My label</label><input class="form-control" type="file" id="myname" name="myname">', $this->form->show());
 	unset($form);
   }
   
@@ -76,9 +80,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a helping text is added to the form
   */
   public function testItShowsAFormWithAHelpingTextField(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addHelpingText( 'Title', 'My description', '6' );
-	$this->assertContains('<h5>Title</h5><p>My description</p>', $form->show());
+	$this->form->addHelpingText( 'Title', 'My description', '6' );
+	$this->assertContains('<h5>Title</h5><p>My description</p>', $this->form->show());
 	unset($form);
   }
   
@@ -86,9 +89,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a helping text is added to the form
   */
   public function testItShowsAFormWithAHiddenField(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addHiddenField( 'myfield', 'My Value' );
-	$this->assertContains('<input type="hidden" name="myfield" value="My Value">', $form->show());
+	$this->form->addHiddenField( 'myfield', 'My Value' );
+	$this->assertContains('<input type="hidden" name="myfield" value="My Value">', $this->form->show());
 	unset($form);
   }
   
@@ -96,9 +98,8 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking a helping text is added to the form
   */
   public function testItShowsAFormWithASubmitButton(){
-	$form = new Firststep\Common\Blocks\BaseForm;
-	$form->addSubmitButton( 'myfield', 'My Value' );
-	$this->assertContains('<input class="form-control" type="submit" name="myfield" value="My Value"/>', $form->show());
+	$this->form->addSubmitButton( 'myfield', 'My Value' );
+	$this->assertContains('<input class="form-control" type="submit" name="myfield" value="My Value"/>', $this->form->show());
 	unset($form);
   }
   

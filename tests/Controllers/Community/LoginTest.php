@@ -32,7 +32,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
-		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
+        $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
+        $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
 		$controller = new Firststep\Controllers\Community\Login;
 		$controller->makeAllPresets(
@@ -46,7 +47,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 			$redirector,
 			$jsonLoader,
 			$echologger,
-			$messages 
+			$messages,
+            $htmlTemplateBuilder
 		);
 		$controller->getRequest();
 		
@@ -67,7 +69,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
-		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
+        $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
+        $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
 		$controller = new Firststep\Controllers\Community\Login;
 		$controller->makeAllPresets(
@@ -81,7 +84,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 			$redirector,
 			$jsonLoader,
 			$echologger,
-			$messages 
+			$messages,
+            $htmlTemplateBuilder
 		);
 		$controller->setPostParameters( array() );
 		$controller->userCanLogIn = $this->getMockBuilder(Firststep\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
@@ -115,7 +119,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$e->defaultdashboard='defaultdashboard';
 		$jsonLoader->expects($this->once())->method('loadResource')->will($this->returnValue( $e ));
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
-		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
+        $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
+        $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
 		$controller = new Firststep\Controllers\Community\Login;
 		$controller->makeAllPresets(
@@ -129,7 +134,8 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 			$redirector,
 			$jsonLoader,
 			$echologger,
-			$messages 
+			$messages,
+            $htmlTemplateBuilder
 		);
 		$controller->setPostParameters( array( 'email' => '' ) );
 		$controller->userCanLogIn = $this->getMockBuilder(Firststep\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
