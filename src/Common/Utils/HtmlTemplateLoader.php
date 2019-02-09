@@ -15,9 +15,15 @@ class HtmlTemplateLoader {
     public function setPath(string $path) {
         $this->path = $path;
     }
-// 'Templates/HTML/Form/body.html'
-    public function loadTemplate(string $filename) {
-        return file_get_contents($this->path.$filename);
+
+    /**
+     * @param $search string or array to look for
+     * @param $replace string or array to replace
+     * @param $filename name of the template html file
+     * @return string
+     */
+    public function loadTemplateAndReplace($search, $replace, $filename): string {
+        return str_replace( $search, $replace, file_get_contents($this->path.$filename));
     }
 
 }

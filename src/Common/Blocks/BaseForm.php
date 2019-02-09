@@ -33,20 +33,31 @@ class BaseForm extends BaseBlock {
 	}
 
     function show(): string {
-        $file = $this->htmlTemplateLoader->loadTemplate('Form/body.html');
-        return str_replace(array('${title}', '${subtitle}', '${action}', '${body}'), array($this->title, $this->subtitle, $this->action, $this->body), $file);
+        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${title}', '${subtitle}', '${action}', '${body}'),
+            array($this->title, $this->subtitle, $this->action, $this->body),
+            'Form/body.html');
     }
 
     function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {
-        $this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input class="form-control" type="text" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'"></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
+            'Form/textfield.html');
     }
 
     function addPasswordField( string $name, string $label, string $width ) {
-        $this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input class="form-control" type="password" id="'.$name.'" name="'.$name.'"></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label),
+            'Form/passwordfield.html');
     }
 
     function addTextAreaField( string $name, string $label, string $value, string $width ) {
-        $this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><textarea class="form-control" id="'.$name.'" name="'.$name.'">'.htmlspecialchars( $value ).'</textarea></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value )),
+            'Form/textarea.html');
     }
 
     /**
