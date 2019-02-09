@@ -73,11 +73,17 @@ class BaseForm extends BaseBlock {
      *   array( 'optvalue1' => 'opt label 1', 'optvalue2' => 'opt label 2' )
      */
     function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
-        $this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><select class="form-control" id="'.$name.'" name="'.$name.'">';
+        $htmloptions = '';
         foreach ($options as $key => $val) {
-            $this->body .= '<option value="'.$key.'" '.( $key==$value ? 'selected="selected"' : '' ).'>'.htmlspecialchars( $val ).'</option>';
+            $htmloptions .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${key}', '${selected}', '${val}'),
+                array($key, ( $key==$value ? 'selected="selected"' : '' ), htmlspecialchars( $val )),
+                'Form/selectfieldoption.html');
         }
-        $this->body .= '</select></div>';
+        $this->body .= $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${htmloptions}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, $htmloptions),
+            'Form/selectfield.html');
     }
 	
 	function addCurrencyField( string $name, string $label, string $placeholder, string $value, string $width ) {
