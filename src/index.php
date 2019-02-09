@@ -6,6 +6,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $severWrapper = new Firststep\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
+$htmlTemplateLoader = new Firststep\Common\Utils\HtmlTemplateLoader;
+$htmlTemplateLoader->setPath('src/Templates/HTML/');
 
 $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");
@@ -47,7 +49,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Firststep\Common\Redirectors\URLRedirector(),
 		$jsonloader,
     	new Firststep\Common\Loggers\EchoLogger(),
-    	new Firststep\Common\Blocks\BaseMessages()
+    	new Firststep\Common\Blocks\BaseMessages(),
+        $htmlTemplateLoader
 	);
 } else {
 	// settings for user that has not logged in the system
@@ -62,7 +65,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Firststep\Common\Redirectors\URLRedirector(),
 		$jsonloader,
     	new Firststep\Common\Loggers\EchoLogger(),
-    	new Firststep\Common\Blocks\BaseMessages()
+    	new Firststep\Common\Blocks\BaseMessages(),
+        $htmlTemplateLoader
 	);
 }
 $controller->setGetParameters( $_GET );

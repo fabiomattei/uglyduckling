@@ -12,6 +12,7 @@ use Firststep\Common\Setup\Setup;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Json\JsonLoader;
 use Firststep\Common\Database\DBConnection;
+use Firststep\Common\Utils\HtmlTemplateLoader;
 use Firststep\Common\Wrappers\ServerWrapper;
 use Firststep\Common\Wrappers\SessionWrapper;
 use Firststep\Common\SecurityCheckers\SecurityChecker;
@@ -36,6 +37,8 @@ class Controller {
     public $jsonloader;
     public $logger;
     public $messages;
+    public $htmlTemplateLoader;
+    public $gump;
     public $getParameters;
     public $postParameters;
 
@@ -50,7 +53,8 @@ class Controller {
 		Redirector $urlredirector,
 		JsonLoader $jsonloader,
 		Logger $logger, 
-		BaseMessages $messages 
+		BaseMessages $messages,
+        HtmlTemplateLoader $htmlTemplateLoader
 		) {
 		$this->router          = $router;
         $this->setup           = $setup;
@@ -63,6 +67,7 @@ class Controller {
 		$this->jsonloader      = $jsonloader;
         $this->logger          = $logger;
         $this->messages        = $messages;
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
         $this->gump            = new GUMP();
 
         // setting an array containing all parameters

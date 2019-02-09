@@ -10,11 +10,13 @@ class BaseForm extends BaseBlock {
     private $title;
     private $subtitle;
     private $action;
+    private $body;
 
     function __construct() {
         $this->body = '';
 		$this->adddate = false;
 		$this->action = '';
+        $this->body = '';
     }
 	
 	function setTitle( string $title ) {
@@ -30,14 +32,8 @@ class BaseForm extends BaseBlock {
 	}
 
     function show(): string {
-        $out = '<h3>' . $this->title . '</h3>';
-        if ( $this->subtitle != '' ) {
-            $out .= '<p>' . $this->subtitle . '</p>';
-        }
-        $out .= '<form action="'.$this->action.'" method="POST" class="form-horizontal">';
-        $out .= $this->body;
-        $out .= '</form>';
-        return $out;
+        $file = file_get_contents('Templates/HTML/Form/body.html');
+        return str_replace(array('${title}', '${subtitle}', '${action}', '${body}'), array($this->title, $this->subtitle, $this->action, $this->body), $file);
     }
 
     function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {

@@ -85,6 +85,25 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_object($form));
 		unset($form);
 	}
+
+    public function testFormContainsFormTag(){
+        $form = new Firststep\Common\Builders\FormBuilder;
+        $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
+        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
+        $queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
+        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
+
+        $form->setRouter($router);
+        $form->setParameters( array( 'id' => '1' ) );
+        $form->setResource( $this->form );
+        $form->setDbconnection( $dbconnection );
+        $form->setQueryExecuter( $queryExecuter );
+        $form->setQueryBuilder( $queryBuilder );
+        $block = $form->createForm();
+        $this->assertContains('<form', $block->show());
+        unset($form);
+    }
 	
 	public function testFormContainsTextArea(){
 		$form = new Firststep\Common\Builders\FormBuilder;
