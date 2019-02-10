@@ -11,16 +11,11 @@ namespace Firststep\Common\Builders;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Database\QueryExecuter;
 
-class TableBuilder {
+class TableBuilder extends BaseBuilder {
 
     const GET_METHOD = 'GET';
     const POST_METHOD = 'POST';
-    private $queryExecuter;
-    private $queryBuilder;
-    private $resource;
-    private $router;
-    private $dbconnection;
-    private $parameters;
+    private $query;
     private $method;
 
     function __construct() {
@@ -36,31 +31,6 @@ class TableBuilder {
      */
     public function setMethod(string $method) {
         $this->method = $method;
-    }
-
-    public function setRouter( $router ) {
-    	$this->router = $router;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $resource
-     */
-    public function setResource($resource) {
-        $this->resource = $resource;
-    }
-
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
     }
 
     public function createTable() {
