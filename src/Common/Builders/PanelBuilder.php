@@ -80,6 +80,7 @@ class PanelBuilder {
         $resource = $this->jsonloader->loadResource( $panel->resource );
 
         if ($resource->metadata->type == 'table') {
+            $this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             $this->tableBuilder->setRouter( $this->router );
             $this->tableBuilder->setResource( $resource );
             $this->tableBuilder->setParameters( $this->parameters );
@@ -88,6 +89,7 @@ class PanelBuilder {
         }
 
         if ($resource->metadata->type == 'chartjs') {
+            $this->chartjsBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             $this->chartjsBuilder->setRouter( $this->router );
             $this->chartjsBuilder->setResource( $resource );
             $this->chartjsBuilder->setParameters( $this->parameters );
@@ -96,6 +98,7 @@ class PanelBuilder {
         }
 
         if ($resource->metadata->type == 'info') {
+            $this->infoBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             $this->infoBuilder->setRouter( $this->router );
             $this->infoBuilder->setResource( $resource );
             $this->infoBuilder->setParameters( $this->parameters );
@@ -114,6 +117,7 @@ class PanelBuilder {
         }
 
         if ($resource->metadata->type == 'search') {
+            $this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             $this->formBuilder->setRouter( $this->router );
             $this->formBuilder->setResource( $resource );
             $this->formBuilder->setParameters( $this->parameters );
@@ -123,6 +127,7 @@ class PanelBuilder {
         }
 
         if ($resource->metadata->type == 'export') {
+            $this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             $this->formBuilder->setRouter( $this->router );
             $this->formBuilder->setResource( $resource );
             $this->formBuilder->setParameters( $this->parameters );
