@@ -62,7 +62,7 @@ class FormBuilder extends BaseBuilder {
                     $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value, $field->width);
                 }
                 if ($field->type === 'date') {
-                    $formBlock->addDateField($field->name, $field->label, $value, $field->width, $field->placeholder);
+                    $formBlock->addDateField($field->name, $field->label, $value, $field->width, $field->placeholder ?? date('Y-m-d'));
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
