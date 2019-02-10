@@ -17,7 +17,6 @@ class BaseChart extends BaseBlock {
     private $structure;
     private $chartdataglue;
     private $glue;
-    private $htmlTemplateLoader;
 
     function __construct() {
         $this->lables = '';
@@ -25,10 +24,6 @@ class BaseChart extends BaseBlock {
         $this->structure = '';
         $this->chartdataglue = array();
         $this->glue = array();
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function setStructure($structure) {
@@ -49,19 +44,18 @@ class BaseChart extends BaseBlock {
     }
 
     function addToHead(): string {
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'Chartjs/addtohead.html');
+        return '<script src="assets/js/lib/chartjs/Chart.bundle.min.js"></script>\n
+<script src="assets/js/lib/chartjs/Chart.min.js"></script>';
     }
 
     function show(): string {
         $this->structure->data->labels = $this->glue['#labels'];
         $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array( '${structure}' ),
-            array( json_encode( $this->structure ) ),
-            'Chartjs/body.html');
+        return "<canvas id=\"myChart\" width=\"400\" height=\"400\"></canvas>
+                <script>
+                    var ctx = document.getElementById(\"myChart\").getContext('2d');
+                    var myChart = new Chart(ctx, ".json_encode( $this->structure ).");
+                </script>";
     }
 
 }
