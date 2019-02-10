@@ -46,7 +46,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 			"fields": [
 				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
 				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
-				{ "type":"date", "name":"duedate", "label":"Due date", "sqlfield":"duedate", "width":"6", "row":"2" },
+				{ "type":"date", "name":"duedate", "label":"Due date", "placeholder":"2019-02-22", "sqlfield":"duedate", "width":"6", "row":"2" },
 				{ "type":"dropdown", "name":"category", "label":"Category", "sqlfield":"category", "width":"6", "row":"2", "options":[
 					{ "value":"High", "label":"High" },
 					{ "value":"Medium", "label":"Medium" },
@@ -128,7 +128,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	public function testFormContainsDateField(){
         $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
         $block = $this->form->createForm();
-		$this->assertContains('<input class="form-control" type="date" id="duedate" name="duedate" value="" placeholder="">', $block->show());
+		$this->assertContains('<input class="form-control" type="date" id="duedate" name="duedate" value="" placeholder="2019-02-22">', $block->show());
 		unset($this->form);
 	}
 	

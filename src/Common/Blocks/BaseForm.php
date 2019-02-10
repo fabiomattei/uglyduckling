@@ -93,7 +93,7 @@ class BaseForm extends BaseBlock {
             'Form/currencyfield.html');
 	}
 	
-	function addDateField( string $name, string $label, string $value, string $width ) {
+	function addDateField( string $name, string $label, string $value, string $width, string $placeholder ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
@@ -101,27 +101,45 @@ class BaseForm extends BaseBlock {
 	}
 
     function addFileUploadField( string $name, string $label, string $width ) {
-        $this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input class="form-control" type="file" id="'.$name.'" name="'.$name.'"></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label),
+            'Form/fileuploadfield.html');
     }
 
     function addHelpingText( string $title, string $text, string $width ) {
-        $this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${title}', '${text}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $title, $text),
+            'Form/helpingtext.html');
     }
 
     function addHiddenField( string $name, string $value ) {
-        $this->body .= '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars( $value ).'">';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${name}', '${value}'),
+            array($name, htmlspecialchars( $value )),
+            'Form/hiddenfield.html');
     }
 
     function addSubmitButton( string $name = 'save', string $value = 'Save' ) {
-        $this->body .= '<input class="form-control" type="submit" name="'.$name.'" value="'.htmlspecialchars( $value ).'"/>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${name}', '${value}'),
+            array($name, htmlspecialchars( $value )),
+            'Form/submitbutton.html');
     }
 	
 	function addRow() {
-		$this->body .= '<div class="row">';
-	}
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'Form/addrow.html');
+    }
 	
 	function closeRow( string $comment = '' ) {
-		$this->body .= '</div>  <!-- '.$comment.' -->';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${comment}'),
+            array($comment),
+            'Form/closerow.html');
 	}
 
     public function setHtmlTemplateLoader($htmlTemplateLoader) {

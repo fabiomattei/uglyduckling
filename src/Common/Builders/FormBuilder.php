@@ -134,7 +134,7 @@ class FormBuilder {
                     $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value, $field->width);
                 }
                 if ($field->type === 'date') {
-                    $formBlock->addDateField($field->name, $field->label, $value, $field->width);
+                    $formBlock->addDateField($field->name, $field->label, $value, $field->width, $field->placeholder);
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
