@@ -9,81 +9,9 @@
 namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\BaseForm;
-use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Builders\BaseBuilder;
 
-class FormBuilder {
-
-    private $queryExecuter;
-    private $queryBuilder;
-    private $resource;
-    private $router;
-    private $dbconnection;
-    private $parameters;
-    private $action;
-    private $htmlTemplateLoader;
-
-    /**
-     * InfoBuilder constructor.
-     */
-    public function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
-    }
-
-    public function setRouter( $router ) {
-        $this->router = $router;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $resource
-     */
-    public function setResource($resource) {
-        $this->resource = $resource;
-    }
-
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryExecuter
-     */
-    public function setQueryExecuter( $queryExecuter ) {
-        $this->queryExecuter = $queryExecuter;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryBuilder
-     */
-    public function setQueryBuilder( $queryBuilder ) {
-        $this->queryBuilder = $queryBuilder;
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
-
-    /**
-     * Set the complete URL for the form action
-     * @param action $action
-     */
-    public function setAction( string $action ) {
-        $this->action = $action;
-    }
+class FormBuilder extends BaseBuilder {
 
     public function createForm() {
         // If there is a query I look for data to fill the form,

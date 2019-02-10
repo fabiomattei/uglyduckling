@@ -10,66 +10,9 @@ namespace Firststep\Common\Builders;
 
 use Firststep\Common\Blocks\BaseInfo;
 use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Builders\BaseBuilder;
 
-class InfoBuilder {
-
-    private $queryExecuter;
-    private $queryBuilder;
-    private $resource;
-    private $router;
-    private $dbconnection;
-    private $parameters;
-
-    /**
-     * InfoBuilder constructor.
-     */
-    public function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
-    }
-
-    public function setRouter( $router ) {
-        $this->router = $router;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $resource
-     */
-    public function setResource($resource) {
-        $this->resource = $resource;
-    }
-
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryExecuter
-     */
-    public function setQueryExecuter( $queryExecuter ) {
-        $this->queryExecuter = $queryExecuter;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryBuilder
-     */
-    public function setQueryBuilder( $queryBuilder ) {
-        $this->queryBuilder = $queryBuilder;
-    }
+class InfoBuilder extends BaseBuilder {
 
     public function createInfo() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
