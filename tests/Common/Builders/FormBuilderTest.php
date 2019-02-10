@@ -128,7 +128,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	public function testFormContainsDateField(){
         $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
         $block = $this->form->createForm();
-		$this->assertContains('<input class="form-control" type="date" id="duedate" name="duedate" value="" >', $block->show());
+		$this->assertContains('<input class="form-control" type="date" id="duedate" name="duedate" value="" placeholder="">', $block->show());
 		unset($this->form);
 	}
 	

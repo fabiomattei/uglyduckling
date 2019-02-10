@@ -87,16 +87,17 @@ class BaseForm extends BaseBlock {
     }
 	
 	function addCurrencyField( string $name, string $label, string $placeholder, string $value, string $width ) {
-		$this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input class="form-control" type="number" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" placeholder="'.$placeholder.'" min="0" step="0.01"></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
+            'Form/currencyfield.html');
 	}
 	
 	function addDateField( string $name, string $label, string $value, string $width ) {
-		$this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input class="form-control" type="date" id="'.$name.'" name="'.$name.'" value="'.htmlspecialchars( $value ).'" ></div>';
-	}
-	
-	function addDateField_oldstyle( string $name, string $label, string $value, string $width ) {
-		$this->adddate = true;
-		$this->body .= '<div class="form-group '.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input class="form-control" type="date" class="datepicker" id="'.$name.'" name="'.$name.'" value="'.date( 'd/m/Y', strtotime($value) ).'" ></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
+            'Form/datefield.html');
 	}
 
     function addFileUploadField( string $name, string $label, string $width ) {
@@ -122,27 +123,6 @@ class BaseForm extends BaseBlock {
 	function closeRow( string $comment = '' ) {
 		$this->body .= '</div>  <!-- '.$comment.' -->';
 	}
-	
-    function addToHead(): string {
-        $out = '';
-        if ($this->adddate) {
-            $out .= '<link rel="stylesheet" href="assets/lib/jquery-ui/jquery-ui.css">';
-        }
-        return $out;
-    }
-
-    function addToFoot(): string {
-        $out = '';
-        if ($this->adddate) {
-            $out .= '<script src="assets/lib/jquery-ui/jquery-ui.min.js"></script>
- 		   	            <script>
-  		  		            $(function() {
-    				            $( ".datepicker" ).datepicker({ dateFormat: "dd/mm/yy" });
-  				            });
-  			            </script>';
-        }
-        return $out;
-    }
 
     public function setHtmlTemplateLoader($htmlTemplateLoader) {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
