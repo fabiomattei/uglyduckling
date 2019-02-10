@@ -36,47 +36,74 @@ class BaseInfo extends BaseBlock {
     }
 
     function addTextField( string $label, string $value, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.$value.'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
     }
 
     function addTextAreaField( string $label, string $value, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.$value.'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
     }
 
-    function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>';
+    function addDropdownField( string $label, array $options, string $value, string $width ) {
+        $selectedvalue = '';
         foreach ($options as $key => $val) {
-            $this->body .= ( $key==$value ? $val : '' );
+            $selectedvalue .= ( $key == $value ? $val : '' );
         }
-        $this->body .= '</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($label, htmlspecialchars( $selectedvalue ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
     }
 	
 	function addCurrencyField( string $label, string $value, string $width ) {
-		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.$value.'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
 	}
 	
 	function addDateField( string $label, string $value, string $width ) {
-		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.date( 'd/m/Y', strtotime($value) ).'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($label, date( 'd/m/Y', strtotime(htmlspecialchars( $value ))), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
 	}
 
     function addFileUploadField( string $name, string $label, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'"></div>';
+        $this->body .= 'addFileUploadField TO BE implemented';
     }
 
     function addHelpingText( string $title, string $text, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($title, htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
     }
 	
     function addParagraph( string $text, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><p>'.$text.'</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${text}', '${ColWidth}'),
+            array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
     }
-	
-	function addRow() {
-		$this->body .= '<div class="row">';
-	}
-	
-	function closeRow( string $comment = '' ) {
-		$this->body .= '</div>  <!-- '.$comment.' -->';
-	}
+
+    function addRow() {
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'Form/addrow.html');
+    }
+
+    function closeRow( string $comment = '' ) {
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${comment}'),
+            array($comment),
+            'Form/closerow.html');
+    }
 
 }

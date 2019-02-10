@@ -36,6 +36,7 @@ class EntityChart extends ManagerEntityController {
         $this->chartjsBuilder->setResource( $this->resource );
         $this->chartjsBuilder->setParameters( $this->internalGetParameters );
         $this->chartjsBuilder->setDbconnection( $this->dbconnection );
+        $this->chartjsBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office chart';
 
