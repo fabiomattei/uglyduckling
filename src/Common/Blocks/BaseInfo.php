@@ -9,9 +9,15 @@ class BaseInfo extends BaseBlock {
 
     private $title;
     private $subtitle;
+    private $body;
+    private $htmlTemplateLoader;
 
     function __construct() {
         $this->body = '';
+    }
+
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 	
 	function setTitle( string $title ) {
@@ -23,12 +29,10 @@ class BaseInfo extends BaseBlock {
 	}
 
     function show(): string {
-        $out = '<h3>' . $this->title . '</h3>';
-        if ( $this->subtitle != '' ) {
-            $out .= '<p>' . $this->subtitle . '</p>';
-        }
-        $out .= $this->body;
-        return $out;
+        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${title}', '${subtitle}', '${body}'),
+            array($this->title, $this->subtitle, $this->body),
+            'Info/body.html');
     }
 
     function addTextField( string $label, string $value, string $width ) {

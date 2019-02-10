@@ -9,8 +9,16 @@ class InfoBuilderTest extends PHPUnit_Framework_TestCase {
 	
     private $info;
 	private $entity;
+	private $htmlTemplateLoader;
+	private $queryExecuter;
+	private $infoBlock;
 	
 	protected function setUp() {
+        $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
+        $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
+        $this->info = new Firststep\Common\Builders\InfoBuilder;
+        $this->info->setHtmlTemplateLoader($this->htmlTemplateLoader);
+
 		$this->entity = new stdClass;
 	    $this->entity->fl_id   = 3;	
 	    $this->entity->fl_name = 'prova';
@@ -44,6 +52,18 @@ class InfoBuilderTest extends PHPUnit_Framework_TestCase {
     }
   }
 }');
+
+        $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
+        $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
+        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
+
+        $this->info->setRouter($router);
+        $this->info->setParameters( array( 'id' => '1' ) );
+        $this->info->setResource( $this->infoBlock );
+        $this->info->setDbconnection( $dbconnection );
+        $this->info->setQueryExecuter( $this->queryExecuter );
+        $this->info->setQueryBuilder( $queryBuilder );
 	}
 	
 	/**
@@ -54,66 +74,32 @@ class InfoBuilderTest extends PHPUnit_Framework_TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError(){
-		$info = new Firststep\Common\Builders\InfoBuilder;
-		$this->assertTrue(is_object($info));
-		unset($info);
+		$this->assertTrue(is_object($this->info));
+		unset($this->info);
 	}
 	
 	public function testInfoContainsTextArea(){
-		$info = new Firststep\Common\Builders\InfoBuilder;
-		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->name = 'prova'; return $e; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->name = 'prova'; return $e; }}));
 
-        $info->setRouter($router);
-        $info->setParameters( array( 'id' => '1' ) );
-		$info->setResource( $this->infoBlock );
-		$info->setDbconnection( $dbconnection );
-        $info->setQueryExecuter( $queryExecuter );
-        $info->setQueryBuilder( $queryBuilder );
-		$block = $info->createInfo();
+		$block = $this->info->createInfo();
 		$this->assertContains('<p>prova</p>', $block->show() );
-		unset($info);
+		unset($this->info);
 	}
 	
 	public function testInfoContainsCurrencyFieldWithData(){
-		$info = new Firststep\Common\Builders\InfoBuilder;
-		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->amount = 10; return $e; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->amount = 10; return $e; }}));
 
-        $info->setRouter($router);
-        $info->setParameters( array( 'id' => '1' ) );
-		$info->setResource( $this->infoBlock );
-		$info->setDbconnection( $dbconnection );
-        $info->setQueryExecuter( $queryExecuter );
-        $info->setQueryBuilder( $queryBuilder );
-		$block = $info->createInfo();
+		$block = $this->info->createInfo();
 		$this->assertContains('<p>10</p>', $block->show() );
-		unset($info);
+		unset($this->info);
 	}
 	
 	public function testInfoContainsDateFieldWithData(){
-		$info = new Firststep\Common\Builders\InfoBuilder;
-		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-		$queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->duedate = '2017-06-26'; return $e; }}));
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Builders\QueryBuilder::class)->getMock();
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->duedate = '2017-06-26'; return $e; }}));
 
-        $info->setRouter($router);
-        $info->setParameters( array( 'id' => '1' ) );
-		$info->setResource( $this->infoBlock );
-		$info->setDbconnection( $dbconnection );
-        $info->setQueryExecuter( $queryExecuter );
-        $info->setQueryBuilder( $queryBuilder );
-		$block = $info->createInfo();
+		$block = $this->info->createInfo();
 		$this->assertContains('<p>26/06/2017</p>', $block->show() );
-		unset($info);
+		unset($this->info);
 	}
 
 }

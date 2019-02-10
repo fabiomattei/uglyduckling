@@ -19,6 +19,10 @@ class BaseForm extends BaseBlock {
 		$this->action = '';
         $this->body = '';
     }
+
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
+    }
 	
 	function setTitle( string $title ) {
 		$this->title = $title;
@@ -141,9 +145,5 @@ class BaseForm extends BaseBlock {
             array($comment),
             'Form/closerow.html');
 	}
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
 
 }

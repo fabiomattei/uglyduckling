@@ -23,8 +23,9 @@ class InfoBuilder extends BaseBuilder {
         $result = $this->queryExecuter->executeQuery();
         $entity = $result->fetch();
 
-		$formBlock = new BaseInfo;
-		$formBlock->setTitle($this->resource->get->info->title ?? '');
+		$infoBlock = new BaseInfo;
+        $infoBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		$infoBlock->setTitle($this->resource->get->info->title ?? '');
 		$fieldRows = array();
 		
 		foreach ($this->resource->get->info->fields as $field) {
@@ -34,24 +35,24 @@ class InfoBuilder extends BaseBuilder {
 		
         $rowcounter = 1;
 		foreach ($fieldRows as $row) {
-			$formBlock->addRow();
+			$infoBlock->addRow();
 			foreach ($row as $field) {
 				$fieldname = $field->value;
 				$value = ($entity == null ? '' : ( isset($entity->$fieldname) ? $entity->$fieldname : '' ) );
                 if ($field->type === 'textarea') {
-                    $formBlock->addTextAreaField($field->label, $value, $field->width);
+                    $infoBlock->addTextAreaField($field->label, $value, $field->width);
                 }
                 if ($field->type === 'currency') {
-                    $formBlock->addCurrencyField($field->label, $value, $field->width);
+                    $infoBlock->addCurrencyField($field->label, $value, $field->width);
                 }
                 if ($field->type === 'date') {
-                    $formBlock->addDateField($field->label, $value, $field->width);
+                    $infoBlock->addDateField($field->label, $value, $field->width);
                 }
 			}
-			$formBlock->closeRow('row '.$rowcounter);
+			$infoBlock->closeRow('row '.$rowcounter);
             $rowcounter++;
 		}
-        return $formBlock;
+        return $infoBlock;
     }
 
 }
