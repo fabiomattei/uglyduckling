@@ -49,12 +49,15 @@ class BaseInfo extends BaseBlock {
             'Info/textfield.html');
     }
 
-    function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
-        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>';
+    function addDropdownField( string $label, array $options, string $value, string $width ) {
+        $selectedvalue = '';
         foreach ($options as $key => $val) {
-            $this->body .= ( $key==$value ? $val : '' );
+            $selectedvalue .= ( $key == $value ? $val : '' );
         }
-        $this->body .= '</p></div>';
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${label}', '${value}', '${ColWidth}'),
+            array($label, htmlspecialchars( $selectedvalue ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/textfield.html');
     }
 	
 	function addCurrencyField( string $label, string $value, string $width ) {
