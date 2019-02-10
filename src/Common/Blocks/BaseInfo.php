@@ -36,17 +36,11 @@ class BaseInfo extends BaseBlock {
     }
 
     function addTextField( string $label, string $value, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.$value.'</p></div>';
     }
 
     function addTextAreaField( string $label, string $value, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.$value.'</p></div>';
     }
 
     function addDropdownField( string $name, string $label, array $options, string $value, string $width ) {
@@ -58,49 +52,31 @@ class BaseInfo extends BaseBlock {
     }
 	
 	function addCurrencyField( string $label, string $value, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.$value.'</p></div>';
 	}
 	
 	function addDateField( string $label, string $value, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, date( 'd/m/Y', strtotime(htmlspecialchars( $value ))), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+		$this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$label.'</h5><p>'.date( 'd/m/Y', strtotime($value) ).'</p></div>';
 	}
 
     function addFileUploadField( string $name, string $label, string $width ) {
-        $this->body .= 'addFileUploadField TO BE implemented';
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><label for="'.$name.'">'.$label.'</label><input type="file" id="'.$name.'" name="'.$name.'"></div>';
     }
 
     function addHelpingText( string $title, string $text, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($title, htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><h5>'.$title.'</h5><p>'.$text.'</p></div>';
     }
 	
     function addParagraph( string $text, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${text}', '${ColWidth}'),
-            array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+        $this->body .= '<div class="'.ColWidth::getWidth(ColWidth::MEDIUM, $width).'"><p>'.$text.'</p></div>';
     }
-
-    function addRow() {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'Form/addrow.html');
-    }
-
-    function closeRow( string $comment = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${comment}'),
-            array($comment),
-            'Form/closerow.html');
-    }
+	
+	function addRow() {
+		$this->body .= '<div class="row">';
+	}
+	
+	function closeRow( string $comment = '' ) {
+		$this->body .= '</div>  <!-- '.$comment.' -->';
+	}
 
 }

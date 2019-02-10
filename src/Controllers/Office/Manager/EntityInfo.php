@@ -13,9 +13,6 @@ use Firststep\Common\Builders\MenuBuilder;
  */
 class EntityInfo extends ManagerEntityController {
 
-    private $menubuilder;
-    private $infoBuilder;
-
     function __construct() {
 		$this->infoBuilder = new InfoBuilder;
 		$this->menubuilder = new MenuBuilder;
@@ -33,7 +30,6 @@ class EntityInfo extends ManagerEntityController {
         $this->infoBuilder->setResource( $this->resource );
         $this->infoBuilder->setParameters( $this->internalGetParameters );
         $this->infoBuilder->setDbconnection( $this->dbconnection );
-        $this->infoBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office info';
 	
