@@ -69,7 +69,7 @@ class TableBuilder extends BaseBuilder {
 		foreach ($entities as $entity) {
 			$tableBlock->addRow();
 			foreach ($table->fields as $field) {
-				$tableBlock->addColumn($entity->{$field->sqlfield});
+				$tableBlock->addColumn($this->getValue($field, $entity));
 			}
 			$links = '';
 			foreach ( $table->actions as $action ) {

@@ -17,6 +17,8 @@ class BaseBuilder {
     protected $router;
     protected $dbconnection;
     protected $parameters;
+    protected $postparameters;
+    protected $sessionparameters;
     protected $action;
     protected $htmlTemplateLoader;
 
@@ -37,6 +39,20 @@ class BaseBuilder {
      */
     public function setParameters($parameters) {
         $this->parameters = $parameters;
+    }
+
+    /**
+     * @param mixed $parameters
+     */
+    public function setPostParameters($parameters) {
+        $this->postparameters = $parameters;
+    }
+
+    /**
+     * @param mixed $parameters
+     */
+    public function setSessionParameters($parameters) {
+        $this->sessionparameters = $parameters;
     }
 
     /**
@@ -81,6 +97,29 @@ class BaseBuilder {
      */
     public function setAction( string $action ) {
         $this->action = $action;
+    }
+
+    public function getValue( $field, $entity = null ) {
+        if ( isset($field->value) ) {  // used for info builder but I need to remove this
+            $fieldname = $field->value;
+            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );    
+        }
+        if ( isset($field->sqlfield) ) {
+            $fieldname = $field->sqlfield;
+            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );    
+        }
+        if ( isset($field->constantparameter) ) {
+            return $field->constantparameter;
+        }
+        if ( isset($field->getparameter) ) {
+            return $this->parameters[$field->getparameter] ?? '';
+        }
+        if ( isset($field->postparameter) ) {
+            return $this->postparameters[$field->postparameter] ?? '';
+        }
+        if ( isset($field->sessionparameter) ) {
+            return $this->sessionparameters[$field->sessionparameter] ?? '';
+        }
     }
 
 }

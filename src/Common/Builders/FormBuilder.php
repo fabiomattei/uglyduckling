@@ -43,8 +43,7 @@ class FormBuilder extends BaseBuilder {
 		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
 			foreach ($row as $field) {
-				$fieldname = $field->sqlfield;
-				$value = ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
+				$value = $this->getValue($field, $entity);
                 if ($field->type === 'text') {
                     $formBlock->addTextField($field->name, $field->label, $field->placeholder, $value, $field->width);
                 }
