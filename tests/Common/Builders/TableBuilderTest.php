@@ -7,8 +7,7 @@
 */
 class TableBuilderTest extends PHPUnit_Framework_TestCase {
 	
-    protected $table;
-	protected $entity;
+	protected $entities;
 	protected $htmlTemplateLoader;
 	protected $queryExecuter;
 	
@@ -18,11 +17,20 @@ class TableBuilderTest extends PHPUnit_Framework_TestCase {
         $this->tableBuilder = new Firststep\Common\Builders\TableBuilder;
         $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
-		$this->entity = new stdClass;
-	    $this->entity->fl_id   = 3;	
-	    $this->entity->fl_name = 'prova';
-		$this->entity->fl_amount = 10;
-		$this->entity->fl_duedate = '2017-06-26';
+		$entity = new stdClass;
+	    $entity->id   = 3;
+	    $entity->name = 'prova';
+		$entity->amount = 10;
+		$entity->duedate = '2017-06-26';
+        $entity2 = new stdClass;
+        $entity2->id   = 3;
+        $entity2->name = 'prova';
+        $entity2->amount = 10;
+        $entity2->duedate = '2017-06-26';
+
+        $this->entities = array();
+        $this->entities[] = $entity;
+        $this->entities[] = $entity2;
 
 		$this->jsonform = json_decode('{
   "name": "requesttablev1",
@@ -73,9 +81,34 @@ class TableBuilderTest extends PHPUnit_Framework_TestCase {
 	* any typo before you even use this library in a real project.
 	*
 	*/
-	public function testIsThereAnySyntaxError(){
+	public function testIsThereAnySyntaxError() {
 		$this->assertTrue(is_object($this->tableBuilder));
 		unset($this->tableBuilder);
 	}
+
+    public function testTableContainsTableTag() {
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue( $this->entities ));
+        $block = $this->tableBuilder->createTable();
+        $this->assertContains('<table', $block->show());
+        unset($this->tableBuilder);
+    }
+
+    public function testTableContainsColumnsTitles() {
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue( $this->entities ));
+        $block = $this->tableBuilder->createTable();
+        $this->assertContains('<th>Name</th>', $block->show());
+        $this->assertContains('<th>Amount</th>', $block->show());
+        $this->assertContains('<th>Due date</th>', $block->show());
+        unset($this->tableBuilder);
+    }
+
+    public function testTableContainsColumnsFirstEntity() {
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue( $this->entities ));
+        $block = $this->tableBuilder->createTable();
+        $this->assertContains('<td>prova</td>', $block->show());
+        $this->assertContains('<td>10</td>', $block->show());
+        $this->assertContains('<td>2017-06-26</td>', $block->show());
+        unset($this->tableBuilder);
+    }
 
 }

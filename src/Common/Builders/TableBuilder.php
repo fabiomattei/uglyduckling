@@ -37,7 +37,6 @@ class TableBuilder extends BaseBuilder {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
 
-
         if ($this->method === self::GET_METHOD) {
             $query = $this->resource->get->query;
             $table = $this->resource->get->table;
@@ -49,7 +48,6 @@ class TableBuilder extends BaseBuilder {
         }
 
         $this->queryExecuter->setQueryStructure( $query );
-
 
         $entities = $this->queryExecuter->executeQuery();
 
