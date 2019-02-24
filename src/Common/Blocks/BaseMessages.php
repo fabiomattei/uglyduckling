@@ -5,6 +5,8 @@ namespace Firststep\Common\Blocks;
 use Firststep\Common\Blocks\BaseBlock;
 
 class BaseMessages extends BaseBlock {
+
+	private $htmlTemplateLoader;
 	
 	function __construct() {
 	    $this->info = '';
@@ -12,20 +14,24 @@ class BaseMessages extends BaseBlock {
 		$this->warning = '';
 		$this->error = '';
 	}
+
+	public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
+    }
 	
     function show(): string {
 		$out = '';
 		if ($this->info != '') {
-			$out.= '<div class="alert alert-info">'.$this->info.'</div>';
+			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${info}'), array($this->info), 'Messages/info.html');
 		}
 		if ($this->success != '') {
-			$out.= '<div class="alert alert-success">'.$this->success.'</div>';
+			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${success}'), array($this->success), 'Messages/success.html');
 		}
 		if ($this->warning != '') {
-			$out.= '<div class="alert alert-warning">'.$this->warning.'</div>';
+			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${warning}'), array($this->warning), 'Messages/warning.html');
 		}
 		if ($this->error != '') {
-			$out.= '<div class="alert alert-danger">'.$this->error.'</div>';
+			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${error}'), array($this->error), 'Messages/error.html');
 		}
         return $out;
     }
