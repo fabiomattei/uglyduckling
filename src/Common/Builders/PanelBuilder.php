@@ -76,6 +76,7 @@ class PanelBuilder {
         $panelBlock = new CardBlock;
         $panelBlock->setTitle($panel->title ?? '');
         $panelBlock->setWidth($panel->width ?? '3');
+        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
         $resource = $this->jsonloader->loadResource( $panel->resource );
 
