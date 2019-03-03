@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: fabio
+ * Created by fabio
  * Date: 05/02/2016
  * Time: 10:37
  */
