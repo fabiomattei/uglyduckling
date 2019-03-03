@@ -13,6 +13,7 @@ use Firststep\Common\Blocks\BaseBlock;
 class RowBlock extends BaseBlock {
 
     private $blocks;
+    private $htmlTemplateLoader;
 
     /**
      * RowBlock constructor.
@@ -22,17 +23,23 @@ class RowBlock extends BaseBlock {
         $this->blocks = array();
     }
 
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
+    }
+
     function addBlock($block) {
         $this->blocks[] = $block;
     }
 
     function show(): string {
-        $body = '<div class="row">';
+        $htmlbody = '';
         foreach ($this->blocks as $bl) {
-            $body .= $bl->show();
+            $htmlbody .= $bl->show();
         }
-        $body .= '</div> <!-- end row --!>';
-        return $body;
+        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array( '${htmlbody}' ),
+            array( $htmlbody ),
+            'RowBlock/body.html');;
     }
 
     function addToHead(): string {

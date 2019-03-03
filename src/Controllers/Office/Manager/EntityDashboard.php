@@ -52,6 +52,7 @@ class EntityDashboard extends ManagerEntityController {
 
         foreach ($fieldRows as $row) {
             $rowBlock = new RowBlock;
+            $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             foreach ($row as $panel) {
                 $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
             }
