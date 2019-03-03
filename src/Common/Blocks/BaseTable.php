@@ -8,15 +8,19 @@
 
 namespace Firststep\Common\Blocks;
 
-
 class BaseTable extends BaseBlock {
 
     protected $html;
     protected $title;
+    private $htmlTemplateLoader;
 
     function __construct() {
         $this->html = '';
         $this->title = '';
+    }
+
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function setTitle( string $title ) {
@@ -24,55 +28,94 @@ class BaseTable extends BaseBlock {
     }
 
     function addRow() {
-        $this->html .= '<tr>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'BaseTable/openrow.html');
     }
 
     function closeRow() {
-        $this->html .= '</tr>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'BaseTable/closerow.html');
     }
 
     function addTHead() {
-        $this->html .= '<thead>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'BaseTable/openthead.html');
     }
 
     function closeTHead() {
-        $this->html .= '</thead>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'BaseTable/closethead.html');
     }
 
     function addTBody() {
-        $this->html .= '<tbody>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'BaseTable/opentbody.html');
     }
 
     function closeTBody() {
-        $this->html .= '</tbody>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'BaseTable/closetbody.html');
     }
 
     function addHeadLineColumn(string $value) {
-        $this->html .= '<th>'.$value.'</th>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${value}'),
+            array($value),
+            'BaseTable/headlinecolumn.html');
     }
 
     function addColumn(string $value) {
-        $this->html .= '<td>'.htmlspecialchars( $value ).'</td>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${value}'),
+            array( htmlspecialchars( $value ) ),
+            'BaseTable/tablecolumn.html');
     }
 
     function addUnfilteredColumn(string $value) {
-        $this->html .= '<td>'.$value.'</td>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${value}'),
+            array( $value ),
+            'BaseTable/tablecolumn.html');
     }
 
     function addColumnDate(string $value) {
-        $this->html .= '<td>'.date( 'd/m/Y', strtotime( htmlspecialchars( $value ) ) ).'</td>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${value}'),
+            array( date( 'd/m/Y', strtotime( htmlspecialchars( $value ) ) ) ),
+            'BaseTable/tablecolumn.html');
     }
 
     function addColumnDateTime(string $value) {
-        $this->html .= '<td>'.date( 'H:i d/m/Y', strtotime( htmlspecialchars( $value ) ) ).'</td>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${value}'),
+            array( date( 'H:i d/m/Y', strtotime( htmlspecialchars( $value ) ) ) ),
+            'BaseTable/tablecolumn.html');
     }
 
     function addColumnNoFilters(string $value) {
-        $this->html .= '<td>'.$value.'</td>';
+        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${value}'),
+            array( $value ),
+            'BaseTable/tablecolumn.html');
     }
 
     function show(): string {
-        return '<h2>'.$this->title.'</h2><table class="table table-striped table-sm">'.$this->html.'</table>';
+        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${title}', '${html}'),
+            array( $this->title, $this->html),
+            'BaseTable/body.html');
     }
 
 }

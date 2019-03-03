@@ -37,6 +37,7 @@ class EntityTable extends ManagerEntityController {
         $this->tableBuilder->setResource( $this->resource );
 		$this->tableBuilder->setParameters( $this->internalGetParameters );
 		$this->tableBuilder->setDbconnection( $this->dbconnection );
+		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		

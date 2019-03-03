@@ -52,6 +52,7 @@ class TableBuilder extends BaseBuilder {
         $entities = $this->queryExecuter->executeQuery();
 
 		$tableBlock = new StaticTable;
+        $tableBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$tableBlock->setTitle($table->title ?? '');
 		
 		$tableBlock->addTHead();
