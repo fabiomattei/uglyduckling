@@ -27,3 +27,10 @@ If first restart does not work, I can do:
 * docker-compose down
 * docker-compose up -d
 
+## phan commands
+
+./vendor/bin/phan --allow-polyfill-parser
+
+## phpunit commands
+
+./vendor/bin/phpunit

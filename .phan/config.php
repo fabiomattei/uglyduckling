@@ -1,3 +1,5 @@
+<?php
+
 /**
  * This configuration will be read and overlaid on top of the
  * default configuration. Command line arguments will be applied
@@ -34,7 +36,9 @@ return [
     //       should be added to the `directory_list` as
     //       to `exclude_analysis_directory_list`.
     "exclude_analysis_directory_list" => [
-        'vendor/'
+        'vendor/',
+        'src/assets/',
+        'src/Templates/'
     ],
 
 ];

@@ -13,14 +13,16 @@ use Firststep\Common\Builders\QueryBuilder;
  */
 class EntityTransaction extends ManagerEntityController {
 
+    /** @var QueryExecuter */
+    private $queryExecuter;
+    /** @var QueryBuilder */
+    private $queryBuilder;
+
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
     }
 	
-    /**
-     * @throws GeneralException
-     */
 	public function getRequest() {
         $conn = $this->dbconnection->getDBH();
         try {
@@ -34,10 +36,9 @@ class EntityTransaction extends ManagerEntityController {
             }
             $conn->commit();
         }
-        catch (PDOException $e) {
+        catch (\PDOException $e) {
             $conn->rollBack();
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
 
         $this->redirectToPreviousPage();
