@@ -31,6 +31,9 @@ If first restart does not work, I can do:
 
 ./vendor/bin/phan --allow-polyfill-parser
 
+https://github.com/phan/phan/wiki/Issue-Types-Caught-by-Phan
+https://github.com/phan/phan/wiki/Annotating-Your-Source-Code#property
+
 ## phpunit commands
 
 ./vendor/bin/phpunit
