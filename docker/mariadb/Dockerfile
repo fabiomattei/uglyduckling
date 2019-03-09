@@ -1,3 +1,3 @@
-FROM mariadb:10.1.21
+FROM mariadb:10.4.3
 
 LABEL maintainer="Fabio Mattei"
