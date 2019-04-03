@@ -67,7 +67,7 @@ class Login extends Controller {
 			if ( $user->usr_defaultgroup == 'administrationgroup' ) {
 				$this->redirectToPage( $this->router->make_url( Router::ROUTE_ADMIN_DASHBOARD ) );
 			} else {
-				$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$groupresource->defaultdashboard ) );
+				$this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$groupresource->defaultaction ) );
 			}
 			
 		} else {

@@ -2,7 +2,7 @@
   "name": "managergroup",
   "metadata": { "type":"group", "version": "1" },
   "home": { "label":"My app", "action":"#" },
-  "defaultdashboard": "managermaindashboard",
+  "defaultaction": "managermaindashboard",
   "menu": [
     { "label":"Home", "action":"entitydashboard", "resource":"managermaindashboard" },
     {

@@ -116,7 +116,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
 		$e = new stdClass; 
-		$e->defaultdashboard='defaultdashboard';
+		$e->defaultaction='defaultaction';
 		$jsonLoader->expects($this->once())->method('loadResource')->will($this->returnValue( $e ));
 		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();

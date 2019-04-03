@@ -2,7 +2,7 @@
   "name": "studentgroup",
   "metadata": { "type":"group", "version": "1" },
   "home": { "label":"My app", "action":"#" },
-  "defaultdashboard": "managermaindashboard",
+  "defaultaction": "managermaindashboard",
   "dashboard": [
       { "resource":"mydashboardv1" }
   ],
