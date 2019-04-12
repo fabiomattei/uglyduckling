@@ -9,7 +9,7 @@ class ServerWrapper {
     }
 
     public function getRequestURI(): string {
-        return filter_var(isset($_SERVER['REQUEST_URI']) ? rtrim($_SERVER['REQUEST_URI'], '/') : NULL, FILTER_SANITIZE_URL);
+        return filter_var(($_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : NULL), FILTER_SANITIZE_URL);
     }
 
     public function getPhpSelf(): string {
