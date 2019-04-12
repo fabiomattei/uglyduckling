@@ -11,9 +11,8 @@ class PublicMenu extends BaseBlock {
 		$this->active = $active;
 	}
 	
-    function show(): string {
-		$out = '
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  function show(): string {
+		$out = '<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
       <a class="navbar-brand" href="#">' . $this->appname . '</a>
       <ul class="nav navbar-nav">
         <li class="nav-item '.( $this->active == 'home' ? 'active' : '').'">
@@ -30,7 +29,7 @@ class PublicMenu extends BaseBlock {
         </li>
       </ul>
     </nav>';
-        return $out; 
-    }
+    return $out; 
+  }
 	
 }
