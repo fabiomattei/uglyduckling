@@ -27,7 +27,7 @@ class BasicJsonChecker {
      * @param string $groupslug
      * @return bool
      */
-	public function isGroupAllowedToAccess( string $groupslug ) {
+	public function isGroupAllowedToAccess( string $groupslug ): bool {
 		return ( isset( $this->resource->allowedgroups ) AND in_array( $groupslug, $this->resource->allowedgroups) );
 	}
 
@@ -36,7 +36,7 @@ class BasicJsonChecker {
      * @param $parameters $this->resource->get->request->parameters
      * @return bool
      */
-	function isActionPresentAndWellStructured( $action, $parameters ) {
+	function isActionPresentAndWellStructured( $action, $parameters ): bool {
         foreach ($this->getActionsDefinedInResource() as $definedAction) {
             if ( $definedAction->action === $action ) {
                 foreach ( $parameters as $requiredParameter ) {
@@ -51,8 +51,22 @@ class BasicJsonChecker {
         }
         return true;
     }
-    
-	public function getActionsDefinedInResource() {
+
+    /**
+     * Check if the strcture of the internally defined block is well done
+     *
+     * @return bool
+     */
+    function isResourceBlockWellStructured() : bool {
+        return true;
+    }
+
+    /**
+     * Return an array containing all actions defined in this resource
+     *
+     * @return array
+     */
+	public function getActionsDefinedInResource(): array {
 		return array();
 	}
 
