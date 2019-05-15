@@ -2,8 +2,8 @@
 
 namespace Firststep\Common\Json;
 
-use Firststep\Common\Builders\FormBuilder;
-use Firststep\Common\Builders\FormBuilderDocumentV1;
+use Firststep\Common\Json\Builders\FormBuilder;
+use Firststep\Common\Json\Builders\FormBuilderDocumentV1;
 
 /**
  * JsonLoader makes an index of all available resources and load the 

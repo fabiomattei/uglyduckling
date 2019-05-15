@@ -7,7 +7,7 @@ use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\DocumentDao;
-use Firststep\Common\Builders\MenuBuilder;
+use Firststep\Common\Json\Builders\MenuBuilder;
 
 /**
  * This page gives to the users buttons in order to create all documents his group has permission to create

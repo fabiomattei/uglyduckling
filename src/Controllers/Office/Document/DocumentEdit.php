@@ -7,8 +7,8 @@ use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Json\JsonBlockFormParser;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
-use Firststep\Common\Builders\MenuBuilder;
+use Firststep\Common\Json\Builders\QueryBuilder;
+use Firststep\Common\Json\Builders\MenuBuilder;
 use Firststep\Common\Database\DocumentDao;
 
 /**

@@ -60,13 +60,13 @@ class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError(){
-		$query = new Firststep\Common\Builders\QueryBuilder;
+		$query = new Firststep\Common\Json\Builders\QueryBuilder;
 		$this->assertTrue(is_object($query));
 		unset($query);
 	}
 	
 	public function testCreateQuery(){
-		$query = new Firststep\Common\Builders\QueryBuilder;
+		$query = new Firststep\Common\Json\Builders\QueryBuilder;
 		$query->setQueryStructure( $this->query );
 		$query->setParameters( $this->parameters );
 		$sqlquery = $query->createQuery();
@@ -80,7 +80,7 @@ class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCreateTable(){
-		$query = new Firststep\Common\Builders\QueryBuilder;
+		$query = new Firststep\Common\Json\Builders\QueryBuilder;
 		$query->setQueryStructure( $this->create );
 		$sqlquery = $query->create();
 		$this->assertContains('CREATE', $sqlquery);

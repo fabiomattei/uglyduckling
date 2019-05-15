@@ -2,7 +2,7 @@
 
 namespace Firststep\Common\Json;
 
-use Firststep\Common\Builders\InfoBuilder;
+use Firststep\Common\Json\Builders\InfoBuilder;
 
 /**
  * JsonLoader makes an index of all available resources and load the 

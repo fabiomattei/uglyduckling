@@ -5,9 +5,9 @@ namespace Firststep\Controllers\Office\Manager;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Builders\FormBuilder;
-use Firststep\Common\Builders\TableBuilder;
-use Firststep\Common\Builders\MenuBuilder;
+use Firststep\Common\Json\Builders\FormBuilder;
+use Firststep\Common\Json\Builders\TableBuilder;
+use Firststep\Common\Json\Builders\MenuBuilder;
 
 /**
  * User: Fabio

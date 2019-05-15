@@ -3,12 +3,12 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Blocks\RowBlock;
-use Firststep\Common\Builders\PanelBuilder;
+use Firststep\Common\Json\Builders\PanelBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Builders\QueryBuilder;
-use Firststep\Common\Builders\MenuBuilder;
+use Firststep\Common\Json\Builders\QueryBuilder;
+use Firststep\Common\Json\Builders\MenuBuilder;
 
 /**
  * User: Fabio Mattei

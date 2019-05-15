@@ -3,8 +3,8 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Builders\InfoBuilder;
-use Firststep\Common\Builders\MenuBuilder;
+use Firststep\Common\Json\Builders\InfoBuilder;
+use Firststep\Common\Json\Builders\MenuBuilder;
 
 /**
  * User: Fabio

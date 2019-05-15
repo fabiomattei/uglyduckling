@@ -3,7 +3,7 @@
 namespace Firststep\Common\Controllers;
 
 use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Builders\ValidationBuilder;
+use Firststep\Common\Json\Builders\ValidationBuilder;
 use Gump;
 
 /**
