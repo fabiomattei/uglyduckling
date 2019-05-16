@@ -9,10 +9,6 @@ use  Firststep\Common\Json\Checkers\BasicJsonChecker;
  */
 class TableV1JsonChecker extends BasicJsonChecker {
 
-    function __construct() {
-        # code...
-    }
-
     function isResourceBlockWellStructured() : bool {
         return true;
     }

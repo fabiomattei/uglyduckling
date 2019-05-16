@@ -8,10 +8,6 @@ use  Firststep\Common\Json\Checkers\BasicJsonChecker;
  * 
  */
 class FormV1JsonChecker extends BasicJsonChecker {
-	
-	function __construct() {
-		# code...
-	}
 
 	function isResourceBlockWellStructured() : bool {
 	    return true;

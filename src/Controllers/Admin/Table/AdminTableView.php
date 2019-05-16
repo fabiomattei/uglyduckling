@@ -15,7 +15,7 @@ use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
 use Firststep\Common\Router\Router;
-
+use Firststep\Common\Json\Checkers\BasicJsonChecker;
 
 class AdminTableView extends Controller {
 
@@ -81,11 +81,31 @@ class AdminTableView extends Controller {
         }
         $actionsTable->closeTBody();
 
+        $resourcesTable = new StaticTable;
+        $resourcesTable->setTitle("Actions pointing to this resource");
+        $resourcesTable->addTHead();
+        $resourcesTable->addRow();
+        $resourcesTable->addHeadLineColumn('Name');
+        $resourcesTable->addHeadLineColumn('Satus');
+        $resourcesTable->closeRow();
+        $resourcesTable->closeTHead();
+        $resourcesTable->addTBody();
+        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->jsonloader->loadResource( $reskey );
+            $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
+
+            $resourcesTable->addRow();
+            $resourcesTable->addColumn($reskey);
+            $resourcesTable->addColumn($checker->isActionPresentAndWellStructured( $this->resource->metadata->name, $this->resource->get->request->parameters ) ? 'Ok' : $checker->getErrorsString() );
+            $resourcesTable->closeRow();
+        }
+        $resourcesTable->closeTBody();
+
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsTable );
-        $this->thirdcentralcontainer = array( $actionsTable );
+        $this->thirdcentralcontainer = array( $actionsTable, $resourcesTable );
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }

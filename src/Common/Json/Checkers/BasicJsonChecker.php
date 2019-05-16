@@ -2,6 +2,9 @@
 
 namespace Firststep\Common\Json\Checkers;
 
+use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
+use Firststep\Common\Json\Checkers\Table\TableV1JsonChecker;
+
 /**
  * 
  */
@@ -10,8 +13,8 @@ class BasicJsonChecker {
 	protected $resource;
 	protected $errors = array();
 	
-	function __construct() {
-		# code...
+	function __construct( $resource ) {
+        $this->resource = $resource;
 	}
 
 	/**
@@ -68,6 +71,20 @@ class BasicJsonChecker {
      */
 	public function getActionsDefinedInResource(): array {
 		return array();
+	}
+
+	public function getErrorsString(): string {
+	    $errorString = '';
+        foreach ( $this->errors as $error) {
+            $errorString.=$error;
+        }
+        return $errorString;
+    }
+
+	public static function basicJsonCheckerFactory( $resource ): BasicJsonChecker {
+        if ( $resource->metadata->type === "form" ) return new FormV1JsonChecker( resource );
+        if ( $resource->metadata->type === "table" ) return new TableV1JsonChecker( resource );
+        return new BasicJsonChecker( resource );
 	}
 
 }
