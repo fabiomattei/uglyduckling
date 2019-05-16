@@ -82,9 +82,9 @@ class BasicJsonChecker {
     }
 
 	public static function basicJsonCheckerFactory( $resource ): BasicJsonChecker {
-        if ( $resource->metadata->type === "form" ) return new FormV1JsonChecker( resource );
-        if ( $resource->metadata->type === "table" ) return new TableV1JsonChecker( resource );
-        return new BasicJsonChecker( resource );
+        if ( $resource->metadata->type === "form" ) return new FormV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "table" ) return new TableV1JsonChecker( $resource );
+        return new BasicJsonChecker( $resource );
 	}
 
 }

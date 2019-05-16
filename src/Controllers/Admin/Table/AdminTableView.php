@@ -41,11 +41,14 @@ class AdminTableView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
 
         $info = new BaseInfo;
+		$info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Table name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('SQL Query: '.$this->resource->get->query->sql, '6');
 
         $fieldsTable = new StaticTable;
+		$fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		
         $fieldsTable->setTitle("Fields");
         $fieldsTable->addTHead();
         $fieldsTable->addRow();
@@ -63,6 +66,8 @@ class AdminTableView extends Controller {
         $fieldsTable->closeTBody();
 
         $actionsTable = new StaticTable;
+		$actionsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		
         $actionsTable->setTitle("Actions");
         $actionsTable->addTHead();
         $actionsTable->addRow();
@@ -82,6 +87,8 @@ class AdminTableView extends Controller {
         $actionsTable->closeTBody();
 
         $resourcesTable = new StaticTable;
+		$resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		
         $resourcesTable->setTitle("Actions pointing to this resource");
         $resourcesTable->addTHead();
         $resourcesTable->addRow();

@@ -20,7 +20,8 @@ class FormV1JsonChecker extends BasicJsonChecker {
      */
     public function getActionsDefinedInResource(): array {
 	    $actions = $this->resource->get->form->topactions ?? array();
-	    $actions = array_merge( $actions, $this->resource->post->redirect ?? array() );
+		if ( isset( $this->resource->post->redirect ) ) $actions[] = $this->resource->post->redirect;
+	    // $actions = array_merge( $actions, $this->resource->post->redirect ?? array() );
         return $actions;
     }
 
