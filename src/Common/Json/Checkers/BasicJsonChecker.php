@@ -39,9 +39,26 @@ class BasicJsonChecker {
      * @param $parameters $this->resource->get->request->parameters
      * @return bool
      */
+	function isActionPresent( $action ): bool {
+		$out = false;
+        foreach ( $this->getActionsDefinedInResource() as $definedAction ) {
+            if ( $definedAction->resource === $action ) {
+                $out = true;
+            }
+			echo $definedAction->resource . '===' . $action . '  -  ';
+        }
+		echo $out ? 'true' : 'false';
+        return $out;
+    }
+
+    /**
+     * @param $action     action name
+     * @param $parameters $this->resource->get->request->parameters
+     * @return bool
+     */
 	function isActionPresentAndWellStructured( $action, $parameters ): bool {
-        foreach ($this->getActionsDefinedInResource() as $definedAction) {
-            if ( $definedAction->action === $action ) {
+        foreach ( $this->getActionsDefinedInResource() as $definedAction ) {
+            if ( $definedAction->resource === $action ) {
                 foreach ( $parameters as $requiredParameter ) {
                     if (!array_filter($definedAction->parameters, function($parToCheck) use ($requiredParameter) {
                         return $parToCheck->name === $requiredParameter->name;
@@ -76,7 +93,7 @@ class BasicJsonChecker {
 	public function getErrorsString(): string {
 	    $errorString = '';
         foreach ( $this->errors as $error) {
-            $errorString.=$error;
+            $errorString .= $error;
         }
         return $errorString;
     }

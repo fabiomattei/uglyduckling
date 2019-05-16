@@ -100,11 +100,13 @@ class AdminTableView extends Controller {
         foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
             $tmpres = $this->jsonloader->loadResource( $reskey );
             $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
-
-            $resourcesTable->addRow();
-            $resourcesTable->addColumn($reskey);
-            $resourcesTable->addColumn($checker->isActionPresentAndWellStructured( $this->resource->metadata->name, $this->resource->get->request->parameters ) ? 'Ok' : $checker->getErrorsString() );
-            $resourcesTable->closeRow();
+			if ( $checker->isActionPresent( $this->resource->name ) ) {
+	            $resourcesTable->addRow();
+	            $resourcesTable->addColumn( $reskey );
+	            $resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $this->resource->get->request->parameters ) ? 'Ok' : $checker->getErrorsString() );
+	            $resourcesTable->closeRow();
+			}
+            
         }
         $resourcesTable->closeTBody();
 

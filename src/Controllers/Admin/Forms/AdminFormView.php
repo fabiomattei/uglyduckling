@@ -15,6 +15,7 @@ use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
 use Firststep\Common\Router\Router;
+use Firststep\Common\Json\Checkers\BasicJsonChecker;
 
 class AdminFormView extends Controller {
 
@@ -40,11 +41,13 @@ class AdminFormView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin form view';
 
         $info = new BaseInfo;
+		$info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Form name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('SQL Query: '.$this->resource->get->query->sql, '6');
 
         $fieldsTable = new StaticTable;
+		$fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $fieldsTable->setTitle("Fields");
         $fieldsTable->addTHead();
         $fieldsTable->addRow();
@@ -72,6 +75,7 @@ class AdminFormView extends Controller {
         $fieldsTable->closeTBody();
 
         $actionsTable = new StaticTable;
+		$actionsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $actionsTable->setTitle("Logics");
         $actionsTable->addTHead();
         $actionsTable->addRow();
@@ -85,12 +89,36 @@ class AdminFormView extends Controller {
             $actionsTable->closeRow();
         }
         $actionsTable->closeTBody();
+		
+        $resourcesTable = new StaticTable;
+		$resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		
+        $resourcesTable->setTitle("Actions pointing to this resource");
+        $resourcesTable->addTHead();
+        $resourcesTable->addRow();
+        $resourcesTable->addHeadLineColumn('Name');
+        $resourcesTable->addHeadLineColumn('Satus');
+        $resourcesTable->closeRow();
+        $resourcesTable->closeTHead();
+        $resourcesTable->addTBody();
+        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->jsonloader->loadResource( $reskey );
+            $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
+			if ( $checker->isActionPresent( $this->resource->name ) ) {
+	            $resourcesTable->addRow();
+	            $resourcesTable->addColumn( $reskey );
+	            $resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $this->resource->get->request->parameters ) ? 'Ok' : $checker->getErrorsString() );
+	            $resourcesTable->closeRow();
+			}
+            
+        }
+        $resourcesTable->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST, $this->router ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsTable );
-        $this->thirdcentralcontainer = array( $actionsTable );
+        $this->thirdcentralcontainer = array( $actionsTable, $resourcesTable );
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
