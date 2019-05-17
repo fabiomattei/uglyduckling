@@ -19,7 +19,7 @@ class InfoV1JsonChecker extends BasicJsonChecker {
      * @return array
      */
     public function getActionsDefinedInResource(): array {
-	    $actions = $this->resource->get->form->topactions ?? array();
+	    $actions = $this->resource->get->info->topactions ?? array();
         return $actions;
     }
 
