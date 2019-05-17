@@ -39,11 +39,13 @@ class AdminInfoView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin info view';
 
         $info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Info name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('SQL Query: '.$this->resource->get->query->sql, '6');
 
         $parametersTable = new StaticTable;
+        $parametersTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $parametersTable->setTitle("GET Parameters");
         $parametersTable->addTHead();
         $parametersTable->addRow();
@@ -63,6 +65,7 @@ class AdminInfoView extends Controller {
         $parametersTable->closeTBody();
 
         $fieldsTable = new StaticTable;
+        $fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $fieldsTable->setTitle("Fields");
         $fieldsTable->addTHead();
         $fieldsTable->addRow();
