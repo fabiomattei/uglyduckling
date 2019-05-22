@@ -54,5 +54,23 @@ class StringUtils {
         }
     }
 
+    /**
+     * Check if a given $word is between the words $start and $end in a $string
+     * This is useful in order to check is in a particular query
+     *
+     * Ex.
+     * $word = "name", $string = "SELECT name, address FROM People;", $start = "SELECT", $end = "FROM"
+     * will return true because the word name is in the string between the words START and END
+     *
+     * @param string $word
+     * @param string $string
+     * @param string $start
+     * @param string $end
+     * @return bool
+     */
+    static function isStringBetweenCaseUnsensitive( $word, $string, $start, $end ): bool {
+        return StringUtils::isStringBetween( strtolower($word), strtolower($string), strtolower($start), strtolower($end) );
+    }
+
 }
 
