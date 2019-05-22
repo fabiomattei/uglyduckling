@@ -126,14 +126,12 @@ class AdminFormView extends Controller {
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->jsonloader->loadResource( $reskey );
-            $checker = FormV1JsonChecker::basicJsonCheckerFactory( $tmpres );
-            $resourceGeneralChecks->addRow();
-            $resourceGeneralChecks->addColumn( 'Resource well structured' );
-            $resourceGeneralChecks->addColumn( $checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString() );
-            $resourceGeneralChecks->closeRow();
-        }
+        $tmpres = $this->jsonloader->loadResource( $reskey );
+        $checker = FormV1JsonChecker::basicJsonCheckerFactory( $tmpres );
+        $resourceGeneralChecks->addRow();
+        $resourceGeneralChecks->addColumn( 'Resource well structured' );
+        $resourceGeneralChecks->addColumn( $checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString() );
+        $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST ) );

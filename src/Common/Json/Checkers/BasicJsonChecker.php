@@ -47,9 +47,9 @@ class BasicJsonChecker {
             if ( $definedAction->resource === $action ) {
                 $out = true;
             }
-			echo $definedAction->resource . '===' . $action . '  -  ';
+			// echo $definedAction->resource . '===' . $action . '  -  ';
         }
-		echo $out ? 'true' : 'false';
+		// echo $out ? 'true' : 'false';
         return $out;
     }
 
@@ -62,11 +62,13 @@ class BasicJsonChecker {
         foreach ( $this->getActionsDefinedInResource() as $definedAction ) {
             if ( $definedAction->resource === $action ) {
                 foreach ( $parameters as $requiredParameter ) {
-                    if (!array_filter($definedAction->parameters, function($parToCheck) use ($requiredParameter) {
-                        return $parToCheck->name === $requiredParameter->name;
-                    })) {
-                        $this->errors[] = "Error for action " . $action;
-                        return false;
+                    if ( isset($definedAction->parameters) ) {
+                        if (!array_filter($definedAction->parameters, function ($parToCheck) use ($requiredParameter) {
+                            return $parToCheck->name === $requiredParameter->name;
+                        })) {
+                            $this->errors[] = "Error for action " . $action;
+                            return false;
+                        }
                     }
                 }
             }
