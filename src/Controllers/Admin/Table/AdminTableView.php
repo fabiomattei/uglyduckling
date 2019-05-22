@@ -11,6 +11,7 @@ namespace Firststep\Controllers\Admin\Table;
 
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Controllers\Controller;
+use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
@@ -110,11 +111,30 @@ class AdminTableView extends Controller {
         }
         $resourcesTable->closeTBody();
 
+        $resourceGeneralChecks = new StaticTable;
+        $resourceGeneralChecks->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+
+        $resourceGeneralChecks->setTitle("General checks");
+        $resourceGeneralChecks->addTHead();
+        $resourceGeneralChecks->addRow();
+        $resourceGeneralChecks->addHeadLineColumn('Name');
+        $resourceGeneralChecks->addHeadLineColumn('Satus');
+        $resourceGeneralChecks->closeRow();
+        $resourceGeneralChecks->closeTHead();
+        $resourceGeneralChecks->addTBody();
+        $tmpres = $this->jsonloader->loadResource( $reskey );
+        $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
+        $resourceGeneralChecks->addRow();
+        $resourceGeneralChecks->addColumn( 'Resource well structured' );
+        $resourceGeneralChecks->addColumn( $checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString() );
+        $resourceGeneralChecks->closeRow();
+        $resourceGeneralChecks->closeTBody();
+
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsTable );
-        $this->thirdcentralcontainer = array( $actionsTable, $resourcesTable );
+        $this->thirdcentralcontainer = array( $actionsTable, $resourcesTable, $resourceGeneralChecks );
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }

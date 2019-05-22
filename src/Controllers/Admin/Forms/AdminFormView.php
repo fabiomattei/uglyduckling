@@ -127,7 +127,7 @@ class AdminFormView extends Controller {
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();
         $tmpres = $this->jsonloader->loadResource( $reskey );
-        $checker = FormV1JsonChecker::basicJsonCheckerFactory( $tmpres );
+        $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
         $resourceGeneralChecks->addRow();
         $resourceGeneralChecks->addColumn( 'Resource well structured' );
         $resourceGeneralChecks->addColumn( $checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString() );
