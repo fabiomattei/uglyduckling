@@ -3,7 +3,7 @@
 use Firststep\Common\Utils\StringUtils;
 
 /**
- *  Testing the Request class
+ *  Testing the StringUtils class
  *
  *  @author Fabio Mattei
  */
