@@ -35,6 +35,13 @@ class BaseBuilder {
     }
 
     /**
+     * @param mixed $jsonloader
+     */
+    public function setJsonloader($jsonloader) {
+        $this->jsonloader = $jsonloader;
+    }
+
+    /**
      * @param mixed $parameters
      */
     public function setParameters($parameters) {

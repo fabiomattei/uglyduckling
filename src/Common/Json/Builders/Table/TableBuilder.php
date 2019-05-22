@@ -10,6 +10,9 @@ namespace Firststep\Common\Json\Builders\Table;
 
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Json\Builders\BaseBuilder;
+use Firststep\Common\Json\Builders\LinkBuilder;
+use Firststep\Common\Json\Builders\QueryBuilder;
 
 class TableBuilder extends BaseBuilder {
 

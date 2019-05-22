@@ -9,9 +9,13 @@
 namespace Firststep\Common\Json\Builders;
 
 use Firststep\Common\Blocks\CardBlock;
+use Firststep\Common\Json\Builders\Chartjs\ChartjsBuilder;
+use Firststep\Common\Json\Builders\Form\FormBuilder;
+use Firststep\Common\Json\Builders\Info\InfoBuilder;
+use Firststep\Common\Json\Builders\Table\TableBuilder;
 use Firststep\Common\Router\Router;
 
-class PanelBuilder {
+class PanelBuilder extends BaseBuilder {
 
     private $jsonloader;
     private $parameters;
@@ -34,42 +38,6 @@ class PanelBuilder {
         $this->infoBuilder = new InfoBuilder;
         $this->formBuilder = new FormBuilder;
         $this->action = '';
-    }
-
-
-    /**
-     * @param mixed $jsonloader
-     */
-    public function setJsonloader($jsonloader) {
-        $this->jsonloader = $jsonloader;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $router
-     */
-    public function setRouter($router) {
-        $this->router = $router;
-    }
-
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * @param mixed $action
-     */
-    public function setAction(string $action) {
-        $this->action = $action;
     }
 
     function getPanel($panel) {

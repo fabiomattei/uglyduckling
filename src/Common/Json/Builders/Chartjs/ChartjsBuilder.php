@@ -9,7 +9,7 @@
 namespace Firststep\Common\Json\Builders\Chartjs;
 
 use Firststep\Common\Blocks\BaseChart;
-use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Json\Builders\BaseBuilder;
 
 class ChartjsBuilder extends BaseBuilder {
 
