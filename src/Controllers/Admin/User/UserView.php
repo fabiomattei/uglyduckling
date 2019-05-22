@@ -42,6 +42,7 @@ class UserView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User view';
 
         $info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $info->addParagraph(
             Button::get($this->router->make_url( Router::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .

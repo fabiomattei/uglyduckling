@@ -35,6 +35,7 @@ class UserList extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Users list';
 
         $table = new StaticTable;
+        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $table->setTitle('Users list');
         $table->addButton( 'New user', $this->router->make_url( Router::ROUTE_ADMIN_USER_NEW ) );
 

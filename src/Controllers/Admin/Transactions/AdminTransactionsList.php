@@ -32,6 +32,7 @@ class AdminTransactionsList extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Forms list';
 
         $table = new StaticTable;
+        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $table->setTitle('Logics list');
 
         $table->addTHead();

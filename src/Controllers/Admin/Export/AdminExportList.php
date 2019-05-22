@@ -29,6 +29,7 @@ class AdminExportList extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Exports list';
 		
 		$table = new StaticTable;
+        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$table->setTitle('Exports list');
 		
 		$table->addTHead();

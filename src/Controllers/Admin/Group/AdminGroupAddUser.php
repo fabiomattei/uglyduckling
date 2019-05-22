@@ -33,6 +33,7 @@ class AdminGroupAddUser extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Add user to a group';
 
         $form = new BaseForm;
+        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'Add user to a group');
         $form->addDropdownField('usr_id', 'Users:', $this->userDao->makeListForDropdown(), '', '6' );
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );
@@ -79,6 +80,7 @@ class AdminGroupAddUser extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Add user to a group';
 
         $form = new BaseForm;
+        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'Add user to a group');
         $form->addDropdownField('usr_id', 'Users:', $this->userDao->makeListForDropdown(), '', '6' );
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );

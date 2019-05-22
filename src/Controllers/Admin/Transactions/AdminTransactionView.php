@@ -39,10 +39,12 @@ class AdminTransactionView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin form view';
 
         $info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Logic name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
 
         $fieldsTable = new StaticTable;
+        $fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $fieldsTable->setTitle("GET Parameters");
         $fieldsTable->addTHead();
         $fieldsTable->addRow();
@@ -62,6 +64,7 @@ class AdminTransactionView extends Controller {
         $fieldsTable->closeTBody();
 
         $actionsTable = new StaticTable;
+        $actionsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $actionsTable->setTitle("Logics");
         $actionsTable->addTHead();
         $actionsTable->addRow();

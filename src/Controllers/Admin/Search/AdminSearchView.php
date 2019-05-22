@@ -39,6 +39,7 @@ class AdminSearchView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin search view';
 
         $info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Search name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('Post SQL Query: '.$this->resource->post->query->sql, '6');

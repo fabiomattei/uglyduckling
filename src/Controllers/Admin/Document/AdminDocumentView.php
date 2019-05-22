@@ -44,6 +44,7 @@ class AdminDocumentView extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin document view';
 		
 		$info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$info->setTitle( 'Document name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 

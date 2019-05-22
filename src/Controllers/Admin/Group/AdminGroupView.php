@@ -43,11 +43,13 @@ class AdminGroupView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin group view';
 
         $info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Group name: '.$this->resource->name );
 
         $users = $this->userGroupDao->getUsersByGroupSlug( $this->resource->name );
 
         $userTable = new StaticTable;
+        $userTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $userTable->setTitle("Users");
         $userTable->addButton('Add', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
         $userTable->addTHead();
@@ -66,6 +68,7 @@ class AdminGroupView extends Controller {
         $userTable->closeTBody();
 
         $resourcesTable = new StaticTable;
+        $resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $resourcesTable->setTitle("Resources this group has access to");
         $resourcesTable->addTHead();
         $resourcesTable->addRow();

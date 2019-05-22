@@ -29,6 +29,7 @@ class EntityList extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Entites list';
 		
 		$table = new StaticTable;
+        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$table->setTitle('Entities list');
 		
 		$table->addTHead();

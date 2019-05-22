@@ -37,6 +37,7 @@ class UserNew extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User';
 
         $form = new BaseForm;
+        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'New user: ' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addSubmitButton('save', 'Save');
@@ -78,6 +79,7 @@ class UserNew extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User';
 
         $form = new BaseForm;
+        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'New user: ' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addSubmitButton('save', 'Save');

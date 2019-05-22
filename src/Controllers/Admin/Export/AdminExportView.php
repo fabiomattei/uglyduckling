@@ -39,11 +39,13 @@ class AdminExportView extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin form view';
 
         $info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Export name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('Post SQL Query: '.$this->resource->post->query->sql, '6');
 
         $fieldsFormTable = new StaticTable;
+        $fieldsFormTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $fieldsFormTable->setTitle("Form fields");
         $fieldsFormTable->addTHead();
         $fieldsFormTable->addRow();
@@ -71,6 +73,7 @@ class AdminExportView extends Controller {
         $fieldsFormTable->closeTBody();
 
         $fieldsTable = new StaticTable;
+        $fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $fieldsTable->setTitle("Fields");
         $fieldsTable->addTHead();
         $fieldsTable->addRow();

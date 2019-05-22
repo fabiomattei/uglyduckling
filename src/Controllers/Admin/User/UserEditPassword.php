@@ -47,6 +47,7 @@ class UserEditPassword extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit password';
 
         $form = new BaseForm;
+        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
@@ -106,6 +107,7 @@ class UserEditPassword extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit password';
 
         $form = new BaseForm;
+        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );

@@ -43,6 +43,7 @@ class EntityCreateTable extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity create';
 		
 		$info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 

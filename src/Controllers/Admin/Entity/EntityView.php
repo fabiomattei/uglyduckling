@@ -45,6 +45,7 @@ class EntityView extends Controller {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
 		
 		$info = new BaseInfo;
+        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Database table name: '.$this->resource->entity->tablename, '' );
 
@@ -56,6 +57,7 @@ class EntityView extends Controller {
 		), '' );
 
         $resourcesTable = new StaticTable;
+        $resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $resourcesTable->setTitle("Called from resources");
         $resourcesTable->addTHead();
         $resourcesTable->addRow();

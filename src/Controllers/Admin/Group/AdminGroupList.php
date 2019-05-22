@@ -29,6 +29,7 @@ class AdminGroupList extends Controller {
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Documents list';
 
         $table = new StaticTable;
+        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $table->setTitle('Groups list');
 
         $table->addTHead();
