@@ -2,14 +2,14 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\Builders\ExcelBuilder;
+use Firststep\Common\Json\Builders\Excel\ExcelBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\Builders\QueryBuilder;
 use Firststep\Common\Json\Builders\Form\FormBuilder;
-use Firststep\Common\Json\Builders\PDFBuilder;
+use Firststep\Common\Json\Builders\Pdf\PDFBuilder;
 use Firststep\Common\Json\Builders\MenuBuilder;
 
 /**

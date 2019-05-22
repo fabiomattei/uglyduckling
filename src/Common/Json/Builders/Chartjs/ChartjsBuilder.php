@@ -6,7 +6,7 @@
  * Time: 10.15
  */
 
-namespace Firststep\Common\Json\Builders;
+namespace Firststep\Common\Json\Builders\Chartjs;
 
 use Firststep\Common\Blocks\BaseChart;
 use Firststep\Common\Database\QueryExecuter;

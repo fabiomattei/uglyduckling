@@ -8,7 +8,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\Builders\ChartjsBuilder;
+use Firststep\Common\Json\Builders\Chartjs\ChartjsBuilder;;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
