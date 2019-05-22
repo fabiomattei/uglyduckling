@@ -7,7 +7,7 @@ use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\Builders\QueryBuilder;
-use Firststep\Common\Json\Builders\InfoBuilder;
+use Firststep\Common\Json\Builders\Info\InfoBuilder;
 use Firststep\Common\Json\Builders\MenuBuilder;
 
 /**
