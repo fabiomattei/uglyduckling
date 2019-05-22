@@ -6,7 +6,7 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\Builders;
+namespace Firststep\Common\Json\Builders\Form;
 
 use Firststep\Common\Blocks\BaseForm;
 use Firststep\Common\Json\Builders\BaseBuilder;

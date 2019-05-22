@@ -2,7 +2,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\Builders\FormBuilder;
+use Firststep\Common\Json\Builders\Form\FormBuilder;
 use Firststep\Common\Json\Builders\QueryBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Database\QueryExecuter;

@@ -6,7 +6,7 @@
  * Time: 20:39
  */
 
-namespace Firststep\Common\Json\Builders;
+namespace Firststep\Common\Json\Builders\Table;
 
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Database\QueryExecuter;

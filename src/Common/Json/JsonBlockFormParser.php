@@ -2,7 +2,7 @@
 
 namespace Firststep\Common\Json;
 
-use Firststep\Common\Json\Builders\FormBuilder;
+use Firststep\Common\Json\Builders\Form\FormBuilder;
 use Firststep\Common\Json\Builders\FormBuilderDocumentV1;
 
 /**

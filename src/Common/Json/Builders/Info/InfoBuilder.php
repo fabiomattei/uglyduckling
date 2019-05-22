@@ -6,7 +6,7 @@
  * Time: 18.15
  */
 
-namespace Firststep\Common\Json\Builders;
+namespace Firststep\Common\Json\Builders\Info;
 
 use Firststep\Common\Blocks\BaseInfo;
 use Firststep\Common\Database\QueryExecuter;

@@ -8,7 +8,7 @@ use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\Builders\QueryBuilder;
-use Firststep\Common\Json\Builders\FormBuilder;
+use Firststep\Common\Json\Builders\Form\FormBuilder;
 use Firststep\Common\Json\Builders\PDFBuilder;
 use Firststep\Common\Json\Builders\MenuBuilder;
 
