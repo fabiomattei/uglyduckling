@@ -108,8 +108,4 @@ class PanelBuilder extends BaseBuilder {
         return $panelBlock;
     }
 
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
-
 }
