@@ -2,7 +2,6 @@
 
 namespace Firststep\Common\Json;
 
-use Firststep\Common\Json\Builders\Form\FormBuilder;
 use Firststep\Common\Json\Builders\FormBuilderDocumentV1;
 
 /**
@@ -12,13 +11,6 @@ use Firststep\Common\Json\Builders\FormBuilderDocumentV1;
 class JsonBlockFormParser {
 	
 	public function parse( $resource, $entity, $action ) {
-		if ( $resource->metadata->type === 'form' ) {
-			$formBuilder = new FormBuilder;
-			$formBuilder->setFormStructure( $resource->get->form );
-			$formBuilder->setEntity( $entity );
-			$formBuilder->setAction( $action );
-			return $formBuilder->createForm();
-		}
 		if ( $resource->metadata->type === 'document' ) {
 			$formBuilder = new FormBuilderDocumentV1;
 			$formBuilder->setFormStructure( $resource );

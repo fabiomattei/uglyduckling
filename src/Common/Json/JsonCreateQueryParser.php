@@ -18,7 +18,7 @@ class JsonCreateQueryParser {
 	public function parse( $resource ): array {
 		if ( $resource->metadata->type == 'document' AND $resource->metadata->version == 1 ) return $this->parseDocumentV1( $resource );
 		if ( $resource->metadata->type == 'entity' AND $resource->metadata->version == 1 ) return $this->parseEntityV1( $resource );
-		return '';
+		return array();
 	}
 
 	public function parseDocumentV1( $resource ): array {

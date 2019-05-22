@@ -58,7 +58,7 @@ class JsonLoader {
      * @return mixed, a php structure that mirrors the json structure
      * @throws \Exception
      */
-	public function loadResource( string $key = '' ) {
+	public function loadResource( string $key ) {
 		if ( array_key_exists( $key, $this->resourcesIndex ) ) {
 			if ( file_exists( $this->resourcesIndex[$key]->path ) ) {
 				$handle = fopen($this->resourcesIndex[$key]->path, 'r');
