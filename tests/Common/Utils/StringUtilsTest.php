@@ -18,7 +18,7 @@ class StringUtilsTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testFindCorrectlyAFieldInAQueryCaseUnsensitive(){
-        $this->assertTrue( StringUtils::isStringBetweenCaseUnsensitive('username', 'SELECT username, email FROM mytable', 'SeLeCt', 'fRoM') );
+        $this->assertTrue( StringUtils::isStringBetweenCaseUnsensitive('uSeRnaMe', 'SELECT username, email FROM mytable', 'SeLeCt', 'fRoM') );
     }
 
     public function testCorrectlyDoNotFindANotExistentFieldInAQueryCaseUnsensitive(){
