@@ -47,7 +47,6 @@ class BaseMenu extends BaseBlock {
             <div class="dropdown-menu" aria-labelledby="dropdown'.$this->dropdownCounter.'">'.$submenu.'</div>
           </li>';
         $this->dropdownCounter++;
-        return $out;
     }
 
     function show(): string {

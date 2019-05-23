@@ -42,7 +42,7 @@ class FormBuilderDocumentV1 {
 		$formBlock = new BaseForm;
 		$formBlock->setTitle($this->formStructure->title);
         $formBlock->setAction( $this->action );
-		$maxrows = $this->calculateMaxumumRowsNumber($this->formStructure->fields);
+		$maxrows = $this->calculateMaxumumRowsNumber();
 		$fieldRows = array();
 		
 		foreach ($this->formStructure->fields as $field) {
@@ -62,7 +62,7 @@ class FormBuilderDocumentV1 {
                     $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value, $field->width);
                 }
                 if ($field->type === 'date') {
-                    $formBlock->addDateField($field->name, $field->label, $value, $field->width);
+                    $formBlock->addDateField($field->name, $field->label, $value, $field->width, $field->placeholder);
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
