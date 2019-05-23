@@ -61,13 +61,15 @@ class BasicJsonChecker {
 	function isActionPresentAndWellStructured( $action, $parameters ): bool {
         foreach ( $this->getActionsDefinedInResource() as $definedAction ) {
             if ( $definedAction->resource === $action ) {
-                foreach ( $parameters as $requiredParameter ) {
-                    if ( isset($definedAction->parameters) ) {
-                        if (!array_filter($definedAction->parameters, function ($parToCheck) use ($requiredParameter) {
-                            return $parToCheck->name === $requiredParameter->name;
-                        })) {
-                            $this->errors[] = "Error for action " . $action;
-                            return false;
+                if ( is_array($parameters) ) {
+                    foreach ( $parameters as $requiredParameter ) {
+                        if ( isset($definedAction->parameters) ) {
+                            if (!array_filter($definedAction->parameters, function ($parToCheck) use ($requiredParameter) {
+                                return $parToCheck->name === $requiredParameter->name;
+                            })) {
+                                $this->errors[] = "Error for action " . $action;
+                                return false;
+                            }
                         }
                     }
                 }

@@ -29,7 +29,7 @@ class AdminDashboard extends Controller {
 
         $resourceGeneralChecks = new StaticTable;
         $resourceGeneralChecks->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $resourceGeneralChecks->setTitle("General checks");
+        $resourceGeneralChecks->setTitle('General checks');
         $resourceGeneralChecks->addTHead();
         $resourceGeneralChecks->addRow();
         $resourceGeneralChecks->addHeadLineColumn('Name');
@@ -47,8 +47,33 @@ class AdminDashboard extends Controller {
         }
         $resourceGeneralChecks->closeTBody();
 
-		$this->centralcontainer       = array( $resourceGeneralChecks );
-		$this->secondcentralcontainer = array( new StaticTable );
+        $resourcesTable = new StaticTable;
+        $resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $resourcesTable->setTitle('Actions');
+        $resourcesTable->addTHead();
+        $resourcesTable->addRow();
+        $resourcesTable->addHeadLineColumn('Name');
+        $resourcesTable->addHeadLineColumn('Satus');
+        $resourcesTable->closeRow();
+        $resourcesTable->closeTHead();
+        $resourcesTable->addTBody();
+        foreach ( $this->jsonloader->getResourcesIndex() as $restocheck => $restocheckvalue ) {
+            $tmprestocheck = $this->jsonloader->loadResource( $restocheck );
+            foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
+                $tmpres = $this->jsonloader->loadResource( $reskey );
+                $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
+                if ($checker->isActionPresent($tmprestocheck->name)) {
+                    $resourcesTable->addRow();
+                    $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
+                    $resourcesTable->addColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $tmprestocheck->get->request->parameters) ? 'Ok' : $checker->getErrorsString());
+                    $resourcesTable->closeRow();
+                }
+            }
+        }
+        $resourcesTable->closeTBody();
+
+		$this->centralcontainer       = array( $resourceGeneralChecks, $resourcesTable );
+		$this->secondcentralcontainer = array();
 
 		$this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
 	}
