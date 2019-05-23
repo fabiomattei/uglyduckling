@@ -15,9 +15,9 @@ class FormV1JsonChecker extends BasicJsonChecker {
         $formfields = $this->resource->get->form->fields;
 
         foreach ( $formfields as $field ) {
-            if ( isset( $field->sqlfield ) ) {
+            if ( isset( $field->sqlfield ) AND isset( $querysql ) ) {
                 if ( !$this->isFieldInQuery( $field->sqlfield, $querysql ) ) {
-                    $this->errors[] = "Error for form field " . $field->name . " his sqlfield " . $field->sqlfield . " is not in query " . $querysql;
+                    $this->errors[] = 'Error for form field ' . $field->name . ' his sqlfield ' . $field->sqlfield . ' is not in query ' . $querysql;
                     return false;
                 }
             }
@@ -38,7 +38,7 @@ class FormV1JsonChecker extends BasicJsonChecker {
         return $actions;
     }
 
-    public function isFieldInQuery( $field, $query ): bool {
+    public function isFieldInQuery( string $field = '', string $query = '' ): bool {
         return StringUtils::isStringBetweenCaseUnsensitive( $field, $query, 'SELECT', 'FROM' );
     }
 
