@@ -4,6 +4,7 @@ namespace Firststep\Common\Controllers;
 
 use Firststep\Common\Controllers\Controller;
 use Firststep\Common\Json\Builders\ValidationBuilder;
+use Firststep\Common\Json\Parameters\BasicParameterGetter;
 use Gump;
 
 /**
@@ -33,8 +34,9 @@ class ManagerEntityController extends Controller {
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
-    	$validation_rules = $val->getValidationRoules( $this->resource->get->request->parameters );
-    	$filter_rules = $val->getValidationFilters( $this->resource->get->request->parameters );
+    	$parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->jsonloader );
+    	$validation_rules = $val->getValidationRoules( $parametersGetter->getGetParameters() );
+    	$filter_rules = $val->getValidationFilters( $parametersGetter->getGetParameters() );
 
         if ( count( $validation_rules ) == 0 ) {
             return true;
@@ -70,8 +72,9 @@ class ManagerEntityController extends Controller {
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
-    	$validation_rules = $val->postValidationRoules( $this->resource->post->request->postparameters );
-    	$filter_rules = $val->postValidationFilters( $this->resource->post->request->postparameters );
+        $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->jsonloader );
+    	$validation_rules = $val->postValidationRoules( $parametersGetter->getPostParameters() );
+    	$filter_rules = $val->postValidationFilters( $parametersGetter->getPostParameters() );
 
         if ( count( $validation_rules ) == 0 ) {
             return true;

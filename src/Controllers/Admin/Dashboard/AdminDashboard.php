@@ -4,6 +4,7 @@ namespace Firststep\Controllers\Admin\Dashboard;
 
 use Firststep\Common\Controllers\Controller;
 use Firststep\Common\Json\Checkers\BasicJsonChecker;
+use Firststep\Common\Json\Parameters\BasicParameterGetter;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\StaticTable;
@@ -65,7 +66,8 @@ class AdminDashboard extends Controller {
                 if ($checker->isActionPresent($tmprestocheck->name)) {
                     $resourcesTable->addRow();
                     $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
-                    $resourcesTable->addColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $tmprestocheck->get->request->parameters) ? 'Ok' : $checker->getErrorsString());
+                    $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $tmprestocheck, $this->jsonloader );
+                    $resourcesTable->addColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString());
                     $resourcesTable->closeRow();
                 }
             }

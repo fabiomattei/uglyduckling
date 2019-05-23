@@ -12,6 +12,7 @@ namespace Firststep\Controllers\Admin\Forms;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
+use Firststep\Common\Json\Parameters\BasicParameterGetter;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Blocks\BaseInfo;
@@ -108,7 +109,8 @@ class AdminFormView extends Controller {
 			if ( $checker->isActionPresent( $this->resource->name ) ) {
 	            $resourcesTable->addRow();
 	            $resourcesTable->addColumn( $reskey );
-	            $resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $this->resource->get->request->parameters ) ? 'Ok' : $checker->getErrorsString() );
+                $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->jsonloader );
+	            $resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString() );
 	            $resourcesTable->closeRow();
 			}
             
