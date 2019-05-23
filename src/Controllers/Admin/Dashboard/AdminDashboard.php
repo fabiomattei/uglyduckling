@@ -54,7 +54,7 @@ class AdminDashboard extends Controller {
         $resourcesTable->addTHead();
         $resourcesTable->addRow();
         $resourcesTable->addHeadLineColumn('Name');
-        $resourcesTable->addHeadLineColumn('Satus');
+        $resourcesTable->addHeadLineColumn('Staus');
         $resourcesTable->closeRow();
         $resourcesTable->closeTHead();
         $resourcesTable->addTBody();

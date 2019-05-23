@@ -124,7 +124,7 @@ class AdminFormView extends Controller {
         $resourceGeneralChecks->addTHead();
         $resourceGeneralChecks->addRow();
         $resourceGeneralChecks->addHeadLineColumn('Name');
-        $resourceGeneralChecks->addHeadLineColumn('Satus');
+        $resourceGeneralChecks->addHeadLineColumn('Staus');
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();

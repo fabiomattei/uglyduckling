@@ -89,7 +89,7 @@ class BaseInfo extends BaseBlock {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${text}', '${ColWidth}'),
             array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
-            'Info/textfield.html');
+            'Info/paragraph.html');
     }
 
     function addRow() {
