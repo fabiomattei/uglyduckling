@@ -9,9 +9,7 @@
     },
     "query": {
       "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=(SELECT MAX(id) FROM requestv1);",
-      "parameters":[
-        { "placeholder": ":id", "getparameter": "id" }
-      ]
+      "parameters":[]
     },
     "info": {
       "title": "",
