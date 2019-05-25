@@ -21,9 +21,9 @@ class TransactionV1JsonChecker extends BasicJsonChecker {
         foreach ( $getTransactions as $transaction ) {
             foreach ($transaction->parameters as $sqlRequiredPar) {
                 if (!array_filter($getParameters, function ($parToCheck) use ($sqlRequiredPar) {
-                    return $parToCheck->name === $sqlRequiredPar->parameter;
+                    return $parToCheck->name === $sqlRequiredPar->getparameter;
                 })) {
-                    $this->errors[] = 'Error for form, SQL Transaction parameter ' . $sqlRequiredPar->parameter . ' it is not part of the get parameters array';
+                    $this->errors[] = 'Error for form, GET SQL Transaction parameter ' . $sqlRequiredPar->getparameter . ' it is not part of the get parameters array';
                     $out = false;
                 }
             }
@@ -35,7 +35,7 @@ class TransactionV1JsonChecker extends BasicJsonChecker {
                 if (!array_filter($postParameters, function ($parToCheck) use ($sqlRequiredPar) {
                     return $parToCheck->name === $sqlRequiredPar->postparameter;
                 })) {
-                    $this->errors[] = 'Error for form, SQL Transaction parameter ' . $sqlRequiredPar->postparameter . ' it is not part of the get parameters array';
+                    $this->errors[] = 'Error for form, POST SQL Transaction parameter ' . $sqlRequiredPar->postparameter . ' it is not part of the get parameters array';
                     $out = false;
                 }
             }
