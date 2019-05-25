@@ -2,13 +2,16 @@
 
 namespace Firststep\Common\Json\Checkers;
 
+use Firststep\Common\Json\Checkers\Chartjs\ChartjsV1JsonChecker;
 use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
 use Firststep\Common\Json\Checkers\Info\InfoV1JsonChecker;
 use Firststep\Common\Json\Checkers\Group\GroupV1JsonChecker;
 use Firststep\Common\Json\Checkers\Table\TableV1JsonChecker;
 
 /**
- * 
+ * Basic class for json files checkers
+ * Contains the factory to generate the right json checker based on the json resource we need to check
+ * Contains the basic structure
  */
 class BasicJsonChecker {
 
@@ -84,7 +87,8 @@ class BasicJsonChecker {
      * @return bool
      */
     function isResourceBlockWellStructured() : bool {
-        return true;
+        $this->errors[] = 'Undefined checker';
+        return false;
     }
 
     /**
@@ -105,10 +109,11 @@ class BasicJsonChecker {
     }
 
 	public static function basicJsonCheckerFactory( $resource ): BasicJsonChecker {
-        if ( $resource->metadata->type === "form" ) return new FormV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "info" ) return new InfoV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "table" ) return new TableV1JsonChecker( $resource );
-		if ( $resource->metadata->type === "group" ) return new GroupV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "chartjs" ) return new ChartjsV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "form" )    return new FormV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "info" )    return new InfoV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "table" )   return new TableV1JsonChecker( $resource );
+		if ( $resource->metadata->type === "group" )   return new GroupV1JsonChecker( $resource );
         return new BasicJsonChecker( $resource );
 	}
 
