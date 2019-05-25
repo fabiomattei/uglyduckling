@@ -43,7 +43,7 @@ class AdminDashboard extends Controller {
             $checker = BasicJsonChecker::basicJsonCheckerFactory($tmpres);
             $resourceGeneralChecks->addRow();
             $resourceGeneralChecks->addColumn( $tmpres->name );
-            $resourceGeneralChecks->addColumn($checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString());
+            $resourceGeneralChecks->addUnfilteredColumn($checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString());
             $resourceGeneralChecks->closeRow();
         }
         $resourceGeneralChecks->closeTBody();
@@ -67,7 +67,7 @@ class AdminDashboard extends Controller {
                     $resourcesTable->addRow();
                     $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
                     $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $tmprestocheck, $this->jsonloader );
-                    $resourcesTable->addColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString());
+                    $resourcesTable->addUnfilteredColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString());
                     $resourcesTable->closeRow();
                 }
             }

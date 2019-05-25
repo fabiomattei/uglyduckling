@@ -99,7 +99,7 @@ class BasicJsonChecker {
 	public function getErrorsString(): string {
 	    $errorString = '';
         foreach ( $this->errors as $error) {
-            $errorString .= $error;
+            $errorString .= $error . '<br />';
         }
         return $errorString;
     }
