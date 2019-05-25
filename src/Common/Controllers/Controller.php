@@ -246,7 +246,7 @@ class Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->logger->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 

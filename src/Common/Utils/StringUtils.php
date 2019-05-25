@@ -26,6 +26,57 @@ class StringUtils {
 		return false;
 	}
 
+    /**
+     * Check if a given $word is between the words $start and $end in a string $container
+     * This is useful in order to check if a field is in a particular query
+     * 
+     * Ex.
+     * $word = "name", $string = "SELECT name, address FROM People;", $start = "SELECT", $end = "FROM"
+     * will return true because the word name is in the string between the words START and END
+     *
+     * @param string $field
+     * @param string $container
+     * @param string $start
+     * @param string $end
+     * @return bool
+     */
+    static function isFieldInSqlSelect( string $field, string $sql ): bool {
+        $sql = ' ' . $sql;
+        if ( strpos( $sql, strtolower('RECURSIVE') ) ) {
+            $ini = strrpos( $sql, strtolower('SELECT') ); // finding the position of the last occurrence of $start in $sql    
+        } else {
+            $ini = strpos( $sql, strtolower('SELECT') ); // finding the position of the last occurrence of $start in $sql    
+        }
+        if ($ini == 0) return false;
+        $ini += strlen($start);
+        $len = strpos($sql, strtolower('FROM'), $ini) - $ini;
+        $string_in_the_middle = substr($sql, $ini, $len);
+        if ( strpos( $string_in_the_middle, $field ) !== false ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * This is the case unsensitive version of the method isStringBetween
+     * Check if a given $word is between the words $start and $end in a string $container
+     * This is useful in order to check if a field is in a particular query
+     *
+     * Ex.
+     * $word = "name", $string = "SELECT name, address FROM People;", $start = "SELECT", $end = "FROM"
+     * will return true because the word name is in the string between the words START and END
+     *
+     * @param string $word
+     * @param string $container
+     * @param string $start
+     * @param string $end
+     * @return bool
+     */
+    static function isFieldInSqlSelectCaseUnsensitive( string $field, string $container ): bool {
+        return StringUtils::isFieldInSqlSelect( strtolower($field), strtolower($container) );
+    }
+
 	/**
      * Check if a given $word is between the words $start and $end in a string $container
      * This is useful in order to check if a field is in a particular query
@@ -42,7 +93,7 @@ class StringUtils {
      */
     static function isStringBetween( string $word, string $container, string $start, string $end ): bool {
         $container = ' ' . $container;
-        $ini = strpos( $container, $start );
+        $ini = strpos( $container, $start ); // finding the position of the last occurrence of $start in $container
         if ($ini == 0) return false;
         $ini += strlen($start);
         $len = strpos($container, $end, $ini) - $ini;
@@ -74,4 +125,3 @@ class StringUtils {
     }
 
 }
-

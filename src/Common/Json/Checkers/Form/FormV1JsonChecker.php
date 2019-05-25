@@ -80,7 +80,7 @@ class FormV1JsonChecker extends BasicJsonChecker {
     }
 
     public function isFieldInQuery( string $field = '', string $query = '' ): bool {
-        return StringUtils::isStringBetweenCaseUnsensitive( $field, $query, 'SELECT', 'FROM' );
+        return StringUtils::isFieldInSqlSelectCaseUnsensitive( $field, $query );
     }
 
 }

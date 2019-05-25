@@ -3,9 +3,11 @@
 namespace Firststep\Common\Json\Checkers;
 
 use Firststep\Common\Json\Checkers\Chartjs\ChartjsV1JsonChecker;
+use Firststep\Common\Json\Checkers\Dashboard\DashboardV1JsonChecker;
 use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
 use Firststep\Common\Json\Checkers\Info\InfoV1JsonChecker;
 use Firststep\Common\Json\Checkers\Group\GroupV1JsonChecker;
+use Firststep\Common\Json\Checkers\TabbedPage\TabbedPageV1JsonChecker;
 use Firststep\Common\Json\Checkers\Table\TableV1JsonChecker;
 use Firststep\Common\Json\Checkers\Transaction\TransactionV1JsonChecker;
 
@@ -111,10 +113,12 @@ class BasicJsonChecker {
 
 	public static function basicJsonCheckerFactory( $resource ): BasicJsonChecker {
         if ( $resource->metadata->type === "chartjs" )     return new ChartjsV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "dashboard" )   return new DashboardV1JsonChecker( $resource );
         if ( $resource->metadata->type === "form" )        return new FormV1JsonChecker( $resource );
         if ( $resource->metadata->type === "group" )       return new GroupV1JsonChecker( $resource );
         if ( $resource->metadata->type === "info" )        return new InfoV1JsonChecker( $resource );
         if ( $resource->metadata->type === "table" OR $resource->metadata->type === "datatable" )       return new TableV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "tabbedpage" )  return new TabbedPageV1JsonChecker( $resource );
         if ( $resource->metadata->type === "transaction" ) return new TransactionV1JsonChecker( $resource );
         return new BasicJsonChecker( $resource );
 	}
