@@ -19,14 +19,17 @@ class FormV1JsonChecker extends BasicJsonChecker {
         $formfields = $this->resource->get->form->fields ?? array();
         $form_transactions = $this->resource->post->transactions ?? array();
 
-        // check if all form fields are cotained in the query selected fields
-        foreach ( $formfields as $field ) {
-            if ( isset( $field->sqlfield ) AND isset( $querysql ) ) {
-                if ( !$this->isFieldInQuery( $field->sqlfield, $querysql ) ) {
-                    $this->errors[] = 'Error for form field ' . $field->name . ' its sqlfield ' . $field->sqlfield . ' is not in query ' . $querysql;
-                    $out = false;
+        // check if all form fields are contained in the query selected fields
+        // it performs this check only if the query has been set
+        if ( $querysql != '' ) {
+            foreach ( $formfields as $field ) {
+                if ( isset( $field->sqlfield ) AND isset( $querysql ) ) {
+                    if ( !$this->isFieldInQuery( $field->sqlfield, $querysql ) ) {
+                        $this->errors[] = 'Error for form field ' . $field->name . ' its sqlfield ' . $field->sqlfield . ' is not in query ' . $querysql;
+                        $out = false;
+                    }
                 }
-            }
+            }    
         }
 
         // check if all query sql parameters are passed in the get parameters array
