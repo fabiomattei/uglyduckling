@@ -1,5 +1,7 @@
 <?php
 
+namespace Firststep\Common\Json\Parameters\Dashboard;
+
 use \Firststep\Common\Json\Parameters\BasicParameterGetter;
 
 class DashboardParameterGetter extends BasicParameterGetter {

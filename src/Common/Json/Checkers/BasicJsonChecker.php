@@ -114,7 +114,7 @@ class BasicJsonChecker {
         if ( $resource->metadata->type === "form" )        return new FormV1JsonChecker( $resource );
         if ( $resource->metadata->type === "group" )       return new GroupV1JsonChecker( $resource );
         if ( $resource->metadata->type === "info" )        return new InfoV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "table" )       return new TableV1JsonChecker( $resource );
+        if ( $resource->metadata->type === "table" OR $resource->metadata->type === "datatable" )       return new TableV1JsonChecker( $resource );
         if ( $resource->metadata->type === "transaction" ) return new TransactionV1JsonChecker( $resource );
         return new BasicJsonChecker( $resource );
 	}

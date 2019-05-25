@@ -11,6 +11,7 @@ class JsonLoader {
 	
 	private $indexpath;
 	private $resourcesIndex = array();
+    private $resourceCache = array();
 
     /**
      * Set the path of the file containing the main index of the json structure
@@ -59,10 +60,15 @@ class JsonLoader {
      * @throws \Exception
      */
 	public function loadResource( string $key ) {
+        if ( array_key_exists( $key, $this->resourceCache ) ) {
+            return $this->resourceCache[$key];
+        }
 		if ( array_key_exists( $key, $this->resourcesIndex ) ) {
 			if ( file_exists( $this->resourcesIndex[$key]->path ) ) {
 				$handle = fopen($this->resourcesIndex[$key]->path, 'r');
-				return $this->json_decode_with_error_control(fread($handle,filesize($this->resourcesIndex[$key]->path)));
+                $resourceOut = $this->json_decode_with_error_control(fread($handle,filesize($this->resourcesIndex[$key]->path)));
+                $this->resourceCache[$key] = $resourceOut;
+				return $resourceOut;
 			} else {
 				throw new \Exception('[JsonLoader] :: File associated to resource does not exists!!!');
 			}

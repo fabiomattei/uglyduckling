@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Parameters;
 
-use DashboardParameterGetter;
+use \Firststep\Common\Json\Parameters\Dashboard\DashboardParameterGetter;
 
 class BasicParameterGetter {
 

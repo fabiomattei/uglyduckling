@@ -35,7 +35,6 @@ class FormV1JsonChecker extends BasicJsonChecker {
         // check if all query sql parameters are passed in the get parameters array
         foreach ($querySqlParameters as $sqlRequiredPar) {
             if (!array_filter($getParameters, function ($parToCheck) use ($sqlRequiredPar) {
-                echo "$parToCheck->name === $sqlRequiredPar->getparameter<br>";
                 return $parToCheck->name === $sqlRequiredPar->getparameter;
             })) {
                 $this->errors[] = 'Error for form, SQL parameter ' . $sqlRequiredPar->getparameter . ' it is not part of the get parameters array';

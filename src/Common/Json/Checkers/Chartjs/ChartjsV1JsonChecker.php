@@ -3,6 +3,7 @@
 namespace Firststep\Common\Json\Checkers\Chartjs;
 
 use  Firststep\Common\Json\Checkers\BasicJsonChecker;
+use Firststep\Common\Utils\StringUtils;
 
 /**
  * 
@@ -19,7 +20,6 @@ class ChartjsV1JsonChecker extends BasicJsonChecker {
         // check if all query sql parameters are passed in the get parameters array
         foreach ($querySqlParameters as $sqlRequiredPar) {
             if (!array_filter($getParameters, function ($parToCheck) use ($sqlRequiredPar) {
-                echo "$parToCheck->name === $sqlRequiredPar->getparameter<br>";
                 return $parToCheck->name === $sqlRequiredPar->getparameter;
             })) {
                 $this->errors[] = 'Error for form, SQL parameter ' . $sqlRequiredPar->getparameter . ' it is not part of the get parameters array';
@@ -53,6 +53,10 @@ class ChartjsV1JsonChecker extends BasicJsonChecker {
     		$actions[] = $this->resource->get->actiononclick;
     	}
         return $actions;
+    }
+
+    public function isFieldInQuery( string $field = '', string $query = '' ): bool {
+        return StringUtils::isStringBetweenCaseUnsensitive( $field, $query, 'SELECT', 'FROM' );
     }
 
 }
