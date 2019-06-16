@@ -1,5 +1,14 @@
 # todo list
 
+### IFPUG
+methrics for software
+
+### Dummy data
+integrated in the system
+
+### Variables
+Active varibles for values and fields Ex: "value":"The user GET[NAME] has been deleted"
+
 ### custom controllers and routers
 
 ### custom resources in php indexed with json resource
