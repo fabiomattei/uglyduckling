@@ -25,6 +25,12 @@ class AdminSidebar extends BaseBlock {
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_METRICS_DASHBOARD ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_METRICS_DASHBOARD ).'">
+                      <span data-feather="home"></span>
+                      Metrics <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link '.( $this->active === Router::ROUTE_ADMIN_ENTITY_LIST ? 'active' : '' ).'" href="'.$this->router->make_url( Router::ROUTE_ADMIN_ENTITY_LIST ).'">
                       <span data-feather="file"></span>
                       Entities

@@ -2,7 +2,7 @@
 
 namespace Firststep\Common\Json\Checkers\Table;
 
-use  Firststep\Common\Json\Checkers\BasicJsonChecker;
+use Firststep\Common\Json\Checkers\BasicJsonChecker;
 use Firststep\Common\Utils\StringUtils;
 
 /**
