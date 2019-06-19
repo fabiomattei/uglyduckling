@@ -22,8 +22,28 @@ class BaseResourceMetric {
         $this->resource = $resource;
     }
 
+    public function getRET(): int {
+        return 1;
+    }
+
+    public function getDET(): int {
+        return 0;
+    }
+
     public function getFunctionPoints(): int {
-    	return 0;
+        if ($this->getRET() <= 2) {
+            if ($this->getDET() <= 19) return 7;
+            if ($this->getDET() <= 50) return 7;
+            return 10;
+        }
+        if ($this->getRET() <= 5) {
+            if ($this->getDET() <= 19) return 7;
+            if ($this->getDET() <= 50) return 10;
+            return 15;
+        }
+        if ($this->getDET() <= 19) return 10;
+        if ($this->getDET() <= 50) return 15;
+        return 15;
     }
 
     public static function basicResourceMetricFactory( $resource ): BaseResourceMetric {
