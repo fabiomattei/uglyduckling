@@ -1,0 +1,23 @@
+{
+  "name": "deletearticletransaction",
+  "metadata": { "type":"transaction", "version": "1" },
+  "allowedgroups": [ "author" ],
+  "get": {
+    "request": {
+      "parameters": [
+        { "type":"long", "validation":"required|numeric", "name":"id" }
+      ]
+    },
+    "transactions": [
+      {
+        "sql":"DELETE FROM article WHERE id=:id;",
+        "parameters":[
+          { "placeholder": ":id", "getparameter": "id" }
+        ]
+      }
+    ],
+    "redirect": {
+      "internal": { "type": "onepageback" }
+    }
+  }
+}

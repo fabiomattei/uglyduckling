@@ -1,8 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-      { "path":"./Custom/Json/tables/requesttable/requesttablev1.json", "type":"table", "name":"requesttablev1" },
-      { "path":"./Custom/Json/tables/requesttable/smallrequesttablev1.json", "type":"table", "name":"smallrequesttablev1" }
-  ]
- }

@@ -1,8 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-    { "path":"./Custom/Json/forms/course/request/formrequestv1.json", "type":"form", "name":"formrequestv1" },
-    { "path":"./Custom/Json/forms/course/request/newformrequestv1.json", "type":"form", "name":"newformrequestv1" }
-  ]
- }

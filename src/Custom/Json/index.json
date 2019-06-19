@@ -1,17 +1,11 @@
-{ 
+{
   "name": "index",
   "metadata": { "type":"index", "version": "1" },
   "scripts": [
-      { "path":"./Custom/Json/charts/index.json", "type":"index" },
-      { "path":"./Custom/Json/dashboards/index.json", "type":"index" },
-      { "path":"./Custom/Json/documents/index.json", "type":"index" },
-      { "path":"./Custom/Json/entities/index.json", "type":"index" },
-      { "path":"./Custom/Json/exports/index.json", "type":"index" },
-      { "path":"./Custom/Json/forms/index.json", "type":"index" },
-      { "path":"./Custom/Json/groups/index.json", "type":"index" },
-      { "path":"./Custom/Json/infos/index.json", "type":"index" },
-      { "path":"./Custom/Json/transactions/index.json", "type":"index" },
-      { "path":"./Custom/Json/search/index.json", "type":"index" },
-      { "path":"./Custom/Json/tables/index.json", "type":"index" }
+    { "path":"./Custom/Json/groups/author.json", "type":"group", "name":"author" },
+    { "path":"./Custom/Json/articles/articles.json", "type":"table", "name":"articles" },
+    { "path":"./Custom/Json/articles/newarticleform.json", "type":"form", "name":"newarticleform" },
+    { "path":"./Custom/Json/articles/editarticleform.json", "type":"form", "name":"editarticleform" },
+    { "path":"./Custom/Json/articles/deletearticlelogic.json", "type":"transaction", "name":"deletearticlelogic" }
   ]
- }
+}

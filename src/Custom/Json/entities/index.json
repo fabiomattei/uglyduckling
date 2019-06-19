@@ -1,7 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-      { "path":"./Custom/Json/entities/request/entityrequestv1.json", "type":"entity", "name":"entityrequestv1" }
-  ]
- }

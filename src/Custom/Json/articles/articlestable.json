@@ -1,0 +1,29 @@
+{
+  "name": "articlestable",
+  "metadata": { "type":"table", "version": "1" },
+  "allowedgroups": [ "author" ],
+  "get": {
+    "request": {
+      "parameters": []
+    },
+    "query": {
+      "sql": "SELECT id, title, description, created FROM articles;",
+      "parameters":[]
+    },
+    "table": {
+      "title": "My articles",
+      "topactions": [
+        { "label": "New", "resource": "newarticle" }
+      ],
+      "fields": [
+        {"headline": "Title", "sqlfield": "title"},
+        {"headline": "Description", "sqlfield": "description"},
+        {"headline": "Date", "sqlfield": "created"}
+      ],
+      "actions": [
+        {"label": "Edit", "action": "editarticleform", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Delete", "action": "deletearticlelogic", "parameters":[{"name": "id", "sqlfield": "id"}] }
+      ]
+    }
+  }
+}

@@ -1,8 +1,0 @@
-{ 
-  "name": "index",
-  "metadata": { "type":"index", "version": "1" },
-  "scripts": [
-    { "path":"./Custom/Json/infos/request/inforequestv1.json", "type":"info", "name":"inforequestv1" },
-    { "path":"./Custom/Json/infos/request/lastinforequestv1.json", "type":"info", "name":"lastinforequestv1" }
-  ]
- }
