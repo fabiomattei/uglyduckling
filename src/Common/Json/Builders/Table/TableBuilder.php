@@ -36,23 +36,35 @@ class TableBuilder extends BaseBuilder {
         $this->method = $method;
     }
 
-    public function createTable() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+    public function getTableFromResource() {
+        return $this->method === self::GET_METHOD ? $this->resource->get->table : $this->resource->post->table;
+    }
 
-        if ($this->method === self::GET_METHOD) {
-            $query = $this->resource->get->query;
-            $table = $this->resource->get->table;
-            if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+    public function createTable() {
+        // If there are dummy data they take precedence in order to fill the table
+        if ( isset($this->resource->get->dummydata) ) {
+            $entities = $this->resource->get->dummydata;
         } else {
-            $query = $this->resource->post->query;
-            $table = $this->resource->post->table;
-            if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
+            // If there is a query I look for data to fill the table,
+            // if there is not query I do not
+            if ( isset($this->resource->get->query) AND isset($this->dbconnection) ) {
+                $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                if ($this->method === self::GET_METHOD) {
+                    $query = $this->resource->get->query;
+                    if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+                } else {
+                    $query = $this->resource->post->query;
+                    if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
+                }
+                $this->queryExecuter->setQueryStructure( $query );
+                $entities = $this->queryExecuter->executeQuery();
+            } else {
+                $entity = new \stdClass();
+            }
         }
 
-        $this->queryExecuter->setQueryStructure( $query );
-
-        $entities = $this->queryExecuter->executeQuery();
+        $table = $this->getTableFromResource();
 
 		$tableBlock = new StaticTable;
         $tableBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );

@@ -1,8 +1,5 @@
 # todo list
 
-### IFPUG
-methrics for software
-
 ### Dummy data
 integrated in the system
 
@@ -45,3 +42,6 @@ Active varibles for values and fields Ex: "value":"The user GET[NAME] has been d
 # done
 
 ### Implement user management
+
+### IFPUG
+methrics for software schelethon

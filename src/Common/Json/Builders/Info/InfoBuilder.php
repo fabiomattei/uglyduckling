@@ -15,13 +15,24 @@ use Firststep\Common\Json\Builders\BaseBuilder;
 class InfoBuilder extends BaseBuilder {
 
     public function createInfo() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
+        // If there are dummy data they take precedence in order to fill the info box
+        if ( isset($this->resource->get->dummydata) ) {
+            $entity = $this->resource->get->dummydata;
+        } else {
+            // If there is a query I look for data to fill the info box,
+            // if there is not query I do not
+            if ( isset($this->resource->get->query) AND isset($this->dbconnection) ) {
+                $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+                if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
 
-        $result = $this->queryExecuter->executeQuery();
-        $entity = $result->fetch();
+                $result = $this->queryExecuter->executeQuery();
+                $entity = $result->fetch();
+            } else {
+                $entity = new \stdClass();
+            }
+        }
 
 		$infoBlock = new BaseInfo;
         $infoBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
