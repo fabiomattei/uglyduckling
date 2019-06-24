@@ -21,7 +21,7 @@
     },
     "transactions": [
       {
-        "sql":"INSERT INTO articles ( title, description, created ) VALUES ( :title, :description, NOW() );",
+        "sql":"INSERT INTO articles ( title, description, updated, created ) VALUES ( :title, :description, NOW(), NOW() );",
         "parameters":[
           { "type":"string", "placeholder": ":title", "postparameter": "title" },
           { "type":"long", "placeholder": ":description", "postparameter": "description" }
