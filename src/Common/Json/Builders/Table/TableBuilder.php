@@ -59,8 +59,6 @@ class TableBuilder extends BaseBuilder {
                 }
                 $this->queryExecuter->setQueryStructure( $query );
                 $entities = $this->queryExecuter->executeQuery();
-            } else {
-                $entity = new \stdClass();
             }
         }
 
@@ -87,7 +85,7 @@ class TableBuilder extends BaseBuilder {
 			}
 			$links = '';
 			foreach ( $table->actions as $action ) {
-				$links .= LinkBuilder::get( $this->router, $action->label, $action->action, $action->resource, $action->parameters, $entity );
+				$links .= LinkBuilder::get( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
 			}
 			$tableBlock->addUnfilteredColumn( $links );
 			$tableBlock->closeRow();

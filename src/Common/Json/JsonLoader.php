@@ -97,7 +97,6 @@ class JsonLoader {
                 case 'chart': return 'entitychart';
                 case 'transaction': return 'entitytransaction';
             }
-
         } else {
             throw new \Exception('[JsonLoader] :: It is not possible to assocate an action to Resource: '.$resource_key);
         }

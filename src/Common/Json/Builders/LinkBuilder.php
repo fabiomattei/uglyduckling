@@ -13,12 +13,15 @@ use Firststep\Common\Blocks\Button;
 
 class LinkBuilder {
 
-    static function get($router, $label, $action, $resource, $parameters, $entity ) {
+    static function get( $jsonloader, $router, $label, $resource, $parameters, $entity ) {
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
             $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
         }
         $url_parameters = rtrim($url_parameters, '&');
+
+        print_r($jsonloader);
+        $action = $jsonloader->getActionRelatedToResource($resource);
         switch ( $action ) {
             case 'entitydashboard':
                 return Button::get($router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
