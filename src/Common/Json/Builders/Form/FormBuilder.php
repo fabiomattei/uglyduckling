@@ -49,8 +49,8 @@ class FormBuilder extends BaseBuilder {
 			$formBlock->addRow();
 			foreach ($row as $field) {
 				$value = $this->getValue($field, $entity);
-                if ($field->type === 'text') {
-                    $formBlock->addTextField($field->name, $field->label, $field->placeholder, $value, $field->width);
+                if ($field->type === 'textfield') {
+                    $formBlock->addTextField($field->name, $field->label, $field->placeholder, $value ?? '', $field->width);
                 }
                 if ($field->type === 'dropdown') {
                     $options = array();
@@ -71,13 +71,13 @@ class FormBuilder extends BaseBuilder {
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
                 }
+                if ($field->type === 'submitbutton') {
+                    $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '' );
+                }
 			}
 			$formBlock->closeRow('row '.$rowcounter);
             $rowcounter++;
 		}
-        $formBlock->addRow();
-        $formBlock->addSubmitButton( 'save', $this->resource->get->form->submitTitle ?? '' );
-        $formBlock->closeRow('row save');
         return $formBlock;
     }
 
