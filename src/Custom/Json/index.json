@@ -3,9 +3,10 @@
   "metadata": { "type":"index", "version": "1" },
   "scripts": [
     { "path":"./Custom/Json/groups/author.json", "type":"group", "name":"author" },
-    { "path":"./Custom/Json/articles/articles.json", "type":"table", "name":"articles" },
+    { "path":"./Custom/Json/groups/administrationgroup.json", "type":"group", "name":"administrationgroup" },
+    { "path":"./Custom/Json/articles/articlestable.json", "type":"table", "name":"articlestable" },
     { "path":"./Custom/Json/articles/newarticleform.json", "type":"form", "name":"newarticleform" },
     { "path":"./Custom/Json/articles/editarticleform.json", "type":"form", "name":"editarticleform" },
-    { "path":"./Custom/Json/articles/deletearticlelogic.json", "type":"transaction", "name":"deletearticlelogic" }
+    { "path":"./Custom/Json/articles/deletearticletransaction.json", "type":"transaction", "name":"deletearticletransaction" }
   ]
 }

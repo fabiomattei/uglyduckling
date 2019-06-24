@@ -20,7 +20,7 @@
         { "type":"textfield", "name":"title", "label":"Title", "placeholder":"title", "width":"12", "row":"1" },
         { "type":"textarea", "name":"description", "label":"Description", "placeholder":"Description", "width":"12", "row":"2" },
         { "type":"hidden", "name":"id", "sqlfield":"id", "row":"3" },
-        { "type": "submitbutton", "width":"2", "row":"3", "name": "Save", "constantparameter": "Save" },
+        { "type": "submitbutton", "width":"2", "row":"3", "name": "Save", "constantparameter": "Save" }
       ]
     }
   },
