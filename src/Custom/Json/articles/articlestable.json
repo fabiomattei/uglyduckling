@@ -21,8 +21,8 @@
         {"headline": "Date", "sqlfield": "created"}
       ],
       "actions": [
-        {"label": "Edit", "action": "editarticleform", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Delete", "action": "deletearticlelogic", "parameters":[{"name": "id", "sqlfield": "id"}] }
+        {"label": "Edit", "resource": "editarticleform", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Delete", "resource": "deletearticletransaction", "parameters":[{"name": "id", "sqlfield": "id"}] }
       ]
     }
   }

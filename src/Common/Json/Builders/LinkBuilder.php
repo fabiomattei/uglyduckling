@@ -20,7 +20,6 @@ class LinkBuilder {
         }
         $url_parameters = rtrim($url_parameters, '&');
 
-        print_r($jsonloader);
         $action = $jsonloader->getActionRelatedToResource($resource);
         switch ( $action ) {
             case 'entitydashboard':

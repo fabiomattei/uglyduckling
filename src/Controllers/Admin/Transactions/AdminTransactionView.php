@@ -72,7 +72,6 @@ class AdminTransactionView extends Controller {
         $actionsTable->closeRow();
         $actionsTable->closeTHead();
         $actionsTable->addTBody();
-        print_r($this->resource->get->transactions);
         foreach ( $this->resource->get->transactions as $transaction ) {
             $actionsTable->addRow();
             $actionsTable->addColumn($transaction->sql ?? 'Undefined');

@@ -60,7 +60,7 @@ class PanelBuilder extends BaseBuilder {
      * @param $resource
      * @param CardBlock $panelBlock
      */
-    public function getHTMLBlock($resource): string {
+    public function getHTMLBlock($resource) {
         if ($resource->metadata->type == 'table') {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->tableBuilder->setJsonloader($this->jsonloader);

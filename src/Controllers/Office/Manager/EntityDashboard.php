@@ -35,6 +35,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->menubuilder->setRouter( $this->router );
 
         $this->panelBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->panelBuilder->setJsonloader($this->jsonloader);
         $this->panelBuilder->setDbconnection($this->dbconnection);
         $this->panelBuilder->setRouter($this->router);
         $this->panelBuilder->setJsonloader($this->jsonloader);
