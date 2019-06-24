@@ -10,7 +10,7 @@ $htmlTemplateLoader = new Firststep\Common\Utils\HtmlTemplateLoader;
 $htmlTemplateLoader->setPath('Templates/HTML/');
 
 $messagesBlock = new Firststep\Common\Blocks\BaseMessages();
-$messagesBlock->setHtmlTemplateLoader( $messagesBlock );
+$messagesBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 
 $setup = new Firststep\Common\Setup\Setup();
 $setup->setAppNameForPageTitle("Try app");

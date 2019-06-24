@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * User: Fabio Mattei
+ * Date: 24/06/2019
+ * Time: 09:49
+ */
+
 namespace Firststep\Common\Controllers;
 
 use Firststep\Common\Blocks\BaseMessages;
@@ -56,19 +62,19 @@ class Controller {
 		BaseMessages $messages,
         HtmlTemplateLoader $htmlTemplateLoader
 		) {
-		$this->router          = $router;
-        $this->setup           = $setup;
-        $this->request         = $request;
-		$this->serverWrapper   = $serverWrapper;
-		$this->sessionWrapper  = $sessionWrapper;
-		$this->securityChecker = $securityChecker;
-		$this->dbconnection    = $dbconnection;
-        $this->urlredirector   = $urlredirector;
-		$this->jsonloader      = $jsonloader;
-        $this->logger          = $logger;
-        $this->messages        = $messages;
+		$this->router             = $router;
+        $this->setup              = $setup;
+        $this->request            = $request;
+		$this->serverWrapper      = $serverWrapper;
+		$this->sessionWrapper     = $sessionWrapper;
+		$this->securityChecker    = $securityChecker;
+		$this->dbconnection       = $dbconnection;
+        $this->urlredirector      = $urlredirector;
+		$this->jsonloader         = $jsonloader;
+        $this->logger             = $logger;
+        $this->messages           = $messages;
         $this->htmlTemplateLoader = $htmlTemplateLoader;
-        $this->gump            = new GUMP();
+        $this->gump               = new GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
@@ -185,10 +191,22 @@ class Controller {
         }
     }
 
+    /**
+     * This method has to be overriden, if id does not it throws an unhandled ErrorPageException
+     * The ovverriding method need to show the page containing the errors that prevent the validation to pass
+     *
+     * @throws ErrorPageException
+     */
     public function show_get_error_page() {
         throw new ErrorPageException('Error page exception function show_get_error_page()');
     }
 
+    /**
+     * This method has to be overriden, if id does not it throws an unhandled ErrorPageException
+     * The ovverriding method need to show the page containing the errors that prevent the validation to pass
+     *
+     * @throws ErrorPageException
+     */
     public function show_post_error_page() {
         throw new ErrorPageException('Error page exception function show_post_error_page()');
     }
