@@ -17,16 +17,11 @@ use Firststep\Common\Router\Router;
 
 class PanelBuilder extends BaseBuilder {
 
-    private $jsonloader;
-    private $parameters;
-    private $router;
-    private $dbconnection;
-    private $action;
+    protected $jsonloader;
     private $tableBuilder;
     private $chartjsBuilder;
     private $infoBuilder;
     private $formBuilder;
-    private $htmlTemplateLoader;
 
     /**
      * PanelBuilder constructor.
