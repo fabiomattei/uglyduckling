@@ -17,7 +17,6 @@ use Firststep\Common\Router\Router;
 
 class PanelBuilder extends BaseBuilder {
 
-    protected $jsonloader;
     private $tableBuilder;
     private $chartjsBuilder;
     private $infoBuilder;

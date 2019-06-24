@@ -57,16 +57,16 @@ class FormBuilder extends BaseBuilder {
                     foreach ($field->options as $op) {
                         $options[$op->value] = $op->label;
                     }
-                    $formBlock->addDropdownField($field->name, $field->label, $options, $value, $field->width);
+                    $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
                 }
 				if ($field->type === 'textarea') {
-                    $formBlock->addTextAreaField($field->name, $field->label, $value, $field->width);
+                    $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
                 }
                 if ($field->type === 'currency') {
-                    $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value, $field->width);
+                    $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value ?? '', $field->width);
                 }
                 if ($field->type === 'date') {
-                    $formBlock->addDateField($field->name, $field->label, $value, $field->width, $field->placeholder ?? date('Y-m-d'));
+                    $formBlock->addDateField($field->name, $field->label, $value ?? '', $field->width, $field->placeholder ?? date('Y-m-d'));
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
@@ -76,7 +76,7 @@ class FormBuilder extends BaseBuilder {
             $rowcounter++;
 		}
         $formBlock->addRow();
-        $formBlock->addSubmitButton( 'save', $this->resource->get->form->submitTitle );
+        $formBlock->addSubmitButton( 'save', $this->resource->get->form->submitTitle ?? '' );
         $formBlock->closeRow('row save');
         return $formBlock;
     }

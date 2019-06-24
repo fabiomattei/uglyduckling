@@ -21,6 +21,7 @@ class BaseBuilder {
     protected $sessionparameters;
     protected $action;
     protected $htmlTemplateLoader;
+    protected $jsonloader;
 
     /**
      * InfoBuilder constructor.
