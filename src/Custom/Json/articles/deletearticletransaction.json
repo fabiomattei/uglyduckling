@@ -10,7 +10,7 @@
     },
     "transactions": [
       {
-        "sql":"DELETE FROM article WHERE id=:id;",
+        "sql":"DELETE FROM articles WHERE id=:id;",
         "parameters":[
           { "placeholder": ":id", "getparameter": "id" }
         ]

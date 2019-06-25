@@ -47,7 +47,15 @@ class PanelBuilder extends BaseBuilder {
         return $panelBlock;
     }
 
-    function getWidePanel($resource) {
+    /**
+     * Return a panel containing an HTML Block built with data in the resource field
+     *
+     * The HTML block type depends from the resource->metadata->type field in the json strcture
+     *
+     * @param $resource
+     * @return CardBlock
+     */
+    function getWidePanel( $resource ) {
         $panelBlock = new CardBlock;
         $panelBlock->setTitle('');
         $panelBlock->setWidth( '12');
@@ -57,10 +65,14 @@ class PanelBuilder extends BaseBuilder {
     }
 
     /**
-     * @param $resource
+     * Return an HTML Block
+     *
+     * The HTML block type depends from the resource->metadata->type field in the json strcture
+     *
+     * @param $resource json strcture
      * @param CardBlock $panelBlock
      */
-    public function getHTMLBlock($resource) {
+    public function getHTMLBlock( $resource ) {
         if ($resource->metadata->type == 'table') {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->tableBuilder->setJsonloader($this->jsonloader);
