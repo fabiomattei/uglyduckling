@@ -16,6 +16,7 @@ use Firststep\Common\Json\Builders\QueryBuilder;
 
 class TableBuilder extends BaseBuilder {
 
+    const blocktype = 'table';
     const GET_METHOD = 'GET';
     const POST_METHOD = 'POST';
     private $query;

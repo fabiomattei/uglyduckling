@@ -13,6 +13,8 @@ use Firststep\Common\Json\Builders\BaseBuilder;
 
 class FormBuilder extends BaseBuilder {
 
+    const blocktype = 'form';
+
     public function createForm() {
         // If there are dummy data they take precedence in order to fill the form
         if ( isset($this->resource->get->dummydata) ) {

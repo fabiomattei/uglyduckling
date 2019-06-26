@@ -73,7 +73,7 @@ class PanelBuilder extends BaseBuilder {
      * @param CardHTMLBlock $panelBlock
      */
     public function getHTMLBlock( $resource ) {
-        if ($resource->metadata->type == 'table') {
+        if ($resource->metadata->type == TableBuilder::blocktype) {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->tableBuilder->setJsonloader($this->jsonloader);
             $this->tableBuilder->setRouter($this->router);
@@ -83,7 +83,7 @@ class PanelBuilder extends BaseBuilder {
             return $this->tableBuilder->createTable();
         }
 
-        if ($resource->metadata->type == 'chartjs') {
+        if ($resource->metadata->type == ChartjsBuilder::blocktype) {
             $this->chartjsBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->chartjsBuilder->setJsonloader($this->jsonloader);
             $this->chartjsBuilder->setRouter($this->router);
@@ -93,7 +93,7 @@ class PanelBuilder extends BaseBuilder {
             return $this->chartjsBuilder->createChart();
         }
 
-        if ($resource->metadata->type == 'info') {
+        if ($resource->metadata->type == InfoBuilder::blocktype) {
             $this->infoBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->infoBuilder->setJsonloader($this->jsonloader);
             $this->infoBuilder->setRouter($this->router);
@@ -103,7 +103,7 @@ class PanelBuilder extends BaseBuilder {
             return $this->infoBuilder->createInfo();
         }
 
-        if ($resource->metadata->type == 'form') {
+        if ($resource->metadata->type == FormBuilder::blocktype) {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
             $this->formBuilder->setRouter($this->router);

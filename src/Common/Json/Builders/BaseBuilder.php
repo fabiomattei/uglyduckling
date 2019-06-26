@@ -25,6 +25,8 @@ class BaseBuilder {
     protected $htmlTemplateLoader;
     protected $jsonloader;
 
+    const blocktype = 'basebuilder';
+
     /**
      * BaseBuilder constructor.
      */
@@ -141,6 +143,8 @@ class BaseBuilder {
             return $this->sessionparameters[$field->sessionparameter] ?? '';
         }
     }
+
+
 
     /**
      * Return a object that inherit from BaseHTMLBlock class

@@ -13,6 +13,8 @@ use Firststep\Common\Json\Builders\BaseBuilder;
 
 class ChartjsBuilder extends BaseBuilder {
 
+    const blocktype = 'chartjs';
+
     public function createChart() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );

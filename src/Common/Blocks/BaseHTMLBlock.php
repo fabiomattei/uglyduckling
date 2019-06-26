@@ -5,6 +5,8 @@ namespace Firststep\Common\Blocks;
 abstract class BaseHTMLBlock {
 
     /**
+     * @deprecated
+     *
      * Overwrite this method with the content you want your block to show
      */
     function show(): string {

@@ -14,6 +14,8 @@ use Firststep\Common\Json\Builders\BaseBuilder;
 
 class InfoBuilder extends BaseBuilder {
 
+    const blocktype = 'info';
+
     public function createInfo() {
         // If there are dummy data they take precedence in order to fill the info box
         if ( isset($this->resource->get->dummydata) ) {
