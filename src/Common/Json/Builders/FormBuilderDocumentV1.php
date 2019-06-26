@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Builders;
 
-use Firststep\Common\Blocks\BaseForm;
+use Firststep\Common\Blocks\BaseHTMLForm;
 
 class FormBuilderDocumentV1 {
 
@@ -39,7 +39,7 @@ class FormBuilderDocumentV1 {
     }
 
     public function createForm() {
-		$formBlock = new BaseForm;
+		$formBlock = new BaseHTMLForm;
 		$formBlock->setTitle($this->formStructure->title);
         $formBlock->setAction( $this->action );
 		$maxrows = $this->calculateMaxumumRowsNumber();

@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Controllers;
 
-use Firststep\Common\Blocks\BaseMessages;
+use Firststep\Common\Blocks\BaseHTMLMessages;
 use Firststep\Common\Exceptions\ErrorPageException;
 use Firststep\Common\Exceptions\AuthorizationException;
 use Firststep\Common\Redirectors\Redirector;
@@ -48,18 +48,18 @@ class Controller {
     public $getParameters;
     public $postParameters;
 
-    public function makeAllPresets( 
-		Router $router, 
-		Setup $setup, 
-		Request $request, 
-		ServerWrapper $serverWrapper,
-		SessionWrapper $sessionWrapper,
-		SecurityChecker $securityChecker,
-		DBConnection $dbconnection, 
-		Redirector $urlredirector,
-		JsonLoader $jsonloader,
-		Logger $logger, 
-		BaseMessages $messages,
+    public function makeAllPresets(
+        Router $router,
+        Setup $setup,
+        Request $request,
+        ServerWrapper $serverWrapper,
+        SessionWrapper $sessionWrapper,
+        SecurityChecker $securityChecker,
+        DBConnection $dbconnection,
+        Redirector $urlredirector,
+        JsonLoader $jsonloader,
+        Logger $logger,
+        BaseHTMLMessages $messages,
         HtmlTemplateLoader $htmlTemplateLoader
 		) {
 		$this->router             = $router;

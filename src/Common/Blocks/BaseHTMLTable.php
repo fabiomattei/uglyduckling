@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Blocks;
 
-class BaseTable extends BaseBlock {
+class BaseHTMLTable extends BaseHTMLBlock {
 
     protected $html;
     protected $title;

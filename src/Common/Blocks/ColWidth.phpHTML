@@ -2,9 +2,9 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class ColWidth extends BaseBlock {
+class ColWidth extends BaseHTMLBlock {
 	
 	const EXTRA_SMALL = 'col-';         // < 576px
 	const SMALL       = 'col-sm-';      // >= 576px

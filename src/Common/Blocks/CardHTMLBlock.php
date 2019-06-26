@@ -8,10 +8,10 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
-use Firststep\Common\Blocks\EmptyBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
+use Firststep\Common\Blocks\EmptyHTMLBlock;
 
-class CardBlock extends BaseBlock {
+class CardHTMLBlock extends BaseHTMLBlock {
 
     private $title;
     private $subtitle;
@@ -22,7 +22,7 @@ class CardBlock extends BaseBlock {
     function __construct() {
         $this->title = '';
         $this->subtitle = '';
-        $this->block = new EmptyBlock;
+        $this->block = new EmptyHTMLBlock;
         $this->width = ColWidth::getWidth(ColWidth::MEDIUM, 3);
     }
 

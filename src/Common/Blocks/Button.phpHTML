@@ -2,9 +2,9 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class Button extends BaseBlock {
+class Button extends BaseHTMLBlock {
 	
 	const COLOR_BLUE              = 'btn-primary';
 	const COLOR_GRAY              = 'btn-secondary';

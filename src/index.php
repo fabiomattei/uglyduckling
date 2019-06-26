@@ -9,7 +9,7 @@ $sessionWrapper = new Firststep\Common\Wrappers\SessionWrapper;
 $htmlTemplateLoader = new Firststep\Common\Utils\HtmlTemplateLoader;
 $htmlTemplateLoader->setPath('Templates/HTML/');
 
-$messagesBlock = new Firststep\Common\Blocks\BaseMessages();
+$messagesBlock = new Firststep\Common\Blocks\BaseHTMLMessages();
 $messagesBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 
 $setup = new Firststep\Common\Setup\Setup();

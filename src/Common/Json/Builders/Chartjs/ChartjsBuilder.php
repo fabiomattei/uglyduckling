@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Builders\Chartjs;
 
-use Firststep\Common\Blocks\BaseChart;
+use Firststep\Common\Blocks\BaseHTMLChart;
 use Firststep\Common\Json\Builders\BaseBuilder;
 
 class ChartjsBuilder extends BaseBuilder {
@@ -20,7 +20,7 @@ class ChartjsBuilder extends BaseBuilder {
         if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
         $entities = $this->queryExecuter->executeQuery();
 
-        $chartBlock = new BaseChart;
+        $chartBlock = new BaseHTMLChart;
         $chartBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $chartBlock->setStructure($this->resource->get->chart);
         $chartBlock->setChartDataGlue($this->resource->get->chartdataglue);

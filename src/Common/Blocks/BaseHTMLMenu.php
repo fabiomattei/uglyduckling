@@ -2,9 +2,9 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class BaseMenu extends BaseBlock {
+class BaseHTMLMenu extends BaseHTMLBlock {
 
     function __construct() {
         $this->brand = '';

@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Builders;
 
-use Firststep\Common\Blocks\BaseMenu;
+use Firststep\Common\Blocks\BaseHTMLMenu;
 use stdClass;
 
 class MenuBuilder {
@@ -28,7 +28,7 @@ class MenuBuilder {
     }
 
     public function createMenu() {
-		$menu = new BaseMenu;
+		$menu = new BaseHTMLMenu;
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
         foreach ($this->menuStructure->menu as $menuitem) {

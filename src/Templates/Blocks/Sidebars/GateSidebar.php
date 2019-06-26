@@ -2,9 +2,9 @@
 
 namespace Firststep\Templates\Blocks\Sidebars;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class GateSidebar extends BaseBlock {
+class GateSidebar extends BaseHTMLBlock {
 	
 	function __construct( string $appname, string $active = 'home' ) {
 		$this->appname = $appname;

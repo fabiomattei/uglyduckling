@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Builders;
 
-use Firststep\Common\Blocks\CardBlock;
+use Firststep\Common\Blocks\CardHTMLBlock;
 use Firststep\Common\Json\Builders\Chartjs\ChartjsBuilder;
 use Firststep\Common\Json\Builders\Form\FormBuilder;
 use Firststep\Common\Json\Builders\Info\InfoBuilder;
@@ -35,7 +35,7 @@ class PanelBuilder extends BaseBuilder {
     }
 
     function getPanel($panel) {
-        $panelBlock = new CardBlock;
+        $panelBlock = new CardHTMLBlock;
         $panelBlock->setTitle($panel->title ?? '');
         $panelBlock->setWidth($panel->width ?? '3');
         $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
@@ -53,10 +53,10 @@ class PanelBuilder extends BaseBuilder {
      * The HTML block type depends from the resource->metadata->type field in the json strcture
      *
      * @param $resource
-     * @return CardBlock
+     * @return CardHTMLBlock
      */
     function getWidePanel( $resource ) {
-        $panelBlock = new CardBlock;
+        $panelBlock = new CardHTMLBlock;
         $panelBlock->setTitle('');
         $panelBlock->setWidth( '12');
         $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
@@ -70,7 +70,7 @@ class PanelBuilder extends BaseBuilder {
      * The HTML block type depends from the resource->metadata->type field in the json strcture
      *
      * @param $resource json strcture
-     * @param CardBlock $panelBlock
+     * @param CardHTMLBlock $panelBlock
      */
     public function getHTMLBlock( $resource ) {
         if ($resource->metadata->type == 'table') {

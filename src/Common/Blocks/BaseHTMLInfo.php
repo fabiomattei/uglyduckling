@@ -2,10 +2,10 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 use Firststep\Common\Blocks\ColWidth;
 
-class BaseInfo extends BaseBlock {
+class BaseHTMLInfo extends BaseHTMLBlock {
 
     private $title;
     private $subtitle;

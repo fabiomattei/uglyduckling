@@ -9,7 +9,7 @@
 
 namespace Firststep\Common\Json\Builders\Pdf;
 
-use Firststep\Common\Blocks\BaseTable;
+use Firststep\Common\Blocks\BaseHTMLTable;
 use Firststep\Common\Database\QueryExecuter;
 
 class PDFBuilder {
@@ -54,7 +54,7 @@ class PDFBuilder {
 
         $table = $this->resource->post->table;
 
-        $tableBlock = new BaseTable;
+        $tableBlock = new BaseHTMLTable;
         $tableBlock->setTitle($table->title ?? '');
 
         $tableBlock->addTHead();

@@ -5,7 +5,7 @@ namespace Firststep\Controllers\Admin\Document;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\Builders\QueryBuilder;
@@ -42,7 +42,7 @@ class AdminDocumentDropTable extends Controller {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin document drop table';
 		
-		$info = new BaseInfo;
+		$info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$info->setTitle( 'Document name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->name, '' );

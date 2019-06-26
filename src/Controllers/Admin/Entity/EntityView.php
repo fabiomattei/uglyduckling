@@ -5,7 +5,7 @@ namespace Firststep\Controllers\Admin\Entity;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
@@ -44,7 +44,7 @@ class EntityView extends Controller {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
 		
-		$info = new BaseInfo;
+		$info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Database table name: '.$this->resource->entity->tablename, '' );

@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Builders\Info;
 
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\Builders\BaseBuilder;
 
@@ -34,7 +34,7 @@ class InfoBuilder extends BaseBuilder {
             }
         }
 
-		$infoBlock = new BaseInfo;
+		$infoBlock = new BaseHTMLInfo;
         $infoBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$infoBlock->setTitle($this->resource->get->info->title ?? '');
 		$fieldRows = array();

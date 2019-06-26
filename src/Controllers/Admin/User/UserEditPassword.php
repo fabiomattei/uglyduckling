@@ -12,7 +12,7 @@ use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseForm;
+use Firststep\Common\Blocks\BaseHTMLForm;
 use Firststep\Common\Router\Router;
 
 /**
@@ -46,7 +46,7 @@ class UserEditPassword extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit password';
 
-        $form = new BaseForm;
+        $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
@@ -106,7 +106,7 @@ class UserEditPassword extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit password';
 
-        $form = new BaseForm;
+        $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );

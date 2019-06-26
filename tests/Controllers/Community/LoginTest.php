@@ -31,7 +31,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
-		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
+		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
         $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
@@ -68,7 +68,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
-		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
+		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
         $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		
@@ -118,7 +118,7 @@ class LoginTest extends PHPUnit_Framework_TestCase {
 		$e = new stdClass; 
 		$e->defaultaction='defaultaction';
 		$jsonLoader->expects($this->once())->method('loadResource')->will($this->returnValue( $e ));
-		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseMessages::class)->getMock();
+		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
         $echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
 		

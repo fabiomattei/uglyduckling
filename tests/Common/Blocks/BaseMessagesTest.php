@@ -1,7 +1,7 @@
 <?php
 
 /**
-*  Testing the BaseForm class
+*  Testing the BaseHTMLForm class
 *
 *  @author Fabio Mattei
 */
@@ -15,7 +15,7 @@ class BaseMessagesTest extends PHPUnit_Framework_TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	$form = new Firststep\Common\Blocks\BaseMessages;
+	$form = new Firststep\Common\Blocks\BaseHTMLMessages;
 	$this->assertTrue(is_object($form));
 	unset($form);
   }

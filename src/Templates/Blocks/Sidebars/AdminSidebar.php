@@ -2,10 +2,10 @@
 
 namespace Firststep\Templates\Blocks\Sidebars;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 use Firststep\Common\Router\Router;
 
-class AdminSidebar extends BaseBlock {
+class AdminSidebar extends BaseHTMLBlock {
 	
 	function __construct( string $appname, string $active = 'home', $router ) {
 		$this->appname = $appname;

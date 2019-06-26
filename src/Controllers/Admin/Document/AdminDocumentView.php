@@ -5,7 +5,7 @@ namespace Firststep\Controllers\Admin\Document;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
@@ -43,7 +43,7 @@ class AdminDocumentView extends Controller {
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin document view';
 		
-		$info = new BaseInfo;
+		$info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$info->setTitle( 'Document name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );

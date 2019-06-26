@@ -8,7 +8,7 @@
 
 namespace Firststep\Common\Json\Builders\Form;
 
-use Firststep\Common\Blocks\BaseForm;
+use Firststep\Common\Blocks\BaseHTMLForm;
 use Firststep\Common\Json\Builders\BaseBuilder;
 
 class FormBuilder extends BaseBuilder {
@@ -33,7 +33,7 @@ class FormBuilder extends BaseBuilder {
             }
         }
 
-		$formBlock = new BaseForm;
+		$formBlock = new BaseHTMLForm;
         $formBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
         $formBlock->setAction( $this->action ?? '');

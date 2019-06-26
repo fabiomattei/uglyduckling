@@ -2,7 +2,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Blocks\RowBlock;
+use Firststep\Common\Blocks\RowHTMLBlock;
 use Firststep\Common\Json\Builders\PanelBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Router\Router;
@@ -52,7 +52,7 @@ class EntityDashboard extends ManagerEntityController {
         $rowcontainer = array();
 
         foreach ($fieldRows as $row) {
-            $rowBlock = new RowBlock;
+            $rowBlock = new RowHTMLBlock;
             $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             foreach ($row as $panel) {
                 $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );

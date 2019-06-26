@@ -8,15 +8,15 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class RowBlock extends BaseBlock {
+class RowHTMLBlock extends BaseHTMLBlock {
 
     private $blocks;
     private $htmlTemplateLoader;
 
     /**
-     * RowBlock constructor.
+     * RowHTMLBlock constructor.
      * @param $blocks
      */
     public function __construct() {
@@ -39,7 +39,7 @@ class RowBlock extends BaseBlock {
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
             array( '${htmlbody}' ),
             array( $htmlbody ),
-            'RowBlock/body.html');;
+            'RowHTMLBlock/body.html');;
     }
 
     function addToHead(): string {

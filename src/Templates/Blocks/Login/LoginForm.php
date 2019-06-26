@@ -2,9 +2,9 @@
 
 namespace Firststep\Templates\Blocks\Login;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class LoginForm extends BaseBlock {
+class LoginForm extends BaseHTMLBlock {
 	
 	function __construct( string $appname, string $error = '' ) {
 		$this->appname = $appname;

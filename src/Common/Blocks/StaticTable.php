@@ -2,9 +2,9 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseTable;
+use Firststep\Common\Blocks\BaseHTMLTable;
 
-class StaticTable extends BaseTable {
+class StaticTable extends BaseHTMLTable {
 
   private $buttons;
 

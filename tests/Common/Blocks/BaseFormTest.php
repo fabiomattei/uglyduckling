@@ -1,7 +1,7 @@
 <?php 
 
 /**
-*  Testing the BaseForm class
+*  Testing the BaseHTMLForm class
 *
 *  @author Fabio Mattei
 */
@@ -13,7 +13,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
     protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->form = new Firststep\Common\Blocks\BaseForm;
+        $this->form = new Firststep\Common\Blocks\BaseHTMLForm;
         $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
     }
 	

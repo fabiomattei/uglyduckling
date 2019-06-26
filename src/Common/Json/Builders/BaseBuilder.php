@@ -7,6 +7,8 @@
 
 namespace Firststep\Common\Json\Builders;
 
+use Firststep\Common\Blocks\BaseHTMLBlock;
+use Firststep\Common\Blocks\EmptyHTMLBlock;
 use Firststep\Common\Database\QueryExecuter;
 
 class BaseBuilder {
@@ -24,13 +26,18 @@ class BaseBuilder {
     protected $jsonloader;
 
     /**
-     * InfoBuilder constructor.
+     * BaseBuilder constructor.
      */
     public function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
     }
 
+    /**
+     * Setting router object
+     *
+     * @param $router
+     */
     public function setRouter( $router ) {
         $this->router = $router;
     }
@@ -95,6 +102,11 @@ class BaseBuilder {
         $this->queryBuilder = $queryBuilder;
     }
 
+    /**
+     * Setting Html template loader
+     *
+     * @param $htmlTemplateLoader
+     */
     public function setHtmlTemplateLoader($htmlTemplateLoader) {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
@@ -128,6 +140,16 @@ class BaseBuilder {
         if ( isset($field->sessionparameter) ) {
             return $this->sessionparameters[$field->sessionparameter] ?? '';
         }
+    }
+
+    /**
+     * Return a object that inherit from BaseHTMLBlock class
+     * It is an object that has to generate HTML code
+     *
+     * @return EmptyHTMLBlock
+     */
+    public function createHTMLBlock() {
+        return new EmptyHTMLBlock;
     }
 
 }

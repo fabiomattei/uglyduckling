@@ -2,9 +2,9 @@
 
 namespace Firststep\Templates\Blocks\Menus;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class PublicMenu extends BaseBlock {
+class PublicMenu extends BaseHTMLBlock {
 	
 	function __construct( string $appname, string $active = 'home' ) {
 		$this->appname = $appname;

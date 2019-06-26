@@ -7,7 +7,7 @@ use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseForm;
+use Firststep\Common\Blocks\BaseHTMLForm;
 use Firststep\Common\Router\Router;
 
 class AdminGroupAddUser extends Controller {
@@ -32,7 +32,7 @@ class AdminGroupAddUser extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Add user to a group';
 
-        $form = new BaseForm;
+        $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'Add user to a group');
         $form->addDropdownField('usr_id', 'Users:', $this->userDao->makeListForDropdown(), '', '6' );
@@ -79,7 +79,7 @@ class AdminGroupAddUser extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Add user to a group';
 
-        $form = new BaseForm;
+        $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'Add user to a group');
         $form->addDropdownField('usr_id', 'Users:', $this->userDao->makeListForDropdown(), '', '6' );

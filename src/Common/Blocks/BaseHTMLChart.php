@@ -8,9 +8,9 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class BaseChart extends BaseBlock {
+class BaseHTMLChart extends BaseHTMLBlock {
 
     private $lables;
     private $dataset;

@@ -12,7 +12,7 @@ use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 
@@ -41,7 +41,7 @@ class UserView extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User view';
 
-        $info = new BaseInfo;
+        $info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $info->addParagraph(

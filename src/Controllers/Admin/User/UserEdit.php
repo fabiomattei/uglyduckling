@@ -13,7 +13,7 @@ use Firststep\BusinessLogic\User\Daos\UserDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseForm;
+use Firststep\Common\Blocks\BaseHTMLForm;
 use Firststep\Common\Router\Router;
 
 /**
@@ -45,7 +45,7 @@ class UserEdit extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit';
 
-        $form = new BaseForm;
+        $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
@@ -97,7 +97,7 @@ class UserEdit extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: User view';
 
-        $form = new BaseForm;
+        $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );

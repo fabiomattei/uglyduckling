@@ -2,9 +2,9 @@
 
 namespace Firststep\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseBlock;
+use Firststep\Common\Blocks\BaseHTMLBlock;
 
-class BaseMessages extends BaseBlock {
+class BaseHTMLMessages extends BaseHTMLBlock {
 
 	private $htmlTemplateLoader;
 	

@@ -6,7 +6,7 @@ use Firststep\BusinessLogic\Group\Daos\UserGroupDao;
 use Firststep\Common\Controllers\Controller;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
@@ -42,7 +42,7 @@ class AdminGroupView extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin group view';
 
-        $info = new BaseInfo;
+        $info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Group name: '.$this->resource->name );
 

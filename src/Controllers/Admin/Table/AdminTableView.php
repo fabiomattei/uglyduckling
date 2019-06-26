@@ -15,7 +15,7 @@ use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
 use Firststep\Common\Json\Parameters\BasicParameterGetter;
 use Firststep\Templates\Blocks\Menus\AdminMenu;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseInfo;
+use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Json\Checkers\BasicJsonChecker;
 
@@ -42,7 +42,7 @@ class AdminTableView extends Controller {
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
 
-        $info = new BaseInfo;
+        $info = new BaseHTMLInfo;
 		$info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Table name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
