@@ -16,6 +16,12 @@
       ]
     },
     {
+      "label":"Extetions",
+      "submenu": [
+            { "label":"Dashboard", "action":"entitydashboard", "resource":"articlesdashboard" }
+      ]
+    },
+    {
       "label":"Documents",
       "submenu": [
             { "label":"In Box", "action":"documentinbox" }
