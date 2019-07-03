@@ -5,7 +5,7 @@
   "defaultaction": "articlestable",
   "home": { "label":"My app", "action":"#" },
   "menu": [
-    { "label":"Home", "action":"entityinfo", "resource":"inforequestv1" },
+    { "label":"Home", "action":"entityinfo", "resource":"articleinfov1" },
     {
       "label":"Requests",
       "submenu": [

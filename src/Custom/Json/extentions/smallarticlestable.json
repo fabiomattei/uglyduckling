@@ -17,7 +17,7 @@
         {"headline": "Due date", "sqlfield": "duedate"}
       ],
       "actions": [
-        {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] }
+        {"label": "Info", "action": "entityinfo", "resource": "articleinfov1", "parameters":[{"name": "id", "sqlfield": "id"}] }
       ]
     }
   }
