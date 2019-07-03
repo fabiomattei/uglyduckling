@@ -1,0 +1,56 @@
+{
+  "name": "articlesearchv1",
+  "metadata": { "type":"search", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "get": {
+    "query": {
+      "sql":"select id, name, amount, duedate FROM requestv1 ORDER BY id LIMIT 20;"
+    },
+    "table": {
+      "title": "My table",
+      "fields": [
+        { "headline": "Name", "sqlfield":"name" },
+        { "headline": "Amount", "sqlfield":"amount" },
+        { "headline": "Due date", "sqlfield":"duedate" }
+      ],
+      "actions": [
+        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "sqlfield":"id"}] }
+      ]
+    },
+    "form": {
+      "title": "Serch between all requests",
+      "submitTitle": "Search",
+      "fields": [
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" }
+      ]
+    }
+  },
+  "post": {
+    "table": {
+      "title": "My table",
+      "fields": [
+        { "headline": "Name", "sqlfield":"name" },
+        { "headline": "Amount", "sqlfield":"amount" },
+        { "headline": "Due date", "sqlfield":"duedate" }
+      ],
+      "actions": [
+        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
+        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "sqlfield":"id"}] }
+      ]
+    },
+    "form": {
+      "title": "Serch between all requests",
+      "submitTitle": "Search",
+      "fields": [
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" }
+      ]
+    },
+    "query": {
+      "sql":"select id, name, amount, duedate FROM requestv1 WHERE name=:name;",
+      "parameters":[
+        { "placeholder": ":name", "postparameter": "name" }
+      ]
+    }
+  }
+}

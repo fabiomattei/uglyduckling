@@ -1,0 +1,24 @@
+{
+  "name": "lastarticleinfov1",
+  "metadata": { "type":"info", "version": "1" },
+  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "get": {
+    "request": {
+      "parameters": [
+      ]
+    },
+    "query": {
+      "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=(SELECT MAX(id) FROM requestv1);",
+      "parameters":[]
+    },
+    "info": {
+      "title": "",
+      "fields": [
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
+        { "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
+        { "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
+        { "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id" }
+      ]
+    }
+  }
+}
