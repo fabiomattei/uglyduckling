@@ -6,7 +6,7 @@
  * Time: 07:02
  */
 
-namespace Firststep\Common\Json\Builders;
+namespace Firststep\Common\Json\TemplateBuilder;
 
 class QueryBuilder {
 	

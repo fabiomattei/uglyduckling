@@ -6,11 +6,11 @@
  * Time: 18.15
  */
 
-namespace Firststep\Common\Json\Builders\Info;
+namespace Firststep\Common\Json\TemplateBuilder\Info;
 
 use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\Builders\BaseBuilder;
+use Firststep\Common\Json\TemplateBuilder\BaseBuilder;
 
 class InfoBuilder extends BaseBuilder {
 

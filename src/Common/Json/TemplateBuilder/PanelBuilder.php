@@ -6,13 +6,13 @@
  * Time: 04:56
  */
 
-namespace Firststep\Common\Json\Builders;
+namespace Firststep\Common\Json\TemplateBuilder;
 
 use Firststep\Common\Blocks\CardHTMLBlock;
-use Firststep\Common\Json\Builders\Chartjs\ChartjsBuilder;
-use Firststep\Common\Json\Builders\Form\FormBuilder;
-use Firststep\Common\Json\Builders\Info\InfoBuilder;
-use Firststep\Common\Json\Builders\Table\TableBuilder;
+use Firststep\Common\Json\TemplateBuilder\Chartjs\ChartjsBuilder;
+use Firststep\Common\Json\TemplateBuilder\Form\FormBuilder;
+use Firststep\Common\Json\TemplateBuilder\Info\InfoBuilder;
+use Firststep\Common\Json\TemplateBuilder\Table\TableBuilder;
 use Firststep\Common\Router\Router;
 
 class PanelBuilder extends BaseBuilder {

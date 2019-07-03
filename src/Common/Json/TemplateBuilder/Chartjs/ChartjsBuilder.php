@@ -6,10 +6,10 @@
  * Time: 10.15
  */
 
-namespace Firststep\Common\Json\Builders\Chartjs;
+namespace Firststep\Common\Json\TemplateBuilder\Chartjs;
 
 use Firststep\Common\Blocks\BaseHTMLChart;
-use Firststep\Common\Json\Builders\BaseBuilder;
+use Firststep\Common\Json\TemplateBuilder\BaseBuilder;
 
 class ChartjsBuilder extends BaseBuilder {
 

@@ -6,10 +6,10 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\Builders\Form;
+namespace Firststep\Common\Json\TemplateBuilder\Form;
 
 use Firststep\Common\Blocks\BaseHTMLForm;
-use Firststep\Common\Json\Builders\BaseBuilder;
+use Firststep\Common\Json\TemplateBuilder\BaseBuilder;
 
 class FormBuilder extends BaseBuilder {
 
