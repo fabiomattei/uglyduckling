@@ -5,7 +5,7 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\TemplateBuilder;
+namespace Firststep\Common\Json\TemplateBuilders;
 
 use Firststep\Common\Blocks\BaseHTMLBlock;
 use Firststep\Common\Blocks\EmptyHTMLBlock;

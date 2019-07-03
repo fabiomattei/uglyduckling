@@ -2,7 +2,7 @@
 
 namespace Firststep\Common\Json;
 
-use Firststep\Common\Json\Builders\CreateQueryBuilder;
+use Firststep\Common\Json\TemplateBuilders\CreateQueryBuilder;
 use Firststep\Common\Database\DatabaseDefaults;
 use Firststep\Common\Database\DocumentDao;
 

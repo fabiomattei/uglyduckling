@@ -6,7 +6,7 @@
  * Time: 07:17
  */
 
-namespace Firststep\Common\Json\TemplateBuilder;
+namespace Firststep\Common\Json\TemplateBuilders;
 
 class NotificationBuilder {
 

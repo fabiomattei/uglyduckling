@@ -3,7 +3,7 @@
 namespace Firststep\Common\Controllers;
 
 use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Json\Builders\ValidationBuilder;
+use Firststep\Common\Json\TemplateBuilders\ValidationBuilder;
 use Firststep\Common\Json\Parameters\BasicParameterGetter;
 use Gump;
 

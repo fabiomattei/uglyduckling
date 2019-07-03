@@ -9,8 +9,8 @@ use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\Builders\QueryBuilder;
-use Firststep\Common\Json\Builders\MenuBuilder;
+use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
+use Firststep\Common\Json\TemplateBuilders\MenuBuilder;
 use Firststep\Common\Database\DocumentDao;
 
 /**

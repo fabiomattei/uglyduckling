@@ -4,7 +4,7 @@ namespace Firststep\Controllers\Office\Document;
 
 use Firststep\Common\Controllers\ManagerDocumentSenderController;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\Builders\QueryBuilder;
+use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
 use Firststep\Common\Database\DocumentDao;
 
 /**

@@ -3,7 +3,7 @@
 namespace Firststep\Common\Database;
 
 use PDO;
-use Firststep\Common\Json\Builders\QueryBuilder;
+use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
 
 /**
  * It executes queries on the database

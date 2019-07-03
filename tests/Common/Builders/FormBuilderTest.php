@@ -15,7 +15,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->form = new Firststep\Common\Json\Builders\FormBuilder;
+        $this->form = new Firststep\Common\Json\TemplateBuilders\FormBuilder;
         $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
 		$this->entity = new stdClass;
@@ -82,7 +82,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
         $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\Builders\QueryBuilder::class)->getMock();
+        $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\TemplateBuilders\QueryBuilder::class)->getMock();
 
         $this->form->setRouter($router);
         $this->form->setParameters( array( 'id' => '1' ) );

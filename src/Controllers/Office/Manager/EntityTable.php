@@ -3,9 +3,9 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Json\Builders\PanelBuilder;
+use Firststep\Common\Json\TemplateBuilders\PanelBuilder;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Json\Builders\MenuBuilder;
+use Firststep\Common\Json\TemplateBuilders\MenuBuilder;
 
 /**
  * User: Fabio Mattei

@@ -27,13 +27,13 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError(){
-		$val = new Firststep\Common\Json\Builders\ValidationBuilder;
+		$val = new Firststep\Common\Json\TemplateBuilders\ValidationBuilder;
 		$this->assertTrue(is_object($val));
 		unset($val);
 	}
 	
 	public function testGetValidationRoules(){
-		$val = new Firststep\Common\Json\Builders\ValidationBuilder;
+		$val = new Firststep\Common\Json\TemplateBuilders\ValidationBuilder;
 		$rules = $val->getValidationRoules( $this->parameters );
 		$this->assertCount(2, $rules);
 		$this->assertContains('required|numeric', $rules['id']);
@@ -42,7 +42,7 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testGetValidationFilters(){
-		$val = new Firststep\Common\Json\Builders\ValidationBuilder;
+		$val = new Firststep\Common\Json\TemplateBuilders\ValidationBuilder;
 		$filters = $val->getValidationFilters( $this->parameters );
 		$this->assertCount(2, $filters);
 		$this->assertContains('trim', $filters['id']);
@@ -51,7 +51,7 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testPostValidationRoules(){
-		$val = new Firststep\Common\Json\Builders\ValidationBuilder;
+		$val = new Firststep\Common\Json\TemplateBuilders\ValidationBuilder;
 		$rules = $val->postValidationRoules( $this->parameters );
 		$this->assertCount(2, $rules);
 		$this->assertContains('required|numeric', $rules['id']);
@@ -60,7 +60,7 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testPostValidationFilters(){
-		$val = new Firststep\Common\Json\Builders\ValidationBuilder;
+		$val = new Firststep\Common\Json\TemplateBuilders\ValidationBuilder;
 		$filters = $val->postValidationFilters( $this->parameters );
 		$this->assertCount(2, $filters);
 		$this->assertContains('trim', $filters['id']);

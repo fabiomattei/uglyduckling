@@ -6,9 +6,9 @@ use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\Builders\QueryBuilder;
-use Firststep\Common\Json\Builders\Info\InfoBuilder;
-use Firststep\Common\Json\Builders\MenuBuilder;
+use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
+use Firststep\Common\Json\TemplateBuilders\Info\InfoBuilder;
+use Firststep\Common\Json\TemplateBuilders\MenuBuilder;
 
 /**
  * 
