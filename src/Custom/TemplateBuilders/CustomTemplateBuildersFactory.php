@@ -2,6 +2,8 @@
 
 namespace Firststep\Custom\TemplateBuilders;
 
+use Firststep\Common\Json\TemplateBuilders\BaseBuilder;
+
 class CustomTemplateBuildersFactory {
 
     /**
@@ -12,7 +14,6 @@ class CustomTemplateBuildersFactory {
         $this->templateBuilderExample = new TemplateBuilderExample;
     }
 
-
     /**
      * Return an HTML Block
      *
@@ -21,10 +22,16 @@ class CustomTemplateBuildersFactory {
      * @param $resource json strcture
      * @param CardHTMLBlock $panelBlock
      */
-    public function getHTMLBlock( $resource ) {
+    public function getHTMLBlock( $resource ): BaseBuilder {
 
         if ($resource->metadata->type == TemplateBuilderExample::blocktype) {
-
+            $this->templateBuilderExample->setResource($resource);
+            $this->templateBuilderExample->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->templateBuilderExample->setJsonloader($this->jsonloader);
+            $this->templateBuilderExample->setRouter($this->router);
+            $this->templateBuilderExample->setParameters($this->parameters);
+            $this->templateBuilderExample->setDbconnection($this->dbconnection);
+            return $this->templateBuilderExample->createHTMLBlock();
         }
 
     }
