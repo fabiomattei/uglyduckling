@@ -11,7 +11,8 @@ use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Router\Router;
 
 /**
- * 
+ * This controller shows to the user an interface where all the resources are listed and 
+ * the metric is calculated for each one of them
  */
 class AdminMetricsDashboard extends Controller {
 
