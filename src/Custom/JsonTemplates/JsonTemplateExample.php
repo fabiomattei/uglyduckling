@@ -5,7 +5,7 @@ namespace Firststep\Custom\JsonTemplates;
 use Firststep\Common\Json\JsonTemplates\BaseBuilder;
 use Firststep\Custom\HTMLBlocks\HTMLBlockExample;
 
-class TemplateBuilderExample extends BaseBuilder {
+class JsonTemplateExample extends BaseBuilder {
 
     const blocktype = 'templatebuilderexample';
 

@@ -11,7 +11,7 @@ class CustomTemplateBuildersFactory {
      * @param $tableBuilder
      */
     public function __construct() {
-        $this->templateBuilderExample = new TemplateBuilderExample;
+        $this->jsonTemplateExample = new JsonTemplateExample;
     }
 
     /**
@@ -24,14 +24,14 @@ class CustomTemplateBuildersFactory {
      */
     public function getHTMLBlock( $resource ): BaseBuilder {
 
-        if ($resource->metadata->type == TemplateBuilderExample::blocktype) {
-            $this->templateBuilderExample->setResource($resource);
-            $this->templateBuilderExample->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->templateBuilderExample->setJsonloader($this->jsonloader);
-            $this->templateBuilderExample->setRouter($this->router);
-            $this->templateBuilderExample->setParameters($this->parameters);
-            $this->templateBuilderExample->setDbconnection($this->dbconnection);
-            return $this->templateBuilderExample->createHTMLBlock();
+        if ($resource->metadata->type == JsonTemplateExample::blocktype) {
+            $this->jsonTemplateExample->setResource($resource);
+            $this->jsonTemplateExample->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->jsonTemplateExample->setJsonloader($this->jsonloader);
+            $this->jsonTemplateExample->setRouter($this->router);
+            $this->jsonTemplateExample->setParameters($this->parameters);
+            $this->jsonTemplateExample->setDbconnection($this->dbconnection);
+            return $this->jsonTemplateExample->createHTMLBlock();
         }
 
     }
