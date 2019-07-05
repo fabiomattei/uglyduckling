@@ -6,7 +6,7 @@
  * Time: 20:59
  */
 
-namespace Firststep\Common\Json\TemplateBuilders;
+namespace Firststep\Common\Json\JsonTemplates;
 
 class ValidationBuilder {
 	

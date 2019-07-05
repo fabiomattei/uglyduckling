@@ -4,7 +4,7 @@ namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
+use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * User: Fabio

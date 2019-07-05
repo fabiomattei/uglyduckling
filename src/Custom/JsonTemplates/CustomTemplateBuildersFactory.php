@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Custom\TemplateBuilders;
+namespace Firststep\Custom\JsonTemplates;
 
-use Firststep\Common\Json\TemplateBuilders\BaseBuilder;
+use Firststep\Common\Json\JsonTemplates\BaseBuilder;
 
 class CustomTemplateBuildersFactory {
 

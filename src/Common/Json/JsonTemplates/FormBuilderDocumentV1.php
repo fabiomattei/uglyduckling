@@ -6,7 +6,7 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\TemplateBuilders;
+namespace Firststep\Common\Json\JsonTemplates;
 
 use Firststep\Common\Blocks\BaseHTMLForm;
 

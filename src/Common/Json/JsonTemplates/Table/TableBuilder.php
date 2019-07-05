@@ -6,13 +6,13 @@
  * Time: 20:39
  */
 
-namespace Firststep\Common\Json\TemplateBuilders\Table;
+namespace Firststep\Common\Json\JsonTemplates\Table;
 
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\TemplateBuilders\BaseBuilder;
-use Firststep\Common\Json\TemplateBuilders\LinkBuilder;
-use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
+use Firststep\Common\Json\JsonTemplates\BaseBuilder;
+use Firststep\Common\Json\JsonTemplates\LinkBuilder;
+use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 
 class TableBuilder extends BaseBuilder {
 

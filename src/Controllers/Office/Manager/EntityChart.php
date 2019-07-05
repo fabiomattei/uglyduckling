@@ -8,11 +8,11 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\TemplateBuilders\Chartjs\ChartjsBuilder;;
+use Firststep\Common\Json\JsonTemplates\Chartjs\ChartjsBuilder;;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Json\TemplateBuilders\MenuBuilder;
+use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
 class EntityChart extends ManagerEntityController {
 

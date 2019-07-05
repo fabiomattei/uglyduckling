@@ -9,7 +9,7 @@ use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\TemplateBuilders\QueryBuilder;
+use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * 

@@ -6,7 +6,7 @@
  * Time: 11.54
  */
 
-namespace Firststep\Common\Json\TemplateBuilders;
+namespace Firststep\Common\Json\JsonTemplates;
 
 use Firststep\Common\Blocks\BaseHTMLMenu;
 use stdClass;

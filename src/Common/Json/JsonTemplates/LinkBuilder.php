@@ -6,7 +6,7 @@
  * Time: 18.15
  */
 
-namespace Firststep\Common\Json\TemplateBuilders;
+namespace Firststep\Common\Json\JsonTemplates;
 
 use Firststep\Common\Router\Router;
 use Firststep\Common\Blocks\Button;

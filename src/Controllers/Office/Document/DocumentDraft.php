@@ -7,7 +7,7 @@ use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Blocks\Button;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\DocumentDao;
-use Firststep\Common\Json\TemplateBuilders\MenuBuilder;
+use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
  * This page represent the inbox for all received documents.

@@ -14,7 +14,7 @@ class TableBuilderTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->tableBuilder = new Firststep\Common\Json\TemplateBuilders\TableBuilder;
+        $this->tableBuilder = new Firststep\Common\Json\JsonTemplates\TableBuilder;
         $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
 		$entity = new stdClass;
@@ -64,7 +64,7 @@ class TableBuilderTest extends PHPUnit_Framework_TestCase {
         $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\TemplateBuilders\QueryBuilder::class)->getMock();
+        $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
 
         $this->tableBuilder->setRouter($router);
         $this->tableBuilder->setParameters( array( 'id' => '1' ) );

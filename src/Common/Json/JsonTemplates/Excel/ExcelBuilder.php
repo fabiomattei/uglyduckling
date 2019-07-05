@@ -2,17 +2,17 @@
 
 /**
  * Created by Fabio Mattei
- * User: fabio
  * Date: 02/11/2018
  * Time: 11:48
  */
 
-namespace Firststep\Common\Json\TemplateBuilders\Pdf;
+namespace Firststep\Common\Json\JsonTemplates\Excel;
 
-use Firststep\Common\Blocks\BaseHTMLTable;
 use Firststep\Common\Database\QueryExecuter;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class PDFBuilder {
+class ExcelBuilder {
 
     private $queryExecuter;
     private $queryBuilder;
@@ -45,7 +45,7 @@ class PDFBuilder {
         $this->dbconnection = $dbconnection;
     }
 
-    public function createTable() {
+    public function getWriter() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
         $this->queryExecuter->setQueryStructure( $this->resource->post->query );
@@ -54,27 +54,34 @@ class PDFBuilder {
 
         $table = $this->resource->post->table;
 
-        $tableBlock = new BaseHTMLTable;
-        $tableBlock->setTitle($table->title ?? '');
+        $spreadsheet = new Spreadsheet();
 
-        $tableBlock->addTHead();
-        $tableBlock->addRow();
+        // Add titles
+        $col = 1;
         foreach ($table->fields as $field) {
-            $tableBlock->addHeadLineColumn($field->headline);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $field->headline);
+            $col++;
         }
-        $tableBlock->closeRow();
-        $tableBlock->closeTHead();
 
-        $tableBlock->addTBody();
+        $row = 1;
         foreach ($entities as $entity) {
-            $tableBlock->addRow();
+            $col = 1;
             foreach ($table->fields as $field) {
-                $tableBlock->addColumn($entity->{$field->sqlfield});
+                $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $entity->{$field->sqlfield});
+                $col++;
             }
-            $tableBlock->closeRow();
+            $row++;
         }
-        $tableBlock->closeTBody();
 
-        return $tableBlock->show();
+        // Rename worksheet
+        $spreadsheet->getActiveSheet()->setTitle($this->resource->filename);
+
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $spreadsheet->setActiveSheetIndex(0);
+
+        $writer = new Xlsx($spreadsheet);
+
+        return $writer;
     }
+
 }
