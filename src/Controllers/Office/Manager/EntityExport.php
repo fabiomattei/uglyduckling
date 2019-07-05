@@ -8,7 +8,7 @@ use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\JsonTemplates\QueryBuilder;
-use Firststep\Common\Json\JsonTemplates\Form\FormBuilder;
+use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\Pdf\PDFBuilder;
 use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
@@ -27,7 +27,7 @@ class EntityExport extends ManagerEntityController {
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
-		$this->formBuilder = new FormBuilder;
+		$this->formBuilder = new FormJsonTemplate;
 		$this->pdfBuilder = new PDFBuilder;
         $this->excelBuilder = new ExcelBuilder;
 		$this->menubuilder = new MenuBuilder;

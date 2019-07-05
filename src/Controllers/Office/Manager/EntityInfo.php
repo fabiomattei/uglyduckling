@@ -3,7 +3,7 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Json\JsonTemplates\Info\InfoBuilder;
+use Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
@@ -17,7 +17,7 @@ class EntityInfo extends ManagerEntityController {
     private $infoBuilder;
 
     function __construct() {
-		$this->infoBuilder = new InfoBuilder;
+		$this->infoBuilder = new InfoJsonTemplate;
 		$this->menubuilder = new MenuBuilder;
     }
 

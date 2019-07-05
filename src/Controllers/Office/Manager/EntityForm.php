@@ -2,7 +2,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\JsonTemplates\Form\FormBuilder;
+use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Database\QueryExecuter;
@@ -22,7 +22,7 @@ class EntityForm extends ManagerEntityController {
     private $queryBuilder;
 
     function __construct() {
-		$this->formBuilder = new FormBuilder;
+		$this->formBuilder = new FormJsonTemplate;
 		$this->menubuilder = new MenuBuilder;
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;

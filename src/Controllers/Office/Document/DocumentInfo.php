@@ -7,7 +7,7 @@ use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\JsonTemplates\QueryBuilder;
-use Firststep\Common\Json\JsonTemplates\Info\InfoBuilder;
+use Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
@@ -18,7 +18,7 @@ class DocumentInfo extends ManagerEntityController {
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
-		$this->infoBuilder = new InfoBuilder;
+		$this->infoBuilder = new InfoJsonTemplate;
 		$this->menubuilder = new MenuBuilder;
     }
 

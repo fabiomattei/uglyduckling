@@ -9,13 +9,13 @@
 namespace Firststep\Common\Json\JsonTemplates;
 
 use Firststep\Common\Blocks\CardHTMLBlock;
-use Firststep\Common\Json\JsonTemplates\Chartjs\ChartjsBuilder;
-use Firststep\Common\Json\JsonTemplates\Form\FormBuilder;
-use Firststep\Common\Json\JsonTemplates\Info\InfoBuilder;
-use Firststep\Common\Json\JsonTemplates\Table\TableBuilder;
+use Firststep\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Firststep\Common\Router\Router;
 
-class JsonTemplateFactory extends BaseBuilder {
+class JsonTemplateFactory extends BaseJsonTemplate {
 
     private $tableBuilder;
     private $chartjsBuilder;
@@ -27,10 +27,10 @@ class JsonTemplateFactory extends BaseBuilder {
      * @param $tableBuilder
      */
     public function __construct() {
-        $this->tableBuilder = new TableBuilder;
-        $this->chartjsBuilder = new ChartjsBuilder;
-        $this->infoBuilder = new InfoBuilder;
-        $this->formBuilder = new FormBuilder;
+        $this->tableBuilder = new TableJsonTemplate;
+        $this->chartjsBuilder = new ChartjsJsonTemplate;
+        $this->infoBuilder = new InfoJsonTemplate;
+        $this->formBuilder = new FormJsonTemplate;
         $this->action = '';
     }
 
@@ -73,7 +73,7 @@ class JsonTemplateFactory extends BaseBuilder {
      * @param CardHTMLBlock $panelBlock
      */
     public function getHTMLBlock( $resource ) {
-        if ($resource->metadata->type == TableBuilder::blocktype) {
+        if ($resource->metadata->type == TableJsonTemplate::blocktype) {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->tableBuilder->setJsonloader($this->jsonloader);
             $this->tableBuilder->setRouter($this->router);
@@ -83,7 +83,7 @@ class JsonTemplateFactory extends BaseBuilder {
             return $this->tableBuilder->createTable();
         }
 
-        if ($resource->metadata->type == ChartjsBuilder::blocktype) {
+        if ($resource->metadata->type == ChartjsJsonTemplate::blocktype) {
             $this->chartjsBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->chartjsBuilder->setJsonloader($this->jsonloader);
             $this->chartjsBuilder->setRouter($this->router);
@@ -93,7 +93,7 @@ class JsonTemplateFactory extends BaseBuilder {
             return $this->chartjsBuilder->createChart();
         }
 
-        if ($resource->metadata->type == InfoBuilder::blocktype) {
+        if ($resource->metadata->type == InfoJsonTemplate::blocktype) {
             $this->infoBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->infoBuilder->setJsonloader($this->jsonloader);
             $this->infoBuilder->setRouter($this->router);
@@ -103,7 +103,7 @@ class JsonTemplateFactory extends BaseBuilder {
             return $this->infoBuilder->createInfo();
         }
 
-        if ($resource->metadata->type == FormBuilder::blocktype) {
+        if ($resource->metadata->type == FormJsonTemplate::blocktype) {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
             $this->formBuilder->setRouter($this->router);

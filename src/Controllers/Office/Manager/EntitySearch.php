@@ -5,8 +5,8 @@ namespace Firststep\Controllers\Office\Manager;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
-use Firststep\Common\Json\JsonTemplates\Form\FormBuilder;
-use Firststep\Common\Json\JsonTemplates\Table\TableBuilder;
+use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
@@ -21,8 +21,8 @@ class EntitySearch extends ManagerEntityController {
     private $menubuilder;
 
     function __construct() {
-		$this->formBuilder = new FormBuilder;
-		$this->tableBuilder = new TableBuilder;
+		$this->formBuilder = new FormJsonTemplate;
+		$this->tableBuilder = new TableJsonTemplate;
 		$this->menubuilder = new MenuBuilder;
     }
 
@@ -63,7 +63,7 @@ class EntitySearch extends ManagerEntityController {
         $this->tableBuilder->setResource( $this->resource );
         $this->tableBuilder->setParameters( $this->postParameters );
         $this->tableBuilder->setDbconnection( $this->dbconnection );
-        $this->tableBuilder->setMethod(TableBuilder::POST_METHOD);
+        $this->tableBuilder->setMethod(TableJsonTemplate::POST_METHOD);
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office search';
 	

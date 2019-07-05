@@ -8,7 +8,7 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\JsonTemplates\Chartjs\ChartjsBuilder;;
+use Firststep\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
@@ -20,7 +20,7 @@ class EntityChart extends ManagerEntityController {
     private $menubuilder;
 
     function __construct() {
-        $this->chartjsBuilder = new ChartjsBuilder;
+        $this->chartjsBuilder = new ChartjsJsonTemplate;
         $this->menubuilder = new MenuBuilder;
     }
 

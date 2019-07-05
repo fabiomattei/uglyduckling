@@ -2,9 +2,9 @@
 
 namespace Firststep\Custom\JsonTemplates;
 
-use Firststep\Common\Json\JsonTemplates\BaseBuilder;
+use Firststep\Common\Json\JsonTemplates\BaseJsonTemplate;
 
-class CustomTemplateBuildersFactory {
+class CustomTemplateBuildersFactory extends BaseJsonTemplate {
 
     /**
      * PanelBuilder constructor.
@@ -22,7 +22,7 @@ class CustomTemplateBuildersFactory {
      * @param $resource json strcture
      * @param CardHTMLBlock $panelBlock
      */
-    public function getHTMLBlock( $resource ): BaseBuilder {
+    public function getHTMLBlock( $resource ): BaseJsonTemplate {
 
         if ($resource->metadata->type == JsonTemplateExample::blocktype) {
             $this->jsonTemplateExample->setResource($resource);
