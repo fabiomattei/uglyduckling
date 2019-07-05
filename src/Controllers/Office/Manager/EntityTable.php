@@ -3,7 +3,7 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Json\JsonTemplates\PanelBuilder;
+use Firststep\Common\Json\JsonTemplates\JsonTemplateFactory;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
@@ -18,7 +18,7 @@ class EntityTable extends ManagerEntityController {
     private $menubuilder;
 
     function __construct() {
-        $this->panelBuilder = new PanelBuilder;
+        $this->panelBuilder = new JsonTemplateFactory;
 		$this->menubuilder = new MenuBuilder;
     }
 	

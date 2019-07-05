@@ -3,7 +3,7 @@
 namespace Firststep\Controllers\Office\Manager;
 
 use Firststep\Common\Blocks\RowHTMLBlock;
-use Firststep\Common\Json\JsonTemplates\PanelBuilder;
+use Firststep\Common\Json\JsonTemplates\JsonTemplateFactory;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
@@ -23,7 +23,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
-        $this->panelBuilder = new PanelBuilder;
+        $this->panelBuilder = new JsonTemplateFactory;
     }
 
     /**
