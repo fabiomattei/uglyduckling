@@ -2,14 +2,14 @@
 
 namespace Firststep\Controllers\Office\Manager;
 
-use Firststep\Common\Json\JsonTemplates\Excel\ExcelBuilder;
+use Firststep\Common\Json\JsonTemplates\Excel\ExcelJsonTemplate;
 use Firststep\Common\Controllers\ManagerEntityController;
 use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
 use Firststep\Common\Router\Router;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
-use Firststep\Common\Json\JsonTemplates\Pdf\PDFBuilder;
+use Firststep\Common\Json\JsonTemplates\Pdf\PdfJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
@@ -28,8 +28,8 @@ class EntityExport extends ManagerEntityController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->formBuilder = new FormJsonTemplate;
-		$this->pdfBuilder = new PDFBuilder;
-        $this->excelBuilder = new ExcelBuilder;
+		$this->pdfBuilder = new PdfJsonTemplate;
+        $this->excelBuilder = new ExcelJsonTemplate;
 		$this->menubuilder = new MenuBuilder;
     }
 	

@@ -12,7 +12,7 @@ namespace Firststep\Common\Json\JsonTemplates\Pdf;
 use Firststep\Common\Blocks\BaseHTMLTable;
 use Firststep\Common\Database\QueryExecuter;
 
-class PDFBuilder {
+class PdfJsonTemplate {
 
     private $queryExecuter;
     private $queryBuilder;

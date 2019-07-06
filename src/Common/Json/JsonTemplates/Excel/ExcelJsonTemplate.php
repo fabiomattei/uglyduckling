@@ -12,7 +12,7 @@ use Firststep\Common\Database\QueryExecuter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class ExcelBuilder {
+class ExcelJsonTemplate {
 
     private $queryExecuter;
     private $queryBuilder;
