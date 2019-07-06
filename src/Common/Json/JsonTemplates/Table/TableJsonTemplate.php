@@ -10,11 +10,11 @@ namespace Firststep\Common\Json\JsonTemplates\Table;
 
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\BaseJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\JsonTemplate;
 use Firststep\Common\Json\JsonTemplates\LinkBuilder;
 use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 
-class TableJsonTemplate extends BaseJsonTemplate {
+class TableJsonTemplate extends JsonTemplate {
 
     const blocktype = 'table';
     const GET_METHOD = 'GET';

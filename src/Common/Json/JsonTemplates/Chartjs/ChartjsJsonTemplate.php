@@ -9,9 +9,9 @@
 namespace Firststep\Common\Json\JsonTemplates\Chartjs;
 
 use Firststep\Common\Blocks\BaseHTMLChart;
-use Firststep\Common\Json\JsonTemplates\BaseJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\JsonTemplate;
 
-class ChartjsJsonTemplate extends BaseJsonTemplate {
+class ChartjsJsonTemplate extends JsonTemplate {
 
     const blocktype = 'chartjs';
 

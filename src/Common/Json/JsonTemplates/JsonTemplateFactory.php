@@ -15,7 +15,7 @@ use Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Firststep\Common\Router\Router;
 
-class JsonTemplateFactory extends BaseJsonTemplate {
+class JsonTemplateFactory extends JsonTemplate {
 
     private $tableBuilder;
     private $chartjsBuilder;

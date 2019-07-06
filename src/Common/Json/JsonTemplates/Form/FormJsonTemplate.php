@@ -9,9 +9,9 @@
 namespace Firststep\Common\Json\JsonTemplates\Form;
 
 use Firststep\Common\Blocks\BaseHTMLForm;
-use Firststep\Common\Json\JsonTemplates\BaseJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\JsonTemplate;
 
-class FormJsonTemplate extends BaseJsonTemplate {
+class FormJsonTemplate extends JsonTemplate {
 
     const blocktype = 'form';
 

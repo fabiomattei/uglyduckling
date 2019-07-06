@@ -11,7 +11,7 @@ use Firststep\Common\Blocks\BaseHTMLBlock;
 use Firststep\Common\Blocks\EmptyHTMLBlock;
 use Firststep\Common\Database\QueryExecuter;
 
-class BaseJsonTemplate {
+class JsonTemplate {
 
     protected $queryExecuter;
     protected $queryBuilder;

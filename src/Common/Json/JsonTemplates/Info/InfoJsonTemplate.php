@@ -10,9 +10,9 @@ namespace Firststep\Common\Json\JsonTemplates\Info;
 
 use Firststep\Common\Blocks\BaseHTMLInfo;
 use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\BaseJsonTemplate;
+use Firststep\Common\Json\JsonTemplates\JsonTemplate;
 
-class InfoJsonTemplate extends BaseJsonTemplate {
+class InfoJsonTemplate extends JsonTemplate {
 
     const blocktype = 'info';
 
