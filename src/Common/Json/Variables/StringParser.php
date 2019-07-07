@@ -29,8 +29,26 @@ class StringParser {
         $this->sessionParameters = $sessionParameters;
     }
 
+    /*
+            Pattern p = Pattern.compile("GET\\[([a-zA-Z0-9]+)\\]");
+            Matcher m = p.matcher(this.pattern);
+
+            while (m.find()) {
+                String group = m.group(1);
+                out = out.replace("GET[" + group + "]", getWashingMachine.getCleanValue(group));
+            }*/
+
+
+
     public function parseString( string $input ): string {
-        return $input;
+        $pattern = "/POST\[([a-zA-Z0-9]+)\]/";
+        $replacement = "1";
+
+        $matches = preg_replace($pattern, $replacement, $input);
+
+        print_r($matches);
+
+        return $matches;
     }
 
 }

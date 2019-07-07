@@ -17,9 +17,15 @@ class StringParserTest extends PHPUnit_Framework_TestCase {
         unset($stringParser);
     }
 
-    public function testMakeAllPresets(){
+    public function testIWorksWithCostants(){
         $stringParser = new Firststep\Common\Json\Variables\StringParser;
         $this->assertEquals( 'mycostant', $stringParser->parseString('mycostant') );
+    }
+
+    public function testIWorksWithOnePostVariable(){
+        $stringParser = new Firststep\Common\Json\Variables\StringParser;
+        $stringParser->setPostparameters(array( 'mypostvarabile' => '1' ));
+        $this->assertEquals( '1', $stringParser->parseString('POST[mypostvarabile]') );
     }
 
 }
