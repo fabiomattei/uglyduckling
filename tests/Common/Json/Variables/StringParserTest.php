@@ -12,20 +12,41 @@ class StringParserTest extends PHPUnit_Framework_TestCase {
      *
      */
     public function testIsThereAnySyntaxError(){
-        $stringParser = new Firststep\Common\Json\Variables\StringParser;
+        $stringParser = new StringParser;
         $this->assertTrue(is_object($stringParser));
         unset($stringParser);
     }
 
     public function testIWorksWithCostants(){
-        $stringParser = new Firststep\Common\Json\Variables\StringParser;
+        $stringParser = new StringParser;
         $this->assertEquals( 'mycostant', $stringParser->parseString('mycostant') );
     }
 
     public function testIWorksWithOnePostVariable(){
+        $stringParser = new StringParser;
+        $stringParser->setPostparameters(array( 'mypostvariable' => '1' ));
+        $this->assertEquals( '1', $stringParser->parseString('POST[mypostvariable]') );
+    }
+
+    public function testIWorksWithTwoPostVariables(){
+        $stringParser = new StringParser;
+        $stringParser->setPostparameters(array( 'mypostvariable' => '1', 'mysecondpostvariable' => 'fabio' ));
+        $this->assertEquals( ' 1 - fabio ', $stringParser->parseString(' POST[mypostvariable] - POST[mysecondpostvariable] ') );
+    }
+
+    public function testIWorksWithTwoPostVariableAndTwoGetVariables(){
         $stringParser = new Firststep\Common\Json\Variables\StringParser;
-        $stringParser->setPostparameters(array( 'mypostvarabile' => '1' ));
-        $this->assertEquals( '1', $stringParser->parseString('POST[mypostvarabile]') );
+        $stringParser->setPostparameters(array( 'mypostvariable' => '1', 'mysecondpostvariable' => 'fabio' ));
+        $stringParser->setGetParameters(array( 'mygetvariable' => '2', 'mysecondgetvariable' => 'bob' ));
+        $this->assertEquals( ' 1 - fabio 2 - bob ', $stringParser->parseString(' POST[mypostvariable] - POST[mysecondpostvariable] GET[mygetvariable] - GET[mysecondgetvariable] ') );
+    }
+
+    public function testIWorksWithTwoPostVariableTwoGetVariablesAndTwoSessionVariables(){
+        $stringParser = new Firststep\Common\Json\Variables\StringParser;
+        $stringParser->setPostparameters(array( 'mypostvariable' => '1', 'mysecondpostvariable' => 'fabio' ));
+        $stringParser->setGetParameters(array( 'mygetvariable' => '2', 'mysecondgetvariable' => 'bob' ));
+        $stringParser->setSessionparameters(array( 'mysessionvariable' => '3', 'mysecondsessionvariable' => 'eve' ));
+        $this->assertEquals( ' 1 - fabio 2 - bob 3 - eve  ', $stringParser->parseString(' POST[mypostvariable] - POST[mysecondpostvariable] GET[mygetvariable] - GET[mysecondgetvariable] SESSION[mysessionvariable] - SESSION[mysecondsessionvariable]  ') );
     }
 
 }
