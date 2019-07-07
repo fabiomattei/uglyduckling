@@ -35,7 +35,7 @@ class StringParser {
      *
      * This method parse the string and make all the sobsitution.
      *
-     * For every GET[VARAIBLENAME] the method finds, the method is going to replace it with the content of the variale $this->getParameters['VARAIBLENAME']
+     * For every GET[VARIABLE_NAME] the method finds, the method is going to replace it with the content of the variale $this->getParameters['VARIABLE_NAME']
      * The same applies to POST and SESSION variables
      */
     public function parseString( string $input ): string {
