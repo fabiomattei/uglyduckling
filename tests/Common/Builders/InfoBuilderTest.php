@@ -16,7 +16,7 @@ class InfoBuilderTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->info = new Firststep\Common\Json\JsonTemplates\InfoBuilder;
+        $this->info = new Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate();
         $this->info->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
 		$this->entity = new stdClass;

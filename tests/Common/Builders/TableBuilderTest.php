@@ -14,7 +14,7 @@ class TableBuilderTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->tableBuilder = new Firststep\Common\Json\JsonTemplates\TableBuilder;
+        $this->tableBuilder = new Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
         $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
 		$entity = new stdClass;

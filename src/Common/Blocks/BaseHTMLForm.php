@@ -45,7 +45,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
 
     function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
             'Form/textfield.html');
     }
@@ -92,17 +92,46 @@ class BaseHTMLForm extends BaseHTMLBlock {
 	
 	function addCurrencyField( string $name, string $label, string $placeholder, string $value, string $width ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
             'Form/currencyfield.html');
 	}
 	
 	function addDateField( string $name, string $label, string $value, string $width, string $placeholder ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${ColWidth}', '${name}', '${label}', '${value}', '${$placeholder}'),
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
             'Form/datefield.html');
 	}
+
+    /**
+     * @param $field
+     *
+     * Filed is a object that contains a property for each of the properties of the filed we want to insert in the form
+     * Each property corresponds to an HTML INPUT tag
+     *
+     * Ex:
+     * $field->type = 'password'
+     * $field->id   = 'myfieldid'
+     * $field->name = 'myfieldname'
+     *
+     * Becomes: <input type="password" id="myfieldid" name="myfieldname" >
+     *
+     * The label property is reserved for the field label
+     *
+     */
+    function addGenericField( $field, $value ) {
+        $properties = '';
+        foreach ($field as $key => $value) {
+            if (!in_array( $key, array('label', 'width', 'row', 'value') )) { // forbidden properties
+                $properties .= $key . '=' .'"' . $value . '"' ;
+            }
+        }
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${properties}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $field->width ?? 12), $field->name ?? '', $field->label ?? '', htmlspecialchars( $value ), $properties),
+            'Form/genericfield.html');
+    }
 
     function addFileUploadField( string $name, string $label, string $width ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(

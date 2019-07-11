@@ -15,7 +15,7 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->form = new Firststep\Common\Json\JsonTemplates\FormBuilder;
+        $this->form = new Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate();
         $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
 		$this->entity = new stdClass;
