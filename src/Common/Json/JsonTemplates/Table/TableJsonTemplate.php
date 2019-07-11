@@ -87,6 +87,7 @@ class TableJsonTemplate extends JsonTemplate {
 			}
 			$links = '';
 			foreach ( $table->actions as $action ) {
+			    print_r($action);
 				$links .= LinkBuilder::get( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
 			}
 			$tableBlock->addUnfilteredColumn( $links );

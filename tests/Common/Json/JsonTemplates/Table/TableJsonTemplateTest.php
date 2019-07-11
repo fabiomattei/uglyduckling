@@ -1,5 +1,7 @@
 <?php
 
+use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+
 /**
 *  Testing the TableBuilder class
 *
@@ -52,11 +54,11 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
         {"headline": "Due date", "sqlfield": "duedate"}
       ],
       "actions": [
-        {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Edit", "action": "entityform", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Delete", "action": "entitytransaction", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Search", "action": "entitysearch", "resource": "searchreportv1", "parameters":[{}] },
-        {"label": "Export", "action": "entityexport", "resource": "requestexportv1", "parameters":[{}] }
+        {"label": "Info", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Edit", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Delete", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Search", "resource": "searchreportv1", "parameters":[{}] },
+        {"label": "Export", "resource": "requestexportv1", "parameters":[{}] }
       ]
     }
   }
@@ -66,6 +68,7 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
         $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
+        $jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
 
         $this->tableBuilder->setRouter($router);
         $this->tableBuilder->setParameters( array( 'id' => '1' ) );
@@ -73,6 +76,7 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $this->tableBuilder->setDbconnection( $dbconnection );
         $this->tableBuilder->setQueryExecuter( $this->queryExecuter );
         $this->tableBuilder->setQueryBuilder( $queryBuilder );
+        $this->tableBuilder->setJsonloader( $jsonLoader );
 	}
 	
 	/**
