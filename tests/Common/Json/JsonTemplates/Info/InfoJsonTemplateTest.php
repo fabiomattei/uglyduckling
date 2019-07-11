@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class InfoBuilderTest extends PHPUnit_Framework_TestCase {
+class InfoJsonTemplateTest extends PHPUnit_Framework_TestCase {
 	
     private $info;
 	private $entity;

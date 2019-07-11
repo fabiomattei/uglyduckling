@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class TableBuilderTest extends PHPUnit_Framework_TestCase {
+class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
 	
 	protected $entities;
 	protected $htmlTemplateLoader;

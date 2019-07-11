@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class FormBuilderTest extends PHPUnit_Framework_TestCase {
+class FormJsonTemplateTest extends PHPUnit_Framework_TestCase {
 	
     protected $form;
 	protected $entity;
