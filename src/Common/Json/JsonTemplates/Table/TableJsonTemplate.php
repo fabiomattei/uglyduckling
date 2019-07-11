@@ -8,6 +8,7 @@
 
 namespace Firststep\Common\Json\JsonTemplates\Table;
 
+use Firststep\Common\Blocks\EmptyHTMLBlock;
 use Firststep\Common\Blocks\StaticTable;
 use Firststep\Common\Database\QueryExecuter;
 use Firststep\Common\Json\JsonTemplates\JsonTemplate;
@@ -94,6 +95,16 @@ class TableJsonTemplate extends JsonTemplate {
 		$tableBlock->closeTBody();
 		
         return $tableBlock;
+    }
+
+    /**
+     * Return a object that inherit from BaseHTMLBlock class
+     * It is an object that has to generate HTML code
+     *
+     * @return EmptyHTMLBlock
+     */
+    public function createHTMLBlock() {
+        return $this->createTable();
     }
 	
 }

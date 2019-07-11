@@ -10,6 +10,7 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
 	protected $entities;
 	protected $htmlTemplateLoader;
 	protected $queryExecuter;
+    protected $tableBuilder;
 	
 	protected function setUp() {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
