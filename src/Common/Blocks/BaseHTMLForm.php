@@ -123,8 +123,8 @@ class BaseHTMLForm extends BaseHTMLBlock {
     function addGenericField( $field, $value ) {
         $properties = '';
         foreach ($field as $key => $value) {
-            if (!in_array( $key, array('label', 'width', 'row', 'value') )) { // forbidden properties
-                $properties .= $key . '=' .'"' . $value . '"' ;
+            if (!in_array( $key, array('label', 'width', 'row', 'value', 'sqlfield', 'name') )) { // forbidden properties
+                $properties .= $key . '=' .'"' . $value . '" ' ;
             }
         }
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(

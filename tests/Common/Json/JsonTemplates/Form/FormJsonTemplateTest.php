@@ -45,6 +45,7 @@ class FormJsonTemplateTest extends PHPUnit_Framework_TestCase {
 			"submitTitle": "Save",
 			"fields": [
 				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
+				{ "type":"textfield", "name":"namemytextfield", "label":"My text field", "placeholder":"My Placeholder", "sqlfield":"sqlmytextfield", "width":"6", "row":"1" },
 				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
 				{ "type":"date", "name":"duedate", "label":"Due date", "placeholder":"2019-02-22", "sqlfield":"duedate", "width":"6", "row":"2" },
 				{ "type":"dropdown", "name":"category", "label":"Category", "sqlfield":"category", "width":"6", "row":"2", "options":[
@@ -153,4 +154,10 @@ class FormJsonTemplateTest extends PHPUnit_Framework_TestCase {
 		unset($this->form);
 	}
 
+	public function testFormContainsTextFieldField(){
+        $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->mytextfield = 'my value'; return $e; }}));
+		$block = $this->form->createForm();
+		$this->assertContains('<label for="namemytextfield">My text field</label><input class="form-control" type="textfield" placeholder="My Placeholder"  id="namemytextfield" name="namemytextfield">', $block->show());
+		unset($this->form);
+	}
 }
