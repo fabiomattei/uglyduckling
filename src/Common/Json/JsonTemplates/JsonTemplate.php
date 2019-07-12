@@ -10,6 +10,7 @@ namespace Firststep\Common\Json\JsonTemplates;
 use Firststep\Common\Blocks\BaseHTMLBlock;
 use Firststep\Common\Blocks\EmptyHTMLBlock;
 use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Json\JsonTemplates\LinkBuilder;
 
 class JsonTemplate {
 
@@ -24,6 +25,7 @@ class JsonTemplate {
     protected $action;
     protected $htmlTemplateLoader;
     protected $jsonloader;
+    protected $linkBuilder;
 
     const blocktype = 'basebuilder';
 
@@ -119,6 +121,10 @@ class JsonTemplate {
      */
     public function setAction( string $action ) {
         $this->action = $action;
+    }
+
+    public function setLinkBuilder( $linkBuilder ) {
+        $this->linkBuilder = $linkBuilder;
     }
 
     public function getValue( $field, $entity = null ) {

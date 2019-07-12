@@ -26,6 +26,7 @@ class TableJsonTemplate extends JsonTemplate {
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
+        $this->linkBuilder = new LinkBuilder;
         $this->query = '';
         $this->method = self::GET_METHOD;
     }
@@ -87,8 +88,7 @@ class TableJsonTemplate extends JsonTemplate {
 			}
 			$links = '';
 			foreach ( $table->actions as $action ) {
-			    print_r($action);
-				$links .= LinkBuilder::get( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
+				$links .= $this->linkBuilder->getButton( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
 			}
 			$tableBlock->addUnfilteredColumn( $links );
 			$tableBlock->closeRow();
@@ -107,5 +107,5 @@ class TableJsonTemplate extends JsonTemplate {
     public function createHTMLBlock() {
         return $this->createTable();
     }
-	
+
 }
