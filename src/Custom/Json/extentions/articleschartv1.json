@@ -7,19 +7,19 @@
       "parameters": []
     },
     "query": {
-      "sql":"select amount, duedate FROM requestv1;",
+      "sql":"select count(id) counted, created FROM articles GROUP BY created;",
       "parameters":[]
     },
     "chartdataglue":[
-      { "type":"array", "placeholder":"#labels", "sqlfield":"duedate" },
-      { "type":"array", "placeholder":"#amounts", "sqlfield":"amount" }
+      { "type":"array", "placeholder":"#labels", "sqlfield":"created" },
+      { "type":"array", "placeholder":"#amounts", "sqlfield":"counted" }
     ],
     "chart": {
       "type":"bar",
       "data": {
         "labels": "#labels",
         "datasets": [{
-          "label": "# of Votes",
+          "label": "# of Articles",
           "data": "#amounts",
           "backgroundColor:":[
             "rgba(255, 99, 132, 0.2)",
