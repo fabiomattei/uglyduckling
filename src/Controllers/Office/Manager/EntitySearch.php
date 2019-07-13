@@ -35,9 +35,11 @@ class EntitySearch extends ManagerEntityController {
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
+		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );
         $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
+		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->tableBuilder->setRouter( $this->router );
         $this->tableBuilder->setResource( $this->resource );
         $this->tableBuilder->setParameters( $this->internalGetParameters );
@@ -56,10 +58,13 @@ class EntitySearch extends ManagerEntityController {
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
+		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );
         $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
+		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->tableBuilder->setRouter( $this->router );
+        $this->tableBuilder->setJsonloader($this->jsonloader);
         $this->tableBuilder->setResource( $this->resource );
         $this->tableBuilder->setParameters( $this->postParameters );
         $this->tableBuilder->setDbconnection( $this->dbconnection );

@@ -4,7 +4,7 @@
   "allowedgroups": [ "author" ],
   "get": {
     "query": {
-      "sql":"select id, name, amount, duedate FROM requestv1 ORDER BY id LIMIT 20;"
+      "sql":"select id, title, description, created FROM articles ORDER BY id LIMIT 20;"
     },
     "table": {
       "title": "My table",
@@ -22,33 +22,32 @@
       "title": "Serch between all requests",
       "submitTitle": "Search",
       "fields": [
-        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" },
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "width":"12", "row":"1" },
         { "type": "submitbutton", "width":"2", "row":"3", "name": "Save", "constantparameter": "Save" }
       ]
     }
   },
   "post": {
     "table": {
-      "title": "My table",
+      "title": "My articles",
       "fields": [
-        { "headline": "Name", "sqlfield":"name" },
-        { "headline": "Amount", "sqlfield":"amount" },
-        { "headline": "Due date", "sqlfield":"duedate" }
+        {"headline": "Title", "sqlfield": "title"},
+        {"headline": "Description", "sqlfield": "description"},
+        {"headline": "Date", "sqlfield": "created"}
       ],
       "actions": [
-        { "lable":"Edit", "action":"entityform", "resource":"formrequestv1", "parameters":[{"name":"id", "sqlfield":"id"}] },
-        { "lable":"Edit", "action":"entitydelete", "resource":"entitydelete", "parameters":[{"name":"id", "sqlfield":"id"}] }
+        {"label": "Info", "action": "entityinfo", "resource": "articleinfov1", "parameters":[{"name": "id", "sqlfield": "id"}] }
       ]
     },
     "form": {
       "title": "Serch between all requests",
       "submitTitle": "Search",
       "fields": [
-        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" }
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "postparameter":"name", "width":"12", "row":"1" }
       ]
     },
     "query": {
-      "sql":"select id, name, amount, duedate FROM requestv1 WHERE name=:name;",
+      "sql":"select id, title, description, created FROM articles WHERE title=:name;",
       "parameters":[
         { "placeholder": ":name", "postparameter": "name" }
       ]
