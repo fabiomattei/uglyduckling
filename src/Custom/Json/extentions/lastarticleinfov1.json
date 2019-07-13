@@ -8,16 +8,15 @@
       ]
     },
     "query": {
-      "sql":"select id, name, amount, duedate FROM requestv1 WHERE id=(SELECT MAX(id) FROM requestv1);",
+      "sql":"select id, title, description, created FROM articles WHERE id=(SELECT MAX(id) FROM articles);",
       "parameters":[]
     },
     "info": {
       "title": "",
       "fields": [
-        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"6", "row":"1" },
-        { "type":"currency", "validation":"required|numeric", "name":"amount", "label":"Amount", "placeholder":"10.0", "value":"amount", "width":"6", "row":"1" },
-        { "type":"date", "validation":"max_len,10", "name":"duedate", "label":"Due date", "value":"duedate", "width":"12", "row":"2" },
-        { "type":"hidden", "validation":"required|numeric", "name":"id", "value":"id" }
+        { "type":"textfield", "label":"Title", "value":"title", "width":"6", "row":"1" },
+        { "type":"textarea", "label":"Description", "value":"description", "width":"6", "row":"1" },
+        { "type":"date", "label":"Created on", "value":"created", "width":"12", "row":"2" }
       ]
     }
   }
