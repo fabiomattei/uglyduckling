@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class InfoJsonTemplateTest extends PHPUnit_Framework_TestCase {
+class InfoJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	
     private $info;
 	private $entity;
@@ -13,7 +13,7 @@ class InfoJsonTemplateTest extends PHPUnit_Framework_TestCase {
 	private $queryExecuter;
 	private $infoBlock;
 	
-	protected function setUp() {
+	protected function setUp(): void {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
         $this->info = new Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate();
@@ -82,7 +82,7 @@ class InfoJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->name = 'prova'; return $e; }}));
 
 		$block = $this->info->createInfo();
-		$this->assertContains('<p>prova</p>', $block->show() );
+		$this->assertStringContainsString('<p>prova</p>', $block->show() );
 		unset($this->info);
 	}
 	
@@ -90,7 +90,7 @@ class InfoJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->amount = 10; return $e; }}));
 
 		$block = $this->info->createInfo();
-		$this->assertContains('<p>10</p>', $block->show() );
+		$this->assertStringContainsString('<p>10</p>', $block->show() );
 		unset($this->info);
 	}
 	
@@ -98,7 +98,7 @@ class InfoJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->duedate = '2017-06-26'; return $e; }}));
 
 		$block = $this->info->createInfo();
-		$this->assertContains('<p>26/06/2017</p>', $block->show() );
+		$this->assertStringContainsString('<p>26/06/2017</p>', $block->show() );
 		unset($this->info);
 	}
 

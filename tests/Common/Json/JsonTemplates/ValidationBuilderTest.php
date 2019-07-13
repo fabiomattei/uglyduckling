@@ -5,11 +5,11 @@
 *
 *  @author Fabio Mattei
 */
-class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
+class ValidationBuilderTest extends PHPUnit\Framework\TestCase {
 	
 	private $parameters;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		$this->parameters = array();
 		$this->parameters[0] = new stdClass;
 		$this->parameters[0]->name = 'id';
@@ -36,8 +36,8 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 		$val = new Firststep\Common\Json\JsonTemplates\ValidationBuilder;
 		$rules = $val->getValidationRoules( $this->parameters );
 		$this->assertCount(2, $rules);
-		$this->assertContains('required|numeric', $rules['id']);
-		$this->assertContains('maxlength,15', $rules['name']);
+		$this->assertStringContainsString('required|numeric', $rules['id']);
+		$this->assertStringContainsString('maxlength,15', $rules['name']);
 		unset($val);
 	}
 	
@@ -45,8 +45,8 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 		$val = new Firststep\Common\Json\JsonTemplates\ValidationBuilder;
 		$filters = $val->getValidationFilters( $this->parameters );
 		$this->assertCount(2, $filters);
-		$this->assertContains('trim', $filters['id']);
-		$this->assertContains('trim', $filters['name']);
+		$this->assertStringContainsString('trim', $filters['id']);
+		$this->assertStringContainsString('trim', $filters['name']);
 		unset($val);
 	}
 	
@@ -54,8 +54,8 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 		$val = new Firststep\Common\Json\JsonTemplates\ValidationBuilder;
 		$rules = $val->postValidationRoules( $this->parameters );
 		$this->assertCount(2, $rules);
-		$this->assertContains('required|numeric', $rules['id']);
-		$this->assertContains('maxlength,15', $rules['name']);
+		$this->assertStringContainsString('required|numeric', $rules['id']);
+		$this->assertStringContainsString('maxlength,15', $rules['name']);
 		unset($val);
 	}
 	
@@ -63,8 +63,8 @@ class ValidationBuilderTest extends PHPUnit_Framework_TestCase {
 		$val = new Firststep\Common\Json\JsonTemplates\ValidationBuilder;
 		$filters = $val->postValidationFilters( $this->parameters );
 		$this->assertCount(2, $filters);
-		$this->assertContains('trim', $filters['id']);
-		$this->assertContains('trim', $filters['name']);
+		$this->assertStringContainsString('trim', $filters['id']);
+		$this->assertStringContainsString('trim', $filters['name']);
 		unset($val);
 	}
 	

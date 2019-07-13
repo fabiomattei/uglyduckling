@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class BaseMessagesTest extends PHPUnit_Framework_TestCase{
+class BaseMessagesTest extends PHPUnit\Framework\TestCase{
 	
   /**
   * Just check if the YourClass has no syntax error 

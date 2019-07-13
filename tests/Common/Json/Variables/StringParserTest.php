@@ -2,7 +2,7 @@
 
 use Firststep\Common\Json\Variables\StringParser;
 
-class StringParserTest extends PHPUnit_Framework_TestCase {
+class StringParserTest extends PHPUnit\Framework\TestCase {
 
     /**
      * Just check if the YourClass has no syntax error

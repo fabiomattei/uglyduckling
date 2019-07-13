@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class RouterTest extends PHPUnit_Framework_TestCase {
+class RouterTest extends PHPUnit\Framework\TestCase {
 	
 	/**
 	* Just check if the YourClass has no syntax error 

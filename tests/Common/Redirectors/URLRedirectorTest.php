@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class URLRedirectorTest extends PHPUnit_Framework_TestCase {
+class URLRedirectorTest extends PHPUnit\Framework\TestCase {
 
     /**
      * Just check if the Request has no syntax error 

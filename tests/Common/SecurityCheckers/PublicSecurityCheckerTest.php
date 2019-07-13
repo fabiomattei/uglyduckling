@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class PublicSecurityCheckerTest extends PHPUnit_Framework_TestCase{
+class PublicSecurityCheckerTest extends PHPUnit\Framework\TestCase{
 	
   /**
   * Just check if the YourClass has no syntax error 

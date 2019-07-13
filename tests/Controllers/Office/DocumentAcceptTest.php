@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class DocumentAcceptTest extends PHPUnit_Framework_TestCase {
+class DocumentAcceptTest extends PHPUnit\Framework\TestCase {
 	
 	/**
 	* Just check if the YourClass has no syntax error 

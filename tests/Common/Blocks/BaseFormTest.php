@@ -5,12 +5,12 @@
 *
 *  @author Fabio Mattei
 */
-class BaseFormTest extends PHPUnit_Framework_TestCase{
+class BaseFormTest extends PHPUnit\Framework\TestCase{
 
     private $htmlTemplateLoader;
     private $form;
 
-    protected function setUp() {
+    protected function setUp(): void {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
         $this->form = new Firststep\Common\Blocks\BaseHTMLForm;
@@ -33,7 +33,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   * Checking empty form
   */
   public function testItShowsAnEmpyForm(){
-	$this->assertContains('<form action="" method="POST" class="form-horizontal">', $this->form->show());
+	$this->assertStringContainsString('<form action="" method="POST" class="form-horizontal">', $this->form->show());
 	unset($form);
   }
   
@@ -42,7 +42,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithATextField(){
 	$this->form->addTextField( 'myname', 'My label', 'My placeholder', 'My value', '6');
-	$this->assertContains('<label for="myname">My label</label><input class="form-control" type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">', $this->form->show());
+	$this->assertStringContainsString('<label for="myname">My label</label><input class="form-control" type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">', $this->form->show());
 	unset($form);
   }
   
@@ -51,7 +51,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithATextAreaField(){
 	$this->form->addTextAreaField( 'myname', 'My label', 'My value', '6');
-	$this->assertContains('<label for="myname">My label</label><textarea class="form-control" id="myname" name="myname">My value</textarea>', $this->form->show());
+	$this->assertStringContainsString('<label for="myname">My label</label><textarea class="form-control" id="myname" name="myname">My value</textarea>', $this->form->show());
 	unset($form);
   }
   
@@ -63,7 +63,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithADropdownField(){
 	$this->form->addDropdownField( 'myname', 'My label', array( '1' => 'Option 1', '2' => 'Option 2' ), '2', '6');
-	$this->assertContains('<label for="myname">My label</label><select class="form-control" id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>', $this->form->show());
+	$this->assertStringContainsString('<label for="myname">My label</label><select class="form-control" id="myname" name="myname"><option value="1" >Option 1</option><option value="2" selected="selected">Option 2</option></select>', $this->form->show());
 	unset($form);
   }
   
@@ -72,7 +72,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithAFileUploadField(){
 	$this->form->addFileUploadField( 'myname', 'My label', '6' );
-	$this->assertContains('<label for="myname">My label</label><input class="form-control" type="file" id="myname" name="myname">', $this->form->show());
+	$this->assertStringContainsString('<label for="myname">My label</label><input class="form-control" type="file" id="myname" name="myname">', $this->form->show());
 	unset($form);
   }
   
@@ -81,7 +81,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithAHelpingTextField(){
 	$this->form->addHelpingText( 'Title', 'My description', '6' );
-	$this->assertContains('<h5>Title</h5><p>My description</p>', $this->form->show());
+	$this->assertStringContainsString('<h5>Title</h5><p>My description</p>', $this->form->show());
 	unset($form);
   }
   
@@ -90,7 +90,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithAHiddenField(){
 	$this->form->addHiddenField( 'myfield', 'My Value' );
-	$this->assertContains('<input type="hidden" name="myfield" value="My Value">', $this->form->show());
+	$this->assertStringContainsString('<input type="hidden" name="myfield" value="My Value">', $this->form->show());
 	unset($form);
   }
   
@@ -99,7 +99,7 @@ class BaseFormTest extends PHPUnit_Framework_TestCase{
   */
   public function testItShowsAFormWithASubmitButton(){
 	$this->form->addSubmitButton( 'myfield', 'My Value' );
-	$this->assertContains('<input class="form-control" type="submit" name="myfield" value="My Value"/>', $this->form->show());
+	$this->assertStringContainsString('<input class="form-control" type="submit" name="myfield" value="My Value"/>', $this->form->show());
 	unset($form);
   }
   

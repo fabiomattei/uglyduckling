@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class JsonParametersParserTest extends PHPUnit_Framework_TestCase {
+class JsonParametersParserTest extends PHPUnit\Framework\TestCase {
 	
 	private $json = '{
   "request": {

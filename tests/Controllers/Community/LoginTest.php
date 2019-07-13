@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class LoginTest extends PHPUnit_Framework_TestCase {
+class LoginTest extends PHPUnit\Framework\TestCase {
 	
 	/**
 	* Just check if the YourClass has no syntax error 

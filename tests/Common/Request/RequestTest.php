@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class RequestTest extends PHPUnit_Framework_TestCase {
+class RequestTest extends PHPUnit\Framework\TestCase {
 
     /**
      * Just check if the Request has no syntax error 

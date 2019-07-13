@@ -5,12 +5,12 @@
 *
 *  @author Fabio Mattei
 */
-class QueryBuilderTest extends PHPUnit_Framework_TestCase {
+class QueryBuilderTest extends PHPUnit\Framework\TestCase {
 	
     private $query;
 	private $parameters;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		$this->query = new stdClass;
 		$this->query->type = "select";
 		$this->query->entity = "mysqltablename";
@@ -70,12 +70,12 @@ class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 		$query->setQueryStructure( $this->query );
 		$query->setParameters( $this->parameters );
 		$sqlquery = $query->createQuery();
-		$this->assertContains('SELECT', $sqlquery);
-		$this->assertContains('myt_field1, myt_field2, myt_field3', $sqlquery);
-		$this->assertContains('FROM mysqltablename', $sqlquery);
-		$this->assertContains('JOIN mysecondtable ON myifled_1 = myfield2', $sqlquery);
-		$this->assertContains('LEFT JOIN mythirdtable ON myifled_2 = myfield3', $sqlquery);
-		$this->assertContains('WHERE id = :id', $sqlquery);
+		$this->assertStringContainsString('SELECT', $sqlquery);
+		$this->assertStringContainsString('myt_field1, myt_field2, myt_field3', $sqlquery);
+		$this->assertStringContainsString('FROM mysqltablename', $sqlquery);
+		$this->assertStringContainsString('JOIN mysecondtable ON myifled_1 = myfield2', $sqlquery);
+		$this->assertStringContainsString('LEFT JOIN mythirdtable ON myifled_2 = myfield3', $sqlquery);
+		$this->assertStringContainsString('WHERE id = :id', $sqlquery);
 		unset($query);
 	}
 	
@@ -83,13 +83,13 @@ class QueryBuilderTest extends PHPUnit_Framework_TestCase {
 		$query = new Firststep\Common\Json\JsonTemplates\QueryBuilder;
 		$query->setQueryStructure( $this->create );
 		$sqlquery = $query->create();
-		$this->assertContains('CREATE', $sqlquery);
-		$this->assertContains('`requestv1`', $sqlquery);
-		$this->assertContains('`name` VARCHAR(255),', $sqlquery);
-		$this->assertContains('`duedate` DATE)', $sqlquery);
-		$this->assertContains('ENGINE=InnoDB DEFAULT', $sqlquery);
-		$this->assertContains('CHARSET=utf8', $sqlquery);
-		$this->assertContains('COLLATE=utf8_bin', $sqlquery);
+		$this->assertStringContainsString('CREATE', $sqlquery);
+		$this->assertStringContainsString('`requestv1`', $sqlquery);
+		$this->assertStringContainsString('`name` VARCHAR(255),', $sqlquery);
+		$this->assertStringContainsString('`duedate` DATE)', $sqlquery);
+		$this->assertStringContainsString('ENGINE=InnoDB DEFAULT', $sqlquery);
+		$this->assertStringContainsString('CHARSET=utf8', $sqlquery);
+		$this->assertStringContainsString('COLLATE=utf8_bin', $sqlquery);
 		unset($query);
 	}
 

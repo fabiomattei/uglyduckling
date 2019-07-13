@@ -7,7 +7,7 @@ use Firststep\Common\Utils\StringUtils;
  *
  *  @author Fabio Mattei
  */
-class StringUtilsTest extends PHPUnit_Framework_TestCase {
+class StringUtilsTest extends PHPUnit\Framework\TestCase {
 
     public function testFindCorrectlyAFieldInAQuery(){
         $this->assertTrue( StringUtils::isStringBetween('username', 'SELECT username, email FROM mytable', 'SELECT', 'FROM') );
