@@ -1,7 +1,7 @@
 { 
   "name": "articleexportv1",
   "metadata": { "type":"export", "version": "1" },
-  "documenttype":"xls",
+  "documenttype":"pdf",
   "filename":"requests",
   "allowedgroups": [ "author" ],
   "get": {
@@ -16,7 +16,7 @@
   },
   "post": {
     "query": {
-      "sql":"select id, name, amount, duedate FROM requestv1 WHERE name=:name;",
+      "sql":"select id, title, description, created FROM articles WHERE title=:name;",
       "parameters":[
         { "placeholder": ":name", "postparameter": "name" }
       ]
@@ -24,9 +24,9 @@
     "table": {
       "title": "My table",
       "fields": [
-        { "headline": "Name", "sqlfield":"name" },
-        { "headline": "Amount", "sqlfield":"amount" },
-        { "headline": "Due date", "sqlfield":"duedate" }
+        {"headline": "Title", "sqlfield": "title"},
+        {"headline": "Description", "sqlfield": "description"},
+        {"headline": "Date", "sqlfield": "created"}
       ]
     },
     "aggregation": [

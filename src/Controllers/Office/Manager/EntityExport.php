@@ -57,6 +57,7 @@ class EntityExport extends ManagerEntityController {
             $this->pdfBuilder->setResource( $this->resource );
             $this->pdfBuilder->setParameters( $this->postParameters );
             $this->pdfBuilder->setDbconnection( $this->dbconnection );
+            $this->pdfBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->WriteHTML($this->pdfBuilder->createTable());

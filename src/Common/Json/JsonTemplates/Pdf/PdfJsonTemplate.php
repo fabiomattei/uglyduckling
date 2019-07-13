@@ -11,13 +11,10 @@ namespace Firststep\Common\Json\JsonTemplates\Pdf;
 
 use Firststep\Common\Blocks\BaseHTMLTable;
 use Firststep\Common\Database\QueryExecuter;
+use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+use Firststep\Common\Json\JsonTemplates\JsonTemplate;
 
-class PdfJsonTemplate {
-
-    private $queryExecuter;
-    private $queryBuilder;
-    private $resource;
-    private $parameters;
+class PdfJsonTemplate extends JsonTemplate {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
@@ -55,6 +52,7 @@ class PdfJsonTemplate {
         $table = $this->resource->post->table;
 
         $tableBlock = new BaseHTMLTable;
+        $tableBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $tableBlock->setTitle($table->title ?? '');
 
         $tableBlock->addTHead();

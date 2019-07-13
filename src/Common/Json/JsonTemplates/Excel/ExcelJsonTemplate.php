@@ -11,6 +11,7 @@ namespace Firststep\Common\Json\JsonTemplates\Excel;
 use Firststep\Common\Database\QueryExecuter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 
 class ExcelJsonTemplate {
 
