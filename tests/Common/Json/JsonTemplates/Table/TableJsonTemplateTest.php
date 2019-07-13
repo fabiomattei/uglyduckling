@@ -7,14 +7,14 @@ use Firststep\Common\Json\JsonTemplates\QueryBuilder;
 *
 *  @author Fabio Mattei
 */
-class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
+class TableJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	
 	protected $entities;
 	protected $htmlTemplateLoader;
 	protected $queryExecuter;
     protected $tableBuilder;
 	
-	protected function setUp() {
+	protected function setUp(): void {
         $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
         $this->tableBuilder = new Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
@@ -95,25 +95,25 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
     public function testTableContainsTableTag() {
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue( $this->entities ));
         $block = $this->tableBuilder->createTable();
-        $this->assertContains('<table', $block->show());
+        $this->assertStringContainsString('<table', $block->show());
         unset($this->tableBuilder);
     }
 
     public function testTableContainsColumnsTitles() {
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue( $this->entities ));
         $block = $this->tableBuilder->createTable();
-        $this->assertContains('<th>Name</th>', $block->show());
-        $this->assertContains('<th>Amount</th>', $block->show());
-        $this->assertContains('<th>Due date</th>', $block->show());
+        $this->assertStringContainsString('<th>Name</th>', $block->show());
+        $this->assertStringContainsString('<th>Amount</th>', $block->show());
+        $this->assertStringContainsString('<th>Due date</th>', $block->show());
         unset($this->tableBuilder);
     }
 
     public function testTableContainsColumnsFirstEntity() {
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue( $this->entities ));
         $block = $this->tableBuilder->createTable();
-        $this->assertContains('<td>prova</td>', $block->show());
-        $this->assertContains('<td>10</td>', $block->show());
-        $this->assertContains('<td>2017-06-26</td>', $block->show());
+        $this->assertStringContainsString('<td>prova</td>', $block->show());
+        $this->assertStringContainsString('<td>10</td>', $block->show());
+        $this->assertStringContainsString('<td>2017-06-26</td>', $block->show());
         unset($this->tableBuilder);
     }
 
