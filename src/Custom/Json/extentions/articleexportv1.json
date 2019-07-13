@@ -9,7 +9,8 @@
       "title": "Search and export",
       "submitTitle": "Export",
       "fields": [
-        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" }
+        { "type":"textarea", "validation":"max_len,2500", "name":"name", "label":"Name", "placeholder":"Name", "value":"name", "width":"12", "row":"1" },
+        { "type": "submitbutton", "width":"2", "row":"3", "name": "Save", "constantparameter": "Save" }
       ]
     }
   },
