@@ -1,7 +1,7 @@
 {
   "name": "articleschartv1",
   "metadata": { "type":"chartjs", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "allowedgroups": [ "author" ],
   "get": {
     "request": {
       "parameters": []

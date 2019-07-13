@@ -1,7 +1,7 @@
 {
   "name": "smallarticlestable",
   "metadata": { "type":"table", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "allowedgroups": [ "author" ],
   "get": {
     "request": {
       "parameters": []

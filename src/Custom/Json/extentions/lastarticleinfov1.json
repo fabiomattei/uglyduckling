@@ -1,7 +1,7 @@
 {
   "name": "lastarticleinfov1",
   "metadata": { "type":"info", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "allowedgroups": [ "author" ],
   "get": {
     "request": {
       "parameters": [

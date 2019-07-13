@@ -1,7 +1,7 @@
 {
   "name": "articlesearchv1",
   "metadata": { "type":"search", "version": "1" },
-  "allowedgroups": [ "administrationgroup", "teachergroup", "managergroup" ],
+  "allowedgroups": [ "author" ],
   "get": {
     "query": {
       "sql":"select id, name, amount, duedate FROM requestv1 ORDER BY id LIMIT 20;"
