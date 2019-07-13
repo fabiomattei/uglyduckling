@@ -68,7 +68,8 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
         $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
-        $jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
+        $linkBuilder = $this->getMockBuilder(Firststep\Common\Json\JsonTemplates\LinkBuilder::class)->getMock();
+        $linkBuilder->expects($this->any())->method('getButton')->will($this->returnValue(''));
 
         $this->tableBuilder->setRouter($router);
         $this->tableBuilder->setParameters( array( 'id' => '1' ) );
@@ -76,7 +77,7 @@ class TableJsonTemplateTest extends PHPUnit_Framework_TestCase {
         $this->tableBuilder->setDbconnection( $dbconnection );
         $this->tableBuilder->setQueryExecuter( $this->queryExecuter );
         $this->tableBuilder->setQueryBuilder( $queryBuilder );
-        $this->tableBuilder->setJsonloader( $jsonLoader );
+        $this->tableBuilder->setLinkBuilder( $linkBuilder );
 	}
 	
 	/**

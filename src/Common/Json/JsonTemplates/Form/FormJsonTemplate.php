@@ -52,7 +52,7 @@ class FormJsonTemplate extends JsonTemplate {
 			foreach ($row as $field) {
 				$value = $this->getValue($field, $entity);
                 if ($field->type === 'textfield') {
-                    $formBlock->addTextField($field->name, $field->label, $field->placeholder, $value ?? '', $field->width);
+                    $formBlock->addGenericField( $field, $value ?? '');
                 }
                 if ($field->type === 'dropdown') {
                     $options = array();
