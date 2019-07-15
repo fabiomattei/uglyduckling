@@ -38,15 +38,6 @@ class BaseFormTest extends PHPUnit\Framework\TestCase{
   }
   
   /**
-  * Checking a text field is added to the form
-  */
-  public function testItShowsAFormWithATextField(){
-	$this->form->addTextField( 'myname', 'My label', 'My placeholder', 'My value', '6');
-	$this->assertStringContainsString('<label for="myname">My label</label><input class="form-control" type="text" id="myname" name="myname" value="My value" placeholder="My placeholder">', $this->form->show());
-	unset($form);
-  }
-  
-  /**
   * Checking a textarea field is added to the form
   */
   public function testItShowsAFormWithATextAreaField(){
