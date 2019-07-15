@@ -129,7 +129,7 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	public function testFormContainsDateField(){
         $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
         $block = $this->form->createForm();
-		$this->assertStringContainsString('<input class="form-control" type="date" id="duedate" name="duedate" value="" placeholder="2019-02-22">', $block->show());
+		$this->assertStringContainsString('<input class="form-control" id="duedate" name="duedate" value="" type="date" placeholder="2019-02-22" >', $block->show());
 		unset($this->form);
 	}
 	

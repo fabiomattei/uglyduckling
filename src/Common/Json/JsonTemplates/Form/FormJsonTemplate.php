@@ -65,7 +65,8 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
                 }
                 if ($field->type === 'date') {
-                    $formBlock->addDateField($field->name, $field->label, $value ?? '', $field->width, $field->placeholder ?? date('Y-m-d'));
+                    if (!isset($field->placeholder)) { $field->placeholder = date('Y-m-d'); }
+                    $formBlock->addGenericField( $field, $value ?? '');
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);

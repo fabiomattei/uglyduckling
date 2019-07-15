@@ -89,18 +89,11 @@ class BaseHTMLForm extends BaseHTMLBlock {
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, $htmloptions),
             'Form/selectfield.html');
     }
-	
-	function addDateField( string $name, string $label, string $value, string $width, string $placeholder ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
-            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
-            'Form/datefield.html');
-	}
 
     /**
      * @param $field
      *
-     * Filed is a object that contains a property for each of the properties of the filed we want to insert in the form
+     * Filed is a sttClass that contains a property for each of the properties of the filed we want to insert in the form
      * Each property corresponds to an HTML INPUT tag
      *
      * Ex:
