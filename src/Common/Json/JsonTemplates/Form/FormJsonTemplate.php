@@ -51,7 +51,7 @@ class FormJsonTemplate extends JsonTemplate {
 			$formBlock->addRow();
 			foreach ($row as $field) {
 				$value = $this->getValue($field, $entity);
-                if ($field->type === 'textfield') {
+                if (in_array( $field->type, array('textfield', 'number') )) {
                     $formBlock->addGenericField( $field, $value ?? '');
                 }
                 if ($field->type === 'dropdown') {
@@ -63,9 +63,6 @@ class FormJsonTemplate extends JsonTemplate {
                 }
 				if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
-                }
-                if ($field->type === 'currency') {
-                    $formBlock->addCurrencyField($field->name, $field->label, $field->placeholder, $value ?? '', $field->width);
                 }
                 if ($field->type === 'date') {
                     $formBlock->addDateField($field->name, $field->label, $value ?? '', $field->width, $field->placeholder ?? date('Y-m-d'));

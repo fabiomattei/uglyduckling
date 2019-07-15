@@ -127,14 +127,19 @@ class JsonTemplate {
         $this->linkBuilder = $linkBuilder;
     }
 
+    /**
+     * Get the value to populate a form or a query from the right array of variables: GET POST SESSION
+     * @param $field: stdClass must contain fieldname attibute
+     * @param $entity: possible entity loaded from the database (TODO: must become a property of this class)
+     */
     public function getValue( $field, $entity = null ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
-            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );    
+            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) ); 
         }
         if ( isset($field->sqlfield) ) {
             $fieldname = $field->sqlfield;
-            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );    
+            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );   
         }
         if ( isset($field->constantparameter) ) {
             return $field->constantparameter;

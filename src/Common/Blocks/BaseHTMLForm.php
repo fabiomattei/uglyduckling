@@ -90,13 +90,6 @@ class BaseHTMLForm extends BaseHTMLBlock {
             'Form/selectfield.html');
     }
 	
-	function addCurrencyField( string $name, string $label, string $placeholder, string $value, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
-            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
-            'Form/currencyfield.html');
-	}
-	
 	function addDateField( string $name, string $label, string $value, string $width, string $placeholder ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
@@ -120,7 +113,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
      * The label property is reserved for the field label
      *
      */
-    function addGenericField( $field, $value ) {
+    function addGenericField( $field, $fieldValue ) {
         $properties = '';
         foreach ($field as $key => $value) {
             if (!in_array( $key, array('label', 'width', 'row', 'value', 'sqlfield', 'name') )) { // forbidden properties
@@ -129,7 +122,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
         }
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${ColWidth}', '${name}', '${label}', '${value}', '${properties}'),
-            array(ColWidth::getWidth(ColWidth::MEDIUM, $field->width ?? 12), $field->name ?? '', $field->label ?? '', htmlspecialchars( $value ), $properties),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $field->width ?? 12), $field->name ?? '', $field->label ?? '', htmlspecialchars( $fieldValue ), $properties),
             'Form/genericfield.html');
     }
 

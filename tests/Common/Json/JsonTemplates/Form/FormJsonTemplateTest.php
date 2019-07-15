@@ -46,7 +46,7 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 			"fields": [
 				{ "type":"textarea", "name":"name", "label":"Name", "placeholder":"Name", "sqlfield":"name", "width":"6", "row":"1" },
 				{ "type":"textfield", "name":"namemytextfield", "label":"My text field", "placeholder":"My Placeholder", "sqlfield":"sqlmytextfield", "width":"6", "row":"1" },
-				{ "type":"currency", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "width":"6", "row":"1" },
+				{ "type":"number", "name":"amount", "label":"Amount", "placeholder":"10.0", "sqlfield":"amount", "min":"0", "step":"0.01", "width":"6", "row":"1" },
 				{ "type":"date", "name":"duedate", "label":"Due date", "placeholder":"2019-02-22", "sqlfield":"duedate", "width":"6", "row":"2" },
 				{ "type":"dropdown", "name":"category", "label":"Category", "sqlfield":"category", "width":"6", "row":"2", "options":[
 					{ "value":"High", "label":"High" },
@@ -122,7 +122,7 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	public function testFormContainsCurrencyField(){
         $this->queryExecuter->expects($this->any())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { return new stdClass; }}));
         $block = $this->form->createForm();
-		$this->assertStringContainsString('<input class="form-control" type="number" id="amount" name="amount" value="" placeholder="10.0" min="0" step="0.01">', $block->show());
+		$this->assertStringContainsString('<input class="form-control" id="amount" name="amount" value="" type="number" placeholder="10.0" min="0" step="0.01" >', $block->show());
 		unset($this->form);
 	}
 	
@@ -143,10 +143,10 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	public function testFormContainsCurrencyFieldWithData(){
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->amount = 10; return $e; }}));
 		$block = $this->form->createForm();
-		$this->assertStringContainsString('name="amount" value="10" placeholder="10.0"', $block->show());
+		$this->assertStringContainsString('name="amount" value="10" type="number"', $block->show());
 		unset($this->form);
 	}
-	
+
 	public function testFormContainsDateFieldWithData(){
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->duedate = '26/06/2017'; return $e; }}));
 		$block = $this->form->createForm();
@@ -157,7 +157,7 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	public function testFormContainsTextFieldField(){
         $this->queryExecuter->expects($this->once())->method('executeQuery')->will($this->returnValue(new class { public function fetch() { $e = new stdClass; $e->mytextfield = 'my value'; return $e; }}));
 		$block = $this->form->createForm();
-		$this->assertStringContainsString('<label for="namemytextfield">My text field</label><input class="form-control" type="textfield" placeholder="My Placeholder"  id="namemytextfield" name="namemytextfield">', $block->show());
+		$this->assertStringContainsString('<label for="namemytextfield">My text field</label><input class="form-control" id="namemytextfield" name="namemytextfield" value="" type="textfield" placeholder="My Placeholder" >', $block->show());
 		unset($this->form);
 	}
 }
