@@ -86,7 +86,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
     /**
      * @param $field
      *
-     * Filed is a sttClass that contains a property for each of the properties of the filed we want to insert in the form
+     * Filed is a stdClass that contains a property for each of the properties of the filed we want to insert in the form
      * Each property corresponds to an HTML INPUT tag
      *
      * Ex:
