@@ -1,6 +1,6 @@
 {
-    "name": "buonzz/firststep",
-    "description": "My basic class that i use for every project",
+    "name": "fabiom/uglyduckling",
+    "description": "Framework to create web applications using json structures",
     "keywords": ["template", "design", "software"],
     "license": "GPL3",
     "authors": [
@@ -9,7 +9,7 @@
             "email": "burattino@gmail.com"
         }
     ],
-    "type": "project",
+    "type": "library",
     "require": {
 		"php": ">=7.0",
         "wixel/gump": "dev-master",
