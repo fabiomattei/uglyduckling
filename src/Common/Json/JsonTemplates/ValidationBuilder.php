@@ -6,7 +6,7 @@
  * Time: 20:59
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 class ValidationBuilder {
 	

@@ -23,14 +23,14 @@ class JsonParametersParserTest extends PHPUnit\Framework\TestCase {
      *
      */
     public function testIsThereAnySyntaxError(){
-        $parser = new Firststep\Common\Json\JsonParametersParser;
+        $parser = new Fabiom\UglyDuckling\Common\Json\JsonParametersParser;
 	    $this->assertTrue( is_object( $parser ) );
         unset( $parser );
     }
 	
     public function testParseResourceForParametersValidationRoules(){
 		$resource = json_decode($this->json);
-		$parameters = Firststep\Common\Json\JsonParametersParser::parseResourceForParametersValidationRoules($resource);
+		$parameters = Fabiom\UglyDuckling\Common\Json\JsonParametersParser::parseResourceForParametersValidationRoules($resource);
         $this->assertNotEmpty($parameters['rules']);
 		$this->assertNotEmpty($parameters['filters']);
 		$this->assertCount(1, $parameters['rules']);

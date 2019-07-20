@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Json\Variables;
+namespace Fabiom\UglyDuckling\Common\Json\Variables;
 
 class StringParser {
 

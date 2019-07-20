@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\BusinessLogic\Group\Daos;
+namespace Fabiom\UglyDuckling\BusinessLogic\Group\Daos;
 
-use Firststep\Common\Database\BasicDao;
+use Fabiom\UglyDuckling\Common\Database\BasicDao;
 use PDO;
 use stdClass;
 

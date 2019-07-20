@@ -7,11 +7,11 @@
  * Time: 15:46
  */
 
-namespace Firststep\Controllers\Admin\User;
+namespace Fabiom\UglyDuckling\Controllers\Admin\User;
 
-use Firststep\BusinessLogic\Group\Daos\UserGroupDao;
-use Firststep\BusinessLogic\User\Daos\UserDao;
-use Firststep\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
+use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
 
 /**
  * This class gives a list of all entities loaded in to the system

@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Loggers;
+namespace Fabiom\UglyDuckling\Common\Loggers;
 
 /**
  * Created fabio

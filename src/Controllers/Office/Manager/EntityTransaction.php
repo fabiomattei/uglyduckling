@@ -1,10 +1,10 @@
 <?php
 
-namespace Firststep\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * User: Fabio

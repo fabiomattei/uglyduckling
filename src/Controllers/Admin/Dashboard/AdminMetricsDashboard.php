@@ -1,14 +1,14 @@
 <?php
 
-namespace Firststep\Controllers\Admin\Dashboard;
+namespace Fabiom\UglyDuckling\Controllers\Admin\Dashboard;
 
-use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Json\Metrics\BaseResourceMetric;
-use Firststep\Common\Json\Parameters\BasicParameterGetter;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Json\Metrics\BaseResourceMetric;
+use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
+use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
+use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 /**
  * This controller shows to the user an interface where all the resources are listed and 

@@ -15,7 +15,7 @@ class DocumentAcceptTest extends PHPUnit\Framework\TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError() {
-		$controller = new Firststep\Controllers\Office\Document\DocumentAccept;
+		$controller = new Fabiom\UglyDuckling\Controllers\Office\Document\DocumentAccept;
 		$this->assertTrue(is_object($controller));
 		unset($controller);
 	}

@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Blocks;
+namespace Fabiom\UglyDuckling\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseHTMLTable;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 
 class StaticTable extends BaseHTMLTable {
 

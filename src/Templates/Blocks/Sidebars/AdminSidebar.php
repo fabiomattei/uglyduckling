@@ -1,9 +1,9 @@
 <?php
 
-namespace Firststep\Templates\Blocks\Sidebars;
+namespace Fabiom\UglyDuckling\Templates\Blocks\Sidebars;
 
-use Firststep\Common\Blocks\BaseHTMLBlock;
-use Firststep\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 class AdminSidebar extends BaseHTMLBlock {
 	

@@ -1,6 +1,6 @@
 <?php
 
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
 *  Testing the TableBuilder class
@@ -15,9 +15,9 @@ class TableJsonTemplateTest extends PHPUnit\Framework\TestCase {
     protected $tableBuilder;
 	
 	protected function setUp(): void {
-        $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
+        $this->htmlTemplateLoader = new \Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->tableBuilder = new Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
+        $this->tableBuilder = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
         $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
 
 		$entity = new stdClass;
@@ -64,11 +64,11 @@ class TableJsonTemplateTest extends PHPUnit\Framework\TestCase {
   }
 }');
 
-        $router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $this->queryExecuter = $this->getMockBuilder(Firststep\Common\Database\QueryExecuter::class)->getMock();
-        $queryBuilder = $this->getMockBuilder(Firststep\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
-        $linkBuilder = $this->getMockBuilder(Firststep\Common\Json\JsonTemplates\LinkBuilder::class)->getMock();
+        $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+        $dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
+        $this->queryExecuter = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\QueryExecuter::class)->getMock();
+        $queryBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
+        $linkBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder::class)->getMock();
         $linkBuilder->expects($this->any())->method('getButton')->will($this->returnValue(''));
 
         $this->tableBuilder->setRouter($router);

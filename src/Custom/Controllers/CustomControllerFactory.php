@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Custom\Controllers;
+namespace Fabiom\UglyDuckling\Custom\Controllers;
 
 class CustomControllerFactory {
 

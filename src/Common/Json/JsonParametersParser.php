@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Json;
+namespace Fabiom\UglyDuckling\Common\Json;
 
 /**
  * JsonLoader makes an index of all available resources and load the 

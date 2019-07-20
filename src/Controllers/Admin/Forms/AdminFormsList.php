@@ -6,14 +6,14 @@
  * Time: 16.01
  */
 
-namespace Firststep\Controllers\Admin\Forms;
+namespace Fabiom\UglyDuckling\Controllers\Admin\Forms;
 
-use Firststep\Common\Controllers\Controller;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
-use Firststep\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
+use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 class AdminFormsList extends Controller {
 

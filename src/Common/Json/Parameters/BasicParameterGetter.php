@@ -6,9 +6,9 @@
  * Time: 21:34
  */
 
-namespace Firststep\Common\Json\Parameters;
+namespace Fabiom\UglyDuckling\Common\Json\Parameters;
 
-use \Firststep\Common\Json\Parameters\Dashboard\DashboardParameterGetter;
+use \Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\DashboardParameterGetter;
 
 class BasicParameterGetter {
 

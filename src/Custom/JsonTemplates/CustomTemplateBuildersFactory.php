@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Custom\JsonTemplates;
+namespace Fabiom\UglyDuckling\Custom\JsonTemplates;
 
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class CustomTemplateBuildersFactory extends JsonTemplate {
 

@@ -1,9 +1,9 @@
 <?php 
 
-namespace Firststep\Common\Json\Checkers\Transaction;
+namespace Fabiom\UglyDuckling\Common\Json\Checkers\Transaction;
 
-use Firststep\Common\Json\Checkers\BasicJsonChecker;
-use Firststep\Common\Utils\StringUtils;
+use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
+use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 /**
  * Make all checks for form entity version 1

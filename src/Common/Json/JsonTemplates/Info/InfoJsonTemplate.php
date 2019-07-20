@@ -6,11 +6,11 @@
  * Time: 18.15
  */
 
-namespace Firststep\Common\Json\JsonTemplates\Info;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info;
 
-use Firststep\Common\Blocks\BaseHTMLInfo;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class InfoJsonTemplate extends JsonTemplate {
 

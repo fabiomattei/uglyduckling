@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Setup;
+namespace Fabiom\UglyDuckling\Common\Setup;
 
 class Setup {
 

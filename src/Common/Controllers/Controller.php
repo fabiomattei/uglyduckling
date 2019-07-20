@@ -6,22 +6,22 @@
  * Time: 09:49
  */
 
-namespace Firststep\Common\Controllers;
+namespace Fabiom\UglyDuckling\Common\Controllers;
 
-use Firststep\Common\Blocks\BaseHTMLMessages;
-use Firststep\Common\Exceptions\ErrorPageException;
-use Firststep\Common\Exceptions\AuthorizationException;
-use Firststep\Common\Redirectors\Redirector;
-use Firststep\Common\Loggers\Logger;
-use Firststep\Common\Request\Request;
-use Firststep\Common\Setup\Setup;
-use Firststep\Common\Router\Router;
-use Firststep\Common\Json\JsonLoader;
-use Firststep\Common\Database\DBConnection;
-use Firststep\Common\Utils\HtmlTemplateLoader;
-use Firststep\Common\Wrappers\ServerWrapper;
-use Firststep\Common\Wrappers\SessionWrapper;
-use Firststep\Common\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
+use Fabiom\UglyDuckling\Common\Exceptions\ErrorPageException;
+use Fabiom\UglyDuckling\Common\Exceptions\AuthorizationException;
+use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Common\Request\Request;
+use Fabiom\UglyDuckling\Common\Setup\Setup;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Json\JsonLoader;
+use Fabiom\UglyDuckling\Common\Database\DBConnection;
+use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
+use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
+use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
 use GUMP;
 
 class Controller {

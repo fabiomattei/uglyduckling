@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Templates\Blocks\Menus;
+namespace Fabiom\UglyDuckling\Templates\Blocks\Menus;
 
-use Firststep\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class AdminMenu extends BaseHTMLBlock {
 	

@@ -6,10 +6,10 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\JsonTemplates\Form;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form;
 
-use Firststep\Common\Blocks\BaseHTMLForm;
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class FormJsonTemplate extends JsonTemplate {
 

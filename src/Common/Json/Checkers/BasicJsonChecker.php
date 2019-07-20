@@ -1,15 +1,15 @@
 <?php 
 
-namespace Firststep\Common\Json\Checkers;
+namespace Fabiom\UglyDuckling\Common\Json\Checkers;
 
-use Firststep\Common\Json\Checkers\Chartjs\ChartjsV1JsonChecker;
-use Firststep\Common\Json\Checkers\Dashboard\DashboardV1JsonChecker;
-use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
-use Firststep\Common\Json\Checkers\Info\InfoV1JsonChecker;
-use Firststep\Common\Json\Checkers\Group\GroupV1JsonChecker;
-use Firststep\Common\Json\Checkers\TabbedPage\TabbedPageV1JsonChecker;
-use Firststep\Common\Json\Checkers\Table\TableV1JsonChecker;
-use Firststep\Common\Json\Checkers\Transaction\TransactionV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Chartjs\ChartjsV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Dashboard\DashboardV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Form\FormV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Info\InfoV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Group\GroupV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\TabbedPage\TabbedPageV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Table\TableV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Transaction\TransactionV1JsonChecker;
 
 /**
  * Basic class for json files checkers

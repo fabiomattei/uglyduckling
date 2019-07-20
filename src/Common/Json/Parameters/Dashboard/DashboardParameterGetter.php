@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Json\Parameters\Dashboard;
+namespace Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard;
 
-use \Firststep\Common\Json\Parameters\BasicParameterGetter;
+use \Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 
 class DashboardParameterGetter extends BasicParameterGetter {
 

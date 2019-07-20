@@ -6,10 +6,10 @@
  * Time: 04:19
  */
 
-namespace Firststep\Common\Blocks;
+namespace Fabiom\UglyDuckling\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseHTMLBlock;
-use Firststep\Common\Blocks\EmptyHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 
 class CardHTMLBlock extends BaseHTMLBlock {
 

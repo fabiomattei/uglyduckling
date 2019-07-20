@@ -1,10 +1,10 @@
 <?php
 
-namespace Firststep\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
-use Firststep\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
  * User: Fabio

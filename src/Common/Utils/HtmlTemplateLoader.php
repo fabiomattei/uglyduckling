@@ -6,7 +6,7 @@
  * Time: 14.16
  */
 
-namespace Firststep\Common\Utils;
+namespace Fabiom\UglyDuckling\Common\Utils;
 
 class HtmlTemplateLoader {
 

@@ -15,7 +15,7 @@ class URLRedirectorTest extends PHPUnit\Framework\TestCase {
      *
      */
     public function testIsThereAnySyntaxError(){
-        $request = new Firststep\Common\Redirectors\URLRedirector( 'http://localhost:18080/' );
+        $request = new Fabiom\UglyDuckling\Common\Redirectors\URLRedirector( 'http://localhost:18080/' );
 	    $this->assertTrue( is_object( $request ) );
         unset( $request );
     }

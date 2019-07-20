@@ -19,7 +19,7 @@
  *        the array value is the alter SQL command to apply to the specific field (Ex. int(11) UNSIGNED NOT NULL AUTO_INCREMENT)
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 class CreateQueryBuilder {
 	

@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Wrappers;
+namespace Fabiom\UglyDuckling\Common\Wrappers;
 
 class SessionWrapper {
 	

@@ -15,13 +15,13 @@ class PublicSecurityCheckerTest extends PHPUnit\Framework\TestCase{
   *
   */
   public function testIsThereAnySyntaxError(){
-	 $checker = new Firststep\Common\SecurityCheckers\PublicSecurityChecker();
+	 $checker = new Fabiom\UglyDuckling\Common\SecurityCheckers\PublicSecurityChecker();
 	 $this->assertTrue(is_object($checker));
 	 unset($checker);
   }
 
   public function testIsSessionValid() {
-   $checker = new Firststep\Common\SecurityCheckers\PublicSecurityChecker();
+   $checker = new Fabiom\UglyDuckling\Common\SecurityCheckers\PublicSecurityChecker();
    $this->assertTrue($checker->isSessionValid(
     1, 
     ':: 1', 

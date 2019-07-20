@@ -7,12 +7,12 @@
  * Time: 11:48
  */
 
-namespace Firststep\Common\Json\JsonTemplates\Pdf;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf;
 
-use Firststep\Common\Blocks\BaseHTMLTable;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class PdfJsonTemplate extends JsonTemplate {
 

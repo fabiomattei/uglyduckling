@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Exceptions;
+namespace Fabiom\UglyDuckling\Common\Exceptions;
 
 use Exception;
 

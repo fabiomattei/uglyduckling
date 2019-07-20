@@ -5,7 +5,7 @@
  * Time: 10:30
  */
 
-namespace Firststep\Common\SecurityCheckers;
+namespace Fabiom\UglyDuckling\Common\SecurityCheckers;
 
 interface SecurityChecker {
 

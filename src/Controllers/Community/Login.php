@@ -1,13 +1,13 @@
 <?php
 
-namespace Firststep\Controllers\Community;
+namespace Fabiom\UglyDuckling\Controllers\Community;
 
-use Firststep\Common\Controllers\Controller;
-use Firststep\Templates\Blocks\Menus\PublicMenu;
-use Firststep\Templates\Blocks\Login\LoginForm;
-use Firststep\BusinessLogic\User\Daos\UserDao;
-use Firststep\BusinessLogic\User\UseCases\UserCanLogIn;
-use Firststep\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Templates\Blocks\Menus\PublicMenu;
+use Fabiom\UglyDuckling\Templates\Blocks\Login\LoginForm;
+use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
+use Fabiom\UglyDuckling\BusinessLogic\User\UseCases\UserCanLogIn;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 /**
  * This class cares about the login process.

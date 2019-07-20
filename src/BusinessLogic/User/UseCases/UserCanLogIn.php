@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\BusinessLogic\User\UseCases;
+namespace Fabiom\UglyDuckling\BusinessLogic\User\UseCases;
 
 class UserCanLogIn {
 	

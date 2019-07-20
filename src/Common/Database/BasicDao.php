@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Database;
+namespace Fabiom\UglyDuckling\Common\Database;
 
 use PDO;
 

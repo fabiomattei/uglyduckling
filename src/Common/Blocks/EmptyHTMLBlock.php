@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\Blocks;
+namespace Fabiom\UglyDuckling\Common\Blocks;
 
 class EmptyHTMLBlock extends BaseHTMLBlock {
 

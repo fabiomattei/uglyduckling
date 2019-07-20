@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Controllers\Office\Document;
+namespace Fabiom\UglyDuckling\Controllers\Office\Document;
 
-use Firststep\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
 
 /**
  * 

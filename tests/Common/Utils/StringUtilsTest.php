@@ -1,6 +1,6 @@
 <?php
 
-use Firststep\Common\Utils\StringUtils;
+use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 /**
  *  Testing the StringUtils class

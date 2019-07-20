@@ -6,9 +6,9 @@
  * Time: 04:34
  */
 
-namespace Firststep\Common\Blocks;
+namespace Fabiom\UglyDuckling\Common\Blocks;
 
-use Firststep\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class RowHTMLBlock extends BaseHTMLBlock {
 

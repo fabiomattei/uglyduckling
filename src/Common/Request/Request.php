@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Request;
+namespace Fabiom\UglyDuckling\Common\Request;
 
-use Firststep\Common\Utils\StringUtils;
+use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 class Request {
 

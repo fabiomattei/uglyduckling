@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Templates\Blocks\Sidebars;
+namespace Fabiom\UglyDuckling\Templates\Blocks\Sidebars;
 
-use Firststep\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class GateSidebar extends BaseHTMLBlock {
 	

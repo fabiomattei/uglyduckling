@@ -7,10 +7,10 @@
  * Time: 15:50
  */
 
-namespace Firststep\Controllers\Admin\Group;
+namespace Fabiom\UglyDuckling\Controllers\Admin\Group;
 
-use Firststep\BusinessLogic\Group\Daos\UserGroupDao;
-use Firststep\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
 
 class AdminGroupRemoveUser extends Controller {
 

@@ -1,6 +1,6 @@
 <?php
 
-use Firststep\Common\Json\Variables\StringParser;
+use Fabiom\UglyDuckling\Common\Json\Variables\StringParser;
 
 class StringParserTest extends PHPUnit\Framework\TestCase {
 
@@ -35,14 +35,14 @@ class StringParserTest extends PHPUnit\Framework\TestCase {
     }
 
     public function testIWorksWithTwoPostVariableAndTwoGetVariables(){
-        $stringParser = new Firststep\Common\Json\Variables\StringParser;
+        $stringParser = new Fabiom\UglyDuckling\Common\Json\Variables\StringParser;
         $stringParser->setPostparameters(array( 'mypostvariable' => '1', 'mysecondpostvariable' => 'fabio' ));
         $stringParser->setGetParameters(array( 'mygetvariable' => '2', 'mysecondgetvariable' => 'bob' ));
         $this->assertEquals( ' 1 - fabio 2 - bob ', $stringParser->parseString(' POST[mypostvariable] - POST[mysecondpostvariable] GET[mygetvariable] - GET[mysecondgetvariable] ') );
     }
 
     public function testIWorksWithTwoPostVariableTwoGetVariablesAndTwoSessionVariables(){
-        $stringParser = new Firststep\Common\Json\Variables\StringParser;
+        $stringParser = new Fabiom\UglyDuckling\Common\Json\Variables\StringParser;
         $stringParser->setPostparameters(array( 'mypostvariable' => '1', 'mysecondpostvariable' => 'fabio' ));
         $stringParser->setGetParameters(array( 'mygetvariable' => '2', 'mysecondgetvariable' => 'bob' ));
         $stringParser->setSessionparameters(array( 'mysessionvariable' => '3', 'mysecondsessionvariable' => 'eve' ));

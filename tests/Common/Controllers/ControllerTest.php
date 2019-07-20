@@ -15,27 +15,27 @@ class ControllerTest extends PHPUnit\Framework\TestCase {
 	*
 	*/
 	public function testIsThereAnySyntaxError(){
-		$controller = new Firststep\Common\Controllers\Controller;
+		$controller = new Fabiom\UglyDuckling\Common\Controllers\Controller;
 		$this->assertTrue(is_object($controller));
 		unset($controller);
 	}
 
 	public function testMakeAllPresets(){
-		$router = $this->getMockBuilder(Firststep\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-		$setup = $this->getMockBuilder(Firststep\Common\Setup\Setup::class)->getMock();
-		$request = $this->getMockBuilder(Firststep\Common\Request\Request::class)->getMock();
-		$severWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\ServerWrapper::class)->getMock(); 		
-		$sessionWrapper = $this->getMockBuilder(Firststep\Common\Wrappers\SessionWrapper::class)->getMock();
-		$securityChecker = $this->getMockBuilder(Firststep\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
+		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+		$setup = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Setup\Setup::class)->getMock();
+		$request = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Request\Request::class)->getMock();
+		$severWrapper = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper::class)->getMock(); 		
+		$sessionWrapper = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper::class)->getMock();
+		$securityChecker = $this->getMockBuilder(Fabiom\UglyDuckling\Common\SecurityCheckers\PublicSecurityChecker::class)->getMock();
 		$securityChecker->expects($this->once())->method('isSessionValid')->will($this->returnValue(true));
-		$dbconnection = $this->getMockBuilder(Firststep\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
-		$redirector = $this->getMockBuilder(Firststep\Common\Redirectors\FakeRedirector::class)->getMock();
-		$jsonLoader = $this->getMockBuilder(Firststep\Common\Json\JsonLoader::class)->getMock();
-		$messages = $this->getMockBuilder(Firststep\Common\Blocks\BaseHTMLMessages::class)->getMock();
-        $htmlTemplateBuilder = $this->getMockBuilder(Firststep\Common\Utils\HtmlTemplateLoader::class)->getMock();
-		$echologger = $this->getMockBuilder(Firststep\Common\Loggers\EchoLogger::class)->getMock();
+		$dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
+		$redirector = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Redirectors\FakeRedirector::class)->getMock();
+		$jsonLoader = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonLoader::class)->getMock();
+		$messages = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages::class)->getMock();
+        $htmlTemplateBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader::class)->getMock();
+		$echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
 		
-		$controller = new Firststep\Common\Controllers\Controller;
+		$controller = new Fabiom\UglyDuckling\Common\Controllers\Controller;
 		$controller->makeAllPresets(
 			$router,
 			$setup, 

@@ -6,7 +6,7 @@
  * Time: 18:26
  */
 
-namespace Firststep\Common\Redirectors;
+namespace Fabiom\UglyDuckling\Common\Redirectors;
 
 class URLRedirector implements Redirector {
 

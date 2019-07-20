@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Json;
+namespace Fabiom\UglyDuckling\Common\Json;
 
-use Firststep\Common\Json\JsonTemplates\FormBuilderDocumentV1;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\FormBuilderDocumentV1;
 
 /**
  * JsonLoader makes an index of all available resources and load the 

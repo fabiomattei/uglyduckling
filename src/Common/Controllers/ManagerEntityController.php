@@ -1,10 +1,10 @@
 <?php
 
-namespace Firststep\Common\Controllers;
+namespace Fabiom\UglyDuckling\Common\Controllers;
 
-use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Json\JsonTemplates\ValidationBuilder;
-use Firststep\Common\Json\Parameters\BasicParameterGetter;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\ValidationBuilder;
+use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Gump;
 
 /**

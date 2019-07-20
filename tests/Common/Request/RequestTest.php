@@ -15,20 +15,20 @@ class RequestTest extends PHPUnit\Framework\TestCase {
      *
      */
     public function testIsThereAnySyntaxError(){
-        $request = new Firststep\Common\Request\Request;
+        $request = new Fabiom\UglyDuckling\Common\Request\Request;
 	    $this->assertTrue( is_object( $request ) );
         unset( $request );
     }
 
     public function testOnceWeSetRequestItGetsTheAction(){
-        $request = new Firststep\Common\Request\Request;
+        $request = new Fabiom\UglyDuckling\Common\Request\Request;
         $request->setServerRequestURI( '/action.html' );
         $this->assertTrue( $request->getAction() == 'action' );
         unset( $request );
     }
 	
     public function testOnceWeSetRequestItGetsTheActionEvenIfParametersAreThere(){
-        $request = new Firststep\Common\Request\Request;
+        $request = new Fabiom\UglyDuckling\Common\Request\Request;
         $request->setServerRequestURI( '/action.html?id=0&action=mystring' );
         $this->assertTrue( $request->getAction() == 'action' );
         unset( $request );

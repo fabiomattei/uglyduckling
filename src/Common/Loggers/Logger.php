@@ -6,7 +6,7 @@
  * Time: 19:06
  */
 
-namespace Firststep\Common\Loggers;
+namespace Fabiom\UglyDuckling\Common\Loggers;
 
 interface Logger {
 

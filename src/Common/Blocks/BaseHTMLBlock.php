@@ -1,10 +1,10 @@
 <?php
 
-namespace Firststep\Common\Blocks;
+namespace Fabiom\UglyDuckling\Common\Blocks;
 
 /**
  * Class BaseHTMLBlock
- * @package Firststep\Common\Blocks
+ * @package Fabiom\UglyDuckling\Common\Blocks
  *
  * This class gives the structure to create an HTML block.
  * An HTML block could be a form, a table or a list.

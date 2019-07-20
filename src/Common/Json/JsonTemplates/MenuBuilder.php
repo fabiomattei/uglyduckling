@@ -6,9 +6,9 @@
  * Time: 11.54
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Firststep\Common\Blocks\BaseHTMLMenu;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
 use stdClass;
 
 class MenuBuilder {

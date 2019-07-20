@@ -1,9 +1,9 @@
 <?php 
 
-namespace Firststep\Common\Json\Checkers\Info;
+namespace Fabiom\UglyDuckling\Common\Json\Checkers\Info;
 
-use  Firststep\Common\Json\Checkers\BasicJsonChecker;
-use Firststep\Common\Utils\StringUtils;
+use  Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
+use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 /**
  * 

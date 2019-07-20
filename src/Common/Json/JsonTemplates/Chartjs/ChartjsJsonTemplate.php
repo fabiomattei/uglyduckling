@@ -6,10 +6,10 @@
  * Time: 10.15
  */
 
-namespace Firststep\Common\Json\JsonTemplates\Chartjs;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs;
 
-use Firststep\Common\Blocks\BaseHTMLChart;
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLChart;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class ChartjsJsonTemplate extends JsonTemplate {
 

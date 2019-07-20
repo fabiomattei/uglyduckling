@@ -1,11 +1,11 @@
 <?php
 
-namespace Firststep\Controllers\Office\Document;
+namespace Fabiom\UglyDuckling\Controllers\Office\Document;
 
-use Firststep\Common\Controllers\ManagerDocumentSenderController;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
-use Firststep\Common\Database\DocumentDao;
+use Fabiom\UglyDuckling\Common\Controllers\ManagerDocumentSenderController;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Database\DocumentDao;
 
 /**
  * This class handle the deleting of a document entity instance

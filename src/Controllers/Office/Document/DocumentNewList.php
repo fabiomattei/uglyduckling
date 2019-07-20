@@ -1,13 +1,13 @@
 <?php
 
-namespace Firststep\Controllers\Office\Document;
+namespace Fabiom\UglyDuckling\Controllers\Office\Document;
 
-use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
-use Firststep\Common\Router\Router;
-use Firststep\Common\Database\DocumentDao;
-use Firststep\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Database\DocumentDao;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
  * This page gives to the users buttons in order to create all documents his group has permission to create

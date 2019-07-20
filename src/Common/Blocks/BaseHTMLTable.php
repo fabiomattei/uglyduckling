@@ -6,7 +6,7 @@
  * Time: 11:58
  */
 
-namespace Firststep\Common\Blocks;
+namespace Fabiom\UglyDuckling\Common\Blocks;
 
 class BaseHTMLTable extends BaseHTMLBlock {
 

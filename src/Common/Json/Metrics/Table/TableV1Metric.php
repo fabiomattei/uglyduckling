@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Json\Metrics\Table;
+namespace Fabiom\UglyDuckling\Common\Json\Metrics\Table;
 
-use Firststep\Common\Json\Metrics\BaseResourceMetric;
+use Fabiom\UglyDuckling\Common\Json\Metrics\BaseResourceMetric;
 
 /**
  * 

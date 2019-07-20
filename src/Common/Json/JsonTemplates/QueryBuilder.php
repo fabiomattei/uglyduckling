@@ -6,7 +6,7 @@
  * Time: 07:02
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 class QueryBuilder {
 	

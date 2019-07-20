@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Controllers;
+namespace Fabiom\UglyDuckling\Common\Controllers;
 
-use Firststep\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 
 /**
  * User: Fabio

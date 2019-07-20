@@ -1,10 +1,10 @@
 <?php
 
-namespace Firststep\Common\Json;
+namespace Fabiom\UglyDuckling\Common\Json;
 
-use Firststep\Common\Json\JsonTemplates\CreateQueryBuilder;
-use Firststep\Common\Database\DatabaseDefaults;
-use Firststep\Common\Database\DocumentDao;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\CreateQueryBuilder;
+use Fabiom\UglyDuckling\Common\Database\DatabaseDefaults;
+use Fabiom\UglyDuckling\Common\Database\DocumentDao;
 
 /**
  * It parses a resource in order to make the neccessary queries to create a table in the database

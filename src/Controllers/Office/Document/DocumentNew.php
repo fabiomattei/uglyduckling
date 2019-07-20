@@ -1,17 +1,17 @@
 <?php
 
-namespace Firststep\Controllers\Office\Document;
+namespace Fabiom\UglyDuckling\Controllers\Office\Document;
 
-use Firststep\Common\Controllers\ManagerDocumentSenderController;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Json\JsonBlockFormParser;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
-use Firststep\Common\Router\Router;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
-use Firststep\Common\Json\JsonTemplates\MenuBuilder;
-use Firststep\Common\Database\DocumentDao;
+use Fabiom\UglyDuckling\Common\Controllers\ManagerDocumentSenderController;
+use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
+use Fabiom\UglyDuckling\Common\Json\JsonBlockFormParser;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Database\DocumentDao;
 
 /**
  * This class cares about the creation of a new istance of a selected document

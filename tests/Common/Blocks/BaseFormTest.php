@@ -11,9 +11,9 @@ class BaseFormTest extends PHPUnit\Framework\TestCase{
     private $form;
 
     protected function setUp(): void {
-        $this->htmlTemplateLoader = new \Firststep\Common\Utils\HtmlTemplateLoader();
+        $this->htmlTemplateLoader = new \Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
-        $this->form = new Firststep\Common\Blocks\BaseHTMLForm;
+        $this->form = new Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
         $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
     }
 	

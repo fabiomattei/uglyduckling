@@ -7,15 +7,15 @@
  * Time: 10:38
  */
 
-namespace Firststep\Controllers\Admin\User;
+namespace Fabiom\UglyDuckling\Controllers\Admin\User;
 
-use Firststep\BusinessLogic\User\Daos\UserDao;
-use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
-use Firststep\Common\Router\Router;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
+use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
+use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 
 /**
  * This class gives a list of all entities loaded in to the system

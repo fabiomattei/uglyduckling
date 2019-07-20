@@ -6,10 +6,10 @@
  * Time: 18.15
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Firststep\Common\Router\Router;
-use Firststep\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Blocks\Button;
 
 class LinkBuilder {
 

@@ -6,9 +6,9 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Firststep\Common\Blocks\BaseHTMLForm;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
 
 class FormBuilderDocumentV1 {
 

@@ -7,17 +7,17 @@
  * Time: 15.57
  */
 
-namespace Firststep\Controllers\Admin\Table;
+namespace Fabiom\UglyDuckling\Controllers\Admin\Table;
 
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Controllers\Controller;
-use Firststep\Common\Json\Checkers\Form\FormV1JsonChecker;
-use Firststep\Common\Json\Parameters\BasicParameterGetter;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseHTMLInfo;
-use Firststep\Common\Router\Router;
-use Firststep\Common\Json\Checkers\BasicJsonChecker;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Json\Checkers\Form\FormV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
+use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
+use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 
 class AdminTableView extends Controller {
 

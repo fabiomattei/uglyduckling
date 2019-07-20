@@ -1,16 +1,16 @@
 <?php
 
-namespace Firststep\Custom\JsonTemplates;
+namespace Fabiom\UglyDuckling\Custom\JsonTemplates;
 
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
-use Firststep\Custom\HTMLBlocks\HTMLBlockExample;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Custom\HTMLBlocks\HTMLBlockExample;
 
 class JsonTemplateExample extends JsonTemplate {
 
     const blocktype = 'templatebuilderexample';
 
     /**
-     * @return \Firststep\Common\Blocks\EmptyHTMLBlock|HTMLBlockExample
+     * @return \Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock|HTMLBlockExample
      */
     public function createHTMLBlock() {
         return new HTMLBlockExample;

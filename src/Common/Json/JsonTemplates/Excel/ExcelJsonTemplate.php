@@ -6,12 +6,12 @@
  * Time: 11:48
  */
 
-namespace Firststep\Common\Json\JsonTemplates\Excel;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel;
 
-use Firststep\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 class ExcelJsonTemplate {
 

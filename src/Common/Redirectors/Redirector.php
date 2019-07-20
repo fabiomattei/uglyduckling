@@ -6,7 +6,7 @@
  * Time: 16.54
  */
 
-namespace Firststep\Common\Redirectors;
+namespace Fabiom\UglyDuckling\Common\Redirectors;
 
 interface Redirector {
 

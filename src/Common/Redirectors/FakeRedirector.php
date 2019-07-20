@@ -7,7 +7,7 @@
  * Time: 17.53
  */
 
-namespace Firststep\Common\Redirectors;
+namespace Fabiom\UglyDuckling\Common\Redirectors;
 
 /**
  * This class is a fake for testing porpuses

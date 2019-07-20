@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Custom\Controllers;
+namespace Fabiom\UglyDuckling\Custom\Controllers;
 
-use Firststep\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
 
 class CustomControllerExample extends Controller {
 

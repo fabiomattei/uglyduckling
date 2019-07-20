@@ -1,8 +1,8 @@
 <?php 
 
-namespace Firststep\Common\Json\Checkers\Group;
+namespace Fabiom\UglyDuckling\Common\Json\Checkers\Group;
 
-use  Firststep\Common\Json\Checkers\BasicJsonChecker;
+use  Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 
 /**
  * 

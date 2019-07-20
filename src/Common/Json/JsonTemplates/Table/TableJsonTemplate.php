@@ -6,14 +6,14 @@
  * Time: 20:39
  */
 
-namespace Firststep\Common\Json\JsonTemplates\Table;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table;
 
-use Firststep\Common\Blocks\EmptyHTMLBlock;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\JsonTemplate;
-use Firststep\Common\Json\JsonTemplates\LinkBuilder;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 class TableJsonTemplate extends JsonTemplate {
 

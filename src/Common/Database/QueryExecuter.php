@@ -1,9 +1,9 @@
 <?php
 
-namespace Firststep\Common\Database;
+namespace Fabiom\UglyDuckling\Common\Database;
 
 use PDO;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * It executes queries on the database

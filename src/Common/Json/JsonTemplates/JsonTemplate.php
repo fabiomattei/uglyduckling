@@ -5,12 +5,12 @@
  * Time: 12:00
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Firststep\Common\Blocks\BaseHTMLBlock;
-use Firststep\Common\Blocks\EmptyHTMLBlock;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Json\JsonTemplates\LinkBuilder;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 
 class JsonTemplate {
 

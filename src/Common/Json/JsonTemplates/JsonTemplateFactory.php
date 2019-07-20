@@ -6,14 +6,14 @@
  * Time: 04:56
  */
 
-namespace Firststep\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Firststep\Common\Blocks\CardHTMLBlock;
-use Firststep\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
-use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
-use Firststep\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
-use Firststep\Common\Json\JsonTemplates\Table\TableJsonTemplate;
-use Firststep\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 class JsonTemplateFactory extends JsonTemplate {
 

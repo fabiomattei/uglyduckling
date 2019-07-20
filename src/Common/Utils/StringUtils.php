@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Firststep\Common\Utils;
+namespace Fabiom\UglyDuckling\Common\Utils;
 
 /**
 * 

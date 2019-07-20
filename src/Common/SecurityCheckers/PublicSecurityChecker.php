@@ -1,6 +1,6 @@
 <?php
 
-namespace Firststep\Common\SecurityCheckers;
+namespace Fabiom\UglyDuckling\Common\SecurityCheckers;
 
 /**
  * Created fabio

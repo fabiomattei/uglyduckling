@@ -1,15 +1,15 @@
 <?php
 
-namespace Firststep\Controllers\Admin\Group;
+namespace Fabiom\UglyDuckling\Controllers\Admin\Group;
 
-use Firststep\BusinessLogic\Group\Daos\UserGroupDao;
-use Firststep\Common\Controllers\Controller;
-use Firststep\Templates\Blocks\Menus\AdminMenu;
-use Firststep\Templates\Blocks\Sidebars\AdminSidebar;
-use Firststep\Common\Blocks\BaseHTMLInfo;
-use Firststep\Common\Blocks\StaticTable;
-use Firststep\Common\Blocks\Button;
-use Firststep\Common\Router\Router;
+use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
+use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
+use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
+use Fabiom\UglyDuckling\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 /**
  *

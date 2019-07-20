@@ -1,8 +1,8 @@
 <?php
 
-namespace Firststep\Common\Json\Metrics;
+namespace Fabiom\UglyDuckling\Common\Json\Metrics;
 
-use Firststep\Common\Json\Metrics\Table\TableV1Metric;
+use Fabiom\UglyDuckling\Common\Json\Metrics\Table\TableV1Metric;
 
 /**
  * This class is a model for the IFPUG metric reource calculation

@@ -1,13 +1,13 @@
 <?php
 
-namespace Firststep\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Firststep\Common\Json\JsonTemplates\Form\FormJsonTemplate;
-use Firststep\Common\Json\JsonTemplates\QueryBuilder;
-use Firststep\Common\Controllers\ManagerEntityController;
-use Firststep\Common\Database\QueryExecuter;
-use Firststep\Common\Router\Router;
-use Firststep\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
 
 /**
  * User: Fabio
