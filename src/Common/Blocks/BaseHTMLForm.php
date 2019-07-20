@@ -43,6 +43,13 @@ class BaseHTMLForm extends BaseHTMLBlock {
             'Form/body.html');
     }
 
+    function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
+            'Form/textfield.html');
+    }
+
     function addPasswordField( string $name, string $label, string $width ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${ColWidth}', '${name}', '${label}'),
