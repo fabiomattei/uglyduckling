@@ -70,7 +70,7 @@ class JsonLoader {
                 $this->resourceCache[$key] = $resourceOut;
 				return $resourceOut;
 			} else {
-				throw new \Exception('[JsonLoader] :: File associated to resource does not exists!!!');
+				throw new \Exception('[JsonLoader] :: Path associated to resource does not exists!!! Path required: ' . $this->resourcesIndex[$key]->path);
 			}
 		} else {
 			throw new \Exception('[JsonLoader] :: Resource '.$key.' undefined in array index!!!');
