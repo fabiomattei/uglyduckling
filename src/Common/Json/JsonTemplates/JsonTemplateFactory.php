@@ -13,6 +13,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\Router;
 
 class JsonTemplateFactory extends JsonTemplate {
@@ -31,6 +32,7 @@ class JsonTemplateFactory extends JsonTemplate {
         $this->chartjsBuilder = new ChartjsJsonTemplate;
         $this->infoBuilder = new InfoJsonTemplate;
         $this->formBuilder = new FormJsonTemplate;
+        $this->dashboardJsonTemplate = new DashboardJsonTemplate;
         $this->action = '';
     }
 
@@ -73,6 +75,16 @@ class JsonTemplateFactory extends JsonTemplate {
      * @param CardHTMLBlock $panelBlock
      */
     public function getHTMLBlock( $resource ) {
+        if ($resource->metadata->type == DashboardJsonTemplate::blocktype) {
+            $this->dashboardJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
+            $this->dashboardJsonTemplate->setRouter($this->router);
+            $this->dashboardJsonTemplate->setResource($resource);
+            $this->dashboardJsonTemplate->setParameters($this->parameters);
+            $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
+            return $this->dashboardJsonTemplate->createHTMLBlock();
+        }
+
         if ($resource->metadata->type == TableJsonTemplate::blocktype) {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->tableBuilder->setJsonloader($this->jsonloader);
