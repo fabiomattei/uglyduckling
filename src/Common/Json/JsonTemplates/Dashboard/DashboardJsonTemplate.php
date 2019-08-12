@@ -15,16 +15,23 @@ class DashboardJsonTemplate extends JsonTemplate {
     const blocktype = 'dashboard';
 
     public function createHTMLBlock() {
-		$fieldRows = array();
+        // this first section of the code roun trough all defined panels for the specific
+        // dashboard and add each of them to the array $panelRows
+        // I am separating panels by row
+		$panelRows = array();
 
         foreach ($this->resource->panels as $panel) {
-            if( !array_key_exists($panel->row, $fieldRows) ) $fieldRows[$panel->row] = array();
-            $fieldRows[$panel->row][] = $panel;
+            // if there is not array of panels defined for that specific row I am going to create one
+            if( !array_key_exists($panel->row, $panelRows) ) $panelRows[$panel->row] = array();
+            // adding the panel section, taken from the dashboard json file, to array
+            $panelRows[$panel->row][] = $panel;
         }
 
+        // rowcontainer is an array of HTMLBlock that is going to be filled by the resources defined
+        // previously
         $rowcontainer = array();
 
-        foreach ($fieldRows as $row) {
+        foreach ($panelRows as $row) {
             $rowBlock = new RowHTMLBlock;
             $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             foreach ($row as $panel) {

@@ -10,6 +10,12 @@ namespace Fabiom\UglyDuckling\Common\Blocks;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
+/**
+ * This class is a container
+ *
+ * As we define in a dashboard rows containing one or more HTMLBlock
+ * we can use this class in order to contain these
+ */
 class RowHTMLBlock extends BaseHTMLBlock {
 
     private $blocks;
