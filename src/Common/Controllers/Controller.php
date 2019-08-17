@@ -366,7 +366,7 @@ class Controller {
         $this->addToHeadAndToFoot($this->thirdcentralcontainer);
         $this->addToHeadAndToFoot($this->bottomcontainer);
 
-        require_once 'Templates/' . $this->templateFile . '.php';
+        require_once $this->setup->getHTMLTemplatePath() . $this->templateFile . '.php';
     }
 
     function addToHeadAndToFoot($container) {

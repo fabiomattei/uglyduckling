@@ -4,23 +4,24 @@ namespace Fabiom\UglyDuckling\Common\Setup;
 
 class Setup {
 
-	public $appNameForPageTitle;
-	public $privateTemplateFileName;
+    public $appNameForPageTitle;
+    public $privateTemplateFileName;
     public $privateTemplateWithSidebarFileName;
-	public $publicTemplateFileName;
-	public $emptyTemplateFileName;
-	public $basePath;
+    public $publicTemplateFileName;
+    public $emptyTemplateFileName;
+    public $basePath;
     public $pathtoapp;
-	public $jsonPath;
+    public $jsonPath;
 
-	public function __construct() {
-		$this->appNameForPageTitle = '';
-		$this->privateTemplateFileName = '';
-		$this->privateTemplateWithSidebarFileName = '';
-		$this->publicTemplateFileName = '';
-		$this->basePath = '';
+    public function __construct() {
+        $this->appNameForPageTitle = '';
+        $this->privateTemplateFileName = '';
+        $this->privateTemplateWithSidebarFileName = '';
+        $this->publicTemplateFileName = '';
+        $this->basePath = '';
         $this->pathtoapp = '';
-		$this->jsonPath = '';
+        $this->jsonPath = '';
+        $this->htmlTemplatePath = '';
     }
 
     /**
@@ -98,6 +99,20 @@ class Setup {
     /**
      * @return string
      */
+    public function getHTMLTemplatePath(): string {
+        return $this->htmlTemplatePath;
+    }
+
+    /**
+     * @param string $HTMLTemplatePath
+     */
+    public function setHTMLTemplatePath( string $HTMLTemplatePath ) {
+        $this->htmlTemplatePath = $htmlTemplatePath;
+    }
+
+    /**
+     * @return string
+     */
     public function getBasePath(): string {
         return $this->basePath;
     }
@@ -122,7 +137,7 @@ class Setup {
     public function setPathToApp(string $pathtoapp) {
         $this->pathtoapp = $pathtoapp;
     }
-	
+    
     /**
      * @return string
      */
