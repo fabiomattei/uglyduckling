@@ -104,9 +104,9 @@ class Setup {
     }
 
     /**
-     * @param string $HTMLTemplatePath
+     * @param string $htmlTemplatePath
      */
-    public function setHTMLTemplatePath( string $HTMLTemplatePath ) {
+    public function setHTMLTemplatePath( string $htmlTemplatePath ) {
         $this->htmlTemplatePath = $htmlTemplatePath;
     }
 
