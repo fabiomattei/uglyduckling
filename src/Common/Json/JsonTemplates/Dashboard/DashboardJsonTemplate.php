@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLDashboard;
 
 class DashboardJsonTemplate extends JsonTemplate {
 

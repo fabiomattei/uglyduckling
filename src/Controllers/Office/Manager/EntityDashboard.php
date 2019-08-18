@@ -9,6 +9,7 @@ use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 
 /**
  * User: Fabio Mattei
@@ -24,6 +25,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
         $this->panelBuilder = new JsonTemplateFactory;
+        $this->dashboardJsonTemplate = new DashboardJsonTemplate;
     }
 
     /**
@@ -42,31 +44,19 @@ class EntityDashboard extends ManagerEntityController {
         $this->panelBuilder->setParameters($this->getParameters);
         $this->panelBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
-        $fieldRows = array();
-
-        foreach ($this->resource->panels as $panel) {
-            if( !array_key_exists($panel->row, $fieldRows) ) $fieldRows[$panel->row] = array();
-            $fieldRows[$panel->row][] = $panel;
-        }
-
-        $rowcontainer = array();
-
-        foreach ($fieldRows as $row) {
-            $rowBlock = new RowHTMLBlock;
-            $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-            foreach ($row as $panel) {
-                $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
-            }
-            $rowcontainer[] = $rowBlock;
-        }
+        $this->dashboardJsonTemplate->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
+        $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
+        $this->dashboardJsonTemplate->setRouter($this->router);
+        $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
+        $this->dashboardJsonTemplate->setParameters($this->getParameters);
+        $this->dashboardJsonTemplate->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = ( isset($rowcontainer[0]) ? $rowcontainer[0] : array() );
-        $this->secondcentralcontainer = ( isset($rowcontainer[1]) ? $rowcontainer[1] : array() );
-        $this->thirdcentralcontainer = ( isset($rowcontainer[2]) ? $rowcontainer[2] : array() );
+        $this->centralcontainer = ( $this->dashboardJsonTemplate->createHTMLBlock() );
     }
 
     public function postRequest() {
