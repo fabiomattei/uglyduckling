@@ -40,7 +40,7 @@ class DashboardJsonTemplate extends JsonTemplate {
             $rowcontainer[] = $rowBlock;
         }
 
-        return $rowcontainer[];
+        return $rowcontainer;
     }
 
 }
