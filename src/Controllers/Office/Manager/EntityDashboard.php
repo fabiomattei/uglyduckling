@@ -44,19 +44,13 @@ class EntityDashboard extends ManagerEntityController {
         $this->panelBuilder->setParameters($this->getParameters);
         $this->panelBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
-        $this->dashboardJsonTemplate->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
-        $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
-        $this->dashboardJsonTemplate->setRouter($this->router);
-        $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
-        $this->dashboardJsonTemplate->setParameters($this->getParameters);
-        $this->dashboardJsonTemplate->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $htmlBlock = $this->panelBuilde->getHTMLBlock();
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = ( $this->dashboardJsonTemplate->createHTMLBlock() );
+        $this->centralcontainer = ( $htmlBlock->show() );
     }
 
     public function postRequest() {

@@ -22,6 +22,7 @@ class JsonTemplateFactory extends JsonTemplate {
     private $chartjsBuilder;
     private $infoBuilder;
     private $formBuilder;
+    private $dashboardJsonTemplate;
 
     /**
      * PanelBuilder constructor.
