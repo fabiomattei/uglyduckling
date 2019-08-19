@@ -44,7 +44,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     /**
      * Add an array ready to recive BaseHTMLBlock to data structure
      */
-    function createNewRow($row) {
+    function createNewRow() {
         $this->rows[] = array();
     }
 
