@@ -10,10 +10,22 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLDashboard;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactory;
 
 class DashboardJsonTemplate extends JsonTemplate {
 
     const blocktype = 'dashboard';
+
+    private $jsonTemplateFactory;
+
+    /**
+     * Setting panelBuilder
+     *
+     * @param $panelBuilder
+     */
+    public function setPanelBuilder( JsonTemplateFactory $jsonTemplateFactory ) {
+        $this->jsonTemplateFactory = $jsonTemplateFactory;
+    }
 
     public function createHTMLBlock() {
         // this first section of the code roun trough all defined panels for the specific
@@ -34,7 +46,7 @@ class DashboardJsonTemplate extends JsonTemplate {
         foreach ($panelRows as $row) {
             $htmlDashboard->createNewRow();
             foreach ($row as $panel) {
-                $htmlDashboard->addBlockToCurrentRow( $this->panelBuilder->getPanel($panel) );
+                $htmlDashboard->addBlockToCurrentRow( $this->jsonTemplateFactory->getPanel($panel) );
             }
         }
 

@@ -83,6 +83,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->dashboardJsonTemplate->setResource($resource);
             $this->dashboardJsonTemplate->setParameters($this->parameters);
             $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
+            $this->dashboardJsonTemplate->setPanelBuilder($this);
             return $this->dashboardJsonTemplate->createHTMLBlock();
         }
 
