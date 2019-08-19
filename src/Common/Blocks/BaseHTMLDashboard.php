@@ -66,6 +66,15 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         return $htmlbody;
     }
 
+    /**
+     * Implemented in order to mantain compatibilty with older implementations
+     * return HTML code
+     * @return string
+     */
+    function show(): string {
+        return $this->getHTML();
+    }
+
     /** 
      * It creates the addToHead string iterating trough all BaseHTMLBlock contained
      * in the data structure

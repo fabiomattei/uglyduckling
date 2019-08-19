@@ -2,7 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Fabiom\UglyDuckling\Common\Blocks\RowHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactory;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Router\Router;
@@ -18,13 +17,13 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  */
 class EntityDashboard extends ManagerEntityController {
 
-    private $panelBuilder;
+    private $jsonTemplateFactory;
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
-        $this->panelBuilder = new JsonTemplateFactory;
+        $this->jsonTemplateFactory = new JsonTemplateFactory;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
     }
 
@@ -36,15 +35,15 @@ class EntityDashboard extends ManagerEntityController {
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setRouter( $this->router );
 
-        $this->panelBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->panelBuilder->setJsonloader($this->jsonloader);
-        $this->panelBuilder->setDbconnection($this->dbconnection);
-        $this->panelBuilder->setRouter($this->router);
-        $this->panelBuilder->setJsonloader($this->jsonloader);
-        $this->panelBuilder->setParameters($this->getParameters);
-        $this->panelBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactory->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->jsonTemplateFactory->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactory->setDbconnection($this->dbconnection);
+        $this->jsonTemplateFactory->setRouter($this->router);
+        $this->jsonTemplateFactory->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactory->setParameters($this->getParameters);
+        $this->jsonTemplateFactory->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
-        $htmlBlock = $this->panelBuilder->getHTMLBlock( $this->resource );
+        $htmlBlock = $this->jsonTemplateFactory->getHTMLBlock( $this->resource );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
