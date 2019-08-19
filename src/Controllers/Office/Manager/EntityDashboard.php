@@ -44,7 +44,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->panelBuilder->setParameters($this->getParameters);
         $this->panelBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
-        $htmlBlock = $this->panelBuilde->getHTMLBlock();
+        $htmlBlock = $this->panelBuilder->getHTMLBlock();
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
