@@ -7,9 +7,19 @@ namespace Fabiom\UglyDuckling\Common\Blocks;
  *
  * A dashboard is basically a container of rows
  */
-class BaseHTMLDashboard extends BaseHTMLBloc {
+class BaseHTMLDashboard extends BaseHTMLBlock {
 
+    /**
+     * $rows is an array of arrays of BaseHTMLBlock
+     * the idea is to put in this structure all BaseHTMLBlock needed in order
+     * to create the dashboard and then iterate trough them in order to compose
+     * the HTML
+     */
     private $rows;
+
+    /**
+     * Necessary in order to load the HTML surrounding code
+     */
     private $htmlTemplateLoader;
 
     /**
@@ -24,38 +34,62 @@ class BaseHTMLDashboard extends BaseHTMLBloc {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
-    function addBlock($row) {
-        $this->rows[] = $row;
+	/**
+     * Add a BaseHTMLBlock to to current row in data scruture
+     */
+    function addBlockToCurrentRow( $htmlBlock ) {
+        $this->rows[count($this->rows)][] = $htmlBlock;
     }
 
     /**
-     * Overwrite this method with the content you want your block to show
-     *
-     * it return the HTML code for the web page
+     * Add an array ready to recive BaseHTMLBlock to data structure
+     */
+    function createNewRow($row) {
+        $this->rows[] = array();
+    }
+
+    /**
+     * it return the HTML code for the web page built on data structure
      */
     function getHTML(): string {
         $htmlbody = '';
-        foreach ($this->rows as $bl) {
-            $htmlbody .= $bl->show();
-        }
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array( '${htmlbody}' ),
-            array( $htmlbody ),
-            'RowBlock/body.html');;
+        foreach ($this->rows as $row) {
+        	$tempHTML = '';
+        	foreach ($row as $bl) {
+            	$tempHTML .= $bl->getHTML();
+        	}
+        	$htmlbody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array( '${htmlbody}' ),
+                array( $tempHTML ),
+            'RowBlock/body.html');
+    	}
+        return $htmlbody;
     }
 
+    /** 
+     * It creates the addToHead string iterating trough all BaseHTMLBlock contained
+     * in the data structure
+     */
     function addToHead(): string {
         $globalAddToHead = '';
-        foreach ($this->rows as $bl) {
-            $globalAddToHead .= $bl->addToHead();
+        foreach ($this->rows as $row) {
+        	foreach ($row as $bl) {
+            	$globalAddToHead .= $bl->addToHead();
+        	}
         }
         return $globalAddToHead;
     }
 
+    /** 
+     * It creates the addToFoot string iterating trough all BaseHTMLBlock contained
+     * in the data structure
+     */
     function addToFoot(): string {
         $globalAddToFoot = '';
-        foreach ($this->rows as $bl) {
-            $globalAddToFoot .= $bl->addToFoot();
+        foreach ($this->rows as $row) {
+        	foreach ($row as $bl) {
+            	$globalAddToFoot .= $bl->addToFoot();
+        	}
         }
         return $globalAddToFoot;
     }

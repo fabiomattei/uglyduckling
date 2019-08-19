@@ -28,20 +28,17 @@ class DashboardJsonTemplate extends JsonTemplate {
             $panelRows[$panel->row][] = $panel;
         }
 
-        // rowcontainer is an array of HTMLBlock that is going to be filled by the resources defined
-        // previously
-        $rowcontainer = array();
+        $htmlDashboard = new BaseHTMLDashboard;
+        $htmlDashboard->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
         foreach ($panelRows as $row) {
-            $rowBlock = new RowHTMLBlock;
-            $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+            $htmlDashboard->createNewRow();
             foreach ($row as $panel) {
-                $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
+                $htmlDashboard->addBlockToCurrentRow( $this->panelBuilder->getPanel($panel) );
             }
-            $rowcontainer[] = $rowBlock;
         }
 
-        return $rowcontainer;
+        return $htmlDashboard;
     }
 
 }
