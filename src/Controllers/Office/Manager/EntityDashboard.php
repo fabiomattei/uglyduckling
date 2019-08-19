@@ -50,7 +50,7 @@ class EntityDashboard extends ManagerEntityController {
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = ( $htmlBlock->show() );
+        $this->centralcontainer = ( $htmlBlock );
     }
 
     public function postRequest() {
