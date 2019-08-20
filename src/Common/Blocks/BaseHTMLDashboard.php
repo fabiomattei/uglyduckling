@@ -56,7 +56,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         foreach ($this->rows as $row) {
         	$tempHTML = '';
         	foreach ($row as $bl) {
-            	$tempHTML .= $bl->getHTML();
+            	$tempHTML .= $bl->show();//$bl->getHTML();
         	}
         	$htmlbody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
                 array( '${htmlbody}' ),
