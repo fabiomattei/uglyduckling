@@ -63,7 +63,9 @@ class ManagerEntityController extends Controller {
         echo "allowed groups: ";
         print_r($this->resource->allowedgroups);
         echo "session groups: ";
+        echo $this->sessionWrapper->getSessionUserId();
         echo $this->sessionWrapper->getSessionGroup();
+        echo $this->sessionWrapper->getSessionUsename();
         if(!isset($this->resource->allowedgroups)) return false;
         return in_array($this->sessionWrapper->getSessionGroup(), $this->resource->allowedgroups);
     }
