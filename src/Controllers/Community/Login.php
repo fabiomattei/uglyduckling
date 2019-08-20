@@ -59,8 +59,6 @@ class Login extends Controller {
 			$this->sessionWrapper->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
 			$this->sessionWrapper->setSessionLastLogin( time() );
 
-			echo "dafult group: ".$user->usr_defaultgroup;
-
             $this->jsonloader->loadIndex();
             $groupresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 			
