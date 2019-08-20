@@ -52,7 +52,7 @@ class DashboardJsonTemplate extends JsonTemplate {
         foreach ($panelRows as $row) {
             $htmlDashboard->createNewRow();
             foreach ($row as $panel) {
-                $htmlDashboard->addBlockToCurrentRow( $this->jsonTemplateFactory->getPanel($panel) );
+                $htmlDashboard->addBlockToCurrentRow( $panel );
             }
         }
 

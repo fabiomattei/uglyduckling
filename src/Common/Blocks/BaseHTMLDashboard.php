@@ -54,12 +54,14 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     function getHTML(): string {
         $htmlbody = '';
         foreach ($this->rows as $row) {
-        	$tempHTML = '';
-        	foreach ($row as $bl) {
-            	$tempHTML .= $bl->show();//$bl->getHTML();
+            $rowBlock = new RowHTMLBlock;
+            $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+            foreach ($row as $panel) {
+                $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
+                
         	}
-            
 
+            $tempHTML = $rowBlock->show();//$bl->getHTML();
             
         	$htmlbody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
                 array( '${htmlbody}' ),
