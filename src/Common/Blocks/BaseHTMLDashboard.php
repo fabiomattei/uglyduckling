@@ -58,7 +58,6 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
             $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             foreach ($row as $panel) {
                 $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
-                
         	}
 
             $tempHTML = $rowBlock->show();//$bl->getHTML();
@@ -87,8 +86,9 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     function addToHead(): string {
         $globalAddToHead = '';
         foreach ($this->rows as $row) {
-        	foreach ($row as $bl) {
-            	$globalAddToHead .= $bl->addToHead();
+        	foreach ($row as $panel) {
+                $block = $this->panelBuilder->getPanel($panel);
+            	$globalAddToHead .= $block->addToHead();
         	}
         }
         return $globalAddToHead;
@@ -101,8 +101,9 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     function addToFoot(): string {
         $globalAddToFoot = '';
         foreach ($this->rows as $row) {
-        	foreach ($row as $bl) {
-            	$globalAddToFoot .= $bl->addToFoot();
+        	foreach ($row as $panel) {
+                $block = $this->panelBuilder->getPanel($panel);
+            	$globalAddToFoot .= $block->addToFoot();
         	}
         }
         return $globalAddToFoot;
