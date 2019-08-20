@@ -16,7 +16,7 @@ class URLRedirector implements Redirector {
 
     public function redirect() {
         header('Location: ' . $this->url );
-        die();
+        exit();
     }
 
 }
