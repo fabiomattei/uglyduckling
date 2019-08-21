@@ -34,15 +34,17 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
-	/**
-     * Add a BaseHTMLBlock to to current row in data scruture
+    /**
+     * Add a BaseHTMLBlock to to current row in data structure
+     *
+     * @param BaseHTMLBlock $htmlBlock
      */
-    function addBlockToCurrentRow( $htmlBlock ) {
+    function addBlockToCurrentRow( BaseHTMLBlock $htmlBlock ) {
         $this->rows[count($this->rows)][] = $htmlBlock;
     }
 
     /**
-     * Add an array ready to recive BaseHTMLBlock to data structure
+     * Add an array ready to receive BaseHTMLBlock to data structure
      */
     function createNewRow() {
         $this->rows[] = array();
