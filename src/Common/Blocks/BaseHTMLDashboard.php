@@ -35,11 +35,11 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     }
 
     /**
-     * Add a pane to to current row in data structure
+     * Add a BaseHTMLBlock to to current row in data structure
      *
-     * @param json structure $htmlBlock
+     * @param BaseHTMLBlock structure $htmlBlock
      */
-    function addBlockToCurrentRow( $htmlBlock ) {
+    function addBlockToCurrentRow( BaseHTMLBlock $htmlBlock ) {
         $this->rows[count($this->rows)][] = $htmlBlock;
     }
 
@@ -59,7 +59,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
             $rowBlock = new RowHTMLBlock;
             $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             foreach ($row as $panel) {
-                $rowBlock->addBlock( $this->panelBuilder->getPanel($panel) );
+                $rowBlock->addBlock( $panel );
         	}
 
             $tempHTML = $rowBlock->show();//$bl->getHTML();
@@ -88,8 +88,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     function addToHead(): string {
         $globalAddToHead = '';
         foreach ($this->rows as $row) {
-        	foreach ($row as $panel) {
-                $block = $this->panelBuilder->getPanel($panel);
+        	foreach ($row as $block) {
             	$globalAddToHead .= $block->addToHead();
         	}
         }
@@ -103,8 +102,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     function addToFoot(): string {
         $globalAddToFoot = '';
         foreach ($this->rows as $row) {
-        	foreach ($row as $panel) {
-                $block = $this->panelBuilder->getPanel($panel);
+        	foreach ($row as $block) {
             	$globalAddToFoot .= $block->addToFoot();
         	}
         }
