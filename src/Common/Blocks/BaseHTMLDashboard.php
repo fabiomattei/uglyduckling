@@ -40,14 +40,14 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
      * @param BaseHTMLBlock structure $htmlBlock
      */
     function addBlockToCurrentRow( BaseHTMLBlock $htmlBlock ) {
-        $this->rows[count($this->rows)][] = $htmlBlock;
+        $this->rows[count($this->rows) - 1][] = $htmlBlock;
     }
 
     /**
      * Add an array ready to receive BaseHTMLBlock to data structure
      */
     function createNewRow() {
-        $this->rows[] = array();
+        $this->rows[count($this->rows)] = array();
     }
 
     /**
