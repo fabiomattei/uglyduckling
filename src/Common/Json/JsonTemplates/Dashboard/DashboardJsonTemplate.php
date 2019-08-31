@@ -50,8 +50,6 @@ class DashboardJsonTemplate extends JsonTemplate {
         $htmlDashboard = new BaseHTMLDashboard;
         $htmlDashboard->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
-        print_r($panelRows);
-
         foreach ($panelRows as $row) {
             $htmlDashboard->createNewRow();
             foreach ($row as $panel) {
