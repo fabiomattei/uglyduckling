@@ -62,12 +62,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
                 $rowBlock->addBlock( $panel );
         	}
 
-            $tempHTML = $rowBlock->show();//$bl->getHTML();
-            
-        	$htmlbody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-                array( '${htmlbody}' ),
-                array( $tempHTML ),
-            'RowBlock/body.html');
+            $htmlbody .= $rowBlock->show();//$bl->getHTML();
     	}
         return $htmlbody;
     }
