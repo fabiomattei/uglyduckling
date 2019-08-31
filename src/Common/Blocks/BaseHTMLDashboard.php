@@ -35,11 +35,11 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     }
 
     /**
-     * Add a BaseHTMLBlock to to current row in data structure
+     * Add a pane to to current row in data structure
      *
-     * @param BaseHTMLBlock $htmlBlock
+     * @param json structure $htmlBlock
      */
-    function addBlockToCurrentRow( BaseHTMLBlock $htmlBlock ) {
+    function addBlockToCurrentRow( $htmlBlock ) {
         $this->rows[count($this->rows)][] = $htmlBlock;
     }
 
