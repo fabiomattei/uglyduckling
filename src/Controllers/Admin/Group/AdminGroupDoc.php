@@ -51,6 +51,8 @@ class AdminGroupDoc extends Controller {
         $users = $this->userGroupDao->getUsersByGroupSlug( $this->resource->name );
 
         $doctext = '';
+
+        print_r($this->resource->menu);
         foreach ($this->resource->menu as $menuitem) {
             if (isset($menuitem->submenu)) {
                 $submenuItems = array();
@@ -69,56 +71,14 @@ class AdminGroupDoc extends Controller {
 
             }
         }
-
+        echo $doctext;
         $info->addParagraph($doctext, 6);
-
-        $userTable = new StaticTable;
-        $userTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $userTable->setTitle("Users that belong to this group");
-        $userTable->addButton('Add a user to this group', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
-        $userTable->addTHead();
-        $userTable->addRow();
-        $userTable->addHeadLineColumn('Name');
-        $userTable->addHeadLineColumn(''); // adding one more for actions
-        $userTable->closeRow();
-        $userTable->closeTHead();
-        $userTable->addTBody();
-        foreach ( $users as $res ) {
-            $userTable->addRow();
-            $userTable->addColumn($res->usr_name.' '.$res->usr_surname);
-            $userTable->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_GROUP_REMOVE_USER, 'res='.$this->resource->name.'&usrid='.$res->usr_id ), 'Remove', Button::COLOR_GRAY.' '.Button::SMALL ) );
-            $userTable->closeRow();
-        }
-        $userTable->closeTBody();
-
-        $resourcesTable = new StaticTable;
-        $resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $resourcesTable->setTitle("Resources this group has access to");
-        $resourcesTable->addTHead();
-        $resourcesTable->addRow();
-        $resourcesTable->addHeadLineColumn('Name');
-        $resourcesTable->addHeadLineColumn('Path');
-        $resourcesTable->addHeadLineColumn('Type'); // adding one more for actions
-        $resourcesTable->closeRow();
-        $resourcesTable->closeTHead();
-        $resourcesTable->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->jsonloader->loadResource( $reskey );
-            if ( isset($tmpres->allowedgroups) AND in_array( $this->resource->name, $tmpres->allowedgroups) ) {
-                $resourcesTable->addRow();
-                $resourcesTable->addColumn($reskey);
-                $resourcesTable->addColumn($resvalue->path);
-                $resourcesTable->addColumn($resvalue->type);
-                $resourcesTable->closeRow();
-            }
-        }
-        $resourcesTable->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->router ) );
         $this->centralcontainer = array( $info );
-        $this->secondcentralcontainer = array( $userTable );
-        $this->thirdcentralcontainer = array( $resourcesTable );
+        $this->secondcentralcontainer = array();
+        $this->thirdcentralcontainer = array();
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
     }
