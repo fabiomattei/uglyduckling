@@ -11,7 +11,7 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 class ChartjsV1DocBuilder extends BasicDocBuilder {
 
     public function getDocText() {
-        $out = '\subsubsection{' . $this->resource->get->graphmeta->title . '}<br />';
+        $out = '\subsubsection{' . $this->resource->get->graphmeta->title . '}<br /><br />';
 
         $out .= '\begin{minted}{sql}' . '<br />';
         $out .= wordwrap($this->resource->get->query->sql, 80, '<br />') . '<br />';
