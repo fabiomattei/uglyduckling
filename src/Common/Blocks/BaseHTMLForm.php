@@ -84,7 +84,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
                 array($key, ( $key==$value ? 'selected="selected"' : '' ), htmlspecialchars( $val )),
                 'Form/selectfieldoption.html');
         }
-        $this->body .= $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${ColWidth}', '${name}', '${label}', '${htmloptions}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, $htmloptions),
             'Form/selectfield.html');
