@@ -56,17 +56,17 @@ class AdminGroupDoc extends Controller {
             if (isset($menuitem->submenu)) {
                 $submenuItems = array();
                 foreach ($menuitem->submenu as $item) {
-                    echo $item->resource.'<br>';
+
                     $tmpres = $this->jsonloader->loadResource( $item->resource );
-                    print_r($tmpres);
+
                     $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
                     $doctext .= $item->lable . ' ' . $docBuilder->getDocText();
                 }
 
             } else {
-                echo $menuitem->resource.'<br>';
+
                 $tmpres = $this->jsonloader->loadResource( $menuitem->resource );
-                print_r($tmpres);
+
                 $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
                 $doctext .= $menuitem->lable . ' ' . $docBuilder->getDocText();
 

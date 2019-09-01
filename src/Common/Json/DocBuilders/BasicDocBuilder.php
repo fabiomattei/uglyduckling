@@ -33,7 +33,7 @@ class BasicDocBuilder {
     }
 
     public function getDocText() {
-        $this->resource->metadata->name;
+        $this->resource->name;
     }
 
     public static function basicJsonDocBuilderFactory( $resource ): BasicDocBuilder {
