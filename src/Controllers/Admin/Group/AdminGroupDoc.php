@@ -52,27 +52,26 @@ class AdminGroupDoc extends Controller {
 
         $doctext = '';
 
-        print_r($this->resource->menu);
         foreach ($this->resource->menu as $menuitem) {
             if (isset($menuitem->submenu)) {
                 $submenuItems = array();
                 foreach ($menuitem->submenu as $item) {
-
+                    echo $item->resource.'<br>';
                     $tmpres = $this->jsonloader->loadResource( $item->resource );
                     $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
-                    $doctext .= $docBuilder->getDocText();
+                    $doctext .= $item->lable . ' ' . $docBuilder->getDocText();
                 }
 
             } else {
-
+                echo $menuitem->resource.'<br>';
                 $tmpres = $this->jsonloader->loadResource( $menuitem->resource );
                 $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
-                $doctext .= $docBuilder->getDocText();
+                $doctext .= $menuitem->lable . ' ' . $docBuilder->getDocText();
 
             }
         }
         echo $doctext;
-        $info->addParagraph($doctext, 6);
+        $info->addParagraph($doctext, 12);
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->router ) );
