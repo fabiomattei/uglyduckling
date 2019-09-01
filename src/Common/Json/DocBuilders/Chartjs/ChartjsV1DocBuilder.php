@@ -15,8 +15,8 @@ class ChartjsV1DocBuilder extends BasicDocBuilder {
 
         $out .= $this->resource->get->query->sql . '<br />';
 
-        $out .= 'X Axis: '.$this->resource->get->chart->options->scales->xAxes[0]->scaleLabel->labelString . '<br />';
-        $out .= 'Y Axis: '.$this->resource->get->chart->options->scales->yAxes[0]->scaleLabel->labelString . '<br />';
+        $out .= 'X Axis: '.$this->resource->get->chart->options->scales->xAxes[0]->scaleLabel->labelString . ' ' . $this->resource->get->chartdataglue[1]->sqlfield . '<br />';
+        $out .= 'Y Axis: '.$this->resource->get->chart->options->scales->yAxes[0]->scaleLabel->labelString . ' ' . $this->resource->get->chartdataglue[0]->sqlfield . '<br />';
 
         return $out . '<br />';
     }
