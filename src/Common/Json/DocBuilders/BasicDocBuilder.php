@@ -34,7 +34,7 @@ class BasicDocBuilder {
     }
 
     public function getDocText() {
-        return $this->resource->name.'\n';
+        return $this->resource->name.'<br />';
     }
 
     public static function basicJsonDocBuilderFactory( $resource ): BasicDocBuilder {

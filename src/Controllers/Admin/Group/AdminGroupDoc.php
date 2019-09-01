@@ -47,7 +47,7 @@ class AdminGroupDoc extends Controller {
         $info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Group name: '.$this->resource->name );
-        
+
         $doctext = '';
 
         foreach ($this->resource->menu as $menuitem) {
@@ -65,7 +65,7 @@ class AdminGroupDoc extends Controller {
                 $tmpres = $this->jsonloader->loadResource( $menuitem->resource );
 
                 $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
-                $doctext .= '\subsection{' . $menuitem->label . '}\n ' . $docBuilder->getDocText();
+                $doctext .= '\subsection{' . $menuitem->label . '}<br /> ' . $docBuilder->getDocText();
 
             }
         }
