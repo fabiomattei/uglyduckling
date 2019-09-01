@@ -15,7 +15,7 @@ class TabbedPageV1DocBuilder extends BasicDocBuilder {
         foreach ($this->resource->panels as $panel) {
             $tmpres = $this->jsonLoader->loadResource( $panel->resource );
             $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonLoader );
-            $doctext .= '\subsubsection{' . $panel->title . '}<br /> ' . $docBuilder->getDocText();
+            $doctext .= $docBuilder->getDocText();
         }
 
         return $doctext.'<br />';
