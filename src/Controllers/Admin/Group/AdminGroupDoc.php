@@ -47,14 +47,11 @@ class AdminGroupDoc extends Controller {
         $info = new BaseHTMLInfo;
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'Group name: '.$this->resource->name );
-
-        $users = $this->userGroupDao->getUsersByGroupSlug( $this->resource->name );
-
+        
         $doctext = '';
 
         foreach ($this->resource->menu as $menuitem) {
             if (isset($menuitem->submenu)) {
-                $submenuItems = array();
                 foreach ($menuitem->submenu as $item) {
 
                     $tmpres = $this->jsonloader->loadResource( $item->resource );
@@ -72,7 +69,7 @@ class AdminGroupDoc extends Controller {
 
             }
         }
-        echo $doctext;
+
         $info->addParagraph($doctext, 12);
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
