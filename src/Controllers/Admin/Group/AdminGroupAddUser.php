@@ -34,7 +34,7 @@ class AdminGroupAddUser extends Controller {
 
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $form->setTitle( 'Add user to a group');
+        $form->setTitle( 'Add user to group: ' . $this->getParameters['groupslug'] );
         $form->addDropdownField('usr_id', 'User:', $this->userDao->makeListForDropdown(), '', '6' );
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );
         $form->addSubmitButton('save', 'Add');
