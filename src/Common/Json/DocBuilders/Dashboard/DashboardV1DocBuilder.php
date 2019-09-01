@@ -11,7 +11,14 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 class DashboardV1DocBuilder extends BasicDocBuilder {
 
     public function getDocText() {
-        return $this->resource->name.'<br />';
+        $doctext = '';
+        foreach ($this->resource->panels as $panel) {
+            $tmpres = $this->jsonloader->loadResource( $panel->resource );
+            $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonloader );
+            $doctext .= '\subsubsection{' . $panel->label . '}<br /> ' . $docBuilder->getDocText();
+        }
+
+        return $doctext.'<br />';
     }
 
 }
