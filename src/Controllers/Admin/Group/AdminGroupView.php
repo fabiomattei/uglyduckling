@@ -50,8 +50,8 @@ class AdminGroupView extends Controller {
 
         $userTable = new StaticTable;
         $userTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $userTable->setTitle("Users");
-        $userTable->addButton('Add', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
+        $userTable->setTitle("Users that belong to this group");
+        $userTable->addButton('Add a user to this group', $this->router->make_url( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
         $userTable->addTHead();
         $userTable->addRow();
         $userTable->addHeadLineColumn('Name');
