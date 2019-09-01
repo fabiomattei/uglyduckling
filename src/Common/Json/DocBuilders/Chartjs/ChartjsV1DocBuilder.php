@@ -14,7 +14,7 @@ class ChartjsV1DocBuilder extends BasicDocBuilder {
         $out = '\subsubsection{' . $this->resource->get->graphmeta->title . '}<br />';
 
         $out .= '\begin{minted}{sql}' . '<br />';
-        $out .= wordwrap($this->resource->get->query->sql, 40, '<br />') . '<br />';
+        $out .= wordwrap($this->resource->get->query->sql, 80, '<br />') . '<br />';
         $out .= '\end{minted}' . '<br />';
 
         $out .= '\begin{table}[htbp]' . '<br />';
