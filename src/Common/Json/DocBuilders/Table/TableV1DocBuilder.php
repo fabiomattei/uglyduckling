@@ -13,7 +13,7 @@ class TableV1DocBuilder extends BasicDocBuilder {
     public function getDocText() {
         $out = '\subsubsection{' . $this->resource->get->table->title . '}<br />';
 
-        $out .= $this->resource->get->query->sql . '<br />';
+        $out .= wordwrap($this->resource->get->query->sql, 40, '<br />') . '<br />';
 
         foreach ($this->resource->get->table->fields as $field) {
            $out .= $field->headline . ' ' .  $field->sqlfield . '<br />';
