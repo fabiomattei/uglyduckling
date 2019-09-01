@@ -33,6 +33,7 @@ class BasicDocBuilder {
     }
 
     public function getDocText() {
+        print_r($this->resource);
         $this->resource->name;
     }
 
