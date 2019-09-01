@@ -45,6 +45,7 @@ use Fabiom\UglyDuckling\Controllers\Admin\Table\AdminTableView;
 use Fabiom\UglyDuckling\Controllers\Admin\Export\AdminExportList;
 use Fabiom\UglyDuckling\Controllers\Admin\Export\AdminExportView;
 use Fabiom\UglyDuckling\Controllers\Admin\Group\AdminGroupAddUser;
+use Fabiom\UglyDuckling\Controllers\Admin\Group\AdminGroupDoc;
 use Fabiom\UglyDuckling\Controllers\Admin\Group\AdminGroupList;
 use Fabiom\UglyDuckling\Controllers\Admin\Group\AdminGroupRemoveUser;
 use Fabiom\UglyDuckling\Controllers\Admin\Group\AdminGroupView;
@@ -106,6 +107,7 @@ class Router {
 	const ROUTE_ADMIN_EXPORT_LIST           = 'adminexportlist';
     const ROUTE_ADMIN_EXPORT_VIEW           = 'adminexportview';
     const ROUTE_ADMIN_GROUP_ADD_USER        = 'admingroupadduser';
+    const ROUTE_ADMIN_GROUP_DOC             = 'admingroupdoc';
 	const ROUTE_ADMIN_GROUP_LIST            = 'admingrouplist';
     const ROUTE_ADMIN_GROUP_REMOVE_USER     = 'admingroupremoveuser';
     const ROUTE_ADMIN_GROUP_VIEW            = 'admingroupview';
@@ -171,6 +173,7 @@ class Router {
 			case self::ROUTE_ADMIN_EXPORT_LIST:           $controller = new AdminExportList; break;
             case self::ROUTE_ADMIN_EXPORT_VIEW:           $controller = new AdminExportView(); break;
             case self::ROUTE_ADMIN_GROUP_ADD_USER:        $controller = new AdminGroupAddUser(); break;
+            case self::ROUTE_ADMIN_GROUP_DOC:             $controller = new AdminGroupDoc(); break;
             case self::ROUTE_ADMIN_GROUP_LIST:            $controller = new AdminGroupList; break;
             case self::ROUTE_ADMIN_GROUP_REMOVE_USER:     $controller = new AdminGroupRemoveUser(); break;
             case self::ROUTE_ADMIN_GROUP_VIEW:            $controller = new AdminGroupView; break;
