@@ -15,7 +15,7 @@ class DashboardV1DocBuilder extends BasicDocBuilder {
         foreach ($this->resource->panels as $panel) {
             $tmpres = $this->jsonLoader->loadResource( $panel->resource );
             $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonLoader );
-            $doctext .= '\subsubsection{' . $panel->label . '}<br /> ' . $docBuilder->getDocText();
+            $doctext .= '\subsubsection{' . $panel->title . '}<br /> ' . $docBuilder->getDocText();
         }
 
         return $doctext.'<br />';
