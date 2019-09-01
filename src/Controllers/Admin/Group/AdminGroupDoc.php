@@ -56,15 +56,15 @@ class AdminGroupDoc extends Controller {
 
                     $tmpres = $this->jsonloader->loadResource( $item->resource );
 
-                    $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
-                    $doctext .= '\subsection{' . $item->label . '}\n ' . $docBuilder->getDocText();
+                    $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonloader );
+                    $doctext .= '\subsection{' . $item->label . '}<br /> ' . $docBuilder->getDocText();
                 }
 
             } else {
 
                 $tmpres = $this->jsonloader->loadResource( $menuitem->resource );
 
-                $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
+                $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonloader );
                 $doctext .= '\subsection{' . $menuitem->label . '}<br /> ' . $docBuilder->getDocText();
 
             }
