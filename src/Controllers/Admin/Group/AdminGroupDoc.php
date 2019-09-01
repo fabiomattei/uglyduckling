@@ -70,7 +70,7 @@ class AdminGroupDoc extends Controller {
             }
         }
 
-        $info->addParagraph($doctext, 12);
+        $info->addUnfilteredParagraph($doctext, 12);
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->router ) );

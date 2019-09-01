@@ -2,9 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Blocks;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
-use Fabiom\UglyDuckling\Common\Blocks\ColWidth;
-
 class BaseHTMLInfo extends BaseHTMLBlock {
 
     private $title;
@@ -89,6 +86,13 @@ class BaseHTMLInfo extends BaseHTMLBlock {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${text}', '${ColWidth}'),
             array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            'Info/paragraph.html');
+    }
+
+    function addUnfilteredParagraph( string $text, string $width ) {
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${text}', '${ColWidth}'),
+            array($text, ColWidth::getWidth(ColWidth::MEDIUM, $width)),
             'Info/paragraph.html');
     }
 
