@@ -2,14 +2,15 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\DocBuilders;
 
-use Fabiom\UglyDuckling\Common\Json\Checkers\Chartjs\ChartjsV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\Dashboard\DashboardV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\Form\FormV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\Info\InfoV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\Group\GroupV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\TabbedPage\TabbedPageV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\Table\TableV1JsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Checkers\Transaction\TransactionV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Chartjs\ChartjsV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Dashboard\DashboardV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Form\FormV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Info\InfoV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Group\GroupV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\TabbedPage\TabbedPageV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Table\TableV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Table\TableV1JsonChecker;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Transaction\TransactionV1DocBuilder;
 
 /**
  * Basic class for json files checkers
@@ -37,16 +38,14 @@ class BasicDocBuilder {
     }
 
     public static function basicJsonDocBuilderFactory( $resource ): BasicDocBuilder {
-        /*
-        if ( $resource->metadata->type === "chartjs" )     return new ChartjsV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "dashboard" )   return new DashboardV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "form" )        return new FormV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "group" )       return new GroupV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "info" )        return new InfoV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "table" OR $resource->metadata->type === "datatable" )       return new TableV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "tabbedpage" )  return new TabbedPageV1JsonChecker( $resource );
-        if ( $resource->metadata->type === "transaction" ) return new TransactionV1JsonChecker( $resource );
-        */
+        if ( $resource->metadata->type === "chartjs" )     return new ChartjsV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "dashboard" )   return new DashboardV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "form" )        return new FormV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "group" )       return new GroupV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "info" )        return new InfoV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "table" OR $resource->metadata->type === "datatable" )       return new TableV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "tabbedpage" )  return new TabbedPageV1DocBuilder( $resource );
+        if ( $resource->metadata->type === "transaction" ) return new TransactionV1DocBuilder( $resource );
         return new BasicDocBuilder( $resource );
     }
 
