@@ -4,6 +4,8 @@ namespace Fabiom\UglyDuckling\Controllers\Admin\Group;
 
 use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\BasicDocBuilder;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
@@ -47,6 +49,28 @@ class AdminGroupDoc extends Controller {
         $info->setTitle( 'Group name: '.$this->resource->name );
 
         $users = $this->userGroupDao->getUsersByGroupSlug( $this->resource->name );
+
+        $doctext = '';
+        foreach ($this->resource->menu as $menuitem) {
+            if (isset($menuitem->submenu)) {
+                $submenuItems = array();
+                foreach ($menuitem->submenu as $item) {
+
+                    $tmpres = $this->jsonloader->loadResource( $item->resource );
+                    $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
+                    $doctext .= $docBuilder->getDocText();
+                }
+
+            } else {
+
+                $tmpres = $this->jsonloader->loadResource( $menuitem->resource );
+                $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres );
+                $doctext .= $docBuilder->getDocText();
+
+            }
+        }
+
+        $info->addParagraph($doctext, 6);
 
         $userTable = new StaticTable;
         $userTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
