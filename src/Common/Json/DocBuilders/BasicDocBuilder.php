@@ -40,7 +40,7 @@ class BasicDocBuilder {
     }
 
     public static function basicJsonDocBuilderFactory( $resource, $jsonLoader ): BasicDocBuilder {
-        if ( $resource->metadata->type === "chartjs" )     return new ChartjsV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "chartjs" OR $resource->metadata->type === "searchchart" )     return new ChartjsV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "dashboard" )   return new DashboardV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "form" )        return new FormV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "group" )       return new GroupV1DocBuilder( $resource, $jsonLoader );
