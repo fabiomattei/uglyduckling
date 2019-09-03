@@ -50,7 +50,7 @@ class BasicDocBuilder {
         if ( $resource->metadata->type === "tabbedpage" )  return new TabbedPageV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "transaction" ) return new TransactionV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "breadcrumbs" ) return new BreadcrumbsV1DocBuilder( $resource, $jsonLoader );
-        if ( $resource->metadata->type === "title" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "titlebar" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
         return new BasicDocBuilder( $resource, $jsonLoader );
     }
 
