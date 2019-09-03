@@ -8,7 +8,7 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 /**
  *
  */
-class php extends BasicDocBuilder {
+class HeatMapV1DocBuilder extends BasicDocBuilder {
 
     public function getDocText() {
         $out = '\subsubsection{' . $this->resource->get->heatmap->title . '}<br /><br />';
