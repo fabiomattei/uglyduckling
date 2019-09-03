@@ -10,6 +10,7 @@ use Fabiom\UglyDuckling\Common\Json\DocBuilders\Info\InfoV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Group\GroupV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\TabbedPage\TabbedPageV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Table\TableV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\Title\TitleV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Transaction\TransactionV1DocBuilder;
 
 /**
@@ -49,6 +50,7 @@ class BasicDocBuilder {
         if ( $resource->metadata->type === "tabbedpage" )  return new TabbedPageV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "transaction" ) return new TransactionV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "breadcrumbs" ) return new BreadcrumbsV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "title" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
         return new BasicDocBuilder( $resource, $jsonLoader );
     }
 
