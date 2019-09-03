@@ -54,7 +54,7 @@ class BasicDocBuilder {
         if ( $resource->metadata->type === "breadcrumbs" ) return new BreadcrumbsV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "titlebar" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "static" ) return new StaticBlockV1DocBuilder( $resource, $jsonLoader );
-        if ( $resource->metadata->type === "heatmap" ) return new HeatMapV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "heatmap" OR $resource->metadata->type === "searchheatmap" ) return new HeatMapV1DocBuilder( $resource, $jsonLoader );
         return new BasicDocBuilder( $resource, $jsonLoader );
     }
 
