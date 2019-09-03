@@ -8,6 +8,7 @@ use Fabiom\UglyDuckling\Common\Json\DocBuilders\Dashboard\DashboardV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Form\FormV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Info\InfoV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Group\GroupV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\StaticBlock\StaticBlockV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\TabbedPage\TabbedPageV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Table\TableV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Title\TitleV1DocBuilder;
@@ -51,6 +52,7 @@ class BasicDocBuilder {
         if ( $resource->metadata->type === "transaction" ) return new TransactionV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "breadcrumbs" ) return new BreadcrumbsV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "titlebar" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "static" ) return new StaticBlockV1DocBuilder( $resource, $jsonLoader );
         return new BasicDocBuilder( $resource, $jsonLoader );
     }
 
