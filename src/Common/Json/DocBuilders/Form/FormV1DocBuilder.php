@@ -14,7 +14,7 @@ class FormV1DocBuilder extends BasicDocBuilder {
         $out = '\subsubsection{' . $this->resource->get->form->title . '}<br />';
 
         $out .= '\begin{minted}{sql}' . '<br />';
-        $out .= wordwrap(str_replace('_', '\_', $this->resource->get->query->sql), 80, '<br />') . '<br />';
+        $out .= wordwrap($this->resource->get->query->sql, 80, '<br />') . '<br />';
         $out .= '\end{minted}' . '<br />';
 
         $out .= '\begin{table}[htbp]' . '<br />';
@@ -24,7 +24,7 @@ class FormV1DocBuilder extends BasicDocBuilder {
         $out .= 'Field name & SQL field \\\\' . '<br />';
         $out .= '\hline' . '<br />';
         foreach ($this->resource->get->form->fields as $field) {
-            $out .= $field->headline . ' & ' .  $field->sqlfield . ' \\\\' . '<br />';
+            $out .= $field->headline . ' & ' . str_replace('_', '\_', $field->sqlfield) . ' \\\\' . '<br />';
         }
         $out .= '\hline' . '<br />';
         $out .= '\end{tabular}' . '<br />';

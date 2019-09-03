@@ -14,7 +14,7 @@ class ChartjsV1DocBuilder extends BasicDocBuilder {
         $out = '\subsubsection{' . $this->resource->get->graphmeta->title . '}<br /><br />';
 
         $out .= '\begin{minted}{sql}' . '<br />';
-        $out .= wordwrap(str_replace('_', '\_', $this->resource->get->query->sql), 80, '<br />') . '<br />';
+        $out .= wordwrap($this->resource->get->query->sql, 80, '<br />') . '<br />';
         $out .= '\end{minted}' . '<br />';
 
         $out .= '\begin{table}[htbp]' . '<br />';
@@ -22,8 +22,8 @@ class ChartjsV1DocBuilder extends BasicDocBuilder {
         $out .= '\begin{tabular}{|l|l|l|}' . '<br />';
         $out .= '\hline' . '<br />';
 
-        $out .= 'X Axis: & '.$this->resource->get->chart->options->scales->xAxes[0]->scaleLabel->labelString . ' & ' . $this->resource->get->chartdataglue[1]->sqlfield . ' \\\\' . '<br />';
-        $out .= 'Y Axis: & '.$this->resource->get->chart->options->scales->yAxes[0]->scaleLabel->labelString . ' & ' . $this->resource->get->chartdataglue[0]->sqlfield . ' \\\\' . '<br />';
+        $out .= 'X Axis: & '.$this->resource->get->chart->options->scales->xAxes[0]->scaleLabel->labelString . ' & ' . str_replace('_', '\_', $this->resource->get->chartdataglue[1]->sqlfield) . ' \\\\' . '<br />';
+        $out .= 'Y Axis: & '.$this->resource->get->chart->options->scales->yAxes[0]->scaleLabel->labelString . ' & ' . str_replace('_', '\_', $this->resource->get->chartdataglue[0]->sqlfield) . ' \\\\' . '<br />';
 
         $out .= '\hline' . '<br />';
         $out .= '\end{tabular}' . '<br />';
