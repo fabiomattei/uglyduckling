@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Common\Json\DocBuilders;
 
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Breadcrumbs\BreadcrumbsV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\ButtonBar\ButtonBarV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Chartjs\ChartjsV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Dashboard\DashboardV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Form\FormV1DocBuilder;
@@ -55,6 +56,7 @@ class BasicDocBuilder {
         if ( $resource->metadata->type === "titlebar" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "static" ) return new StaticBlockV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "heatmap" OR $resource->metadata->type === "searchheatmap" ) return new HeatMapV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "buttonbar" ) return new ButtonBarV1DocBuilder( $resource, $jsonLoader );
         return new BasicDocBuilder( $resource, $jsonLoader );
     }
 
