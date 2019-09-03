@@ -11,6 +11,11 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 class FormV1DocBuilder extends BasicDocBuilder {
 
     public function getDocText() {
+        return '';
+    }
+
+    /*
+    public function getDocText() {
         $out = '\subsubsection{' . $this->resource->get->form->title . '}<br />';
 
         $out .= '\begin{minted}{sql}' . '<br />';
@@ -31,5 +36,6 @@ class FormV1DocBuilder extends BasicDocBuilder {
 
         return $out . '<br />';
     }
+    */
 
 }
