@@ -6,6 +6,7 @@ use Fabiom\UglyDuckling\Common\Json\DocBuilders\Breadcrumbs\BreadcrumbsV1DocBuil
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Chartjs\ChartjsV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Dashboard\DashboardV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Form\FormV1DocBuilder;
+use Fabiom\UglyDuckling\Common\Json\DocBuilders\HeatMap\HeatMapV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Info\InfoV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\Group\GroupV1DocBuilder;
 use Fabiom\UglyDuckling\Common\Json\DocBuilders\StaticBlock\StaticBlockV1DocBuilder;
@@ -53,6 +54,7 @@ class BasicDocBuilder {
         if ( $resource->metadata->type === "breadcrumbs" ) return new BreadcrumbsV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "titlebar" ) return new TitleV1DocBuilder( $resource, $jsonLoader );
         if ( $resource->metadata->type === "static" ) return new StaticBlockV1DocBuilder( $resource, $jsonLoader );
+        if ( $resource->metadata->type === "heatmap" ) return new HeatMapV1DocBuilder( $resource, $jsonLoader );
         return new BasicDocBuilder( $resource, $jsonLoader );
     }
 
