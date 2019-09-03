@@ -18,7 +18,6 @@ class ChartjsV1DocBuilder extends BasicDocBuilder {
         $out .= '\end{minted}' . '<br />';
 
         $out .= '\begin{table}[htbp]' . '<br />';
-        $out .= '\centering' . '<br />';
         $out .= '\begin{tabular}{|l|l|l|}' . '<br />';
         $out .= '\hline' . '<br />';
 

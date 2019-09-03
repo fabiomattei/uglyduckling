@@ -18,7 +18,6 @@ class FormV1DocBuilder extends BasicDocBuilder {
         $out .= '\end{minted}' . '<br />';
 
         $out .= '\begin{table}[htbp]' . '<br />';
-        $out .= '\centering' . '<br />';
         $out .= '\begin{tabular}{|l|l|}' . '<br />';
         $out .= '\hline' . '<br />';
         $out .= 'Field name & SQL field \\\\' . '<br />';
