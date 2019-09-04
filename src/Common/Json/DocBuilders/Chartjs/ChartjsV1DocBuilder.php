@@ -20,8 +20,10 @@ class ChartjsV1DocBuilder extends BasicDocBuilder {
         $out .= '\begin{table}[htbp]' . '<br />';
         $out .= '\begin{tabular}{|l|l|l|}' . '<br />';
         $out .= '\hline' . '<br />';
-
+        $out .= ' & Label & SQL field \\\\' . '<br />';
+        $out .= '\hline' . '<br />';
         $out .= 'X Axis: & '.$this->resource->get->chart->options->scales->xAxes[0]->scaleLabel->labelString . ' & ' . str_replace('_', '\_', $this->resource->get->chartdataglue[1]->sqlfield) . ' \\\\' . '<br />';
+        $out .= '\hline' . '<br />';
         $out .= 'Y Axis: & '.$this->resource->get->chart->options->scales->yAxes[0]->scaleLabel->labelString . ' & ' . str_replace('_', '\_', $this->resource->get->chartdataglue[0]->sqlfield) . ' \\\\' . '<br />';
 
         $out .= '\hline' . '<br />';

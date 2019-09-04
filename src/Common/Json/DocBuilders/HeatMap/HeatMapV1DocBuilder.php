@@ -20,8 +20,10 @@ class HeatMapV1DocBuilder extends BasicDocBuilder {
         $out .= '\begin{table}[htbp]' . '<br />';
         $out .= '\begin{tabular}{|l|l|l|}' . '<br />';
         $out .= '\hline' . '<br />';
-
+        $out .= ' & Label & SQL field \\\\' . '<br />';
+        $out .= '\hline' . '<br />';
         $out .= 'X Axis: & '.$this->resource->get->heatmap->xaxis->label . ' & ' . str_replace('_', '\_', $this->resource->get->heatmap->xaxis->sqlfield) . ' \\\\' . '<br />';
+        $out .= '\hline' . '<br />';
         $out .= 'Y Axis: & '.$this->resource->get->heatmap->yaxis->label . ' & ' . str_replace('_', '\_', $this->resource->get->heatmap->yaxis->sqlfield) . ' \\\\' . '<br />';
 
         $out .= '\hline' . '<br />';
