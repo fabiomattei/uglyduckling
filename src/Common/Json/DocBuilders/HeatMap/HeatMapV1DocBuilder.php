@@ -12,7 +12,7 @@ class HeatMapV1DocBuilder extends BasicDocBuilder {
 
     public function getDocText() {
         $out = '\subsubsection{' . $this->resource->get->heatmap->title . '}<br /><br />';
-
+        $out .= '% ' . $this->resource->name . ' <br />';
         $out .= '\begin{minted}{sql}' . '<br />';
         $out .= wordwrap($this->resource->get->query->sql, 80, '<br />') . '<br />';
         $out .= '\end{minted}' . '<br />';
