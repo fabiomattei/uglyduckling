@@ -14,6 +14,7 @@ class QueryExecuter {
     private $parameters;
     private $DBH;
     private $queryBuilder;
+    private $logger;
 
     /**
      * Database connection handler setter
@@ -58,6 +59,14 @@ class QueryExecuter {
      */
     public function setPostParameters( array $postParameters ) {
         $this->postParameters = $postParameters;
+    }
+
+    /**
+     * @param mixed $logger
+     * the $logger variable contains a logger for this class
+     */
+    public function setLogger( $logger ) {
+        $this->logger = $logger;
     }
 
     public function executeQuery() {
@@ -112,8 +121,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (\PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -190,8 +198,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -231,8 +238,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -282,8 +288,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 	
@@ -301,8 +306,7 @@ class QueryExecuter {
 			}
             return $out;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 	
@@ -313,8 +317,7 @@ class QueryExecuter {
         try {
             $STH = $this->DBH->query( $query );
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 	
@@ -325,8 +328,7 @@ class QueryExecuter {
         try {
             $STH = $this->DBH->query( $query );
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -360,8 +362,7 @@ class QueryExecuter {
             
             return $STH;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -399,8 +400,7 @@ class QueryExecuter {
             
             return $STH;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -437,8 +437,7 @@ class QueryExecuter {
             
             return $STH;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 

@@ -63,6 +63,7 @@ class EntityDashboard extends ManagerEntityController {
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setQueryStructure( $transaction );
                 $this->queryExecuter->setPostParameters( $this->postParameters );
+                $this->queryExecuter->setLogger( $this->logger );
                 $this->queryExecuter->executeQuery();
             }
             $conn->commit();
