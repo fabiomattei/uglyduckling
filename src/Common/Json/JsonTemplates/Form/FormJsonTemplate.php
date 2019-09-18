@@ -26,6 +26,7 @@ class FormJsonTemplate extends JsonTemplate {
                 $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setQueryStructure( $this->resource->get->query );
+                $this->queryExecuter->setLogger( $this->logger );
                 if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
 
                 $result = $this->queryExecuter->executeQuery();
