@@ -26,6 +26,7 @@ class JsonTemplate {
     protected $htmlTemplateLoader;
     protected $jsonloader;
     protected $linkBuilder;
+    protected $logger;
 
     const blocktype = 'basebuilder';
 
@@ -113,6 +114,14 @@ class JsonTemplate {
      */
     public function setHtmlTemplateLoader($htmlTemplateLoader) {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
+    }
+    
+    /**
+     * @param mixed $logger
+     * the $logger variable contains a logger for this class
+     */
+    public function setLogger( $logger ) {
+        $this->logger = $logger;
     }
 
     /**

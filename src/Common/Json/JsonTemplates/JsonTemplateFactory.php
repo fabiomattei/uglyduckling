@@ -84,6 +84,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->dashboardJsonTemplate->setParameters($this->parameters);
             $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
             $this->dashboardJsonTemplate->setPanelBuilder($this);
+            $this->dashboardJsonTemplate->setLogger($this->logger);
             return $this->dashboardJsonTemplate->createHTMLBlock();
         }
 
@@ -94,6 +95,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->tableBuilder->setResource($resource);
             $this->tableBuilder->setParameters($this->parameters);
             $this->tableBuilder->setDbconnection($this->dbconnection);
+            $this->tableBuilder->setLogger($this->logger);
             return $this->tableBuilder->createTable();
         }
 
@@ -104,6 +106,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->chartjsBuilder->setResource($resource);
             $this->chartjsBuilder->setParameters($this->parameters);
             $this->chartjsBuilder->setDbconnection($this->dbconnection);
+            $this->chartjsBuilder->setLogger($this->logger);
             return $this->chartjsBuilder->createChart();
         }
 
@@ -114,6 +117,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->infoBuilder->setResource($resource);
             $this->infoBuilder->setParameters($this->parameters);
             $this->infoBuilder->setDbconnection($this->dbconnection);
+            $this->infoBuilder->setLogger($this->logger);
             return $this->infoBuilder->createInfo();
         }
 
@@ -124,6 +128,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->formBuilder->setResource($resource);
             $this->formBuilder->setParameters($this->parameters);
             $this->formBuilder->setDbconnection($this->dbconnection);
+            $this->formBuilder->setLogger($this->logger);
             $this->formBuilder->setAction($this->action . '&postres=' . $resource->name);
             return $this->formBuilder->createForm();
         }
@@ -135,6 +140,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->formBuilder->setResource($resource);
             $this->formBuilder->setParameters($this->parameters);
             $this->formBuilder->setDbconnection($this->dbconnection);
+            $this->formBuilder->setLogger($this->logger);
             $this->formBuilder->setAction($this->router->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
             return $this->formBuilder->createForm();
         }
@@ -146,6 +152,7 @@ class JsonTemplateFactory extends JsonTemplate {
             $this->formBuilder->setResource($resource);
             $this->formBuilder->setParameters($this->parameters);
             $this->formBuilder->setDbconnection($this->dbconnection);
+            $this->formBuilder->setLogger($this->logger);
             $this->formBuilder->setAction($this->router->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
             return $this->formBuilder->createForm();
         }
