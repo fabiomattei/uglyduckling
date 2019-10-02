@@ -2,8 +2,8 @@
 
 /**
  * Created by Fabio Mattei
- * Date: 02/11/2018
- * Time: 04:56
+ * Date: 19/09/2019
+ * Time: 08:16
  */
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
@@ -16,7 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\Router;
 
-class JsonTemplateFactory extends JsonTemplate {
+class JsonDefaultTemplateFactory extends JsonTemplate {
 
     private $tableBuilder;
     private $chartjsBuilder;

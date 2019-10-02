@@ -3,7 +3,7 @@
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactory;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
 
@@ -18,7 +18,7 @@ class EntityTable extends ManagerEntityController {
     private $menubuilder;
 
     function __construct() {
-        $this->panelBuilder = new JsonTemplateFactory;
+        $this->panelBuilder = new JsonDefaultTemplateFactory;
 		$this->menubuilder = new MenuBuilder;
     }
 	

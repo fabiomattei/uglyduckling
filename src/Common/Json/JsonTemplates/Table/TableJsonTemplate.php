@@ -88,9 +88,11 @@ class TableJsonTemplate extends JsonTemplate {
 				$tableBlock->addColumn($this->getValue($field, $entity));
 			}
 			$links = '';
-			foreach ( $table->actions as $action ) {
-				$links .= $this->linkBuilder->getButton( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
-			}
+            if (isset($table->actions) AND is_array($table->actions)) {
+                foreach ( $table->actions as $action ) {
+                $links .= $this->linkBuilder->getButton( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
+                }
+            }
 			$tableBlock->addUnfilteredColumn( $links );
 			$tableBlock->closeRow();
 		}

@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactory;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
@@ -23,7 +23,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
-        $this->jsonTemplateFactory = new JsonTemplateFactory;
+        $this->jsonTemplateFactory = new JsonDefaultTemplateFactory;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
     }
 
