@@ -24,7 +24,7 @@ class DashboardJsonTemplate extends JsonTemplate {
      *
      * @param JsonTemplateFactory $jsonTemplateFactory
      */
-    public function setPanelBuilder( JsonTemplateFactory $jsonTemplateFactory ) {
+    public function setPanelBuilder( $jsonTemplateFactory ) {
         $this->jsonTemplateFactory = $jsonTemplateFactory;
     }
 
