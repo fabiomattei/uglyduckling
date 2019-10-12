@@ -39,6 +39,9 @@ $controller = $router->getController( $request->getAction() );
 $jsonloader = new Fabiom\UglyDuckling\Common\Json\JsonLoader();
 $jsonloader->setIndexPath($setup->getJsonPath());
 
+$jsonTemplateFactoriesContainer = new JsonTemplateFactoriesContainer;
+$jsonTemplateFactoriesContainer->addJsonTemplateFactory( new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory );
+
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
 	$controller->makeAllPresets(
@@ -53,7 +56,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		$jsonloader,
     	new Fabiom\UglyDuckling\Common\Loggers\EchoLogger(),
     	$messagesBlock,
-        $htmlTemplateLoader
+        $htmlTemplateLoader,
+        $jsonTemplateFactoriesContainer
 	);
 } else {
 	// settings for user that has not logged in the system
@@ -69,7 +73,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 		$jsonloader,
     	new Fabiom\UglyDuckling\Common\Loggers\EchoLogger(),
     	$messagesBlock,
-        $htmlTemplateLoader
+        $htmlTemplateLoader,
+        $jsonTemplateFactoriesContainer
 	);
 }
 $controller->setGetParameters( $_GET );

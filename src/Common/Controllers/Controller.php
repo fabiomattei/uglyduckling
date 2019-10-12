@@ -44,6 +44,7 @@ class Controller {
     public $logger;
     public $messages;
     public $htmlTemplateLoader;
+    public $jsonTemplateFactoriesContainer;
     public $gump;
     public $getParameters;
     public $postParameters;
@@ -60,21 +61,23 @@ class Controller {
         JsonLoader $jsonloader,
         Logger $logger,
         BaseHTMLMessages $messages,
-        HtmlTemplateLoader $htmlTemplateLoader
+        HtmlTemplateLoader $htmlTemplateLoader,
+        JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
 		) {
-		$this->router             = $router;
-        $this->setup              = $setup;
-        $this->request            = $request;
-		$this->serverWrapper      = $serverWrapper;
-		$this->sessionWrapper     = $sessionWrapper;
-		$this->securityChecker    = $securityChecker;
-		$this->dbconnection       = $dbconnection;
-        $this->urlredirector      = $urlredirector;
-		$this->jsonloader         = $jsonloader;
-        $this->logger             = $logger;
-        $this->messages           = $messages;
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-        $this->gump               = new GUMP();
+		$this->router                         = $router;
+        $this->setup                          = $setup;
+        $this->request                        = $request;
+		$this->serverWrapper                  = $serverWrapper;
+		$this->sessionWrapper                 = $sessionWrapper;
+		$this->securityChecker                = $securityChecker;
+		$this->dbconnection                   = $dbconnection;
+        $this->urlredirector                  = $urlredirector;
+		$this->jsonloader                     = $jsonloader;
+        $this->logger                         = $logger;
+        $this->messages                       = $messages;
+        $this->htmlTemplateLoader             = $htmlTemplateLoader;
+        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
+        $this->gump                           = new GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
