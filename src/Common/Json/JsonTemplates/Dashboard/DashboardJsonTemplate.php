@@ -10,19 +10,19 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLDashboard;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\DefaultJsonTemplateFactory;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactory;
 
 class DashboardJsonTemplate extends JsonTemplate {
 
     const blocktype = 'dashboard';
 
-    // DefaultJsonTemplateFactory
+    // JsonTemplateFactory
     private $jsonTemplateFactory;
 
     /**
      * Setting panelBuilder
      *
-     * @param $panelBuilder
+     * @param JsonTemplateFactory $jsonTemplateFactory
      */
     public function setPanelBuilder( JsonTemplateFactory $jsonTemplateFactory ) {
         $this->jsonTemplateFactory = $jsonTemplateFactory;
