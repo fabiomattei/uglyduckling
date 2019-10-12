@@ -11,6 +11,7 @@ namespace Fabiom\UglyDuckling\Common\Controllers;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Exceptions\ErrorPageException;
 use Fabiom\UglyDuckling\Common\Exceptions\AuthorizationException;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Request\Request;
