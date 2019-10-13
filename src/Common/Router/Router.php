@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Created Fabio Mattei
+ * Date: 2019-10-13
+ * Time: 17:12
+ */
+
 namespace Fabiom\UglyDuckling\Common\Router;
 
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityDashboard;
