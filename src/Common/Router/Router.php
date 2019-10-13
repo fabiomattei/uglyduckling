@@ -68,7 +68,7 @@ use Fabiom\UglyDuckling\Controllers\Admin\User\UserList;
 use Fabiom\UglyDuckling\Controllers\Admin\User\UserNew;
 use Fabiom\UglyDuckling\Controllers\Admin\User\UserView;
 
-class Router {
+class Router extends RouterBase {
 
     const ROUTE_OFFICE_ENTITY_CHART         = 'officeentitychart';
 	const ROUTE_OFFICE_ENTITY_TABLE         = 'officeentitytable';
@@ -130,9 +130,15 @@ class Router {
     const ROUTE_ADMIN_USER_NEW              = 'adminusernew';
     const ROUTE_ADMIN_USER_VIEW             = 'adminuserview';
 
-	public function __construct( $basepath ) {
-		$this->basepath = $basepath;
-	}
+    /**
+     * Overwrite this function
+     *
+     * @param string $action
+     */
+    function isSupportingAction( string $action ) {
+        return true;
+        //return in_array($action, array());
+    }
 
     function getController( string $action ) {
         switch ( $action ) {
@@ -200,28 +206,5 @@ class Router {
         }
         return $controller;
     }
-	
-	/**
-	 * It creates a URL appending the content of variable $_SESSION['office'] to BASEPATH
-	 *
-	 * Result is: BASEPATH . $_SESSION['office'] . $final_part
-	 *
-	 * @param        string     Action
-	 * @param        string     Parameters: string containing all parameters separated by '/'
-	 * @param        string     Extension:  .html by default
-	 *
-	 * @return       string     The url well formed
-	 */
-	function make_url( $action = '', $parameters = '', $extension = '.html' ) {
-		if ( $action == '' ) {
-			return $this->basepath;
-		} else {
-	        return $this->basepath.$action.$extension.( $parameters == '' ? '' : '?'.$parameters );
-	    }
-	}
-
-	public function getInfo() : string {
-		return '[Router] BasePath: '.$this->basepath;
-	}
 
 }
