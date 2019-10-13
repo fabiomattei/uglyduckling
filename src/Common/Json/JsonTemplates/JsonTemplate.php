@@ -27,6 +27,7 @@ class JsonTemplate {
     protected $jsonloader;
     protected $linkBuilder;
     protected $logger;
+    protected $jsonTemplateFactoriesContainer;
 
     const blocktype = 'basebuilder';
 
@@ -134,6 +135,15 @@ class JsonTemplate {
 
     public function setLinkBuilder( $linkBuilder ) {
         $this->linkBuilder = $linkBuilder;
+    }
+
+    /**
+     * Setting panelBuilder
+     *
+     * @param JsonTemplateFactory $jsonTemplateFactory
+     */
+    public function setJsonTemplateFactoriesContainer ( $jsonTemplateFactoriesContainer ) {
+        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
     }
 
     /**

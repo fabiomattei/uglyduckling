@@ -16,18 +16,6 @@ class DashboardJsonTemplate extends JsonTemplate {
 
     const blocktype = 'dashboard';
 
-    // JsonTemplateFactory
-    private $jsonTemplateFactoriesContainer;
-
-    /**
-     * Setting panelBuilder
-     *
-     * @param JsonTemplateFactory $jsonTemplateFactory
-     */
-    public function setJsonTemplateFactoriesContainer ( $jsonTemplateFactoriesContainer ) {
-        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
-    }
-
     /**
      * It creates an HTMLBlock containing all information necessary in order to create
      * the actual HTML code
