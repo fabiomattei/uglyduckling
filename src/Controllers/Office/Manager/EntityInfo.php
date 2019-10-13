@@ -5,6 +5,7 @@ namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
 /**
  * User: Fabio
@@ -29,17 +30,20 @@ class EntityInfo extends ManagerEntityController {
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
-        $this->infoBuilder->setRouter( $this->router );
-        $this->infoBuilder->setResource( $this->resource );
-        $this->infoBuilder->setParameters( $this->internalGetParameters );
-        $this->infoBuilder->setDbconnection( $this->dbconnection );
-        $this->infoBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office info';
+        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
+        $this->jsonTemplateFactoriesContainer->setRouter($this->router);
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
+        $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
+        $this->jsonTemplateFactoriesContainer->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, 'res='.$this->getParameters['res'] ));
+
+        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office info';
 	
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array();
-		$this->centralcontainer = array( $this->infoBuilder->createInfo() );
+		$this->centralcontainer = array( $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource ) );
 	}
 
     public function show_second_get_error_page() {

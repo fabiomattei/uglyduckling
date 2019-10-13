@@ -8,19 +8,15 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
-use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
 
 class EntityChart extends ManagerEntityController {
 
-    private $chartjsBuilder;
     private $menubuilder;
 
     function __construct() {
-        $this->chartjsBuilder = new ChartjsJsonTemplate;
         $this->menubuilder = new MenuBuilder;
     }
 
@@ -32,17 +28,20 @@ class EntityChart extends ManagerEntityController {
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setRouter( $this->router );
 
-        $this->chartjsBuilder->setRouter( $this->router );
-        $this->chartjsBuilder->setResource( $this->resource );
-        $this->chartjsBuilder->setParameters( $this->internalGetParameters );
-        $this->chartjsBuilder->setDbconnection( $this->dbconnection );
-        $this->chartjsBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
+        $this->jsonTemplateFactoriesContainer->setRouter($this->router);
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
+        $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
+        $this->jsonTemplateFactoriesContainer->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, 'res='.$this->getParameters['res'] ));
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office chart';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = array( $this->chartjsBuilder->createChart() );
+        $this->centralcontainer = array( $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource ) );
     }
 
     public function show_second_get_error_page() {

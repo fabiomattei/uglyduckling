@@ -32,18 +32,20 @@ class EntityTable extends ManagerEntityController {
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->router );
 
-        $this->panelBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->panelBuilder->setDbconnection($this->dbconnection);
-        $this->panelBuilder->setRouter($this->router);
-        $this->panelBuilder->setJsonloader($this->jsonloader);
-        $this->panelBuilder->setParameters($this->getParameters);
-        $this->panelBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
+        $this->jsonTemplateFactoriesContainer->setRouter($this->router);
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
+        $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
+        $this->jsonTemplateFactoriesContainer->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, 'res='.$this->getParameters['res'] ));
 
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
+        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array();
-		$this->centralcontainer = array( $this->panelBuilder->getWidePanel($this->resource) );
+		$this->centralcontainer = array( $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource ) );
 	}
 
 }
