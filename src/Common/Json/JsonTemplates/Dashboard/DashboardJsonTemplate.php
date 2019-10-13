@@ -17,15 +17,15 @@ class DashboardJsonTemplate extends JsonTemplate {
     const blocktype = 'dashboard';
 
     // JsonTemplateFactory
-    private $jsonTemplateFactory;
+    private $jsonTemplateFactoriesContainer;
 
     /**
      * Setting panelBuilder
      *
      * @param JsonTemplateFactory $jsonTemplateFactory
      */
-    public function setPanelBuilder( $jsonTemplateFactory ) {
-        $this->jsonTemplateFactory = $jsonTemplateFactory;
+    public function setJsonTemplateFactoriesContainer ( $jsonTemplateFactoriesContainer ) {
+        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
     }
 
     /**
@@ -53,7 +53,7 @@ class DashboardJsonTemplate extends JsonTemplate {
         foreach ($panelRows as $row) {
             $htmlDashboard->createNewRow();
             foreach ($row as $panel) {
-                $htmlDashboard->addBlockToCurrentRow( $this->jsonTemplateFactory->getPanel($panel) );
+                $htmlDashboard->addBlockToCurrentRow( $this->jsonTemplateFactoriesContainer->getPanel($panel) );
             }
         }
 
