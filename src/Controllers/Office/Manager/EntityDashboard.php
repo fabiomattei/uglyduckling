@@ -2,7 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
@@ -17,13 +16,10 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  */
 class EntityDashboard extends ManagerEntityController {
 
-    private $jsonTemplateFactory;
-
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
-        $this->jsonTemplateFactory = new JsonDefaultTemplateFactory;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
     }
 
@@ -35,16 +31,16 @@ class EntityDashboard extends ManagerEntityController {
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setRouter( $this->router );
 
-        $this->jsonTemplateFactory->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->jsonTemplateFactory->setJsonloader($this->jsonloader);
-        $this->jsonTemplateFactory->setDbconnection($this->dbconnection);
-        $this->jsonTemplateFactory->setRouter($this->router);
-        $this->jsonTemplateFactory->setJsonloader($this->jsonloader);
-        $this->jsonTemplateFactory->setParameters($this->getParameters);
-        $this->jsonTemplateFactory->setLogger($this->logger);
-        $this->jsonTemplateFactory->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
+        $this->jsonTemplateFactoriesContainer->setRouter($this->router);
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
+        $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
+        $this->jsonTemplateFactoriesContainer->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
-        $htmlBlock = $this->jsonTemplateFactory->getHTMLBlock( $this->resource );
+        $htmlBlock = $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource );
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
 
@@ -69,7 +65,7 @@ class EntityDashboard extends ManagerEntityController {
             }
             $conn->commit();
         }
-        catch (PDOException $e) {
+        catch (\PDOException $e) {
             $conn->rollBack();
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
