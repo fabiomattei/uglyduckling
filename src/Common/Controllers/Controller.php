@@ -16,7 +16,7 @@ use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Request\Request;
 use Fabiom\UglyDuckling\Common\Setup\Setup;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
@@ -51,7 +51,7 @@ class Controller {
     public $postParameters;
 
     public function makeAllPresets(
-        Router $router,
+        RoutersContainer $routerContainer,
         Setup $setup,
         Request $request,
         ServerWrapper $serverWrapper,
@@ -65,7 +65,7 @@ class Controller {
         HtmlTemplateLoader $htmlTemplateLoader,
         JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
 		) {
-		$this->router                         = $router;
+		$this->routerContainer                = $routerContainer;
         $this->setup                          = $setup;
         $this->request                        = $request;
 		$this->serverWrapper                  = $serverWrapper;

@@ -30,7 +30,7 @@ class RouterBase {
      * @param string $action
      */
     function getController( string $action ) {
-
+		// overwrite this function
     }
 
     /**
