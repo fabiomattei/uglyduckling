@@ -33,9 +33,9 @@ $request = new Fabiom\UglyDuckling\Common\Request\Request();
 $request->setServerRequestURI( $severWrapper->getRequestURI() );
 
 $routerContainer = new Fabiom\UglyDuckling\Common\Router\RoutersContainer( $setup->getBasePath() );
-$routerContainer->addRouter( new Fabiom\UglyDuckling\Common\Router\Router( $setup->getBasePath() ) )
+$routerContainer->addRouter( new Fabiom\UglyDuckling\Common\Router\Router( $setup->getBasePath() ) );
 
-$controller = $router->getController( $request->getAction() );
+$controller = $routerContainer->getController( $request->getAction() );
 
 $jsonloader = new Fabiom\UglyDuckling\Common\Json\JsonLoader();
 $jsonloader->setIndexPath($setup->getJsonPath());
