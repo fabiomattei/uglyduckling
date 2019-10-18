@@ -135,7 +135,7 @@ class Router extends RouterBase {
      *
      * @param string $action
      */
-    function isSupportingAction( string $action ) {
+    function isActionSupported( string $action ) {
         return true;
         //return in_array($action, array());
     }

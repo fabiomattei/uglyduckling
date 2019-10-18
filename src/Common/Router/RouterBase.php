@@ -20,7 +20,7 @@ class RouterBase {
      *
      * @param string $action
      */
-    function isSupportingAction( string $action ) {
+    function isActionSupported( string $action ) {
         return false;
     }
 
