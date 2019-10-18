@@ -38,7 +38,7 @@ class RoutersContainer {
 	 */
 	function getController( string $action ) {
         foreach ( $this->routers as $router ) {
-            if ( $router->supports( $resource ) ) return $router->getController( $action );
+            if ( $router->isActionSupported( $action ) ) return $router->getController( $action );
         }
 	}
 	
