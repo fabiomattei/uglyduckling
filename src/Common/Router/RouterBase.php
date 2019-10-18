@@ -52,6 +52,9 @@ class RouterBase {
         }
     }
 
+	/**
+	 * Return a string containing the basepath of the application
+	 */
     public function getInfo() : string {
         return '[Router] BasePath: '.$this->basepath;
     }

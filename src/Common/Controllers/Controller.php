@@ -397,7 +397,7 @@ class Controller {
         $this->logger          = $logger;
 */
     public function getInfo(): string {
-        return '<br>'.$this->router->getInfo().'<br>'.$this->request->getInfo().'<br>';
+        return '<br>'.$this->routerContainer->getInfo().'<br>'.$this->request->getInfo().'<br>';
     }
 
 }
