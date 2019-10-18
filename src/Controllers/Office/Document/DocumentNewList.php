@@ -35,7 +35,7 @@ class DocumentNewList extends Controller {
 		
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 		
 		$table = new StaticTable;
 		$table->setTitle('List of all possible documents');
@@ -60,7 +60,7 @@ class DocumentNewList extends Controller {
 					$table->addRow();
 					$table->addColumn($resource->title);
 					$table->addUnfilteredColumn( 
-						Button::get($this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, 'res='.$resource->name ), 'New', Button::COLOR_GRAY.' '.Button::SMALL )
+						Button::get($this->routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_NEW, 'res='.$resource->name ), 'New', Button::COLOR_GRAY.' '.Button::SMALL )
 					);
 					$table->closeRow();
 				}

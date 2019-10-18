@@ -33,14 +33,14 @@ class EntitySearch extends ManagerEntityController {
 	    $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 
 		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
 		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->tableBuilder->setRouter( $this->router );
+        $this->tableBuilder->setRouter( $this->routerContainer );
         $this->tableBuilder->setResource( $this->resource );
         $this->tableBuilder->setParameters( $this->internalGetParameters );
         $this->tableBuilder->setDbconnection( $this->dbconnection );
@@ -56,14 +56,14 @@ class EntitySearch extends ManagerEntityController {
 	public function postRequest() {
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 
 		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
 		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->tableBuilder->setRouter( $this->router );
+        $this->tableBuilder->setRouter( $this->routerContainer );
         $this->tableBuilder->setJsonloader($this->jsonloader);
         $this->tableBuilder->setResource( $this->resource );
         $this->tableBuilder->setParameters( $this->postParameters );

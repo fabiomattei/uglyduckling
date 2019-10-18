@@ -28,7 +28,7 @@ class DocumentInfo extends ManagerEntityController {
 	public function getRequest() {
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
 	    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
@@ -44,7 +44,7 @@ class DocumentInfo extends ManagerEntityController {
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Info';
 	
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
 		$this->centralcontainer = array( $this->infoBuilder->createInfo() );
 	}
 

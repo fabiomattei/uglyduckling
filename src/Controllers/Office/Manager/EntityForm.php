@@ -36,16 +36,16 @@ class EntityForm extends ManagerEntityController {
 
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 
         $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
-        $this->jsonTemplateFactoriesContainer->setRouter($this->router);
+        $this->jsonTemplateFactoriesContainer->setRouter($this->routerContainer);
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
 
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array();
@@ -84,14 +84,14 @@ class EntityForm extends ManagerEntityController {
 
         $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
         $this->menubuilder->setMenuStructure( $menuresource );
-        $this->menubuilder->setRouter( $this->router );
+        $this->menubuilder->setRouter( $this->routerContainer );
 
-        $this->formBuilder->setRouter( $this->router );
+        $this->formBuilder->setRouter( $this->routerContainer );
         $this->formBuilder->setResource( $this->resource );
         $this->formBuilder->setParameters( $this->internalGetParameters );
         $this->formBuilder->setDbconnection( $this->dbconnection );
         $this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();

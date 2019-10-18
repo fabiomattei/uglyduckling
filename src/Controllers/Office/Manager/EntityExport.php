@@ -38,13 +38,13 @@ class EntityExport extends ManagerEntityController {
      */
 	public function getRequest() {
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->router->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
 
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 	
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array();

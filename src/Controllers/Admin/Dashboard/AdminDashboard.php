@@ -26,7 +26,7 @@ class AdminDashboard extends Controller {
 	public function getRequest() {
 		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Admin dashboard';
 		$this->menucontainer          = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD ) );
-		$this->leftcontainer          = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->router ) );
+		$this->leftcontainer          = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->routerContainer ) );
 
         $resourceGeneralChecks = new StaticTable;
         $resourceGeneralChecks->setHtmlTemplateLoader( $this->htmlTemplateLoader );

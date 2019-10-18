@@ -49,13 +49,13 @@ class AdminSearchList extends Controller {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
-            $table->addUnfilteredColumn( Button::get($this->router->make_url( Router::ROUTE_ADMIN_SEARCH_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
+            $table->addUnfilteredColumn( Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_SEARCH_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
             $table->closeRow();
         }
         $table->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST, $this->router ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $table );
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();

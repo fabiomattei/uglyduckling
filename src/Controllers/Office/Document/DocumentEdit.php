@@ -49,17 +49,17 @@ class DocumentEdit extends ManagerDocumentSenderController {
 		$formBlock = $this->jsonBlockFormParser->parse(
 			$this->resource,
 			$entity,
-			$this->router->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, 'res='.$this->getParameters['res'] )
+			$this->routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_EDIT, 'res='.$this->getParameters['res'] )
 		);
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Document edit';
 		
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 		
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
 		$this->centralcontainer = array( $formBlock );
 	}
 	

@@ -37,7 +37,7 @@ class UserList extends Controller {
         $table = new StaticTable;
         $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $table->setTitle('Users list');
-        $table->addButton( 'New user', $this->router->make_url( Router::ROUTE_ADMIN_USER_NEW ) );
+        $table->addButton( 'New user', $this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_NEW ) );
 
         $table->addTHead();
         $table->addRow();
@@ -58,15 +58,15 @@ class UserList extends Controller {
             $table->addColumn( $user->usr_surname );
             $table->addColumn( $user->usr_defaultgroup );
             $table->addUnfilteredColumn(
-                Button::get($this->router->make_url( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-                Button::get($this->router->make_url( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+                Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+                Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             );
             $table->closeRow();
         }
         $table->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->router ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $table );
 
         $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();

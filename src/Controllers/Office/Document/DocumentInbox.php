@@ -37,7 +37,7 @@ class DocumentInbox extends Controller {
 		
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->router );
+		$this->menubuilder->setRouter( $this->routerContainer );
 		
 		$this->documentDao->setDBH( $this->dbconnection->getDBH() );
 		
@@ -79,7 +79,7 @@ class DocumentInbox extends Controller {
 						$table->addColumn($object);
 						$table->addColumn($resource->title);
 						$table->addUnfilteredColumn( 
-							Button::get($this->router->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$resource->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) 
+							Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_ENTITY_VIEW, 'res='.$resource->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) 
 						);
 						$table->closeRow();
 					}
