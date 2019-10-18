@@ -17,7 +17,7 @@ class JsonTemplate {
     protected $queryExecuter;
     protected $queryBuilder;
     protected $resource;
-    protected $router;
+    protected $routerContainer;
     protected $dbconnection;
     protected $parameters;
     protected $postparameters;
