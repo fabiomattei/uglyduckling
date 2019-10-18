@@ -14,7 +14,7 @@ use stdClass;
 class MenuBuilder {
 
     private $menuStructure;
-    private $router;
+    private $routerContainer;
 
     /**
      * @param mixed $infoStructure
@@ -23,8 +23,8 @@ class MenuBuilder {
         $this->menuStructure = $menuStructure;
     }
 
-    public function setRouter( $router ) {
-        $this->router = $router;
+    public function setRouter( $routerContainer ) {
+        $this->routerContainer = $routerContainer;
     }
 
     public function createMenu() {
