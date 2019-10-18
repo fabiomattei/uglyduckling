@@ -37,17 +37,17 @@ class MenuBuilder {
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label;
-                    $mi->url = LinkBuilder::getURL( $this->router, $item->action, $item->resource );
+                    $mi->url = LinkBuilder::getURL( $this->routerContainer, $item->action, $item->resource );
                     $submenuItems[] = $mi;
                 }
                 $menu->addNavItemWithDropdown( $menuitem->label, 
-                    LinkBuilder::getURL( $this->router, $menuitem->action, $menuitem->resource ), 
+                    LinkBuilder::getURL( $this->routerContainer, $menuitem->action, $menuitem->resource ), 
                     false, false, 
                     $submenuItems 
                 );
             } else {
                 $menu->addNavItem( $menuitem->label, 
-                    LinkBuilder::getURL( $this->router, $menuitem->action, $menuitem->resource ), 
+                    LinkBuilder::getURL( $this->routerContainer, $menuitem->action, $menuitem->resource ), 
                     false, false 
                 );
             }

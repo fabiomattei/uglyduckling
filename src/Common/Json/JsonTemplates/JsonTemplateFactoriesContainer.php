@@ -11,7 +11,7 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 class JsonTemplateFactoriesContainer {
 
     private $factories;
-    private $router;
+    private $routerContainer;
     private $dbconnection;
     private $parameters;
     private $postparameters;
@@ -30,12 +30,12 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * Setting router object
+     * Setting routerContainer object
      *
-     * @param $router
+     * @param $routerContainer
      */
-    public function setRouter( $router ) {
-        $this->router = $router;
+    public function setRouter( $routerContainer ) {
+        $this->routerContainer = $routerContainer;
     }
 
     /**
@@ -115,7 +115,7 @@ class JsonTemplateFactoriesContainer {
             if ($factory->isResourceSupported( $resource )) {
                 $factory->setHtmlTemplateLoader($this->htmlTemplateLoader);
                 $factory->setJsonloader($this->jsonloader);
-                $factory->setRouter($this->router);
+                $factory->setRouter($this->routerContainer);
                 $factory->setResource($resource);
                 $factory->setParameters($this->parameters);
                 $factory->setDbconnection($this->dbconnection);

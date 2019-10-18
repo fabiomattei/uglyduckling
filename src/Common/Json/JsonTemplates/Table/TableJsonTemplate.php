@@ -90,7 +90,7 @@ class TableJsonTemplate extends JsonTemplate {
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
-                $links .= $this->linkBuilder->getButton( $this->jsonloader, $this->router, $action->label, $action->resource, $action->parameters, $entity );
+                $links .= $this->linkBuilder->getButton( $this->jsonloader, $this->routerContainer, $action->label, $action->resource, $action->parameters, $entity );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );

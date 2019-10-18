@@ -40,12 +40,12 @@ class JsonTemplate {
     }
 
     /**
-     * Setting router object
+     * Setting routerContainer object
      *
-     * @param $router
+     * @param $routerContainer
      */
-    public function setRouter( $router ) {
-        $this->router = $router;
+    public function setRouter( $routerContainer ) {
+        $this->routerContainer = $routerContainer;
     }
 
     /**

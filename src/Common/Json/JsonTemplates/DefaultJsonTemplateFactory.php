@@ -91,7 +91,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == DashboardJsonTemplate::blocktype ) {
             $this->dashboardJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
-            $this->dashboardJsonTemplate->setRouter($this->router);
+            $this->dashboardJsonTemplate->setRouter($this->routerContainer);
             $this->dashboardJsonTemplate->setResource($resource);
             $this->dashboardJsonTemplate->setParameters($this->parameters);
             $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
@@ -103,7 +103,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == TableJsonTemplate::blocktype ) {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->tableBuilder->setJsonloader($this->jsonloader);
-            $this->tableBuilder->setRouter($this->router);
+            $this->tableBuilder->setRouter($this->routerContainer);
             $this->tableBuilder->setResource($resource);
             $this->tableBuilder->setParameters($this->parameters);
             $this->tableBuilder->setDbconnection($this->dbconnection);
@@ -114,7 +114,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == ChartjsJsonTemplate::blocktype ) {
             $this->chartjsBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->chartjsBuilder->setJsonloader($this->jsonloader);
-            $this->chartjsBuilder->setRouter($this->router);
+            $this->chartjsBuilder->setRouter($this->routerContainer);
             $this->chartjsBuilder->setResource($resource);
             $this->chartjsBuilder->setParameters($this->parameters);
             $this->chartjsBuilder->setDbconnection($this->dbconnection);
@@ -125,7 +125,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == InfoJsonTemplate::blocktype ) {
             $this->infoBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->infoBuilder->setJsonloader($this->jsonloader);
-            $this->infoBuilder->setRouter($this->router);
+            $this->infoBuilder->setRouter($this->routerContainer);
             $this->infoBuilder->setResource($resource);
             $this->infoBuilder->setParameters($this->parameters);
             $this->infoBuilder->setDbconnection($this->dbconnection);
@@ -136,7 +136,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == FormJsonTemplate::blocktype ) {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
-            $this->formBuilder->setRouter($this->router);
+            $this->formBuilder->setRouter($this->routerContainer);
             $this->formBuilder->setResource($resource);
             $this->formBuilder->setParameters($this->parameters);
             $this->formBuilder->setDbconnection($this->dbconnection);
@@ -148,24 +148,24 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
         if ($resource->metadata->type == 'search') {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
-            $this->formBuilder->setRouter($this->router);
+            $this->formBuilder->setRouter($this->routerContainer);
             $this->formBuilder->setResource($resource);
             $this->formBuilder->setParameters($this->parameters);
             $this->formBuilder->setDbconnection($this->dbconnection);
             $this->formBuilder->setLogger($this->logger);
-            $this->formBuilder->setAction($this->router->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
+            $this->formBuilder->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
             return $this->formBuilder->createForm();
         }
 
         if ($resource->metadata->type == 'export') {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
-            $this->formBuilder->setRouter($this->router);
+            $this->formBuilder->setRouter($this->routerContainer);
             $this->formBuilder->setResource($resource);
             $this->formBuilder->setParameters($this->parameters);
             $this->formBuilder->setDbconnection($this->dbconnection);
             $this->formBuilder->setLogger($this->logger);
-            $this->formBuilder->setAction($this->router->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
+            $this->formBuilder->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
             return $this->formBuilder->createForm();
         }
     }

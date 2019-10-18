@@ -18,7 +18,7 @@ class JsonTemplateFactory {
     protected $queryExecuter;
     protected $queryBuilder;
     protected $resource;
-    protected $router;
+    protected $routerContainer;
     protected $dbconnection;
     protected $parameters;
     protected $postparameters;
@@ -40,12 +40,12 @@ class JsonTemplateFactory {
     }
 
     /**
-     * Setting router object
+     * Setting routerContainer object
      *
-     * @param $router
+     * @param $routerContainer
      */
-    public function setRouter( $router ) {
-        $this->router = $router;
+    public function setRouter( $routerContainer ) {
+        $this->routerContainer = $routerContainer;
     }
 
     /**
