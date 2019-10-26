@@ -10,6 +10,8 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Export\ExportJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Search\SearchJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
@@ -22,6 +24,8 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     private $chartjsBuilder;
     private $infoBuilder;
     private $formBuilder;
+    private $searchJsonTemplate;
+    private $exportJsonTemplate;
     private $dashboardJsonTemplate;
 
     /**
@@ -33,6 +37,8 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $this->chartjsBuilder = new ChartjsJsonTemplate;
         $this->infoBuilder = new InfoJsonTemplate;
         $this->formBuilder = new FormJsonTemplate;
+        $this->searchJsonTemplate = new SearchJsonTemplate;
+        $this->exportJsonTemplate = new ExportJsonTemplate;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
         $this->action = '';
     }
@@ -145,28 +151,28 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
             return $this->formBuilder->createForm();
         }
 
-        if ($resource->metadata->type == 'search') {
-            $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->formBuilder->setJsonloader($this->jsonloader);
-            $this->formBuilder->setRouter($this->routerContainer);
-            $this->formBuilder->setResource($resource);
-            $this->formBuilder->setParameters($this->parameters);
-            $this->formBuilder->setDbconnection($this->dbconnection);
-            $this->formBuilder->setLogger($this->logger);
-            $this->formBuilder->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
-            return $this->formBuilder->createForm();
+        if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
+            $this->searchJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->searchJsonTemplate->setJsonloader($this->jsonloader);
+            $this->searchJsonTemplate->setRouter($this->routerContainer);
+            $this->searchJsonTemplate->setResource($resource);
+            $this->searchJsonTemplate->setParameters($this->parameters);
+            $this->searchJsonTemplate->setDbconnection($this->dbconnection);
+            $this->searchJsonTemplate->setLogger($this->logger);
+            $this->searchJsonTemplate->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
+            return $this->searchJsonTemplate->createHTMLBlock();
         }
 
-        if ($resource->metadata->type == 'export') {
-            $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->formBuilder->setJsonloader($this->jsonloader);
-            $this->formBuilder->setRouter($this->routerContainer);
-            $this->formBuilder->setResource($resource);
-            $this->formBuilder->setParameters($this->parameters);
-            $this->formBuilder->setDbconnection($this->dbconnection);
-            $this->formBuilder->setLogger($this->logger);
-            $this->formBuilder->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
-            return $this->formBuilder->createForm();
+        if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
+            $this->exportJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->exportJsonTemplate->setJsonloader($this->jsonloader);
+            $this->exportJsonTemplate->setRouter($this->routerContainer);
+            $this->exportJsonTemplate->setResource($resource);
+            $this->exportJsonTemplate->setParameters($this->parameters);
+            $this->exportJsonTemplate->setDbconnection($this->dbconnection);
+            $this->exportJsonTemplate->setLogger($this->logger);
+            $this->exportJsonTemplate->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
+            return $this->exportJsonTemplate->createHTMLBlock();
         }
     }
 
