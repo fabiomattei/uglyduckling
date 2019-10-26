@@ -10,8 +10,10 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Export\ExportJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Search\SearchJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
@@ -145,7 +147,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
             return $this->formBuilder->createForm();
         }
 
-        if ($resource->metadata->type == 'search') {
+        if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
             $this->formBuilder->setRouter($this->routerContainer);
@@ -157,7 +159,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
             return $this->formBuilder->createForm();
         }
 
-        if ($resource->metadata->type == 'export') {
+        if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
             $this->formBuilder->setJsonloader($this->jsonloader);
             $this->formBuilder->setRouter($this->routerContainer);
