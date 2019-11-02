@@ -74,14 +74,17 @@ class ExportJsonTemplate extends JsonTemplate {
 		
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
+		/*
 		foreach ($table->fields as $field) {
 			$tableBlock->addHeadLineColumn($field->headline);
 		}
+		*/
 		$tableBlock->addHeadLineColumn(''); // adding one more for actions
 		$tableBlock->closeRow();
 		$tableBlock->closeTHead();
 		
 		$tableBlock->addTBody();
+		/*
 		foreach ($entities as $entity) {
 			$tableBlock->addRow();
 			foreach ($table->fields as $field) {
@@ -96,6 +99,7 @@ class ExportJsonTemplate extends JsonTemplate {
 			$tableBlock->addUnfilteredColumn( $links );
 			$tableBlock->closeRow();
 		}
+		*/
 		$tableBlock->closeTBody();
 		
         return $tableBlock;
