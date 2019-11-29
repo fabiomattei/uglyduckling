@@ -11,13 +11,14 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
+use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
 class JsonTemplate {
 
     protected $queryExecuter;
     protected $queryBuilder;
     protected $resource;
-    protected $routerContainer;
+    protected RoutersContainer $routerContainer;
     protected $dbconnection;
     protected $parameters;
     protected $postparameters;
@@ -44,7 +45,7 @@ class JsonTemplate {
      *
      * @param $routerContainer
      */
-    public function setRouter( $routerContainer ) {
+    public function setRouter( RoutersContainer $routerContainer ) {
         $this->routerContainer = $routerContainer;
     }
 

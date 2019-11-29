@@ -12,13 +12,14 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
+use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
 class JsonTemplateFactory {
 
-    protected $queryExecuter;
-    protected $queryBuilder;
+    protected QueryExecuter $queryExecuter;
+    protected QueryBuilder $queryBuilder;
     protected $resource;
-    protected $routerContainer;
+    protected RoutersContainer $routerContainer;
     protected $dbconnection;
     protected $parameters;
     protected $postparameters;
