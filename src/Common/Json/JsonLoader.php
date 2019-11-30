@@ -10,7 +10,7 @@ use stdClass;
 class JsonLoader {
 	
 	private string $indexpath;
-	private array $resourcesIndex = array();
+	protected array $resourcesIndex = array();
     private array $resourceCache = array();
 
     /**
@@ -122,15 +122,7 @@ class JsonLoader {
      * @param string $type
      */
 	public function getResourcesByType( string $type ): array {
-	    /*$out = array();
-        foreach ( $this->resourcesIndex as $res ) {
-            if ( $res->type === $type ) {
-                $out[] = $res;
-            }
-        }
-        return $out;
-	    */
-	    return array_filter($this->resourcesIndex, fn ($res, $type) => $res->type === $type );
+	    return array_filter($this->resourcesIndex, function($res) use($type) { return $res->type === $type; } );
     }
 
     /**
