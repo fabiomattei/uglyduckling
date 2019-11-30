@@ -33,8 +33,7 @@ class Controller {
     public $post_filter_rules = array();
     public $post_get_validation_rules = array();
     public $post_get_filter_rules = array();
-    public $router;
-    public RoutersContainer routerContainer;
+    public RoutersContainer $routerContainer;
     public Setup $setup;
     public Request $request;
     public ServerWrapper $serverWrapper;
