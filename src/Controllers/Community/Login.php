@@ -34,11 +34,11 @@ class Login extends Controller {
 		$this->templateFile     = 'login';
 	}
 	
-    public $post_validation_rules = array(
+    public array $post_validation_rules = array(
 		'email'	   => 'max_len,255',
 		'password' => 'max_len,255',
     );
-    public $post_filter_rules = array(
+    public array $post_filter_rules = array(
 		'email'    => 'trim',
 		'password' => 'trim',
     );
@@ -72,7 +72,7 @@ class Login extends Controller {
 			
 		} else {
 	        // redirecting to main page
-			$this->redirectToPage( $this->router->make_url( Router::ROUTE_COMMUNITY_LOGIN ) );
+			$this->redirectToPage( $this->routerContainer->make_url( Router::ROUTE_COMMUNITY_LOGIN ) );
 		}
 	}
 	

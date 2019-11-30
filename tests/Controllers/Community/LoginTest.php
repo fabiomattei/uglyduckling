@@ -34,6 +34,7 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 		$messages = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader::class)->getMock();
         $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
+        $jsonTemplateFactoriesContainer = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer::class)->getMock();
 		
 		$controller = new Fabiom\UglyDuckling\Controllers\Community\Login;
 		$controller->makeAllPresets(
@@ -48,7 +49,8 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 			$jsonLoader,
 			$echologger,
 			$messages,
-            $htmlTemplateBuilder
+            $htmlTemplateBuilder,
+            $jsonTemplateFactoriesContainer
 		);
 		$controller->getRequest();
 		
@@ -71,6 +73,7 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 		$messages = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader::class)->getMock();
         $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
+        $jsonTemplateFactoriesContainer = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer::class)->getMock();
 		
 		$controller = new Fabiom\UglyDuckling\Controllers\Community\Login;
 		$controller->makeAllPresets(
@@ -85,7 +88,8 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 			$jsonLoader,
 			$echologger,
 			$messages,
-            $htmlTemplateBuilder
+            $htmlTemplateBuilder,
+            $jsonTemplateFactoriesContainer
 		);
 		$controller->setPostParameters( array() );
 		$controller->userCanLogIn = $this->getMockBuilder(Fabiom\UglyDuckling\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
@@ -121,6 +125,7 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 		$messages = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader::class)->getMock();
         $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
+        $jsonTemplateFactoriesContainer = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer::class)->getMock();
 		
 		$controller = new Fabiom\UglyDuckling\Controllers\Community\Login;
 		$controller->makeAllPresets(
@@ -135,7 +140,8 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 			$jsonLoader,
 			$echologger,
 			$messages,
-            $htmlTemplateBuilder
+            $htmlTemplateBuilder,
+            $jsonTemplateFactoriesContainer
 		);
 		$controller->setPostParameters( array( 'email' => '' ) );
 		$controller->userCanLogIn = $this->getMockBuilder(Fabiom\UglyDuckling\BusinessLogic\User\UseCases\UserCanLogIn::class)->getMock();
