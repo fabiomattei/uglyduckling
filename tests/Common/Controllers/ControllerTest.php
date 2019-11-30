@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
 *  Testing the Controller class
@@ -21,7 +21,7 @@ class ControllerTest extends PHPUnit\Framework\TestCase {
 	}
 
 	public function testMakeAllPresets(){
-		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+		$routersContainer = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$setup = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Request\Request::class)->getMock();
 		$severWrapper = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper::class)->getMock(); 		
@@ -31,13 +31,15 @@ class ControllerTest extends PHPUnit\Framework\TestCase {
 		$dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonLoader::class)->getMock();
+		$logger = new \Fabiom\UglyDuckling\Common\Loggers\EchoLogger();
 		$messages = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader::class)->getMock();
 		$echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
-		
+        $jsonTemplateFactoriesContainer = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer::class)->getMock();
+
 		$controller = new Fabiom\UglyDuckling\Common\Controllers\Controller;
 		$controller->makeAllPresets(
-			$router,
+            $routersContainer,
 			$setup, 
 			$request,
 			$severWrapper,
@@ -48,7 +50,8 @@ class ControllerTest extends PHPUnit\Framework\TestCase {
 			$jsonLoader,
 			$echologger,
 			$messages,
-            $htmlTemplateBuilder
+            $htmlTemplateBuilder,
+            $jsonTemplateFactoriesContainer
 		);
 		$this->assertTrue(is_object($controller));
 		unset($controller);

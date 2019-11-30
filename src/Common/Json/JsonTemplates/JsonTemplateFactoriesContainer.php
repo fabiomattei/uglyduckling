@@ -8,19 +8,25 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
+use Fabiom\UglyDuckling\Common\Database\DBConnection;
+use Fabiom\UglyDuckling\Common\Json\JsonLoader;
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
+use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+
 class JsonTemplateFactoriesContainer {
 
-    private $factories;
-    private $routerContainer;
-    private $dbconnection;
-    private $parameters;
-    private $postparameters;
-    private $sessionparameters;
-    private $action;
-    private $htmlTemplateLoader;
-    private $jsonloader;
-    private $linkBuilder;
-    private $logger;
+    private array $factories;
+    private RoutersContainer $routerContainer;
+    private DBConnection $dbconnection;
+    private array $parameters;
+    private array $postparameters;
+    private array $sessionparameters;
+    private string $action;
+    private HtmlTemplateLoader $htmlTemplateLoader;
+    private JsonLoader $jsonloader;
+    private LinkBuilder $linkBuilder;
+    private Logger $logger;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
@@ -32,61 +38,61 @@ class JsonTemplateFactoriesContainer {
     /**
      * Setting routerContainer object
      *
-     * @param $routerContainer
+     * @param RoutersContainer $routerContainer
      */
-    public function setRouter( $routerContainer ) {
+    public function setRouter( RoutersContainer $routerContainer ) {
         $this->routerContainer = $routerContainer;
     }
 
     /**
-     * @param mixed $jsonloader
+     * @param JsonLoader $jsonloader
      */
-    public function setJsonloader($jsonloader) {
+    public function setJsonloader(JsonLoader $jsonloader): void {
         $this->jsonloader = $jsonloader;
     }
 
     /**
      * @param mixed $parameters
      */
-    public function setParameters($parameters) {
+    public function setParameters($parameters): void {
         $this->parameters = $parameters;
     }
 
     /**
      * @param mixed $parameters
      */
-    public function setPostParameters($parameters) {
+    public function setPostParameters($parameters): void {
         $this->postparameters = $parameters;
     }
 
     /**
      * @param mixed $parameters
      */
-    public function setSessionParameters($parameters) {
+    public function setSessionParameters($parameters): void {
         $this->sessionparameters = $parameters;
     }
 
     /**
-     * @param mixed $dbconnection
+     * @param DBConnection $dbconnection
      */
-    public function setDbconnection($dbconnection) {
+    public function setDbconnection( DBConnection $dbconnection): void {
         $this->dbconnection = $dbconnection;
     }
 
     /**
      * Setting Html template loader
      *
-     * @param $htmlTemplateLoader
+     * @param HtmlTemplateLoader $htmlTemplateLoader
      */
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+    public function setHtmlTemplateLoader(HtmlTemplateLoader $htmlTemplateLoader) {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     /**
-     * @param mixed $logger
+     * @param Logger $logger
      * the $logger variable contains a logger for this class
      */
-    public function setLogger( $logger ) {
+    public function setLogger( Logger $logger ): void {
         $this->logger = $logger;
     }
 
@@ -94,11 +100,14 @@ class JsonTemplateFactoriesContainer {
      * Set the complete URL for the form action
      * @param action $action
      */
-    public function setAction( string $action ) {
+    public function setAction( string $action ): void {
         $this->action = $action;
     }
 
-    public function setLinkBuilder( $linkBuilder ) {
+    /**
+     * @param LinkBuilder $linkBuilder
+     */
+    public function setLinkBuilder( LinkBuilder $linkBuilder ) {
         $this->linkBuilder = $linkBuilder;
     }
 

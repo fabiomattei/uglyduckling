@@ -27,12 +27,14 @@ use GUMP;
 
 class Controller {
 
-    public $get_validation_rules = array();
-    public $get_filter_rules = array();
-    public $post_validation_rules = array();
-    public $post_filter_rules = array();
-    public $post_get_validation_rules = array();
-    public $post_get_filter_rules = array();
+    public array $get_validation_rules = array();
+    public array $get_filter_rules = array();
+    public array $post_validation_rules = array();
+    public array $post_filter_rules = array();
+    public array $post_get_validation_rules = array();
+    public array $post_get_filter_rules = array();
+    public array $getParameters;
+    public array $postParameters;
     public RoutersContainer $routerContainer;
     public Setup $setup;
     public Request $request;
@@ -47,9 +49,25 @@ class Controller {
     public HtmlTemplateLoader $htmlTemplateLoader;
     public JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer;
     public GUMP $gump;
-    public $getParameters;
-    public $postParameters;
 
+    /**
+     * This method makes all necessary presets to activate a controller
+     *
+     * @param RoutersContainer $routerContainer
+     * @param Setup $setup
+     * @param Request $request
+     * @param ServerWrapper $serverWrapper
+     * @param SessionWrapper $sessionWrapper
+     * @param SecurityChecker $securityChecker
+     * @param DBConnection $dbconnection
+     * @param Redirector $urlredirector
+     * @param JsonLoader $jsonloader
+     * @param Logger $logger
+     * @param BaseHTMLMessages $messages
+     * @param HtmlTemplateLoader $htmlTemplateLoader
+     * @param JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
+     * @throws \Exception
+     */
     public function makeAllPresets(
         RoutersContainer $routerContainer,
         Setup $setup,

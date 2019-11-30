@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Database;
 
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use PDO;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
@@ -14,10 +15,11 @@ class QueryExecuter {
     private $parameters;
     private $DBH;
     private $queryBuilder;
-    private $logger;
+    private Logger $logger;
 
     /**
      * Database connection handler setter
+     * @param $DBH
      */
     public function setDBH( $DBH ) {
         $this->DBH = $DBH;
@@ -49,7 +51,7 @@ class QueryExecuter {
      * @param mixed $getParameters
      * the $parameters variable contains all values for the query
      */
-    public function setGetParameters( array $getParameters ) {
+    public function setGetParameters( array $getParameters ): void {
         $this->getParameters = $getParameters;
     }
 
@@ -57,7 +59,7 @@ class QueryExecuter {
      * @param mixed $postParameters
      * the $parameters variable contains all values for the query
      */
-    public function setPostParameters( array $postParameters ) {
+    public function setPostParameters( array $postParameters ): void {
         $this->postParameters = $postParameters;
     }
 
@@ -65,7 +67,7 @@ class QueryExecuter {
      * @param mixed $logger
      * the $logger variable contains a logger for this class
      */
-    public function setLogger( $logger ) {
+    public function setLogger( $logger ): void {
         $this->logger = $logger;
     }
 

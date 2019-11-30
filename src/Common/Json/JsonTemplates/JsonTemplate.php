@@ -7,28 +7,30 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
+use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonLoader;
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
+use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class JsonTemplate {
 
-    protected $queryExecuter;
-    protected $queryBuilder;
+    protected QueryExecuter $queryExecuter;
+    protected QueryBuilder $queryBuilder;
     protected $resource;
     protected RoutersContainer $routerContainer;
-    protected $dbconnection;
-    protected $parameters;
-    protected $postparameters;
+    protected DBConnection $dbconnection;
+    protected array $parameters;
+    protected array $postparameters;
     protected $sessionparameters;
-    protected $action;
-    protected $htmlTemplateLoader;
-    protected $jsonloader;
-    protected $linkBuilder;
-    protected $logger;
-    protected $jsonTemplateFactoriesContainer;
+    protected string $action;
+    protected HtmlTemplateLoader $htmlTemplateLoader;
+    protected JsonLoader $jsonloader;
+    protected LinkBuilder $linkBuilder;
+    protected Logger $logger;
+    protected JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer;
 
     const blocktype = 'basebuilder';
 
@@ -50,30 +52,30 @@ class JsonTemplate {
     }
 
     /**
-     * @param mixed $jsonloader
+     * @param JsonLoader $jsonloader
      */
-    public function setJsonloader($jsonloader) {
+    public function setJsonloader( JsonLoader $jsonloader) {
         $this->jsonloader = $jsonloader;
     }
 
     /**
-     * @param mixed $parameters
+     * @param array $parameters
      */
-    public function setParameters($parameters) {
+    public function setParameters(array $parameters): void {
         $this->parameters = $parameters;
     }
 
     /**
-     * @param mixed $parameters
+     * @param array $parameters
      */
-    public function setPostParameters($parameters) {
+    public function setPostParameters(array $parameters): void {
         $this->postparameters = $parameters;
     }
 
     /**
-     * @param mixed $parameters
+     * @param array $parameters
      */
-    public function setSessionParameters($parameters) {
+    public function setSessionParameters(array $parameters): void {
         $this->sessionparameters = $parameters;
     }
 
@@ -85,36 +87,36 @@ class JsonTemplate {
     }
 
     /**
-     * @param mixed $dbconnection
+     * @param DBConnection $dbconnection
      */
-    public function setDbconnection($dbconnection) {
+    public function setDbconnection( DBConnection $dbconnection ): void {
         $this->dbconnection = $dbconnection;
     }
 
     /**
      * Setting method for testing purposes
      *
-     * @param $queryExecuter
+     * @param QueryExecuter $queryExecuter
      */
-    public function setQueryExecuter( $queryExecuter ) {
+    public function setQueryExecuter( QueryExecuter $queryExecuter ): void {
         $this->queryExecuter = $queryExecuter;
     }
 
     /**
      * Setting method for testing purposes
      *
-     * @param $queryBuilder
+     * @param QueryBuilder $queryBuilder
      */
-    public function setQueryBuilder( $queryBuilder ) {
+    public function setQueryBuilder( QueryBuilder $queryBuilder ): void {
         $this->queryBuilder = $queryBuilder;
     }
 
     /**
      * Setting Html template loader
      *
-     * @param $htmlTemplateLoader
+     * @param HtmlTemplateLoader $htmlTemplateLoader
      */
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+    public function setHtmlTemplateLoader( HtmlTemplateLoader $htmlTemplateLoader): void {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
     
@@ -122,7 +124,7 @@ class JsonTemplate {
      * @param mixed $logger
      * the $logger variable contains a logger for this class
      */
-    public function setLogger( $logger ) {
+    public function setLogger( Logger $logger ): void {
         $this->logger = $logger;
     }
 
@@ -130,20 +132,23 @@ class JsonTemplate {
      * Set the complete URL for the form action
      * @param action $action
      */
-    public function setAction( string $action ) {
+    public function setAction( string $action ): void {
         $this->action = $action;
     }
 
-    public function setLinkBuilder( $linkBuilder ) {
+    /**
+     * @param LinkBuilder $linkBuilder
+     */
+    public function setLinkBuilder( LinkBuilder $linkBuilder ): void {
         $this->linkBuilder = $linkBuilder;
     }
 
     /**
      * Setting panelBuilder
      *
-     * @param JsonTemplateFactory $jsonTemplateFactory
+     * @param JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
      */
-    public function setJsonTemplateFactoriesContainer ( $jsonTemplateFactoriesContainer ) {
+    public function setJsonTemplateFactoriesContainer( JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer ): void {
         $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
     }
 
@@ -174,8 +179,6 @@ class JsonTemplate {
             return $this->sessionparameters[$field->sessionparameter] ?? '';
         }
     }
-
-
 
     /**
      * Return a object that inherit from BaseHTMLBlock class

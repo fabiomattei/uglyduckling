@@ -10,6 +10,8 @@ use Fabiom\UglyDuckling\Common\Database\DocumentDao;
  * It parses a resource in order to make the neccessary queries to create a table in the database
  */
 class JsonCreateQueryParser {
+
+    private CreateQueryBuilder $createQueryBuilder;
 	
 	function __construct() {
 		$this->createQueryBuilder = new CreateQueryBuilder();

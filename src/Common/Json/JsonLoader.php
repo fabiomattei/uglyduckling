@@ -9,9 +9,9 @@ use stdClass;
  */
 class JsonLoader {
 	
-	private $indexpath;
-	private $resourcesIndex = array();
-    private $resourceCache = array();
+	private string $indexpath;
+	private array $resourcesIndex = array();
+    private array $resourceCache = array();
 
     /**
      * Set the path of the file containing the main index of the json structure
@@ -104,8 +104,13 @@ class JsonLoader {
 
     /**
      * Return the index of all resources loaded from the main index
+     *
+     * The index is an array of stdClass containing attributes
+     * path: path of the given resource
+     * type: type of the given resource
+     * name: name of the given resource (used for key research, name must be unique)
      */
-    public function getResourcesIndex() {
+    public function getResourcesIndex(): array {
         return $this->resourcesIndex;
     }
 
@@ -116,14 +121,16 @@ class JsonLoader {
      *
      * @param string $type
      */
-	public function getResourcesByType( string $type ) {
-	    $out = array();
+	public function getResourcesByType( string $type ): array {
+	    /*$out = array();
         foreach ( $this->resourcesIndex as $res ) {
             if ( $res->type === $type ) {
                 $out[] = $res;
             }
         }
         return $out;
+	    */
+	    return array_filter($this->resourcesIndex, fn ($res, $type) => $res->type === $type );
     }
 
     /**

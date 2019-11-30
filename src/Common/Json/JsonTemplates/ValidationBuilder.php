@@ -18,7 +18,7 @@ class ValidationBuilder {
 		return $rules;
 	}
 	
-	public function getValidationFilters( $parameters ) {
+	public function getValidationFilters( array $parameters ) {
 		$filters = array();
 		foreach ($parameters as $par) {
 			$filters[$par->name] = 'trim';

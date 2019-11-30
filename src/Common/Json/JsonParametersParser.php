@@ -7,7 +7,17 @@ namespace Fabiom\UglyDuckling\Common\Json;
  * resource if needed
  */
 class JsonParametersParser {
-	
+
+    /**
+     * Thake a resource json parsed structure and takes out the parameters from
+     * the structure.
+     *
+     * Return an array containin two arrays:
+     * array['rules']   contains the rules taken from json parsed structure
+     * array['filters'] contains the filters taken from json parsed structure
+     * @param $resource
+     * @return array
+     */
 	public static function parseResourceForParametersValidationRoules( $resource ) {
 		$par_rules = array();
 		$par_filters = array();
