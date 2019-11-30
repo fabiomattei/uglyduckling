@@ -31,7 +31,6 @@ class ControllerTest extends PHPUnit\Framework\TestCase {
 		$dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock(); 
 		$redirector = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Redirectors\FakeRedirector::class)->getMock();
 		$jsonLoader = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonLoader::class)->getMock();
-		$logger = new \Fabiom\UglyDuckling\Common\Loggers\EchoLogger();
 		$messages = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages::class)->getMock();
         $htmlTemplateBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader::class)->getMock();
 		$echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();

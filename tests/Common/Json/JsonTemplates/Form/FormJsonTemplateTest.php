@@ -15,8 +15,10 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	protected function setUp(): void {
         $this->htmlTemplateLoader = new \Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
+        $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
         $this->form = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate();
         $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
+        $this->form->setLogger($echologger);
 
 		$this->entity = new stdClass;
 	    $this->entity->fl_id   = 3;	

@@ -18,6 +18,8 @@ class InfoJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
         $this->info = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate();
         $this->info->setHtmlTemplateLoader($this->htmlTemplateLoader);
+        $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
+        $this->info->setLogger($echologger);
 
 		$this->entity = new stdClass;
 	    $this->entity->fl_id   = 3;	
@@ -53,7 +55,7 @@ class InfoJsonTemplateTest extends PHPUnit\Framework\TestCase {
   }
 }');
 
-        $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+        $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\QueryExecuter::class)->getMock();
         $queryBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
