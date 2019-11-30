@@ -5,7 +5,7 @@
 *
 *  @author Fabio Mattei
 */
-class RouterTest extends PHPUnit\Framework\TestCase {
+class RoutersContainerTest extends PHPUnit\Framework\TestCase {
 	
 	/**
 	* Just check if the YourClass has no syntax error 
@@ -31,19 +31,5 @@ class RouterTest extends PHPUnit\Framework\TestCase {
 		$this->assertSame( $router->make_url( 'dashboard', 'id=0&par=1' ), 'http://localhost:18080/dashboard.html?id=0&par=1' );
         unset( $router );
 	}
-
-	/*
-	public function testReturnLoginControllerIfCalledWithNoAction() {
-		$router = new Fabiom\UglyDuckling\Common\Router\RoutersContainer( 'http://localhost:18080/' );
-		$this->assertSame( get_class( $router->getController( '' ) ), 'Fabiom\UglyDuckling\Controllers\Community\Login' );
-        unset( $router );
-	}
- 	
- 	public function testReturnAdminDashboardControllerIfCalledWithActionadmindashboard() {
-		$router = new Fabiom\UglyDuckling\Common\Router\RoutersContainer( 'http://localhost:18080/' );
-		$this->assertSame( get_class( $router->getController( 'admindashboard' ) ), 'Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminDashboard' );
-        unset( $router );
-	}
-	*/
    
 }
