@@ -21,7 +21,7 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 	}
 
 	public function testGetRequest() {
-		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$setup = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Request\Request::class)->getMock(); 
 		$severWrapper = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper::class)->getMock(); 		
@@ -56,7 +56,7 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 	}
 	
 	public function testPostRequestWithNoPostParameters() {
-		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$router->expects($this->once())->method('make_url')->will($this->returnValue(''));
 		$setup = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Request\Request::class)->getMock();
@@ -95,7 +95,7 @@ class LoginTest extends PHPUnit\Framework\TestCase {
 	}
 	
 	public function testPostRequestTrue() {
-		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\Router::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+		$router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
 		$router->expects($this->once())->method('make_url')->will($this->returnValue(''));
 		$setup = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Setup\Setup::class)->getMock();
 		$request = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Request\Request::class)->getMock();

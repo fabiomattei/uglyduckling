@@ -70,8 +70,12 @@ class TableJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $queryBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
         $linkBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder::class)->getMock();
         $linkBuilder->expects($this->any())->method('getButton')->will($this->returnValue(''));
+        $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
+        $jsonLoader = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonLoader::class)->getMock();
 
         $this->tableBuilder->setRouter($router);
+        $this->tableBuilder->setLogger($echologger);
+        $this->tableBuilder->setJsonloader($jsonLoader);
         $this->tableBuilder->setParameters( array( 'id' => '1' ) );
         $this->tableBuilder->setResource( $this->jsonform );
         $this->tableBuilder->setDbconnection( $dbconnection );
