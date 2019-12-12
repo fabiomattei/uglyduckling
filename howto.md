@@ -37,3 +37,7 @@ https://github.com/phan/phan/wiki/Annotating-Your-Source-Code#property
 ## phpunit commands
 
 ./vendor/bin/phpunit
+
+## running phpunit using docker
+sudo docker run --rm --interactive --tty   --volume $PWD:/app  composer vendor/bin/phpunit
+
