@@ -20,11 +20,13 @@ use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
 class DefaultJsonTemplateFactory extends JsonTemplateFactory {
 
-    private $tableBuilder;
-    private $chartjsBuilder;
-    private $infoBuilder;
-    private $formBuilder;
-    private $dashboardJsonTemplate;
+    private TableJsonTemplate $tableBuilder;
+    private ChartjsJsonTemplate $chartjsBuilder;
+    private InfoJsonTemplate $infoBuilder;
+    private FormJsonTemplate$formBuilder;
+    private DashboardJsonTemplate $dashboardJsonTemplate;
+    private SearchJsonTemplate $searchJsonTemplate;
+    private ExportJsonTemplate $exportJsonTemplate;
 
     /**
      * PanelBuilder constructor.

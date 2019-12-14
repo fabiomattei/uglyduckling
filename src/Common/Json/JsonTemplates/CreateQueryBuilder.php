@@ -23,13 +23,13 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 class CreateQueryBuilder {
 	
-	private $tableName;
-	private $engine;
-	private $collate;
-	private $charset;
-	private $primary;
-    private $fields;
-    private $alter;
+	private string $tableName;
+	private string $engine;
+	private string $collate;
+	private string $charset;
+	private string $primary;
+    private array $fields;
+    private array $alter;
 	
 	public function __construct() {
 		$this->tableName = '';

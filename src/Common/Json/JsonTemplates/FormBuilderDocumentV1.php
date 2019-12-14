@@ -39,7 +39,7 @@ class FormBuilderDocumentV1 {
     }
 
     public function createForm() {
-		$formBlock = new BaseHTMLForm;
+        $formBlock = new BaseHTMLForm;
 		$formBlock->setTitle($this->formStructure->title);
         $formBlock->setAction( $this->action );
 		$maxrows = $this->calculateMaxumumRowsNumber();
