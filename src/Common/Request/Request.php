@@ -6,12 +6,13 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 class Request {
 
-    private $msginfo = '';
-    private $msgwarning = '';
-    private $msgerror = '';
-    private $msgsuccess = '';
-    private $flashvariable = '';
-    private $requestURI = '';
+    private string $msginfo = '';
+    private string $msgwarning = '';
+    private string $msgerror = '';
+    private string $msgsuccess = '';
+    private string $flashvariable = '';
+    private string $requestURI = '';
+    private string $action = '';
 
 	function __construct() {
 	}
@@ -46,6 +47,7 @@ class Request {
         if ( $request == '' ) throw new \Exception('General malfuction!!!');
     
         #split the string by '/'
+        echo "richiesta: ".$request;
         $params = explode( '/', $request );
         $this->action = $params[1];
 
