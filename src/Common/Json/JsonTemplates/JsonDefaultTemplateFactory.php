@@ -43,6 +43,12 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $this->action = '';
     }
 
+    /**
+     * @deprecated
+     * @param $panel
+     * @return CardHTMLBlock
+     * @throws \Exception
+     */
     function getPanel($panel) {
         $panelBlock = new CardHTMLBlock;
         $panelBlock->setTitle($panel->title ?? '');
@@ -57,6 +63,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     }
 
     /**
+     * @deprecated
      * Return a panel containing an HTML Block built with data in the resource field
      *
      * The HTML block type depends from the resource->metadata->type field in the json strcture

@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
+use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
@@ -117,6 +118,36 @@ class JsonTemplateFactoriesContainer {
      */
     public function addJsonTemplateFactory( $jsonTemplateFactory ) {
         $this->factories[] = $jsonTemplateFactory;
+    }
+
+    function getPanel($panel) {
+        $panelBlock = new CardHTMLBlock;
+        $panelBlock->setTitle($panel->title ?? '');
+        $panelBlock->setWidth($panel->width ?? '3');
+        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+
+        $resource = $this->jsonloader->loadResource( $panel->resource );
+
+        $panelBlock->setBlock($this->getHTMLBlock($resource));
+
+        return $panelBlock;
+    }
+
+    /**
+     * Return a panel containing an HTML Block built with data in the resource field
+     *
+     * The HTML block type depends from the resource->metadata->type field in the json strcture
+     *
+     * @param $resource
+     * @return CardHTMLBlock
+     */
+    function getWidePanel( $resource ) {
+        $panelBlock = new CardHTMLBlock;
+        $panelBlock->setTitle('');
+        $panelBlock->setWidth( '12');
+        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $panelBlock->setBlock($this->getHTMLBlock($resource));
+        return $panelBlock;
     }
 
     public function getHTMLBlock( $resource ) {
