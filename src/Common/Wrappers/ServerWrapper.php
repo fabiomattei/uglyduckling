@@ -23,7 +23,8 @@ class ServerWrapper {
      * @return string
      */
     public function getRequestURI(): string {
-        return filter_var((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : NULL), FILTER_SANITIZE_URL);
+        return $_SERVER['REQUEST_URI'];
+        // return filter_var((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : NULL), FILTER_SANITIZE_URL);
     }
 
     /**
