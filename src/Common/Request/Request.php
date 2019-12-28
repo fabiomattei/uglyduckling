@@ -40,6 +40,7 @@ class Request {
     * Diventa array( 'action', array( 'par1', 'par2', 'par3' ) )
     */
     public function calculateSplittedURL() {
+        echo "richiesta: ".$this->requestURI;
         $request2 = str_replace( '.html', '', $this->requestURI );
         $request3 = str_replace( '.pdf', '', $request2 );
         $request  = preg_replace( '/\?.*/', '', $request3 );
