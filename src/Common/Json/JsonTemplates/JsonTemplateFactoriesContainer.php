@@ -121,7 +121,7 @@ class JsonTemplateFactoriesContainer {
 
     public function getHTMLBlock( $resource ) {
         foreach ($this->factories as $factory) {
-            if ($factory->isResourceSupported( $resource )) {
+            if ( $factory->isResourceSupported( $resource ) ) {
                 $factory->setHtmlTemplateLoader($this->htmlTemplateLoader);
                 $factory->setJsonloader($this->jsonloader);
                 $factory->setRouter($this->routerContainer);

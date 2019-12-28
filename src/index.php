@@ -40,7 +40,7 @@ $controller = $routerContainer->getController( $request->getAction() );
 $jsonloader = new Fabiom\UglyDuckling\Common\Json\JsonLoader();
 $jsonloader->setIndexPath($setup->getJsonPath());
 
-$jsonTemplateFactoriesContainer = new JsonTemplateFactoriesContainer;
+$jsonTemplateFactoriesContainer = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 $jsonTemplateFactoriesContainer->addJsonTemplateFactory( new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory );
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
