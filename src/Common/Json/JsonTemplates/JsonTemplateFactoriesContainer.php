@@ -161,6 +161,7 @@ class JsonTemplateFactoriesContainer {
                 $factory->setDbconnection($this->dbconnection);
                 $factory->setJsonTemplateFactoriesContainer($this);
                 $factory->setLogger($this->logger);
+                $factory->setAction($this->action);
                 return $factory->getHTMLBlock( $resource );
             }
         }
