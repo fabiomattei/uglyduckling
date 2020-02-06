@@ -11,6 +11,11 @@ class DBConnection {
 
     /**
      * Setting up the database connection
+     *
+     * @param string $host
+     * @param string $dbname
+     * @param string $username
+     * @param string $password
      */
     function __construct( string $host, string $dbname, string $username, string $password ) {
 		$this->host = $host;
