@@ -28,6 +28,7 @@ $dbconnection = new Fabiom\UglyDuckling\Common\Database\DBConnection(
 	'user',
 	'userp'
 );
+$dbconnection->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 
 $request = new Fabiom\UglyDuckling\Common\Request\Request();
 $request->setServerRequestURI( $severWrapper->getRequestURI() );
