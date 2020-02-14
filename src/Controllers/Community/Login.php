@@ -34,11 +34,11 @@ class Login extends Controller {
 		$this->templateFile     = 'login';
 	}
 	
-    public array $post_validation_rules = array(
+    public /* array */ $post_validation_rules = array(
 		'email'	   => 'max_len,255',
 		'password' => 'max_len,255',
     );
-    public array $post_filter_rules = array(
+    public /* array */ $post_filter_rules = array(
 		'email'    => 'trim',
 		'password' => 'trim',
     );
