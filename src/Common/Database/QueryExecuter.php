@@ -15,7 +15,7 @@ class QueryExecuter {
     private $parameters;
     private $DBH;
     private $queryBuilder;
-    private Logger $logger;
+    private /* Logger */ $logger;
 
     /**
      * Database connection handler setter

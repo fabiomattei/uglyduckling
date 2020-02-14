@@ -9,9 +9,9 @@ use stdClass;
  */
 class JsonLoader {
 	
-	private string $indexpath;
-	protected array $resourcesIndex = array();
-    private array $resourceCache = array();
+	private /* string */ $indexpath;
+	private /* array */ $resourceCache = array();
+	protected /* array */ $resourcesIndex = array();
 
     /**
      * Set the path of the file containing the main index of the json structure

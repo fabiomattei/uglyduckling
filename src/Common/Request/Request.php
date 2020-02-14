@@ -6,13 +6,13 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 class Request {
 
-    private string $msginfo = '';
-    private string $msgwarning = '';
-    private string $msgerror = '';
-    private string $msgsuccess = '';
-    private string $flashvariable = '';
-    private string $requestURI = '';
-    private string $action = '';
+    private /* string */ $msginfo = '';
+    private /* string */ $msgwarning = '';
+    private /* string */ $msgerror = '';
+    private /* string */ $msgsuccess = '';
+    private /* string */ $flashvariable = '';
+    private /* string */ $requestURI = '';
+    private /* string */ $action = '';
 
 	function __construct() {
 	}

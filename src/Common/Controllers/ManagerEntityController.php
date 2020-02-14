@@ -14,8 +14,8 @@ use Gump;
  */
 class ManagerEntityController extends Controller {
 
-	public array $get_validation_rules = array( 'res' => 'required|max_len,50' );
-    public array $get_filter_rules     = array( 'res' => 'trim' );
+	public /* array */ $get_validation_rules = array( 'res' => 'required|max_len,50' );
+    public /* array */ $get_filter_rules     = array( 'res' => 'trim' );
     protected $resource;
     protected $internalGetParameters;
 

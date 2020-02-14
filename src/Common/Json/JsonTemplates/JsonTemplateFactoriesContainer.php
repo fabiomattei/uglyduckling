@@ -17,17 +17,17 @@ use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class JsonTemplateFactoriesContainer {
 
-    private array $factories;
-    private RoutersContainer $routerContainer;
-    private DBConnection $dbconnection;
-    private array $parameters;
-    private array $postparameters;
-    private array $sessionparameters;
-    private string $action;
-    private HtmlTemplateLoader $htmlTemplateLoader;
-    private JsonLoader $jsonloader;
-    private LinkBuilder $linkBuilder;
-    private Logger $logger;
+    private /* array */ $factories;
+    private /* RoutersContainer */ $routerContainer;
+    private /* DBConnection */ $dbconnection;
+    private /* array */ $parameters;
+    private /* array */ $postparameters;
+    private /* array */ $sessionparameters;
+    private /* string */ $action;
+    private /* HtmlTemplateLoader */ $htmlTemplateLoader;
+    private /* JsonLoader */ $jsonloader;
+    private /* LinkBuilder */ $linkBuilder;
+    private /* Logger */ $logger;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
