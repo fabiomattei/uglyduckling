@@ -291,6 +291,7 @@ class QueryExecuter {
             return $STH;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 	
@@ -309,6 +310,7 @@ class QueryExecuter {
             return $out;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 	
@@ -320,6 +322,7 @@ class QueryExecuter {
             $STH = $this->DBH->query( $query );
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 	
@@ -331,6 +334,7 @@ class QueryExecuter {
             $STH = $this->DBH->query( $query );
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 
@@ -365,6 +369,7 @@ class QueryExecuter {
             return $STH;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 
@@ -403,6 +408,7 @@ class QueryExecuter {
             return $STH;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 
@@ -440,6 +446,7 @@ class QueryExecuter {
             return $STH;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 
