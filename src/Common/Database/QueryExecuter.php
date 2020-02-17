@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Common\Database;
 
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use PDO;
+use PDOException;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
@@ -271,12 +272,12 @@ class QueryExecuter {
      * It gets all rows contained in a table
      */
     function executeSelect() {
-        try {
-			$this->queryBuilder = new QueryBuilder;
-			$this->queryBuilder->setQueryStructure( $this->queryStructure );
-			$this->queryBuilder->setParameters( $this->parameters );
+        $this->queryBuilder = new QueryBuilder;
+        $this->queryBuilder->setQueryStructure( $this->queryStructure );
+        $this->queryBuilder->setParameters( $this->parameters );
 
-            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+        try {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
 			if ( isset($this->queryStructure->conditions) ) {
@@ -299,11 +300,13 @@ class QueryExecuter {
      * It gets all rows contained in a table
      */
     function executeTableExists( $query ) {
+        $out = false;
+        $STH = $this->DBH->prepare( $query );
         try {
-			$out = false;
-            $STH = $this->DBH->query( $query );
             $STH->setFetchMode(PDO::FETCH_OBJ);
-			
+
+            $STH->execute();
+
 			foreach ($STH as $table) {
 				$out = true;
 			}
@@ -318,8 +321,9 @@ class QueryExecuter {
      * It creates a table
      */
     function executeTableCreate( $query ) {
+        $STH = $this->DBH->prepare( $query );
         try {
-            $STH = $this->DBH->query( $query );
+            $STH->execute();
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
@@ -330,8 +334,9 @@ class QueryExecuter {
      * It drops a table
      */
     function executeTableDrop( $query ) {
+        $STH = $this->DBH->prepare( $query );
         try {
-            $STH = $this->DBH->query( $query );
+            $STH->execute();
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
@@ -350,13 +355,13 @@ class QueryExecuter {
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
     function insert() {
-        try {
-            $this->queryBuilder = new QueryBuilder;
-            $this->queryBuilder->setQueryStructure( $this->queryStructure );
-            $this->queryBuilder->setParameters( $this->parameters );
-            
-            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+        $this->queryBuilder = new QueryBuilder;
+        $this->queryBuilder->setQueryStructure( $this->queryStructure );
+        $this->queryBuilder->setParameters( $this->parameters );
 
+        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+
+        try {
             if ( isset($this->queryStructure->fields) ) {
                 foreach ($this->queryStructure->fields as $field) {
                     $par =& $this->parameters[$field->value];
@@ -382,13 +387,13 @@ class QueryExecuter {
      *
      */
     function update() {
-        try {
-            $this->queryBuilder = new QueryBuilder;
-            $this->queryBuilder->setQueryStructure( $this->queryStructure );
-            $this->queryBuilder->setParameters( $this->parameters );
-            
-            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+        $this->queryBuilder = new QueryBuilder;
+        $this->queryBuilder->setQueryStructure( $this->queryStructure );
+        $this->queryBuilder->setParameters( $this->parameters );
 
+        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+
+        try {
             if ( isset($this->queryStructure->fields) ) {
                 foreach ($this->queryStructure->fields as $field) {
                     $par =& $this->parameters[$field->value];
@@ -427,13 +432,13 @@ class QueryExecuter {
      * const DB_TABLE_PK = 'stp_id';
      */
     function delete() {
-        try {
-            $this->queryBuilder = new QueryBuilder;
-            $this->queryBuilder->setQueryStructure( $this->queryStructure );
-            $this->queryBuilder->setParameters( $this->parameters );
-            
-            $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+        $this->queryBuilder = new QueryBuilder;
+        $this->queryBuilder->setQueryStructure( $this->queryStructure );
+        $this->queryBuilder->setParameters( $this->parameters );
 
+        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
+
+        try {
             if ( isset($this->queryStructure->conditions) ) {
                 foreach ($this->queryStructure->conditions as $cond) {
                     $par =& $this->parameters[$cond->value];
