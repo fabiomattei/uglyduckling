@@ -54,7 +54,7 @@ class HorizontalTabber extends BaseBlock {
     }
 
     function addToHead() {
-        $out = '<link href="'.BASEPATH.'assets/lib/jquery-ui/jquery-ui.css" rel="stylesheet">';
+        $out = '<link href="'.BASEPATH.'udassets/lib/jquery-ui/jquery-ui.css" rel="stylesheet">';
         if (isset($this->blocks)) {
             if (is_array($this->blocks)) {
                 foreach ($this->blocks as $bl) {
@@ -68,7 +68,7 @@ class HorizontalTabber extends BaseBlock {
     }
 
     function addToFoot() {
-        $out = '<script src="'.BASEPATH.'assets/lib/jquery-ui/jquery-ui.js"></script>
+        $out = '<script src="'.BASEPATH.'udassets/lib/jquery-ui/jquery-ui.js"></script>
 			<script>
 				$( "#tabs" ).tabs();
 		    </script>';

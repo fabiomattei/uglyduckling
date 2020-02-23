@@ -37,7 +37,7 @@ return [
     //       to `exclude_analysis_directory_list`.
     "exclude_analysis_directory_list" => [
         'vendor/',
-        'src/assets/',
+        'src/udassets/',
         'src/Templates/'
     ],
 

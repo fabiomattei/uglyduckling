@@ -39,7 +39,7 @@ class LoginForm extends BaseHTMLBlock {
     }
 	
 	function addToHead(): string {
-        return '<link rel="stylesheet" href="assets/css/login.css">';
+        return '<link rel="stylesheet" href="udassets/css/login.css">';
     }
 
 }
