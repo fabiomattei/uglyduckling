@@ -16,10 +16,10 @@ use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
 class JsonTemplateFactory {
 
-    protected QueryExecuter $queryExecuter;
-    protected QueryBuilder $queryBuilder;
+    protected /* QueryExecuter */ $queryExecuter;
+    protected /* QueryBuilder */ $queryBuilder;
     protected $resource;
-    protected RoutersContainer $routerContainer;
+    protected /* RoutersContainer */ $routerContainer;
     protected $dbconnection;
     protected $parameters;
     protected $postparameters;

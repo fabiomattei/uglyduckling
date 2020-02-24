@@ -17,20 +17,20 @@ use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class JsonTemplate {
 
-    protected QueryExecuter $queryExecuter;
-    protected QueryBuilder $queryBuilder;
+    protected /* QueryExecuter */ $queryExecuter;
+    protected /* QueryBuilder */ $queryBuilder;
     protected $resource;
-    protected RoutersContainer $routerContainer;
-    protected DBConnection $dbconnection;
-    protected array $parameters;
-    protected array $postparameters;
+    protected /* RoutersContainer */ $routerContainer;
+    protected /* DBConnection */ $dbconnection;
+    protected /* array */ $parameters;
+    protected /* array */ $postparameters;
     protected $sessionparameters;
-    protected string $action;
-    protected HtmlTemplateLoader $htmlTemplateLoader;
-    protected JsonLoader $jsonloader;
-    protected LinkBuilder $linkBuilder;
-    protected Logger $logger;
-    protected JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer;
+    protected /* string */ $action;
+    protected /* HtmlTemplateLoader */ $htmlTemplateLoader;
+    protected /* JsonLoader */ $jsonloader;
+    protected /* LinkBuilder */ $linkBuilder;
+    protected /* Logger */ $logger;
+    protected /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
 
     const blocktype = 'basebuilder';
 
