@@ -12,10 +12,10 @@
     <title><?php echo isset($this->title) ? $this->title : '' ?></title>
 
     <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="udassets/css/bootstrap.min.css" rel="stylesheet">
 	
 	<!-- Custom styles for this template -->
-	<link href="assets/css/dashboard.css" rel="stylesheet">
+	<link href="udassets/css/dashboard.css" rel="stylesheet">
 
     <?php echo isset($this->addToHead) ? $this->addToHead : '' ?>
   </head>
@@ -98,9 +98,9 @@
 	      </div>
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="assets/lib/jquery/jquery-3.3.1.min.js">"></script>
-	<script src="assets/lib/popper.min.js">"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="udassets/lib/jquery/jquery-3.3.1.min.js">"></script>
+	<script src="udassets/lib/popper.min.js">"></script>
+    <script src="udassets/js/bootstrap.min.js"></script>
 	
 	<!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>

@@ -11,8 +11,8 @@ use Fabiom\UglyDuckling\Common\Loggers\Logger;
  */
 class DBConnection {
 
-    public PDO $DBH;
-    private Logger $logger;
+    public /* PDO */ $DBH;
+    private /* Logger */ $logger;
 
     /**
      * Setting up the database connection
