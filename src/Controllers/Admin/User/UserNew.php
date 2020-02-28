@@ -64,7 +64,8 @@ class UserNew extends Controller {
     public function postRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
         $this->userDao->insert( array(
-                'usr_email' => $this->postParameters['usr_email']
+                'usr_email' => $this->postParameters['usr_email'],
+                'usr_password_updated' => date('Y-m-d')
             )
         );
 
