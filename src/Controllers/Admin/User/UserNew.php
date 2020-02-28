@@ -83,7 +83,7 @@ class UserNew extends Controller {
                     'usr_surname' => $this->postParameters['usr_surname'],
                     'usr_email' => $this->postParameters['usr_email'],
                     'usr_password_updated' => date('Y-m-d'),
-                );
+                ) );
                 $this->userDao->updatePassword( $iduser, $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
                 $this->setSuccess("Password successfully updated");
                 $this->redirectToSecondPreviousPage();
