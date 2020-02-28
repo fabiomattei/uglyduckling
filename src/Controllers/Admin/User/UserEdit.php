@@ -50,6 +50,8 @@ class UserEdit extends Controller {
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
+        $form->addTextField('usr_name', 'Name: ', 'Name', $user->usr_name, '6' );
+        $form->addTextField('usr_surname', 'Surname: ', 'Surname', $user->usr_surname, '6' );
         $form->addHiddenField('usr_id', $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
@@ -63,12 +65,16 @@ class UserEdit extends Controller {
     public $post_validation_rules = array(
         'usr_id' => 'required|numeric',
         'usr_defaultgroup' => 'required|alpha_numeric|max_len,100',
-        'usr_email' => 'required|valid_email'
+        'usr_email' => 'required|valid_email',
+        'usr_name' => 'max_len,100',
+        'usr_surname' => 'max_len,100'
     );
     public $post_filter_rules     = array(
         'usr_id' => 'trim',
         'usr_defaultgroup' => 'trim|sanitize_string',
-        'usr_email' => 'trim|sanitize_email'
+        'usr_email' => 'trim|sanitize_email',
+        'usr_name' => 'trim',
+        'usr_surname' => 'trim'
     );
 
     /**
@@ -80,7 +86,9 @@ class UserEdit extends Controller {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
         $this->userDao->update( $this->postParameters['usr_id'], array(
             'usr_defaultgroup' => $this->postParameters['usr_defaultgroup'],
-            'usr_email' => $this->postParameters['usr_email']
+            'usr_email' => $this->postParameters['usr_email'],
+            'usr_name' => $this->postParameters['usr_name'],
+            'usr_surname' => $this->postParameters['usr_surname']
             )
         );
 
@@ -102,6 +110,8 @@ class UserEdit extends Controller {
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
+        $form->addTextField('usr_name', 'Name: ', 'Name', $user->usr_name, '6' );
+        $form->addTextField('usr_surname', 'Surname: ', 'Surname', $user->usr_surname, '6' );
         $form->addHiddenField('usr_id', $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 

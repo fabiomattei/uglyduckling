@@ -40,6 +40,8 @@ class UserNew extends Controller {
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'New user: ' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
+        $form->addTextField('usr_name', 'Name: ', 'Name', $user->usr_name, '6' );
+        $form->addTextField('usr_surname', 'Surname: ', 'Surname', $user->usr_surname, '6' );
         $form->addSubmitButton('save', 'Save');
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
@@ -50,10 +52,14 @@ class UserNew extends Controller {
     }
 
     public $post_validation_rules = array(
-        'usr_email' => 'required|valid_email'
+        'usr_email' => 'required|valid_email',
+        'usr_name' => 'max_len,100',
+        'usr_surname' => 'max_len,100'
     );
     public $post_filter_rules     = array(
-        'usr_email' => 'trim|sanitize_email'
+        'usr_email' => 'trim|sanitize_email',
+        'usr_name' => 'trim',
+        'usr_surname' => 'trim'
     );
 
     /**
@@ -64,6 +70,8 @@ class UserNew extends Controller {
     public function postRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
         $this->userDao->insert( array(
+                'usr_name' => $this->postParameters['usr_name'],
+                'usr_surname' => $this->postParameters['usr_surname'],
                 'usr_email' => $this->postParameters['usr_email'],
                 'usr_password_updated' => date('Y-m-d')
             )
@@ -83,6 +91,8 @@ class UserNew extends Controller {
         $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $form->setTitle( 'New user: ' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
+        $form->addTextField('usr_name', 'Name: ', 'Name', '', '6' );
+        $form->addTextField('usr_surname', 'Surname: ', 'Surname', '', '6' );
         $form->addSubmitButton('save', 'Save');
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
