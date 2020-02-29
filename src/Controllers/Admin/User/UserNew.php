@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\User;
 
+use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
@@ -26,6 +27,15 @@ class UserNew extends Controller {
 
     public function __construct() {
         $this->userDao = new UserDao;
+        $this->userGroupDao = New UserGroupDao();
+    }
+
+    /**
+     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
+     */
+    public function showPage() {
+        $this->jsonloader->loadIndex();
+        parent::showPage();
     }
 
     /**
@@ -46,6 +56,11 @@ class UserNew extends Controller {
         $form->addTextField('usr_surname', 'Surname: ', 'Surname', '', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
+        $grouparray = array();
+        foreach ( $this->jsonloader->getResourcesByType( 'group' ) as $res ) {
+            $grouparray[$res->name] = $res->name;
+        }
+        $form->addDropdownField('usr_defaultgroup', 'Default Group: ', $grouparray, '', '6' );
         $form->addSubmitButton('save', 'Save');
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
@@ -59,6 +74,7 @@ class UserNew extends Controller {
         'usr_email' => 'required|valid_email',
         'usr_name' => 'max_len,100',
         'usr_surname' => 'max_len,100',
+        'usr_defaultgroup' => 'max_len,100',
         UserEditPassword::FIELD_NEW_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'required|max_len,100|min_len,6',
     );
@@ -66,6 +82,7 @@ class UserNew extends Controller {
         'usr_email' => 'trim|sanitize_email',
         'usr_name' => 'trim',
         'usr_surname' => 'trim',
+        'usr_defaultgroup' => 'trim',
         UserEditPassword::FIELD_NEW_PASSWORD => 'trim',
         UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'trim'
     );
@@ -82,10 +99,17 @@ class UserNew extends Controller {
                     'usr_name' => $this->postParameters['usr_name'],
                     'usr_surname' => $this->postParameters['usr_surname'],
                     'usr_email' => $this->postParameters['usr_email'],
+                    'usr_defaultgroup' => $this->postParameters['usr_defaultgroup'],
                     'usr_password_updated' => date('Y-m-d'),
                 ) );
                 $this->userDao->updatePassword( $iduser, $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
-                $this->setSuccess("Password successfully updated");
+                $this->userGroupDao->insert(
+                    array(
+                        'ug_groupslug' => $this->postParameters['usr_defaultgroup'],
+                        'ug_userid' => $iduser
+                    )
+                );
+                $this->setSuccess("User successfully saved");
                 $this->redirectToSecondPreviousPage();
             } else {
                 $this->setError("The two new password do not match");
@@ -109,6 +133,11 @@ class UserNew extends Controller {
         $form->addTextField('usr_surname', 'Surname: ', 'Surname', '', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
+        $grouparray = array();
+        foreach ( $this->jsonloader->getResourcesByType( 'group' ) as $res ) {
+            $grouparray[$res->name] = $res->name;
+        }
+        $form->addDropdownField('usr_defaultgroup', 'Default Group: ', $grouparray, '', '6' );
         $form->addSubmitButton('save', 'Save');
 
         $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
