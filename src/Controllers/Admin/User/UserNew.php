@@ -22,6 +22,7 @@ use Fabiom\UglyDuckling\Common\Router\Router;
 class UserNew extends Controller {
 
     private $userDao;
+    private $userGroupDao;
     const FIELD_NEW_PASSWORD = 'usr_new_password';
     const FIELD_RETYPE_NEW_PASSWORD = 'usr_retype_new_password';
 
@@ -94,6 +95,7 @@ class UserNew extends Controller {
      */
     public function postRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
+        $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
         if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
                 $iduser = $this->userDao->insert( array(
                     'usr_name' => $this->postParameters['usr_name'],
