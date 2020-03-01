@@ -332,6 +332,13 @@ class Controller {
     }
 
     /**
+     * Return the SessionWrapper variable set for this controller
+     */
+    function getSessionWrapper() : SessionWrapper {
+        return $this->sessionWrapper;
+    }
+
+    /**
      * Function for setting parameters array
      */
     public function setGetParameters( $parameters ) {

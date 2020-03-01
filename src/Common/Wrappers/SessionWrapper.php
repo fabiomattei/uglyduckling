@@ -3,6 +3,37 @@
 namespace Fabiom\UglyDuckling\Common\Wrappers;
 
 class SessionWrapper {
+
+    /**
+     * Check using the isset native PHP function if a specific session parameter has been set in $_SESSION super array
+     *
+     * @param string $parameterName
+     * @return bool
+     */
+    public function isSessionParameterSet( string $parameterName ): bool {
+        return isset($_SESSION[$parameterName]);
+    }
+
+    /**
+     * Get a session parameter previously set in $_SESSION super array
+     *
+     * @param string $parameterName
+     * @return string
+     */
+    public function getSessionParameter( string $parameterName ): string {
+        return $_SESSION[$parameterName];
+    }
+
+    /**
+     * Set a session parameter in $_SESSION super array
+     *
+     * @param string $parameterName
+     * @param string $parameterValue
+     * @return string
+     */
+    public function setSessionParameter( string $parameterName, string $parameterValue ): string {
+        return $_SESSION[$parameterName] = $parameterValue;
+    }
 	
 	public function setSessionUserId( $user_id ) {
 		$_SESSION['user_id'] = $user_id;

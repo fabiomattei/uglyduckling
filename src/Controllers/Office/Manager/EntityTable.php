@@ -34,6 +34,7 @@ class EntityTable extends ManagerEntityController {
 
         $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setSessionWrapper( $this->getSessionWrapper() );
         $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
         $this->jsonTemplateFactoriesContainer->setRouter($this->routerContainer);
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);

@@ -20,6 +20,7 @@ class JsonTemplateFactoriesContainer {
     private /* array */ $factories;
     private /* RoutersContainer */ $routerContainer;
     private /* DBConnection */ $dbconnection;
+    private /* SessionWrapper */ $sessionWrapper;
     private /* array */ $parameters;
     private /* array */ $postparameters;
     private /* array */ $sessionparameters;
@@ -57,6 +58,13 @@ class JsonTemplateFactoriesContainer {
      */
     public function setParameters($parameters): void {
         $this->parameters = $parameters;
+    }
+
+    /**
+     * @param mixed $parameters
+     */
+    public function setSessionWrapper( $sessionWrapper ): void {
+        $this->sessionWrapper = $sessionWrapper;
     }
 
     /**
