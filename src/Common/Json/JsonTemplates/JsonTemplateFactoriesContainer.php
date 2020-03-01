@@ -14,6 +14,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class JsonTemplateFactoriesContainer {
 
@@ -61,7 +62,7 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * @param mixed $parameters
+     * @param SessionWrapper $sessionWrapper
      */
     public function setSessionWrapper( $sessionWrapper ): void {
         $this->sessionWrapper = $sessionWrapper;
@@ -72,13 +73,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function setPostParameters($parameters): void {
         $this->postparameters = $parameters;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setSessionParameters($parameters): void {
-        $this->sessionparameters = $parameters;
     }
 
     /**
@@ -167,6 +161,7 @@ class JsonTemplateFactoriesContainer {
                 $factory->setResource($resource);
                 $factory->setParameters($this->parameters);
                 $factory->setDbconnection($this->dbconnection);
+                $factory->setSessionWrapper($this->sessionWrapper);
                 $factory->setJsonTemplateFactoriesContainer($this);
                 $factory->setLogger($this->logger);
                 $factory->setAction($this->action);

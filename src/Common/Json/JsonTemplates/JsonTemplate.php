@@ -14,6 +14,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class JsonTemplate {
 
@@ -24,7 +25,7 @@ class JsonTemplate {
     protected /* DBConnection */ $dbconnection;
     protected /* array */ $parameters;
     protected /* array */ $postparameters;
-    protected $sessionparameters;
+    protected /* SessionWrapper */ $sessionWrapper;
     protected /* string */ $action;
     protected /* HtmlTemplateLoader */ $htmlTemplateLoader;
     protected /* JsonLoader */ $jsonloader;
@@ -75,8 +76,8 @@ class JsonTemplate {
     /**
      * @param array $parameters
      */
-    public function setSessionParameters(array $parameters): void {
-        $this->sessionparameters = $parameters;
+    public function setSessionWrapper( SessionWrapper $sessionWrapper): void {
+        $this->sessionWrapper = $sessionWrapper;
     }
 
     /**
@@ -175,8 +176,8 @@ class JsonTemplate {
         if ( isset($field->postparameter) ) {
             return $this->postparameters[$field->postparameter] ?? '';
         }
-        if ( isset($field->sessionparameter) ) {
-            return $this->sessionparameters[$field->sessionparameter] ?? '';
+        if ( $this->sessionWrapper->isSessionParameterSet($field->sessionparameter) ) {
+            return $this->sessionWrapper->getSessionParameter($field->sessionparameter);
         }
     }
 
