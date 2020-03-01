@@ -83,6 +83,9 @@ class QueryExecuter {
         $this->sessionWrapper = $sessionWrapper;
     }
 
+    /*
+     * @deprecated
+     */
     public function executeQuery() {
         if($this->queryStructure->type === 'select') {
             return $this->executeSelect();
