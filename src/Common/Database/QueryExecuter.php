@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Common\Database;
 
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 use PDO;
 use PDOException;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
@@ -17,6 +18,7 @@ class QueryExecuter {
     private $DBH;
     private $queryBuilder;
     private /* Logger */ $logger;
+    private /* SessionWrapper */ $sessionWrapper;
 
     /**
      * Database connection handler setter
@@ -72,6 +74,15 @@ class QueryExecuter {
         $this->logger = $logger;
     }
 
+    /**
+     * Setting the SessionWrapper
+     *
+     * @param $sessionWrapper
+     */
+    public function setSessionWrapper( SessionWrapper $sessionWrapper ) {
+        $this->sessionWrapper = $sessionWrapper;
+    }
+
     public function executeQuery() {
         if($this->queryStructure->type === 'select') {
             return $this->executeSelect();
@@ -112,6 +123,9 @@ class QueryExecuter {
                         $par =& $this->postParameters[$cond->postparameter];
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
+                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
+                        $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -152,6 +166,9 @@ class QueryExecuter {
                         $par =& $this->postParameters[$cond->postparameter];
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
+                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
+                        $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -189,6 +206,9 @@ class QueryExecuter {
                         $par =& $this->postParameters[$cond->postparameter];
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
+                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
+                        $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -229,6 +249,9 @@ class QueryExecuter {
                         $par =& $this->postParameters[$cond->postparameter];
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
+                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
+                        $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);

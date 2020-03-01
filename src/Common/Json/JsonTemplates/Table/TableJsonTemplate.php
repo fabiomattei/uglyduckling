@@ -54,6 +54,7 @@ class TableJsonTemplate extends JsonTemplate {
                 $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setLogger( $this->logger );
+                $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
                 if ($this->method === self::GET_METHOD) {
                     $query = $this->resource->get->query;
                     if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );

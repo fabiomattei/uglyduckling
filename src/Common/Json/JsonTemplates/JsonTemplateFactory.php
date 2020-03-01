@@ -23,7 +23,7 @@ class JsonTemplateFactory {
     protected $dbconnection;
     protected $parameters;
     protected $postparameters;
-    protected $sessionparameters;
+    protected /* SessionWrapper */ $sessionWrapper;
     protected $action;
     protected $htmlTemplateLoader;
     protected $jsonloader;
@@ -73,8 +73,8 @@ class JsonTemplateFactory {
     /**
      * @param mixed $parameters
      */
-    public function setSessionParameters($parameters) {
-        $this->sessionparameters = $parameters;
+    public function setSessionWrapper( $sessionWrapper ) {
+        $this->sessionWrapper = $sessionWrapper;
     }
 
     /**

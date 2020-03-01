@@ -103,6 +103,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     public function getHTMLBlock( $resource ) {
         if ( $resource->metadata->type == DashboardJsonTemplate::blocktype ) {
             $this->dashboardJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->dashboardJsonTemplate->setSessionWrapper($this->sessionWrapper);
             $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
             $this->dashboardJsonTemplate->setRouter($this->routerContainer);
             $this->dashboardJsonTemplate->setResource($resource);
@@ -115,6 +116,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ( $resource->metadata->type == TableJsonTemplate::blocktype ) {
             $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->tableBuilder->setSessionWrapper($this->sessionWrapper);
             $this->tableBuilder->setJsonloader($this->jsonloader);
             $this->tableBuilder->setRouter($this->routerContainer);
             $this->tableBuilder->setResource($resource);
@@ -126,6 +128,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ( $resource->metadata->type == ChartjsJsonTemplate::blocktype ) {
             $this->chartjsBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->chartjsBuilder->setSessionWrapper($this->sessionWrapper);
             $this->chartjsBuilder->setJsonloader($this->jsonloader);
             $this->chartjsBuilder->setRouter($this->routerContainer);
             $this->chartjsBuilder->setResource($resource);
@@ -137,6 +140,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ( $resource->metadata->type == InfoJsonTemplate::blocktype ) {
             $this->infoBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->infoBuilder->setSessionWrapper($this->sessionWrapper);
             $this->infoBuilder->setJsonloader($this->jsonloader);
             $this->infoBuilder->setRouter($this->routerContainer);
             $this->infoBuilder->setResource($resource);
@@ -148,6 +152,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ( $resource->metadata->type == FormJsonTemplate::blocktype ) {
             $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->formBuilder->setSessionWrapper($this->sessionWrapper);
             $this->formBuilder->setJsonloader($this->jsonloader);
             $this->formBuilder->setRouter($this->routerContainer);
             $this->formBuilder->setResource($resource);
@@ -160,6 +165,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
             $this->searchJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->searchJsonTemplate->setSessionWrapper($this->sessionWrapper);
             $this->searchJsonTemplate->setJsonloader($this->jsonloader);
             $this->searchJsonTemplate->setRouter($this->routerContainer);
             $this->searchJsonTemplate->setResource($resource);
@@ -172,6 +178,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
             $this->exportJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
+            $this->exportJsonTemplate->setSessionWrapper($this->sessionWrapper);
             $this->exportJsonTemplate->setJsonloader($this->jsonloader);
             $this->exportJsonTemplate->setRouter($this->routerContainer);
             $this->exportJsonTemplate->setResource($resource);
