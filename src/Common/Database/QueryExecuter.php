@@ -300,16 +300,16 @@ class QueryExecuter {
      *   DELETE  if the statement starts with DELETE
      */
     function getSqlStatmentType() {
-        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'SELECT') == 0 ) {
+        if ( substr(strtoupper(trim($this->queryStructure->sql)), 0, 6) === self::SELECT ) {
             return self::SELECT;
         }
-        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'INSERT') == 0 ) {
+        if ( substr(strtoupper(trim($this->queryStructure->sql)), 0, 6) === self::INSERT  ) {
             return self::INSERT;
         }
-        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'UPDATE') == 0 ) {
+        if ( substr(strtoupper(trim($this->queryStructure->sql)), 0, 6) === self::UPDATE  ) {
             return self::UPDATE;
         }
-        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'DELETE') == 0 ) {
+        if ( substr(strtoupper(trim($this->queryStructure->sql)), 0, 6) === self::DELETE  ) {
             return self::DELETE;
         }
     }
