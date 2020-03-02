@@ -25,6 +25,17 @@ class SessionWrapper {
     }
 
     /**
+     * Get a pointer to a session parameter previously set in $_SESSION super array
+     * Used for bindpar in PDO parameters
+     *
+     * @param string $parameterName
+     * @return string
+     */
+    public function &getPointerToSessionParameter( string $parameterName ): string {
+        return $_SESSION[$parameterName];
+    }
+
+    /**
      * Set a session parameter in $_SESSION super array
      *
      * @param string $parameterName
