@@ -66,17 +66,13 @@ class EntityDashboard extends ManagerEntityController {
                 $this->queryExecuter->setLogger( $this->logger );
                 $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
                 $this->queryExecuter->setQueryReturnedValues( $returnedIds );
-                echo "getSqlStatmentType " .$this->queryExecuter->getSqlStatmentType().'<br>';
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
-                    echo "sql ".$transaction->sql;
-                    echo "label " .$transaction->label.'<br>';
                     if (isset($transaction->label)) {
                         $returnedIds->setValue($transaction->label, $this->queryExecuter->executeQuery());
                     } else {
                         $returnedIds->setValueNoKey($this->queryExecuter->executeQuery());
                     }
                 } else {
-                    echo "executeQuery <br>";
                     $this->queryExecuter->executeQuery();
                 }
             }
