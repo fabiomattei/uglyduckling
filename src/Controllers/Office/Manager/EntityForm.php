@@ -67,6 +67,8 @@ class EntityForm extends ManagerEntityController {
             foreach ($this->resource->post->transactions as $transaction) {
                 $this->queryExecuter->setQueryStructure($transaction);
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
+                    echo "sql ".$transaction->sql;
+                    echo "label " .$transaction->label.'<br>';
                     if (isset($transaction->label)) {
                         $returnedIds->setValue($transaction->label, $this->queryExecuter->executeQuery());
                     } else {
