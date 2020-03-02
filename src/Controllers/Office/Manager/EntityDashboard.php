@@ -57,13 +57,13 @@ class EntityDashboard extends ManagerEntityController {
         $returnedIds = array();
         try {
             $conn->beginTransaction();
-            $this->queryExecuter->setDBH($conn);
-            $this->queryExecuter->setQueryBuilder($this->queryBuilder);
-            $this->queryExecuter->setPostParameters($this->postParameters);
-            $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
-            $this->queryExecuter->setReturnedIds( $returnedIds );
-            foreach ($this->resource->post->transactions as $transaction) {
-                $this->queryExecuter->setQueryStructure($transaction);
+            foreach ($this->postresource->post->transactions as $transaction) {
+                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                $this->queryExecuter->setQueryStructure( $transaction );
+                $this->queryExecuter->setPostParameters( $this->postParameters );
+                $this->queryExecuter->setLogger( $this->logger );
+                $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
+                $this->queryExecuter->setReturnedIds( $returnedIds );
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
                     if (isset($transaction->label)) {
                         $returnedIds[$transaction->label] = $this->queryExecuter->executeQuery();
