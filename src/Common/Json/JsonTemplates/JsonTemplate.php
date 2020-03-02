@@ -176,8 +176,12 @@ class JsonTemplate {
         if ( isset($field->postparameter) ) {
             return $this->postparameters[$field->postparameter] ?? '';
         }
-        if ( isset($field->sessionparameter) AND !empty ( $field->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet($field->sessionparameter) ) {
-            return $this->sessionWrapper->getSessionParameter($field->sessionparameter);
+        if ( isset($field->sessionparameter) ) {
+            if ( !empty ( $field->sessionparameter ) ) {
+                if ( $this->sessionWrapper->isSessionParameterSet($field->sessionparameter) ) {
+                    return $this->sessionWrapper->getSessionParameter($field->sessionparameter);
+                }
+            }
         }
     }
 
