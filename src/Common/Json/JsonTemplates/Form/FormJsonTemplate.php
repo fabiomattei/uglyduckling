@@ -72,6 +72,9 @@ class FormJsonTemplate extends JsonTemplate {
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
                 }
+                if ($field->type === 'file') {
+                    $formBlock->addFileUploadField($field->name, $field->label, $field->width);
+                }
                 if ($field->type === 'submitbutton') {
                     $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '' );
                 }
