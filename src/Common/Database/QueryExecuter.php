@@ -178,14 +178,14 @@ class QueryExecuter {
                 } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                     $par =& $this->queryReturnedValues->getValue($cond->returnedid);
                 }
-                // echo "$cond->placeholder, $par";
+                echo "$cond->placeholder, $par";
                 $STH->bindParam($cond->placeholder, $par);
             }
         }
 
         $STH->execute();
 
-        // $STH->debugDumpParams();
+        $STH->debugDumpParams();
 
         return $this->DBH->lastInsertId();
     }
