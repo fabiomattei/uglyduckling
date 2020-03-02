@@ -63,7 +63,7 @@ class EntityForm extends ManagerEntityController {
             $this->queryExecuter->setQueryBuilder($this->queryBuilder);
             $this->queryExecuter->setPostParameters($this->postParameters);
             $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
-            $this->queryExecuter->setReturnedIds( $returnedIds );
+            $this->queryExecuter->setQueryReturnedValues( $returnedIds );
             foreach ($this->resource->post->transactions as $transaction) {
                 $this->queryExecuter->setQueryStructure($transaction);
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {

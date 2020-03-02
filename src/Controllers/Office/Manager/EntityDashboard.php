@@ -65,7 +65,7 @@ class EntityDashboard extends ManagerEntityController {
                 $this->queryExecuter->setPostParameters( $this->postParameters );
                 $this->queryExecuter->setLogger( $this->logger );
                 $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
-                $this->queryExecuter->setReturnedIds( $returnedIds );
+                $this->queryExecuter->setQueryReturnedValues( $returnedIds );
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
                     if (isset($transaction->label)) {
                         $returnedIds->setValue($transaction->label, $this->queryExecuter->executeQuery());
