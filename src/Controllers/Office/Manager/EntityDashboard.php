@@ -76,7 +76,7 @@ class EntityDashboard extends ManagerEntityController {
                         $returnedIds->setValueNoKey($this->queryExecuter->executeQuery());
                     }
                 } else {
-                    echo "executeQuery <br>';
+                    echo "executeQuery <br>";
                     $this->queryExecuter->executeQuery();
                 }
             }
