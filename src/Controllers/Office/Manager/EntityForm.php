@@ -57,7 +57,7 @@ class EntityForm extends ManagerEntityController {
         $conn = $this->dbconnection->getDBH();
         $returnedIds = array();
         try {
-            $conn->beginTransaction();
+            //$conn->beginTransaction();
             $this->queryExecuter->setDBH($conn);
             $this->queryExecuter->setQueryBuilder($this->queryBuilder);
             $this->queryExecuter->setPostParameters($this->postParameters);
@@ -75,7 +75,7 @@ class EntityForm extends ManagerEntityController {
                     $this->queryExecuter->executeQuery();
                 }
             }
-            $conn->commit();
+            //$conn->commit();
         }
         catch (\PDOException $e) {
             $conn->rollBack();
