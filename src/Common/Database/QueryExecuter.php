@@ -144,7 +144,7 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
-                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                    } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                         $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
                         $par =& $sp;
                     }
@@ -184,7 +184,7 @@ class QueryExecuter {
                 } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                     $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                     $par =& $sp;
-                } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                     $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
                     $par =& $sp;
                 }
@@ -227,7 +227,7 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
-                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                    } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                         $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
                         $par =& $sp;
                     }
@@ -273,7 +273,7 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
-                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                    } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                         $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
                         $par =& $sp;
                     }
@@ -323,16 +323,16 @@ class QueryExecuter {
      *   "DELETE"  calls executeSqlDelete
      */
     function executeSql() {
-        if ( strpos(strtoupper($this->queryStructure->sql), 'SELECT') !== false ) {
+        if ( strpos(strtoupper($this->queryStructure->sql), self::SELECT) !== false ) {
             return $this->executeSqlSelect();
         }
-        if ( strpos(strtoupper($this->queryStructure->sql), 'INSERT') !== false ) {
+        if ( strpos(strtoupper($this->queryStructure->sql), self::INSERT) !== false ) {
             return $this->executeSqlInsert();
         }
-        if ( strpos(strtoupper($this->queryStructure->sql), 'UPDATE') !== false ) {
+        if ( strpos(strtoupper($this->queryStructure->sql), self::UPDATE) !== false ) {
             return $this->executeSqlUpdate();
         }
-        if ( strpos(strtoupper($this->queryStructure->sql), 'DELETE') !== false ) {
+        if ( strpos(strtoupper($this->queryStructure->sql), self::DELETE) !== false ) {
             return $this->executeSqlDelete();
         }
     }
