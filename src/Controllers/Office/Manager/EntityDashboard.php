@@ -59,7 +59,7 @@ class EntityDashboard extends ManagerEntityController {
             $conn->beginTransaction();
             foreach ($this->postresource->post->transactions as $transaction) {
                 echo "Faccio query <br>";
-                echo $transaction;
+                echo $transaction->sql;
                 echo "<br>";
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                 $this->queryExecuter->setQueryStructure( $transaction );
