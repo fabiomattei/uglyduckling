@@ -21,7 +21,7 @@ class QueryReturnedValues {
         $this->values[] = $value;
     }
 
-    public function getValue( $label ) {
+    public function &getValue( $label ) {
         return $this->values[$label];
     }
 
