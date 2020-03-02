@@ -169,39 +169,33 @@ class QueryExecuter {
      * @return mixed
      */
     function executeSqlInsert() {
-        //echo $this->queryStructure->sql;
-        //echo "GET";
-        //print_r($this->getParameters);
-            //echo "POST";
-            //print_r($this->postParameters);
+        $STH = $this->DBH->prepare( $this->queryStructure->sql );
+        $STH->setFetchMode(PDO::FETCH_OBJ);
 
-            $STH = $this->DBH->prepare( $this->queryStructure->sql );
-            $STH->setFetchMode(PDO::FETCH_OBJ);
-
-            if ( isset($this->queryStructure->parameters) ) {
-                foreach ($this->queryStructure->parameters as $cond) {
-                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
-                        $par =& $this->getParameters[$cond->getparameter];
-                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-                        $par =& $this->postParameters[$cond->postparameter];
-                    } elseif ( isset( $cond->constant ) ) {
-                        $par =& $cond->constant;
-                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-                        $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
-                        $par =& $sp;
-                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
-                        $par =& $this->returnedIds[$cond->returnedid];
-                    }
-                    // echo "$cond->placeholder, $par";
-                    $STH->bindParam($cond->placeholder, $par);
+        if ( isset($this->queryStructure->parameters) ) {
+            foreach ($this->queryStructure->parameters as $cond) {
+                if ( isset( $this->getParameters[$cond->getparameter] ) ) {
+                    $par =& $this->getParameters[$cond->getparameter];
+                } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
+                    $par =& $this->postParameters[$cond->postparameter];
+                } elseif ( isset( $cond->constant ) ) {
+                    $par =& $cond->constant;
+                } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
+                    $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
+                    $par =& $sp;
+                } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                    $par =& $this->returnedIds[$cond->returnedid];
                 }
+                // echo "$cond->placeholder, $par";
+                $STH->bindParam($cond->placeholder, $par);
             }
+        }
 
-            $STH->execute();
+        $STH->execute();
 
-            // $STH->debugDumpParams();
+        // $STH->debugDumpParams();
 
-            return $this->DBH->lastInsertId();
+        return $this->DBH->lastInsertId();
     }
 
     /**
