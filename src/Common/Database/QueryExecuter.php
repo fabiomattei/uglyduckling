@@ -271,11 +271,9 @@ class QueryExecuter {
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-                        $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
-                        $par =& $sp;
+                        $par =& $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                     } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
-                        $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
-                        $par =& $sp;
+                        $par =& $this->queryReturnedValues->getValue($cond->returnedid);
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
