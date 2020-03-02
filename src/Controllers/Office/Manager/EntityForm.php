@@ -55,14 +55,25 @@ class EntityForm extends ManagerEntityController {
 	
 	public function postRequest() {
         $conn = $this->dbconnection->getDBH();
+        $returnedIds = array();
         try {
             $conn->beginTransaction();
             $this->queryExecuter->setDBH($conn);
             $this->queryExecuter->setQueryBuilder($this->queryBuilder);
             $this->queryExecuter->setPostParameters($this->postParameters);
+            $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
+            $this->queryExecuter->setReturnedIds( $returnedIds );
             foreach ($this->resource->post->transactions as $transaction) {
                 $this->queryExecuter->setQueryStructure($transaction);
-                $this->queryExecuter->executeQuery();
+                if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
+                    if (isset($transaction->label)) {
+                        $returnedIds[$transaction->label] = $this->queryExecuter->executeQuery();
+                    } else {
+                        $returnedIds[] = $this->queryExecuter->executeQuery();
+                    }
+                } else {
+                    $this->queryExecuter->executeQuery();
+                }
             }
             $conn->commit();
         }

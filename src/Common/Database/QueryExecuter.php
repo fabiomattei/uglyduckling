@@ -19,6 +19,12 @@ class QueryExecuter {
     private $queryBuilder;
     private /* Logger */ $logger;
     private /* SessionWrapper */ $sessionWrapper;
+    private /* array */ $returnedIds;
+
+    public const SELECT = 'SELECT';
+    public const INSERT = 'INSERT';
+    public const UPDATE = 'UPDATE';
+    public const DELETE = 'DELETE';
 
     /**
      * Database connection handler setter
@@ -83,6 +89,15 @@ class QueryExecuter {
         $this->sessionWrapper = $sessionWrapper;
     }
 
+    /**
+     * Set the arrary that is going to contain the INSERT SQL statement returned Id's
+     *
+     * @param $returnedIds
+     */
+    public function setReturnedIds( $returnedIds ) {
+        $this->returnedIds = $returnedIds;
+    }
+
     /*
      * @deprecated
      */
@@ -129,6 +144,8 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
+                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                        $par =& $this->returnedIds[$cond->returnedid];
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -172,6 +189,8 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
+                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                        $par =& $this->returnedIds[$cond->returnedid];
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -212,6 +231,8 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
+                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                        $par =& $this->returnedIds[$cond->returnedid];
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -255,6 +276,8 @@ class QueryExecuter {
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
+                    } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
+                        $par =& $this->returnedIds[$cond->returnedid];
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -268,6 +291,28 @@ class QueryExecuter {
             return $STH;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
+    /**
+     * Check the SQL statment and return the constant:
+     *   SELECT  if the statement starts with SELECT
+     *   INSERT  if the statement starts with INSERT
+     *   UPDATE  if the statement starts with UPDATE
+     *   DELETE  if the statement starts with DELETE
+     */
+    function getSqlStatmentType() {
+        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'SELECT') === 0 ) {
+            return self::SELECT;
+        }
+        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'INSERT') === 0 ) {
+            return self::INSERT;
+        }
+        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'UPDATE') === 0 ) {
+            return self::UPDATE;
+        }
+        if ( strpos(strtoupper(trim($this->queryStructure->sql)), 'DELETE') === 0 ) {
+            return self::DELETE;
         }
     }
 
