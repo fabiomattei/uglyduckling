@@ -17,6 +17,10 @@ class QueryReturnedValues {
         $this->values[$label] = $value;
     }
 
+    public function setValueNoKey( $value ) {
+        $this->values[] = $value;
+    }
+
     public function getValue( $label ) {
         return $this->values[$label];
     }

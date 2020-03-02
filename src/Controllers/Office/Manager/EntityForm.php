@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
+use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
@@ -55,7 +56,7 @@ class EntityForm extends ManagerEntityController {
 	
 	public function postRequest() {
         $conn = $this->dbconnection->getDBH();
-        $returnedIds = array();
+        $returnedIds = new QueryReturnedValues;
         try {
             //$conn->beginTransaction();
             $this->queryExecuter->setDBH($conn);
@@ -67,9 +68,9 @@ class EntityForm extends ManagerEntityController {
                 $this->queryExecuter->setQueryStructure($transaction);
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
                     if (isset($transaction->label)) {
-                        $returnedIds[$transaction->label] = $this->queryExecuter->executeQuery();
+                        $returnedIds->setValue($transaction->label, $this->queryExecuter->executeQuery());
                     } else {
-                        $returnedIds[] = $this->queryExecuter->executeQuery();
+                        $returnedIds->setValueNoKey($this->queryExecuter->executeQuery());
                     }
                 } else {
                     $this->queryExecuter->executeQuery();

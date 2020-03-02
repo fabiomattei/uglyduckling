@@ -19,7 +19,7 @@ class QueryExecuter {
     private $queryBuilder;
     private /* Logger */ $logger;
     private /* SessionWrapper */ $sessionWrapper;
-    private /* array */ $returnedIds;
+    private /* QueryReturnedValues */ $queryReturnedValues;
 
     public const SELECT = 'SELECT';
     public const INSERT = 'INSERT';
@@ -94,8 +94,8 @@ class QueryExecuter {
      *
      * @param $returnedIds
      */
-    public function setReturnedIds( $returnedIds ) {
-        $this->returnedIds = $returnedIds;
+    public function setQueryReturnedValues( $queryReturnedValues ) {
+        $this->queryReturnedValues = $queryReturnedValues;
     }
 
     /*
@@ -145,7 +145,8 @@ class QueryExecuter {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
                     } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
-                        $par =& $this->returnedIds[$cond->returnedid];
+                        $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -184,7 +185,8 @@ class QueryExecuter {
                     $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                     $par =& $sp;
                 } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
-                    $par =& $this->returnedIds[$cond->returnedid];
+                    $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
+                    $par =& $sp;
                 }
                 // echo "$cond->placeholder, $par";
                 $STH->bindParam($cond->placeholder, $par);
@@ -226,7 +228,8 @@ class QueryExecuter {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
                     } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
-                        $par =& $this->returnedIds[$cond->returnedid];
+                        $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
@@ -271,7 +274,8 @@ class QueryExecuter {
                         $sp = $this->sessionWrapper->getSessionParameter( $cond->sessionparameter );
                         $par =& $sp;
                     } elseif ( isset( $cond->returnedid ) AND isset($this->returnedIds[$cond->returnedid]) ) {
-                        $par =& $this->returnedIds[$cond->returnedid];
+                        $sp =& $this->queryReturnedValues->getValue($cond->returnedid);
+                        $par =& $sp;
                     }
                     // echo "$cond->placeholder, $par";
                     $STH->bindParam($cond->placeholder, $par);
