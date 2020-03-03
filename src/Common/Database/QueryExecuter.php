@@ -179,6 +179,7 @@ class QueryExecuter {
                 } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                     $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
                 } elseif ( isset( $cond->fileparameter ) AND isset( $this->postParameters[$cond->fileparameter] ) ) {
+                    print_r($this->postParameters[$cond->fileparameter]);
                     $mime[$cont] = $this->postParameters[$cond->fileparameter]['type'];
                     $size[$cont] = $this->postParameters[$cond->fileparameter]['size'];
                     $name[$cont] = $this->postParameters[$cond->fileparameter]['name'];
