@@ -184,6 +184,12 @@ class QueryExecuter {
                     $name[$cont] = $this->postParameters[$cond->fileparameter]['name'];
                     $tmpf[$cont] = $this->postParameters[$cond->fileparameter]['tmp_name'];
                     $file[$cont] = fopen($this->postParameters[$cond->fileparameter]['tmp_name'], "rb");
+                    $mime =& $mime[$cont];
+                    $size =& $size[$cont];
+                    $name =& $name[$cont];
+                    $STH->bindParam($cond->placeholder.'mime', $mime);
+                    $STH->bindParam($cond->placeholder.'size', $size);
+                    $STH->bindParam($cond->placeholder.'name', $name);
                     $par =& $file[$cont];
                 }
                 // echo "$cond->placeholder, $par";
