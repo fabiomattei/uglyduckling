@@ -166,6 +166,7 @@ class QueryExecuter {
         $STH->setFetchMode(PDO::FETCH_OBJ);
 
         if ( isset($this->queryStructure->parameters) ) {
+            $cont = 1;
             foreach ($this->queryStructure->parameters as $cond) {
                 if ( isset( $this->getParameters[$cond->getparameter] ) ) {
                     $par =& $this->getParameters[$cond->getparameter];
@@ -177,9 +178,17 @@ class QueryExecuter {
                     $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
                 } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                     $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
+                } elseif ( isset( $cond->fileparameter ) AND isset( $this->postParameters[$cond->fileparameter] ) ) {
+                    $mime[$cont] = $this->postParameters[$cond->fileparameter]['type'];
+                    $size[$cont] = $this->postParameters[$cond->fileparameter]['size'];
+                    $name[$cont] = $this->postParameters[$cond->fileparameter]['name'];
+                    $tmpf[$cont] = $this->postParameters[$cond->fileparameter]['tmp_name'];
+                    $file[$cont] = fopen($this->postParameters[$cond->fileparameter]['tmp_name'], "rb");
+                    $par =& $file[$cont];
                 }
                 // echo "$cond->placeholder, $par";
                 $STH->bindParam($cond->placeholder, $par);
+                $cont++;
             }
         }
 

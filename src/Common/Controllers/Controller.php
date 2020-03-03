@@ -49,6 +49,7 @@ class Controller {
     public /* array */ $post_get_filter_rules = array();
     public /* array */ $getParameters;
     public /* array */ $postParameters;
+    public /* array */ $filesParameters;
 
     /**
      * This method makes all necessary presets to activate a controller
@@ -353,6 +354,15 @@ class Controller {
     public function setPostParameters( $parameters ) {
         if (is_array($parameters)) {
             $this->postParameters = $parameters;
+        }
+    }
+
+    /**
+     * Function for setting parameters array
+     */
+    public function setFilesParameters( $parameters ) {
+        if (is_array($parameters)) {
+            $this->filesParameters = $parameters;
         }
     }
 

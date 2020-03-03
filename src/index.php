@@ -81,6 +81,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
 }
 $controller->setGetParameters( $_GET );
 $controller->setPostParameters( $_POST );
+$controller->setFilesParameters( $_FILES );
 
 $sessionWrapper->setRequestedURL( $severWrapper->getRequestURI() );
 $controller->showPage();

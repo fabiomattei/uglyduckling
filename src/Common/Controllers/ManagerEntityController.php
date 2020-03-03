@@ -79,7 +79,7 @@ class ManagerEntityController extends Controller {
         if ( count( $validation_rules ) == 0 ) {
             return true;
         } else {
-            $parms = $this->secondGump->sanitize( $this->postParameters );
+            $parms = $this->secondGump->sanitize( array_merge($this->postParameters, $this->filesParameters) );
             $this->secondGump->validation_rules( $validation_rules );
             $this->secondGump->filter_rules( $filter_rules );
             $this->postParameters = $this->secondGump->run( $parms );
