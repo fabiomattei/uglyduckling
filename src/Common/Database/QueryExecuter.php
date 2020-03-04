@@ -182,6 +182,7 @@ class QueryExecuter {
                     print_r($_FILES[$cond->fileparameter]);
                     $mime[$cont] = $_FILES[$cond->fileparameter]['type'] ?? '';
                     $size[$cont] = $_FILES[$cond->fileparameter]['size'] ?? '';
+                    $error[$cont] = $_FILES[$cond->fileparameter]['error'] ?? '';
                     $name[$cont] = $_FILES[$cond->fileparameter]['name'] ?? '';
                     $tmpf[$cont] = $_FILES[$cond->fileparameter]['tmp_name'];
                     $file[$cont] = fopen($_FILES[$cond->fileparameter]['tmp_name'], "rb");
@@ -191,6 +192,7 @@ class QueryExecuter {
                     $STH->bindParam($cond->placeholder.'mime', $mime);
                     $STH->bindParam($cond->placeholder.'size', $size);
                     $STH->bindParam($cond->placeholder.'name', $name);
+                    $STH->bindParam($cond->placeholder.'error', $error);
                     $par =& $file[$cont];
                 }
                 // echo "$cond->placeholder, $par";
