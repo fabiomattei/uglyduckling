@@ -201,7 +201,7 @@ class QueryExecuter {
 
         $STH->execute();
 
-        // $STH->debugDumpParams();
+        $STH->debugDumpParams();
 
         return $this->DBH->lastInsertId();
     }
