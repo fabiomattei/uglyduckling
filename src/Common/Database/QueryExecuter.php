@@ -170,14 +170,19 @@ class QueryExecuter {
             foreach ($this->queryStructure->parameters as $cond) {
                 if ( isset( $this->getParameters[$cond->getparameter] ) ) {
                     $par =& $this->getParameters[$cond->getparameter];
+                    $STH->bindParam($cond->placeholder, $par);
                 } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
                     $par =& $this->postParameters[$cond->postparameter];
+                    $STH->bindParam($cond->placeholder, $par);
                 } elseif ( isset( $cond->constant ) ) {
                     $par =& $cond->constant;
+                    $STH->bindParam($cond->placeholder, $par);
                 } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
                     $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
+                    $STH->bindParam($cond->placeholder, $par);
                 } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
                     $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
+                    $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
                 } elseif ( isset( $cond->fileparameter ) AND isset( $_FILES[$cond->fileparameter] ) ) {
                     print_r($_FILES[$cond->fileparameter]);
                     $mime[$cont] = $_FILES[$cond->fileparameter]['type'] ?? '';
@@ -189,14 +194,15 @@ class QueryExecuter {
                     $mime =& $mime[$cont];
                     $size =& $size[$cont];
                     $name =& $name[$cont];
+                    $par =& $file[$cont];
                     $STH->bindParam($cond->placeholder.'mime', $mime);
                     $STH->bindParam($cond->placeholder.'size', $size);
                     $STH->bindParam($cond->placeholder.'name', $name);
                     $STH->bindParam($cond->placeholder.'error', $error);
-                    $par =& $file[$cont];
+                    $STH->bindParam($cond->placeholder, $par, PDO::PARAM_LOB);
                 }
                 // echo "$cond->placeholder, $par";
-                $STH->bindParam($cond->placeholder, $par);
+
                 $cont++;
             }
         }
