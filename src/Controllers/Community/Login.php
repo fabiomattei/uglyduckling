@@ -8,6 +8,8 @@ use Fabiom\UglyDuckling\Templates\Blocks\Login\LoginForm;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
 use Fabiom\UglyDuckling\BusinessLogic\User\UseCases\UserCanLogIn;
 use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * This class cares about the login process.
@@ -19,6 +21,8 @@ class Login extends Controller {
     function __construct() {
 		$this->userDao = new UserDao();
 		$this->userCanLogIn = new UserCanLogIn();
+		$this->queryExecuter = new QueryExecuter;
+		$this->queryBuilder = new QueryBuilder;
     }
 	
 	public function getRequest() {
@@ -58,6 +62,10 @@ class Login extends Controller {
 			$this->sessionWrapper->setSessionIp( $this->serverWrapper->getRemoteAddress() );
 			$this->sessionWrapper->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
 			$this->sessionWrapper->setSessionLastLogin( time() );
+			
+			if ( $this->setup->isSessionSetupPathSet() ) {
+				
+			}
 
             $this->jsonloader->loadIndex();
             $groupresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );

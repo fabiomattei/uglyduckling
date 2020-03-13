@@ -12,6 +12,7 @@ class Setup {
     public $basePath;
     public $pathtoapp;
     public $jsonPath;
+    public /* string */ $sessionSetupPath; 
 
     public function __construct() {
         $this->appNameForPageTitle = '';
@@ -22,6 +23,7 @@ class Setup {
         $this->pathtoapp = '';
         $this->jsonPath = '';
         $this->htmlTemplatePath = '';
+        $this->sessionSetupPath = '';
     }
 
     /**
@@ -150,6 +152,31 @@ class Setup {
      */
     public function setJsonPath(string $jsonPath) {
         $this->jsonPath = $jsonPath;
+    }
+    
+    /**
+     * Check if the session setup json file has been defined 
+     *
+     * @return boolean
+     */
+    public function isSessionSetupPathSet(): boolean {
+        return $this->sessionSetupPath;
+    }
+    
+    /**
+     * Get the path to session setup json file
+     * @return string
+     */
+    public function getSessionSetupPath(): string {
+        return $this->sessionSetupPath;
+    }
+    
+    /**
+     * Set the path to session setup json file
+     * @param string $sessionSetupPath
+     */
+    public function setSessionSetupPath(string $sessionSetupPath) {
+        $this->sessionSetupPath = $sessionSetupPath;
     }
 
 }
