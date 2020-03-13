@@ -15,15 +15,12 @@ class SessionJsonSetup {
 			$loadedfile = $this->json_decode_with_error_control($data);
 
 
-			foreach ($loadedfile->scripts as $key) {
-				if($key->type === 'index') {
-					$this->loadIndex( $key->path );
-				} else {
-					$this->resourcesIndex[$key->name] = new stdClass;
-					$this->resourcesIndex[$key->name]->path = $key->path;
-					$this->resourcesIndex[$key->name]->type = $key->type;
-					$this->resourcesIndex[$key->name]->name = $key->name;
-				}
+			foreach ($loadedfile->queryset as $query) {
+				
+			}
+
+			foreach ($loadedfile->sessionvars as $sessionvar) {
+				
 			}
 		}
 	}
