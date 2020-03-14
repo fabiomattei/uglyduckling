@@ -2,7 +2,9 @@
 
 namespace Fabiom\UglyDuckling\Common\Setup;
 
+use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
@@ -17,18 +19,40 @@ class SessionJsonSetup {
      * @param QueryExecuter $queryExecuter
      * @param SessionWrapper $sessionWrapper
      */
-	public static function loadSessionVariables(string $sessionSetupPath, QueryBuilder $queryBuilder, QueryExecuter $queryExecuter, SessionWrapper $sessionWrapper) {
+	public static function loadSessionVariables(string $sessionSetupPath, QueryBuilder $queryBuilder, QueryExecuter $queryExecuter, DBConnection $dbconnection, SessionWrapper $sessionWrapper) {
 		if (file_exists ( $sessionSetupPath )) {
 			$handle = fopen($sessionSetupPath, 'r');
 			$data = fread($handle,filesize($sessionSetupPath));
 			$loadedfile = SessionJsonSetup::json_decode_with_error_control($data);
 
+			$querySet = new QuerySet;
+
+            $conn = $dbconnection->getDBH();
+
+            $queryExecuter->setDBH($conn);
+            $queryExecuter->setQueryBuilder($queryBuilder);
+            $queryExecuter->setParameters(array());
+            $queryExecuter->setPostParameters(array());
+            $queryExecuter->setSessionWrapper($sessionWrapper);
+
 			foreach ($loadedfile->queryset as $query) {
-				
+                $queryExecuter->setQueryStructure($query);
+                if (isset($query->label)) {
+                    $querySet->setResult($query->label, $queryExecuter->executeQuery());
+                } else {
+                    $querySet->setResultNoKey($queryExecuter->executeQuery());
+                }
 			}
 
 			foreach ($loadedfile->sessionvars as $sessionvar) {
-				
+                if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
+                    if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
+                        $sessionWrapper->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
+                    }
+                }
+                if ( isset( $sessionvar->constantparamenter ) ) {
+                    $sessionWrapper->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
+                }
 			}
 		}
 	}

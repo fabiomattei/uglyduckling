@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Controllers\Community;
 
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Setup\SessionJsonSetup;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\PublicMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Login\LoginForm;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
@@ -17,6 +18,11 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
  * the user to log in or not
  */
 class Login extends Controller {
+
+     private /* UserDao */ $userDao;
+     private /* UserCanLogIn */ $userCanLogIn;
+     private /* QueryExecuter */ $queryExecuter;
+     private /* QueryBuilder */ $queryBuilder;
 	
     function __construct() {
 		$this->userDao = new UserDao();
@@ -64,7 +70,13 @@ class Login extends Controller {
 			$this->sessionWrapper->setSessionLastLogin( time() );
 			
 			if ( $this->setup->isSessionSetupPathSet() ) {
-				
+                 SessionJsonSetup::loadSessionVariables(
+                     $this->setup->getSessionSetupPath(),
+                     $this->queryBuilder,
+                     $this->queryExecuter,
+                     $this->dbconnection,
+                     $this->sessionWrapper
+                 );
 			}
 
             $this->jsonloader->loadIndex();
