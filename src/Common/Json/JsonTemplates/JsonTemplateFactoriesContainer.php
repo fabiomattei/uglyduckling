@@ -15,6 +15,7 @@ use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class JsonTemplateFactoriesContainer {
 
@@ -152,7 +153,14 @@ class JsonTemplateFactoriesContainer {
         return $panelBlock;
     }
 
-    public function getHTMLBlock( $resource ) {
+    /**
+     * Given a specific json resource select between all JsonTemplateFactories
+     * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
+     *
+     * @param $resource
+     * @return BaseHTMLBlock
+     */
+    public function getHTMLBlock( $resource ): BaseHTMLBlock {
         foreach ($this->factories as $factory) {
             if ( $factory->isResourceSupported( $resource ) ) {
                 $factory->setHtmlTemplateLoader($this->htmlTemplateLoader);
@@ -168,5 +176,7 @@ class JsonTemplateFactoriesContainer {
                 return $factory->getHTMLBlock( $resource );
             }
         }
+
+        return new BaseHTMLBlock;
     }
 }

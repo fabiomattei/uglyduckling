@@ -10,7 +10,7 @@ namespace Fabiom\UglyDuckling\Common\Blocks;
  * Any HTML structure can be formalised as a block.
  *
  */
-abstract class BaseHTMLBlock {
+class BaseHTMLBlock {
 
     /**
      * @deprecated
@@ -18,7 +18,7 @@ abstract class BaseHTMLBlock {
      * Overwrite this method with the content you want your block to show
      */
     function show(): string {
-        return '';
+        return 'base html block';
     }
 
     /**
