@@ -159,7 +159,7 @@ class Setup {
      *
      * @return boolean
      */
-    public function isSessionSetupPathSet(): boolean {
+    public function isSessionSetupPathSet(): bool {
         return isset($this->sessionSetupPath);
     }
     
