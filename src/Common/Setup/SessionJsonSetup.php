@@ -7,13 +7,21 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class SessionJsonSetup {
-	
-	public function loadSessionVariables($sessionSetupPath. $queryBuilder, $queryExecuter, $sessionWrapper) {
+
+    /**
+     * Loading all necessary session variables
+     * To be used during login process
+     *
+     * @param string $sessionSetupPath
+     * @param QueryBuilder $queryBuilder
+     * @param QueryExecuter $queryExecuter
+     * @param SessionWrapper $sessionWrapper
+     */
+	public static function loadSessionVariables(string $sessionSetupPath, QueryBuilder $queryBuilder, QueryExecuter $queryExecuter, SessionWrapper $sessionWrapper) {
 		if (file_exists ( $sessionSetupPath )) {
 			$handle = fopen($sessionSetupPath, 'r');
 			$data = fread($handle,filesize($sessionSetupPath));
-			$loadedfile = $this->json_decode_with_error_control($data);
-
+			$loadedfile = SessionJsonSetup::json_decode_with_error_control($data);
 
 			foreach ($loadedfile->queryset as $query) {
 				
@@ -43,7 +51,7 @@ class SessionJsonSetup {
      * JSON_ERROR_UTF8
      *
      */
-	public function json_decode_with_error_control( string $data ) {
+	public static function json_decode_with_error_control( string $data ) {
 		$loadeddata = json_decode($data);
 		switch (json_last_error()) {
         	case JSON_ERROR_NONE:
