@@ -11,7 +11,7 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
 use stdClass;
 
-class MenuBuilder {
+class MenuJsonTemplate {
 
     private $menuStructure;
     private $routerContainer;

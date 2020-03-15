@@ -8,7 +8,7 @@ use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 
 /**
  * 
@@ -19,7 +19,7 @@ class DocumentInfo extends ManagerEntityController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->infoBuilder = new InfoJsonTemplate;
-		$this->menubuilder = new MenuBuilder;
+		$this->menubuilder = new MenuJsonTemplate;
     }
 
     /**

@@ -10,7 +10,7 @@ use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf\PdfJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 
 /**
  * User: Fabio
@@ -30,7 +30,7 @@ class EntityExport extends ManagerEntityController {
 		$this->formBuilder = new FormJsonTemplate;
 		$this->pdfBuilder = new PdfJsonTemplate;
         $this->excelBuilder = new ExcelJsonTemplate;
-		$this->menubuilder = new MenuBuilder;
+		$this->menubuilder = new MenuJsonTemplate;
     }
 	
     /**

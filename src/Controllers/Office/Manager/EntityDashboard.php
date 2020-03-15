@@ -7,7 +7,7 @@ use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 
 /**
@@ -21,7 +21,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->queryExecuter = new QueryExecuter;
         $this->queryExecuter->setLogger($this->logger);
         $this->queryBuilder = new QueryBuilder;
-        $this->menubuilder = new MenuBuilder;
+        $this->menubuilder = new MenuJsonTemplate;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
     }
 

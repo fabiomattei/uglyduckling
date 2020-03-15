@@ -8,7 +8,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonBlockFormParser;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Common\Database\DocumentDao;
 
 /**
@@ -20,7 +20,7 @@ class DocumentEdit extends ManagerDocumentSenderController {
 		$this->queryExecuter = new QueryExecuter;
 		$this->queryBuilder = new QueryBuilder;
 		$this->jsonBlockFormParser = new JsonBlockFormParser;
-		$this->menubuilder = new MenuBuilder;
+		$this->menubuilder = new MenuJsonTemplate;
 		$this->documentDao = new DocumentDao;
     }
 

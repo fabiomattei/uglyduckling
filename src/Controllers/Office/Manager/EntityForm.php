@@ -8,7 +8,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Router\Router;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 
 /**
  * User: Fabio
@@ -24,7 +24,7 @@ class EntityForm extends ManagerEntityController {
 
     function __construct() {
 		$this->formBuilder = new FormJsonTemplate;
-		$this->menubuilder = new MenuBuilder;
+		$this->menubuilder = new MenuJsonTemplate;
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
     }

@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\Router;
 
 /**
@@ -19,7 +19,7 @@ class EntityInfo extends ManagerEntityController {
 
     function __construct() {
 		$this->infoBuilder = new InfoJsonTemplate;
-		$this->menubuilder = new MenuBuilder;
+		$this->menubuilder = new MenuJsonTemplate;
     }
 
     /**

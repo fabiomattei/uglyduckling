@@ -7,7 +7,7 @@ use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuBuilder;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
 
 /**
  * User: Fabio
@@ -23,7 +23,7 @@ class EntitySearch extends ManagerEntityController {
     function __construct() {
 		$this->formBuilder = new FormJsonTemplate;
 		$this->tableBuilder = new TableJsonTemplate;
-		$this->menubuilder = new MenuBuilder;
+		$this->menubuilder = new MenuJsonTemplate;
     }
 
     /**
