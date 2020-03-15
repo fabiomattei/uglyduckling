@@ -28,6 +28,7 @@ class Login extends Controller {
 		$this->userDao = new UserDao();
 		$this->userCanLogIn = new UserCanLogIn();
 		$this->queryExecuter = new QueryExecuter;
+        $this->queryExecuter->setLogger($this->logger);
 		$this->queryBuilder = new QueryBuilder;
     }
 	

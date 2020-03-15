@@ -38,9 +38,9 @@ class SessionJsonSetup {
 			foreach ($loadedfile->queryset as $query) {
                 $queryExecuter->setQueryStructure($query);
                 if (isset($query->label)) {
-                    $querySet->setResult($query->label, $queryExecuter->executeQuery());
+                    $querySet->setResult($query->label, $queryExecuter->executeSql());
                 } else {
-                    $querySet->setResultNoKey($queryExecuter->executeQuery());
+                    $querySet->setResultNoKey($queryExecuter->executeSql());
                 }
 			}
 

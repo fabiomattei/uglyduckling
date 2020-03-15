@@ -44,8 +44,8 @@ class CardHTMLBlock extends BaseHTMLBlock {
      * @param $name
      */
     function setInternalBlockName( $name ) {
-        $this->cardExternalContainerId = 'externalcalrdcontainer'.$name;
-        $this->cardId = 'cardcontainer'.$name;
+        $this->cardExternalContainerId = 'externalcalrdcontainer-'.$name;
+        $this->cardId = 'cardcontainer-'.$name;
     }
 
     function setWidth( int $width ) {

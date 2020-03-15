@@ -98,7 +98,7 @@ class QueryExecuter {
         $this->queryReturnedValues = $queryReturnedValues;
     }
 
-    /*
+    /**
      * @deprecated
      */
     public function executeQuery() {

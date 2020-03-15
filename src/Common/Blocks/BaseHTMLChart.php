@@ -24,7 +24,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->htmlBlockId = 'myChart';
         $this->lables = '';
         $this->dataset = '';
-        $this->structure = '';
+        $this->structure = \stdClass;
         $this->chartdataglue = array();
         $this->glue = array();
     }
@@ -51,6 +51,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
     }
 
     function setData($data) {
+        print_r($data);
         foreach ( $data as $dt ) {
             foreach ($this->chartdataglue as $dg) {
                 if(!isset($this->glue[$dg->placeholder])) $this->glue[$dg->placeholder] = array();

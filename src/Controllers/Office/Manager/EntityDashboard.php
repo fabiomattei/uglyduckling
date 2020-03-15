@@ -19,6 +19,7 @@ class EntityDashboard extends ManagerEntityController {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
+        $this->queryExecuter->setLogger($this->logger);
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuBuilder;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
@@ -68,12 +69,12 @@ class EntityDashboard extends ManagerEntityController {
                 $this->queryExecuter->setQueryReturnedValues( $returnedIds );
                 if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
                     if (isset($transaction->label)) {
-                        $returnedIds->setValue($transaction->label, $this->queryExecuter->executeQuery());
+                        $returnedIds->setValue($transaction->label, $this->queryExecuter->executeSql());
                     } else {
-                        $returnedIds->setValueNoKey($this->queryExecuter->executeQuery());
+                        $returnedIds->setValueNoKey($this->queryExecuter->executeSql());
                     }
                 } else {
-                    $this->queryExecuter->executeQuery();
+                    $this->queryExecuter->executeSql();
                 }
             }
             $conn->commit();

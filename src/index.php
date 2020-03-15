@@ -20,8 +20,9 @@ $setup->setPublicTemplateFileName('public');
 $setup->setEmptyTemplateFileName('empty');
 $setup->setBasePath('http://localhost:18080/');
 $setup->setPathToApp('/uglyduckling/');
-$setup->setJsonPath('./Custom/Json/index.json');
-$setup->setSessionSetupPath('./Custom/Json/session.json');
+$setup->setJsonPath('Json/index.json');
+$setup->setHTMLTemplatePath('../vendor/fabiomattei/uglyduckling/src/Templates/');
+$setup->setSessionSetupPath('Json/session.json');
 
 $dbconnection = new Fabiom\UglyDuckling\Common\Database\DBConnection( 
 	'mysql:host=mariadb:3306;dbname=',
