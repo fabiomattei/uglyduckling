@@ -58,7 +58,7 @@ class EntityDashboard extends ManagerEntityController {
         $conn = $this->dbconnection->getDBH();
         $returnedIds = new QueryReturnedValues;
         try {
-            $conn->beginTransaction();
+            //$conn->beginTransaction();
             $this->queryExecuter->setDBH( $conn );
             foreach ($this->postresource->post->transactions as $transaction) {
                 $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
@@ -77,7 +77,7 @@ class EntityDashboard extends ManagerEntityController {
                     $this->queryExecuter->executeSql();
                 }
             }
-            $conn->commit();
+            //$conn->commit();
         }
         catch (\PDOException $e) {
             $conn->rollBack();
