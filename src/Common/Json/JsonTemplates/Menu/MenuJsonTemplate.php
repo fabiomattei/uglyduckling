@@ -8,10 +8,11 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu;
 
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
 use stdClass;
 
-class MenuJsonTemplate {
+class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
     private $routerContainer;
@@ -21,10 +22,6 @@ class MenuJsonTemplate {
      */
     public function setMenuStructure( $menuStructure ) {
         $this->menuStructure = $menuStructure;
-    }
-
-    public function setRouter( $routerContainer ) {
-        $this->routerContainer = $routerContainer;
     }
 
     public function createMenu() {
