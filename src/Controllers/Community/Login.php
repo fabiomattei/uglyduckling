@@ -11,6 +11,7 @@ use Fabiom\UglyDuckling\BusinessLogic\User\UseCases\UserCanLogIn;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
+use Fabiom\UglyDuckling\Common\Loggers\EchoLogger;
 
 /**
  * This class cares about the login process.
@@ -25,8 +26,9 @@ class Login extends Controller {
      private /* QueryBuilder */ $queryBuilder;
 	
     function __construct() {
-		$this->userDao = new UserDao();
-		$this->userCanLogIn = new UserCanLogIn();
+        $this->logger = new EchoLogger;
+		$this->userDao = new UserDao;
+		$this->userCanLogIn = new UserCanLogIn;
 		$this->queryExecuter = new QueryExecuter;
         $this->queryExecuter->setLogger($this->logger);
 		$this->queryBuilder = new QueryBuilder;
