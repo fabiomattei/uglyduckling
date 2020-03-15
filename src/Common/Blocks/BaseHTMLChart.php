@@ -68,6 +68,14 @@ class BaseHTMLChart extends BaseHTMLBlock {
 
     function show(): string {
         $this->structure->data->labels = $this->glue['#labels'];
+        // $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
+        foreach ($this->structure->data->datasets[0] as $dataset) {
+            if ( isset($dataset->data) ) {
+                if ( isset($this->glue[$dataset->data]) ) {
+                    $dataset->data = $this->glue[$dataset->data];
+                }
+            }
+        }
         $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
             array( '${htmlBlockId}', '${structure}' ),
