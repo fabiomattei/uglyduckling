@@ -93,7 +93,7 @@ class LinkBuilder {
                 break;
             
             default:
-                return '#';
+                return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
         }
     }
@@ -181,7 +181,7 @@ class LinkBuilder {
 			    break;
             
             default:
-                return '#';
+                return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
         }
     }
@@ -260,7 +260,7 @@ class LinkBuilder {
 			    break;
             
             default:
-                return '#';
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
                 break;
         }
     }    
