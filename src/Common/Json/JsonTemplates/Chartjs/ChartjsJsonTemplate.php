@@ -26,6 +26,7 @@ class ChartjsJsonTemplate extends JsonTemplate {
 
         $chartBlock = new BaseHTMLChart;
         $chartBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $chartBlock->setHtmlBlockId($this->resource->name);
         $chartBlock->setStructure($this->resource->get->chart);
         $chartBlock->setChartDataGlue($this->resource->get->chartdataglue);
         $chartBlock->setData($entities);

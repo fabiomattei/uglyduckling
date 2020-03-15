@@ -1,5 +1,7 @@
-<canvas id="myChart" width="400" height="400"></canvas>
+<!-- Resource name: " + this.resourceName + "-->
+<canvas id="${htmlBlockId}" width="400" height="400"></canvas>
 <script>
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, ${structure} );
+    var ctx = document.getElementById("${structure}").getContext('2d');
+    var myChart = new Chart(ctx, ${htmlBlockId} );
 </script>
+<!-- End: " + this.resourceName + "-->

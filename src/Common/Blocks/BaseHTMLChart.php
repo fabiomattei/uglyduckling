@@ -12,6 +12,7 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class BaseHTMLChart extends BaseHTMLBlock {
 
+    private $htmlBlockId;
     private $lables;
     private $dataset;
     private $structure;
@@ -20,6 +21,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
     private $htmlTemplateLoader;
 
     function __construct() {
+        $this->htmlBlockId = 'myChart';
         $this->lables = '';
         $this->dataset = '';
         $this->structure = '';
@@ -37,6 +39,15 @@ class BaseHTMLChart extends BaseHTMLBlock {
 
     function setChartDataGlue($chartDataGlue) {
         $this->chartdataglue = $chartDataGlue;
+    }
+
+    /**
+     * Set the HTML block that is going to be used as block id
+     *
+     * @param string $htmlBlockId
+     */
+    public function setHtmlBlockId(string $htmlBlockId): void {
+        $this->htmlBlockId = $htmlBlockId;
     }
 
     function setData($data) {
@@ -59,8 +70,8 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->structure->data->labels = $this->glue['#labels'];
         $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array( '${structure}' ),
-            array( json_encode( $this->structure ) ),
+            array( '${htmlBlockId}', '${structure}' ),
+            array( $this->htmlBlockId, json_encode( $this->structure ) ),
             'Chartjs/body.html');
     }
 
