@@ -7,7 +7,7 @@ use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\DocumentDao;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 
 /**
  * This page represent the inbox for all received documents.

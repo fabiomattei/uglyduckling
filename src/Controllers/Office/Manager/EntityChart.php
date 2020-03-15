@@ -10,7 +10,7 @@ namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Router\Router;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 
 class EntityChart extends ManagerEntityController {
 

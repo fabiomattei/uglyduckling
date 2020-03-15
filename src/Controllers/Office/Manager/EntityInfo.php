@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\MenuJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\Router;
 
 /**

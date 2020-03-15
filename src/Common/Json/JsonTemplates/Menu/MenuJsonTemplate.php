@@ -6,7 +6,7 @@
  * Time: 11.54
  */
 
-namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
+namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
 use stdClass;
