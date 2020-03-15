@@ -24,7 +24,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->htmlBlockId = 'myChart';
         $this->lables = '';
         $this->dataset = '';
-        $this->structure = \stdClass;
+        $this->structure = new \stdClass;
         $this->chartdataglue = array();
         $this->glue = array();
     }
