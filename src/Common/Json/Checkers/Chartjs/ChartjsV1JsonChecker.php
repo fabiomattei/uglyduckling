@@ -2,11 +2,11 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\Checkers\Chartjs;
 
-use  Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
+use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 /**
- * 
+ * This class checks the json structure for Chartjs resource
  */
 class ChartjsV1JsonChecker extends BasicJsonChecker {
 

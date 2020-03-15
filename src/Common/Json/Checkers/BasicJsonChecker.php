@@ -85,7 +85,7 @@ class BasicJsonChecker {
     }
 
     /**
-     * Check if the strcture of the internally defined block is well done
+     * Check if the structure of the internally defined block is well done
      *
      * @return bool
      */

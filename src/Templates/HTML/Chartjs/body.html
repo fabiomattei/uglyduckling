@@ -1,7 +1,7 @@
-<!-- Resource name: ${htmlBlockId} -->
+<!-- Resource type: chartjs name: ${htmlBlockId} -->
 <canvas id="${htmlBlockId}" width="400" height="400"></canvas>
 <script>
-    var ctx = document.getElementById("${htmlBlockId}").getContext('2d');
-    var chart${htmlBlockId} = new Chart(ctx, ${structure} );
+    var ctx${htmlBlockId} = document.getElementById("${htmlBlockId}").getContext('2d');
+    var chart${htmlBlockId} = new Chart(ctx${htmlBlockId}, ${structure} );
 </script>
 <!-- End: ${htmlBlockId} -->

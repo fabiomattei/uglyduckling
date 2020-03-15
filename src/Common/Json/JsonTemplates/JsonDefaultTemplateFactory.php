@@ -57,6 +57,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         $resource = $this->jsonloader->loadResource( $panel->resource );
 
+        $panelBlock->setInternalBlockName( $resource->name ?? '' );
         $panelBlock->setBlock($this->getHTMLBlock($resource));
 
         return $panelBlock;
@@ -76,6 +77,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $panelBlock->setTitle('');
         $panelBlock->setWidth( '12');
         $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $panelBlock->setInternalBlockName( $resource->name ?? '' );
         $panelBlock->setBlock($this->getHTMLBlock($resource));
         return $panelBlock;
     }

@@ -18,10 +18,14 @@ class CardHTMLBlock extends BaseHTMLBlock {
     private $block;
     private $width;
     private $htmlTemplateLoader;
+    private /* string */ $cardExternalContainerId;
+	private /* string */ $cardId;
 
     function __construct() {
         $this->title = '';
         $this->subtitle = '';
+        $this->cardExternalContainerId = '';
+        $this->cardId = '';
         $this->block = new EmptyHTMLBlock;
         $this->width = ColWidth::getWidth(ColWidth::MEDIUM, 3);
     }
@@ -32,6 +36,16 @@ class CardHTMLBlock extends BaseHTMLBlock {
 
     function setBlock( $block ) {
         $this->block = $block;
+    }
+
+    /**
+     * Set block name in odre to generate CARDBLOCK External ID and internal ID
+     *
+     * @param $name
+     */
+    function setInternalBlockName( $name ) {
+        $this->cardExternalContainerId = 'externalcalrdcontainer'.$name;
+        $this->cardId = 'cardcontainer'.$name;
     }
 
     function setWidth( int $width ) {
@@ -61,8 +75,8 @@ class CardHTMLBlock extends BaseHTMLBlock {
 
     function show(): string {
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array( '${width}', '${title}', '${subtitle}', '${body}' ),
-            array( $this->width, $this->title, $this->showSubTitle(), $this->block->show() ),
+            array( '${width}', '${title}', '${subtitle}', '${body}', '${cardExternalContainerId}', '${cardId}' ),
+            array( $this->width, $this->title, $this->showSubTitle(), $this->block->show(), $this->cardExternalContainerId, $this->cardId ),
             'Card/body.html');
     }
 

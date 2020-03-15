@@ -131,6 +131,7 @@ class JsonTemplateFactoriesContainer {
 
         $resource = $this->jsonloader->loadResource( $panel->resource );
 
+        $panelBlock->setInternalBlockName( $resource->name ?? '' );
         $panelBlock->setBlock($this->getHTMLBlock($resource));
 
         return $panelBlock;
@@ -149,6 +150,7 @@ class JsonTemplateFactoriesContainer {
         $panelBlock->setTitle('');
         $panelBlock->setWidth( '12');
         $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $panelBlock->setInternalBlockName( $resource->name ?? '' );
         $panelBlock->setBlock($this->getHTMLBlock($resource));
         return $panelBlock;
     }
