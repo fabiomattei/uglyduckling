@@ -1,7 +1,7 @@
-<!-- Resource name: " + this.resourceName + "-->
+<!-- Resource name: ${htmlBlockId} -->
 <canvas id="${htmlBlockId}" width="400" height="400"></canvas>
 <script>
-    var ctx = document.getElementById("${structure}").getContext('2d');
-    var myChart = new Chart(ctx, ${htmlBlockId} );
+    var ctx = document.getElementById("${htmlBlockId}").getContext('2d');
+    var chart${htmlBlockId} = new Chart(ctx, ${structure} );
 </script>
-<!-- End: " + this.resourceName + "-->
+<!-- End: ${htmlBlockId} -->
