@@ -30,7 +30,7 @@ class FormJsonTemplate extends JsonTemplate {
                 $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
                 if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
 
-                $result = $this->queryExecuter->executeQuery();
+                $result = $this->queryExecuter->executeSql();
                 $entity = $result->fetch();
             } else {
                 $entity = new \stdClass();

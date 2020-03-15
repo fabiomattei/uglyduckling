@@ -21,33 +21,12 @@ class PdfJsonTemplate extends JsonTemplate {
         $this->queryBuilder = new QueryBuilder;
     }
 
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $resource
-     */
-    public function setResource($resource) {
-        $this->resource = $resource;
-    }
-
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
-
     public function createTable() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
         $this->queryExecuter->setQueryStructure( $this->resource->post->query );
         if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
-        $entities = $this->queryExecuter->executeQuery();
+        $entities = $this->queryExecuter->executeSql();
 
         $table = $this->resource->post->table;
 

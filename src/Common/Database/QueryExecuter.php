@@ -184,7 +184,6 @@ class QueryExecuter {
                     $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
                     $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
                 } elseif ( isset( $cond->fileparameter ) AND isset( $_FILES[$cond->fileparameter] ) ) {
-                    print_r($_FILES[$cond->fileparameter]);
                     $mime[$cont] = $_FILES[$cond->fileparameter]['type'] ?? '';
                     $size[$cont] = $_FILES[$cond->fileparameter]['size'] ?? '';
                     $error[$cont] = $_FILES[$cond->fileparameter]['error'] ?? '';

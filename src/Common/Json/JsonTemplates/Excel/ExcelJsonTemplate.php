@@ -53,7 +53,7 @@ class ExcelJsonTemplate {
         $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
         $this->queryExecuter->setQueryStructure( $this->resource->post->query );
         if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
-        $entities = $this->queryExecuter->executeQuery();
+        $entities = $this->queryExecuter->executeSql();
 
         $table = $this->resource->post->table;
 

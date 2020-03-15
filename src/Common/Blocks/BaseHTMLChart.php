@@ -51,7 +51,6 @@ class BaseHTMLChart extends BaseHTMLBlock {
     }
 
     function setData($data) {
-        print_r($data);
         foreach ( $data as $dt ) {
             foreach ($this->chartdataglue as $dg) {
                 if(!isset($this->glue[$dg->placeholder])) $this->glue[$dg->placeholder] = array();

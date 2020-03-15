@@ -30,7 +30,7 @@ class InfoJsonTemplate extends JsonTemplate {
                 $this->queryExecuter->setLogger( $this->logger );
                 if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
 
-                $result = $this->queryExecuter->executeQuery();
+                $result = $this->queryExecuter->executeSql();
                 $entity = $result->fetch();
             } else {
                 $entity = new \stdClass();

@@ -22,7 +22,7 @@ class ChartjsJsonTemplate extends JsonTemplate {
         $this->queryExecuter->setLogger( $this->logger );
         $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
         if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
-        $entities = $this->queryExecuter->executeQuery();
+        $entities = $this->queryExecuter->executeSql();
 
         $chartBlock = new BaseHTMLChart;
         $chartBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
