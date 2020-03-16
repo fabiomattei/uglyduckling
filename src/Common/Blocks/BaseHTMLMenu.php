@@ -29,44 +29,47 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function addButtonToggler() {
-        $this->buttonToggler = $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'Menu/buttontoggeler.html');
+        $this->buttonToggler = $this->htmlTemplateLoader->loadTemplate('Menu/buttontoggeler.html');
     }
 
     function addForm() {
-        $this->rightBody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'Menu/form.html');
+        $this->rightBody .= $this->htmlTemplateLoader->loadTemplate('Menu/form.html');
     }
 
     function addNavItem( string $label, string $url, bool $active, bool $current ) {
-        $this->body .= '<li class="nav-item '.( $active ? 'active' : '' ).'">
-            <a class="nav-link" href="'.$url.'">'.$label.' '.( $current ? '<span class="sr-only">(current)</span>' : '' ).'</a>
-          </li>';
+        $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';
+        $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
+
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${active}', '${current}', '${url}', '${label}'),
+            array($activestr, $currentstr, $url, $label),
+            'Menu/navitem.html');
     }
 
     function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems ) {
         $submenu = '';
         foreach ($submenuItems as $item) {
-            $submenu .= '<a class="dropdown-item" href="'.$item->url.'">'.$item->label.'</a>';
+            $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${url}', '${label}'),
+                array($item->url, $item->label),
+                'Menu/submenuitem.html');
         }
-        $this->body .= '<li class="nav-item dropdown'.( $active ? 'active' : '' ).'">
-            <a class="nav-link dropdown-toggle" href="'.$url.'" id="dropdown'.$this->dropdownCounter.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$label.' '.( $current ? '<span class="sr-only">(current)</span>' : '' ).'</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown'.$this->dropdownCounter.'">'.$submenu.'</div>
-          </li>';
+
+        $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';
+        $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
+
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
+            array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
+            'Menu/menuitem.html');
         $this->dropdownCounter++;
     }
 
     function show(): string {
-        return $this->brand.
-            $this->buttonToggler.
-        '<div class="collapse navbar-collapse" id="navbarsExampleDefault">'.
-        '<ul class="navbar-nav mr-auto">'.$this->body.'</ul>'.
-        $this->rightBody.
-        '</div>';
+        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${brand}', '${buttonToggler}', '${body}', '${rightBody}'),
+            array($this->brand, $this->buttonToggler, $this->body, $this->rightBody),
+            'Menu/body.html');
     }
 
 }
