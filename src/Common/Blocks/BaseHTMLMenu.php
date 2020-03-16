@@ -3,8 +3,11 @@
 namespace Fabiom\UglyDuckling\Common\Blocks;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class BaseHTMLMenu extends BaseHTMLBlock {
+
+    private /* HtmlTemplateLoader */ $htmlTemplateLoader;
 
     function __construct() {
         $this->brand = '';
@@ -12,6 +15,10 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $this->body = '';
         $this->rightBody = '';
         $this->dropdownCounter = 1;
+    }
+
+    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function addBrand( string $brand, string $url ) {
