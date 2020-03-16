@@ -15,7 +15,6 @@ use stdClass;
 class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
-    private $routerContainer;
 
     /**
      * @param mixed $infoStructure
