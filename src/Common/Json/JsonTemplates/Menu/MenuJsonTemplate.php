@@ -1,11 +1,5 @@
 <?php
 
-/**
- * User: Fabio Mattei
- * Date: 29/09/18
- * Time: 11.54
- */
-
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
@@ -13,13 +7,18 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 use stdClass;
 
+/**
+ * User: Fabio Mattei
+ * Date: 29/09/18
+ * Time: 11.54
+ */
 class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
 
     /**
      * Set the json structure in order to build the menu
-     * Usually the structure is set in a group file
+     * Usually the structure is set in a json group file
      *
      * @param mixed $menuStructure
      */

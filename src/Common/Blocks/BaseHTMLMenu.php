@@ -22,20 +22,24 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function addBrand( string $brand, string $url ) {
-        $this->brand = '<a class="navbar-brand" href="' . $url . '">' . $title . '</a>';    
+        $this->brand = $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${url}', '${title}'),
+                array($url, $brand),
+                'Menu/brand.html');
     }
 
     function addButtonToggler() {
-        $this->buttonToggler = '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>';    
+        $this->buttonToggler = $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'Menu/buttontoggeler.html');
     }
 
     function addForm() {
-        $this->rightBody .= '<form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>';    
+        $this->rightBody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array(),
+            array(),
+            'Menu/form.html');
     }
 
     function addNavItem( string $label, string $url, bool $active, bool $current ) {

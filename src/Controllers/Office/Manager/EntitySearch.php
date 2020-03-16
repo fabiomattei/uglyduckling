@@ -34,6 +34,7 @@ class EntitySearch extends ManagerEntityController {
 
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->routerContainer );
+        $this->menubuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
 		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );

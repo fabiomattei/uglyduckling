@@ -45,6 +45,7 @@ class EntityExport extends ManagerEntityController {
 		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 		$this->menubuilder->setMenuStructure( $menuresource );
 		$this->menubuilder->setRouter( $this->routerContainer );
+        $this->menubuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 	
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array();
