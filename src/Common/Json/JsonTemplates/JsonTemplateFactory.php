@@ -11,6 +11,7 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
@@ -29,6 +30,7 @@ class JsonTemplateFactory {
     protected $jsonloader;
     protected $linkBuilder;
     protected $logger;
+    protected /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
 
     const blocktype = 'basebuilder';
 
@@ -38,6 +40,13 @@ class JsonTemplateFactory {
     public function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
+    }
+
+    /**
+     * @param $container JsonTemplateFactoriesContainer
+     */
+    public function setJsonTemplateFactoriesContainer( $container) {
+        $this->jsonTemplateFactoriesContainer = $container;
     }
 
     /**
