@@ -104,89 +104,40 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
      */
     public function getHTMLBlock( $resource ) {
         if ( $resource->metadata->type == DashboardJsonTemplate::blocktype ) {
-            $this->dashboardJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->dashboardJsonTemplate->setSessionWrapper($this->sessionWrapper);
-            $this->dashboardJsonTemplate->setJsonloader($this->jsonloader);
-            $this->dashboardJsonTemplate->setRouter($this->routerContainer);
             $this->dashboardJsonTemplate->setResource($resource);
-            $this->dashboardJsonTemplate->setParameters($this->parameters);
-            $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
             $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
-            $this->dashboardJsonTemplate->setLogger($this->logger);
             return $this->dashboardJsonTemplate->createHTMLBlock();
         }
 
         if ( $resource->metadata->type == TableJsonTemplate::blocktype ) {
-            $this->tableBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->tableBuilder->setSessionWrapper($this->sessionWrapper);
-            $this->tableBuilder->setJsonloader($this->jsonloader);
-            $this->tableBuilder->setRouter($this->routerContainer);
             $this->tableBuilder->setResource($resource);
-            $this->tableBuilder->setParameters($this->parameters);
-            $this->tableBuilder->setDbconnection($this->dbconnection);
-            $this->tableBuilder->setLogger($this->logger);
             return $this->tableBuilder->createTable();
         }
 
         if ( $resource->metadata->type == ChartjsJsonTemplate::blocktype ) {
-            $this->chartjsBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->chartjsBuilder->setSessionWrapper($this->sessionWrapper);
-            $this->chartjsBuilder->setJsonloader($this->jsonloader);
-            $this->chartjsBuilder->setRouter($this->routerContainer);
             $this->chartjsBuilder->setResource($resource);
-            $this->chartjsBuilder->setParameters($this->parameters);
-            $this->chartjsBuilder->setDbconnection($this->dbconnection);
-            $this->chartjsBuilder->setLogger($this->logger);
             return $this->chartjsBuilder->createChart();
         }
 
         if ( $resource->metadata->type == InfoJsonTemplate::blocktype ) {
-            $this->infoBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->infoBuilder->setSessionWrapper($this->sessionWrapper);
-            $this->infoBuilder->setJsonloader($this->jsonloader);
-            $this->infoBuilder->setRouter($this->routerContainer);
             $this->infoBuilder->setResource($resource);
-            $this->infoBuilder->setParameters($this->parameters);
-            $this->infoBuilder->setDbconnection($this->dbconnection);
-            $this->infoBuilder->setLogger($this->logger);
             return $this->infoBuilder->createInfo();
         }
 
         if ( $resource->metadata->type == FormJsonTemplate::blocktype ) {
-            $this->formBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->formBuilder->setSessionWrapper($this->sessionWrapper);
-            $this->formBuilder->setJsonloader($this->jsonloader);
-            $this->formBuilder->setRouter($this->routerContainer);
             $this->formBuilder->setResource($resource);
-            $this->formBuilder->setParameters($this->parameters);
-            $this->formBuilder->setDbconnection($this->dbconnection);
-            $this->formBuilder->setLogger($this->logger);
             $this->formBuilder->setAction($this->action . '&postres=' . $resource->name);
             return $this->formBuilder->createForm();
         }
 
         if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
-            $this->searchJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->searchJsonTemplate->setSessionWrapper($this->sessionWrapper);
-            $this->searchJsonTemplate->setJsonloader($this->jsonloader);
-            $this->searchJsonTemplate->setRouter($this->routerContainer);
             $this->searchJsonTemplate->setResource($resource);
-            $this->searchJsonTemplate->setParameters($this->parameters);
-            $this->searchJsonTemplate->setDbconnection($this->dbconnection);
-            $this->searchJsonTemplate->setLogger($this->logger);
             $this->searchJsonTemplate->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
             return $this->searchJsonTemplate->createHTMLBlock();
         }
 
         if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
-            $this->exportJsonTemplate->setHtmlTemplateLoader($this->htmlTemplateLoader);
-            $this->exportJsonTemplate->setSessionWrapper($this->sessionWrapper);
-            $this->exportJsonTemplate->setJsonloader($this->jsonloader);
-            $this->exportJsonTemplate->setRouter($this->routerContainer);
             $this->exportJsonTemplate->setResource($resource);
-            $this->exportJsonTemplate->setParameters($this->parameters);
-            $this->exportJsonTemplate->setDbconnection($this->dbconnection);
-            $this->exportJsonTemplate->setLogger($this->logger);
             $this->exportJsonTemplate->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
             return $this->exportJsonTemplate->createHTMLBlock();
         }

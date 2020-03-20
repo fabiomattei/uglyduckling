@@ -44,33 +44,44 @@ class TableJsonTemplate extends JsonTemplate {
     }
 
     public function createTable() {
+        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
+        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
+        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
+        $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
+        $logger = $this->jsonTemplateFactoriesContainer->getLogger();
+        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
+        $linkBuilder = $this->jsonTemplateFactoriesContainer->getLinkBuilder();
+        $jsonloader = $this->jsonTemplateFactoriesContainer->getJsonloader();
+        $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
+
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {
             $entities = $this->resource->get->dummydata;
         } else {
             // If there is a query I look for data to fill the table,
             // if there is not query I do not
-            if ( isset($this->resource->get->query) AND isset($this->dbconnection) ) {
-                $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-                $this->queryExecuter->setLogger( $this->logger );
-                $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
+            if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
+                $queryExecuter->setDBH( $dbconnection->getDBH() );
+                $queryExecuter->setQueryBuilder( $queryBuilder );
+                $queryExecuter->setLogger( $logger );
+                $queryExecuter->setSessionWrapper( $sessionWrapper );
                 if ($this->method === self::GET_METHOD) {
                     $query = $this->resource->get->query;
-                    if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
+                    if (isset( $this->parameters ) ) $queryExecuter->setParameters( $parameters );
                 } else {
                     $query = $this->resource->post->query;
-                    if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
+                    if (isset( $this->parameters ) ) $queryExecuter->setPostParameters( $parameters );
                 }
-                $this->queryExecuter->setQueryStructure( $query );
-                $entities = $this->queryExecuter->executeSql();
+                $queryExecuter->setQueryStructure( $query );
+                $entities = $queryExecuter->executeSql();
             }
         }
 
         $table = $this->getTableFromResource();
 
 		$tableBlock = new StaticTable;
-        $tableBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$tableBlock->setTitle($table->title ?? '');
 		
 		$tableBlock->addTHead();
@@ -91,7 +102,7 @@ class TableJsonTemplate extends JsonTemplate {
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
-                $links .= $this->linkBuilder->getButton( $this->jsonloader, $this->routerContainer, $action->label, $action->resource, $action->parameters, $entity );
+                $links .= $linkBuilder->getButton( $jsonloader, $routerContainer, $action->label, $action->resource, $action->parameters, $entity );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );

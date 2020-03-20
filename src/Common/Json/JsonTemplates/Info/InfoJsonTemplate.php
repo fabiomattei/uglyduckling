@@ -1,36 +1,42 @@
 <?php
 
-/**
- * User: Fabio Mattei
- * Date: 13/07/18
- * Time: 18.15
- */
-
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
+/**
+ * User: Fabio Mattei
+ * Date: 13/07/18
+ * Time: 18.15
+ */
 class InfoJsonTemplate extends JsonTemplate {
 
     const blocktype = 'info';
 
     public function createInfo() {
+        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
+        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
+        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
+        $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
+        $logger = $this->jsonTemplateFactoriesContainer->getLogger();
+        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+
         // If there are dummy data they take precedence in order to fill the info box
         if ( isset($this->resource->get->dummydata) ) {
             $entity = $this->resource->get->dummydata;
         } else {
             // If there is a query I look for data to fill the info box,
             // if there is not query I do not
-            if ( isset($this->resource->get->query) AND isset($this->dbconnection) ) {
-                $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-                $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-                $this->queryExecuter->setLogger( $this->logger );
-                if (isset( $this->parameters ) ) $this->queryExecuter->setGetParameters( $this->parameters );
+            if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
+                $queryExecuter->setDBH( $dbconnection->getDBH() );
+                $queryExecuter->setQueryBuilder( $queryBuilder );
+                $queryExecuter->setQueryStructure( $this->resource->get->query );
+                $queryExecuter->setLogger( $logger );
+                if (isset( $this->parameters ) ) $queryExecuter->setGetParameters( $parameters );
 
-                $result = $this->queryExecuter->executeSql();
+                $result = $queryExecuter->executeSql();
                 $entity = $result->fetch();
             } else {
                 $entity = new \stdClass();
@@ -38,7 +44,7 @@ class InfoJsonTemplate extends JsonTemplate {
         }
 
 		$infoBlock = new BaseHTMLInfo;
-        $infoBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $infoBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$infoBlock->setTitle($this->resource->get->info->title ?? '');
 		$fieldRows = array();
 		

@@ -18,19 +18,8 @@ use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class JsonTemplate {
 
-    protected /* QueryExecuter */ $queryExecuter;
-    protected /* QueryBuilder */ $queryBuilder;
     protected $resource;
-    protected /* RoutersContainer */ $routerContainer;
-    protected /* DBConnection */ $dbconnection;
-    protected /* array */ $parameters;
-    protected /* array */ $postparameters;
-    protected /* SessionWrapper */ $sessionWrapper;
     protected /* string */ $action;
-    protected /* HtmlTemplateLoader */ $htmlTemplateLoader;
-    protected /* JsonLoader */ $jsonloader;
-    protected /* LinkBuilder */ $linkBuilder;
-    protected /* Logger */ $logger;
     protected /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
 
     const blocktype = 'basebuilder';
@@ -39,45 +28,7 @@ class JsonTemplate {
      * BaseBuilder constructor.
      */
     public function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
-    }
 
-    /**
-     * Setting routerContainer object
-     *
-     * @param $routerContainer
-     */
-    public function setRouter( RoutersContainer $routerContainer ) {
-        $this->routerContainer = $routerContainer;
-    }
-
-    /**
-     * @param JsonLoader $jsonloader
-     */
-    public function setJsonloader( JsonLoader $jsonloader) {
-        $this->jsonloader = $jsonloader;
-    }
-
-    /**
-     * @param array $parameters
-     */
-    public function setParameters(array $parameters): void {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param array $parameters
-     */
-    public function setPostParameters(array $parameters): void {
-        $this->postparameters = $parameters;
-    }
-
-    /**
-     * @param array $parameters
-     */
-    public function setSessionWrapper( SessionWrapper $sessionWrapper): void {
-        $this->sessionWrapper = $sessionWrapper;
     }
 
     /**
@@ -88,60 +39,11 @@ class JsonTemplate {
     }
 
     /**
-     * @param DBConnection $dbconnection
-     */
-    public function setDbconnection( DBConnection $dbconnection ): void {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param QueryExecuter $queryExecuter
-     */
-    public function setQueryExecuter( QueryExecuter $queryExecuter ): void {
-        $this->queryExecuter = $queryExecuter;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param QueryBuilder $queryBuilder
-     */
-    public function setQueryBuilder( QueryBuilder $queryBuilder ): void {
-        $this->queryBuilder = $queryBuilder;
-    }
-
-    /**
-     * Setting Html template loader
-     *
-     * @param HtmlTemplateLoader $htmlTemplateLoader
-     */
-    public function setHtmlTemplateLoader( HtmlTemplateLoader $htmlTemplateLoader): void {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
-    
-    /**
-     * @param mixed $logger
-     * the $logger variable contains a logger for this class
-     */
-    public function setLogger( Logger $logger ): void {
-        $this->logger = $logger;
-    }
-
-    /**
      * Set the complete URL for the form action
      * @param action $action
      */
     public function setAction( string $action ): void {
         $this->action = $action;
-    }
-
-    /**
-     * @param LinkBuilder $linkBuilder
-     */
-    public function setLinkBuilder( LinkBuilder $linkBuilder ): void {
-        $this->linkBuilder = $linkBuilder;
     }
 
     /**

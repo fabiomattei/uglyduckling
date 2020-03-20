@@ -17,19 +17,8 @@ use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
 class JsonTemplateFactory {
 
-    protected /* QueryExecuter */ $queryExecuter;
-    protected /* QueryBuilder */ $queryBuilder;
     protected $resource;
-    protected /* RoutersContainer */ $routerContainer;
-    protected $dbconnection;
-    protected $parameters;
-    protected $postparameters;
-    protected /* SessionWrapper */ $sessionWrapper;
     protected $action;
-    protected $htmlTemplateLoader;
-    protected $jsonloader;
-    protected $linkBuilder;
-    protected $logger;
     protected /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
 
     const blocktype = 'basebuilder';
@@ -45,45 +34,8 @@ class JsonTemplateFactory {
     /**
      * @param $container JsonTemplateFactoriesContainer
      */
-    public function setJsonTemplateFactoriesContainer( $container) {
+    public function setJsonTemplateFactoriesContainer( JsonTemplateFactoriesContainer $container) {
         $this->jsonTemplateFactoriesContainer = $container;
-    }
-
-    /**
-     * Setting routerContainer object
-     *
-     * @param $routerContainer
-     */
-    public function setRouter( $routerContainer ) {
-        $this->routerContainer = $routerContainer;
-    }
-
-    /**
-     * @param mixed $jsonloader
-     */
-    public function setJsonloader($jsonloader) {
-        $this->jsonloader = $jsonloader;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setPostParameters($parameters) {
-        $this->postparameters = $parameters;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setSessionWrapper( $sessionWrapper ) {
-        $this->sessionWrapper = $sessionWrapper;
     }
 
     /**
@@ -94,48 +46,6 @@ class JsonTemplateFactory {
     }
 
     /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryExecuter
-     */
-    public function setQueryExecuter( $queryExecuter ) {
-        $this->queryExecuter = $queryExecuter;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryBuilder
-     */
-    public function setQueryBuilder( $queryBuilder ) {
-        $this->queryBuilder = $queryBuilder;
-    }
-
-    /**
-     * Setting Html template loader
-     *
-     * @param $htmlTemplateLoader
-     */
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
-
-    /**
-     * @param mixed $logger
-     * the $logger variable contains a logger for this class
-     */
-    public function setLogger( $logger ) {
-        $this->logger = $logger;
-    }
-
-    /**
      * Set the complete URL for the form action
      * @param action $action
      */
@@ -143,9 +53,4 @@ class JsonTemplateFactory {
         $this->action = $action;
     }
 
-    public function setLinkBuilder( $linkBuilder ) {
-        $this->linkBuilder = $linkBuilder;
-    }
-
 }
-
