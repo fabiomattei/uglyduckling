@@ -16,16 +16,27 @@ class ChartjsJsonTemplate extends JsonTemplate {
     const blocktype = 'chartjs';
 
     public function createChart() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-        $this->queryExecuter->setQueryStructure( $this->resource->get->query );
-        $this->queryExecuter->setLogger( $this->logger );
-        $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setParameters( $this->parameters );
-        $entities = $this->queryExecuter->executeSql();
+        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
+        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
+        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
+        $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
+        $logger = $this->jsonTemplateFactoriesContainer->getLogger();
+        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
+        $linkBuilder = $this->jsonTemplateFactoriesContainer->getLinkBuilder();
+        $jsonloader = $this->jsonTemplateFactoriesContainer->getJsonloader();
+        $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
+
+        $queryExecuter->setDBH( $dbconnection->getDBH() );
+        $queryExecuter->setQueryBuilder( $queryBuilder );
+        $queryExecuter->setQueryStructure( $this->resource->get->query );
+        $queryExecuter->setLogger( $logger );
+        $queryExecuter->setSessionWrapper( $sessionWrapper );
+        if (isset( $parameters ) ) $queryExecuter->setParameters( $parameters );
+        $entities = $queryExecuter->executeSql();
 
         $chartBlock = new BaseHTMLChart;
-        $chartBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $chartBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $chartBlock->setHtmlBlockId($this->resource->name);
         $chartBlock->setStructure($this->resource->get->chart);
         $chartBlock->setChartDataGlue($this->resource->get->chartdataglue);

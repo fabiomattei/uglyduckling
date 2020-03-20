@@ -22,6 +22,8 @@ class DashboardJsonTemplate extends JsonTemplate {
      * @return BaseHTMLDashboard
      */
     public function createHTMLBlock(): BaseHTMLDashboard {
+        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+
         // this first section of the code roun trough all defined panels for the specific
         // dashboard and add each of them to the array $panelRows
         // I am separating panels by row
@@ -35,7 +37,7 @@ class DashboardJsonTemplate extends JsonTemplate {
         }
 
         $htmlDashboard = new BaseHTMLDashboard;
-        $htmlDashboard->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $htmlDashboard->setHtmlTemplateLoader( $htmlTemplateLoader );
 
         foreach ($panelRows as $row) {
             $htmlDashboard->createNewRow();
