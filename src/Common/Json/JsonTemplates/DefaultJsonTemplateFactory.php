@@ -104,7 +104,7 @@ class DefaultJsonTemplateFactory extends JsonTemplateFactory {
             $this->dashboardJsonTemplate->setResource($resource);
             $this->dashboardJsonTemplate->setParameters($this->parameters);
             $this->dashboardJsonTemplate->setDbconnection($this->dbconnection);
-            $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($this);
+            $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
             $this->dashboardJsonTemplate->setLogger($this->logger);
             return $this->dashboardJsonTemplate->createHTMLBlock();
         }
