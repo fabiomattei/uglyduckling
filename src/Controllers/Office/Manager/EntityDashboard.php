@@ -17,8 +17,8 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  */
 class EntityDashboard extends ManagerEntityController {
 
-    private $menubuilder;
-    private /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;
+    public $menubuilder;
+    public /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
