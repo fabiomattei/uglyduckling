@@ -27,8 +27,11 @@ class MenuJsonTemplate extends JsonTemplate {
     }
 
     public function createMenu() {
+        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+        $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
+
 		$menu = new BaseHTMLMenu;
-        $menu->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
         foreach ($this->menuStructure->menu as $menuitem) {
@@ -37,17 +40,17 @@ class MenuJsonTemplate extends JsonTemplate {
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label;
-                    $mi->url = LinkBuilder::getURL( $this->routerContainer, $item->action, $item->resource );
+                    $mi->url = LinkBuilder::getURL( $routerContainer, $item->action, $item->resource );
                     $submenuItems[] = $mi;
                 }
                 $menu->addNavItemWithDropdown( $menuitem->label, 
-                    LinkBuilder::getURL( $this->routerContainer, $menuitem->action, $menuitem->resource ), 
+                    LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
                     false, false, 
                     $submenuItems 
                 );
             } else {
                 $menu->addNavItem( $menuitem->label, 
-                    LinkBuilder::getURL( $this->routerContainer, $menuitem->action, $menuitem->resource ), 
+                    LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
                     false, false 
                 );
             }

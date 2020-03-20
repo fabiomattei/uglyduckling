@@ -17,6 +17,9 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  */
 class EntityDashboard extends ManagerEntityController {
 
+    private $menubuilder;
+    private /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;
+
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryExecuter->setLogger($this->logger);
@@ -30,9 +33,6 @@ class EntityDashboard extends ManagerEntityController {
      */
     public function getRequest() {
         $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-        $this->menubuilder->setMenuStructure( $menuresource );
-        $this->menubuilder->setRouter( $this->routerContainer );
-        $this->menubuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
         $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
@@ -43,6 +43,9 @@ class EntityDashboard extends ManagerEntityController {
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
         $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+
+        $this->menubuilder->setMenuStructure( $menuresource );
+        $this->menubuilder->setJsonTemplateFactoriesContainer( $this->jsonTemplateFactoriesContainer );
 
         $htmlBlock = $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource );
 
