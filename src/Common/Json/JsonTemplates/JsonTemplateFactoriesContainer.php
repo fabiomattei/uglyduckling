@@ -56,6 +56,8 @@ class JsonTemplateFactoriesContainer {
 
     function getPanel($panel) {
         $panelBlock = new CardHTMLBlock;
+        // $panelBlock->setJsonTemplateFactoriesContainer();
+
         $panelBlock->setTitle($panel->title ?? '');
         $panelBlock->setWidth($panel->width ?? '3');
         $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );

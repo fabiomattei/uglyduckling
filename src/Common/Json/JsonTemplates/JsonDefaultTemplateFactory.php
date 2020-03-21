@@ -34,12 +34,19 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
      */
     public function __construct() {
         $this->tableBuilder = new TableJsonTemplate;
+        $this->tableBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->chartjsBuilder = new ChartjsJsonTemplate;
+        $this->chartjsBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->infoBuilder = new InfoJsonTemplate;
+        $this->infoBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->formBuilder = new FormJsonTemplate;
+        $this->formBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->searchJsonTemplate = new SearchJsonTemplate;
+        $this->searchJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->exportJsonTemplate = new ExportJsonTemplate;
+        $this->exportJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
+        $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
         $this->action = '';
     }
 
@@ -105,7 +112,6 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     public function getHTMLBlock( $resource ) {
         if ( $resource->metadata->type == DashboardJsonTemplate::blocktype ) {
             $this->dashboardJsonTemplate->setResource($resource);
-            $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
             return $this->dashboardJsonTemplate->createHTMLBlock();
         }
 
