@@ -51,7 +51,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function addJsonTemplateFactory( $jsonTemplateFactory ) {
         $this->factories[] = $jsonTemplateFactory;
-        $jsonTemplateFactory->setJsonTemplateFactoriesContainer($this);
     }
 
     function getPanel($panel) {
