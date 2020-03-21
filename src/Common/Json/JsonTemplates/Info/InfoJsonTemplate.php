@@ -22,6 +22,7 @@ class InfoJsonTemplate extends JsonTemplate {
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
 
         // If there are dummy data they take precedence in order to fill the info box
         if ( isset($this->resource->get->dummydata) ) {
@@ -57,8 +58,7 @@ class InfoJsonTemplate extends JsonTemplate {
 		foreach ($fieldRows as $row) {
 			$infoBlock->addRow();
 			foreach ($row as $field) {
-				$fieldname = $field->value;
-				$value = ($entity == null ? '' : ( isset($entity->$fieldname) ? $entity->$fieldname : '' ) );
+                $value = $this->getValue($field, array(), array(), $sessionWrapper, $entity);
                 if ($field->type === 'textfield') {
                     $infoBlock->addTextField($field->label, $value, $field->width);
                 }

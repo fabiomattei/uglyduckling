@@ -109,8 +109,7 @@ class JsonTemplateFactoriesContainer {
     /**
      * @return QueryExecuter
      */
-    public function getQueryExecuter(): QueryExecuter
-    {
+    public function getQueryExecuter(): QueryExecuter {
         return $this->queryExecuter;
     }
 

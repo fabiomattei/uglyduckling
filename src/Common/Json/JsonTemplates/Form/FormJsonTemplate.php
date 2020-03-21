@@ -59,7 +59,7 @@ class FormJsonTemplate extends JsonTemplate {
 		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
 			foreach ($row as $field) {
-				$value = $this->getValue($field, $entity);
+				$value = $this->getValue($field, $parameters, array(), $sessionWrapper, $entity);
                 if (in_array( $field->type, array('textfield', 'number') )) {
                     $formBlock->addGenericField( $field, $value ?? '');
                 }

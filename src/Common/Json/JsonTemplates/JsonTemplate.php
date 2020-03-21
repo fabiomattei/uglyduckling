@@ -60,7 +60,7 @@ class JsonTemplate {
      * @param $field: stdClass must contain fieldname attibute
      * @param $entity: possible entity loaded from the database (TODO: must become a property of this class)
      */
-    public function getValue( $field, $entity = null ) {
+    public function getValue( $field, $parameters, $postparameters, $sessionWrapper, $entity = null ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
             return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) ); 
@@ -73,15 +73,15 @@ class JsonTemplate {
             return $field->constantparameter;
         }
         if ( isset($field->getparameter) ) {
-            return $this->parameters[$field->getparameter] ?? '';
+            return $parameters[$field->getparameter] ?? '';
         }
         if ( isset($field->postparameter) ) {
-            return $this->postparameters[$field->postparameter] ?? '';
+            return $postparameters[$field->postparameter] ?? '';
         }
         if ( isset($field->sessionparameter) ) {
             if ( !empty ( $field->sessionparameter ) ) {
-                if ( $this->sessionWrapper->isSessionParameterSet($field->sessionparameter) ) {
-                    return $this->sessionWrapper->getSessionParameter($field->sessionparameter);
+                if ( $sessionWrapper->isSessionParameterSet($field->sessionparameter) ) {
+                    return $sessionWrapper->getSessionParameter($field->sessionparameter);
                 }
             }
         }
