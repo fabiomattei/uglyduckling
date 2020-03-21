@@ -32,21 +32,21 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
      * PanelBuilder constructor.
      * @param $tableBuilder
      */
-    public function __construct() {
+    public function __construct( $jsonTemplateFactoriesContainer ) {
         $this->tableBuilder = new TableJsonTemplate;
-        $this->tableBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->tableBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->chartjsBuilder = new ChartjsJsonTemplate;
-        $this->chartjsBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->chartjsBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->infoBuilder = new InfoJsonTemplate;
-        $this->infoBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->infoBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->formBuilder = new FormJsonTemplate;
-        $this->formBuilder->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->formBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->searchJsonTemplate = new SearchJsonTemplate;
-        $this->searchJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->searchJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->exportJsonTemplate = new ExportJsonTemplate;
-        $this->exportJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->exportJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
-        $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($this->jsonTemplateFactoriesContainer);
+        $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->action = '';
     }
 
