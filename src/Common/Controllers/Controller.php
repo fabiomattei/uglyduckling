@@ -12,6 +12,7 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Exceptions\ErrorPageException;
 use Fabiom\UglyDuckling\Common\Exceptions\AuthorizationException;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Request\Request;
@@ -40,6 +41,7 @@ class Controller {
     public /* BaseHTMLMessages */ $messages;
     public /* HtmlTemplateLoader */ $htmlTemplateLoader;
     public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
+    public /* LinkBuilder */ $linkBuilder;
     public /* GUMP */ $gump;
     public /* array */ $get_validation_rules = array();
     public /* array */ $get_filter_rules = array();
@@ -82,7 +84,8 @@ class Controller {
         Logger $logger,
         BaseHTMLMessages $messages,
         HtmlTemplateLoader $htmlTemplateLoader,
-        JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
+        JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer,
+        LinkBuilder $linkBuilder
 		) {
 		$this->routerContainer                = $routerContainer;
         $this->setup                          = $setup;
@@ -97,6 +100,7 @@ class Controller {
         $this->messages                       = $messages;
         $this->htmlTemplateLoader             = $htmlTemplateLoader;
         $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
+        $this->linkBuilder                    = $linkBuilder;
         $this->gump                           = new GUMP();
 
         // setting an array containing all parameters

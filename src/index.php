@@ -7,6 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $severWrapper = new Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 $htmlTemplateLoader = new Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+$linkBuilder = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder();
 $htmlTemplateLoader->setPath('Templates/HTML/');
 
 $messagesBlock = new Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages();
@@ -61,7 +62,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Fabiom\UglyDuckling\Common\Loggers\EchoLogger(),
     	$messagesBlock,
         $htmlTemplateLoader,
-        $jsonTemplateFactoriesContainer
+        $jsonTemplateFactoriesContainer,
+        $linkBuilder
 	);
 } else {
 	// settings for user that has not logged in the system
@@ -78,7 +80,8 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	new Fabiom\UglyDuckling\Common\Loggers\EchoLogger(),
     	$messagesBlock,
         $htmlTemplateLoader,
-        $jsonTemplateFactoriesContainer
+        $jsonTemplateFactoriesContainer,
+        $linkBuilder
 	);
 }
 $controller->setGetParameters( $_GET );

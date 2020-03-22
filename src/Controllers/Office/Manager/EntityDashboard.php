@@ -38,6 +38,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setSessionWrapper( $this->getSessionWrapper() );
         $this->jsonTemplateFactoriesContainer->setServerWrapper($this->serverWrapper);
+        $this->jsonTemplateFactoriesContainer->setLinkBuilder( $this->linkBuilder );
         $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
         $this->jsonTemplateFactoriesContainer->setRouter($this->routerContainer);
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
