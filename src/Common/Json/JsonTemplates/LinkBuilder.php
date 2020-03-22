@@ -98,7 +98,7 @@ class LinkBuilder {
         }
     }
 
-    function getUrl( $jsonloader, $routerContainer, $resource, $parameters, $entity ) {
+    function getUrlForLink( $jsonloader, $routerContainer, $resource, $parameters, $entity ) {
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
             $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
