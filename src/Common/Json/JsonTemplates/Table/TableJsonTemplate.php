@@ -54,6 +54,7 @@ class TableJsonTemplate extends JsonTemplate {
         $linkBuilder = $this->jsonTemplateFactoriesContainer->getLinkBuilder();
         $jsonloader = $this->jsonTemplateFactoriesContainer->getJsonloader();
         $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
+        $serverWrapper = $this->jsonTemplateFactoriesContainer->getServerWrapper();
 
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {
@@ -66,7 +67,7 @@ class TableJsonTemplate extends JsonTemplate {
                 $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setLogger( $logger );
                 $queryExecuter->setSessionWrapper( $sessionWrapper );
-                if ($this->method === self::GET_METHOD) {
+                if ( $serverWrapper->isGetRequest() ) {
                     $query = $this->resource->get->query;
                     if (isset( $this->parameters ) ) $queryExecuter->setParameters( $parameters );
                 } else {

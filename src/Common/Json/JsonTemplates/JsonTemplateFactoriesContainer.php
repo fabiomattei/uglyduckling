@@ -16,6 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
@@ -27,6 +28,7 @@ class JsonTemplateFactoriesContainer {
     private /* RoutersContainer */ $routerContainer;
     private /* DBConnection */ $dbconnection;
     private /* SessionWrapper */ $sessionWrapper;
+    private /* ServerWrapper */ $serverWrapper;
     private /* array */ $parameters;
     private /* array */ $postparameters;
     private /* array */ $sessionparameters;
@@ -135,17 +137,24 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * @return mixed
+     * @return DBConnection
      */
     public function getDbconnection() {
         return $this->dbconnection;
     }
 
     /**
-     * @return mixed
+     * @return SessionWrapper
      */
     public function getSessionWrapper() {
         return $this->sessionWrapper;
+    }
+
+    /**
+     * @return ServerWrapper
+     */
+    public function getServerWrapper() {
+        return $this->serverWrapper;
     }
 
     /**
@@ -232,6 +241,13 @@ class JsonTemplateFactoriesContainer {
      */
     public function setSessionWrapper( $sessionWrapper ): void {
         $this->sessionWrapper = $sessionWrapper;
+    }
+
+    /**
+     * @param ServerWrapper $serverWrapper
+     */
+    public function setServerWrapper( ServerWrapper $serverWrapper ): void {
+        $this->serverWrapper = $serverWrapper;
     }
 
     /**
