@@ -98,6 +98,46 @@ class LinkBuilder {
         }
     }
 
+    function getUrl( $jsonloader, $routerContainer, $resource, $parameters, $entity ) {
+        $url_parameters = 'res='.$resource.'&';
+        foreach ($parameters as $par) {
+            $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
+        }
+        $url_parameters = rtrim($url_parameters, '&');
+
+        $action = $jsonloader->getActionRelatedToResource($resource);
+        switch ( $action ) {
+            case 'entitydashboard':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                break;
+            case 'entitychart':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, $url_parameters );
+                break;
+            case 'entitytable':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, $url_parameters );
+                break;
+            case 'entityform':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, $url_parameters );
+                break;
+            case 'entityinfo':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, $url_parameters );
+                break;
+            case 'entitysearch':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, $url_parameters );
+                break;
+            case 'entityexport':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
+                break;
+            case 'entitytransaction':
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
+                break;
+
+            default:
+                return $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                break;
+        }
+    }
+
     /**
      * @deprecated
      */
