@@ -413,6 +413,28 @@ class Controller {
     }
 
     function addToHeadAndToFoot($container) {
+        $addToHeadDictionary = array();
+        $addToFootDictionary = array();
+
+        if (isset($container)) {
+            if (gettype($container) == 'array') {
+                foreach ($container as $obj) {
+                    $addToHeadDictionary[get_class($obj)] = $obj->addToHeadOnce();
+                    $addToFootDictionary[get_class($obj)] = $obj->addToFootOnce();
+                }
+            }
+            if (gettype($container) == 'object') {
+                $addToHeadDictionary[get_class($obj)] = $obj->addToHeadOnce();
+                $addToFootDictionary[get_class($obj)] = $obj->addToFootOnce();
+            }
+        }
+        foreach ($addToHeadDictionary as $htmlBlock => $blockContent) {
+            $this->addToHead .= $blockContent;
+        }
+        foreach ($addToFootDictionary as $htmlBlock => $blockContent) {
+            $this->addToFoot .= $blockContent;
+        }
+
         if (isset($container)) {
             if (gettype($container) == 'array') {
                 foreach ($container as $obj) {
