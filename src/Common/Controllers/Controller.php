@@ -413,28 +413,6 @@ class Controller {
     }
 
     function addToHeadAndToFoot($container) {
-        $addToHeadDictionary = array();
-        $addToFootDictionary = array();
-
-        if (isset($container)) {
-            if (gettype($container) == 'array') {
-                foreach ($container as $obj) {
-                    $addToHeadDictionary[get_class($obj)] = $obj->addToHeadOnce();
-                    $addToFootDictionary[get_class($obj)] = $obj->addToFootOnce();
-                }
-            }
-            if (gettype($container) == 'object') {
-                $addToHeadDictionary[get_class($container)] = $container->addToHeadOnce();
-                $addToFootDictionary[get_class($container)] = $container->addToFootOnce();
-            }
-        }
-        foreach ($addToHeadDictionary as $htmlBlock => $blockContent) {
-            $this->addToHead .= $blockContent;
-        }
-        foreach ($addToFootDictionary as $htmlBlock => $blockContent) {
-            $this->addToFoot .= $blockContent;
-        }
-
         if (isset($container)) {
             if (gettype($container) == 'array') {
                 foreach ($container as $obj) {
@@ -451,6 +429,30 @@ class Controller {
                 $this->subAddToFoot .= $container->subAddToFoot();
             }
         }
+
+        /* add once section */
+        $addToHeadDictionary = array();
+        $addToFootDictionary = array();
+
+        if (isset($container)) {
+            if (gettype($container) == 'array') {
+                foreach ($container as $obj) {
+                    $addToHeadDictionary[get_class($obj)] = $obj->addToHeadOnce();
+                    $addToFootDictionary[get_class($obj)] = $obj->addToFootOnce();
+                }
+            }
+            if (gettype($container) == 'object') {
+                $addToHeadDictionary[get_class($container)] = $container->addToHeadOnce();
+                $addToFootDictionary[get_class($container)] = $container->addToFootOnce();
+            }
+        }
+        foreach ($addToHeadDictionary as $htmlBlock) {
+            $this->addToHead .= $htmlBlock;
+        }
+        foreach ($addToFootDictionary as $htmlBlock) {
+            $this->addToFoot .= $htmlBlock;
+        }
+        /* end add once section */
     }
 
 /*
