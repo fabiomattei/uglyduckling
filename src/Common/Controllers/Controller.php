@@ -424,8 +424,8 @@ class Controller {
                 }
             }
             if (gettype($container) == 'object') {
-                $addToHeadDictionary[get_class($obj)] = $obj->addToHeadOnce();
-                $addToFootDictionary[get_class($obj)] = $obj->addToFootOnce();
+                $addToHeadDictionary[get_class($container)] = $container->addToHeadOnce();
+                $addToFootDictionary[get_class($container)] = $container->addToFootOnce();
             }
         }
         foreach ($addToHeadDictionary as $htmlBlock => $blockContent) {
