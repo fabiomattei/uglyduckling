@@ -88,4 +88,12 @@ class CardHTMLBlock extends BaseHTMLBlock {
         return $this->block->addToFoot();
     }
 
+    function addToHeadOnce(): string {
+        return $this->block->addToHeadOnce();
+    }
+
+    function addToFootOnce(): string {
+        return $this->block->addToFootOnce();
+    }
+
 }
