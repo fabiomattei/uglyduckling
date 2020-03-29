@@ -71,6 +71,34 @@ class FormJsonTemplate extends JsonTemplate {
                     }
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
                 }
+                if ($field->type === 'sqldropdown') {
+                    if ( isset($field->query) AND isset($dbconnection) ) {
+                        $queryExecuter->setDBH( $dbconnection->getDBH() );
+                        $queryExecuter->setQueryBuilder( $queryBuilder );
+                        $queryExecuter->setQueryStructure( $field->query );
+                        $queryExecuter->setLogger( $logger );
+                        $queryExecuter->setSessionWrapper( $sessionWrapper );
+                        if (isset( $this->parameters ) ) $queryExecuter->setGetParameters( $this->parameters );
+
+                        $result = $queryExecuter->executeSql();
+                        $fieldOptions = $result->fetchAll();
+                    } else {
+                        $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing object query in json object', __FILE__, __LINE__);
+                        $fieldOptions = array();
+                    }
+
+                    $options = array();
+                    foreach ($fieldOptions as $op) {
+                        if ( !isset($op->valuesqlfield) ) {
+                            $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter valuesqlfield in json object', __FILE__, __LINE__);
+                        }
+                        if ( !isset($op->labelsqlfield) ) {
+                            $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter labelsqlfield in json object', __FILE__, __LINE__);
+                        }
+                        $options[$op->valuesqlfield] = $op->labelsqlfield;
+                    }
+                    $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
+                }
 				if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
                 }
