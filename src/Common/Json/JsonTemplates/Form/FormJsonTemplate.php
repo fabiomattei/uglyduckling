@@ -48,6 +48,7 @@ class FormJsonTemplate extends JsonTemplate {
         $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
         $formBlock->setAction( $this->action ?? '');
+        $formBlock->setMethod( $this->resource->get->form->method ?? 'POST');
 		$fieldRows = array();
 		
 		foreach ($this->resource->get->form->fields as $field) {

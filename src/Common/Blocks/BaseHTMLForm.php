@@ -11,12 +11,14 @@ class BaseHTMLForm extends BaseHTMLBlock {
     private $subtitle;
     private $action;
     private $body;
+    private $method;
     private $htmlTemplateLoader;
 
     function __construct() {
         $this->body = '';
 		$this->adddate = false;
 		$this->action = '';
+        $this->method = 'POST';
         $this->body = '';
     }
 
@@ -36,10 +38,14 @@ class BaseHTMLForm extends BaseHTMLBlock {
 		$this->action = $action;
 	}
 
+    function setMethod( string $method ) {
+        $this->method = $method;
+    }
+
     function show(): string {
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${title}', '${subtitle}', '${action}', '${body}'),
-            array($this->title, $this->subtitle, $this->action, $this->body),
+            array('${title}', '${subtitle}', '${action}', '${body}', '${method}'),
+            array($this->title, $this->subtitle, $this->action, $this->body, $this->method),
             'Form/body.html');
     }
 
