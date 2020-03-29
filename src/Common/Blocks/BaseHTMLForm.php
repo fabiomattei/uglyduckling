@@ -146,10 +146,10 @@ class BaseHTMLForm extends BaseHTMLBlock {
             'Form/hiddenfield.html');
     }
 
-    function addSubmitButton( string $name = 'save', string $value = 'Save' ) {
+    function addSubmitButton( string $name = 'save', string $value = 'Save', string $label = '', string $width = '12' ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${name}', '${value}'),
-            array($name, htmlspecialchars( $value )),
+            array('${name}', '${value}', '${label}', '${ColWidth}'),
+            array($name, htmlspecialchars( $value ), $label, ColWidth::getWidth(ColWidth::MEDIUM, $width)),
             'Form/submitbutton.html');
     }
 	

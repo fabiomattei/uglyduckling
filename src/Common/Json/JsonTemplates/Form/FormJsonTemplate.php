@@ -113,7 +113,7 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addFileUploadField($field->name, $field->label, $field->width);
                 }
                 if ($field->type === 'submitbutton') {
-                    $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '' );
+                    $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '', $field->label ?? '', $field->width ?? '12' );
                 }
 			}
 			$formBlock->closeRow('row '.$rowcounter);
