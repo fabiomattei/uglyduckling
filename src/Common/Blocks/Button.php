@@ -34,7 +34,7 @@ class Button extends BaseHTMLBlock {
 	 *
 	 */
     function get($url, $text, $properties = Button::COLOR_GRAY, $disabled = false) {
-        return '<a class="btn '.$properties.'" href="'.$url.'" role="button" '.($disabled ? '' : Button::DISABLED).'>'.$text.'</a>'; 
+        return '<a class="btn '.$properties.'" href="'.$url.'" role="button" >'.$text.'</a>';
     }
 	
 }

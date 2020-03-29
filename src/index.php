@@ -7,7 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $severWrapper = new Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 $htmlTemplateLoader = new Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
-$linkBuilder = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder();
+$linkBuilder = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 $htmlTemplateLoader->setPath('Templates/HTML/');
 
 $messagesBlock = new Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages();
