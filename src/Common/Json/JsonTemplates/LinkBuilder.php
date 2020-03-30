@@ -13,6 +13,14 @@ use Fabiom\UglyDuckling\Common\Blocks\Button;
 
 class LinkBuilder {
 
+    /**
+     * @param $buttonBuilder
+     * @param $jsonresource
+     * @param $jsonloader
+     * @param $routerContainer
+     * @param $entity
+     * @return mixed
+     */
     function getAppButton($buttonBuilder, $jsonresource, $jsonloader, $routerContainer, $entity ) {
         $resource = $jsonresource->resource;
         $parameters = $jsonresource->parameters;

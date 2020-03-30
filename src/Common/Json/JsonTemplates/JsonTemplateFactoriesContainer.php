@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
+use Fabiom\UglyDuckling\Common\Blocks\Button;
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
@@ -37,6 +38,7 @@ class JsonTemplateFactoriesContainer {
     private /* JsonLoader */ $jsonloader;
     private /* LinkBuilder */ $linkBuilder;
     private /* Logger */ $logger;
+    private $buttonBuilder;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
@@ -45,6 +47,7 @@ class JsonTemplateFactoriesContainer {
         $this->factories = array();
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
+        $this->buttonBuilder = new Button;
     }
 
     /**
@@ -214,6 +217,13 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getButtonBuilder() {
+        return $this->buttonBuilder;
+    }
+
+    /**
      * Setting routerContainer object
      *
      * @param RoutersContainer $routerContainer
@@ -295,4 +305,12 @@ class JsonTemplateFactoriesContainer {
     public function setLinkBuilder( LinkBuilder $linkBuilder ) {
         $this->linkBuilder = $linkBuilder;
     }
+
+    /**
+     * @param mixed $buttonBuilder
+     */
+    public function setButtonBuilder($buttonBuilder): void {
+        $this->buttonBuilder = $buttonBuilder;
+    }
+
 }
