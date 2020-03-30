@@ -55,6 +55,7 @@ class TableJsonTemplate extends JsonTemplate {
         $jsonloader = $this->jsonTemplateFactoriesContainer->getJsonloader();
         $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
         $serverWrapper = $this->jsonTemplateFactoriesContainer->getServerWrapper();
+        $buttonBuilder = $this->jsonTemplateFactoriesContainer->getButtonBuilder();
 
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {
@@ -103,7 +104,7 @@ class TableJsonTemplate extends JsonTemplate {
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
-                    $links .= $linkBuilder->getAppButton( $action, $jsonloader, $routerContainer, $entity );
+                    $links .= $linkBuilder->getAppButton( $buttonBuilder, $action, $jsonloader, $routerContainer, $entity );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );
