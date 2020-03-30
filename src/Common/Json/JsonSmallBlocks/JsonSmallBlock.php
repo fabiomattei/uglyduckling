@@ -27,7 +27,7 @@ class JsonSmallBlock {
 	/**
 	 * Takes a JSON resource (object or array or composite) and convert it in HTML
 	 */
-	function getHTML( $resource ): string {
+	function getHTML( $resource, $parameters ): string {
 		return 'Undefined JsonSmallBlock';
 	}
 

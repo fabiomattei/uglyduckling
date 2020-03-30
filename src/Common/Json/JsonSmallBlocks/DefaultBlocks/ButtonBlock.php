@@ -8,6 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonSmallBlocks\DefaultBlocks;
 
+use Fabiom\UglyDuckling\Common\Json\JsonSmallBlocks\JsonSmallBlock;
+
 /**
  * A Json small block is a JSON resource (object or array or composite)
  * that we need to convert in HTML
@@ -24,7 +26,7 @@ class ButtonBlock extends JsonSmallBlock {
 	 * Takes a JSON resource (object or array or composite) and convert it in HTML
 	 */
 	function getHTML( $resource, $parameters ): string {
-		return 'Undefined JsonSmallBlock';
+        return '';
 	}
 
 }

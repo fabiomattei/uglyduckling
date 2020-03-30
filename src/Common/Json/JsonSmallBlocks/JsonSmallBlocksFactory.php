@@ -17,7 +17,6 @@ class JsonSmallBlocksFactory {
 
 	protected /* array */ $smallBlocks;
 
-	
 	function __construct() {
 		$this->smallBlocks = array();
 	}
