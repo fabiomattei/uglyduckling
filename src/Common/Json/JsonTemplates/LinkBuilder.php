@@ -13,7 +13,61 @@ use Fabiom\UglyDuckling\Common\Blocks\Button;
 
 class LinkBuilder {
 
-    function getButton( $jsonloader, $routerContainer, $label, $resource, $parameters, $entity ) {
+    function getAppButton($buttonBuilder, $jsonresource, $jsonloader, $routerContainer, $entity ) {
+        $resource = $jsonresource->resource;
+        $parameters = $jsonresource->parameters;
+        $label = $jsonresource->label;
+        $url_parameters = 'res='.$resource.'&';
+        foreach ($parameters as $par) {
+            $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
+        }
+        $url_parameters = rtrim($url_parameters, '&');
+
+        $action = $jsonloader->getActionRelatedToResource($resource);
+        switch ( $action ) {
+            case 'entitydashboard':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ));
+                break;
+            case 'entitychart':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, $url_parameters ));
+                break;
+            case 'entitytable':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_TABLE, $url_parameters ));
+                break;
+            case 'entityform':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_FORM, $url_parameters ));
+                break;
+            case 'entityinfo':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, $url_parameters ));
+                break;
+            case 'entitysearch':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, $url_parameters ));
+                break;
+            case 'entityexport':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters ));
+                break;
+            case 'entitytransaction':
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters ));
+                break;
+
+            default:
+                return $buttonBuilder::get($jsonresource, $routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ));
+                break;
+        }
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param $jsonloader
+     * @param $routerContainer
+     * @param $label
+     * @param $resource
+     * @param $parameters
+     * @param $entity
+     * @return string
+     */
+    function getButton($jsonloader, $routerContainer, $label, $resource, $parameters, $entity ) {
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
             $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
@@ -69,7 +123,7 @@ class LinkBuilder {
                 break;
             case 'documentdraftuser':
                 return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT_USER ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;              
+                break;
             case 'documentdelete':
                 return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
@@ -91,7 +145,7 @@ class LinkBuilder {
             case 'documentsearch':
                 return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
-            
+
             default:
                 return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
@@ -197,7 +251,7 @@ class LinkBuilder {
 			    break;
 			case 'documentdraftuser':
 			    return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_DRAFT_USER ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;				
+			    break;
 		    case 'documentdelete':
 		        return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
 		        break;
@@ -219,7 +273,7 @@ class LinkBuilder {
 			case 'documentsearch':
 			    return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
 			    break;
-            
+
             default:
                 return Button::get($routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
