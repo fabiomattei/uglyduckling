@@ -8,8 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table;
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
-use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
@@ -82,7 +82,7 @@ class TableJsonTemplate extends JsonTemplate {
 
         $table = $this->getTableFromResource();
 
-		$tableBlock = new StaticTable;
+		$tableBlock = new BaseHTMLTable;
         $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$tableBlock->setTitle($table->title ?? '');
 		

@@ -1,9 +1,23 @@
 <?php
 
+/**
+ * User: Fabio Mattei
+ * Date: 1/04/2020
+ * Time: 19:33
+ */
+
 namespace Fabiom\UglyDuckling\Common\Blocks;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 
+/**
+ * Class StaticTable
+ * @package Fabiom\UglyDuckling\Common\Blocks
+ *
+ * This class is used for the administration section of the System and only there
+ * 
+ * It is not used to generate tables from json resources!
+ */
 class StaticTable extends BaseHTMLTable {
 
   private $buttons;
