@@ -16,23 +16,6 @@ use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityInfo;
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntitySearch;
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityExport;
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityTransaction;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentAccept;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentDelete;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentEdit;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentExport;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentInbox;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentAcceptedBox;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentRejectedBox;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentOutbox;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentOutboxUser;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentDraft;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentDraftUser;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentInfo;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentNew;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentNewList;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentReject;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentSearch;
-use Fabiom\UglyDuckling\Controllers\Office\Document\DocumentSend;
 use Fabiom\UglyDuckling\Controllers\Community\Login;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminDashboard;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminMetricsDashboard;
@@ -42,10 +25,6 @@ use Fabiom\UglyDuckling\Controllers\Admin\Entity\EntityCreateTable;
 use Fabiom\UglyDuckling\Controllers\Admin\Entity\EntityDropTable;
 use Fabiom\UglyDuckling\Controllers\Admin\Forms\AdminFormsList;
 use Fabiom\UglyDuckling\Controllers\Admin\Forms\AdminFormView;
-use Fabiom\UglyDuckling\Controllers\Admin\Document\AdminDocumentsList;
-use Fabiom\UglyDuckling\Controllers\Admin\Document\AdminDocumentView;
-use Fabiom\UglyDuckling\Controllers\Admin\Document\AdminDocumentCreateTable;
-use Fabiom\UglyDuckling\Controllers\Admin\Document\AdminDocumentDropTable;
 use Fabiom\UglyDuckling\Controllers\Admin\Table\TableList;
 use Fabiom\UglyDuckling\Controllers\Admin\Table\AdminTableView;
 use Fabiom\UglyDuckling\Controllers\Admin\Export\AdminExportList;
@@ -78,23 +57,8 @@ class Router extends RouterBase {
 	const ROUTE_OFFICE_ENTITY_EXPORT        = 'officeentityexport';
 	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitytransaction';
     const ROUTE_OFFICE_ENTITY_DASHBOARD     = 'officeentitydashboard';
-	const ROUTE_OFFICE_DOCUMENT_ACCEPT      = 'officedocumentaccept';
-	const ROUTE_OFFICE_DOCUMENT_DELETE      = 'officedocumentdelete';
-	const ROUTE_OFFICE_DOCUMENT_EDIT        = 'officedocumentedit';
-	const ROUTE_OFFICE_DOCUMENT_EXPORT      = 'officedocumentexport';
-	const ROUTE_OFFICE_DOCUMENT_INBOX       = 'officedocumentinbox';
     const ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX = 'documentacceptedbox';
     const ROUTE_OFFICE_DOCUMENT_REJECTEDBOX = 'documentrejectedbox';
-	const ROUTE_OFFICE_DOCUMENT_OUTBOX      = 'officedocumentoutbox';
-	const ROUTE_OFFICE_DOCUMENT_OUTBOX_USER = 'officedocumentoutboxuser';
-	const ROUTE_OFFICE_DOCUMENT_DRAFT       = 'officedocumentdraft';
-	const ROUTE_OFFICE_DOCUMENT_DRAFT_USER  = 'officedocumentdraftuser';
-	const ROUTE_OFFICE_DOCUMENT_INFO        = 'officedocumentinfo';
-	const ROUTE_OFFICE_DOCUMENT_NEW         = 'officedocumentnew';
-	const ROUTE_OFFICE_DOCUMENT_NEW_LIST    = 'officedocumentnewlist';
-	const ROUTE_OFFICE_DOCUMENT_REJECT      = 'officedocumentreject';
-	const ROUTE_OFFICE_DOCUMENT_SEARCH      = 'officedocumentsearch';
-	const ROUTE_OFFICE_DOCUMENT_SEND        = 'officedocumentsend';
 	const ROUTE_COMMUNITY_LOGIN             = 'communitylogin';
 	const ROUTE_ADMIN_DASHBOARD             = 'admindashboard';
 	const ROUTE_ADMIN_METRICS_DASHBOARD     = 'adminmetricsdashboard';
@@ -105,9 +69,6 @@ class Router extends RouterBase {
     const ROUTE_ADMIN_FORM_LIST             = 'adminformslist';
     const ROUTE_ADMIN_FORM_VIEW             = 'adminformview';
 	const ROUTE_ADMIN_DOCUMENT_LIST         = 'admindocumentlist';
-	const ROUTE_ADMIN_DOCUMENT_VIEW         = 'admindocumentview';
-	const ROUTE_ADMIN_DOCUMENT_CREATE_TABLE = 'admindocumentcreatetable';
-	const ROUTE_ADMIN_DOCUMENT_DROP_TABLE   = 'admindocumentdroptable';
 	const ROUTE_ADMIN_TABLE_LIST            = 'admintablelist';
     const ROUTE_ADMIN_TABLE_VIEW            = 'admintableview';
 	const ROUTE_ADMIN_EXPORT_LIST           = 'adminexportlist';
@@ -136,8 +97,46 @@ class Router extends RouterBase {
      * @param string $action
      */
     function isActionSupported( string $action ) {
-        return true;
-        //return in_array($action, array());
+        return in_array($action, array(
+            self::ROUTE_OFFICE_ENTITY_CHART,
+            self::ROUTE_OFFICE_ENTITY_TABLE,
+            self::ROUTE_OFFICE_ENTITY_FORM,
+            self::ROUTE_OFFICE_ENTITY_INFO,
+            self::ROUTE_OFFICE_ENTITY_SEARCH,
+            self::ROUTE_OFFICE_ENTITY_EXPORT,
+            self::ROUTE_OFFICE_ENTITY_LOGIC,
+            self::ROUTE_OFFICE_ENTITY_DASHBOARD,
+            self::ROUTE_COMMUNITY_LOGIN,
+            self::ROUTE_ADMIN_DASHBOARD,
+            self::ROUTE_ADMIN_METRICS_DASHBOARD,
+            self::ROUTE_ADMIN_ENTITY_LIST,
+            self::ROUTE_ADMIN_ENTITY_VIEW,
+            self::ROUTE_ADMIN_ENTITY_CREATE_TABLE,
+            self::ROUTE_ADMIN_ENTITY_DROP_TABLE,
+            self::ROUTE_ADMIN_FORM_LIST,
+            self::ROUTE_ADMIN_FORM_VIEW,
+            self::ROUTE_ADMIN_TABLE_LIST,
+            self::ROUTE_ADMIN_TABLE_VIEW,
+            self::ROUTE_ADMIN_EXPORT_LIST,
+            self::ROUTE_ADMIN_EXPORT_VIEW,
+            self::ROUTE_ADMIN_GROUP_ADD_USER,
+            self::ROUTE_ADMIN_GROUP_DOC,
+            self::ROUTE_ADMIN_GROUP_LIST,
+            self::ROUTE_ADMIN_GROUP_REMOVE_USER,
+            self::ROUTE_ADMIN_GROUP_VIEW,
+            self::ROUTE_ADMIN_INFO_LIST,
+            self::ROUTE_ADMIN_INFO_VIEW,
+            self::ROUTE_ADMIN_TRANSACTION_LIST,
+            self::ROUTE_ADMIN_TRANSACTION_VIEW,
+            self::ROUTE_ADMIN_SEARCH_LIST,
+            self::ROUTE_ADMIN_SEARCH_VIEW,
+            self::ROUTE_ADMIN_USER_DELETE,
+            self::ROUTE_ADMIN_USER_EDIT,
+            self::ROUTE_ADMIN_USER_EDIT_PASSWORD,
+            self::ROUTE_ADMIN_USER_LIST,
+            self::ROUTE_ADMIN_USER_NEW,
+            self::ROUTE_ADMIN_USER_VIEW
+        ));
     }
 
     function getController( string $action ) {
@@ -150,23 +149,6 @@ class Router extends RouterBase {
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
 			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityTransaction; break;
             case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new EntityDashboard; break;
-			case self::ROUTE_OFFICE_DOCUMENT_ACCEPT:      $controller = new DocumentAccept; break;
-            case self::ROUTE_OFFICE_DOCUMENT_DELETE:      $controller = new DocumentDelete; break;
-			case self::ROUTE_OFFICE_DOCUMENT_EDIT:        $controller = new DocumentEdit; break;
-			case self::ROUTE_OFFICE_DOCUMENT_EXPORT:      $controller = new DocumentExport; break;
-			case self::ROUTE_OFFICE_DOCUMENT_INBOX:       $controller = new DocumentInbox; break;
-            case self::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX: $controller = new DocumentAcceptedBox; break;
-            case self::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX: $controller = new DocumentRejectedBox(); break;
-			case self::ROUTE_OFFICE_DOCUMENT_OUTBOX:      $controller = new DocumentOutbox; break;
-			case self::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER: $controller = new DocumentOutboxUser; break;
-			case self::ROUTE_OFFICE_DOCUMENT_DRAFT:       $controller = new DocumentDraft; break;
-			case self::ROUTE_OFFICE_DOCUMENT_DRAFT_USER:  $controller = new DocumentDraftUser; break;
-			case self::ROUTE_OFFICE_DOCUMENT_INFO:        $controller = new DocumentInfo; break;
-			case self::ROUTE_OFFICE_DOCUMENT_NEW:         $controller = new DocumentNew; break;
-			case self::ROUTE_OFFICE_DOCUMENT_NEW_LIST:    $controller = new DocumentNewList; break;
-			case self::ROUTE_OFFICE_DOCUMENT_REJECT:      $controller = new DocumentReject; break;
-			case self::ROUTE_OFFICE_DOCUMENT_SEARCH:      $controller = new DocumentSearch; break;
-			case self::ROUTE_OFFICE_DOCUMENT_SEND:        $controller = new DocumentSend; break;
 			case self::ROUTE_COMMUNITY_LOGIN:             $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:             $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_METRICS_DASHBOARD:     $controller = new AdminMetricsDashboard; break;
@@ -176,10 +158,6 @@ class Router extends RouterBase {
 			case self::ROUTE_ADMIN_ENTITY_DROP_TABLE:     $controller = new EntityDropTable; break;
             case self::ROUTE_ADMIN_FORM_LIST:             $controller = new AdminFormsList; break;
             case self::ROUTE_ADMIN_FORM_VIEW:             $controller = new AdminFormView; break;
-			case self::ROUTE_ADMIN_DOCUMENT_LIST:         $controller = new AdminDocumentsList; break;
-			case self::ROUTE_ADMIN_DOCUMENT_VIEW:         $controller = new AdminDocumentView; break;
-			case self::ROUTE_ADMIN_DOCUMENT_CREATE_TABLE: $controller = new AdminDocumentCreateTable; break;
-			case self::ROUTE_ADMIN_DOCUMENT_DROP_TABLE:   $controller = new AdminDocumentDropTable; break;
 			case self::ROUTE_ADMIN_TABLE_LIST:            $controller = new TableList; break;
             case self::ROUTE_ADMIN_TABLE_VIEW:            $controller = new AdminTableView(); break;
 			case self::ROUTE_ADMIN_EXPORT_LIST:           $controller = new AdminExportList; break;
