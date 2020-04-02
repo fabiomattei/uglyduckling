@@ -38,6 +38,7 @@ class JsonTemplateFactoriesContainer {
     private /* JsonLoader */ $jsonloader;
     private /* LinkBuilder */ $linkBuilder;
     private /* Logger */ $logger;
+    private /* Setup */ $setup;
     private $buttonBuilder;
 
     /**
@@ -224,6 +225,13 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
+     * @return mixed
+     */
+    public function getSetup() {
+        return $this->setup;
+    }
+
+    /**
      * Setting routerContainer object
      *
      * @param RoutersContainer $routerContainer
@@ -311,6 +319,13 @@ class JsonTemplateFactoriesContainer {
      */
     public function setButtonBuilder($buttonBuilder): void {
         $this->buttonBuilder = $buttonBuilder;
+    }
+
+    /**
+     * @param mixed $setup
+     */
+    public function setSetup($setup): void {
+        $this->setup = $setup;
     }
 
 }

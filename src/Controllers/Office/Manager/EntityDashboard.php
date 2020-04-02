@@ -44,6 +44,7 @@ class EntityDashboard extends ManagerEntityController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
+        $this->jsonTemplateFactoriesContainer->setSetup($this->setup);
         $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
         $this->menubuilder->setMenuStructure( $menuresource );
