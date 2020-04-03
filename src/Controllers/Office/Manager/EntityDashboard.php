@@ -140,7 +140,19 @@ class EntityDashboard extends ManagerEntityController {
         }
 
         // redirect
-        $this->redirectToPreviousPage();
+        if (isset($this->postresource->post->redirect)) {
+            if (isset($this->postresource->post->redirect->internal) AND $this->postresource->post->redirect->internal->type === 'onepageback') {
+                $this->redirectToPreviousPage();
+            } elseif (isset($this->postresource->post->redirect->internal) AND $this->postresource->post->redirect->internal->type === 'twopagesback') {
+                $this->redirectToSecondPreviousPage();
+            } elseif ( isset($this->postresource->post->redirect->action) AND isset($this->postresource->post->redirect->action->resource) ) {
+                $this->redirectToPage($this->routerContainer->make_url( $this->postresource->post->redirect->action->resource ) );
+            } else {
+                $this->redirectToPreviousPage();
+            }
+        } else {
+            $this->redirectToPreviousPage();
+        }
     }
 
     public function show_second_get_error_page() {
