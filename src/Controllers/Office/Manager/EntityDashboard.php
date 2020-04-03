@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
 use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
+use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
@@ -63,34 +64,82 @@ class EntityDashboard extends ManagerEntityController {
         $this->postresource = $this->jsonloader->loadResource( $this->getParameters['postres'] );
 
         $conn = $this->dbconnection->getDBH();
-        $returnedIds = new QueryReturnedValues;
-        try {
-            //$conn->beginTransaction();
-            $this->queryExecuter->setDBH( $conn );
-            foreach ($this->postresource->post->transactions as $transaction) {
-                $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
-                $this->queryExecuter->setQueryStructure( $transaction );
-                $this->queryExecuter->setPostParameters( $this->postParameters );
-                $this->queryExecuter->setLogger( $this->logger );
-                $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
-                $this->queryExecuter->setQueryReturnedValues( $returnedIds );
-                if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
-                    if (isset($transaction->label)) {
-                        $returnedIds->setValue($transaction->label, $this->queryExecuter->executeSql());
+
+        // performing transactions
+        if (isset($this->postresource->post->transactions)) {
+            $returnedIds = new QueryReturnedValues;
+            try {
+                //$conn->beginTransaction();
+                $this->queryExecuter->setDBH( $conn );
+                foreach ($this->postresource->post->transactions as $transaction) {
+                    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
+                    $this->queryExecuter->setQueryStructure( $transaction );
+                    $this->queryExecuter->setPostParameters( $this->postParameters );
+                    $this->queryExecuter->setLogger( $this->logger );
+                    $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
+                    $this->queryExecuter->setQueryReturnedValues( $returnedIds );
+                    if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
+                        if (isset($transaction->label)) {
+                            $returnedIds->setValue($transaction->label, $this->queryExecuter->executeSql());
+                        } else {
+                            $returnedIds->setValueNoKey($this->queryExecuter->executeSql());
+                        }
                     } else {
-                        $returnedIds->setValueNoKey($this->queryExecuter->executeSql());
+                        $this->queryExecuter->executeSql();
                     }
-                } else {
-                    $this->queryExecuter->executeSql();
                 }
+                //$conn->commit();
             }
-            //$conn->commit();
-        }
-        catch (\PDOException $e) {
-            $conn->rollBack();
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            catch (\PDOException $e) {
+                $conn->rollBack();
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            }
         }
 
+        // session updates
+        if (isset($this->postresource->post->sessionupdates)) {
+            $querySet = new QuerySet;
+
+            $this->queryExecuter->setDBH($conn);
+            $this->queryExecuter->setQueryBuilder($this->queryBuilder);
+            $this->queryExecuter->setParameters(array());
+            $this->queryExecuter->setPostParameters(array());
+            $this->queryExecuter->setSessionWrapper($this->sessionWrapper);
+
+            if (isset($this->postresource->post->sessionupdates->queryset) AND is_array($this->postresource->post->sessionupdates->queryset)) {
+                foreach ($this->postresource->post->sessionupdates->queryset as $query) {
+                    $this->queryExecuter->setQueryStructure($query);
+                    $result = $this->queryExecuter->executeSql();
+                    $entity = $result->fetch();
+                    if (isset($query->label)) {
+                        $querySet->setResult($query->label, $entity);
+                    } else {
+                        $querySet->setResultNoKey($entity);
+                    }
+                }
+            }
+
+            if (isset($this->postresource->post->sessionupdates->sessionvars) AND is_array($this->postresource->post->sessionupdates->sessionvars)) {
+                foreach ($this->postresource->post->sessionupdates->sessionvars as $sessionvar) {
+                    if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
+                        if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
+                            $this->sessionWrapper->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
+                        }
+                    }
+                    if ( isset( $sessionvar->constantparamenter ) ) {
+                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
+                    }
+                    if ( isset( $sessionvar->getparamenter ) ) {
+                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparamenter]);
+                    }
+                    if ( isset( $sessionvar->postparamenter ) ) {
+                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparamenter]);
+                    }
+                }
+            }
+        }
+
+        // redirect
         $this->redirectToPreviousPage();
     }
 
