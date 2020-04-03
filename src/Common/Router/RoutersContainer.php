@@ -8,6 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Router;
 
+use Fabiom\UglyDuckling\Controllers\Community\Login;
+
 class RoutersContainer {
 
 	/**
@@ -31,6 +33,8 @@ class RoutersContainer {
         foreach ( $this->routers as $router ) {
             if ( $router->supports( $resource ) ) return $router;
         }
+
+        return new Login; // this is the defacto custom router
     }
 	
 	/**

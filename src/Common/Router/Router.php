@@ -179,8 +179,6 @@ class Router extends RouterBase {
             case self::ROUTE_ADMIN_USER_LIST:             $controller = new UserList; break;
             case self::ROUTE_ADMIN_USER_NEW:              $controller = new UserNew; break;
             case self::ROUTE_ADMIN_USER_VIEW:             $controller = new UserView; break;
-
-            default: $controller = new Login; break;
         }
         return $controller;
     }
