@@ -10,6 +10,19 @@ namespace Fabiom\UglyDuckling\Common\Router;
 
 use Fabiom\UglyDuckling\Controllers\Community\Login;
 
+/**
+ * Class RoutersContainer
+ * @package Fabiom\UglyDuckling\Common\Router
+ *
+ * This class is a container of routers.
+ * It is useful in order to find the right controller once a request (GET or POST) is made.
+ * In order to do that it requires the existence of one or more routers.
+ *
+ * Once a request is made it checks all routers saved in his internal list and return
+ * the right Controller class.
+ *
+ * If no controller is found return the default controller: Login
+ */
 class RoutersContainer {
 
 	/**
@@ -33,8 +46,6 @@ class RoutersContainer {
         foreach ( $this->routers as $router ) {
             if ( $router->supports( $resource ) ) return $router;
         }
-
-        return new Login; // this is the defacto custom router
     }
 	
 	/**
@@ -44,6 +55,8 @@ class RoutersContainer {
         foreach ( $this->routers as $router ) {
             if ( $router->isActionSupported( $action ) ) return $router->getController( $action );
         }
+
+        return new Login; // this is the defacto custom router
 	}
 	
     /**
