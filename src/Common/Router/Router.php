@@ -16,6 +16,7 @@ use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityInfo;
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntitySearch;
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityExport;
 use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityTransaction;
+use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityNoTemplate;
 use Fabiom\UglyDuckling\Controllers\Community\Login;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminDashboard;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminMetricsDashboard;
@@ -57,6 +58,7 @@ class Router extends RouterBase {
 	const ROUTE_OFFICE_ENTITY_EXPORT        = 'officeentityexport';
 	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitytransaction';
     const ROUTE_OFFICE_ENTITY_DASHBOARD     = 'officeentitydashboard';
+    const ROUTE_OFFICE_ENTITY_NO_TEMPLATE   = 'officeentitynotemplate';
     const ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX = 'documentacceptedbox';
     const ROUTE_OFFICE_DOCUMENT_REJECTEDBOX = 'documentrejectedbox';
 	const ROUTE_COMMUNITY_LOGIN             = 'communitylogin';
@@ -106,6 +108,7 @@ class Router extends RouterBase {
             self::ROUTE_OFFICE_ENTITY_EXPORT,
             self::ROUTE_OFFICE_ENTITY_LOGIC,
             self::ROUTE_OFFICE_ENTITY_DASHBOARD,
+            self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE,
             self::ROUTE_COMMUNITY_LOGIN,
             self::ROUTE_ADMIN_DASHBOARD,
             self::ROUTE_ADMIN_METRICS_DASHBOARD,
@@ -149,6 +152,7 @@ class Router extends RouterBase {
 			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
 			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityTransaction; break;
             case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new EntityDashboard; break;
+            case self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE:   $controller = new EntityNoTemplate; break;
 			case self::ROUTE_COMMUNITY_LOGIN:             $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:             $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_METRICS_DASHBOARD:     $controller = new AdminMetricsDashboard; break;
