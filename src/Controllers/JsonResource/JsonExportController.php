@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel\ExcelJsonTemplate;
 use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
@@ -17,7 +17,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  * Date: 11/09/2018
  * Time: 22:34
  */
-class EntityExport extends JsonEntityController {
+class JsonExportController extends JsonEntityController {
 
     private $formBuilder;
     private $pdfBuilder;

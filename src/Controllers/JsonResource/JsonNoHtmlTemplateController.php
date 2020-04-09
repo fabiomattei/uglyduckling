@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
@@ -8,7 +8,6 @@ use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 
 /**
@@ -16,16 +15,12 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  * Date: 31/10/2018
  * Time: 08:10
  */
-class EntityDashboard extends JsonEntityController {
-
-    public $menubuilder;
-    public /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;
+class JsonNoHtmlTemplateController extends JsonEntityController {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryExecuter->setLogger($this->logger);
         $this->queryBuilder = new QueryBuilder;
-        $this->menubuilder = new MenuJsonTemplate;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
     }
 
@@ -33,7 +28,7 @@ class EntityDashboard extends JsonEntityController {
      * @throws GeneralException
      */
     public function getRequest() {
-        $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+        $this->templateFile = 'notemplate';
 
         $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
@@ -48,19 +43,17 @@ class EntityDashboard extends JsonEntityController {
         $this->jsonTemplateFactoriesContainer->setSetup($this->setup);
         $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
-        $this->menubuilder->setMenuStructure( $menuresource );
-        $this->menubuilder->setJsonTemplateFactoriesContainer( $this->jsonTemplateFactoriesContainer );
 
         $htmlBlock = $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
+        $this->title = $this->setup->getAppNameForPageTitle() . ' :: No template';
 
-        $this->menucontainer    = array( $this->menubuilder->createMenu() );
-        $this->leftcontainer    = array();
         $this->centralcontainer = ( $htmlBlock );
     }
 
     public function postRequest() {
+        $this->templateFile = 'notemplate';
+
         $this->postresource = $this->jsonloader->loadResource( $this->getParameters['postres'] );
 
         $conn = $this->dbconnection->getDBH();
@@ -147,9 +140,9 @@ class EntityDashboard extends JsonEntityController {
                 $this->redirectToSecondPreviousPage();
             } elseif ( isset($this->postresource->post->redirect->action) AND isset($this->postresource->post->redirect->action->resource) ) {
                 $this->redirectToPage(
-                    $this->routerContainer->make_url( 
+                    $this->routerContainer->make_url(
                         $this->jsonloader->getActionRelatedToResource($this->postresource->post->redirect->action->resource), 'res='.$this->postresource->post->redirect->action->resource
-                    ) 
+                    )
                 );
             } else {
                 $this->redirectToPreviousPage();

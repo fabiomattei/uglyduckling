@@ -1,32 +1,34 @@
 <?php
 
-/**
- * Created by Fabio Mattei
- * Date: 01/11/18
- * Time: 9.34
- */
-
-namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
+use Fabiom\UglyDuckling\Common\Router\Router;
 
-class EntityChart extends JsonEntityController {
+/**
+ * User: Fabio
+ * Date: 11/09/2018
+ * Time: 22:34
+ */
+class JsonInfoController extends JsonEntityController {
 
     private $menubuilder;
+    private $infoBuilder;
 
     function __construct() {
-        $this->menubuilder = new MenuJsonTemplate;
+		$this->infoBuilder = new InfoJsonTemplate;
+		$this->menubuilder = new MenuJsonTemplate;
     }
 
     /**
      * @throws GeneralException
      */
-    public function getRequest() {
-        $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-        $this->menubuilder->setMenuStructure( $menuresource );
-        $this->menubuilder->setRouter( $this->routerContainer );
+	public function getRequest() {
+		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+		$this->menubuilder->setMenuStructure( $menuresource );
+		$this->menubuilder->setRouter( $this->routerContainer );
         $this->menubuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
         $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
@@ -38,14 +40,14 @@ class EntityChart extends JsonEntityController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_INFO, 'res='.$this->getParameters['res'] ));
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office chart';
-
-        $this->menucontainer    = array( $this->menubuilder->createMenu() );
-        $this->leftcontainer    = array();
-        $this->centralcontainer = array( $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource ) );
-    }
+        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office info';
+	
+		$this->menucontainer    = array( $this->menubuilder->createMenu() );
+		$this->leftcontainer    = array();
+		$this->centralcontainer = array( $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource ) );
+	}
 
     public function show_second_get_error_page() {
         throw new ErrorPageException('Error page exception function show_get_error_page()');

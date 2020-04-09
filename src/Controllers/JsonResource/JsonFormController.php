@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
@@ -15,7 +15,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  * Date: 17/08/2018
  * Time: 07:07
  */
-class EntityForm extends JsonEntityController {
+class JsonFormController extends JsonEntityController {
 
     private $menubuilder;
     private $formBuilder;

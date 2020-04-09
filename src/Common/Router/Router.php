@@ -8,15 +8,15 @@
 
 namespace Fabiom\UglyDuckling\Common\Router;
 
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityDashboard;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityChart;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityTable;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityForm;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityInfo;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntitySearch;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityExport;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityTransaction;
-use Fabiom\UglyDuckling\Controllers\Office\Manager\EntityNoTemplate;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonDashboardController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonChartController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonTableController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonFormController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonInfoController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonSearchController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonExportController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonTransactionController;
+use Fabiom\UglyDuckling\Controllers\JsonResource\JsonNoHtmlTemplateController;
 use Fabiom\UglyDuckling\Controllers\Community\Login;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminDashboard;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminMetricsDashboard;
@@ -144,15 +144,15 @@ class Router extends RouterBase {
 
     function getController( string $action ) {
         switch ( $action ) {
-            case self::ROUTE_OFFICE_ENTITY_CHART:         $controller = new EntityChart; break;
-			case self::ROUTE_OFFICE_ENTITY_TABLE:         $controller = new EntityTable; break;
-			case self::ROUTE_OFFICE_ENTITY_FORM:          $controller = new EntityForm; break;
-			case self::ROUTE_OFFICE_ENTITY_INFO:          $controller = new EntityInfo; break;
-			case self::ROUTE_OFFICE_ENTITY_SEARCH:        $controller = new EntitySearch; break;
-			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new EntityExport; break;
-			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new EntityTransaction; break;
-            case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new EntityDashboard; break;
-            case self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE:   $controller = new EntityNoTemplate; break;
+            case self::ROUTE_OFFICE_ENTITY_CHART:         $controller = new JsonChartController; break;
+			case self::ROUTE_OFFICE_ENTITY_TABLE:         $controller = new JsonTableController; break;
+			case self::ROUTE_OFFICE_ENTITY_FORM:          $controller = new JsonFormController; break;
+			case self::ROUTE_OFFICE_ENTITY_INFO:          $controller = new JsonInfoController; break;
+			case self::ROUTE_OFFICE_ENTITY_SEARCH:        $controller = new JsonSearchController; break;
+			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new JsonExportController; break;
+			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new JsonTransactionController; break;
+            case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new JsonDashboardController; break;
+            case self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE:   $controller = new JsonNoHtmlTemplateController; break;
 			case self::ROUTE_COMMUNITY_LOGIN:             $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:             $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_METRICS_DASHBOARD:     $controller = new AdminMetricsDashboard; break;

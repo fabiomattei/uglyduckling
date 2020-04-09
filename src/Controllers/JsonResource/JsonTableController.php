@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
+namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory;
@@ -12,7 +12,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  * Date: 16/08/2018
  * Time: 12:02
  */
-class EntityTable extends JsonEntityController {
+class JsonTableController extends JsonEntityController {
 
     private $panelBuilder;
     private $menubuilder;
