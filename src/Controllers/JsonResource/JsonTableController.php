@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
-use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
@@ -12,7 +12,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  * Date: 16/08/2018
  * Time: 12:02
  */
-class JsonTableController extends JsonEntityController {
+class JsonTableController extends JsonResourceBasicController {
 
     private $panelBuilder;
     private $menubuilder;

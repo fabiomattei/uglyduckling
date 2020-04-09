@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
-use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Router\Router;
@@ -16,7 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  * Date: 31/10/2018
  * Time: 08:10
  */
-class JsonDashboardController extends JsonEntityController {
+class JsonDashboardController extends JsonResourceBasicController {
 
     public $menubuilder;
     public /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;

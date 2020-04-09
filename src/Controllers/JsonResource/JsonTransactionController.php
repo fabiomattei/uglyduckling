@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
-use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
@@ -11,7 +11,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
  * Date: 29/09/2018
  * Time: 05:57
  */
-class JsonTransactionController extends JsonEntityController {
+class JsonTransactionController extends JsonResourceBasicController {
 
     /** @var QueryExecuter */
     private $queryExecuter;
