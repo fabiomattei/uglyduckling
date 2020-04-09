@@ -3,7 +3,7 @@
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel\ExcelJsonTemplate;
-use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
@@ -17,7 +17,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  * Date: 11/09/2018
  * Time: 22:34
  */
-class EntityExport extends ManagerEntityController {
+class EntityExport extends JsonEntityController {
 
     private $formBuilder;
     private $pdfBuilder;

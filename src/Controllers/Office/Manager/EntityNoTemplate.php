@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 
-use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Router\Router;
@@ -15,7 +15,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
  * Date: 31/10/2018
  * Time: 08:10
  */
-class EntityNoTemplate extends ManagerEntityController {
+class EntityNoTemplate extends JsonEntityController {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;

@@ -5,7 +5,7 @@ namespace Fabiom\UglyDuckling\Controllers\Office\Manager;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
-use Fabiom\UglyDuckling\Common\Controllers\ManagerEntityController;
+use Fabiom\UglyDuckling\Common\Controllers\JsonEntityController;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Router\Router;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
@@ -15,7 +15,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  * Date: 17/08/2018
  * Time: 07:07
  */
-class EntityForm extends ManagerEntityController {
+class EntityForm extends JsonEntityController {
 
     private $menubuilder;
     private $formBuilder;
