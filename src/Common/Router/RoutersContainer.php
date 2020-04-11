@@ -86,7 +86,7 @@ class RoutersContainer {
      *
      * @return       string     The url well formed
      */
-    function makeRelativeUrl( $action = '', $parameters = '', $extension = '.html' ) {
+    function make_url( $action = '', $parameters = '', $extension = '.html' ) {
         if ( $action == '' ) {
             return $this->basepath;
         } else {
