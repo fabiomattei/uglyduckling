@@ -76,6 +76,7 @@ class RoutersContainer {
 	
     /**
      * It creates a URL appending the content of variable $_SESSION['office'] to BASEPATH
+     * The URL created is absolute
      *
      * Result is: BASEPATH . $_SESSION['office'] . $final_part
      *
@@ -90,6 +91,26 @@ class RoutersContainer {
             return $this->basepath;
         } else {
             return $this->basepath.$action.$extension.( $parameters == '' ? '' : '?'.$parameters );
+        }
+    }
+
+    /**
+     * It creates a URL appending the content of variable $_SESSION['office'] to BASEPATH
+     * The URL created is relative and not absolute
+     *
+     * Result is: BASEPATH . $_SESSION['office'] . $final_part
+     *
+     * @param        string     Action
+     * @param        string     Parameters: string containing all parameters separated by '/'
+     * @param        string     Extension:  .html by default
+     *
+     * @return       string     The url well formed
+     */
+    function makeRelativeUrl( $action = '', $parameters = '', $extension = '.html' ) {
+        if ( $action == '' ) {
+            return '';
+        } else {
+            return $action.$extension.( $parameters == '' ? '' : '?'.$parameters );
         }
     }
 	
