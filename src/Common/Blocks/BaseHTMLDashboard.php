@@ -114,10 +114,11 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
      */
     function addToHeadOnce(): string {
         $addToHeadDictionary = array();
+        $globalAddToHead = '';
         
         foreach ($this->rows as $row) {
             foreach ($row as $block) {
-                $addToHeadDictionary[get_class($block)] = $block->addToFootOnce();
+                $addToHeadDictionary[get_class($block)] = $block->addToHeadOnce();
             }
         }
 
@@ -139,7 +140,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         
         foreach ($this->rows as $row) {
             foreach ($row as $block) {
-                $addToFootDictionary[get_class($block)] = $block->addToHeadOnce();
+                $addToFootDictionary[get_class($block)] = $block->addToFootOnce();
             }
         }
 
