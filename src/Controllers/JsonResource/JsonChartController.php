@@ -38,7 +38,7 @@ class JsonChartController extends JsonResourceBasicController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_CHART, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_CHART, 'res='.$this->getParameters['res'] ));
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office chart';
 

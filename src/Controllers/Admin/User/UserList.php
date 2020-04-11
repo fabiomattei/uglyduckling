@@ -37,7 +37,7 @@ class UserList extends Controller {
         $table = new StaticTable;
         $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $table->setTitle('Users list');
-        $table->addButton( 'New user', $this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_NEW ) );
+        $table->addButton( 'New user', $this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_NEW ) );
 
         $table->addTHead();
         $table->addRow();
@@ -58,8 +58,8 @@ class UserList extends Controller {
             $table->addColumn( $user->usr_surname );
             $table->addColumn( $user->usr_defaultgroup );
             $table->addUnfilteredColumn(
-                Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-                Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+                Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+                Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             );
             $table->closeRow();
         }

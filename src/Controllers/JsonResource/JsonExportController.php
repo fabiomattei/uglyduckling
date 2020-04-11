@@ -38,7 +38,7 @@ class JsonExportController extends JsonResourceBasicController {
      */
 	public function getRequest() {
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
 

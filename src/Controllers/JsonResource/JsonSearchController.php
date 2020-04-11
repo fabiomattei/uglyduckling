@@ -38,7 +38,7 @@ class JsonSearchController extends JsonResourceBasicController {
 
 		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
 		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->tableBuilder->setRouter( $this->routerContainer );
@@ -61,7 +61,7 @@ class JsonSearchController extends JsonResourceBasicController {
 
 		$this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res='.$this->getParameters['res'] ));
 
 		$this->tableBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $this->tableBuilder->setRouter( $this->routerContainer );

@@ -86,7 +86,7 @@ class Login extends Controller {
             $groupresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
 			
 	        // redirecting to main page
-			// $this->redirectToPage( $this->router->make_url( Router::ROUTE_OFFICE_INBOX ) );
+			// $this->redirectToPage( $this->router->makeRelativeUrl( Router::ROUTE_OFFICE_INBOX ) );
 			if ( $user->usr_defaultgroup == 'administrationgroup' ) {
 				$this->redirectToPage( $this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_DASHBOARD ) );
 			} else {

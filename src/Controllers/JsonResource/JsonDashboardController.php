@@ -46,7 +46,7 @@ class JsonDashboardController extends JsonResourceBasicController {
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
         $this->jsonTemplateFactoriesContainer->setSetup($this->setup);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->make_url( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setJsonTemplateFactoriesContainer( $this->jsonTemplateFactoriesContainer );
@@ -147,7 +147,7 @@ class JsonDashboardController extends JsonResourceBasicController {
                 $this->redirectToSecondPreviousPage();
             } elseif ( isset($this->postresource->post->redirect->action) AND isset($this->postresource->post->redirect->action->resource) ) {
                 $this->redirectToPage(
-                    $this->routerContainer->make_url( 
+                    $this->routerContainer->makeRelativeUrl( 
                         $this->jsonloader->getActionRelatedToResource($this->postresource->post->redirect->action->resource), 'res='.$this->postresource->post->redirect->action->resource
                     ) 
                 );

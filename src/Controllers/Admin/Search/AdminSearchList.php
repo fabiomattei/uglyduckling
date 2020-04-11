@@ -49,7 +49,7 @@ class AdminSearchList extends Controller {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
-            $table->addUnfilteredColumn( Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_SEARCH_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
+            $table->addUnfilteredColumn( Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_SEARCH_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
             $table->closeRow();
         }
         $table->closeTBody();

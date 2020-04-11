@@ -46,8 +46,8 @@ class AdminGroupList extends Controller {
             $table->addColumn($res->name);
             $table->addColumn($res->type);
             $table->addUnfilteredColumn(
-                Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_GROUP_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-                Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_GROUP_DOC, 'res='.$res->name ), 'Doc', Button::COLOR_GRAY.' '.Button::SMALL )
+                Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_GROUP_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+                Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_GROUP_DOC, 'res='.$res->name ), 'Doc', Button::COLOR_GRAY.' '.Button::SMALL )
             );
             $table->closeRow();
         }

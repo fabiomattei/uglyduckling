@@ -138,13 +138,13 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
             $this->searchJsonTemplate->setResource($resource);
-            $this->searchJsonTemplate->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
+            $this->searchJsonTemplate->setAction($this->routerContainer->makeRelativeUrl(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
             return $this->searchJsonTemplate->createHTMLBlock();
         }
 
         if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
             $this->exportJsonTemplate->setResource($resource);
-            $this->exportJsonTemplate->setAction($this->routerContainer->make_url(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
+            $this->exportJsonTemplate->setAction($this->routerContainer->makeRelativeUrl(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
             return $this->exportJsonTemplate->createHTMLBlock();
         }
     }

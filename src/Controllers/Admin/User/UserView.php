@@ -45,9 +45,9 @@ class UserView extends Controller {
         $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
         $info->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $info->addUnfilteredParagraph(
-            Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-            Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_EDIT_PASSWORD, 'id='.$user->usr_id ), 'Edit password', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-            Button::get($this->routerContainer->make_url( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+            Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+            Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_EDIT_PASSWORD, 'id='.$user->usr_id ), 'Edit password', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+            Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             ,
             '6'
         );
