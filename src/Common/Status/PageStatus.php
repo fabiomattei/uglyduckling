@@ -6,66 +6,29 @@ use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 
 class PageStatus {
 
-    protected $queryExecuter;
-    protected $queryBuilder;
-    protected $dbconnection;
-    protected $parameters;
-    protected $postparameters;
-    protected $sessionparameters;
+    public /* Request */ $request;
+    public /* ServerWrapper */ $serverWrapper;
+    public /* SessionWrapper */ $sessionWrapper;
 
     /**
      * PageStatus constructor.
      */
     public function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
     }
 
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters) {
-        $this->parameters = $parameters;
+    function setRequest($request) {
+        $this->request = $request;
     }
 
-    /**
-     * @param mixed $parameters
-     */
-    public function setPostParameters($parameters) {
-        $this->postparameters = $parameters;
+    function setServerWrapper($serverWrapper) {
+        $this->serverWrapper = $serverWrapper;
     }
 
-    /**
-     * @param mixed $parameters
-     */
-    public function setSessionParameters($parameters) {
-        $this->sessionparameters = $parameters;
+    function setSessionWrapper($sessionWrapper) {
+        $this->sessionWrapper = $sessionWrapper;
     }
 
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryExecuter
-     */
-    public function setQueryExecuter( $queryExecuter ) {
-        $this->queryExecuter = $queryExecuter;
-    }
-
-    /**
-     * Setting method for testing purposes
-     *
-     * @param $queryBuilder
-     */
-    public function setQueryBuilder( $queryBuilder ) {
-        $this->queryBuilder = $queryBuilder;
-    }
+    // TODO it is going to handle query results too
 
     /**
      * Get the value to populate a form or a query from the right array of variables: GET POST SESSION
