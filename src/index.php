@@ -47,6 +47,24 @@ $jsonloader->setIndexPath($setup->getJsonPath());
 $jsonTemplateFactoriesContainer = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 $jsonTemplateFactoriesContainer->addJsonTemplateFactory( new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory($jsonTemplateFactoriesContainer) );
 
+$pageStatus = new Fabiom\UglyDuckling\Common\Status\PageStatus;
+$pageStatus->setRequest($request);
+$pageStatus->setServerWrapper($severWrapper);
+$pageStatus->setSessionWrapper($sessionWrapper);
+
+$applicationBuilder = new Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+$applicationBuilder->setRouterContainer($routerContainer);
+$applicationBuilder->setSetup($setup);
+$applicationBuilder->setSecurityChecker(new Fabiom\UglyDuckling\Common\SecurityCheckers\PrivateSecurityChecker());
+$applicationBuilder->setDbconnection($dbconnection);
+$applicationBuilder->setRedirector(new Fabiom\UglyDuckling\Common\Redirectors\URLRedirector());
+$applicationBuilder->setJsonloader($jsonloader);
+$applicationBuilder->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
+$applicationBuilder->setMessages($messagesBlock);
+$applicationBuilder->setHtmlTemplateLoader($htmlTemplateLoader);
+$applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
+$applicationBuilder->setLinkBuilder($linkBuilder);
+
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
 	$controller->makeAllPresets(
@@ -55,7 +73,7 @@ if ( $sessionWrapper->isUserLoggedIn() ) {
     	$request,
 		$severWrapper,
 		$sessionWrapper,
-		new Fabiom\UglyDuckling\Common\SecurityCheckers\PrivateSecurityChecker(),
+        new Fabiom\UglyDuckling\Common\SecurityCheckers\PrivateSecurityChecker(),
 		$dbconnection,
     	new Fabiom\UglyDuckling\Common\Redirectors\URLRedirector(),
 		$jsonloader,
