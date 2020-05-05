@@ -68,38 +68,14 @@ $applicationBuilder->setLinkBuilder($linkBuilder);
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
 	$controller->makeAllPresets(
-		$routerContainer,
-    	$setup, 
-    	$request,
-		$severWrapper,
-		$sessionWrapper,
-        new Fabiom\UglyDuckling\Common\SecurityCheckers\PrivateSecurityChecker(),
-		$dbconnection,
-    	new Fabiom\UglyDuckling\Common\Redirectors\URLRedirector(),
-		$jsonloader,
-    	new Fabiom\UglyDuckling\Common\Loggers\EchoLogger(),
-    	$messagesBlock,
-        $htmlTemplateLoader,
-        $jsonTemplateFactoriesContainer,
-        $linkBuilder
+		$applicationBuilder,
+        $pageStatus
 	);
 } else {
 	// settings for user that has not logged in the system
 	$controller->makeAllPresets(
-		$routerContainer,
-    	$setup, 
-    	$request,
-		$severWrapper,
-		$sessionWrapper,
-		new Fabiom\UglyDuckling\Common\SecurityCheckers\PublicSecurityChecker(),
-		$dbconnection,
-    	new Fabiom\UglyDuckling\Common\Redirectors\URLRedirector(),
-		$jsonloader,
-    	new Fabiom\UglyDuckling\Common\Loggers\EchoLogger(),
-    	$messagesBlock,
-        $htmlTemplateLoader,
-        $jsonTemplateFactoriesContainer,
-        $linkBuilder
+        $applicationBuilder,
+        $pageStatus
 	);
 }
 $controller->setGetParameters( $_GET );
