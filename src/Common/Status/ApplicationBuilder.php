@@ -2,6 +2,18 @@
 
 namespace Fabiom\UglyDuckling\Common\Status;
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
+use Fabiom\UglyDuckling\Common\Database\DBConnection;
+use Fabiom\UglyDuckling\Common\Json\JsonLoader;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
+use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
+use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Common\Setup\Setup;
+use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+
 class ApplicationBuilder {
 
     public /* RoutersContainer */ $routerContainer;
@@ -17,156 +29,156 @@ class ApplicationBuilder {
     public /* LinkBuilder */ $linkBuilder;
 
     /**
-     * @return mixed
+     * @return RoutersContainer
      */
-    public function getRouterContainer() {
+    public function getRouterContainer(): RoutersContainer {
         return $this->routerContainer;
     }
 
     /**
      * @param mixed $routerContainer
      */
-    public function setRouterContainer($routerContainer): void {
+    public function setRouterContainer(RoutersContainer $routerContainer): void {
         $this->routerContainer = $routerContainer;
     }
 
     /**
-     * @return mixed
+     * @return Setup
      */
-    public function getSetup() {
+    public function getSetup(): Setup {
         return $this->setup;
     }
 
     /**
      * @param mixed $setup
      */
-    public function setSetup($setup): void {
+    public function setSetup(Setup $setup): void {
         $this->setup = $setup;
     }
 
     /**
-     * @return mixed
+     * @return SecurityChecker
      */
-    public function getSecurityChecker() {
+    public function getSecurityChecker(): SecurityChecker {
         return $this->securityChecker;
     }
 
     /**
      * @param mixed $securityChecker
      */
-    public function setSecurityChecker($securityChecker): void {
+    public function setSecurityChecker(SecurityChecker $securityChecker): void {
         $this->securityChecker = $securityChecker;
     }
 
     /**
-     * @return mixed
+     * @return DBConnection
      */
-    public function getDbconnection() {
+    public function getDbconnection(): DBConnection {
         return $this->dbconnection;
     }
 
     /**
-     * @param mixed $dbconnection
+     * @param DBConnection $dbconnection
      */
-    public function setDbconnection($dbconnection): void {
+    public function setDbconnection(DBConnection $dbconnection): void {
         $this->dbconnection = $dbconnection;
     }
 
     /**
-     * @return mixed
+     * @return Redirector
      */
-    public function getRedirector() {
+    public function getRedirector(): Redirector {
         return $this->redirector;
     }
 
     /**
-     * @param mixed $urlredirector
+     * @param Redirector $urlredirector
      */
-    public function setRedirector($redirector): void {
+    public function setRedirector(Redirector $redirector): void {
         $this->redirector = $redirector;
     }
 
     /**
-     * @return mixed
+     * @return JsonLoader
      */
-    public function getJsonloader() {
+    public function getJsonloader(): JsonLoader {
         return $this->jsonloader;
     }
 
     /**
-     * @param mixed $jsonloader
+     * @param JsonLoader $jsonloader
      */
-    public function setJsonloader($jsonloader): void {
+    public function setJsonloader(JsonLoader $jsonloader): void {
         $this->jsonloader = $jsonloader;
     }
 
     /**
-     * @return mixed
+     * @return Logger
      */
-    public function getLogger() {
+    public function getLogger(): Logger {
         return $this->logger;
     }
 
     /**
-     * @param mixed $logger
+     * @param Logger $logger
      */
-    public function setLogger($logger): void {
+    public function setLogger(Logger $logger): void {
         $this->logger = $logger;
     }
 
     /**
-     * @return mixed
+     * @return BaseHTMLMessages
      */
-    public function getMessages() {
+    public function getMessages(): BaseHTMLMessages {
         return $this->messages;
     }
 
     /**
-     * @param mixed $messages
+     * @param BaseHTMLMessages $messages
      */
-    public function setMessages($messages): void {
+    public function setMessages(BaseHTMLMessages $messages): void {
         $this->messages = $messages;
     }
 
     /**
-     * @return mixed
+     * @return HtmlTemplateLoader
      */
-    public function getHtmlTemplateLoader() {
+    public function getHtmlTemplateLoader(): HtmlTemplateLoader {
         return $this->htmlTemplateLoader;
     }
 
     /**
-     * @param mixed $htmlTemplateLoader
+     * @param HtmlTemplateLoader $htmlTemplateLoader
      */
-    public function setHtmlTemplateLoader($htmlTemplateLoader): void {
+    public function setHtmlTemplateLoader(HtmlTemplateLoader $htmlTemplateLoader): void {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     /**
-     * @return mixed
+     * @return JsonTemplateFactoriesContainer
      */
-    public function getJsonTemplateFactoriesContainer() {
+    public function getJsonTemplateFactoriesContainer(): JsonTemplateFactoriesContainer {
         return $this->jsonTemplateFactoriesContainer;
     }
 
     /**
-     * @param mixed $jsonTemplateFactoriesContainer
+     * @param JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
      */
-    public function setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer): void {
+    public function setJsonTemplateFactoriesContainer(JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer): void {
         $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
     }
 
     /**
-     * @return mixed
+     * @return LinkBuilder
      */
-    public function getLinkBuilder() {
+    public function getLinkBuilder(): LinkBuilder {
         return $this->linkBuilder;
     }
 
     /**
-     * @param mixed $linkBuilder
+     * @param LinkBuilder $linkBuilder
      */
-    public function setLinkBuilder($linkBuilder): void {
+    public function setLinkBuilder(LinkBuilder $linkBuilder): void {
         $this->linkBuilder = $linkBuilder;
     }
 

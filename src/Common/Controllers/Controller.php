@@ -8,40 +8,17 @@
 
 namespace Fabiom\UglyDuckling\Common\Controllers;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Exceptions\ErrorPageException;
 use Fabiom\UglyDuckling\Common\Exceptions\AuthorizationException;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
-use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
-use Fabiom\UglyDuckling\Common\Loggers\Logger;
-use Fabiom\UglyDuckling\Common\Request\Request;
-use Fabiom\UglyDuckling\Common\Setup\Setup;
-use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
-use Fabiom\UglyDuckling\Common\Json\JsonLoader;
-use Fabiom\UglyDuckling\Common\Database\DBConnection;
-use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
-use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
-use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
 use GUMP;
 
 class Controller {
 
-    public /* RoutersContainer */ $routerContainer;
-    public /* Setup */ $setup;
-    public /* Request */ $request;
-    public /* ServerWrapper */ $serverWrapper;
-    public /* SessionWrapper */ $sessionWrapper;
-    public /* SecurityChecker */ $securityChecker;
-    public /* DBConnection */ $dbconnection;
-    public /* Redirector */ $urlredirector;
-    public /* JsonLoader */ $jsonloader;
-    public /* Logger */ $logger;
-    public /* BaseHTMLMessages */ $messages;
-    public /* HtmlTemplateLoader */ $htmlTemplateLoader;
-    public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
-    public /* LinkBuilder */ $linkBuilder;
+    public /* ApplicationBuilder */ $applicationBuilder;
+    public /* PageStatus */ $pageStatus;
     public /* GUMP */ $gump;
     public /* array */ $get_validation_rules = array();
     public /* array */ $get_filter_rules = array();
@@ -56,60 +33,25 @@ class Controller {
     /**
      * This method makes all necessary presets to activate a controller
      *
-     * @param RoutersContainer $routerContainer
-     * @param Setup $setup
-     * @param Request $request
-     * @param ServerWrapper $serverWrapper
-     * @param SessionWrapper $sessionWrapper
-     * @param SecurityChecker $securityChecker
-     * @param DBConnection $dbconnection
-     * @param Redirector $urlredirector
-     * @param JsonLoader $jsonloader
-     * @param Logger $logger
-     * @param BaseHTMLMessages $messages
-     * @param HtmlTemplateLoader $htmlTemplateLoader
-     * @param JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
+     * @param ApplicationBuilder $routerContainer
+     * @param PageStatus $PageStatus
      * @throws \Exception
      */
     public function makeAllPresets(
-        RoutersContainer $routerContainer,
-        Setup $setup,
-        Request $request,
-        ServerWrapper $serverWrapper,
-        SessionWrapper $sessionWrapper,
-        SecurityChecker $securityChecker,
-        DBConnection $dbconnection,
-        Redirector $urlredirector,
-        JsonLoader $jsonloader,
-        Logger $logger,
-        BaseHTMLMessages $messages,
-        HtmlTemplateLoader $htmlTemplateLoader,
-        JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer,
-        LinkBuilder $linkBuilder
+        ApplicationBuilder $applicationBuilder,
+        PageStatus $pageStatus
 		) {
-		$this->routerContainer                = $routerContainer;
-        $this->setup                          = $setup;
-        $this->request                        = $request;
-		$this->serverWrapper                  = $serverWrapper;
-		$this->sessionWrapper                 = $sessionWrapper;
-		$this->securityChecker                = $securityChecker;
-		$this->dbconnection                   = $dbconnection;
-        $this->urlredirector                  = $urlredirector;
-		$this->jsonloader                     = $jsonloader;
-        $this->logger                         = $logger;
-        $this->messages                       = $messages;
-        $this->htmlTemplateLoader             = $htmlTemplateLoader;
-        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
-        $this->linkBuilder                    = $linkBuilder;
-        $this->gump                           = new GUMP();
+		$this->applicationBuilder    = $applicationBuilder;
+        $this->pageStatus            = $pageStatus;
+        $this->gump                  = new GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
 
-        $this->title = $this->setup->getAppNameForPageTitle();
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle();
         $this->menucontainer = array();
         $this->topcontainer = array();
-        $this->messagescontainer = array( $this->messages );
+        $this->messagescontainer = array( $this->applicationBuilder->getMessages() );
         $this->leftcontainer = array();
         $this->rightcontainer = array();
         $this->centralcontainer = array();
@@ -117,28 +59,28 @@ class Controller {
         $this->thirdcentralcontainer = array();
         $this->bottomcontainer = array();
         $this->sidebarcontainer = array();
-        $this->templateFile = $this->setup->getPrivateTemplateFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateFileName();
 
         $this->addToHead = '';
         $this->addToFoot = '';
         $this->subAddToHead = '';
         $this->subAddToFoot = '';
 
-        $this->messages->info = $this->sessionWrapper->getMsgInfo();
-        $this->messages->warning = $this->sessionWrapper->getMsgWarning();
-        $this->messages->error = $this->sessionWrapper->getMsgError();
-        $this->messages->success = $this->sessionWrapper->getMsgSuccess();
-        $this->flashvariable = $this->sessionWrapper->getFlashVariable();
+        $this->applicationBuilder->getMessages()->info = $this->pageStatus->getSessionWrapper()->getMsgInfo();
+        $this->applicationBuilder->getMessages()->warning = $this->pageStatus->getSessionWrapper()->getMsgWarning();
+        $this->applicationBuilder->getMessages()->error = $this->pageStatus->getSessionWrapper()->getMsgError();
+        $this->applicationBuilder->getMessages()->success = $this->pageStatus->getSessionWrapper()->getMsgSuccess();
+        $this->flashvariable = $this->pageStatus->getSessionWrapper()->getFlashVariable();
 
-        if ( !$this->securityChecker->isSessionValid( 
-			$this->sessionWrapper->getSessionLoggedIn(), 
-            $this->sessionWrapper->getSessionIp(),
-            $this->sessionWrapper->getSessionUserAgent(),
-            $this->sessionWrapper->getSessionLastLogin(),
-            $this->serverWrapper->getRemoteAddress(),
-            $this->serverWrapper->getHttpUserAgent() ) ) {
-            $this->urlredirector->setURL($this->setup->getBasePath() . 'public/login.html');
-            $this->urlredirector->redirect();
+        if ( !$this->applicationBuilder->getSecurityChecker()->isSessionValid(
+			$this->pageStatus->getSessionWrapper()->getSessionLoggedIn(),
+            $this->pageStatus->getSessionWrapper()->getSessionIp(),
+            $this->pageStatus->getSessionWrapper()->getSessionUserAgent(),
+            $this->pageStatus->getSessionWrapper()->getSessionLastLogin(),
+            $this->pageStatus->getServerWrapper()->getRemoteAddress(),
+            $this->pageStatus->getServerWrapper()->getHttpUserAgent() ) ) {
+            $this->applicationBuilder->getRedirector()->setURL($this->applicationBuilder->getSetup()->getBasePath() . 'public/login.html');
+            $this->applicationBuilder->getRedirector()->redirect();
         }
     }
 
@@ -265,7 +207,7 @@ class Controller {
     public function showPage() {
         $time_start = microtime(true);
 
-        if ($this->serverWrapper->isGetRequest()) {
+        if ($this->pageStatus->getServerWrapper->isGetRequest()) {
 			if ( $this->check_authorization_get_request() ) {
 	            if ( $this->check_get_request() ) {
 	                $this->getRequest();
@@ -291,25 +233,25 @@ class Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->logger->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->applicationBuilder->getLogger()->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 
     // ** next section load textual messages for messages block
     function setSuccess( string $success ) {
-        $this->sessionWrapper->setMsgSuccess( $success );
+        $this->pageStatus->getSessionWrapper()->setMsgSuccess( $success );
     }
 
     function setError( string $error ) {
-        $this->sessionWrapper->setMsgError( $error );
+        $this->pageStatus->getSessionWrapper()->setMsgError( $error );
     }
 
     function setInfo( string $info ) {
-        $this->sessionWrapper->setMsgInfo( $info );
+        $this->pageStatus->getSessionWrapper()->setMsgInfo( $info );
     }
 
     function setWarning( string $warning ) {
-        $this->sessionWrapper->setMsgWarning( $warning );
+        $this->pageStatus->getSessionWrapper()->setMsgWarning( $warning );
     }
 
     /**
@@ -323,7 +265,7 @@ class Controller {
      * @param [string] $flashvariable [variable that last for a request in the same session]
      */
     function setFlashVariable( string $flashvariable ) {
-        $this->sessionWrapper->setFlashVariable( $flashvariable );
+        $this->pageStatus->getSessionWrapper()->setFlashVariable( $flashvariable );
     }
 
     /**
@@ -333,14 +275,14 @@ class Controller {
      * @return [string] [variable that last for a request in the same session]
      */
     function getFlashVariable() : string {
-        return $this->sessionWrapper->getFlashVariable();
+        return $this->pageStatus->getSessionWrapper()->getFlashVariable();
     }
 
     /**
      * Return the SessionWrapper variable set for this controller
      */
     function getSessionWrapper() : SessionWrapper {
-        return $this->sessionWrapper;
+        return $this->pageStatus->getSessionWrapper();
     }
 
     /**
@@ -376,8 +318,8 @@ class Controller {
      */
     public function redirectToPreviousPage() {
         // avoid end of round here...
-        $this->urlredirector->setURL($this->sessionWrapper->getSecondRequestedURL());
-        $this->urlredirector->redirect();
+        $this->applicationBuilder->getRedirector()->setURL($this->pageStatus->getSessionWrapper()->getSecondRequestedURL());
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     /**
@@ -386,16 +328,16 @@ class Controller {
      */
     public function redirectToSecondPreviousPage() {
         // avoid end of round here...
-        $this->urlredirector->setURL($this->sessionWrapper->getThirdRequestedURL());
-        $this->urlredirector->redirect();
+        $this->applicationBuilder->getRedirector()->setURL($this->pageStatus->getSessionWrapper()->getThirdRequestedURL());
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     /**
      * Redirect the script to a selected url
      */
     public function redirectToPage( $url ) {
-        $this->urlredirector->setURL( $url );
-        $this->urlredirector->redirect();
+        $this->applicationBuilder->getRedirector()->setURL( $url );
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     // taken from page script
@@ -409,7 +351,7 @@ class Controller {
         $this->addToHeadAndToFoot($this->thirdcentralcontainer);
         $this->addToHeadAndToFoot($this->bottomcontainer);
 
-        require_once $this->setup->getHTMLTemplatePath() . $this->templateFile . '.php';
+        require_once $this->applicationBuilder->getSetup()->getHTMLTemplatePath() . $this->templateFile . '.php';
     }
 
     function addToHeadAndToFoot($container) {
@@ -460,7 +402,7 @@ class Controller {
         $this->logger          = $logger;
 */
     public function getInfo(): string {
-        return '<br>'.$this->routerContainer->getInfo().'<br>'.$this->request->getInfo().'<br>';
+        return '<br>'.$this->applicationBuilder->getRouterContainer()->getInfo().'<br>'.$this->pageStatus->getRequest()->getInfo().'<br>';
     }
 
 }

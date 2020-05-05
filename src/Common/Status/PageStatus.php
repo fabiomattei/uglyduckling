@@ -3,6 +3,9 @@
 namespace Fabiom\UglyDuckling\Common\Status;
 
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Request\Request;
+use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
+use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class PageStatus {
 
@@ -26,6 +29,27 @@ class PageStatus {
 
     function setSessionWrapper($sessionWrapper) {
         $this->sessionWrapper = $sessionWrapper;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request {
+        return $this->request;
+    }
+
+    /**
+     * @return ServerWrapper
+     */
+    public function getServerWrapper(): ServerWrapper {
+        return $this->serverWrapper;
+    }
+
+    /**
+     * @return SessionWrapper
+     */
+    public function getSessionWrapper(): SessionWrapper {
+        return $this->sessionWrapper;
     }
 
     // TODO it is going to handle query results too
