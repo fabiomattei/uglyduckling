@@ -64,38 +64,38 @@ class Login extends Controller {
 
 		if ($this->userCanLogIn->getUserCanLogIn()) {
 			$user = $this->userDao->getOneByFields( array( 'usr_email' => $this->postParameters['email'] ) );
-			$this->sessionWrapper->setSessionUserId( $user->usr_id );
-			$this->sessionWrapper->setSessionUsername( $user->usr_name );
-			$this->sessionWrapper->setSessionGroup( $user->usr_defaultgroup );
-			$this->sessionWrapper->setSessionLoggedIn( true );
-			$this->sessionWrapper->setSessionIp( $this->serverWrapper->getRemoteAddress() );
-			$this->sessionWrapper->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
-			$this->sessionWrapper->setSessionLastLogin( time() );
+			$this->pageStatus->getSessionWrapper()->setSessionUserId( $user->usr_id );
+			$this->pageStatus->getSessionWrapper()->setSessionUsername( $user->usr_name );
+			$this->pageStatus->getSessionWrapper()->setSessionGroup( $user->usr_defaultgroup );
+			$this->pageStatus->getSessionWrapper()->setSessionLoggedIn( true );
+			$this->pageStatus->getSessionWrapper()->setSessionIp( $this->serverWrapper->getRemoteAddress() );
+			$this->pageStatus->getSessionWrapper()->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
+			$this->pageStatus->getSessionWrapper()->setSessionLastLogin( time() );
 			
-			if ( $this->setup->isSessionSetupPathSet() ) {
+			if ( $this->pageStatus->getSetup()->isSessionSetupPathSet() ) {
                  SessionJsonSetup::loadSessionVariables(
-                     $this->setup->getSessionSetupPath(),
+                     $this->applicationBuilder->getSetup()->getSessionSetupPath(),
                      $this->queryBuilder,
                      $this->queryExecuter,
-                     $this->dbconnection,
-                     $this->sessionWrapper
+                     $this->applicationBuilder->getDbconnection(),
+                     $this->pageStatus->getSessionWrapper()
                  );
 			}
 
-            $this->jsonloader->loadIndex();
-            $groupresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+            $this->applicationBuilder->getJsonloader()->loadIndex();
+            $groupresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
 			
 	        // redirecting to main page
 			// $this->redirectToPage( $this->router->makeRelativeUrl( Router::ROUTE_OFFICE_INBOX ) );
 			if ( $user->usr_defaultgroup == 'administrationgroup' ) {
-				$this->redirectToPage( $this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_DASHBOARD ) );
+				$this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_DASHBOARD ) );
 			} else {
-				$this->redirectToPage( $this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$groupresource->defaultaction ) );
+				$this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$groupresource->defaultaction ) );
 			}
 			
 		} else {
 	        // redirecting to main page
-			$this->redirectToPage( $this->routerContainer->makeRelativeUrl( Router::ROUTE_COMMUNITY_LOGIN ) );
+			$this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_COMMUNITY_LOGIN ) );
 		}
 	}
 	
