@@ -23,7 +23,6 @@ class JsonDashboardController extends JsonResourceBasicController {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
-        $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuJsonTemplate;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
@@ -33,6 +32,8 @@ class JsonDashboardController extends JsonResourceBasicController {
      * @throws GeneralException
      */
     public function getRequest() {
+        $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
+
         $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
 
         $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
@@ -61,6 +62,8 @@ class JsonDashboardController extends JsonResourceBasicController {
     }
 
     public function postRequest() {
+        $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
+        
         $this->postresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['postres'] );
 
         $conn = $this->applicationBuilder->getDbconnection()->getDBH();
