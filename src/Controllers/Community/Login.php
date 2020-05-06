@@ -41,9 +41,9 @@ class Login extends Controller {
 			$error = 'error';
 		}
 		
-		$this->title            = $this->pageStatus->getSetup()->getAppNameForPageTitle() . ' :: Access page';
-		$this->menucontainer    = array( new PublicMenu( $this->pageStatus->getSetup()->getAppNameForPageTitle(), 'login' ) );
-		$this->centralcontainer = array( new LoginForm( $this->pageStatus->getSetup()->getAppNameForPageTitle(), $error ) );
+		$this->title            = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Access page';
+		$this->menucontainer    = array( new PublicMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), 'login' ) );
+		$this->centralcontainer = array( new LoginForm( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), $error ) );
 		$this->templateFile     = 'login';
 	}
 	
