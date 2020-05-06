@@ -207,7 +207,7 @@ class Controller {
     public function showPage() {
         $time_start = microtime(true);
 
-        if ($this->pageStatus->getServerWrapper->isGetRequest()) {
+        if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
 			if ( $this->check_authorization_get_request() ) {
 	            if ( $this->check_get_request() ) {
 	                $this->getRequest();
