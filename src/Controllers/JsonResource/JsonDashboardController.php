@@ -36,23 +36,23 @@ class JsonDashboardController extends JsonResourceBasicController {
 
         $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
 
-        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-        $this->jsonTemplateFactoriesContainer->setJsonloader($this->applicationBuilder->getJsonloader());
-        $this->jsonTemplateFactoriesContainer->setSessionWrapper( $this->pageStatus->getSessionWrapper() );
-        $this->jsonTemplateFactoriesContainer->setServerWrapper($this->pageStatus->getServerWrapper());
-        $this->jsonTemplateFactoriesContainer->setLinkBuilder( $this->applicationBuilder->getLinkBuilder() );
-        $this->jsonTemplateFactoriesContainer->setDbconnection($this->applicationBuilder->getDbconnection());
-        $this->jsonTemplateFactoriesContainer->setRouter($this->applicationBuilder->getRouterContainer());
-        $this->jsonTemplateFactoriesContainer->setJsonloader($this->applicationBuilder->getJsonloader());
-        $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
-        $this->jsonTemplateFactoriesContainer->setLogger($this->applicationBuilder->getLogger());
-        $this->jsonTemplateFactoriesContainer->setSetup($this->applicationBuilder->getSetup());
-        $this->jsonTemplateFactoriesContainer->setAction($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setJsonloader($this->applicationBuilder->getJsonloader());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setSessionWrapper( $this->pageStatus->getSessionWrapper() );
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setServerWrapper($this->pageStatus->getServerWrapper());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setLinkBuilder( $this->applicationBuilder->getLinkBuilder() );
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setDbconnection($this->applicationBuilder->getDbconnection());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setRouter($this->applicationBuilder->getRouterContainer());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setJsonloader($this->applicationBuilder->getJsonloader());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setParameters($this->getParameters);
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setLogger($this->applicationBuilder->getLogger());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setSetup($this->applicationBuilder->getSetup());
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setAction($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
         $this->menubuilder->setMenuStructure( $menuresource );
-        $this->menubuilder->setJsonTemplateFactoriesContainer( $this->jsonTemplateFactoriesContainer );
+        $this->menubuilder->setJsonTemplateFactoriesContainer( $this->applicationBuilder->getJsonTemplateFactoriesContainer() );
 
-        $htmlBlock = $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource );
+        $htmlBlock = $this->applicationBuilder->getJsonTemplateFactoriesContainer()->getHTMLBlock( $this->resource );
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Dashboard';
 
@@ -63,7 +63,7 @@ class JsonDashboardController extends JsonResourceBasicController {
 
     public function postRequest() {
         $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
-        
+
         $this->postresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['postres'] );
 
         $conn = $this->applicationBuilder->getDbconnection()->getDBH();
