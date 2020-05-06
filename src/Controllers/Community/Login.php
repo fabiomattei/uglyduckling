@@ -72,7 +72,7 @@ class Login extends Controller {
 			$this->pageStatus->getSessionWrapper()->setSessionUserAgent( $this->pageStatus->getServerWrapper()->getHttpUserAgent() );
 			$this->pageStatus->getSessionWrapper()->setSessionLastLogin( time() );
 			
-			if ( $this->pageStatus->getSetup()->isSessionSetupPathSet() ) {
+			if ( $this->applicationBuilder->getSetup()->isSessionSetupPathSet() ) {
                  SessionJsonSetup::loadSessionVariables(
                      $this->applicationBuilder->getSetup()->getSessionSetupPath(),
                      $this->queryBuilder,
