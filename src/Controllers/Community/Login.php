@@ -68,8 +68,8 @@ class Login extends Controller {
 			$this->pageStatus->getSessionWrapper()->setSessionUsername( $user->usr_name );
 			$this->pageStatus->getSessionWrapper()->setSessionGroup( $user->usr_defaultgroup );
 			$this->pageStatus->getSessionWrapper()->setSessionLoggedIn( true );
-			$this->pageStatus->getSessionWrapper()->setSessionIp( $this->serverWrapper->getRemoteAddress() );
-			$this->pageStatus->getSessionWrapper()->setSessionUserAgent( $this->serverWrapper->getHttpUserAgent() );
+			$this->pageStatus->getSessionWrapper()->setSessionIp( $this->pageStatus->getServerWrapper()->getRemoteAddress() );
+			$this->pageStatus->getSessionWrapper()->setSessionUserAgent( $this->pageStatus->getServerWrapper()->getHttpUserAgent() );
 			$this->pageStatus->getSessionWrapper()->setSessionLastLogin( time() );
 			
 			if ( $this->pageStatus->getSetup()->isSessionSetupPathSet() ) {
