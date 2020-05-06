@@ -20,7 +20,7 @@ class JsonResourceBasicController extends Controller {
     protected $internalGetParameters;
 
     public function loadResource() {
-    	$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+    	$this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
     }
 
 	/**
@@ -34,7 +34,7 @@ class JsonResourceBasicController extends Controller {
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
-    	$parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->jsonloader );
+    	$parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
     	$validation_rules = $val->getValidationRoules( $parametersGetter->getGetParameters() );
     	$filter_rules = $val->getValidationFilters( $parametersGetter->getGetParameters() );
 
@@ -61,7 +61,7 @@ class JsonResourceBasicController extends Controller {
      */
     public function check_authorization_get_request(): bool {
         if(!isset($this->resource->allowedgroups)) return false;
-        return in_array($this->sessionWrapper->getSessionGroup(), $this->resource->allowedgroups);
+        return in_array($this->pageStatus->getSessionWrapper()->getSessionGroup(), $this->resource->allowedgroups);
     }
 
 	/**
@@ -72,7 +72,7 @@ class JsonResourceBasicController extends Controller {
     	$this->secondGump = new Gump;
 
     	$val = new ValidationBuilder;
-        $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->jsonloader );
+        $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
     	$validation_rules = $val->postValidationRoules( $parametersGetter->getPostParameters() );
     	$filter_rules = $val->postValidationFilters( $parametersGetter->getPostParameters() );
 
@@ -99,15 +99,15 @@ class JsonResourceBasicController extends Controller {
      */
     public function check_authorization_post_request(): bool {
         if(!isset($this->resource->allowedgroups)) return false;
-        return in_array($this->sessionWrapper->getSessionGroup(), $this->resource->allowedgroups);
+        return in_array($this->pageStatus->getSessionWrapper()->getSessionGroup(), $this->resource->allowedgroups);
     }
 
     public function showPage() {
         $time_start = microtime(true);
 
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
 
-        if ($this->serverWrapper->isGetRequest()) {			
+        if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
             if ( $this->check_get_request() ) {
 	            $this->loadResource();
 	            if ( $this->check_authorization_get_request() ) {
@@ -143,7 +143,7 @@ class JsonResourceBasicController extends Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->logger->write('WARNING TIME :: ' . $this->request->getServerRequestMethod() . ' ' . $this->request->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->applicationBuilder->getLogger()->write('WARNING TIME :: ' . $this->pageStatus->getRequest()->getServerRequestMethod() . ' ' . $this->pageStatus->getRequest()->getServerPhpSelf() . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 

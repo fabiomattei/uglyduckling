@@ -20,10 +20,10 @@ use Fabiom\UglyDuckling\Common\Loggers\EchoLogger;
  */
 class Login extends Controller {
 
-     private /* UserDao */ $userDao;
-     private /* UserCanLogIn */ $userCanLogIn;
-     private /* QueryExecuter */ $queryExecuter;
-     private /* QueryBuilder */ $queryBuilder;
+    private /* UserDao */ $userDao;
+    private /* UserCanLogIn */ $userCanLogIn;
+    private /* QueryExecuter */ $queryExecuter;
+    private /* QueryBuilder */ $queryBuilder;
 	
     function __construct() {
         $this->logger = new EchoLogger;
