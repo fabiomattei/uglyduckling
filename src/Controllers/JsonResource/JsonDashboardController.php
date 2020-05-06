@@ -23,7 +23,7 @@ class JsonDashboardController extends JsonResourceBasicController {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
-        $this->queryExecuter->setLogger($this->logger);
+        $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
         $this->queryBuilder = new QueryBuilder;
         $this->menubuilder = new MenuJsonTemplate;
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
@@ -33,27 +33,27 @@ class JsonDashboardController extends JsonResourceBasicController {
      * @throws GeneralException
      */
     public function getRequest() {
-        $menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
+        $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
 
-        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
-        $this->jsonTemplateFactoriesContainer->setSessionWrapper( $this->getSessionWrapper() );
-        $this->jsonTemplateFactoriesContainer->setServerWrapper($this->serverWrapper);
-        $this->jsonTemplateFactoriesContainer->setLinkBuilder( $this->linkBuilder );
-        $this->jsonTemplateFactoriesContainer->setDbconnection($this->dbconnection);
-        $this->jsonTemplateFactoriesContainer->setRouter($this->routerContainer);
-        $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
+        $this->jsonTemplateFactoriesContainer->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->applicationBuilder->getJsonloader());
+        $this->jsonTemplateFactoriesContainer->setSessionWrapper( $this->pageStatus->getSessionWrapper() );
+        $this->jsonTemplateFactoriesContainer->setServerWrapper($this->pageStatus->getServerWrapper());
+        $this->jsonTemplateFactoriesContainer->setLinkBuilder( $this->applicationBuilder->getLinkBuilder() );
+        $this->jsonTemplateFactoriesContainer->setDbconnection($this->applicationBuilder->getDbconnection());
+        $this->jsonTemplateFactoriesContainer->setRouter($this->applicationBuilder->getRouterContainer());
+        $this->jsonTemplateFactoriesContainer->setJsonloader($this->applicationBuilder->getJsonloader());
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
-        $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setSetup($this->setup);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setLogger($this->applicationBuilder->getLogger());
+        $this->jsonTemplateFactoriesContainer->setSetup($this->applicationBuilder->getSetup());
+        $this->jsonTemplateFactoriesContainer->setAction($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setJsonTemplateFactoriesContainer( $this->jsonTemplateFactoriesContainer );
 
         $htmlBlock = $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Dashboard';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Dashboard';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
@@ -61,9 +61,9 @@ class JsonDashboardController extends JsonResourceBasicController {
     }
 
     public function postRequest() {
-        $this->postresource = $this->jsonloader->loadResource( $this->getParameters['postres'] );
+        $this->postresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['postres'] );
 
-        $conn = $this->dbconnection->getDBH();
+        $conn = $this->applicationBuilder->getDbconnection()->getDBH();
 
         // performing transactions
         if (isset($this->postresource->post->transactions)) {
@@ -75,8 +75,8 @@ class JsonDashboardController extends JsonResourceBasicController {
                     $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                     $this->queryExecuter->setQueryStructure( $transaction );
                     $this->queryExecuter->setPostParameters( $this->postParameters );
-                    $this->queryExecuter->setLogger( $this->logger );
-                    $this->queryExecuter->setSessionWrapper( $this->sessionWrapper );
+                    $this->queryExecuter->setLogger( $this->applicationBuilder->getLogger() );
+                    $this->queryExecuter->setSessionWrapper( $this->pageStatus->getSessionWrapper() );
                     $this->queryExecuter->setQueryReturnedValues( $returnedIds );
                     if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
                         if (isset($transaction->label)) {
@@ -92,7 +92,7 @@ class JsonDashboardController extends JsonResourceBasicController {
             }
             catch (\PDOException $e) {
                 $conn->rollBack();
-                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+                $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
             }
         }
 
@@ -104,7 +104,7 @@ class JsonDashboardController extends JsonResourceBasicController {
             $this->queryExecuter->setQueryBuilder($this->queryBuilder);
             $this->queryExecuter->setParameters(array());
             $this->queryExecuter->setPostParameters(array());
-            $this->queryExecuter->setSessionWrapper($this->sessionWrapper);
+            $this->queryExecuter->setSessionWrapper($this->pageStatus->getSessionWrapper());
 
             if (isset($this->postresource->post->sessionupdates->queryset) AND is_array($this->postresource->post->sessionupdates->queryset)) {
                 foreach ($this->postresource->post->sessionupdates->queryset as $query) {
@@ -123,17 +123,17 @@ class JsonDashboardController extends JsonResourceBasicController {
                 foreach ($this->postresource->post->sessionupdates->sessionvars as $sessionvar) {
                     if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
                         if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
-                            $this->sessionWrapper->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
+                            $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
                         }
                     }
                     if ( isset( $sessionvar->constantparamenter ) ) {
-                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
+                        $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
                     }
                     if ( isset( $sessionvar->getparamenter ) ) {
-                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparamenter]);
+                        $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparamenter]);
                     }
                     if ( isset( $sessionvar->postparamenter ) ) {
-                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparamenter]);
+                        $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparamenter]);
                     }
                 }
             }
@@ -147,8 +147,8 @@ class JsonDashboardController extends JsonResourceBasicController {
                 $this->redirectToSecondPreviousPage();
             } elseif ( isset($this->postresource->post->redirect->action) AND isset($this->postresource->post->redirect->action->resource) ) {
                 $this->redirectToPage(
-                    $this->routerContainer->makeRelativeUrl( 
-                        $this->jsonloader->getActionRelatedToResource($this->postresource->post->redirect->action->resource), 'res='.$this->postresource->post->redirect->action->resource
+                    $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
+                        $this->applicationBuilder->getJsonloader()->getActionRelatedToResource($this->postresource->post->redirect->action->resource), 'res='.$this->postresource->post->redirect->action->resource
                     ) 
                 );
             } else {
