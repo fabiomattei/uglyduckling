@@ -16,11 +16,7 @@ use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
  */
 class HTMLButtonTag extends BaseHTMLTag {
 
-    const BLOCK_TYPE = 'smallblock';
-
-    function __construct() {
-
-    }
+    const BLOCK_TYPE = 'button';
 
     /**
      * Takes a JSON resource (object or array or composite) and convert it in HTML

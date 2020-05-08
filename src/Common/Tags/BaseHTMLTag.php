@@ -13,7 +13,7 @@ use Fabiom\UglyDuckling\Common\Status\PageStatus;
  */
 class BaseHTMLTag {
 
-    const tagtype = 'basetag';
+    const BLOCK_TYPE = '';
     protected $jsonStructure;
     protected /* PageStatus */ $pageStatus;
 
