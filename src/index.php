@@ -7,6 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $severWrapper = new Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 $htmlTemplateLoader = new Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+$htmlTagsFactory = new Fabiom\UglyDuckling\Common\Tags\HTMLTagsFactory;
 $linkBuilder = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 $htmlTemplateLoader->setPath('Templates/HTML/');
 
@@ -62,6 +63,7 @@ $applicationBuilder->setJsonloader($jsonloader);
 $applicationBuilder->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 $applicationBuilder->setMessages($messagesBlock);
 $applicationBuilder->setHtmlTemplateLoader($htmlTemplateLoader);
+$applicationBuilder->setHtmlTagsFactory($htmlTagsFactory);
 $applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
 $applicationBuilder->setLinkBuilder($linkBuilder);
 

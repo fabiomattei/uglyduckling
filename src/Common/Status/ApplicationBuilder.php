@@ -12,6 +12,7 @@ use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Common\Setup\Setup;
+use Fabiom\UglyDuckling\Common\Tags\HTMLTagsFactory;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class ApplicationBuilder {
@@ -25,6 +26,7 @@ class ApplicationBuilder {
     public /* Logger */ $logger;
     public /* BaseHTMLMessages */ $messages;
     public /* HtmlTemplateLoader */ $htmlTemplateLoader;
+    public /* HTMLTagsFactory */ $htmlTagsFactory;
     public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
     public /* LinkBuilder */ $linkBuilder;
 
@@ -152,6 +154,20 @@ class ApplicationBuilder {
      */
     public function setHtmlTemplateLoader(HtmlTemplateLoader $htmlTemplateLoader): void {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
+    }
+
+    /**
+     * @return HTMLTagsFactory
+     */
+    public function getHtmlTagsFactory(): HTMLTagsFactory {
+        return $this->htmlTagsFactory;
+    }
+
+    /**
+     * @param HTMLTagsFactory $htmlTagsFactory
+     */
+    public function setHtmlTagsFactory(HTMLTagsFactory $htmlTagsFactory): void {
+        $this->htmlTagsFactory = $htmlTagsFactory;
     }
 
     /**
