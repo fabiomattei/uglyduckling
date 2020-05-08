@@ -2,13 +2,16 @@
 
 namespace Fabiom\UglyDuckling\Common\Tags;
 
-
+use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLButtonTag;
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
 
 class HTMLTagsFactory {
 
     protected /* array */ $htmlTags;
+
+    private /* TableJsonTemplate */ $htmlButtonTag;
+    private /* ChartjsJsonTemplate */ $htmlLinkTag;
 
     function __construct() {
         $this->htmlTags = array();
@@ -19,8 +22,10 @@ class HTMLTagsFactory {
      * This function load the standard HTML tags defined by UD
      */
     function loadDefaults() {
-        $this->addHTMLTag(new HTMLButtonTag);
-        $this->addHTMLTag(new HTMLLinkTag);
+        $this->htmlButtonTag = new HTMLButtonTag;
+        $this->htmlLinkTag = new HTMLLinkTag;
+        $this->addHTMLTag($this->htmlButtonTag);
+        $this->addHTMLTag($this->htmlLinkTag);
     }
 
     /**
@@ -36,6 +41,16 @@ class HTMLTagsFactory {
         if (property_exists(get_class ($htmlTag), 'BLOCK_TYPE')) {
             $this->htmlTags[$htmlTag::BLOCK_TYPE] = $htmlTag;
         }
+    }
+
+    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus ): BaseHTMLTag {
+        if ( $jsonStructure->type == HTMLButtonTag::BLOCK_TYPE ) {
+            new HTMLButtonTag;
+            $this->htmlButtonTag->setResources( $jsonStructure, $pageStatus );
+            return $this->htmlButtonTag;
+        }
+
+        return new BaseHTMLTag;
     }
 
 }
