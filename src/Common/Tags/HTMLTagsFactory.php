@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Common\Tags;
 
 
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLButtonTag;
+use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
 
 class HTMLTagsFactory {
 
@@ -19,6 +20,7 @@ class HTMLTagsFactory {
      */
     function loadDefaults() {
         $this->addHTMLTag(new HTMLButtonTag);
+        $this->addHTMLTag(new HTMLLinkTag);
     }
 
     /**

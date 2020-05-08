@@ -12,6 +12,9 @@ class PageStatus {
     public /* Request */ $request;
     public /* ServerWrapper */ $serverWrapper;
     public /* SessionWrapper */ $sessionWrapper;
+    public /* array */ $getParameters;
+    public /* array */ $postParameters;
+    public /* array */ $filesParameters;
 
     /**
      * PageStatus constructor.
@@ -29,6 +32,27 @@ class PageStatus {
 
     function setSessionWrapper($sessionWrapper) {
         $this->sessionWrapper = $sessionWrapper;
+    }
+
+    /**
+     * @param mixed $getParameters
+     */
+    public function setGetParameters($getParameters): void {
+        $this->getParameters = $getParameters;
+    }
+
+    /**
+     * @param mixed $postParameters
+     */
+    public function setPostParameters($postParameters): void {
+        $this->postParameters = $postParameters;
+    }
+
+    /**
+     * @param mixed $filesParameters
+     */
+    public function setFilesParameters($filesParameters): void {
+        $this->filesParameters = $filesParameters;
     }
 
     /**
@@ -51,6 +75,8 @@ class PageStatus {
     public function getSessionWrapper(): SessionWrapper {
         return $this->sessionWrapper;
     }
+
+
 
     // TODO it is going to handle query results too
 

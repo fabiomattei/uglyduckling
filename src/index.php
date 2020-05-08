@@ -52,6 +52,9 @@ $pageStatus = new Fabiom\UglyDuckling\Common\Status\PageStatus;
 $pageStatus->setRequest($request);
 $pageStatus->setServerWrapper($severWrapper);
 $pageStatus->setSessionWrapper($sessionWrapper);
+$pageStatus->setGetParameters( $_GET );
+$pageStatus->setPostParameters( $_POST );
+$pageStatus->setFilesParameters( $_FILES );
 
 $applicationBuilder = new Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 $applicationBuilder->setRouterContainer($routerContainer);
