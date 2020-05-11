@@ -16,6 +16,8 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
@@ -26,9 +28,6 @@ class JsonTemplateFactoriesContainer {
     protected /* QueryExecuter */ $queryExecuter;
     protected /* QueryBuilder */ $queryBuilder;
     private /* array */ $factories;
-    private /* RoutersContainer */ $routerContainer;
-    private /* DBConnection */ $dbconnection;
-    private /* SessionWrapper */ $sessionWrapper;
     private /* ServerWrapper */ $serverWrapper;
     private /* array */ $parameters;
     private /* array */ $postparameters;
@@ -36,9 +35,8 @@ class JsonTemplateFactoriesContainer {
     private /* string */ $action;
     private /* HtmlTemplateLoader */ $htmlTemplateLoader;
     private /* JsonLoader */ $jsonloader;
-    private /* LinkBuilder */ $linkBuilder;
-    private /* Logger */ $logger;
-    private /* Setup */ $setup;
+    private /* ApplicationBuilder */ $applicationBuilder;
+    private /* PageStatus */ $pageStatus;
     private $buttonBuilder;
 
     /**
@@ -113,6 +111,34 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
+     * @return ApplicationBuilder
+     */
+    public function getApplicationBuilder(): ApplicationBuilder {
+        return $this->applicationBuilder;
+    }
+
+    /**
+     * @param ApplicationBuilder $applicationBuilder
+     */
+    public function setApplicationBuilder(ApplicationBuilder $applicationBuilder): void {
+        $this->applicationBuilder = $applicationBuilder;
+    }
+
+    /**
+     * @return PageStatus
+     */
+    public function getPageStatus(): PageStatus {
+        return $this->pageStatus;
+    }
+
+    /**
+     * @param PageStatus $applicationBuilder
+     */
+    public function setPageStatus(PageStatus $pageStatus): void {
+        $this->pageStatus = $pageStatus;
+    }
+
+    /**
      * @return QueryExecuter
      */
     public function getQueryExecuter(): QueryExecuter {
@@ -137,28 +163,28 @@ class JsonTemplateFactoriesContainer {
      * @return mixed
      */
     public function getRouterContainer() {
-        return $this->routerContainer;
+        return $this->applicationBuilder->getRouterContainer();
     }
 
     /**
      * @return DBConnection
      */
     public function getDbconnection() {
-        return $this->dbconnection;
+        return $this->applicationBuilder->getDbconnection();
     }
 
     /**
      * @return SessionWrapper
      */
     public function getSessionWrapper() {
-        return $this->sessionWrapper;
+        return $this->pageStatus->getSessionWrapper() ;
     }
 
     /**
      * @return ServerWrapper
      */
     public function getServerWrapper() {
-        return $this->serverWrapper;
+        return $this->pageStatus->getServerWrapper();
     }
 
     /**
@@ -193,28 +219,28 @@ class JsonTemplateFactoriesContainer {
      * @return mixed
      */
     public function getHtmlTemplateLoader() {
-        return $this->htmlTemplateLoader;
+        return $this->applicationBuilder->getHtmlTemplateLoader();
     }
 
     /**
      * @return mixed
      */
     public function getJsonloader() {
-        return $this->jsonloader;
+        return $this->applicationBuilder->getJsonloader();
     }
 
     /**
      * @return mixed
      */
     public function getLinkBuilder() {
-        return $this->linkBuilder;
+        return $this->applicationBuilder->getLinkBuilder();
     }
 
     /**
      * @return mixed
      */
     public function getLogger() {
-        return $this->logger;
+        return $this->applicationBuilder->getLogger();
     }
 
     /**
@@ -228,23 +254,7 @@ class JsonTemplateFactoriesContainer {
      * @return mixed
      */
     public function getSetup() {
-        return $this->setup;
-    }
-
-    /**
-     * Setting routerContainer object
-     *
-     * @param RoutersContainer $routerContainer
-     */
-    public function setRouter( RoutersContainer $routerContainer ) {
-        $this->routerContainer = $routerContainer;
-    }
-
-    /**
-     * @param JsonLoader $jsonloader
-     */
-    public function setJsonloader(JsonLoader $jsonloader): void {
-        $this->jsonloader = $jsonloader;
+        return $this->applicationBuilder->getSetup();
     }
 
     /**
@@ -255,48 +265,10 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * @param SessionWrapper $sessionWrapper
-     */
-    public function setSessionWrapper( $sessionWrapper ): void {
-        $this->sessionWrapper = $sessionWrapper;
-    }
-
-    /**
-     * @param ServerWrapper $serverWrapper
-     */
-    public function setServerWrapper( ServerWrapper $serverWrapper ): void {
-        $this->serverWrapper = $serverWrapper;
-    }
-
-    /**
      * @param mixed $parameters
      */
     public function setPostParameters($parameters): void {
         $this->postparameters = $parameters;
-    }
-
-    /**
-     * @param DBConnection $dbconnection
-     */
-    public function setDbconnection( DBConnection $dbconnection): void {
-        $this->dbconnection = $dbconnection;
-    }
-
-    /**
-     * Setting Html template loader
-     *
-     * @param HtmlTemplateLoader $htmlTemplateLoader
-     */
-    public function setHtmlTemplateLoader(HtmlTemplateLoader $htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
-
-    /**
-     * @param Logger $logger
-     * the $logger variable contains a logger for this class
-     */
-    public function setLogger( Logger $logger ): void {
-        $this->logger = $logger;
     }
 
     /**
@@ -308,24 +280,10 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * @param LinkBuilder $linkBuilder
-     */
-    public function setLinkBuilder( LinkBuilder $linkBuilder ) {
-        $this->linkBuilder = $linkBuilder;
-    }
-
-    /**
      * @param mixed $buttonBuilder
      */
     public function setButtonBuilder($buttonBuilder): void {
         $this->buttonBuilder = $buttonBuilder;
-    }
-
-    /**
-     * @param mixed $setup
-     */
-    public function setSetup($setup): void {
-        $this->setup = $setup;
     }
 
 }
