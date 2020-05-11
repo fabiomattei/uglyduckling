@@ -23,7 +23,7 @@ class BaseHTMLTag {
     protected $jsonStructure;
     protected /* PageStatus */ $pageStatus;
 
-    function __construct($jsonStructure, PageStatus $pageStatus) {
+    function setResources($jsonStructure, PageStatus $pageStatus) {
         $this->jsonStructure = $jsonStructure;
         $this->pageStatus = $pageStatus;
     }

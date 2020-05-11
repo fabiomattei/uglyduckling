@@ -9,7 +9,6 @@ use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
 class HTMLTagsFactory {
 
     protected /* array */ $htmlTags;
-
     private /* TableJsonTemplate */ $htmlButtonTag;
     private /* ChartjsJsonTemplate */ $htmlLinkTag;
 
@@ -44,13 +43,13 @@ class HTMLTagsFactory {
     }
 
     public function getHTMLTag( $jsonStructure, PageStatus $pageStatus ): BaseHTMLTag {
-        if ( $jsonStructure->type == HTMLButtonTag::BLOCK_TYPE ) {
-            new HTMLButtonTag;
-            $this->htmlButtonTag->setResources( $jsonStructure, $pageStatus );
-            return $this->htmlButtonTag;
+        if ( key_exists($jsonStructure->type , $this->htmlTags) ) {
+            $htmlTag = $this->htmlTags[$jsonStructure->type];
+            $htmlTag->setResources($jsonStructure, $pageStatus);
+            return $htmlTag;
+        } else {
+            return new BaseHTMLTag;
         }
-
-        return new BaseHTMLTag;
     }
 
 }
