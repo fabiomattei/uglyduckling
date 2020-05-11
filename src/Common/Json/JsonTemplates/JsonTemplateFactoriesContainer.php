@@ -57,7 +57,7 @@ class JsonTemplateFactoriesContainer {
 
         $panelBlock->setTitle($panel->title ?? '');
         $panelBlock->setWidth($panel->width ?? '3');
-        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
         $resource = $this->applicationBuilder->getJsonloader()->loadResource( $panel->resource );
 
@@ -79,7 +79,7 @@ class JsonTemplateFactoriesContainer {
         $panelBlock = new CardHTMLBlock;
         $panelBlock->setTitle('');
         $panelBlock->setWidth( '12');
-        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $panelBlock->setInternalBlockName( $resource->name ?? '' );
         $panelBlock->setBlock($this->getHTMLBlock($resource));
         return $panelBlock;
