@@ -59,7 +59,7 @@ class JsonTemplateFactoriesContainer {
         $panelBlock->setWidth($panel->width ?? '3');
         $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
-        $resource = $this->jsonloader->loadResource( $panel->resource );
+        $resource = $this->applicationBuilder->getJsonloader()->loadResource( $panel->resource );
 
         $panelBlock->setInternalBlockName( $resource->name ?? '' );
         $panelBlock->setBlock($this->getHTMLBlock($resource));
