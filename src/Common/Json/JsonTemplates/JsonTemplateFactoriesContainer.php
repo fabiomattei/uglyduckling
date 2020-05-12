@@ -52,46 +52,6 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * Called in DashboardJsonTemplate
-     *
-     * @param $panel
-     * @return CardHTMLBlock
-     */
-    function getPanel($panel) {
-        $panelBlock = new CardHTMLBlock;
-        // $panelBlock->setJsonTemplateFactoriesContainer();
-
-        $panelBlock->setTitle($panel->title ?? '');
-        $panelBlock->setWidth($panel->width ?? '3');
-        $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-
-        $resource = $this->applicationBuilder->loadResource( $panel->resource );
-
-        $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($this->applicationBuilder->getHTMLBlock($resource));
-
-        return $panelBlock;
-    }
-
-    /**
-     * Return a panel containing an HTML Block built with data in the resource field
-     *
-     * The HTML block type depends from the resource->metadata->type field in the json strcture
-     *
-     * @param $resource
-     * @return CardHTMLBlock
-     */
-    function getWidePanel( $resource ) {
-        $panelBlock = new CardHTMLBlock;
-        $panelBlock->setTitle('');
-        $panelBlock->setWidth( '12');
-        $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-        $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($this->getHTMLBlock($resource));
-        return $panelBlock;
-    }
-
-    /**
      * Given a specific json resource select between all JsonTemplateFactories
      * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
      *

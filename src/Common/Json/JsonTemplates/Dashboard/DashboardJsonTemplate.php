@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard;
 
+use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLDashboard;
 
@@ -42,11 +43,35 @@ class DashboardJsonTemplate extends JsonTemplate {
         foreach ($panelRows as $row) {
             $htmlDashboard->createNewRow();
             foreach ($row as $panel) {
-                $htmlDashboard->addBlockToCurrentRow( $this->jsonTemplateFactoriesContainer->getPanel($panel) );
+                $htmlDashboard->addBlockToCurrentRow( $this->getPanel($panel) );
             }
         }
 
         return $htmlDashboard;
+    }
+
+    /**
+     * Called in DashboardJsonTemplate
+     *
+     * @param $panel
+     * @return CardHTMLBlock
+     */
+    function getPanel($panel) {
+        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
+
+        $panelBlock = new CardHTMLBlock;
+        // $panelBlock->setJsonTemplateFactoriesContainer();
+
+        $panelBlock->setTitle($panel->title ?? '');
+        $panelBlock->setWidth($panel->width ?? '3');
+        $panelBlock->setHtmlTemplateLoader( $applicationBuilder->getHtmlTemplateLoader() );
+
+        $resource = $applicationBuilder->loadResource( $panel->resource );
+
+        $panelBlock->setInternalBlockName( $resource->name ?? '' );
+        $panelBlock->setBlock($applicationBuilder->getHTMLBlock($resource));
+
+        return $panelBlock;
     }
 
 }
