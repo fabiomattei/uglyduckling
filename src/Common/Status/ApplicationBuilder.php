@@ -12,6 +12,7 @@ use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Common\Setup\Setup;
+use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
 use Fabiom\UglyDuckling\Common\Tags\HTMLTagsFactory;
 use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
@@ -29,6 +30,16 @@ class ApplicationBuilder {
     public /* HTMLTagsFactory */ $htmlTagsFactory;
     public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
     public /* LinkBuilder */ $linkBuilder;
+
+    /**
+     * Gets the appropriate HTML tag from the tag factory
+     * @param $jsonStructure
+     * @param PageStatus $pageStatus
+     * @return BaseHTMLTag
+     */
+    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus ): BaseHTMLTag {
+        return $this->htmlTagsFactory->getHTMLTag( $jsonStructure, $pageStatus );
+    }
 
     /**
      * @return RoutersContainer
