@@ -31,7 +31,6 @@ class JsonTemplateFactoriesContainer {
     private /* JsonLoader */ $jsonloader;
     private /* ApplicationBuilder */ $applicationBuilder;
     private /* PageStatus */ $pageStatus;
-    private $buttonBuilder;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
@@ -157,20 +156,6 @@ class JsonTemplateFactoriesContainer {
     /**
      * @return mixed
      */
-    public function getPostparameters() {
-        return $this->postparameters;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSessionparameters() {
-        return $this->sessionparameters;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getAction() {
         return $this->action;
     }
@@ -206,13 +191,6 @@ class JsonTemplateFactoriesContainer {
     /**
      * @return mixed
      */
-    public function getButtonBuilder() {
-        return $this->buttonBuilder;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getSetup() {
         return $this->applicationBuilder->getSetup();
     }
@@ -237,13 +215,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function setAction( string $action ): void {
         $this->action = $action;
-    }
-
-    /**
-     * @param mixed $buttonBuilder
-     */
-    public function setButtonBuilder($buttonBuilder): void {
-        $this->buttonBuilder = $buttonBuilder;
     }
 
 }
