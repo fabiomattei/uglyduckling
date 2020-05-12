@@ -51,6 +51,12 @@ class JsonTemplateFactoriesContainer {
         $this->factories[] = $jsonTemplateFactory;
     }
 
+    /**
+     * Called in DashboardJsonTemplate
+     *
+     * @param $panel
+     * @return CardHTMLBlock
+     */
     function getPanel($panel) {
         $panelBlock = new CardHTMLBlock;
         // $panelBlock->setJsonTemplateFactoriesContainer();
@@ -59,10 +65,10 @@ class JsonTemplateFactoriesContainer {
         $panelBlock->setWidth($panel->width ?? '3');
         $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
-        $resource = $this->applicationBuilder->getJsonloader()->loadResource( $panel->resource );
+        $resource = $this->applicationBuilder->loadResource( $panel->resource );
 
         $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($this->getHTMLBlock($resource));
+        $panelBlock->setBlock($this->applicationBuilder->getHTMLBlock($resource));
 
         return $panelBlock;
     }

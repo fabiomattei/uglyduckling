@@ -55,7 +55,11 @@ class ApplicationBuilder {
     }
 
     public function getAppNameForPageTitle(): string  {
-        return $this->getSetup()->getAppNameForPageTitle();
+        return $this->setup->getAppNameForPageTitle();
+    }
+
+    public function loadResource( $resourcename ) {
+        return $this->jsonloader->loadResource($resourcename);
     }
 
     /**
