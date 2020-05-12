@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Status;
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
@@ -33,12 +34,24 @@ class ApplicationBuilder {
 
     /**
      * Gets the appropriate HTML tag from the tag factory
+     *
      * @param $jsonStructure
      * @param PageStatus $pageStatus
      * @return BaseHTMLTag
      */
     public function getHTMLTag( $jsonStructure, PageStatus $pageStatus ): BaseHTMLTag {
         return $this->htmlTagsFactory->getHTMLTag( $jsonStructure, $pageStatus );
+    }
+
+    /**
+     * Given a specific json resource select between all JsonTemplateFactories
+     * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
+     *
+     * @param $resource
+     * @return BaseHTMLBlock
+     */
+    public function getHTMLBlock( $resource ): BaseHTMLBlock {
+        return $this->jsonTemplateFactoriesContainer->getHTMLBlock( $resource );
     }
 
     /**
