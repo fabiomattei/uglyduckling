@@ -50,45 +50,6 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $this->action = '';
     }
 
-    /**
-     * @deprecated
-     * @param $panel
-     * @return CardHTMLBlock
-     * @throws \Exception
-     */
-    function getPanel($panel) {
-        $panelBlock = new CardHTMLBlock;
-        $panelBlock->setTitle($panel->title ?? '');
-        $panelBlock->setWidth($panel->width ?? '3');
-        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-
-        $resource = $this->jsonloader->loadResource( $panel->resource );
-
-        $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($this->getHTMLBlock($resource));
-
-        return $panelBlock;
-    }
-
-    /**
-     * @deprecated
-     * Return a panel containing an HTML Block built with data in the resource field
-     *
-     * The HTML block type depends from the resource->metadata->type field in the json strcture
-     *
-     * @param $resource
-     * @return CardHTMLBlock
-     */
-    function getWidePanel( $resource ) {
-        $panelBlock = new CardHTMLBlock;
-        $panelBlock->setTitle('');
-        $panelBlock->setWidth( '12');
-        $panelBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($this->getHTMLBlock($resource));
-        return $panelBlock;
-    }
-
     public function isResourceSupported( $resource ) {
         return in_array($resource->metadata->type, array(
             DashboardJsonTemplate::blocktype, 

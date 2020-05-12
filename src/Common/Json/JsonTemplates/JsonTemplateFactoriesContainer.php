@@ -9,7 +9,6 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\Button;
-use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
@@ -25,10 +24,7 @@ class JsonTemplateFactoriesContainer {
     private /* array */ $factories;
     private /* array */ $parameters;
     private /* array */ $postparameters;
-    private /* array */ $sessionparameters;
     private /* string */ $action;
-    private /* HtmlTemplateLoader */ $htmlTemplateLoader;
-    private /* JsonLoader */ $jsonloader;
     private /* ApplicationBuilder */ $applicationBuilder;
     private /* PageStatus */ $pageStatus;
 
