@@ -54,6 +54,10 @@ class ApplicationBuilder {
         return $this->jsonTemplateFactoriesContainer->getHTMLBlock( $resource );
     }
 
+    public function getAppNameForPageTitle(): string  {
+        return $this->getSetup()->getAppNameForPageTitle();
+    }
+
     /**
      * @return RoutersContainer
      */

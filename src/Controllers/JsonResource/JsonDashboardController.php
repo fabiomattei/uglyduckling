@@ -46,7 +46,7 @@ class JsonDashboardController extends JsonResourceBasicController {
 
         $htmlBlock = $this->applicationBuilder->getHTMLBlock( $this->resource );
 
-        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Dashboard';
+        $this->title = $this->applicationBuilder->getAppNameForPageTitle() . ' :: Dashboard';
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
