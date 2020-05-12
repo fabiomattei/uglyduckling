@@ -8,7 +8,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Blocks\Button;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
@@ -35,7 +34,6 @@ class JsonTemplateFactoriesContainer {
         $this->factories = array();
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
-        $this->buttonBuilder = new Button;
     }
 
     /**

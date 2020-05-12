@@ -60,7 +60,6 @@ class DashboardJsonTemplate extends JsonTemplate {
         $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
 
         $panelBlock = new CardHTMLBlock;
-        // $panelBlock->setJsonTemplateFactoriesContainer();
 
         $panelBlock->setTitle($panel->title ?? '');
         $panelBlock->setWidth($panel->width ?? '3');
