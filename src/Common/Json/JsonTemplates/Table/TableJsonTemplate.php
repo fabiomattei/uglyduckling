@@ -44,6 +44,9 @@ class TableJsonTemplate extends JsonTemplate {
     }
 
     public function createTable() {
+        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
+        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
+
         $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
         $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
         $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
@@ -51,11 +54,7 @@ class TableJsonTemplate extends JsonTemplate {
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
-        $linkBuilder = $this->jsonTemplateFactoriesContainer->getLinkBuilder();
-        $jsonloader = $this->jsonTemplateFactoriesContainer->getJsonloader();
-        $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
         $serverWrapper = $this->jsonTemplateFactoriesContainer->getServerWrapper();
-        $buttonBuilder = $this->jsonTemplateFactoriesContainer->getButtonBuilder();
 
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {
@@ -97,6 +96,7 @@ class TableJsonTemplate extends JsonTemplate {
 		
 		$tableBlock->addTBody();
 		foreach ($entities as $entity) {
+            $pageStatus->setLastEntity($entity);
 			$tableBlock->addRow();
 			foreach ($table->fields as $field) {
 				$tableBlock->addColumn($this->getValue($field, $parameters, array(), $sessionWrapper, $entity));
@@ -104,7 +104,8 @@ class TableJsonTemplate extends JsonTemplate {
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
-                    $links .= $linkBuilder->getAppButton( $buttonBuilder, $action, $jsonloader, $routerContainer, $entity );
+                    $links .= $applicationBuilder->getHTMLTag( $action, $pageStatus, $applicationBuilder );
+                    //$links .= $linkBuilder->getAppButton( $buttonBuilder, $action, $jsonloader, $routerContainer, $entity );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );

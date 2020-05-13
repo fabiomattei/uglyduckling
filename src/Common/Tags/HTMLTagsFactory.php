@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Tags;
 
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLButtonTag;
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
@@ -42,7 +43,13 @@ class HTMLTagsFactory {
         }
     }
 
-    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus ): BaseHTMLTag {
+    /**
+     * @param $jsonStructure
+     * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
+     * @return BaseHTMLTag
+     */
+    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): BaseHTMLTag {
         if ( key_exists($jsonStructure->type , $this->htmlTags) ) {
             $htmlTag = $this->htmlTags[$jsonStructure->type];
             $htmlTag->setResources($jsonStructure, $pageStatus);

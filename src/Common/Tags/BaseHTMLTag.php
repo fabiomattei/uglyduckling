@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Tags;
 
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 
 /**
@@ -22,10 +23,12 @@ class BaseHTMLTag {
     const BLOCK_TYPE = '';
     protected $jsonStructure;
     protected /* PageStatus */ $pageStatus;
+    protected /* ApplicationBuilder */ $applicationBuilder;
 
-    function setResources($jsonStructure, PageStatus $pageStatus) {
+    function setResources($jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder) {
         $this->jsonStructure = $jsonStructure;
         $this->pageStatus = $pageStatus;
+        $this->applicationBuilder = $applicationBuilder;
     }
 
     /**

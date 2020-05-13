@@ -15,6 +15,7 @@ class PageStatus {
     public /* array */ $getParameters;
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
+    public $lastEntity; // result of last query in database, it is a stdClass
 
     /**
      * PageStatus constructor.
@@ -32,6 +33,13 @@ class PageStatus {
 
     function setSessionWrapper($sessionWrapper) {
         $this->sessionWrapper = $sessionWrapper;
+    }
+
+    /**
+     * @param mixed $lastEntity
+     */
+    public function setLastEntity($lastEntity): void {
+        $this->lastEntity = $lastEntity;
     }
 
     /**
@@ -88,11 +96,11 @@ class PageStatus {
     public function getValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
-            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) ); 
+            return ($this->lastEntity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
         }
         if ( isset($field->sqlfield) ) {
             $fieldname = $field->sqlfield;
-            return ($entity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );   
+            return ($this->lastEntity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
         }
         if ( isset($field->constantparameter) ) {
             return $field->constantparameter;

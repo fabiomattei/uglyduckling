@@ -37,10 +37,11 @@ class ApplicationBuilder {
      *
      * @param $jsonStructure
      * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
      * @return BaseHTMLTag
      */
-    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus ): BaseHTMLTag {
-        return $this->htmlTagsFactory->getHTMLTag( $jsonStructure, $pageStatus );
+    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): BaseHTMLTag {
+        return $this->htmlTagsFactory->getHTMLTag( $jsonStructure, $pageStatus, $applicationBuilder );
     }
 
     /**
