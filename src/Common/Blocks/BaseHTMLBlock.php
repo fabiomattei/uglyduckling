@@ -2,6 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Blocks;
 
+use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
+
 /**
  * Class BaseHTMLBlock
  *
@@ -84,6 +86,15 @@ class BaseHTMLBlock {
      */
     function subAddToFoot(): string {
         return '';
+    }
+
+    /**
+     * Add an HTML Tag to this block
+     *
+     * @param BaseHTMLTag $tag
+     */
+    function addHTMLTag( BaseHTMLTag $tag) {
+        $this->tags[] = $tag;
     }
 
 }
