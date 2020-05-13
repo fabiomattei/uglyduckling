@@ -12,6 +12,8 @@ namespace Fabiom\UglyDuckling\Common\Blocks;
  */
 class BaseHTMLBlock {
 
+    protected /* array */ $tags = array();
+
     /**
      * @deprecated
      *
@@ -37,7 +39,7 @@ class BaseHTMLBlock {
      * to work properly.
      */
     function addToHead(): string {
-        return '';
+        return array_reduce( $this->tags, function ($carry, $tag) { return $carry . ' ' . $tag->addToHead(); }, '' );
     }
 
     /**
@@ -46,7 +48,7 @@ class BaseHTMLBlock {
      * It is called for every instance of a class.
      */
     function addToFoot(): string {
-        return '';
+        return array_reduce( $this->tags, function ($carry, $tag) { return $carry . ' ' . $tag->addToFoot(); }, '' );
     }
 
     /**
@@ -56,7 +58,7 @@ class BaseHTMLBlock {
      * to work properly.
      */
     function addToHeadOnce(): string {
-        return '';
+        return array_reduce( $this->tags, function ($carry, $tag) { return $carry . ' ' . $tag->addToHeadOnce(); }, '' );
     }
 
     /**
@@ -65,7 +67,7 @@ class BaseHTMLBlock {
      * It is called only once per class.
      */
     function addToFootOnce(): string {
-        return '';
+        return array_reduce( $this->tags, function ($carry, $tag) { return $carry . ' ' . $tag->addToFootOnce(); }, '' );
     }
 
     /**
