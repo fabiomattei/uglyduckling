@@ -395,6 +395,21 @@ class Controller {
             $this->addToFoot .= $htmlBlock;
         }
         /* end add once section */
+
+        /* new add once section */
+        if (isset($container)) {
+            if (gettype($container) == 'array') {
+                $arraysHeads = array_reduce( $container, function ($carry, $html) { return array_merge($carry, $html ); }, [] );
+                $this->addToHead .= array_reduce( $arraysHeads, function ($carry, $html) { return $carry . ' ' . $html->newAddToFootOnce(); }, '' );
+                $arraysFoots = array_reduce( $container, function ($carry, $html) { return array_merge($carry, $html ); }, [] );
+                $this->addToFoot .= array_reduce( $arraysFoots, function ($carry, $html) { return $carry . ' ' . $html->newAddToHeadOnce(); }, '' );
+            }
+            if (gettype($container) == 'object') {
+                $this->addToHead .= array_reduce( $container->newAddToHeads(), function ($carry, $html) { return $carry . ' ' . $html; }, '' );
+                $this->addToFoot .= array_reduce( $container->newAddToFoods(), function ($carry, $html) { return $carry . ' ' . $html; }, '' );
+            }
+        }
+        /* new add once section end */
     }
 
 /*

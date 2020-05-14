@@ -74,6 +74,25 @@ class BaseHTMLBlock {
 
     /**
      * Overwrite this method with the content you want to put in your html header
+     * It is called only once per class.
+     * It can be useful if you need to load a css or a javascript file for this block
+     * to work properly.
+     */
+    function newAddToHeadOnce(): string {
+        return array_reduce( $this->tags, function ($carry, $tag) { return array_merge($carry, $tag->newAddToHeadOnce()); }, [] );
+    }
+
+    /**
+     * Overwrite this method with the content you want to put at the very bottom of your page
+     * It can be useful if you need to load a javascript file for this block
+     * It is called only once per class.
+     */
+    function newAddToFootOnce(): string {
+        return array_reduce( $this->tags, function ($carry, $tag) { return array_merge($carry, $tag->newAddToFootOnce() ); }, [] );
+    }
+
+    /**
+     * Overwrite this method with the content you want to put in your html header
      * It can be useful if you need to write some css or javascript code
      */
     function subAddToHead(): string {
