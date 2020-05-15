@@ -156,7 +156,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
 
         foreach ($this->rows as $row) {
             foreach ($row as $block) {
-                $addToHeadDictionary = array_merge($addToHeadDictionary, $block->addToFootOnce());
+                $addToHeadDictionary = array_merge($addToHeadDictionary, $block->newAddToHeadOnce());
             }
         }
 
@@ -168,7 +168,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
 
         foreach ($this->rows as $row) {
             foreach ($row as $block) {
-                $addToFootDictionary = array_merge($addToFootDictionary, $block->addToFootOnce());
+                $addToFootDictionary = array_merge($addToFootDictionary, $block->newAddToFootOnce());
             }
         }
 
