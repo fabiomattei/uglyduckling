@@ -54,6 +54,8 @@ class BaseHTMLBlock {
     }
 
     /**
+     * @deprecated
+     *
      * Overwrite this method with the content you want to put in your html header
      * It is called only once per class.
      * It can be useful if you need to load a css or a javascript file for this block
@@ -64,6 +66,8 @@ class BaseHTMLBlock {
     }
 
     /**
+     * @deprecated
+     *
      * Overwrite this method with the content you want to put at the very bottom of your page
      * It can be useful if you need to load a javascript file for this block
      * It is called only once per class.

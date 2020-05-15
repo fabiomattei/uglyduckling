@@ -401,12 +401,12 @@ class Controller {
             if (gettype($container) == 'array') {
                 $arraysHeads = array_reduce( $container, function ($carry, $htmlBlock) { return array_merge($carry, $htmlBlock->newAddToHeadOnce() ); }, [] );
                 $this->addToHead .= array_reduce( $arraysHeads, function ($carry, $htmlCode) { return $carry . ' ' . $htmlCode; }, '' );
-                $arraysFoots = array_reduce( $container, function ($carry, $htmlBlock) { return array_merge($carry, $htmlBlock->newAddToHeadOnce() ); }, [] );
+                $arraysFoots = array_reduce( $container, function ($carry, $htmlBlock) { return array_merge($carry, $htmlBlock->newAddToFootOnce() ); }, [] );
                 $this->addToFoot .= array_reduce( $arraysFoots, function ($carry, $htmlCode) { return $carry . ' ' . $htmlCode; }, '' );
             }
             if (gettype($container) == 'object') {
-                $this->addToHead .= array_reduce( $container->newAddToHeads(), function ($carry, $htmlCode) { return $carry . ' ' . $htmlCode; }, '' );
-                $this->addToFoot .= array_reduce( $container->newAddToFoods(), function ($carry, $htmlCode) { return $carry . ' ' . $htmlCode; }, '' );
+                $this->addToHead .= array_reduce( $container->newAddToHeadOnce(), function ($carry, $htmlCode) { return $carry . ' ' . $htmlCode; }, '' );
+                $this->addToFoot .= array_reduce( $container->newAddToFootOnce(), function ($carry, $htmlCode) { return $carry . ' ' . $htmlCode; }, '' );
             }
         }
         /* new add once section end */
