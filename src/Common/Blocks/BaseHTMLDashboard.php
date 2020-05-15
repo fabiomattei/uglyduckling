@@ -151,4 +151,29 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         return $globalAddToFoot;
     }
 
+    function newAddToHeadOnce(): array {
+        $addToHeadDictionary = array();
+
+        foreach ($this->rows as $row) {
+            foreach ($row as $block) {
+                $addToHeadDictionary = array_merge($addToHeadDictionary, $block->addToFootOnce());
+            }
+        }
+
+        return array_merge( parent::newAddToHeadOnce(), $addToHeadDictionary) ;
+    }
+
+    function newAddToFootOnce(): array {
+        $addToFootDictionary = array();
+
+        foreach ($this->rows as $row) {
+            foreach ($row as $block) {
+                $addToFootDictionary = array_merge($addToFootDictionary, $block->addToFootOnce());
+            }
+        }
+
+        return array_merge( parent::newAddToFootOnce(), $addToFootDictionary);
+    }
+
+
 }
