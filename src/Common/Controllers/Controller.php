@@ -372,30 +372,6 @@ class Controller {
             }
         }
 
-        /* add once section */
-        $addToHeadDictionary = array();
-        $addToFootDictionary = array();
-
-        if (isset($container)) {
-            if (gettype($container) == 'array') {
-                foreach ($container as $obj) {
-                    $addToHeadDictionary[get_class($obj)] = $obj->addToHeadOnce();
-                    $addToFootDictionary[get_class($obj)] = $obj->addToFootOnce();
-                }
-            }
-            if (gettype($container) == 'object') {
-                $addToHeadDictionary[get_class($container)] = $container->addToHeadOnce();
-                $addToFootDictionary[get_class($container)] = $container->addToFootOnce();
-            }
-        }
-        foreach ($addToHeadDictionary as $htmlBlock) {
-            $this->addToHead .= $htmlBlock;
-        }
-        foreach ($addToFootDictionary as $htmlBlock) {
-            $this->addToFoot .= $htmlBlock;
-        }
-        /* end add once section */
-
         /* new add once section */
         if (isset($container)) {
             if (gettype($container) == 'array') {

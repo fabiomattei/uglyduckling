@@ -106,51 +106,6 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         return $globalAddToFoot;
     }
 
-    /**
-     * Overwrite this method with the content you want to put in your html header
-     * It is called only once per class.
-     * It can be useful if you need to load a css or a javascript file for this block
-     * to work properly.
-     */
-    function addToHeadOnce(): string {
-        $addToHeadDictionary = array();
-        $globalAddToHead = '';
-        
-        foreach ($this->rows as $row) {
-            foreach ($row as $block) {
-                $addToHeadDictionary[get_class($block)] = $block->addToHeadOnce();
-            }
-        }
-
-        foreach ($addToHeadDictionary as $htmlBlock) {
-            $globalAddToHead .= $htmlBlock;
-        }
-
-        return $globalAddToHead;
-    }
-
-    /**
-     * Overwrite this method with the content you want to put at the very bottom of your page
-     * It can be useful if you need to load a javascript file for this block
-     * It is called only once per class.
-     */
-    function addToFootOnce(): string {
-        $addToFootDictionary = array();
-        $globalAddToFoot = '';
-        
-        foreach ($this->rows as $row) {
-            foreach ($row as $block) {
-                $addToFootDictionary[get_class($block)] = $block->addToFootOnce();
-            }
-        }
-
-        foreach ($addToFootDictionary as $htmlBlock) {
-            $globalAddToFoot .= $htmlBlock;
-        }
-        
-        return $globalAddToFoot;
-    }
-
     function newAddToHeadOnce(): array {
         $addToHeadDictionary = array();
 

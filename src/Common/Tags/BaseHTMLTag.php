@@ -67,8 +67,8 @@ class BaseHTMLTag {
      * It can be useful if you need to load a css or a javascript file for this block
      * to work properly.
      */
-    function addToHeadOnce(): string {
-        return '';
+    function newAddToHeadOnce(): array {
+        return array();
     }
 
     /**
@@ -76,8 +76,8 @@ class BaseHTMLTag {
      * It can be useful if you need to load a javascript file for this block
      * It is called only once per class.
      */
-    function addToFootOnce(): string {
-        return '';
+    function newAddToFootOnce(): array {
+        return array();
     }
 
 }
