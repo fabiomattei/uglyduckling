@@ -17,7 +17,7 @@ use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
  */
 class HTMLLinkTag extends BaseHTMLTag {
 
-    const BLOCK_TYPE = 'button';
+    const BLOCK_TYPE = 'link';
 
     /**
      * Takes a JSON resource (object or array or composite) and convert it in HTML
