@@ -38,7 +38,7 @@ class HTMLTagsFactory {
     public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): BaseHTMLTag {
         if ( key_exists($jsonStructure->type , $this->htmlTags) ) {
             $htmlTag = $this->htmlTags[$jsonStructure->type];
-            $htmlTag->setResources($jsonStructure, $pageStatus);
+            $htmlTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
             return $htmlTag;
         } else {
             return new BaseHTMLTag;
