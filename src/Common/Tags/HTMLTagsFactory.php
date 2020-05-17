@@ -9,11 +9,11 @@ use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
 
 class HTMLTagsFactory {
 
-    protected /* array */ $htmlTags;
+    protected /* array */ $htmlTags = array();
 
     function __construct() {
-        $this->htmlTags = array();
-        $this->loadDefaults();
+        $this->htmlTags[HTMLButtonTag::BLOCK_TYPE] = new HTMLButtonTag;
+        $this->htmlTags[HTMLLinkTag::BLOCK_TYPE] = new HTMLLinkTag;
     }
 
     /**
@@ -23,11 +23,6 @@ class HTMLTagsFactory {
         $this->htmlButtonTag[HTMLButtonTag::BLOCK_TYPE] = new HTMLButtonTag;
         $this->htmlLinkTag[HTMLLinkTag::BLOCK_TYPE] = new HTMLLinkTag;
     }
-
-    /**
-     * This method is ment to be everrided in order to load custom HTML tags
-     */
-    function loadCustom() {}
 
     /**
      * @param $jsonStructure
