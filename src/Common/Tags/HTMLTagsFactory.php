@@ -9,25 +9,36 @@ use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
 
 class HTMLTagsFactory {
 
+    protected /* HTMLButtonTag */ $htmlButtonTag;
+    protected /* HTMLLinkTag */ $htmlLinkTag;
+
+    /**
+     * HTMLTagsFactory constructor.
+     * @param $htmlButtonTag
+     */
+    public function __construct() {
+        $this->htmlButtonTag = new HTMLButtonTag;
+        $this->htmlLinkTag = new HTMLLinkTag;
+    }
+
+
     /**
      * @param $jsonStructure
      * @param PageStatus $pageStatus
      * @param ApplicationBuilder $applicationBuilder
      * @return BaseHTMLTag
      */
-    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): BaseHTMLTag {
+    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): string {
         if ( isset($jsonStructure->type) ) {
             if ($jsonStructure->type === HTMLButtonTag::BLOCK_TYPE) {
-                $htmlTag = new HTMLButtonTag;
-                $htmlTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
-                return $htmlTag;
+                $this->htmlButtonTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
+                return $this->htmlButtonTag->getHTML();
             }
             if ($jsonStructure->type === HTMLLinkTag::BLOCK_TYPE) {
-                $htmlTag = new HTMLLinkTag;
-                $htmlTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
-                return $htmlTag;
+                $this->htmlLinkTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
+                return $this->htmlLinkTag->getHTML();
             }
-            return new BaseHTMLTag;
+            return 'undefined tag';
         }
     }
 

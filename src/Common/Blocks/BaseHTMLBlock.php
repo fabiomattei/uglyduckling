@@ -14,8 +14,6 @@ use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
  */
 class BaseHTMLBlock {
 
-    protected /* array */ $tags = array();
-
     /**
      * @deprecated
      *
@@ -41,7 +39,7 @@ class BaseHTMLBlock {
      * to work properly.
      */
     function addToHead(): string {
-        return array_reduce( $this->tags, function ($carry, $tag) { return $carry . ' ' . $tag->addToHead(); }, '' );
+        return '';
     }
 
     /**
@@ -50,7 +48,7 @@ class BaseHTMLBlock {
      * It is called for every instance of a class.
      */
     function addToFoot(): string {
-        return array_reduce( $this->tags, function ($carry, $tag) { return $carry . ' ' . $tag->addToFoot(); }, '' );
+        return '';
     }
 
     /**
@@ -60,7 +58,7 @@ class BaseHTMLBlock {
      * to work properly.
      */
     function newAddToHeadOnce(): array {
-        return array_reduce( $this->tags, function ($carry, $tag) { return array_merge($carry, $tag->newAddToHeadOnce()); }, [] );
+        return array();
     }
 
     /**
@@ -69,7 +67,7 @@ class BaseHTMLBlock {
      * It is called only once per class.
      */
     function newAddToFootOnce(): array {
-        return array_reduce( $this->tags, function ($carry, $tag) { return array_merge($carry, $tag->newAddToFootOnce() ); }, [] );
+        return array();
     }
 
     /**
@@ -86,15 +84,6 @@ class BaseHTMLBlock {
      */
     function subAddToFoot(): string {
         return '';
-    }
-
-    /**
-     * Add an HTML Tag to this block
-     *
-     * @param BaseHTMLTag $tag
-     */
-    function addHTMLTag( BaseHTMLTag $tag) {
-        $this->tags[] = $tag;
     }
 
 }

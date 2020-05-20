@@ -40,7 +40,7 @@ class ApplicationBuilder {
      * @param ApplicationBuilder $applicationBuilder
      * @return BaseHTMLTag
      */
-    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): BaseHTMLTag {
+    public function getHTMLTag( $jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ): string {
         return $this->htmlTagsFactory->getHTMLTag( $jsonStructure, $pageStatus, $applicationBuilder );
     }
 
