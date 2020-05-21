@@ -105,14 +105,33 @@ class PageStatus {
         if ( isset($field->constantparameter) ) {
             return $field->constantparameter;
         }
+        if ( isset($field->parameter) ) {
+            return $this->parameters[$field->parameter] ?? $this->checkForDefaultValues($field);
+        }
         if ( isset($field->getparameter) ) {
-            return $this->parameters[$field->getparameter] ?? '';
+            return $this->parameters[$field->getparameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->postparameter) ) {
-            return $this->postparameters[$field->postparameter] ?? '';
+            return $this->postparameters[$field->postparameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->sessionparameter) ) {
-            return $this->sessionparameters[$field->sessionparameter] ?? '';
+            return $this->sessionparameters[$field->sessionparameter] ?? $this->checkForDefaultValues($field);
+        }
+    }
+    
+    function checkForDefaultValues( $field ): string {
+        if ( isset($field->default) ) return $field->default;
+        if ( isset($field->defaultfunction) ) return callDefaulFunction($field->defaultfunction);
+    }
+    
+    /**
+     * @Override this function in order to have more default functions
+     */
+    function callDefaulFunction($defaultfunction): string {
+        switch ($defaultfunction) {
+            case 'getcurrentyear': return date("Y");
+            case 'getcurrentmonth': return date("m");
+            default: return '';
         }
     }
 
