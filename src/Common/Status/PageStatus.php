@@ -131,6 +131,7 @@ class PageStatus {
         switch ($defaultfunction) {
             case 'getcurrentyear': return date("Y");
             case 'getcurrentmonth': return date("m");
+            case 'getcurrentriskcenter' : return $this->sessionparameters['siteid'];
             default: return '';
         }
     }
