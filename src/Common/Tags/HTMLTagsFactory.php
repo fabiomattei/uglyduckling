@@ -38,8 +38,8 @@ class HTMLTagsFactory {
                 $this->htmlLinkTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
                 return $this->htmlLinkTag->getHTML();
             }
-            return 'undefined tag';
         }
+        return 'undefined tag';
     }
 
 }
