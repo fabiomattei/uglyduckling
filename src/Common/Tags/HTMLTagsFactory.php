@@ -20,8 +20,7 @@ class HTMLTagsFactory {
         $this->htmlButtonTag = new HTMLButtonTag;
         $this->htmlLinkTag = new HTMLLinkTag;
     }
-
-
+    
     /**
      * @param $jsonStructure
      * @param PageStatus $pageStatus
