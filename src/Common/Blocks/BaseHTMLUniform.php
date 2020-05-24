@@ -61,7 +61,8 @@ class BaseHTMLUniform extends BaseHTMLBlock {
      * it return the HTML code for the web page built on data structure
      */
     function getHTML(): string {
-        return $this->htmlTemplateLoader->loadTemplate( $this->bodyFile );
+        if ( $this->bodyFile != '' ) return $this->htmlTemplateLoader->loadTemplate( $this->bodyFile );
+        else return '';
     }
 
     /**
@@ -78,7 +79,8 @@ class BaseHTMLUniform extends BaseHTMLBlock {
      * in the data structure
      */
     function addToHead(): string {
-        return $this->htmlTemplateLoader->loadTemplate( $this->addToHeadFile );
+        if ( $this->addToHeadFile != '' ) return $this->htmlTemplateLoader->loadTemplate( $this->addToHeadFile );
+        else return '';
     }
 
     /** 
@@ -86,15 +88,18 @@ class BaseHTMLUniform extends BaseHTMLBlock {
      * in the data structure
      */
     function addToFoot(): string {
-        return $this->htmlTemplateLoader->loadTemplate( $this->addToFootFile );
+        if ( $this->addToFootFile != '' ) return $this->htmlTemplateLoader->loadTemplate( $this->addToFootFile );
+        else return '';
     }
 
     function newAddToHeadOnce(): array {
-        return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToHeadOnceFile ) );
+        if ( $this->addToHeadOnceFile != '' ) return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToHeadOnceFile ) );
+        else return array();
     }
 
     function newAddToFootOnce(): array {
-        return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToFootOnceFile ) );
+        if ( $this->addToFootOnceFile != '' ) return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToFootOnceFile ) );
+        else return array();
     }
 
 }
