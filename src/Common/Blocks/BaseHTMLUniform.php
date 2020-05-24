@@ -90,11 +90,11 @@ class BaseHTMLUniform extends BaseHTMLBlock {
     }
 
     function newAddToHeadOnce(): array {
-        return array( $this->resourceName, return $this->htmlTemplateLoader->loadTemplate( $this->addToHeadOnceFile ) );
+        return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToHeadOnceFile ) );
     }
 
     function newAddToFootOnce(): array {
-        return array( $this->resourceName, return $this->htmlTemplateLoader->loadTemplate( $this->addToFootOnceFile ) );
+        return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToFootOnceFile ) );
     }
 
 }

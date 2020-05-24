@@ -16,6 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Uniform\UniformJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\Router;
 
 class JsonDefaultTemplateFactory extends JsonTemplate {
@@ -27,6 +28,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     private /* SearchJsonTemplate */ $searchJsonTemplate;
     private /* ExportJsonTemplate */ $exportJsonTemplate;
     private /* DashboardJsonTemplate */ $dashboardJsonTemplate;
+    private /* UniformJsonTemplate */ $uniformJsonTemplate;
 
     /**
      * PanelBuilder constructor.
@@ -47,12 +49,15 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $this->exportJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
         $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
+        $this->uniformJsonTemplate = new UniformJsonTemplate;
+        $this->uniformJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->action = '';
     }
 
     public function isResourceSupported( $resource ) {
         return in_array($resource->metadata->type, array(
-            DashboardJsonTemplate::blocktype, 
+            DashboardJsonTemplate::blocktype,
+            UniformJsonTemplate::blocktype,
             TableJsonTemplate::blocktype,
             ChartjsJsonTemplate::blocktype,
             InfoJsonTemplate::blocktype,
@@ -74,6 +79,11 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         if ( $resource->metadata->type == DashboardJsonTemplate::blocktype ) {
             $this->dashboardJsonTemplate->setResource($resource);
             return $this->dashboardJsonTemplate->createHTMLBlock();
+        }
+
+        if ( $resource->metadata->type == UniformJsonTemplate::blocktype ) {
+            $this->uniformJsonTemplate->setResource($resource);
+            return $this->uniformJsonTemplate->createHTMLBlock();
         }
 
         if ( $resource->metadata->type == TableJsonTemplate::blocktype ) {

@@ -26,11 +26,11 @@ class UniformJsonTemplate extends JsonTemplate {
         $uniformBlock = new BaseHTMLUniform;
         $uniformBlock->setHtmlTemplateLoader($htmlTemplateLoader);
         $uniformBlock->setResourceName( $this->resource->name );
-        $uniformBlock->setBodyFile( $this->resource->get->uniform->bodyfile )
-        $uniformBlock->setAddToHeadFile( $this->resource->get->uniform->headfile )
-        $uniformBlock->setAddToFootFile( $this->resource->get->uniform->footfile )
-        $uniformBlock->setAddToHeadOnceFile( $this->resource->get->uniform->headoncefile )
-        $uniformBlock->setAddToFootOnceFile( $this->resource->get->uniform->footoncefile ) 
+        $uniformBlock->setBodyFile( $this->resource->get->uniform->bodyfile );
+        $uniformBlock->setAddToHeadFile( $this->resource->get->uniform->headfile );
+        $uniformBlock->setAddToFootFile( $this->resource->get->uniform->footfile );
+        $uniformBlock->setAddToHeadOnceFile( $this->resource->get->uniform->headoncefile );
+        $uniformBlock->setAddToFootOnceFile( $this->resource->get->uniform->footoncefile );
 
         return $uniformBlock;
     }
