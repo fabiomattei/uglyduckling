@@ -33,6 +33,9 @@ class JsonDashboardController extends JsonResourceBasicController {
     public function getRequest() {
         $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
 
+        // if resource->get->sessionupdates is set I need to update the session
+        if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setApplicationBuilder($this->applicationBuilder);
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setPageStatus($this->pageStatus);
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setParameters($this->getParameters);

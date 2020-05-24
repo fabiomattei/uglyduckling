@@ -55,6 +55,7 @@ $pageStatus->setSessionWrapper($sessionWrapper);
 $pageStatus->setGetParameters( $_GET );
 $pageStatus->setPostParameters( $_POST );
 $pageStatus->setFilesParameters( $_FILES );
+$pageStatus->setDbconnection( $dbconnection );
 
 $applicationBuilder = new Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 $applicationBuilder->setRouterContainer($routerContainer);

@@ -2,7 +2,10 @@
 
 namespace Fabiom\UglyDuckling\Common\Status;
 
+use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Database\QuerySet;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Request\Request;
 use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
@@ -16,6 +19,7 @@ class PageStatus {
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
     public $lastEntity; // result of last query in database, it is a stdClass
+    public /* DBConnection */ $dbconnection;
 
     /**
      * PageStatus constructor.
@@ -33,6 +37,13 @@ class PageStatus {
 
     function setSessionWrapper($sessionWrapper) {
         $this->sessionWrapper = $sessionWrapper;
+    }
+
+    /**
+     * @param DBConnection $dbconnection
+     */
+    public function setDbconnection(DBConnection $dbconnection): void {
+        $this->dbconnection = $dbconnection;
     }
 
     /**
@@ -84,8 +95,6 @@ class PageStatus {
         return $this->sessionWrapper;
     }
 
-
-
     // TODO it is going to handle query results too
 
     /**
@@ -116,6 +125,76 @@ class PageStatus {
         }
         if ( isset($field->sessionparameter) ) {
             return $this->sessionparameters[$field->sessionparameter] ?? $this->checkForDefaultValues($field);
+        }
+    }
+
+    /**
+     * @param $sessionupdates
+     *
+       "sessionupdates": {
+         "queryset": [
+           {
+             "label": "query1",
+             "sql": "SELECT usr_siteid, usr_usrofid, usr_depid FROM user where usr_id = :usrid ;",
+             "parameters":[
+               { "type":"long", "placeholder": ":usrid", "sessionparameter": "user_id" }
+             ]
+           }
+         ],
+         "sessionvars": [
+             { "name":"user_id", "system":"ud" },
+             { "name":"username", "system":"ud" },
+             { "name":"group", "system":"ud" },
+             { "name":"logged_in", "system":"ud" },
+             { "name":"ip", "system":"ud" },
+             { "name":"last_login", "system":"ud" },
+             { "name":"siteid", "sqlfield":"usr_siteid", "querylabel":"query1" },
+             { "name":"tryaconstantparameter", "constantparamenter":"4" }
+           ]
+         }
+     */
+    public function updateSession( $sessionupdates ) {
+        $querySet = new QuerySet;
+
+        if (isset($sessionupdates->queryset) AND is_array($sessionupdates->queryset)) {
+            $queryBuilder = new QueryBuilder;
+            $queryExecuter = new QueryExecuter;
+
+            $queryExecuter->setDBH($this->dbconnection);
+            $queryExecuter->setQueryBuilder($queryBuilder);
+            $queryExecuter->setParameters(array());
+            $queryExecuter->setPostParameters(array());
+            $queryExecuter->setSessionWrapper($this->getSessionWrapper());
+
+            foreach ($sessionupdates->queryset as $query) {
+                $queryExecuter->setQueryStructure($query);
+                $result = $queryExecuter->executeSql();
+                $entity = $result->fetch();
+                if (isset($query->label)) {
+                    $querySet->setResult($query->label, $entity);
+                } else {
+                    $querySet->setResultNoKey($entity);
+                }
+            }
+        }
+
+        if ( isset($sessionupdates->sessionvars) AND is_array($sessionupdates->sessionvars) ) {
+            foreach ($sessionupdates->sessionvars as $sessionvar) {
+                if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
+                    if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
+                        $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
+                    }
+                }
+                if ( isset( $sessionvar->constantparamenter ) ) {
+                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
+                }
+                if ( isset( $sessionvar->getparamenter ) ) {
+                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparamenter]);
+                }
+                if ( isset( $sessionvar->postparamenter ) ) {
+                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparamenter]);
+                }
+            }
         }
     }
     
