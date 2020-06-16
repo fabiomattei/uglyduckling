@@ -13,7 +13,7 @@ class DBConnection {
 
     public /* PDO */ $DBH;
     private /* Logger */ $logger;
-	private /* string */ $pemFileName
+	private /* string */ $pemFileName;
 	private /* string */ $host;
 	private /* string */ $dbname;
 	private /* string */ $username;
