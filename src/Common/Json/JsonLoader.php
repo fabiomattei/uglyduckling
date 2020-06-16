@@ -48,8 +48,10 @@ class JsonLoader {
 					$this->resourcesIndex[$key->name]->name = $key->name;
 				}
 			}
+		} else {
+			//throw new \Exception('[JsonLoader] :: Impossible to find index file ' . $indexPath);
+			// var_dump( $this->resourcesIndex );
 		}
-		// var_dump( $this->resourcesIndex );	
 	}
 
     /**

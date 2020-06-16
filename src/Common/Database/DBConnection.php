@@ -13,6 +13,11 @@ class DBConnection {
 
     public /* PDO */ $DBH;
     private /* Logger */ $logger;
+	private /* string */ $pemFileName
+	private /* string */ $host;
+	private /* string */ $dbname;
+	private /* string */ $username;
+	private /* string */ $password;
 
     /**
      * Setting up the database connection
@@ -29,14 +34,26 @@ class DBConnection {
 		$this->password = $password;
     }
 	
+	function setSSLFile( string $pemFileName ) {
+		$this->pemFileName = $pemFileName;
+	}
+	
     /**
      * Database connection handler getter
      * I can use the already made connection for next database call
      */
     public function getDBH() {
         try {
-            $this->DBH = new PDO($this->host . $this->dbname, $this->username, $this->password);
-            $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			if ( isset( $this->pemFileName ) AND $this->pemFileName != '' ) {
+				$options = array(
+					PDO::MYSQL_ATTR_SSL_CA => $this->pemFileName
+				);
+				$this->DBH = new PDO($this->host . $this->dbname, $this->username, $this->password, $options);
+			} else {
+				$this->DBH = new PDO($this->host . $this->dbname, $this->username, $this->password);
+			}            
+			
+			$this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return $this->DBH;
         } catch (PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
