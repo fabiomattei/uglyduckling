@@ -60,7 +60,6 @@ class Router extends RouterBase {
     const ROUTE_OFFICE_ENTITY_NO_TEMPLATE   = 'officeentitynotemplate';
     const ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX = 'documentacceptedbox';
     const ROUTE_OFFICE_DOCUMENT_REJECTEDBOX = 'documentrejectedbox';
-	const ROUTE_COMMUNITY_LOGIN             = 'communitylogin';
 	const ROUTE_ADMIN_DASHBOARD             = 'admindashboard';
 	const ROUTE_ADMIN_METRICS_DASHBOARD     = 'adminmetricsdashboard';
 	const ROUTE_ADMIN_ENTITY_LIST           = 'adminentitylist';
@@ -108,7 +107,6 @@ class Router extends RouterBase {
             self::ROUTE_OFFICE_ENTITY_LOGIC,
             self::ROUTE_OFFICE_ENTITY_DASHBOARD,
             self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE,
-            self::ROUTE_COMMUNITY_LOGIN,
             self::ROUTE_ADMIN_DASHBOARD,
             self::ROUTE_ADMIN_METRICS_DASHBOARD,
             self::ROUTE_ADMIN_ENTITY_LIST,
