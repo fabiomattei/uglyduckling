@@ -8,8 +8,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Router;
 
-use Fabiom\UglyDuckling\Controllers\Community\Login;
-
 /**
  * Class RoutersContainer
  * @package Fabiom\UglyDuckling\Common\Router
@@ -49,6 +47,14 @@ class RoutersContainer {
     }
 	
 	/**
+	 * Set the default controller when no controller has been requested by the user
+	 * it usually happens when user is at his first connection to the application
+	 */
+	public function setDefaultController( $controller ) {
+		$this->defaultController = $controller;
+	}
+	
+	/**
 	 * Sarch all contained routers in order to get the right contronller
 	 */
 	function getController( string $action ) {
@@ -56,7 +62,7 @@ class RoutersContainer {
             if ( $router->isActionSupported( $action ) ) return $router->getController( $action );
         }
 
-        return new Login; // this is the defacto custom router
+        return $this->defaultController;
 	}
 	
     /**
