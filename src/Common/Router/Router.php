@@ -17,7 +17,6 @@ use Fabiom\UglyDuckling\Controllers\JsonResource\JsonSearchController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonExportController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonTransactionController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonNoHtmlTemplateController;
-use Fabiom\UglyDuckling\Controllers\Community\Login;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminDashboard;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminMetricsDashboard;
 use Fabiom\UglyDuckling\Controllers\Admin\Entity\EntityList;
@@ -153,7 +152,6 @@ class Router extends RouterBase {
 			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new JsonTransactionController; break;
             case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new JsonDashboardController; break;
             case self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE:   $controller = new JsonNoHtmlTemplateController; break;
-			case self::ROUTE_COMMUNITY_LOGIN:             $controller = new Login; break;
 			case self::ROUTE_ADMIN_DASHBOARD:             $controller = new AdminDashboard; break;
 			case self::ROUTE_ADMIN_METRICS_DASHBOARD:     $controller = new AdminMetricsDashboard; break;
 			case self::ROUTE_ADMIN_ENTITY_LIST:           $controller = new EntityList; break;
