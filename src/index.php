@@ -70,7 +70,7 @@ $applicationBuilder->setHtmlTemplateLoader($htmlTemplateLoader);
 $applicationBuilder->setHtmlTagsFactory($htmlTagsFactory);
 $applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
 $applicationBuilder->setLinkBuilder($linkBuilder);
-$applicationBuilder->setMailer(new Fabiom\UglyDuckling\Common\Mailer\BaseMailer);
+$applicationBuilder->setMailer(new Fabiom\UglyDuckling\Common\Mailer\BaseMailer('', ''));
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
