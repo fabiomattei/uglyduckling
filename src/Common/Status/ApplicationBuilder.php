@@ -31,6 +31,7 @@ class ApplicationBuilder {
     public /* HTMLTagsFactory */ $htmlTagsFactory;
     public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
     public /* LinkBuilder */ $linkBuilder;
+	public /* BaseMailer */ $mailer;
 
     /**
      * Gets the appropriate HTML tag from the tag factory
@@ -229,6 +230,20 @@ class ApplicationBuilder {
      */
     public function setLinkBuilder(LinkBuilder $linkBuilder): void {
         $this->linkBuilder = $linkBuilder;
+    }
+	
+    /**
+     * @return Mailer
+     */
+    public function getMailer() {
+        return $this->mailer;
+    }
+
+    /**
+     * @param Mailer $mailer
+     */
+    public function setMailer($mailer) {
+        $this->mailer = $mailer;
     }
 
 }

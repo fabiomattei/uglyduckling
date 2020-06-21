@@ -64,12 +64,13 @@ $applicationBuilder->setSecurityChecker(new Fabiom\UglyDuckling\Common\SecurityC
 $applicationBuilder->setDbconnection($dbconnection);
 $applicationBuilder->setRedirector(new Fabiom\UglyDuckling\Common\Redirectors\URLRedirector());
 $applicationBuilder->setJsonloader($jsonloader);
-$applicationBuilder->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
+$applicationBuilder->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger);
 $applicationBuilder->setMessages($messagesBlock);
 $applicationBuilder->setHtmlTemplateLoader($htmlTemplateLoader);
 $applicationBuilder->setHtmlTagsFactory($htmlTagsFactory);
 $applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
 $applicationBuilder->setLinkBuilder($linkBuilder);
+$applicationBuilder->setMailer(new Fabiom\UglyDuckling\Common\Mailer\BaseMailer);
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
