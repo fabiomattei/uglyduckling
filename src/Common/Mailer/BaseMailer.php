@@ -24,8 +24,8 @@ class BaseMailer {
 		$this->password = $password;
 	}
 
-	function send( string $dest_email, string $from_email, string $object, string $message ) { 
-		mail($dest_email, $object, $message, 'From: '.$from_email); 
+	function send( string $dest_email, string $from_email, string $subject, string $message ) { 
+		mail($dest_email, $subject, $message, 'From: '.$from_email); 
 	}
 
 }
