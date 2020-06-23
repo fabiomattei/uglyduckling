@@ -75,7 +75,7 @@ class AdminGroupAddUser extends Controller {
     public function show_post_error_page() {
         $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
 
-        $this->messages->setError($this->readableErrors);
+        $this->applicationBuilder->getMessages()->setError($this->readableErrors);
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Add user to a group';
 

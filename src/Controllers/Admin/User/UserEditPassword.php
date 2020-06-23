@@ -49,7 +49,7 @@ class UserEditPassword extends Controller {
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
+        //$form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
         $form->addHiddenField(UserEditPassword::FIELD_USR_ID, $user->usr_id);
@@ -64,13 +64,13 @@ class UserEditPassword extends Controller {
 
     public $post_validation_rules = array(
         UserEditPassword::FIELD_USR_ID => 'required|numeric',
-        UserEditPassword::FIELD_OLD_PASSWORD => 'required|max_len,100|min_len,6',
+        //UserEditPassword::FIELD_OLD_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_NEW_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'required|max_len,100|min_len,6',
     );
     public $post_filter_rules     = array(
         UserEditPassword::FIELD_USR_ID => 'trim',
-        UserEditPassword::FIELD_OLD_PASSWORD => 'trim',
+        //UserEditPassword::FIELD_OLD_PASSWORD => 'trim',
         UserEditPassword::FIELD_NEW_PASSWORD => 'trim',
         UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'trim'
     );
@@ -83,7 +83,7 @@ class UserEditPassword extends Controller {
 
         $user = $this->userDao->getById( $this->postParameters[UserEditPassword::FIELD_USR_ID] );
 
-        if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->postParameters[UserEditPassword::FIELD_OLD_PASSWORD] ) ) {
+        /* if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->postParameters[UserEditPassword::FIELD_OLD_PASSWORD] ) ) { */
             if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
                 $this->userDao->updatePassword( $this->postParameters[UserEditPassword::FIELD_USR_ID], $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
                 $this->setSuccess("Password successfully updated");
@@ -92,24 +92,24 @@ class UserEditPassword extends Controller {
                 $this->setError("The two new password do not match");
                 $this->redirectToPreviousPage();
             }
-        } else {
+        /* } else {
             $this->setError("The old password does not match");
             $this->redirectToPreviousPage();
-        }
+        } */
     }
 
     public function show_post_error_page() {
         $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
-        $this->messages->setError($this->readableErrors);
+        $this->applicationBuilder->getMessages()->setError($this->readableErrors);
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit password';
 
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
+        //$form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
         $form->addHiddenField(UserEditPassword::FIELD_USR_ID, $user->usr_id);

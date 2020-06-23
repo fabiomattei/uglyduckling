@@ -101,7 +101,7 @@ class UserEdit extends Controller {
 
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
-        $this->messages->setError($this->readableErrors);
+        $this->applicationBuilder->getMessages()->setError($this->readableErrors);
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User view';
 
