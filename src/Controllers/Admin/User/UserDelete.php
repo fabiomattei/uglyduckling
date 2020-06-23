@@ -35,8 +35,8 @@ class UserDelete extends Controller {
      * $this->getParameters['id'] resource key index
      */
     public function getRequest() {
-        $this->userDao->setDBH( $this->dbconnection->getDBH() );
-        $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
+        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userGroupDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
 
         $this->userGroupDao->deleteByFields( array( 'ug_userid' => $this->getParameters['usrid'] ) );
         $this->userDao->delete( $this->getParameters['usrid'] );

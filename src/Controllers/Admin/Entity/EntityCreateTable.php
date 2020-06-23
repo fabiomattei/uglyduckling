@@ -37,7 +37,7 @@ class EntityCreateTable extends Controller {
      * $this->getParameters['res'] resource key index
      */
 	public function getRequest() {
-		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
+		$this->queryExecuter->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
 		$this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
 		
 		$this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin entity create';

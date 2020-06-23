@@ -29,7 +29,7 @@ class AdminGroupRemoveUser extends Controller {
      * $this->getParameters['id'] resource key index
      */
     public function getRequest() {
-        $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
+        $this->userGroupDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
 
         $this->userGroupDao->deleteByFields( array( 'ug_userid' => $this->getParameters['usrid'], 'ug_groupslug' => $this->getParameters['res'] ) );
 
