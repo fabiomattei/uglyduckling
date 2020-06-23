@@ -17,7 +17,7 @@ namespace Fabiom\UglyDuckling\Common\Mailer;
 class EchoMailer {
 
 	function send( string $dest_email, string $from_email, string $subject, string $message ) { 
-		echo('Destination: ' . $dest_email . ' From: '. $from_email . ' Subject: ' . $subject . ' Message: ' . $messages ); 
+		echo('Destination: ' . $dest_email . ' From: '. $from_email . ' Subject: ' . $subject . ' Message: ' . $message ); 
 	}
 
 }

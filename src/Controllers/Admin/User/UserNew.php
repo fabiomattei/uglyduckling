@@ -35,7 +35,7 @@ class UserNew extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
@@ -47,10 +47,10 @@ class UserNew extends Controller {
     public function getRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'New user: ' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addTextField('usr_name', 'Name: ', 'Name', '', '6' );
@@ -58,17 +58,17 @@ class UserNew extends Controller {
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
         $grouparray = array();
-        foreach ( $this->jsonloader->getResourcesByType( 'group' ) as $res ) {
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'group' ) as $res ) {
             $grouparray[$res->name] = $res->name;
         }
         $form->addDropdownField('usr_defaultgroup', 'Default Group: ', $grouparray, '', '6' );
         $form->addSubmitButton('save', 'Save');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
     public $post_validation_rules = array(
@@ -125,10 +125,10 @@ class UserNew extends Controller {
 
         $this->messages->setError($this->readableErrors);
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'New user: ' );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addTextField('usr_name', 'Name: ', 'Name', '', '6' );
@@ -136,14 +136,14 @@ class UserNew extends Controller {
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );
         $grouparray = array();
-        foreach ( $this->jsonloader->getResourcesByType( 'group' ) as $res ) {
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'group' ) as $res ) {
             $grouparray[$res->name] = $res->name;
         }
         $form->addDropdownField('usr_defaultgroup', 'Default Group: ', $grouparray, '', '6' );
         $form->addSubmitButton('save', 'Save');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
     }
 

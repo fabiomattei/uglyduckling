@@ -44,10 +44,10 @@ class UserEditPassword extends Controller {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit password';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit password';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
@@ -55,11 +55,11 @@ class UserEditPassword extends Controller {
         $form->addHiddenField(UserEditPassword::FIELD_USR_ID, $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
     public $post_validation_rules = array(
@@ -104,10 +104,10 @@ class UserEditPassword extends Controller {
 
         $this->messages->setError($this->readableErrors);
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit password';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit password';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
@@ -115,8 +115,8 @@ class UserEditPassword extends Controller {
         $form->addHiddenField(UserEditPassword::FIELD_USR_ID, $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
     }
 

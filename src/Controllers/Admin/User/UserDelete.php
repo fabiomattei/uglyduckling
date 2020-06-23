@@ -43,7 +43,7 @@ class UserDelete extends Controller {
 
         $this->redirectToPreviousPage();
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }

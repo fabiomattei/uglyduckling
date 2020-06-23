@@ -19,17 +19,17 @@ class AdminDashboard extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
 	public function getRequest() {
-		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Admin dashboard';
-		$this->menucontainer          = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD ) );
-		$this->leftcontainer          = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->routerContainer ) );
+		$this->title                  = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin dashboard';
+		$this->menucontainer          = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD ) );
+		$this->leftcontainer          = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->routerContainer ) );
 
         $resourceGeneralChecks = new StaticTable;
-        $resourceGeneralChecks->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $resourceGeneralChecks->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $resourceGeneralChecks->setTitle('General checks');
         $resourceGeneralChecks->addTHead();
         $resourceGeneralChecks->addRow();
@@ -38,8 +38,8 @@ class AdminDashboard extends Controller {
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->jsonloader->loadResource( $reskey );
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
             $checker = BasicJsonChecker::basicJsonCheckerFactory($tmpres);
             $resourceGeneralChecks->addRow();
             $resourceGeneralChecks->addColumn( $tmpres->name );
@@ -49,7 +49,7 @@ class AdminDashboard extends Controller {
         $resourceGeneralChecks->closeTBody();
 
         $resourcesTable = new StaticTable;
-        $resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $resourcesTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $resourcesTable->setTitle('Actions');
         $resourcesTable->addTHead();
         $resourcesTable->addRow();
@@ -58,15 +58,15 @@ class AdminDashboard extends Controller {
         $resourcesTable->closeRow();
         $resourcesTable->closeTHead();
         $resourcesTable->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $restocheck => $restocheckvalue ) {
-            $tmprestocheck = $this->jsonloader->loadResource( $restocheck );
-            foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-                $tmpres = $this->jsonloader->loadResource( $reskey );
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $restocheck => $restocheckvalue ) {
+            $tmprestocheck = $this->applicationBuilder->getJsonloader()->loadResource( $restocheck );
+            foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
+                $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
                 $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
                 if ($checker->isActionPresent($tmprestocheck->name)) {
                     $resourcesTable->addRow();
                     $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
-                    $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $tmprestocheck, $this->jsonloader );
+                    $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $tmprestocheck, $this->applicationBuilder->getJsonloader() );
                     $resourcesTable->addUnfilteredColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString());
                     $resourcesTable->closeRow();
                 }
@@ -77,7 +77,7 @@ class AdminDashboard extends Controller {
 		$this->centralcontainer       = array( $resourceGeneralChecks, $resourcesTable );
 		$this->secondcentralcontainer = array();
 
-		$this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+		$this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
 	}
 
 }

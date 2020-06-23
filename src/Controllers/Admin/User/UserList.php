@@ -32,10 +32,10 @@ class UserList extends Controller {
      * @throws GeneralException
      */
     public function getRequest() {
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Users list';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Users list';
 
         $table = new StaticTable;
-        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $table->setTitle('Users list');
         $table->addButton( 'New user', $this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_NEW ) );
 
@@ -65,11 +65,11 @@ class UserList extends Controller {
         }
         $table->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $table );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }

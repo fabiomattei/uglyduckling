@@ -39,10 +39,10 @@ class UserView extends Controller {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User view';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User view';
 
         $info = new BaseHTMLInfo;
-        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $info->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $info->addUnfilteredParagraph(
             Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
@@ -57,11 +57,11 @@ class UserView extends Controller {
         $info->addDateField('User created: ', $user->usr_updated , '6' );
         $info->addDateField('User updated: ', $user->usr_created, '6' );
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $info );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }

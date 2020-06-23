@@ -29,7 +29,7 @@ class AdminGroupDoc extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
@@ -40,12 +40,12 @@ class AdminGroupDoc extends Controller {
      */
     public function getRequest() {
         $this->userGroupDao->setDBH( $this->dbconnection->getDBH() );
-        $this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+        $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin group doc';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin group doc';
 
         $info = new BaseHTMLInfo;
-        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $info->setTitle( 'Group name: '.$this->resource->name );
 
         $doctext = '';
@@ -54,17 +54,17 @@ class AdminGroupDoc extends Controller {
             if (isset($menuitem->submenu)) {
                 foreach ($menuitem->submenu as $item) {
 
-                    $tmpres = $this->jsonloader->loadResource( $item->resource );
+                    $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $item->resource );
 
-                    $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonloader );
+                    $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->applicationBuilder->getJsonloader() );
                     $doctext .= '\subsection{' . $item->label . '}<br /> ' . $docBuilder->getDocText();
                 }
 
             } else {
 
-                $tmpres = $this->jsonloader->loadResource( $menuitem->resource );
+                $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $menuitem->resource );
 
-                $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->jsonloader );
+                $docBuilder = BasicDocBuilder::basicJsonDocBuilderFactory( $tmpres, $this->applicationBuilder->getJsonloader() );
                 $doctext .= '\subsection{' . $menuitem->label . '}<br /> ' . $docBuilder->getDocText();
 
             }
@@ -72,13 +72,13 @@ class AdminGroupDoc extends Controller {
 
         $info->addUnfilteredParagraph($doctext, 12);
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array();
         $this->thirdcentralcontainer = array();
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }

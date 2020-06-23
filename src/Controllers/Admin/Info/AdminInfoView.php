@@ -24,7 +24,7 @@ class AdminInfoView extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
@@ -34,18 +34,18 @@ class AdminInfoView extends Controller {
      * $this->getParameters['res'] resource key index
      */
     public function getRequest() {
-        $this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+        $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin info view';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin info view';
 
         $info = new BaseHTMLInfo;
-        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $info->setTitle( 'Info name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('SQL Query: '.$this->resource->get->query->sql, '6');
 
         $parametersTable = new StaticTable;
-        $parametersTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $parametersTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $parametersTable->setTitle("GET Parameters");
         $parametersTable->addTHead();
         $parametersTable->addRow();
@@ -65,7 +65,7 @@ class AdminInfoView extends Controller {
         $parametersTable->closeTBody();
 
         $fieldsTable = new StaticTable;
-        $fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $fieldsTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $fieldsTable->setTitle("Fields");
         $fieldsTable->addTHead();
         $fieldsTable->addRow();
@@ -92,13 +92,13 @@ class AdminInfoView extends Controller {
         }
         $fieldsTable->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_FORM_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $parametersTable );
         $this->thirdcentralcontainer = array( $fieldsTable );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }

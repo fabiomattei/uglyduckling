@@ -30,20 +30,20 @@ class AdminGroupAddUser extends Controller {
     public function getRequest() {
         $this->userDao->setDBH( $this->dbconnection->getDBH() );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Add user to a group';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Add user to a group';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'Add user to group: ' . $this->getParameters['groupslug'] );
         $form->addDropdownField('usr_id', 'User:', $this->userDao->makeListForDropdown(), '', '6' );
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );
         $form->addSubmitButton('save', 'Add');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
     public $post_validation_rules = array(
@@ -77,17 +77,17 @@ class AdminGroupAddUser extends Controller {
 
         $this->messages->setError($this->readableErrors);
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Add user to a group';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Add user to a group';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'Add user to a group');
         $form->addDropdownField('usr_id', 'Users:', $this->userDao->makeListForDropdown(), '', '6' );
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );
         $form->addSubmitButton('save', 'Add');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
     }
 }

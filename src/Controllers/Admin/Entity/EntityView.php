@@ -29,7 +29,7 @@ class EntityView extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-		$this->jsonloader->loadIndex();
+		$this->applicationBuilder->getJsonloader()->loadIndex();
 		parent::showPage(); 
     }
 	
@@ -40,12 +40,12 @@ class EntityView extends Controller {
      */
 	public function getRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+		$this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
+		$this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin entity view';
 		
 		$info = new BaseHTMLInfo;
-        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Database table name: '.$this->resource->entity->tablename, '' );
 
@@ -57,7 +57,7 @@ class EntityView extends Controller {
 		), '' );
 
         $resourcesTable = new StaticTable;
-        $resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $resourcesTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $resourcesTable->setTitle("Called from resources");
         $resourcesTable->addTHead();
         $resourcesTable->addRow();
@@ -67,8 +67,8 @@ class EntityView extends Controller {
         $resourcesTable->closeRow();
         $resourcesTable->closeTHead();
         $resourcesTable->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->jsonloader->loadResource( $reskey );
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
             if ( isset($tmpres->get->query) AND strpos($tmpres->get->query->sql, $this->resource->entity->tablename) !== false )
             {
                 $resourcesTable->addRow();
@@ -112,11 +112,11 @@ class EntityView extends Controller {
         }
         $resourcesTable->closeTBody();
 		
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
+		$this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
 		$this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $resourcesTable );
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
 	}
 
 }

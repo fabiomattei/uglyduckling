@@ -43,10 +43,10 @@ class UserEdit extends Controller {
 
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User edit';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
@@ -55,11 +55,11 @@ class UserEdit extends Controller {
         $form->addHiddenField('usr_id', $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
     public $post_validation_rules = array(
@@ -103,10 +103,10 @@ class UserEdit extends Controller {
 
         $this->messages->setError($this->readableErrors);
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: User view';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User view';
 
         $form = new BaseHTMLForm;
-        $form->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
@@ -115,8 +115,8 @@ class UserEdit extends Controller {
         $form->addHiddenField('usr_id', $user->usr_id);
         $form->addSubmitButton('save', 'Save');
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $form );
     }
 

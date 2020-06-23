@@ -28,7 +28,7 @@ class AdminTableView extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
@@ -38,18 +38,18 @@ class AdminTableView extends Controller {
      * $this->getParameters['res'] resource key index
      */
     public function getRequest() {
-        $this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+        $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
 
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity view';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin entity view';
 
         $info = new BaseHTMLInfo;
-		$info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		$info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $info->setTitle( 'Table name: '.$this->resource->name );
         $info->addParagraph('Allowed groups: '.implode(', ',$this->resource->allowedgroups), '6');
         $info->addParagraph('SQL Query: '.$this->resource->get->query->sql, '6');
 
         $fieldsTable = new StaticTable;
-		$fieldsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		$fieldsTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 		
         $fieldsTable->setTitle("Fields");
         $fieldsTable->addTHead();
@@ -68,7 +68,7 @@ class AdminTableView extends Controller {
         $fieldsTable->closeTBody();
 
         $actionsTable = new StaticTable;
-		$actionsTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		$actionsTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 		
         $actionsTable->setTitle("Actions");
         $actionsTable->addTHead();
@@ -89,7 +89,7 @@ class AdminTableView extends Controller {
         $actionsTable->closeTBody();
 
         $resourcesTable = new StaticTable;
-		$resourcesTable->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+		$resourcesTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 		
         $resourcesTable->setTitle("Actions pointing to this resource");
         $resourcesTable->addTHead();
@@ -99,13 +99,13 @@ class AdminTableView extends Controller {
         $resourcesTable->closeRow();
         $resourcesTable->closeTHead();
         $resourcesTable->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->jsonloader->loadResource( $reskey );
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
             $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
 			if ( $checker->isActionPresent( $this->resource->name ) ) {
 	            $resourcesTable->addRow();
 	            $resourcesTable->addColumn( $reskey );
-                $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->jsonloader );
+                $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
 	            $resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString() );
 	            $resourcesTable->closeRow();
 			}
@@ -114,7 +114,7 @@ class AdminTableView extends Controller {
         $resourcesTable->closeTBody();
 
         $resourceGeneralChecks = new StaticTable;
-        $resourceGeneralChecks->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $resourceGeneralChecks->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
         $resourceGeneralChecks->setTitle("General checks");
         $resourceGeneralChecks->addTHead();
@@ -124,7 +124,7 @@ class AdminTableView extends Controller {
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();
-        $tmpres = $this->jsonloader->loadResource( $reskey );
+        $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
         $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
         $resourceGeneralChecks->addRow();
         $resourceGeneralChecks->addColumn( 'Resource well structured' );
@@ -132,13 +132,13 @@ class AdminTableView extends Controller {
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsTable );
         $this->thirdcentralcontainer = array( $actionsTable, $resourcesTable, $resourceGeneralChecks );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }

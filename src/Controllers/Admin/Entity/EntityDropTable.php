@@ -27,7 +27,7 @@ class EntityDropTable extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-		$this->jsonloader->loadIndex();
+		$this->applicationBuilder->getJsonloader()->loadIndex();
 		parent::showPage(); 
     }
 	
@@ -38,12 +38,12 @@ class EntityDropTable extends Controller {
      */
 	public function getRequest() {
 		$this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-		$this->resource = $this->jsonloader->loadResource( $this->getParameters['res'] );
+		$this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
 		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin entity drop';
+		$this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin entity drop';
 		
 		$info = new BaseHTMLInfo;
-        $info->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 
@@ -51,11 +51,11 @@ class EntityDropTable extends Controller {
 			
 		$info->addParagraph( 'Table Dropped ', '' );
 		
-		$this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-		$this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
+		$this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
 		$this->centralcontainer = array( $info );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
 	}
 
 }

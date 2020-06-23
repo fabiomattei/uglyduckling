@@ -20,17 +20,17 @@ class AdminMetricsDashboard extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
 	public function getRequest() {
-		$this->title                  = $this->setup->getAppNameForPageTitle() . ' :: Admin metrics';
-		$this->menucontainer          = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD ) );
-		$this->leftcontainer          = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->routerContainer ) );
+		$this->title                  = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin metrics';
+		$this->menucontainer          = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD ) );
+		$this->leftcontainer          = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->routerContainer ) );
 
         $resourceGeneralChecks = new StaticTable;
-        $resourceGeneralChecks->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $resourceGeneralChecks->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $resourceGeneralChecks->setTitle('IFPUG');
         $resourceGeneralChecks->addTHead();
         $resourceGeneralChecks->addRow();
@@ -39,8 +39,8 @@ class AdminMetricsDashboard extends Controller {
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();
-        foreach ( $this->jsonloader->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->jsonloader->loadResource( $reskey );
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
+            $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
             $checker = BaseResourceMetric::basicResourceMetricFactory($tmpres);
             $resourceGeneralChecks->addRow();
             $resourceGeneralChecks->addColumn( $tmpres->name );
@@ -52,7 +52,7 @@ class AdminMetricsDashboard extends Controller {
 		$this->centralcontainer       = array( $resourceGeneralChecks );
 		$this->secondcentralcontainer = array();
 
-		$this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+		$this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
 	}
 
 }

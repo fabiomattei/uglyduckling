@@ -22,7 +22,7 @@ class AdminSearchList extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        $this->jsonloader->loadIndex();
+        $this->applicationBuilder->getJsonloader()->loadIndex();
         parent::showPage();
     }
 
@@ -30,10 +30,10 @@ class AdminSearchList extends Controller {
      * @throws GeneralException
      */
     public function getRequest() {
-        $this->title = $this->setup->getAppNameForPageTitle() . ' :: Admin Exports list';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin Exports list';
 
         $table = new StaticTable;
-        $table->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $table->setTitle('Search list');
 
         $table->addTHead();
@@ -45,7 +45,7 @@ class AdminSearchList extends Controller {
         $table->closeTHead();
 
         $table->addTBody();
-        foreach ( $this->jsonloader->getResourcesByType( 'search' ) as $res ) {
+        foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'search' ) as $res ) {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
@@ -54,11 +54,11 @@ class AdminSearchList extends Controller {
         }
         $table->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->setup->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST, $this->routerContainer ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST, $this->routerContainer ) );
         $this->centralcontainer = array( $table );
 
-        $this->templateFile = $this->setup->getPrivateTemplateWithSidebarFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
 
 }
