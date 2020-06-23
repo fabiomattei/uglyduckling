@@ -89,7 +89,7 @@ class AdminSearchView extends Controller {
         $fieldsTable->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST, $this->routerContainer ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_SEARCH_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsFormTable );
         $this->thirdcentralcontainer = array( $fieldsTable );

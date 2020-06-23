@@ -52,8 +52,8 @@ class EntityView extends Controller {
 		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists($this->resource->entity->tablename) );
 			
 		$info->addUnfilteredParagraph( 'Table exists: '.( $tableExists ? 
-			'true  '.Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_ENTITY_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) : 
-			'false  '.Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_ENTITY_CREATE_TABLE, 'res='.$this->resource->name ), 'Create', Button::COLOR_GRAY.' '.Button::SMALL )
+			'true  '.Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_ENTITY_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) : 
+			'false  '.Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_ENTITY_CREATE_TABLE, 'res='.$this->resource->name ), 'Create', Button::COLOR_GRAY.' '.Button::SMALL )
 		), '' );
 
         $resourcesTable = new StaticTable;
@@ -113,7 +113,7 @@ class EntityView extends Controller {
         $resourcesTable->closeTBody();
 		
 		$this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-		$this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
+		$this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->applicationBuilder->getRouterContainer() ) );
 		$this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $resourcesTable );
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();

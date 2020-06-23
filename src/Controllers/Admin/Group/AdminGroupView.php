@@ -51,7 +51,7 @@ class AdminGroupView extends Controller {
         $userTable = new StaticTable;
         $userTable->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $userTable->setTitle("Users that belong to this group");
-        $userTable->addButton('Add a user to this group', $this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
+        $userTable->addButton('Add a user to this group', $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_GROUP_ADD_USER, 'groupslug='.$this->resource->name ));
         $userTable->addTHead();
         $userTable->addRow();
         $userTable->addHeadLineColumn('Name');
@@ -62,7 +62,7 @@ class AdminGroupView extends Controller {
         foreach ( $users as $res ) {
             $userTable->addRow();
             $userTable->addColumn($res->usr_name.' '.$res->usr_surname);
-            $userTable->addUnfilteredColumn( Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_GROUP_REMOVE_USER, 'res='.$this->resource->name.'&usrid='.$res->usr_id ), 'Remove', Button::COLOR_GRAY.' '.Button::SMALL ) );
+            $userTable->addUnfilteredColumn( Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_GROUP_REMOVE_USER, 'res='.$this->resource->name.'&usrid='.$res->usr_id ), 'Remove', Button::COLOR_GRAY.' '.Button::SMALL ) );
             $userTable->closeRow();
         }
         $userTable->closeTBody();
@@ -91,7 +91,7 @@ class AdminGroupView extends Controller {
         $resourcesTable->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->routerContainer ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $userTable );
         $this->thirdcentralcontainer = array( $resourcesTable );

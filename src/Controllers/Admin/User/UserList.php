@@ -37,7 +37,7 @@ class UserList extends Controller {
         $table = new StaticTable;
         $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $table->setTitle('Users list');
-        $table->addButton( 'New user', $this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_NEW ) );
+        $table->addButton( 'New user', $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_NEW ) );
 
         $table->addTHead();
         $table->addRow();
@@ -58,15 +58,15 @@ class UserList extends Controller {
             $table->addColumn( $user->usr_surname );
             $table->addColumn( $user->usr_defaultgroup );
             $table->addUnfilteredColumn(
-                Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-                Button::get($this->routerContainer->makeRelativeUrl( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+                Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+                Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             );
             $table->closeRow();
         }
         $table->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->routerContainer ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $table );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
