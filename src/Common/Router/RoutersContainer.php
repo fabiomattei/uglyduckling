@@ -82,14 +82,33 @@ class RoutersContainer {
     }
 
     /**
-     * @param $jsonresource
+     * @param $json_action
      * @param $jsonloader
      * @param $entity
      * @return mixed
+     *
+     * Example of a json action:
+     *
+     * {
+     *   "type": "link",
+     *   "label": "Info",
+     *   "resource": "myinfopanel",
+     *   "tooltip": "My tool tip text",
+     *   "onclick": "My on click text",
+     *   "buttoncolor": "green",
+     *   "outline": false,
+     *   "parameters":[
+     *     {"name": "id", "sqlfield": "id"},
+     *     {"name": "secondid", "constantparameter": "3"},
+     *     {"name": "thirdid", "getparameter": "mygetparameter"}
+     *   ]
+     * }
+     *
+     * Check out: http://www.uddocs.com/docs/actions
      */
-    function make_resource_url($jsonresource, $jsonloader, $entity ) {
-        $resource = $jsonresource->resource;
-        $parameters = $jsonresource->parameters;
+    function make_resource_url($json_action, $jsonloader, $entity ) {
+        $resource = $json_action->resource;
+        $parameters = $json_action->parameters;
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
             $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
