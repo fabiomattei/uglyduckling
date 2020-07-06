@@ -5,7 +5,7 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
@@ -41,7 +41,7 @@ class JsonNoHtmlTemplateController extends JsonResourceBasicController {
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
         $this->jsonTemplateFactoriesContainer->setSetup($this->setup);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ));
 
 
         $htmlBlock = $this->jsonTemplateFactoriesContainer->getHTMLBlock( $this->resource );

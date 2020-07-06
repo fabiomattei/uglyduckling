@@ -14,7 +14,7 @@ use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 /**
  * This class gives a list of all entities loaded in to the system
@@ -45,9 +45,9 @@ class UserView extends Controller {
         $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $info->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         $info->addUnfilteredParagraph(
-            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_EDIT_PASSWORD, 'id='.$user->usr_id ), 'Edit password', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_USER_EDIT_PASSWORD, 'id='.$user->usr_id ), 'Edit password', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             ,
             '6'
         );
@@ -57,8 +57,8 @@ class UserView extends Controller {
         $info->addDateField('User created: ', $user->usr_updated , '6' );
         $info->addDateField('User updated: ', $user->usr_created, '6' );
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_USER_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $info );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();

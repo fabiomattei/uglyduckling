@@ -13,7 +13,7 @@ use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 
@@ -37,7 +37,7 @@ class UserList extends Controller {
         $table = new StaticTable;
         $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $table->setTitle('Users list');
-        $table->addButton( 'New user', $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_NEW ) );
+        $table->addButton( 'New user', $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_USER_NEW ) );
 
         $table->addTHead();
         $table->addRow();
@@ -58,15 +58,15 @@ class UserList extends Controller {
             $table->addColumn( $user->usr_surname );
             $table->addColumn( $user->usr_defaultgroup );
             $table->addUnfilteredColumn(
-                Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-                Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+                Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
+                Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             );
             $table->closeRow();
         }
         $table->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_ENTITY_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_ENTITY_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $table );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();

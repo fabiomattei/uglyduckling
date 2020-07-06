@@ -5,7 +5,7 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 /**
  * User: Fabio
@@ -40,7 +40,7 @@ class JsonInfoController extends JsonResourceBasicController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_INFO, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_INFO, 'res='.$this->getParameters['res'] ));
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office info';
 	

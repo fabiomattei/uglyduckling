@@ -17,7 +17,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Uniform\UniformJsonTemplate;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 class JsonDefaultTemplateFactory extends JsonTemplate {
 
@@ -109,13 +109,13 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
             $this->searchJsonTemplate->setResource($resource);
-            $this->searchJsonTemplate->setAction($this->routerContainer->makeRelativeUrl(Router::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
+            $this->searchJsonTemplate->setAction($this->routerContainer->makeRelativeUrl(ResourceRouter::ROUTE_OFFICE_ENTITY_SEARCH, 'res=' . $resource->name));
             return $this->searchJsonTemplate->createHTMLBlock();
         }
 
         if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
             $this->exportJsonTemplate->setResource($resource);
-            $this->exportJsonTemplate->setAction($this->routerContainer->makeRelativeUrl(Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
+            $this->exportJsonTemplate->setAction($this->routerContainer->makeRelativeUrl(ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, 'res=' . $resource->name));
             return $this->exportJsonTemplate->createHTMLBlock();
         }
     }

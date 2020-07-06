@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 
 /**
@@ -42,7 +42,7 @@ class JsonTableController extends JsonResourceBasicController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_TABLE, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_TABLE, 'res='.$this->getParameters['res'] ));
 
         $this->title = $this->setup->getAppNameForPageTitle() . ' :: Office table';
 		

@@ -18,7 +18,7 @@ use Fabiom\UglyDuckling\Controllers\JsonResource\JsonExportController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonTransactionController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonNoHtmlTemplateController;
 
-class Router extends RouterBase {
+class ResourceRouter extends RouterBase {
 
     const ROUTE_OFFICE_ENTITY_CHART         = 'officeentitychart';
 	const ROUTE_OFFICE_ENTITY_TABLE         = 'officeentitytable';

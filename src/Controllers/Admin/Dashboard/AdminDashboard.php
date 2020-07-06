@@ -8,7 +8,7 @@ use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 /**
  * 
@@ -25,8 +25,8 @@ class AdminDashboard extends Controller {
 
 	public function getRequest() {
 		$this->title                  = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin dashboard';
-		$this->menucontainer          = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD ) );
-		$this->leftcontainer          = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_DASHBOARD, $this->applicationBuilder->getRouterContainer() ) );
+		$this->menucontainer          = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_DASHBOARD ) );
+		$this->leftcontainer          = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_DASHBOARD, $this->applicationBuilder->getRouterContainer() ) );
 
         $resourceGeneralChecks = new StaticTable;
         $resourceGeneralChecks->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );

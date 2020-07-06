@@ -13,7 +13,7 @@ use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 class AdminInfoList extends Controller {
 
@@ -48,13 +48,13 @@ class AdminInfoList extends Controller {
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
-            $table->addUnfilteredColumn( Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_ADMIN_INFO_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
+            $table->addUnfilteredColumn( Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_ADMIN_INFO_VIEW, 'res='.$res->name ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) );
             $table->closeRow();
         }
         $table->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_INFO_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_INFO_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_INFO_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_INFO_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $table );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();

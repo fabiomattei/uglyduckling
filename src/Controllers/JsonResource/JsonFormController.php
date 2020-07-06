@@ -7,7 +7,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 
 /**
@@ -49,7 +49,7 @@ class JsonFormController extends JsonResourceBasicController {
         $this->jsonTemplateFactoriesContainer->setJsonloader($this->jsonloader);
         $this->jsonTemplateFactoriesContainer->setParameters($this->getParameters);
         $this->jsonTemplateFactoriesContainer->setLogger($this->logger);
-        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
+        $this->jsonTemplateFactoriesContainer->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
 
 		$this->menucontainer    = array( $this->menubuilder->createMenu() );
 		$this->leftcontainer    = array();
@@ -106,7 +106,7 @@ class JsonFormController extends JsonResourceBasicController {
         $this->formBuilder->setParameters( $this->internalGetParameters );
         $this->formBuilder->setDbconnection( $this->dbconnection );
         $this->formBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_FORM, 'res='.$this->getParameters['res'] ));
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();

@@ -5,7 +5,7 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel\ExcelJsonTemplate;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
@@ -38,7 +38,7 @@ class JsonExportController extends JsonResourceBasicController {
      */
 	public function getRequest() {
         $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
+        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
 		
 		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
 

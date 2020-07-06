@@ -8,7 +8,7 @@ use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 class AdminGroupAddUser extends Controller {
 
@@ -39,8 +39,8 @@ class AdminGroupAddUser extends Controller {
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );
         $form->addSubmitButton('save', 'Add');
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_USER_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $form );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
@@ -86,8 +86,8 @@ class AdminGroupAddUser extends Controller {
         $form->addHiddenField('groupslug', $this->getParameters['groupslug'] );
         $form->addSubmitButton('save', 'Add');
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_USER_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_USER_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_USER_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $form );
     }
 }

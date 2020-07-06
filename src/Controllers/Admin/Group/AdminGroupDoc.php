@@ -11,7 +11,7 @@ use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
 use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 /**
  *
@@ -72,8 +72,8 @@ class AdminGroupDoc extends Controller {
 
         $info->addUnfilteredParagraph($doctext, 12);
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_GROUP_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_GROUP_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_GROUP_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array();
         $this->thirdcentralcontainer = array();

@@ -6,7 +6,7 @@ use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Exceptions\ErrorPageException;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
@@ -39,7 +39,7 @@ class JsonDashboardController extends JsonResourceBasicController {
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setApplicationBuilder($this->applicationBuilder);
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setPageStatus($this->pageStatus);
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setParameters($this->getParameters);
-        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setAction( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( Router::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ) );
+        $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setAction( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ) );
 
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setJsonTemplateFactoriesContainer( $this->applicationBuilder->getJsonTemplateFactoriesContainer() );

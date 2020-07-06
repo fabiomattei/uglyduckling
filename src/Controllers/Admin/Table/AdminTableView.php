@@ -16,7 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
-use Fabiom\UglyDuckling\Common\Router\Router;
+use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 
 class AdminTableView extends Controller {
@@ -132,8 +132,8 @@ class AdminTableView extends Controller {
         $resourceGeneralChecks->closeRow();
         $resourceGeneralChecks->closeTBody();
 
-        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST ) );
-        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), Router::ROUTE_ADMIN_ENTITY_LIST, $this->applicationBuilder->getRouterContainer() ) );
+        $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_ENTITY_LIST ) );
+        $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), ResourceRouter::ROUTE_ADMIN_ENTITY_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = array( $info );
         $this->secondcentralcontainer = array( $fieldsTable );
         $this->thirdcentralcontainer = array( $actionsTable, $resourcesTable, $resourceGeneralChecks );
