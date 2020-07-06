@@ -27,6 +27,7 @@ class RoutersContainer {
 	 * Array of routers
 	 */
     private $routers;
+    private /* string */ $defaultController;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
@@ -55,7 +56,7 @@ class RoutersContainer {
 	}
 	
 	/**
-	 * Sarch all contained routers in order to get the right contronller
+	 * Search all contained routers in order to get the right controller
 	 */
 	function getController( string $action ) {
         foreach ( $this->routers as $router ) {
@@ -78,6 +79,55 @@ class RoutersContainer {
 	 */
     public function getInfo() : string {
         return '[Router] BasePath: '.$this->basepath;
+    }
+
+    /**
+     * @param $jsonresource
+     * @param $jsonloader
+     * @param $entity
+     * @return mixed
+     */
+    function make_resource_url($jsonresource, $jsonloader, $entity ) {
+        $resource = $jsonresource->resource;
+        $parameters = $jsonresource->parameters;
+        $url_parameters = 'res='.$resource.'&';
+        foreach ($parameters as $par) {
+            $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
+        }
+        $url_parameters = rtrim($url_parameters, '&');
+
+        $action = $jsonloader->getActionRelatedToResource($resource);
+
+        switch ( $action ) {
+            case 'entitydashboard':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                break;
+            case 'entitychart':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_CHART, $url_parameters );
+                break;
+            case 'entitytable':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_TABLE, $url_parameters );
+                break;
+            case 'entityform':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_FORM, $url_parameters );
+                break;
+            case 'entityinfo':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_INFO, $url_parameters );
+                break;
+            case 'entitysearch':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_SEARCH, $url_parameters );
+                break;
+            case 'entityexport':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
+                break;
+            case 'entitytransaction':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
+                break;
+
+            default:
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                break;
+        }
     }
 	
     /**
