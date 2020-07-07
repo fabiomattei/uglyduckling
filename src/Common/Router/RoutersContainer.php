@@ -8,6 +8,9 @@
 
 namespace Fabiom\UglyDuckling\Common\Router;
 
+use Fabiom\UglyDuckling\Common\Json\JsonLoader;
+use Fabiom\UglyDuckling\Common\Status\PageStatus;
+
 /**
  * Class RoutersContainer
  * @package Fabiom\UglyDuckling\Common\Router
@@ -82,9 +85,9 @@ class RoutersContainer {
     }
 
     /**
-     * @param $json_action
-     * @param $jsonloader
-     * @param $entity
+     * @param mixed $json_action
+     * @param JsonLoader $jsonloader
+     * @param PageStatus $pageStatus
      * @return mixed
      *
      * Example of a json action:
@@ -106,12 +109,12 @@ class RoutersContainer {
      *
      * Check out: http://www.uddocs.com/docs/actions
      */
-    function make_resource_url($json_action, $jsonloader, $entity ) {
+    function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
         $resource = $json_action->resource;
         $parameters = $json_action->parameters;
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
-            $url_parameters .= $par->name.'='.$entity->{$par->sqlfield}.'&';
+            $url_parameters .= $par->name.'='.$pageStatus->getValue($json_action).'&';
         }
         $url_parameters = rtrim($url_parameters, '&');
 
@@ -183,7 +186,7 @@ class RoutersContainer {
      */
     function makeRelativeUrl( $action = '', $parameters = '', $extension = '.html' ) {
         if ( $action == '' ) {
-            return '';
+            return '#';
         } else {
             return $action.$extension.( $parameters == '' ? '' : '?'.$parameters );
         }

@@ -114,6 +114,9 @@ class PageStatus {
         if ( isset($field->constantparameter) ) {
             return $field->constantparameter;
         }
+        if ( isset($field->constant) ) {
+            return $field->constant;
+        }
         if ( isset($field->parameter) ) {
             return $this->parameters[$field->parameter] ?? $this->checkForDefaultValues($field);
         }
