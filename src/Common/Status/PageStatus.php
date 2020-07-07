@@ -105,11 +105,11 @@ class PageStatus {
     public function getValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
-            return ($this->lastEntity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
+            return ($this->lastEntity == null ? '' : ( isset($this->lastEntity->{$fieldname}) ? $this->lastEntity->{$fieldname} : '' ) );
         }
         if ( isset($field->sqlfield) ) {
             $fieldname = $field->sqlfield;
-            return ($this->lastEntity == null ? '' : ( isset($entity->{$fieldname}) ? $entity->{$fieldname} : '' ) );
+            return ($this->lastEntity == null ? '' : ( isset($this->lastEntity->{$fieldname}) ? $this->lastEntity->{$fieldname} : '' ) );
         }
         if ( isset($field->constantparameter) ) {
             return $field->constantparameter;
