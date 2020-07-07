@@ -121,7 +121,7 @@ class PageStatus {
             return $this->parameters[$field->parameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->getparameter) ) {
-            return $this->parameters[$field->getparameter] ?? $this->checkForDefaultValues($field);
+            return $this->getParameters[$field->getparameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->postparameter) ) {
             return $this->postparameters[$field->postparameter] ?? $this->checkForDefaultValues($field);
