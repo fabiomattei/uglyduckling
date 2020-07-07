@@ -129,10 +129,10 @@ class QueryExecuter {
 
             if ( isset($this->queryStructure->parameters) ) {
                 foreach ($this->queryStructure->parameters as $cond) {
-                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
-                        $par =& $this->getParameters[$cond->getparameter];
-                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-                        $par =& $this->postParameters[$cond->postparameter];
+                    if ( isset( $this->parameters[$cond->getparameter] ) ) {
+                        $par =& $this->parameters[$cond->getparameter];
+                    } elseif ( isset( $this->parameters[$cond->postparameter] ) ) {
+                        $par =& $this->parameters[$cond->postparameter];
                     } elseif ( isset( $cond->constant ) ) {
                         $par =& $cond->constant;
                     } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {

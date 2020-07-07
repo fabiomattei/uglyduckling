@@ -69,10 +69,10 @@ class TableJsonTemplate extends JsonTemplate {
                 $queryExecuter->setSessionWrapper( $sessionWrapper );
                 if ( $serverWrapper->isGetRequest() ) {
                     $query = $this->resource->get->query;
-                    if (isset( $this->parameters ) ) $queryExecuter->setParameters( $parameters );
+                    if (isset( $parameters ) ) $queryExecuter->setParameters( $parameters );
                 } else {
                     $query = $this->resource->post->query;
-                    if (isset( $this->parameters ) ) $queryExecuter->setPostParameters( $parameters );
+                    if (isset( $parameters ) ) $queryExecuter->setPostParameters( $parameters );
                 }
                 $queryExecuter->setQueryStructure( $query );
                 $entities = $queryExecuter->executeSql();
