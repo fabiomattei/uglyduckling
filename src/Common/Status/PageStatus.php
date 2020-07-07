@@ -203,17 +203,17 @@ class PageStatus {
     
     function checkForDefaultValues( $field ): string {
         if ( isset($field->default) ) return $field->default;
-        if ( isset($field->defaultfunction) ) return callDefaulFunction($field->defaultfunction);
+        if ( isset($field->defaultfunction) ) return $this->callDefaultFunction($field->defaultfunction);
     }
     
     /**
      * @Override this function in order to have more default functions
      */
-    function callDefaulFunction($defaultfunction): string {
+    function callDefaultFunction($defaultfunction): string {
         switch ($defaultfunction) {
             case 'getcurrentyear': return date("Y");
             case 'getcurrentmonth': return date("m");
-            case 'getcurrentriskcenter' : return $this->sessionparameters['siteid'];
+            case 'getcurrentriskcenter' : return $this->sessionWrapper->getSessionParameter('siteid');
             default: return '';
         }
     }
