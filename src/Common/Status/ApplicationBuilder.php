@@ -46,6 +46,35 @@ class ApplicationBuilder {
     }
 
     /**
+     * @param $json_action
+     * @param JsonLoader $jsonloader
+     * @param PageStatus $pageStatus
+     * @return mixed
+     *
+     * Example of a json action:
+     *
+     * {
+     *   "type": "link",
+     *   "label": "Info",
+     *   "resource": "myinfopanel",
+     *   "tooltip": "My tool tip text",
+     *   "onclick": "My on click text",
+     *   "buttoncolor": "green",
+     *   "outline": false,
+     *   "parameters":[
+     *     {"name": "id", "sqlfield": "id"},
+     *     {"name": "secondid", "constantparameter": "3"},
+     *     {"name": "thirdid", "getparameter": "mygetparameter"}
+     *   ]
+     * }
+     *
+     * Check out: http://www.uddocs.com/docs/actions
+     */
+    public function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
+        return $this->routerContainer->make_resource_url( $json_action, $jsonloader, $pageStatus );
+    }
+
+    /**
      * Given a specific json resource select between all JsonTemplateFactories
      * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
      *
