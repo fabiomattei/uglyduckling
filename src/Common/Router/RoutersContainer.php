@@ -114,7 +114,7 @@ class RoutersContainer {
         $parameters = $json_action->parameters;
         $url_parameters = 'res='.$resource.'&';
         foreach ($parameters as $par) {
-            $url_parameters .= $par->name.'='.$pageStatus->getValue($json_action).'&';
+            $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
         }
         $url_parameters = rtrim($url_parameters, '&');
 
