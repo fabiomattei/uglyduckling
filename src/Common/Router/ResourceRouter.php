@@ -9,14 +9,6 @@
 namespace Fabiom\UglyDuckling\Common\Router;
 
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonDashboardController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonChartController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonTableController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonFormController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonInfoController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonSearchController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonExportController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonTransactionController;
-use Fabiom\UglyDuckling\Controllers\JsonResource\JsonNoHtmlTemplateController;
 
 class ResourceRouter extends RouterBase {
 
@@ -52,18 +44,7 @@ class ResourceRouter extends RouterBase {
     }
 
     function getController( string $action ) {
-        switch ( $action ) {
-            case self::ROUTE_OFFICE_ENTITY_CHART:         $controller = new JsonChartController; break;
-			case self::ROUTE_OFFICE_ENTITY_TABLE:         $controller = new JsonTableController; break;
-			case self::ROUTE_OFFICE_ENTITY_FORM:          $controller = new JsonFormController; break;
-			case self::ROUTE_OFFICE_ENTITY_INFO:          $controller = new JsonInfoController; break;
-			case self::ROUTE_OFFICE_ENTITY_SEARCH:        $controller = new JsonSearchController; break;
-			case self::ROUTE_OFFICE_ENTITY_EXPORT:        $controller = new JsonExportController; break;
-			case self::ROUTE_OFFICE_ENTITY_LOGIC:         $controller = new JsonTransactionController; break;
-            case self::ROUTE_OFFICE_ENTITY_DASHBOARD:     $controller = new JsonDashboardController; break;
-            case self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE:   $controller = new JsonNoHtmlTemplateController; break;
-        }
-        return $controller;
+        return new JsonDashboardController;
     }
 
 }
