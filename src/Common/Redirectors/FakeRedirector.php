@@ -14,13 +14,15 @@ namespace Fabiom\UglyDuckling\Common\Redirectors;
  * It does not do anything
  */
 class FakeRedirector implements Redirector {
+	
+	private $url;
 
     public function setURL(string $url) {
-        // nothing to do here
+        $this->url = $url;
     }
 
     public function redirect() {
-        echo 'Redirecting';
+        echo 'Redirecting to: ' . $this->url;
     }
 
 }

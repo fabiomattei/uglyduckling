@@ -9,6 +9,8 @@
 namespace Fabiom\UglyDuckling\Common\Redirectors;
 
 class URLRedirector implements Redirector {
+	
+	private $url;
 
     public function setURL(string $url) {
         $this->url = $url;
