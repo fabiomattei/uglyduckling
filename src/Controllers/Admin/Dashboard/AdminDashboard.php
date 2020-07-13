@@ -5,10 +5,10 @@ namespace Fabiom\UglyDuckling\Controllers\Admin\Dashboard;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
+use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
-use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 /**
  * 
