@@ -3,7 +3,7 @@
 namespace Fabiom\UglyDuckling\Templates\Blocks\Sidebars;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
-use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
+use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 
 class AdminSidebar extends BaseHTMLBlock {
 	
