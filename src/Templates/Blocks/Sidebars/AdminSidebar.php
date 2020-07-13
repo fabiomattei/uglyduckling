@@ -7,9 +7,9 @@ use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 
 class AdminSidebar extends BaseHTMLBlock {
 	
-	function __construct( string $appname, string $active = 'home', $router ) {
+	function __construct( string $appname, string $active, $router ) {
 		$this->appname = $appname;
-		$this->active = $active;
+		$this->active = $active ?? 'home';
 		$this->router = $router;
 	}
 
