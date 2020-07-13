@@ -6,7 +6,7 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class LoginForm extends BaseHTMLBlock {
 	
-	function __construct( string $appname, string $error = '' ) {
+	function __construct( string $appname, string $error ) {
 		$this->appname = $appname;
 		$this->error = $error;
 	}
