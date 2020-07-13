@@ -108,51 +108,6 @@ class LinkBuilder {
             case 'entitytransaction':
                 return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
-            case 'documentinbox':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_INBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentacceptedbox':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentrejectedbox':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentaccept':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_ACCEPT ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentoutbox':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_OUTBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentoutboxuser':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentdraft':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DRAFT ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentdraftuser':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DRAFT_USER ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentdelete':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentedit':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentexport':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentnew':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentreject':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentnewlist':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_NEW_LIST ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentsearch':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
 
             default:
                 return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
@@ -236,51 +191,6 @@ class LinkBuilder {
             case 'entitytransaction':
                 return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
                 break;
-	        case 'documentinbox':
-	            return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_INBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-	            break;
-            case 'documentacceptedbox':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-            case 'documentrejectedbox':
-                return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-                break;
-			case 'documentaccept':
-				return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_ACCEPT ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-				break;
-		    case 'documentoutbox':
-		        return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_OUTBOX ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-		        break;
-			case 'documentoutboxuser':
-			    return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;
-			case 'documentdraft':
-			    return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DRAFT ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;
-			case 'documentdraftuser':
-			    return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DRAFT_USER ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;
-		    case 'documentdelete':
-		        return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-		        break;
-	        case 'documentedit':
-	            return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-	            break;
-	        case 'documentexport':
-	            return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-	            break;
-		    case 'documentnew':
-		        return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-		        break;
-			case 'documentreject':
-			    return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;
-			case 'documentnewlist':
-			    return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_NEW_LIST ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;
-			case 'documentsearch':
-			    return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
-			    break;
 
             default:
                 return Button::get($routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters ), $label, Button::COLOR_GRAY.' '.Button::SMALL);
@@ -315,51 +225,6 @@ class LinkBuilder {
             case 'entitytransaction':
                 return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
                 break;
-	        case 'documentinbox':
-	            return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_INBOX );
-	            break;
-		    case 'documentaccept':
-		        return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_ACCEPT, $url_parameters );
-		        break;
-			case 'documentoutbox':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_OUTBOX, $url_parameters );
-			    break;
-            case 'documentacceptedbox':
-                return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX, $url_parameters );
-                break;
-            case 'documentrejectedbox':
-                return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_REJECTEDBOX, $url_parameters );
-                break;
-			case 'documentoutboxuser':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_OUTBOX_USER, $url_parameters );
-			    break;
-			case 'documentdraft':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DRAFT, $url_parameters );
-			    break;
-			case 'documentdraftuser':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DRAFT_USER, $url_parameters );
-			    break;
-			case 'documentdelete':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_DELETE, $url_parameters );
-			    break;
-			case 'documentedit':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_EDIT, $url_parameters );
-			    break;
-			case 'documentexport':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_EXPORT, $url_parameters );
-			    break;
-			case 'documentnew':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_NEW, $url_parameters );
-			    break;
-			case 'documentreject':
-				return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_REJECT, $url_parameters );
-				break;
-			case 'documentnewlist':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_NEW_LIST );
-			    break;
-			case 'documentsearch':
-			    return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_DOCUMENT_SEARCH, $url_parameters );
-			    break;
             
             default:
                 return $routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
