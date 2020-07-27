@@ -41,9 +41,8 @@ class Request {
 
         if ( $request == '' ) throw new \Exception('General malfuction!!!');
 
-        #split the string by '/'
-        $params = explode( '/', $request );
-        $this->action = $params[1];
+        # removing the first '/' from the path
+        $this->action = substr($request, 1); // explode( '/', $request );
 
         if (!StringUtils::validate_string( $this->action ))
             throw new \Exception('Illegal access to calculateSplittedURL!!!');
