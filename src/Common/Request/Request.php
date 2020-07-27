@@ -6,11 +6,6 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 class Request {
 
-    private /* string */ $msginfo = '';
-    private /* string */ $msgwarning = '';
-    private /* string */ $msgerror = '';
-    private /* string */ $msgsuccess = '';
-    private /* string */ $flashvariable = '';
     private /* string */ $requestURI = '';
     private /* string */ $action = '';
 
@@ -40,15 +35,9 @@ class Request {
     * Diventa array( 'action', array( 'par1', 'par2', 'par3' ) )
     */
     public function calculateSplittedURL() {
-        $request2 = str_replace( '.html', '', $this->requestURI );
-        $request3 = str_replace( '.pdf', '', $request2 );
-        $request  = preg_replace( '/\?.*/', '', $request3 );
+        if ( $this->requestURI == '' ) throw new \Exception('General malfuction in URI!!!');
 
-        if ( $request == '' ) throw new \Exception('General malfuction!!!');
-    
-        #split the string by '/'
-        $params = explode( '/', $request );
-        $this->action = $params[1];
+        $this->action = parse_url($this->requestURI, PHP_URL_PATH);
 
         if (!StringUtils::validate_string( $this->action ))
             throw new \Exception('Illegal access to calculateSplittedURL!!!');
