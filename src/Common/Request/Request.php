@@ -37,10 +37,11 @@ class Request {
     public function calculateSplittedURL() {
         if ( $this->requestURI == '' ) throw new \Exception('General malfuction in URI!!!');
 
-        $this->action = parse_url($this->requestURI, PHP_URL_PATH);
-
-        if (!StringUtils::validate_string( $this->action ))
+        if (filter_var($this->requestURI, FILTER_VALIDATE_URL)) {
+            $this->action = substr(parse_url($this->requestURI, PHP_URL_PATH), 1);
+        } else {
             throw new \Exception('Illegal access to calculateSplittedURL!!!');
+        }
     }
 
     public function getInfo(): string {
