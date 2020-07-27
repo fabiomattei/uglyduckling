@@ -22,9 +22,9 @@ class Request {
     }
 
     /**
-    * @param $request             a string containing the request
+    * @param $request  a string containing the request
     *
-    * @return array               an array containing the results
+    * @return array    an array containing the results
     *
     * @throws \Exception    in case of empty request
     *
@@ -35,13 +35,18 @@ class Request {
     * Diventa array( 'action', array( 'par1', 'par2', 'par3' ) )
     */
     public function calculateSplittedURL() {
-        if ( $this->requestURI == '' ) throw new \Exception('General malfuction in URI!!!');
+        $request2 = str_replace( '.html', '', $this->requestURI );
+        $request3 = str_replace( '.pdf', '', $request2 );
+        $request  = preg_replace( '/\?.*/', '', $request3 );
 
-        if (filter_var($this->requestURI, FILTER_VALIDATE_URL)) {
-            $this->action = substr(parse_url($this->requestURI, PHP_URL_PATH), 1);
-        } else {
+        if ( $request == '' ) throw new \Exception('General malfuction!!!');
+
+        #split the string by '/'
+        $params = explode( '/', $request );
+        $this->action = $params[1];
+
+        if (!StringUtils::validate_string( $this->action ))
             throw new \Exception('Illegal access to calculateSplittedURL!!!');
-        }
     }
 
     public function getInfo(): string {
