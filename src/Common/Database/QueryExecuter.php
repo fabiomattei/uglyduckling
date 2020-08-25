@@ -160,7 +160,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (\PDOException $e) {
-            $this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName ) . $e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -171,51 +171,56 @@ class QueryExecuter {
      * @return mixed
      */
     function executeSqlInsert() {
-        $STH = $this->DBH->prepare( $this->queryStructure->sql );
-        $STH->setFetchMode(PDO::FETCH_OBJ);
-
-        if ( isset($this->queryStructure->parameters) ) {
-            $cont = 1;
-            foreach ($this->queryStructure->parameters as $cond) {
-                if ( isset( $this->getParameters[$cond->getparameter] ) ) {
-                    $par =& $this->getParameters[$cond->getparameter];
-                    $STH->bindParam($cond->placeholder, $par);
-                } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-                    $par =& $this->postParameters[$cond->postparameter];
-                    $STH->bindParam($cond->placeholder, $par);
-                } elseif ( isset( $cond->constant ) ) {
-                    $par =& $cond->constant;
-                    $STH->bindParam($cond->placeholder, $par);
-                } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-                    $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
-                    $STH->bindParam($cond->placeholder, $par);
-                } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
-                    $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
-                    $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
-                } elseif ( isset( $cond->fileparameter ) AND isset( $_FILES[$cond->fileparameter] ) ) {
-                    $mime[$cont] = $_FILES[$cond->fileparameter]['type'] ?? '';
-                    $size[$cont] = $_FILES[$cond->fileparameter]['size'] ?? '';
-                    $error[$cont] = $_FILES[$cond->fileparameter]['error'] ?? '';
-                    $name[$cont] = $_FILES[$cond->fileparameter]['name'] ?? '';
-                    $tmpf[$cont] = $_FILES[$cond->fileparameter]['tmp_name'];
-                    $file[$cont] = fopen($_FILES[$cond->fileparameter]['tmp_name'], "rb");
-                    $mime =& $mime[$cont];
-                    $size =& $size[$cont];
-                    $name =& $name[$cont];
-                    $par =& $file[$cont];
-                    $STH->bindParam($cond->placeholder.'mime', $mime);
-                    $STH->bindParam($cond->placeholder.'size', $size);
-                    $STH->bindParam($cond->placeholder.'name', $name);
-                    $STH->bindParam($cond->placeholder.'error', $error);
-                    $STH->bindParam($cond->placeholder, $par, PDO::PARAM_LOB);
-                }
-                // echo "$cond->placeholder, $par";
-
-                $cont++;
-            }
-        }
-
-        $STH->execute();
+		try {
+        	$STH = $this->DBH->prepare( $this->queryStructure->sql );
+        	$STH->setFetchMode(PDO::FETCH_OBJ);
+        	
+        	if ( isset($this->queryStructure->parameters) ) {
+        	    $cont = 1;
+        	    foreach ($this->queryStructure->parameters as $cond) {
+        	        if ( isset( $this->getParameters[$cond->getparameter] ) ) {
+        	            $par =& $this->getParameters[$cond->getparameter];
+        	            $STH->bindParam($cond->placeholder, $par);
+        	        } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
+        	            $par =& $this->postParameters[$cond->postparameter];
+        	            $STH->bindParam($cond->placeholder, $par);
+        	        } elseif ( isset( $cond->constant ) ) {
+        	            $par =& $cond->constant;
+        	            $STH->bindParam($cond->placeholder, $par);
+        	        } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
+        	            $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
+        	            $STH->bindParam($cond->placeholder, $par);
+        	        } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
+        	            $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
+        	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
+        	        } elseif ( isset( $cond->fileparameter ) AND isset( $_FILES[$cond->fileparameter] ) ) {
+        	            $mime[$cont] = $_FILES[$cond->fileparameter]['type'] ?? '';
+        	            $size[$cont] = $_FILES[$cond->fileparameter]['size'] ?? '';
+        	            $error[$cont] = $_FILES[$cond->fileparameter]['error'] ?? '';
+        	            $name[$cont] = $_FILES[$cond->fileparameter]['name'] ?? '';
+        	            $tmpf[$cont] = $_FILES[$cond->fileparameter]['tmp_name'];
+        	            $file[$cont] = fopen($_FILES[$cond->fileparameter]['tmp_name'], "rb");
+        	            $mime =& $mime[$cont];
+        	            $size =& $size[$cont];
+        	            $name =& $name[$cont];
+        	            $par =& $file[$cont];
+        	            $STH->bindParam($cond->placeholder.'mime', $mime);
+        	            $STH->bindParam($cond->placeholder.'size', $size);
+        	            $STH->bindParam($cond->placeholder.'name', $name);
+        	            $STH->bindParam($cond->placeholder.'error', $error);
+        	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_LOB);
+        	        }
+        	        // echo "$cond->placeholder, $par";
+        	
+        	        $cont++;
+        	    }
+        	}
+			
+			$STH->execute();
+			
+		} catch (PDOException $e) {
+        	$this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
+    	}
 
         $STH->debugDumpParams();
 
@@ -257,7 +262,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -301,7 +306,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
