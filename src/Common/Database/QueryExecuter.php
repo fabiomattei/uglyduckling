@@ -133,6 +133,8 @@ class QueryExecuter {
      */
     function executeSqlSelect() {
         try {
+			$starttime = microtime(true);
+			
             $STH = $this->DBH->prepare( $this->queryStructure->sql );
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
@@ -155,6 +157,14 @@ class QueryExecuter {
             }
 
             $STH->execute();
+			
+			$endtime = microtime(true);
+			
+	        if (($time_end - $time_start) > 5) {
+	            $this->logger->write('WARNING QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+	        }
+			
+			$duration = $endtime - $starttime;
 
             // $STH->debugDumpParams();
 
