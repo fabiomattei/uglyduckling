@@ -20,11 +20,20 @@ class QueryExecuter {
     private /* Logger */ $logger;
     private /* SessionWrapper */ $sessionWrapper;
     private /* QueryReturnedValues */ $queryReturnedValues;
+	private /* string */ $resourceName = 'unknown';
 
     public const SELECT = 'SELECT';
     public const INSERT = 'INSERT';
     public const UPDATE = 'UPDATE';
     public const DELETE = 'DELETE';
+
+    /**
+     * Database connection handler setter
+     * @param $DBH
+     */
+    public function setResourceName( $resourceName ) {
+        $this->resourceName = $resourceName;
+    }
 
     /**
      * Database connection handler setter
@@ -151,7 +160,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (\PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
