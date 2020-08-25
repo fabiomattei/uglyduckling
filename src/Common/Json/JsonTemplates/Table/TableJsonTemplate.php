@@ -64,6 +64,7 @@ class TableJsonTemplate extends JsonTemplate {
             // if there is not query I do not
             if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
                 $queryExecuter->setDBH( $dbconnection->getDBH() );
+				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
                 $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setLogger( $logger );
                 $queryExecuter->setSessionWrapper( $sessionWrapper );
