@@ -20,6 +20,7 @@ class QueryExecuter {
     private /* Logger */ $logger;
     private /* SessionWrapper */ $sessionWrapper;
     private /* QueryReturnedValues */ $queryReturnedValues;
+    private /* PageStatus */ $pageStatus;
 	private /* string */ $resourceName = 'unknown';
 
     public const SELECT = 'SELECT';
@@ -33,6 +34,10 @@ class QueryExecuter {
      */
     public function setResourceName( $resourceName ) {
         $this->resourceName = $resourceName;
+    }
+
+    public function setPageStatus( $pageStatus ) {
+        $this->pageStatus = $pageStatus;
     }
 
     /**
@@ -139,32 +144,40 @@ class QueryExecuter {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
             if ( isset($this->queryStructure->parameters) ) {
-                foreach ($this->queryStructure->parameters as $cond) {
-                    if ( isset( $this->parameters[$cond->getparameter] ) ) {
-                        $par =& $this->parameters[$cond->getparameter];
-                    } elseif ( isset( $this->parameters[$cond->postparameter] ) ) {
-                        $par =& $this->parameters[$cond->postparameter];
-                    } elseif ( isset( $cond->constant ) ) {
-                        $par =& $cond->constant;
-                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-                        $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
-                    } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
-                        $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
+                if (isset($this->pageStatus) AND $this->pageStatus != '') {
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        $par =& $this->pageStatus->getValue( $cond );
+                        $STH->bindParam($cond->placeholder, $par);
                     }
-                    // echo "$cond->placeholder, $par";
-                    $STH->bindParam($cond->placeholder, $par);
+                } else {
+                    // this section of the if is going to be removed with time
+                    // all parameters must come from pagestatus
+                    // todo that we need to se this property everywhere
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        if (isset($this->parameters[$cond->getparameter])) {
+                            $par =& $this->parameters[$cond->getparameter];
+                        } elseif (isset($this->parameters[$cond->postparameter])) {
+                            $par =& $this->parameters[$cond->postparameter];
+                        } elseif (isset($cond->constant)) {
+                            $par =& $cond->constant;
+                        } elseif (isset($cond->sessionparameter) and $this->sessionWrapper->isSessionParameterSet($cond->sessionparameter)) {
+                            $par =& $this->sessionWrapper->getPointerToSessionParameter($cond->sessionparameter);
+                        } elseif (isset($cond->returnedid) and $this->queryReturnedValues->isValueSet($cond->returnedid)) {
+                            $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
+                        }
+                        // echo "$cond->placeholder, $par";
+                        $STH->bindParam($cond->placeholder, $par);
+                    }
                 }
             }
-
+            
             $STH->execute();
 			
 			$endtime = microtime(true);
 			
-	        if (($time_end - $time_start) > 5) {
+	        if (($endtime - $starttime) > 5) {
 	            $this->logger->write('WARNING QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
 	        }
-			
-			$duration = $endtime - $starttime;
 
             // $STH->debugDumpParams();
 
