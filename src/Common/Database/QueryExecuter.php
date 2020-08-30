@@ -145,9 +145,12 @@ class QueryExecuter {
 
             if ( isset($this->queryStructure->parameters) ) {
                 if (isset($this->pageStatus) AND $this->pageStatus != '') {
+                    $queryParameters = array();
                     foreach ($this->queryStructure->parameters as $cond) {
-                        $par =& $this->pageStatus->getValue( $cond );
-                        $STH->bindParam($cond->placeholder, $par);
+                        $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
+                    }
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                     }
                 } else {
                     // this section of the if is going to be removed with time
