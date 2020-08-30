@@ -211,8 +211,9 @@ class PageStatus {
      */
     function callDefaultFunction($defaultfunction): string {
         switch ($defaultfunction) {
-            case 'getcurrentyear': return date("Y");
-            case 'getcurrentmonth': return date("m");
+            case 'getcurrentyear': return date('Y');
+            case 'getcurrentmonth': return date('m');
+            case 'getcurrentquarter': return ceil(date('n') / 3);
             case 'getcurrentriskcenter' : return $this->sessionWrapper->getSessionParameter('siteid');
             default: return '';
         }

@@ -170,7 +170,7 @@ class QueryExecuter {
                     }
                 }
             }
-            
+
             $STH->execute();
 			
 			$endtime = microtime(true);
