@@ -56,6 +56,8 @@ class JsonTemplate {
     }
 
     /**
+     * @deprecated
+     *
      * Get the value to populate a form or a query from the right array of variables: GET POST SESSION
      * @param $field: stdClass must contain fieldname attibute
      * @param $entity: possible entity loaded from the database (TODO: must become a property of this class)
@@ -85,6 +87,18 @@ class JsonTemplate {
                 }
             }
         }
+    }
+
+    /**
+     * Get the value to populate a form or a query from the right array of variables: GET POST SESSION
+     * @param $field: stdClass must contain fieldname attibute
+     * @param $entity: possible entity loaded from the database (TODO: must become a property of this class)
+     */
+    public function getValueFromPageStatus( $field, $entity = null ) {
+        if ( !is_null($entity) ) {
+            $this->jsonTemplateFactoriesContainer->getPageStatus()->setLastEntity($entity);
+        }
+        return $this->jsonTemplateFactoriesContainer->getPageStatus()->getValue( $field );
     }
 
     /**

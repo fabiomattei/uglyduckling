@@ -22,6 +22,7 @@ class FormJsonTemplate extends JsonTemplate {
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
+        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
 
         // If there are dummy data they take precedence in order to fill the form
         if ( isset($this->resource->get->dummydata) ) {
@@ -61,7 +62,7 @@ class FormJsonTemplate extends JsonTemplate {
 		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
 			foreach ($row as $field) {
-				$value = $this->getValue($field, $parameters, array(), $sessionWrapper, $entity);
+                $value = $this->getValueFromPageStatus($field, $entity);
                 if (in_array( $field->type, array('textfield', 'number') )) {
                     $formBlock->addGenericField( $field, $value ?? '');
                 }
