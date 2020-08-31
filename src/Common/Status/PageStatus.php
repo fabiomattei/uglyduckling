@@ -127,7 +127,7 @@ class PageStatus {
             return $this->postparameters[$field->postparameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->sessionparameter) ) {
-            return $this->sessionparameters[$field->sessionparameter] ?? $this->checkForDefaultValues($field);
+            return ($this->sessionWrapper->isSessionParameterSet( $field->sessionparameter ) ? $this->sessionWrapper->getSessionParameter( $field->sessionparameter ) : $this->checkForDefaultValues($field) );
         }
     }
 
