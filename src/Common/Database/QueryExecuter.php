@@ -182,6 +182,10 @@ class QueryExecuter {
 	            $this->logger->write('WARNING QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
 	        }
 
+	        if ( isset( $this->queryStructure->debug ) ) {
+                $STH->debugDumpParams();
+            }
+	        // to debug
             // $STH->debugDumpParams();
 
             return $STH;
