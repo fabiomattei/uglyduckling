@@ -22,7 +22,6 @@ class FormJsonTemplate extends JsonTemplate {
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
-        $pageStatus = ;
 
         // If there are dummy data they take precedence in order to fill the form
         if ( isset($this->resource->get->dummydata) ) {
