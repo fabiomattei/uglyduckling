@@ -49,7 +49,7 @@ class FormJsonTemplate extends JsonTemplate {
 		$formBlock = new BaseHTMLForm;
         $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
-        $formBlock->setAction( $this->action ?? '');
+        $formBlock->setAction( $this->resource->get->form->action ?? $this->action ?? '');
         $formBlock->setMethod( $this->resource->get->form->method ?? 'POST');
 		$fieldRows = array();
 		
