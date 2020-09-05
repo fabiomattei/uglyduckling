@@ -111,12 +111,13 @@ class RoutersContainer {
      */
     function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
         $resource = $json_action->resource;
-        $parameters = $json_action->parameters;
         $url_parameters = 'res='.$resource.'&';
-        foreach ($parameters as $par) {
-            $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+        if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+            foreach ($json_action->parameters as $par) {
+                $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+            }
+            $url_parameters = rtrim($url_parameters, '&');
         }
-        $url_parameters = rtrim($url_parameters, '&');
 
         $action = $jsonloader->getActionRelatedToResource($resource);
 
