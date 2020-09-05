@@ -204,6 +204,7 @@ class PageStatus {
     function checkForDefaultValues( $field ): string {
         if ( isset($field->default) ) return $field->default;
         if ( isset($field->defaultfunction) ) return $this->callDefaultFunction($field->defaultfunction);
+        return '';
     }
     
     /**
