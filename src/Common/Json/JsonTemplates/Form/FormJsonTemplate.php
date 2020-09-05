@@ -56,6 +56,7 @@ class FormJsonTemplate extends JsonTemplate {
                 $this->jsonTemplateFactoriesContainer->getApplicationBuilder()->getJsonloader(),
                 $this->jsonTemplateFactoriesContainer->getPageStatus()
             );
+            $formBlock->addHiddenField('res', $this->resource->get->form->action->resource);
         } else {
             $url = $this->action ?? '';
         }
