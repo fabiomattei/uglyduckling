@@ -18,7 +18,7 @@ class PageStatus {
     public /* array */ $getParameters;
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
-    public $lastEntity; // result of last query in database, it is a stdClass
+    public /* stdClass */ $lastEntity; // result of last query in database
     public /* DBConnection */ $dbconnection;
 
     /**

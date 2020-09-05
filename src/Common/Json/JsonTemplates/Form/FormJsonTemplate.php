@@ -22,7 +22,7 @@ class FormJsonTemplate extends JsonTemplate {
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
-        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
+        $pageStatus = ;
 
         // If there are dummy data they take precedence in order to fill the form
         if ( isset($this->resource->get->dummydata) ) {
@@ -49,7 +49,19 @@ class FormJsonTemplate extends JsonTemplate {
 		$formBlock = new BaseHTMLForm;
         $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
-        $formBlock->setAction( $this->resource->get->form->action->resource ?? $this->action ?? '');
+
+		// Setting the action to link the form to
+        if ( isset($this->resource->get->form->action) ) {
+            $url = $this->jsonTemplateFactoriesContainer->getApplicationBuilder()->make_resource_url(
+                $this->resource->get->form->action,
+                $this->jsonTemplateFactoriesContainer->getApplicationBuilder()->getJsonloader(),
+                $this->jsonTemplateFactoriesContainer->getPageStatus()
+            );
+        } else {
+            $url = $this->action ?? '';
+        }
+        $formBlock->setAction( $url );
+
         $formBlock->setMethod( $this->resource->get->form->method ?? 'POST');
 		$fieldRows = array();
 		
