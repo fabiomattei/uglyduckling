@@ -83,7 +83,11 @@ class JsonResourceBasicController extends Controller {
         if ( count( $validation_rules ) == 0 ) {
             return true;
         } else {
-            $parms = $this->secondGump->sanitize( array_merge($this->postParameters, $this->filesParameters) );
+            $parms = $this->secondGump->sanitize( array_merge(
+                is_null($this->postParameters) ? array() : $this->postParameters,
+                    is_null($this->filesParameters) ? array() : $this->filesParameters
+                )
+            );
             $this->secondGump->validation_rules( $validation_rules );
             $this->secondGump->filter_rules( $filter_rules );
             $this->postParameters = $this->secondGump->run( $parms );
