@@ -87,7 +87,7 @@ class JsonLoader {
      * @throws \Exception
      */
 	public function getActionRelatedToResource( string $resource_key ): string {
-        return 'entitydashboard';
+        return 'officeentitydashboard';
         //if ( array_key_exists( $resource_key, $this->resourcesIndex ) ) {
         //    switch ( $this->resourcesIndex[$resource_key]->type ) {
         //        case 'index': return '';
