@@ -110,7 +110,7 @@ class JsonResourceBasicController extends Controller {
         $this->queryBuilder = new QueryBuilder;
         $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
 
-        $this->postresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
+        $this->postresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->postParameters['res'] );
 
         $conn = $this->applicationBuilder->getDbconnection()->getDBH();
 

@@ -103,7 +103,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ( $resource->metadata->type == FormJsonTemplate::blocktype ) {
             $this->formBuilder->setResource($resource);
-            $this->formBuilder->setAction($this->action . '&postres=' . $resource->name);
+            $this->formBuilder->setAction($this->action . '&res=' . $resource->name);
             return $this->formBuilder->createForm();
         }
 
