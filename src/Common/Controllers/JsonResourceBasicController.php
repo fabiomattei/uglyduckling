@@ -151,9 +151,7 @@ class JsonResourceBasicController extends Controller {
 
             $this->queryExecuter->setDBH($conn);
             $this->queryExecuter->setQueryBuilder($this->queryBuilder);
-            $this->queryExecuter->setParameters(array());
-            $this->queryExecuter->setPostParameters(array());
-            $this->queryExecuter->setSessionWrapper($this->pageStatus->getSessionWrapper());
+            $this->queryExecuter->setPageStatus($this->pageStatus);
 
             if (isset($this->postresource->post->sessionupdates->queryset) AND is_array($this->postresource->post->sessionupdates->queryset)) {
                 foreach ($this->postresource->post->sessionupdates->queryset as $query) {
@@ -175,14 +173,9 @@ class JsonResourceBasicController extends Controller {
                             $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
                         }
                     }
-                    if ( isset( $sessionvar->constantparamenter ) ) {
-                        $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
-                    }
-                    if ( isset( $sessionvar->getparamenter ) ) {
-                        $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparamenter]);
-                    }
-                    if ( isset( $sessionvar->postparamenter ) ) {
-                        $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparamenter]);
+
+                    if ( isset( $sessionvar->constantparamenter ) OR isset( $sessionvar->getparameter ) OR isset( $sessionvar->postparameter )) {
+                        $this->pageStatus->getSessionWrapper()->setSessionParameter( $sessionvar->name, $this->pageStatus->getValue($sessionvar) );
                     }
                 }
             }

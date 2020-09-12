@@ -131,6 +131,15 @@ class PageStatus {
         }
     }
 
+    public function printStatus() {
+        echo "GET PARAMETERS";
+        print_r($this->getParameters);
+        echo "POST PARAMETERS";
+        print_r($this->postparameters);
+        echo "SESSION PARAMETERS";
+        print_r($this->sessionparameter);
+    }
+
     /**
      * @param $sessionupdates
      *

@@ -2,7 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Database;
 
-use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 use PDO;
 use PDOException;
