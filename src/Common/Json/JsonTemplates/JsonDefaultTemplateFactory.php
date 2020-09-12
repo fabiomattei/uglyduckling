@@ -103,19 +103,16 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
 
         if ( $resource->metadata->type == FormJsonTemplate::blocktype ) {
             $this->formBuilder->setResource($resource);
-            $this->formBuilder->setAction($this->action . '&res=' . $resource->name);
             return $this->formBuilder->createForm();
         }
 
         if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
             $this->searchJsonTemplate->setResource($resource);
-            $this->searchJsonTemplate->setAction( $this->action, '&res=' . $resource->name);
             return $this->searchJsonTemplate->createHTMLBlock();
         }
 
         if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
             $this->exportJsonTemplate->setResource($resource);
-            $this->exportJsonTemplate->setAction($this->action . '&res=' . $resource->name);
             return $this->exportJsonTemplate->createHTMLBlock();
         }
     }
