@@ -23,10 +23,6 @@ class JsonResourceBasicController extends Controller {
     protected $resource;
     protected $internalGetParameters;
 
-    public function loadResource() {
-    	$this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->getParameters['res'] );
-    }
-
 	/**
      * check the parameters sent through the url and check if they are ok from
      * the point of view of the validation rules
@@ -66,6 +62,24 @@ class JsonResourceBasicController extends Controller {
     public function check_authorization_get_request(): bool {
         if(!isset($this->resource->allowedgroups)) return false;
         return in_array($this->pageStatus->getSessionWrapper()->getSessionGroup(), $this->resource->allowedgroups);
+    }
+
+    /**
+     * Check the presence of res variable in GET or POST array
+     * Filter the string
+     * load the json resource in $this->resource
+     */
+    public function check_and_load_resource() {
+        $resource_name = filter_input(INPUT_POST | INPUT_POST, 'res', FILTER_SANITIZE_STRING);
+        if ( ! $resource_name ) {
+            return false;
+        } else {
+            if ( strlen( $resource_name ) > 0 ) {
+                $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $resource_name );
+                return true;
+            }
+        }
+        return false;
     }
 
 	/**
@@ -216,8 +230,7 @@ class JsonResourceBasicController extends Controller {
         $this->applicationBuilder->getJsonloader()->loadIndex();
 
         if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
-            if ( $this->check_get_request() ) {
-	            $this->loadResource();
+            if ( $this->check_and_load_resource() ) {
 	            if ( $this->check_authorization_get_request() ) {
                     if ( $this->second_check_get_request() ) {
 	            		$this->getRequest();	
@@ -231,17 +244,16 @@ class JsonResourceBasicController extends Controller {
                 $this->show_get_error_page();
             }
         } else {
-            if ( $this->check_post_request() ) {
-	            $this->loadResource();
-                    if ( $this->check_authorization_post_request() ) {
-                        if ( $this->check_post_request() ) {
-                            $this->postRequest();	
-                        } else {
-                            $this->show_post_error_page();
-                        }
+            if ( $this->check_and_load_resource() ) {
+                if ( $this->check_authorization_post_request() ) {
+                    if ( $this->check_post_request() ) {
+                        $this->postRequest();
                     } else {
-                        $this->show_post_authorization_error_page();
+                        $this->show_post_error_page();
                     }
+                } else {
+                    $this->show_post_authorization_error_page();
+                }
             } else {
                 $this->show_post_error_page();
             }
