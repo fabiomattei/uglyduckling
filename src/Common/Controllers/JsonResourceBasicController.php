@@ -70,7 +70,7 @@ class JsonResourceBasicController extends Controller {
      * load the json resource in $this->resource
      */
     public function check_and_load_resource() {
-        $resource_name = filter_input(INPUT_POST | INPUT_POST, 'res', FILTER_SANITIZE_STRING);
+        $resource_name = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);
         if ( ! $resource_name ) {
             return false;
         } else {
