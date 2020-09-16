@@ -132,11 +132,11 @@ class PageStatus {
     }
 
     public function printStatus() {
-        echo "GET PARAMETERS</br>";
+        echo "</br>GET PARAMETERS</br>";
         print_r($this->getParameters);
-        echo "POST PARAMETERS</br>";
+        echo "</br>POST PARAMETERS</br>";
         print_r($this->postParameters);
-        echo "SESSION PARAMETERS</br>";
+        echo "</br>SESSION PARAMETERS</br>";
         print_r($this->sessionparameter);
     }
 
