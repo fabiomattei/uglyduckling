@@ -58,7 +58,7 @@ class JsonResourceBasicController extends Controller {
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_get_request(): bool {
+    public function check_authorization_resource_request(): bool {
         if(!isset($this->resource->allowedgroups)) return false;
         return in_array($this->pageStatus->getSessionWrapper()->getSessionGroup(), $this->resource->allowedgroups);
     }
@@ -176,15 +176,6 @@ class JsonResourceBasicController extends Controller {
         }
     }
 
-    /**
-     * This method has to be implemented by inerithed class
-     * It return true by defult for compatiblity issues
-     */
-    public function check_authorization_post_request(): bool {
-        if(!isset($this->resource->allowedgroups)) return false;
-        return in_array($this->pageStatus->getSessionWrapper()->getSessionGroup(), $this->resource->allowedgroups);
-    }
-
     public function showPage() {
         $time_start = microtime(true);
 
@@ -192,7 +183,7 @@ class JsonResourceBasicController extends Controller {
 
         if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
             if ( $this->check_and_load_resource() ) {
-	            if ( $this->check_authorization_get_request() ) {
+	            if ( $this->check_authorization_resource_request() ) {
                     if ( $this->second_check_get_request() ) {
 	            		$this->getRequest();	
 	            	} else {
@@ -206,7 +197,7 @@ class JsonResourceBasicController extends Controller {
             }
         } else {
             if ( $this->check_and_load_resource() ) {
-                if ( $this->check_authorization_post_request() ) {
+                if ( $this->check_authorization_resource_request() ) {
                     if ( $this->check_post_request() ) {
                         $this->postRequest();
                     } else {
