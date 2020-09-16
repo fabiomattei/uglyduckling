@@ -122,19 +122,17 @@ class JsonResourceBasicController extends Controller {
     public function postRequest() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
-        $this->queryExecuter->setLogger($this->applicationBuilder->getLogger());
-
-        $this->postresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->postParameters['res'] );
+        $this->queryExecuter->setLogger( $this->applicationBuilder->getLogger() );
 
         $conn = $this->applicationBuilder->getDbconnection()->getDBH();
 
         // performing transactions
-        if (isset($this->postresource->post->transactions)) {
+        if (isset($this->resource->post->transactions)) {
             $returnedIds = new QueryReturnedValues;
             try {
                 //$conn->beginTransaction();
                 $this->queryExecuter->setDBH( $conn );
-                foreach ($this->postresource->post->transactions as $transaction) {
+                foreach ($this->resource->post->transactions as $transaction) {
                     $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                     $this->queryExecuter->setQueryStructure( $transaction );
                     $this->queryExecuter->setPostParameters( $this->postParameters );
@@ -160,15 +158,15 @@ class JsonResourceBasicController extends Controller {
         }
 
         // session updates
-        if (isset($this->postresource->post->sessionupdates)) {
+        if (isset($this->resource->post->sessionupdates)) {
             $querySet = new QuerySet;
 
             $this->queryExecuter->setDBH($conn);
             $this->queryExecuter->setQueryBuilder($this->queryBuilder);
             $this->queryExecuter->setPageStatus($this->pageStatus);
 
-            if (isset($this->postresource->post->sessionupdates->queryset) AND is_array($this->postresource->post->sessionupdates->queryset)) {
-                foreach ($this->postresource->post->sessionupdates->queryset as $query) {
+            if (isset($this->resource->post->sessionupdates->queryset) AND is_array($this->resource->post->sessionupdates->queryset)) {
+                foreach ($this->resource->post->sessionupdates->queryset as $query) {
                     $this->queryExecuter->setQueryStructure($query);
                     $result = $this->queryExecuter->executeSql();
                     $entity = $result->fetch();
@@ -180,8 +178,8 @@ class JsonResourceBasicController extends Controller {
                 }
             }
 
-            if (isset($this->postresource->post->sessionupdates->sessionvars) AND is_array($this->postresource->post->sessionupdates->sessionvars)) {
-                foreach ($this->postresource->post->sessionupdates->sessionvars as $sessionvar) {
+            if (isset($this->resource->post->sessionupdates->sessionvars) AND is_array($this->resource->post->sessionupdates->sessionvars)) {
+                foreach ($this->resource->post->sessionupdates->sessionvars as $sessionvar) {
                     if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
                         if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
                             $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
@@ -196,15 +194,15 @@ class JsonResourceBasicController extends Controller {
         }
 
         // redirect
-        if (isset($this->postresource->post->redirect)) {
-            if (isset($this->postresource->post->redirect->internal) AND $this->postresource->post->redirect->internal->type === 'onepageback') {
+        if (isset($this->resource->post->redirect)) {
+            if (isset($this->resource->post->redirect->internal) AND $this->resource->post->redirect->internal->type === 'onepageback') {
                 $this->redirectToPreviousPage();
-            } elseif (isset($this->postresource->post->redirect->internal) AND $this->postresource->post->redirect->internal->type === 'twopagesback') {
+            } elseif (isset($this->resource->post->redirect->internal) AND $this->resource->post->redirect->internal->type === 'twopagesback') {
                 $this->redirectToSecondPreviousPage();
-            } elseif ( isset($this->postresource->post->redirect->action) AND isset($this->postresource->post->redirect->action->resource) ) {
+            } elseif ( isset($this->resource->post->redirect->action) AND isset($this->resource->post->redirect->action->resource) ) {
                 $this->redirectToPage(
                     $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
-                        $this->applicationBuilder->getJsonloader()->getActionRelatedToResource($this->postresource->post->redirect->action->resource), 'res='.$this->postresource->post->redirect->action->resource
+                        $this->applicationBuilder->getJsonloader()->getActionRelatedToResource($this->resource->post->redirect->action->resource), 'res='.$this->resource->post->redirect->action->resource
                     )
                 );
             } else {
