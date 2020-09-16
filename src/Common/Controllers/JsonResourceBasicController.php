@@ -5,7 +5,6 @@ namespace Fabiom\UglyDuckling\Common\Controllers;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
-use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\ValidationBuilder;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
@@ -135,10 +134,7 @@ class JsonResourceBasicController extends Controller {
                 foreach ($this->resource->post->transactions as $transaction) {
                     $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                     $this->queryExecuter->setQueryStructure( $transaction );
-                    $this->queryExecuter->setPostParameters( $this->postParameters );
-                    $this->queryExecuter->setLogger( $this->applicationBuilder->getLogger() );
-                    $this->queryExecuter->setSessionWrapper( $this->pageStatus->getSessionWrapper() );
-                    $this->queryExecuter->setQueryReturnedValues( $returnedIds );
+                    $this->queryExecuter->setPageStatus($this->pageStatus);
                     if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
                         if (isset($transaction->label)) {
                             $returnedIds->setValue($transaction->label, $this->queryExecuter->executeSql());
@@ -157,41 +153,8 @@ class JsonResourceBasicController extends Controller {
             }
         }
 
-        // session updates
-        if (isset($this->resource->post->sessionupdates)) {
-            $querySet = new QuerySet;
-
-            $this->queryExecuter->setDBH($conn);
-            $this->queryExecuter->setQueryBuilder($this->queryBuilder);
-            $this->queryExecuter->setPageStatus($this->pageStatus);
-
-            if (isset($this->resource->post->sessionupdates->queryset) AND is_array($this->resource->post->sessionupdates->queryset)) {
-                foreach ($this->resource->post->sessionupdates->queryset as $query) {
-                    $this->queryExecuter->setQueryStructure($query);
-                    $result = $this->queryExecuter->executeSql();
-                    $entity = $result->fetch();
-                    if (isset($query->label)) {
-                        $querySet->setResult($query->label, $entity);
-                    } else {
-                        $querySet->setResultNoKey($entity);
-                    }
-                }
-            }
-
-            if (isset($this->resource->post->sessionupdates->sessionvars) AND is_array($this->resource->post->sessionupdates->sessionvars)) {
-                foreach ($this->resource->post->sessionupdates->sessionvars as $sessionvar) {
-                    if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
-                        if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
-                            $this->pageStatus->getSessionWrapper()->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
-                        }
-                    }
-
-                    if ( isset( $sessionvar->constantparamenter ) OR isset( $sessionvar->getparameter ) OR isset( $sessionvar->postparameter )) {
-                        $this->pageStatus->getSessionWrapper()->setSessionParameter( $sessionvar->name, $this->pageStatus->getValue($sessionvar) );
-                    }
-                }
-            }
-        }
+        // if resource->post->sessionupdates is set I need to update the session
+        if ( isset($this->resource->post->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->post->sessionupdates );
 
         // redirect
         if (isset($this->resource->post->redirect)) {

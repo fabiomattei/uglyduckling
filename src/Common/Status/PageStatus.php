@@ -61,7 +61,7 @@ class PageStatus {
     }
 
     /**
-     * @param mixed $postParameters
+     * @param array $postParameters
      */
     public function setPostParameters($postParameters): void {
         $this->postParameters = $postParameters;
@@ -118,13 +118,13 @@ class PageStatus {
             return $field->constant;
         }
         if ( isset($field->parameter) ) {
-            return $this->parameters[$field->parameter] ?? $this->checkForDefaultValues($field);
+            return $this->getParameters[$field->parameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->getparameter) ) {
             return $this->getParameters[$field->getparameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->postparameter) ) {
-            return $this->postparameters[$field->postparameter] ?? $this->checkForDefaultValues($field);
+            return $this->postParameters[$field->postparameter] ?? $this->checkForDefaultValues($field);
         }
         if ( isset($field->sessionparameter) ) {
             return ($this->sessionWrapper->isSessionParameterSet( $field->sessionparameter ) ? $this->sessionWrapper->getSessionParameter( $field->sessionparameter ) : $this->checkForDefaultValues($field) );
@@ -132,11 +132,11 @@ class PageStatus {
     }
 
     public function printStatus() {
-        echo "GET PARAMETERS";
+        echo "GET PARAMETERS</br>";
         print_r($this->getParameters);
-        echo "POST PARAMETERS";
-        print_r($this->postparameters);
-        echo "SESSION PARAMETERS";
+        echo "POST PARAMETERS</br>";
+        print_r($this->postParameters);
+        echo "SESSION PARAMETERS</br>";
         print_r($this->sessionparameter);
     }
 
