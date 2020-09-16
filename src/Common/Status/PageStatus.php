@@ -200,11 +200,11 @@ class PageStatus {
                 if ( isset( $sessionvar->constantparamenter ) ) {
                     $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
                 }
-                if ( isset( $sessionvar->getparamenter ) ) {
-                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparamenter]);
+                if ( isset( $sessionvar->getparameter ) ) {
+                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparameter]);
                 }
-                if ( isset( $sessionvar->postparamenter ) ) {
-                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparamenter]);
+                if ( isset( $sessionvar->postparameter ) ) {
+                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparameter]);
                 }
             }
         }
