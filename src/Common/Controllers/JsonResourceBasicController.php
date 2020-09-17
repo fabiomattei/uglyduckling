@@ -17,9 +17,8 @@ use Gump;
  */
 class JsonResourceBasicController extends Controller {
 
-	public /* array */ $get_validation_rules = array( 'res' => 'required|max_len,50' );
-    public /* array */ $get_filter_rules     = array( 'res' => 'trim' );
-    protected $resource;
+    protected $resource; // Json structure
+    /* TODO remove following parameter */
     protected $internalGetParameters;
 
     /**
