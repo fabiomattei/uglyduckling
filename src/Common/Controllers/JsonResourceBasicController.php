@@ -22,38 +22,6 @@ class JsonResourceBasicController extends Controller {
     protected $resource;
     protected $internalGetParameters;
 
-	/**
-     * check the parameters sent through the url and check if they are ok from
-     * the point of view of the validation rules
-     */
-    public function second_check_get_request() {
-        // checking if resource defines any get parameter
-        if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) return true;
-
-    	$this->secondGump = new Gump;
-
-    	$val = new ValidationBuilder;
-    	$parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
-    	$validation_rules = $val->getValidationRoules( $parametersGetter->getGetParameters() );
-    	$filter_rules = $val->getValidationFilters( $parametersGetter->getGetParameters() );
-
-        if ( count( $validation_rules ) == 0 ) {
-            return true;
-        } else {
-            $parms = $this->secondGump->sanitize( $this->getParameters );
-            $this->secondGump->validation_rules( $validation_rules );
-            $this->secondGump->filter_rules( $filter_rules );
-            $this->internalGetParameters = $this->secondGump->run( $parms );
-			$this->unvalidated_parameters = $parms;
-            if ( $this->internalGetParameters === false ) {
-				$this->readableErrors = $this->secondGump->get_readable_errors(true);
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
-
     /**
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
@@ -81,6 +49,39 @@ class JsonResourceBasicController extends Controller {
         return false;
     }
 
+    /**
+     * check the parameters sent through the url and check if they are ok from
+     * the point of view of the validation rules
+     */
+    public function second_check_get_request() {
+        // checking if resource defines any get parameter
+        if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) return true;
+
+        $this->secondGump = new Gump;
+
+        $val = new ValidationBuilder;
+        $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
+        $validation_rules = $val->getValidationRoules( $parametersGetter->getGetParameters() );
+        $filter_rules = $val->getValidationFilters( $parametersGetter->getGetParameters() );
+
+        if ( count( $validation_rules ) == 0 ) {
+            return true;
+        } else {
+            $parms = $this->secondGump->sanitize( $this->getParameters );
+            $this->secondGump->validation_rules( $validation_rules );
+            $this->secondGump->filter_rules( $filter_rules );
+            $this->internalGetParameters = $this->secondGump->run( $parms );
+            $this->pageStatus->setGetParameters( $this->internalGetParameters );
+            $this->unvalidated_parameters = $parms;
+            if ( $this->internalGetParameters === false ) {
+                $this->readableErrors = $this->secondGump->get_readable_errors(true);
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
 	/**
      * check the parameters sent through the url and check if they are ok from
      * the point of view of the validation rules
@@ -104,6 +105,7 @@ class JsonResourceBasicController extends Controller {
             $this->secondGump->validation_rules( $validation_rules );
             $this->secondGump->filter_rules( $filter_rules );
             $this->postParameters = $this->secondGump->run( $parms );
+            $this->pageStatus->setPostParameters( $this->postParameters );
 			$this->unvalidated_parameters = $parms;
             if ( $this->postParameters === false ) {
 				$this->readableErrors = $this->secondGump->get_readable_errors(true);
