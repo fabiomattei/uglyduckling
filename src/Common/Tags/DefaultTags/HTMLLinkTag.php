@@ -23,7 +23,8 @@ class HTMLLinkTag extends BaseHTMLTag {
      * Takes a JSON resource (object or array or composite) and convert it in HTML
      */
     function getHTML(): string {
-        return '';
+        $url = $this->applicationBuilder->make_resource_url( $this->jsonStructure, $this->applicationBuilder->getJsonloader(), $this->pageStatus );
+        return '<a href="'.$url.'">'.$this->jsonStructure->label.'</a>';
     }
 
 }
