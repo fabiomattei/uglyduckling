@@ -16,6 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Transaction\TransactionJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Uniform\UniformJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
@@ -29,6 +30,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     private /* ExportJsonTemplate */ $exportJsonTemplate;
     private /* DashboardJsonTemplate */ $dashboardJsonTemplate;
     private /* UniformJsonTemplate */ $uniformJsonTemplate;
+    private /* TransactionJsonTemplate */ $transactionJsonTemplate;
 
     /**
      * PanelBuilder constructor.
@@ -51,6 +53,9 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->uniformJsonTemplate = new UniformJsonTemplate;
         $this->uniformJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
+        $this->transactionJsonTemplate = new TransactionJsonTemplate;
+        $this->transactionJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
+
         $this->action = '';
     }
 
@@ -63,7 +68,8 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
             InfoJsonTemplate::blocktype,
             FormJsonTemplate::blocktype,
             'search', 
-            'export'
+            'export',
+            'transaction'
         ));
     }
 
