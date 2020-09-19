@@ -236,7 +236,7 @@ class QueryExecuter {
         	            $STH->bindParam($cond->placeholder.'error', $error);
         	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_LOB);
         	        */
-                    
+
         	        $cont++;
         	    }
         	}
@@ -247,7 +247,8 @@ class QueryExecuter {
         	$this->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
     	}
 
-        $STH->debugDumpParams();
+    	// uncomment for debug purpose
+        // $STH->debugDumpParams();
 
         return $this->DBH->lastInsertId();
     }
@@ -264,25 +265,18 @@ class QueryExecuter {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
             if ( isset($this->queryStructure->parameters) ) {
+                $queryParameters = array();
                 foreach ($this->queryStructure->parameters as $cond) {
-                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
-                        $par =& $this->getParameters[$cond->getparameter];
-                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-                        $par =& $this->postParameters[$cond->postparameter];
-                    } elseif ( isset( $cond->constant ) ) {
-                        $par =& $cond->constant;
-                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-                        $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
-                    } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
-                        $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
-                    }
-                    // echo "$cond->placeholder, $par";
-                    $STH->bindParam($cond->placeholder, $par);
+                    $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
+                }
+                foreach ($this->queryStructure->parameters as $cond) {
+                    $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                 }
             }
 
             $STH->execute();
 
+            // uncomment for debug purpose
             // $STH->debugDumpParams();
 
             return $STH;
