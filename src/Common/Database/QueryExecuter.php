@@ -143,33 +143,12 @@ class QueryExecuter {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
             if ( isset($this->queryStructure->parameters) ) {
-                if (isset($this->pageStatus) AND $this->pageStatus != '') {
-                    $queryParameters = array();
-                    foreach ($this->queryStructure->parameters as $cond) {
-                        $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
-                    }
-                    foreach ($this->queryStructure->parameters as $cond) {
-                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
-                    }
-                } else {
-                    // this section of the if is going to be removed with time
-                    // all parameters must come from pagestatus
-                    // todo that we need to se this property everywhere
-                    foreach ($this->queryStructure->parameters as $cond) {
-                        if (isset($this->parameters[$cond->getparameter])) {
-                            $par =& $this->parameters[$cond->getparameter];
-                        } elseif (isset($this->parameters[$cond->postparameter])) {
-                            $par =& $this->parameters[$cond->postparameter];
-                        } elseif (isset($cond->constant)) {
-                            $par =& $cond->constant;
-                        } elseif (isset($cond->sessionparameter) and $this->sessionWrapper->isSessionParameterSet($cond->sessionparameter)) {
-                            $par =& $this->sessionWrapper->getPointerToSessionParameter($cond->sessionparameter);
-                        } elseif (isset($cond->returnedid) and $this->queryReturnedValues->isValueSet($cond->returnedid)) {
-                            $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
-                        }
-                        // echo "$cond->placeholder, $par";
-                        $STH->bindParam($cond->placeholder, $par);
-                    }
+                $queryParameters = array();
+                foreach ($this->queryStructure->parameters as $cond) {
+                    $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
+                }
+                foreach ($this->queryStructure->parameters as $cond) {
+                    $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                 }
             }
 
@@ -302,20 +281,14 @@ class QueryExecuter {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
             if ( isset($this->queryStructure->parameters) ) {
-                foreach ($this->queryStructure->parameters as $cond) {
-                    if ( isset( $this->getParameters[$cond->getparameter] ) ) {
-                        $par =& $this->getParameters[$cond->getparameter];
-                    } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-                        $par =& $this->postParameters[$cond->postparameter];
-                    } elseif ( isset( $cond->constant ) ) {
-                        $par =& $cond->constant;
-                    } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-                        $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
-                    } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
-                        $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
+                if ( isset($this->queryStructure->parameters) ) {
+                    $queryParameters = array();
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
                     }
-                    // echo "$cond->placeholder, $par";
-                    $STH->bindParam($cond->placeholder, $par);
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                    }
                 }
             }
 
