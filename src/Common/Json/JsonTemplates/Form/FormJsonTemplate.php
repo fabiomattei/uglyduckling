@@ -17,11 +17,10 @@ class FormJsonTemplate extends JsonTemplate {
     public function createForm() {
         $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
         $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
-        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
-        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
+        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
 
         // If there are dummy data they take precedence in order to fill the form
         if ( isset($this->resource->get->dummydata) ) {
@@ -35,8 +34,7 @@ class FormJsonTemplate extends JsonTemplate {
                 $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setQueryStructure( $this->resource->get->query );
                 $queryExecuter->setLogger( $logger );
-                $queryExecuter->setSessionWrapper( $sessionWrapper );
-                if (isset( $this->parameters ) ) $queryExecuter->setGetParameters( $this->parameters );
+                $queryExecuter->setPageStatus( $pageStatus );
 
                 $result = $queryExecuter->executeSql();
                 $entity = $result->fetch();
