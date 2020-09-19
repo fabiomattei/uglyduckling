@@ -207,18 +207,15 @@ class QueryExecuter {
         	if ( isset($this->queryStructure->parameters) ) {
         	    $cont = 1;
         	    foreach ($this->queryStructure->parameters as $cond) {
-        	        if ( isset( $this->getParameters[$cond->getparameter] ) ) {
-        	            $par =& $this->getParameters[$cond->getparameter];
-        	            $STH->bindParam($cond->placeholder, $par);
-        	        } elseif ( isset( $this->postParameters[$cond->postparameter] ) ) {
-        	            $par =& $this->postParameters[$cond->postparameter];
-        	            $STH->bindParam($cond->placeholder, $par);
-        	        } elseif ( isset( $cond->constant ) ) {
-        	            $par =& $cond->constant;
-        	            $STH->bindParam($cond->placeholder, $par);
-        	        } elseif ( isset( $cond->sessionparameter ) AND $this->sessionWrapper->isSessionParameterSet( $cond->sessionparameter ) ) {
-        	            $par =& $this->sessionWrapper->getPointerToSessionParameter( $cond->sessionparameter );
-        	            $STH->bindParam($cond->placeholder, $par);
+                    $queryParameters = array();
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
+                    }
+                    foreach ($this->queryStructure->parameters as $cond) {
+                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                    }
+
+                    /*
         	        } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
         	            $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
         	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
@@ -238,9 +235,8 @@ class QueryExecuter {
         	            $STH->bindParam($cond->placeholder.'name', $name);
         	            $STH->bindParam($cond->placeholder.'error', $error);
         	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_LOB);
-        	        }
-        	        // echo "$cond->placeholder, $par";
-        	
+        	        */
+                    
         	        $cont++;
         	    }
         	}
