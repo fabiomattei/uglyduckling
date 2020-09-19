@@ -22,7 +22,7 @@ class InfoJsonTemplate extends JsonTemplate {
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
-        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
+        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
 
         // If there are dummy data they take precedence in order to fill the info box
         if ( isset($this->resource->get->dummydata) ) {
@@ -36,7 +36,7 @@ class InfoJsonTemplate extends JsonTemplate {
                 $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setQueryStructure( $this->resource->get->query );
                 $queryExecuter->setLogger( $logger );
-                if (isset( $this->parameters ) ) $queryExecuter->setGetParameters( $parameters );
+                $queryExecuter->setPageStatus( $pageStatus );
 
                 $result = $queryExecuter->executeSql();
                 $entity = $result->fetch();
