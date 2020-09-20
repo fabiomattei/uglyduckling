@@ -15,6 +15,8 @@ use stdClass;
 class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
+    private /* ApplicationBuilder */$applicationBuilder;
+    private /* PageStatus */ $pageStatus;
 
     /**
      * Set the json structure in order to build the menu
@@ -26,6 +28,14 @@ class MenuJsonTemplate extends JsonTemplate {
         $this->menuStructure = $menuStructure;
     }
 
+    public function setApplicationBuilder( $applicationBuilder ) {
+        $this->applicationBuilder = $applicationBuilder;
+    }
+
+    public function setPageStatus( $pageStatus ) {
+        $this->pageStatus = $pageStatus;
+    }
+
     public function createMenu() {
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
@@ -34,23 +44,29 @@ class MenuJsonTemplate extends JsonTemplate {
         $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
+
+        // make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus )
+
         foreach ($this->menuStructure->menu as $menuitem) {
             if (isset($menuitem->submenu)) {
                 $submenuItems = array();
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label;
-                    $mi->url = LinkBuilder::getURL( $routerContainer, $item->action, $item->resource );
+                    $mi->url = $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus );
+                        //LinkBuilder::getURL( $routerContainer, $item->action, $item->resource );
                     $submenuItems[] = $mi;
                 }
-                $menu->addNavItemWithDropdown( $menuitem->label, 
-                    LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
+                $menu->addNavItemWithDropdown( $menuitem->label,
+                    $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus ),
+                    // LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
                     false, false, 
                     $submenuItems 
                 );
             } else {
-                $menu->addNavItem( $menuitem->label, 
-                    LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
+                $menu->addNavItem( $menuitem->label,
+                    $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus ),
+                    // LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
                     false, false 
                 );
             }

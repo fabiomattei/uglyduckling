@@ -39,6 +39,8 @@ class JsonDashboardController extends JsonResourceBasicController {
 
         $this->menubuilder->setMenuStructure( $menuresource );
         $this->menubuilder->setJsonTemplateFactoriesContainer( $this->applicationBuilder->getJsonTemplateFactoriesContainer() );
+        $this->menubuilder->setApplicationBuilder( $this->applicationBuilder );
+        $this->menubuilder->setPageStatus( $this->pageStatus );
 
         $htmlBlock = $this->applicationBuilder->getHTMLBlock( $this->resource );
 

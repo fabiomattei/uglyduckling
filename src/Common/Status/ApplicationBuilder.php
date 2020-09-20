@@ -46,6 +46,8 @@ class ApplicationBuilder {
     }
 
     /**
+     * @deprecated
+     *
      * @param $json_action
      * @param JsonLoader $jsonloader
      * @param PageStatus $pageStatus
@@ -72,6 +74,35 @@ class ApplicationBuilder {
      */
     public function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
         return $this->routerContainer->make_resource_url( $json_action, $jsonloader, $pageStatus );
+    }
+
+    /**
+     *
+     * @param $json_action
+     * @param PageStatus $pageStatus
+     * @return mixed
+     *
+     * Example of a json action:
+     *
+     * {
+     *   "type": "link",
+     *   "label": "Info",
+     *   "resource": "myinfopanel",
+     *   "tooltip": "My tool tip text",
+     *   "onclick": "My on click text",
+     *   "buttoncolor": "green",
+     *   "outline": false,
+     *   "parameters":[
+     *     {"name": "id", "sqlfield": "id"},
+     *     {"name": "secondid", "constantparameter": "3"},
+     *     {"name": "thirdid", "getparameter": "mygetparameter"}
+     *   ]
+     * }
+     *
+     * Check out: http://www.uddocs.com/docs/actions
+     */
+    public function make_resource_url_simplified( $json_action, PageStatus $pageStatus ) {
+        return $this->routerContainer->make_resource_url( $json_action, $this->jsonloader, $pageStatus );
     }
 
     /**

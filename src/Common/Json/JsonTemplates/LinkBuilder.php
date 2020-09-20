@@ -9,12 +9,12 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
-use Fabiom\UglyDuckling\Common\Blocks\Button;
 
 class LinkBuilder {
 
     /**
      * @deprecated
+     * used only in the menu
      *
      * used only for menu generation
      */
