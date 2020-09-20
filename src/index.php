@@ -8,7 +8,6 @@ $severWrapper = new Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 $htmlTemplateLoader = new Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 $htmlTagsFactory = new Fabiom\UglyDuckling\Common\Tags\HTMLTagsFactory;
-$linkBuilder = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 $htmlTemplateLoader->setPath('Templates/HTML/');
 
 $messagesBlock = new Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages();
@@ -70,7 +69,6 @@ $applicationBuilder->setMessages($messagesBlock);
 $applicationBuilder->setHtmlTemplateLoader($htmlTemplateLoader);
 $applicationBuilder->setHtmlTagsFactory($htmlTagsFactory);
 $applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-$applicationBuilder->setLinkBuilder($linkBuilder);
 $applicationBuilder->setMailer(new Fabiom\UglyDuckling\Common\Mailer\BaseMailer('', ''));
 
 if ( $sessionWrapper->isUserLoggedIn() ) {

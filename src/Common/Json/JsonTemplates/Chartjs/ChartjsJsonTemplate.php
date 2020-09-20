@@ -22,9 +22,6 @@ class ChartjsJsonTemplate extends JsonTemplate {
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
-        $linkBuilder = $this->jsonTemplateFactoriesContainer->getLinkBuilder();
-        $jsonloader = $this->jsonTemplateFactoriesContainer->getJsonloader();
-        $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
 
         $queryExecuter->setDBH( $dbconnection->getDBH() );
 		$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');

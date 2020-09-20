@@ -12,7 +12,6 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 class TableJsonTemplate extends JsonTemplate {
@@ -26,7 +25,6 @@ class TableJsonTemplate extends JsonTemplate {
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
         $this->queryBuilder = new QueryBuilder;
-        $this->linkBuilder = new LinkBuilder;
         $this->query = '';
         $this->method = self::GET_METHOD;
     }
@@ -48,7 +46,6 @@ class TableJsonTemplate extends JsonTemplate {
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
 
         $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
-        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
         $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();

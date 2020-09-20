@@ -7,7 +7,6 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
@@ -30,7 +29,6 @@ class ApplicationBuilder {
     public /* HtmlTemplateLoader */ $htmlTemplateLoader;
     public /* HTMLTagsFactory */ $htmlTagsFactory;
     public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
-    public /* LinkBuilder */ $linkBuilder;
 	public /* BaseMailer */ $mailer;
 
     /**
@@ -276,20 +274,6 @@ class ApplicationBuilder {
      */
     public function setJsonTemplateFactoriesContainer(JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer): void {
         $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
-    }
-
-    /**
-     * @return LinkBuilder
-     */
-    public function getLinkBuilder(): LinkBuilder {
-        return $this->linkBuilder;
-    }
-
-    /**
-     * @param LinkBuilder $linkBuilder
-     */
-    public function setLinkBuilder(LinkBuilder $linkBuilder): void {
-        $this->linkBuilder = $linkBuilder;
     }
 	
     /**

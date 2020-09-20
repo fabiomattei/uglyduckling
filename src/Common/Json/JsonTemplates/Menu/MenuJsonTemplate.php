@@ -4,7 +4,6 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
 use stdClass;
 
 /**

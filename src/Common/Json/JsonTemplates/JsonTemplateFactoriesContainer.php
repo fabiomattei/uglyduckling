@@ -171,13 +171,6 @@ class JsonTemplateFactoriesContainer {
     /**
      * @return mixed
      */
-    public function getLinkBuilder() {
-        return $this->applicationBuilder->getLinkBuilder();
-    }
-
-    /**
-     * @return mixed
-     */
     public function getLogger() {
         return $this->applicationBuilder->getLogger();
     }

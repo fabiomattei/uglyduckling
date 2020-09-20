@@ -8,12 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
-use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder;
-use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 
 class JsonTemplateFactory {
 
