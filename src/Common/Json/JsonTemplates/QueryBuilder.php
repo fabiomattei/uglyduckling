@@ -8,6 +8,12 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
+/**
+ * @deprecated
+ *
+ * Class QueryBuilder
+ * @package Fabiom\UglyDuckling\Common\Json\JsonTemplates
+ */
 class QueryBuilder {
 	
     private $queryStructure;

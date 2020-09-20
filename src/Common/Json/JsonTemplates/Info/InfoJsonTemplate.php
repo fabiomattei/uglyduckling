@@ -33,7 +33,6 @@ class InfoJsonTemplate extends JsonTemplate {
             if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
                 $queryExecuter->setDBH( $dbconnection->getDBH() );
 				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-                $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setQueryStructure( $this->resource->get->query );
                 $queryExecuter->setLogger( $logger );
                 $queryExecuter->setPageStatus( $pageStatus );

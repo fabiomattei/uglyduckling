@@ -31,7 +31,6 @@ class FormJsonTemplate extends JsonTemplate {
             if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
                 $queryExecuter->setDBH( $dbconnection->getDBH() );
 				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-                $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setQueryStructure( $this->resource->get->query );
                 $queryExecuter->setLogger( $logger );
                 $queryExecuter->setPageStatus( $pageStatus );
@@ -93,7 +92,6 @@ class FormJsonTemplate extends JsonTemplate {
                 if ($field->type === 'sqldropdown') {
                     if ( isset($field->query) AND isset($dbconnection) ) {
                         $queryExecuter->setDBH( $dbconnection->getDBH() );
-                        $queryExecuter->setQueryBuilder( $queryBuilder );
                         $queryExecuter->setQueryStructure( $field->query );
                         $queryExecuter->setLogger( $logger );
                         $queryExecuter->setPageStatus( $pageStatus );

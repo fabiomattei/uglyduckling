@@ -133,7 +133,6 @@ class JsonResourceBasicController extends Controller {
                 //$conn->beginTransaction();
                 $this->queryExecuter->setDBH( $conn );
                 foreach ($this->resource->post->transactions as $transaction) {
-                    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                     $this->queryExecuter->setQueryStructure( $transaction );
                     $this->queryExecuter->setPageStatus($this->pageStatus);
                     if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {

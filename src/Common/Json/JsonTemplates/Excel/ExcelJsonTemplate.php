@@ -50,7 +50,6 @@ class ExcelJsonTemplate {
 
     public function getWriter() {
         $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
         $this->queryExecuter->setQueryStructure( $this->resource->post->query );
         if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
         $entities = $this->queryExecuter->executeSql();

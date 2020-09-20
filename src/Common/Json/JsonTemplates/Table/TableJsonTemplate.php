@@ -64,7 +64,6 @@ class TableJsonTemplate extends JsonTemplate {
             if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
                 $queryExecuter->setDBH( $dbconnection->getDBH() );
 				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-                $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setLogger( $logger );
                 $queryExecuter->setPageStatus( $pageStatus );
                 if ( $serverWrapper->isGetRequest() ) {

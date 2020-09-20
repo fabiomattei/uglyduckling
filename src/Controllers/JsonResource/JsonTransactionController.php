@@ -38,7 +38,6 @@ class JsonTransactionController extends JsonResourceBasicController {
                 //$conn->beginTransaction();
                 $this->queryExecuter->setDBH( $conn );
                 foreach ($this->resource->get->transactions as $transaction) {
-                    $this->queryExecuter->setQueryBuilder( $this->queryBuilder );
                     $this->queryExecuter->setQueryStructure( $transaction );
                     $this->queryExecuter->setPageStatus($this->pageStatus);
                     if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {

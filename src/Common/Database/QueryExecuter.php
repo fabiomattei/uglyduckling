@@ -5,7 +5,6 @@ namespace Fabiom\UglyDuckling\Common\Database;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 use PDO;
 use PDOException;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * It executes queries on the database
@@ -15,7 +14,6 @@ class QueryExecuter {
     private $queryStructure;
     private $parameters;
     private $DBH;
-    private $queryBuilder;
     private /* Logger */ $logger;
     private /* SessionWrapper */ $sessionWrapper;
     private /* QueryReturnedValues */ $queryReturnedValues;
@@ -45,13 +43,6 @@ class QueryExecuter {
      */
     public function setDBH( $DBH ) {
         $this->DBH = $DBH;
-    }
-
-    /**
-     * Database connection handler setter
-     */
-    public function setQueryBuilder( $queryBuilder ) {
-        $this->queryBuilder = $queryBuilder;
     }
 
     /**
@@ -138,7 +129,7 @@ class QueryExecuter {
 			$endtime = microtime(true);
 			
 	        if (($endtime - $starttime) > 5) {
-	            $this->logger->write('WARNING QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+	            $this->logger->write('WARNING QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
 	        }
 
 	        if ( isset( $this->queryStructure->debug ) ) {

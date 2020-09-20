@@ -30,7 +30,6 @@ class SessionJsonSetup {
             $conn = $dbconnection->getDBH();
 
             $queryExecuter->setDBH($conn);
-            $queryExecuter->setQueryBuilder($queryBuilder);
             $queryExecuter->setParameters(array());
             $queryExecuter->setPostParameters(array());
             $queryExecuter->setSessionWrapper($sessionWrapper);
