@@ -112,25 +112,6 @@ class QueryExecuter {
     }
 
     /**
-     * @deprecated
-     */
-    public function executeQuery() {
-        if($this->queryStructure->type === 'select') {
-            return $this->executeSelect();
-        }
-        if($this->queryStructure->type === 'insert') {
-            return $this->insert();
-        }
-        if($this->queryStructure->type === 'update') {
-            return $this->update();
-        }
-        if($this->queryStructure->type === 'delete') {
-            return $this->delete();
-        }
-        return $this->executeSql();
-    }
-
-    /**
      * Perform a SELECT query on the database
      *
      * @return mixed
@@ -346,34 +327,6 @@ class QueryExecuter {
             return $this->executeSqlDelete();
         }
     }
-
-    /**
-     * It gets all rows contained in a table
-     */
-    function executeSelect() {
-        $this->queryBuilder = new QueryBuilder;
-        $this->queryBuilder->setQueryStructure( $this->queryStructure );
-        $this->queryBuilder->setParameters( $this->parameters );
-
-        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
-        try {
-            $STH->setFetchMode(PDO::FETCH_OBJ);
-
-			if ( isset($this->queryStructure->conditions) ) {
-            	foreach ($this->queryStructure->conditions as $cond) {
-                	$par =& $this->parameters[$cond->value];
-               		$STH->bindParam(':'.$cond->value, $par);
-            	}
-			}
-
-            $STH->execute();
-
-            return $STH;
-        } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
-        }
-    }
 	
     /**
      * It gets all rows contained in a table
@@ -421,117 +374,4 @@ class QueryExecuter {
             $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
-
-    /**
-     * Insert a row in the database.
-     * Set the updated and created fields to current date and time
-     * It accpts an array containing as key the field name and as value
-     * the field content.
-     *
-     * @param $fields :: array of fields to insert
-     *
-     * EX.
-     * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
-     */
-    function insert() {
-        $this->queryBuilder = new QueryBuilder;
-        $this->queryBuilder->setQueryStructure( $this->queryStructure );
-        $this->queryBuilder->setParameters( $this->parameters );
-
-        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
-
-        try {
-            if ( isset($this->queryStructure->fields) ) {
-                foreach ($this->queryStructure->fields as $field) {
-                    $par =& $this->parameters[$field->value];
-                    $STH->bindParam(':'.$field->value, $par);
-                }
-            }
-
-            $STH->execute();
-            
-            return $STH;
-        } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
-        }
-    }
-
-    /**
-     * This function updates a single row of the delared table.
-     * It uptades the row haveing id = $id
-     * @param $id :: integer id
-     * @param $fields :: array of fields to update
-     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
-     *
-     */
-    function update() {
-        $this->queryBuilder = new QueryBuilder;
-        $this->queryBuilder->setQueryStructure( $this->queryStructure );
-        $this->queryBuilder->setParameters( $this->parameters );
-
-        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
-
-        try {
-            if ( isset($this->queryStructure->fields) ) {
-                foreach ($this->queryStructure->fields as $field) {
-                    $par =& $this->parameters[$field->value];
-                    $STH->bindParam(':'.$field->value, $par);
-                }
-            }
-
-            if ( isset($this->queryStructure->conditions) ) {
-                foreach ($this->queryStructure->conditions as $cond) {
-                    $par =& $this->parameters[$cond->value];
-                    $STH->bindParam(':'.$cond->value, $par);
-                }
-            }
-
-            $STH->execute();
-            
-            return $STH;
-        } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
-        }
-    }
-
-    /**
-     * This is the basic function for one row from a table specifying the primary key
-     * of the row you want to delete.
-     * Once you created a instance of the DAO object you can do for example:
-     *
-     * $tododao->delete( 15 );
-     * this will delete the row having the primary key set to 15.
-     *
-     * Remeber that you need to set the primary key in the tabledao.php file
-     * in a costant named DB_TABLE_PK
-     *
-     * Example:
-     * const DB_TABLE_PK = 'stp_id';
-     */
-    function delete() {
-        $this->queryBuilder = new QueryBuilder;
-        $this->queryBuilder->setQueryStructure( $this->queryStructure );
-        $this->queryBuilder->setParameters( $this->parameters );
-
-        $STH = $this->DBH->prepare($this->queryBuilder->createQuery());
-
-        try {
-            if ( isset($this->queryStructure->conditions) ) {
-                foreach ($this->queryStructure->conditions as $cond) {
-                    $par =& $this->parameters[$cond->value];
-                    $STH->bindParam(':'.$cond->value, $par);
-                }
-            }
-
-            $STH->execute();
-            
-            return $STH;
-        } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
-        }
-    }
-
 }

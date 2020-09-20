@@ -10,8 +10,6 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Export\ExportJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Search\SearchJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
@@ -26,8 +24,6 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
     private /* ChartjsJsonTemplate */ $chartjsBuilder;
     private /* InfoJsonTemplate */ $infoBuilder;
     private /* FormJsonTemplate */ $formBuilder;
-    private /* SearchJsonTemplate */ $searchJsonTemplate;
-    private /* ExportJsonTemplate */ $exportJsonTemplate;
     private /* DashboardJsonTemplate */ $dashboardJsonTemplate;
     private /* UniformJsonTemplate */ $uniformJsonTemplate;
     private /* TransactionJsonTemplate */ $transactionJsonTemplate;
@@ -45,10 +41,6 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
         $this->infoBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->formBuilder = new FormJsonTemplate;
         $this->formBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->searchJsonTemplate = new SearchJsonTemplate;
-        $this->searchJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->exportJsonTemplate = new ExportJsonTemplate;
-        $this->exportJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->dashboardJsonTemplate = new DashboardJsonTemplate;
         $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
         $this->uniformJsonTemplate = new UniformJsonTemplate;
@@ -67,8 +59,6 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
             ChartjsJsonTemplate::blocktype,
             InfoJsonTemplate::blocktype,
             FormJsonTemplate::blocktype,
-            'search', 
-            'export',
             'transaction'
         ));
     }
@@ -78,7 +68,7 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
      *
      * The HTML block type depends from the resource->metadata->type field in the json strcture
      *
-     * @param $resource json strcture
+     * @param $resource json structure
      * @param CardHTMLBlock $panelBlock
      */
     public function getHTMLBlock( $resource ) {
@@ -112,15 +102,6 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
             return $this->formBuilder->createForm();
         }
 
-        if ($resource->metadata->type == SearchJsonTemplate::blocktype ) {
-            $this->searchJsonTemplate->setResource($resource);
-            return $this->searchJsonTemplate->createHTMLBlock();
-        }
-
-        if ($resource->metadata->type == ExportJsonTemplate::blocktype ) {
-            $this->exportJsonTemplate->setResource($resource);
-            return $this->exportJsonTemplate->createHTMLBlock();
-        }
     }
 
 }
