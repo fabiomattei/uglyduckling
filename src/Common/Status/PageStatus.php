@@ -181,7 +181,6 @@ class PageStatus {
         $querySet = new QuerySet;
 
         if (isset($sessionupdates->queryset) AND is_array($sessionupdates->queryset)) {
-            $queryBuilder = new QueryBuilder;
             $queryExecuter = new QueryExecuter;
 
             $queryExecuter->setDBH($this->dbconnection);

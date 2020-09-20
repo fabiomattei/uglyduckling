@@ -243,12 +243,6 @@ class QueryExecuter {
      */
     function executeSqlDelete() {
         try {
-            //echo $this->queryStructure->sql;
-            //echo "GET";
-            //print_r($this->getParameters);
-            //echo "POST";
-            //print_r($this->postParameters);
-
             $STH = $this->DBH->prepare( $this->queryStructure->sql );
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
