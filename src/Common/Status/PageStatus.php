@@ -208,7 +208,28 @@ class PageStatus {
             }
         }
     }
-    
+
+    /**
+     * This method check if a field has a defined default value or a default function.
+     * It is used in form fields, info panel fields, table fields and more
+     *
+     * Example:
+     * Imagine there is a json resource of type table cotaining the following fields:
+     * "fields": [
+     *    {"headline": "Title", "sqlfield": "title", "default":"" },
+     *    {"headline": "Description", "sqlfield": "description", "default":"" },
+     *    {"headline": "Date", "sqlfield": "created", "defaultfunction":"getcurrentdate" }
+     * ]
+     *
+     * As you can see the first two fields define a default value, the last one defines a default function
+     * In case the field resulting from SQL query is null:
+     * - The first field has a default value of an empty string
+     * - The second field has a default value of an empty string
+     * - The third field has a default function (See method callDefaultFunction)
+     *
+     * @param $field
+     * @return string
+     */
     function checkForDefaultValues( $field ): string {
         if ( isset($field->default) ) return $field->default;
         if ( isset($field->defaultfunction) ) return $this->callDefaultFunction($field->defaultfunction);
@@ -216,10 +237,27 @@ class PageStatus {
     }
     
     /**
+     * This method specifies a set of strings corresponding to function for a default setting
+     * It is used in form fields, info panel fields, table fields and more
+     *
+     * Example:
+     * Imagine there is a json resource of type table cotaining the following fields:
+     * "fields": [
+     *    {"headline": "Title", "sqlfield": "title", "default":""},
+     *    {"headline": "Description", "sqlfield": "description", "default":""},
+     *    {"headline": "Date", "sqlfield": "created", "defaultfunction":"getcurrentdate" }
+     * ]
+     *
+     * As you can see the last field, named Date, gather data from the field that is resulting
+     * from SQL query. In case that is null the method callDefaultFunction will be
+     * called specifying the function getcurrentdate that return date('Y-m-d', time())
+     *
      * @Override this function in order to have more default functions
      */
-    function callDefaultFunction($defaultfunction): string {
-        switch ($defaultfunction) {
+    function callDefaultFunction(string $functionName): string {
+        switch ( $functionName ) {
+            case 'getcurrentdate': return date('Y-m-d', time());
+            case 'getcurrentdatetime': return date('Y-m-d H:i:s', time());
             case 'getcurrentyear': return date('Y');
             case 'getcurrentmonth': return date('m');
             case 'getcurrentquarter': return ceil(date('n') / 3);
