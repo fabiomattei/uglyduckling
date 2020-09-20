@@ -5,7 +5,6 @@ namespace Fabiom\UglyDuckling\Common\Controllers;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\ValidationBuilder;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Gump;
@@ -121,7 +120,6 @@ class JsonResourceBasicController extends Controller {
      */
     public function postRequest() {
         $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
         $this->queryExecuter->setLogger( $this->applicationBuilder->getLogger() );
 
         $conn = $this->applicationBuilder->getDbconnection()->getDBH();
