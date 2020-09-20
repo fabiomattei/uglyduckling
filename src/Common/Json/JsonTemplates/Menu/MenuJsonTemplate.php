@@ -37,14 +37,11 @@ class MenuJsonTemplate extends JsonTemplate {
 
     public function createMenu() {
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
-        $routerContainer = $this->jsonTemplateFactoriesContainer->getRouterContainer();
 
 		$menu = new BaseHTMLMenu;
         $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
-
-        // make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus )
 
         foreach ($this->menuStructure->menu as $menuitem) {
             if (isset($menuitem->submenu)) {
@@ -53,19 +50,16 @@ class MenuJsonTemplate extends JsonTemplate {
                     $mi = new stdClass;
                     $mi->label = $item->label;
                     $mi->url = $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus );
-                        //LinkBuilder::getURL( $routerContainer, $item->action, $item->resource );
                     $submenuItems[] = $mi;
                 }
                 $menu->addNavItemWithDropdown( $menuitem->label,
-                    $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus ),
-                    // LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
+                    $this->applicationBuilder->make_resource_url_simplified( $menuitem, $this->pageStatus ),
                     false, false, 
                     $submenuItems 
                 );
             } else {
                 $menu->addNavItem( $menuitem->label,
-                    $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus ),
-                    // LinkBuilder::getURL( $routerContainer, $menuitem->action, $menuitem->resource ),
+                    $this->applicationBuilder->make_resource_url_simplified( $menuitem, $this->pageStatus ),
                     false, false 
                 );
             }
