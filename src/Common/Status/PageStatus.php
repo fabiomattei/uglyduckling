@@ -95,12 +95,33 @@ class PageStatus {
         return $this->sessionWrapper;
     }
 
-    // TODO it is going to handle query results too
-
     /**
-     * Get the value to populate a form or a query from the right array of variables: GET POST SESSION
+     * Get the value to populate a form, a table or a info panel or more.
+     *
+     * This Class contains all status for the application, consisting in:
+     * - GET parameters
+     * - POST paramenters
+     * - FILES parameters
+     * - SESSION parameters
+     * - SERVER parameters
+     *
+     * Example:
+     * Imagine there is a json resource of type table containing the following fields:
+     * "fields": [
+     *    {"headline": "Title", "sqlfield": "title", "default":"" },
+     *    {"headline": "Description", "sqlfield": "description", "default":"" },
+     *    {"headline": "Date", "sqlfield": "created", "defaultfunction":"getcurrentdate" }
+     * ]
+     * This method is going to return the SQL field returned from the query for each field:
+     * - SQL field title
+     * - SQL field description
+     * - SQL field created
+     *
+     * In case the field is null for any reason this method is going to call de defined defaul value
+     * or default function
+     *
      * @param $field: stdClass must contain fieldname attibute
-     * @param $entity: possible entity loaded from the database (TODO: must become a property of this class)
+     * @param $entity: possible entity loaded from the database
      */
     public function getValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
@@ -129,15 +150,6 @@ class PageStatus {
         if ( isset($field->sessionparameter) ) {
             return ($this->sessionWrapper->isSessionParameterSet( $field->sessionparameter ) ? $this->sessionWrapper->getSessionParameter( $field->sessionparameter ) : $this->checkForDefaultValues($field) );
         }
-    }
-
-    public function printStatus() {
-        echo "</br>GET PARAMETERS</br>";
-        print_r($this->getParameters);
-        echo "</br>POST PARAMETERS</br>";
-        print_r($this->postParameters);
-        echo "</br>SESSION PARAMETERS</br>";
-        print_r($this->sessionparameter);
     }
 
     /**
@@ -214,7 +226,7 @@ class PageStatus {
      * It is used in form fields, info panel fields, table fields and more
      *
      * Example:
-     * Imagine there is a json resource of type table cotaining the following fields:
+     * Imagine there is a json resource of type table containing the following fields:
      * "fields": [
      *    {"headline": "Title", "sqlfield": "title", "default":"" },
      *    {"headline": "Description", "sqlfield": "description", "default":"" },
@@ -241,7 +253,7 @@ class PageStatus {
      * It is used in form fields, info panel fields, table fields and more
      *
      * Example:
-     * Imagine there is a json resource of type table cotaining the following fields:
+     * Imagine there is a json resource of type table containing the following fields:
      * "fields": [
      *    {"headline": "Title", "sqlfield": "title", "default":""},
      *    {"headline": "Description", "sqlfield": "description", "default":""},
