@@ -43,6 +43,8 @@ class FormJsonTemplate extends JsonTemplate {
             }
         }
 
+        $pageStatus->setLastEntity($entity);
+
 		$formBlock = new BaseHTMLForm;
         $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$formBlock->setTitle($this->resource->get->form->title ?? '');
@@ -77,7 +79,7 @@ class FormJsonTemplate extends JsonTemplate {
 		foreach ($fieldRows as $row) {
 			$formBlock->addRow();
 			foreach ($row as $field) {
-                $value = $this->getValueFromPageStatus($field, $entity);
+                $value = $pageStatus->getValue($field);
                 if (in_array( $field->type, array('textfield', 'number') )) {
                     $formBlock->addGenericField( $field, $value ?? '');
                 }
@@ -94,8 +96,7 @@ class FormJsonTemplate extends JsonTemplate {
                         $queryExecuter->setQueryBuilder( $queryBuilder );
                         $queryExecuter->setQueryStructure( $field->query );
                         $queryExecuter->setLogger( $logger );
-                        $queryExecuter->setSessionWrapper( $sessionWrapper );
-                        if (isset( $this->parameters ) ) $queryExecuter->setGetParameters( $this->parameters );
+                        $queryExecuter->setPageStatus( $pageStatus );
 
                         $result = $queryExecuter->executeSql();
                         $fieldOptions = $result->fetchAll();

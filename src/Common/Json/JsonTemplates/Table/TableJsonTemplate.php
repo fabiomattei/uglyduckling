@@ -53,7 +53,6 @@ class TableJsonTemplate extends JsonTemplate {
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
-        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
         $serverWrapper = $this->jsonTemplateFactoriesContainer->getServerWrapper();
 
         // If there are dummy data they take precedence in order to fill the table
@@ -67,7 +66,7 @@ class TableJsonTemplate extends JsonTemplate {
 				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
                 $queryExecuter->setQueryBuilder( $queryBuilder );
                 $queryExecuter->setLogger( $logger );
-                $queryExecuter->setSessionWrapper( $sessionWrapper );
+                $queryExecuter->setPageStatus( $pageStatus );
                 if ( $serverWrapper->isGetRequest() ) {
                     $query = $this->resource->get->query;
                     if (isset( $parameters ) ) $queryExecuter->setParameters( $parameters );
@@ -100,13 +99,12 @@ class TableJsonTemplate extends JsonTemplate {
             $pageStatus->setLastEntity($entity);
 			$tableBlock->addRow();
 			foreach ($table->fields as $field) {
-				$tableBlock->addColumn($this->getValue($field, $parameters, array(), $sessionWrapper, $entity));
+				$tableBlock->addColumn( $pageStatus->getValue($field) );
 			}
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
                     $links .= $applicationBuilder->getHTMLTag( $action, $pageStatus, $applicationBuilder );
-                    //$links .= $linkBuilder->getAppButton( $buttonBuilder, $action, $jsonloader, $routerContainer, $entity );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );

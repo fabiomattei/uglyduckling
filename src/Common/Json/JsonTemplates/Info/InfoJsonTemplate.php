@@ -45,6 +45,8 @@ class InfoJsonTemplate extends JsonTemplate {
             }
         }
 
+        $pageStatus->setLastEntity($entity);
+
 		$infoBlock = new BaseHTMLInfo;
         $infoBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$infoBlock->setTitle($this->resource->get->info->title ?? '');
@@ -59,7 +61,7 @@ class InfoJsonTemplate extends JsonTemplate {
 		foreach ($fieldRows as $row) {
 			$infoBlock->addRow();
 			foreach ($row as $field) {
-                $value = $this->getValue($field, array(), array(), $sessionWrapper, $entity);
+                $value = $pageStatus->getValue($field);
                 if ($field->type === 'textfield') {
                     $infoBlock->addTextField($field->label, $value, $field->width);
                 }
