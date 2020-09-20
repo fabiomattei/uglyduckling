@@ -22,8 +22,6 @@ class ResourceRouter extends RouterBase {
 	const ROUTE_OFFICE_ENTITY_LOGIC         = 'officeentitytransaction';
     const ROUTE_OFFICE_ENTITY_DASHBOARD     = 'officeentitydashboard';
     const ROUTE_OFFICE_ENTITY_NO_TEMPLATE   = 'officeentitynotemplate';
-    const ROUTE_OFFICE_DOCUMENT_ACCEPTEDBOX = 'documentacceptedbox';
-    const ROUTE_OFFICE_DOCUMENT_REJECTEDBOX = 'documentrejectedbox';
 
     /**
      * Overwrite this function
