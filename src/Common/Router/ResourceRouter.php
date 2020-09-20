@@ -38,13 +38,12 @@ class ResourceRouter extends RouterBase {
             self::ROUTE_OFFICE_ENTITY_EXPORT,
             self::ROUTE_OFFICE_ENTITY_LOGIC,
             self::ROUTE_OFFICE_ENTITY_DASHBOARD,
-            self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE,
-            'transaction'
+            self::ROUTE_OFFICE_ENTITY_NO_TEMPLATE
         ));
     }
 
     function getController( string $action ) {
-        if ( $action === 'transaction' ) {
+        if ( $action === self::ROUTE_OFFICE_ENTITY_LOGIC ) {
             return new JsonTransactionController;
         } else {
             return new JsonDashboardController;

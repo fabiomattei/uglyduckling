@@ -8,7 +8,6 @@ namespace Fabiom\UglyDuckling\Common\Utils;
 */
 class StringUtils {
 
-
 	/**
 	 * validate that the parameter is composed only by letters or numbers
 	 * the problem with ctype_alnum is that ctype_alnum('') == false
