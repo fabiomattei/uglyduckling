@@ -21,7 +21,7 @@ class TransactionJsonTemplate extends JsonTemplate {
      *
      * @return MuteHTMLBlock
      */
-    public function createHTMLBlock() {
+    public function getHTMLBlock() {
         return new MuteHTMLBlock;
     }
 
