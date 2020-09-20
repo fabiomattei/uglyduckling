@@ -122,28 +122,10 @@ class RoutersContainer {
         $action = $jsonloader->getActionRelatedToResource( $resource );
 
         switch ( $action ) {
-            case 'entitydashboard':
+            case 'officeentitydashboard':
                 return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
                 break;
-            case 'entitychart':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_CHART, $url_parameters );
-                break;
-            case 'entitytable':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_TABLE, $url_parameters );
-                break;
-            case 'entityform':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_FORM, $url_parameters );
-                break;
-            case 'entityinfo':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_INFO, $url_parameters );
-                break;
-            case 'entitysearch':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_SEARCH, $url_parameters );
-                break;
-            case 'entityexport':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
-                break;
-            case 'entitytransaction':
+            case 'officeentitytransaction':
                 return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
                 break;
 
