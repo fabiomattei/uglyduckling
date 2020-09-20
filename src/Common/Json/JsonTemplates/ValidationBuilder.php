@@ -12,17 +12,21 @@ class ValidationBuilder {
 	
 	public function getValidationRoules( $parameters ) {
 		$rules = array();
-		foreach ($parameters as $par) {
-			$rules[$par->name] = $par->validation;
-		}
+        if( is_array($parameters) ) {
+            foreach ($parameters as $par) {
+                $rules[$par->name] = $par->validation;
+            }
+        }
 		return $rules;
 	}
 	
 	public function getValidationFilters( array $parameters ) {
 		$filters = array();
-		foreach ($parameters as $par) {
-			$filters[$par->name] = 'trim';
-		}
+        if( is_array($parameters) ) {
+            foreach ($parameters as $par) {
+                $filters[$par->name] = 'trim';
+            }
+        }
 		return $filters;
 	}
 
