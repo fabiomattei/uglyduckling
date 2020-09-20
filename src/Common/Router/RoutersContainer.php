@@ -119,7 +119,7 @@ class RoutersContainer {
             $url_parameters = rtrim($url_parameters, '&');
         }
 
-        $action = $jsonloader->getActionRelatedToResource($resource);
+        $action = $jsonloader->getActionRelatedToResource( $resource );
 
         switch ( $action ) {
             case 'entitydashboard':

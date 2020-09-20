@@ -87,22 +87,15 @@ class JsonLoader {
      * @throws \Exception
      */
 	public function getActionRelatedToResource( string $resource_key ): string {
-        return 'officeentitydashboard';
-        //if ( array_key_exists( $resource_key, $this->resourcesIndex ) ) {
-        //    switch ( $this->resourcesIndex[$resource_key]->type ) {
-        //        case 'index': return '';
-        //        case 'dashboard': return 'entitydashboard';
-        //        case 'table': return 'entitytable';
-        //        case 'form': return 'entityform';
-        //        case 'info': return 'entityinfo';
-        //        case 'search': return 'entitysearch';
-        //        case 'export': return 'entityexport';
-        //        case 'chart': return 'entitychart';
-        //        case 'transaction': return 'entitytransaction';
-        //    }
-        //} else {
-        //    throw new \Exception('[JsonLoader] :: It is not possible to associate an action to Resource: '.$resource_key);
-        //}
+        if ( array_key_exists( $resource_key, $this->resourcesIndex ) ) {
+            switch ( $this->resourcesIndex[$resource_key]->type ) {
+                case 'dashboard': return 'officeentitydashboard';
+                case 'transaction': return 'officeentitytransaction';
+                default: return 'officeentitydashboard';
+            }
+        } else {
+            throw new \Exception('[JsonLoader] :: It is not possible to associate an action to Resource: '.$resource_key);
+        }
     }
 
     /**
