@@ -15,8 +15,7 @@ class FormJsonTemplate extends JsonTemplate {
     const blocktype = 'form';
 
     public function createForm() {
-        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
-        $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
+        $queryExecutor = $this->jsonTemplateFactoriesContainer->getQueryExecutor();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
@@ -27,14 +26,11 @@ class FormJsonTemplate extends JsonTemplate {
         } else {
             // If there is a query I look for data to fill the form,
             // if there is not query I do not
-            if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
-                $queryExecuter->setDBH( $dbconnection->getDBH() );
-				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-                $queryExecuter->setQueryStructure( $this->resource->get->query );
-                $queryExecuter->setLogger( $logger );
-                $queryExecuter->setPageStatus( $pageStatus );
+            if ( isset($this->resource->get->query) ) {
+                $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+                $queryExecutor->setQueryStructure( $this->resource->get->query );
 
-                $result = $queryExecuter->executeSql();
+                $result = $queryExecutor->executeSql();
                 $entity = $result->fetch();
             } else {
                 $entity = new \stdClass();
@@ -89,13 +85,10 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
                 }
                 if ($field->type === 'sqldropdown') {
-                    if ( isset($field->query) AND isset($dbconnection) ) {
-                        $queryExecuter->setDBH( $dbconnection->getDBH() );
-                        $queryExecuter->setQueryStructure( $field->query );
-                        $queryExecuter->setLogger( $logger );
-                        $queryExecuter->setPageStatus( $pageStatus );
+                    if ( isset($field->query) ) {
+                        $queryExecutor->setQueryStructure( $field->query );
 
-                        $result = $queryExecuter->executeSql();
+                        $result = $queryExecutor->executeSql();
                         $fieldOptions = $result->fetchAll();
                     } else {
                         $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing object query in json object', __FILE__, __LINE__);

@@ -35,6 +35,7 @@ $dbconnection->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 
 $queryExecutor = new \Fabiom\UglyDuckling\Common\Database\QueryExecuter();
 $queryExecutor->setDBH( $dbconnection->getDBH() );
+$queryExecutor->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 
 $request = new Fabiom\UglyDuckling\Common\Request\Request();
 $request->setServerRequestURI( $severWrapper->getRequestURI() );
