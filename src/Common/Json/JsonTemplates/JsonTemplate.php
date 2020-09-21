@@ -14,14 +14,18 @@ class JsonTemplate {
     protected $resource;
     protected /* string */ $action;
     protected /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
+    protected /* JsonTemplateFactoriesContainer */ $applicationBuilder;
+    protected /* JsonTemplateFactoriesContainer */ $pageStatus;
 
     const blocktype = 'basebuilder';
 
     /**
      * BaseBuilder constructor.
      */
-    public function __construct(  ) {
-
+    public function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
+        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
+        $this->applicationBuilder = $applicationBuilder;
+        $this->pageStatus = $pageStatus;
     }
 
     /**

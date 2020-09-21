@@ -19,7 +19,8 @@ class TableJsonTemplate extends JsonTemplate {
     private $query;
     private $method;
 
-    function __construct() {
+    function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
+        parent::__construct($jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus);
         $this->query = '';
         $this->method = self::GET_METHOD;
     }
@@ -33,10 +34,8 @@ class TableJsonTemplate extends JsonTemplate {
     }
 
     public function createTable() {
-        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
-        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
-        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
-        $queryExecutor = $pageStatus->getQueryExecutor();
+        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
+        $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {

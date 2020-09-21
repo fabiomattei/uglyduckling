@@ -15,12 +15,9 @@ class FormJsonTemplate extends JsonTemplate {
     const blocktype = 'form';
 
     public function createForm() {
-        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
-        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
-
-        $logger = $applicationBuilder->getLogger();
-        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
-        $queryExecutor = $pageStatus->getQueryExecutor();
+        $logger = $this->applicationBuilder->getLogger();
+        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
+        $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the form
         if ( isset($this->resource->get->dummydata) ) {

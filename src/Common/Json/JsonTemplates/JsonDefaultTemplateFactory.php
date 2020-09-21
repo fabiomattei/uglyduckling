@@ -30,19 +30,13 @@ class JsonDefaultTemplateFactory extends JsonTemplate {
      * PanelBuilder constructor.
      * @param $tableBuilder
      */
-    public function __construct( $jsonTemplateFactoriesContainer ) {
-        $this->tableBuilder = new TableJsonTemplate;
-        $this->tableBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->chartjsBuilder = new ChartjsJsonTemplate;
-        $this->chartjsBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->infoBuilder = new InfoJsonTemplate;
-        $this->infoBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->formBuilder = new FormJsonTemplate;
-        $this->formBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->dashboardJsonTemplate = new DashboardJsonTemplate;
-        $this->dashboardJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
-        $this->uniformJsonTemplate = new UniformJsonTemplate;
-        $this->uniformJsonTemplate->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
+    public function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
+        $this->tableBuilder = new TableJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
+        $this->chartjsBuilder = new ChartjsJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
+        $this->infoBuilder = new InfoJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
+        $this->formBuilder = new FormJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
+        $this->dashboardJsonTemplate = new DashboardJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
+        $this->uniformJsonTemplate = new UniformJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
 
         $this->action = '';
     }

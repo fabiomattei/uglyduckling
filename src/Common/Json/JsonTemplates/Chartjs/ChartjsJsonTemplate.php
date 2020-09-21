@@ -15,11 +15,8 @@ class ChartjsJsonTemplate extends JsonTemplate {
     const blocktype = 'chartjs';
 
     public function createChart() {
-        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
-        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
-
-        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
-        $queryExecutor = $pageStatus->getQueryExecutor();
+        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
+        $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
         $queryExecutor->setQueryStructure( $this->resource->get->query );

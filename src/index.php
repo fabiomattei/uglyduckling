@@ -50,7 +50,6 @@ $jsonloader = new Fabiom\UglyDuckling\Common\Json\JsonLoader();
 $jsonloader->setIndexPath($setup->getJsonPath());
 
 $jsonTemplateFactoriesContainer = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
-$jsonTemplateFactoriesContainer->addJsonTemplateFactory( new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory($jsonTemplateFactoriesContainer) );
 
 $pageStatus = new Fabiom\UglyDuckling\Common\Status\PageStatus;
 $pageStatus->setRequest($request);
@@ -74,6 +73,8 @@ $applicationBuilder->setHtmlTemplateLoader($htmlTemplateLoader);
 $applicationBuilder->setHtmlTagsFactory($htmlTagsFactory);
 $applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesContainer);
 $applicationBuilder->setMailer(new Fabiom\UglyDuckling\Common\Mailer\BaseMailer('', ''));
+
+$jsonTemplateFactoriesContainer->addJsonTemplateFactory( new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) );
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user

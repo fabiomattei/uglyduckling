@@ -15,13 +15,9 @@ class InfoJsonTemplate extends JsonTemplate {
     const blocktype = 'info';
 
     public function createInfo() {
-        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
-        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
-
-        $dbconnection = $pageStatus->getDbconnection();
-        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
-        $queryExecutor = $pageStatus->getQueryExecutor();
-
+        $dbconnection = $this->pageStatus->getDbconnection();
+        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
+        $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the info box
         if ( isset($this->resource->get->dummydata) ) {
