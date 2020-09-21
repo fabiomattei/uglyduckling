@@ -10,8 +10,6 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
-use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
-use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class JsonTemplateFactoriesContainer {
@@ -93,57 +91,8 @@ class JsonTemplateFactoriesContainer {
     /**
      * @return mixed
      */
-    public function getRouterContainer() {
-        return $this->applicationBuilder->getRouterContainer();
-    }
-
-    /**
-     * @return SessionWrapper
-     */
-    public function getSessionWrapper() {
-        return $this->pageStatus->getSessionWrapper() ;
-    }
-
-    /**
-     * @return ServerWrapper
-     */
-    public function getServerWrapper() {
-        return $this->pageStatus->getServerWrapper();
-    }
-
-    /**
-     * @return mixed
-     */
     public function getAction() {
         return $this->action;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHtmlTemplateLoader() {
-        return $this->applicationBuilder->getHtmlTemplateLoader();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getJsonloader() {
-        return $this->applicationBuilder->getJsonloader();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLogger() {
-        return $this->applicationBuilder->getLogger();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSetup() {
-        return $this->applicationBuilder->getSetup();
     }
 
     /**
