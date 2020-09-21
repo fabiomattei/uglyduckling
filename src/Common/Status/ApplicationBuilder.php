@@ -21,7 +21,6 @@ class ApplicationBuilder {
     public /* RoutersContainer */ $routerContainer;
     public /* Setup */ $setup;
     public /* SecurityChecker */ $securityChecker;
-    public /* DBConnection */ $dbconnection;
     public /* Redirector */ $redirector;
     public /* JsonLoader */ $jsonloader;
     public /* Logger */ $logger;
@@ -162,20 +161,6 @@ class ApplicationBuilder {
      */
     public function setSecurityChecker(SecurityChecker $securityChecker): void {
         $this->securityChecker = $securityChecker;
-    }
-
-    /**
-     * @return DBConnection
-     */
-    public function getDbconnection(): DBConnection {
-        return $this->dbconnection;
-    }
-
-    /**
-     * @param DBConnection $dbconnection
-     */
-    public function setDbconnection(DBConnection $dbconnection): void {
-        $this->dbconnection = $dbconnection;
     }
 
     /**
