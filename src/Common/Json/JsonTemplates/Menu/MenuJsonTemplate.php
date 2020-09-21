@@ -36,7 +36,8 @@ class MenuJsonTemplate extends JsonTemplate {
     }
 
     public function createMenu() {
-        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
+        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
+        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
 
 		$menu = new BaseHTMLMenu;
         $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
