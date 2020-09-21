@@ -44,15 +44,6 @@ class JsonTemplate {
     }
 
     /**
-     * Setting panelBuilder
-     *
-     * @param JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
-     */
-    public function setJsonTemplateFactoriesContainer( JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer ): void {
-        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
-    }
-
-    /**
      * Return a object that inherit from BaseHTMLBlock class
      * It is an object that has to generate HTML code
      *

@@ -19,6 +19,12 @@ class TableJsonTemplate extends JsonTemplate {
     private $query;
     private $method;
 
+    /**
+     * TableJsonTemplate constructor.
+     * @param $jsonTemplateFactoriesContainer
+     * @param $applicationBuilder
+     * @param $pageStatus
+     */
     function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
         parent::__construct($jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus);
         $this->query = '';
