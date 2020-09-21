@@ -8,7 +8,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
@@ -18,8 +17,6 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 class JsonTemplateFactoriesContainer {
 
     private /* array */ $factories;
-    private /* array */ $parameters;
-    private /* array */ $postparameters;
     private /* string */ $action;
     private /* ApplicationBuilder */ $applicationBuilder;
     private /* PageStatus */ $pageStatus;
@@ -101,13 +98,6 @@ class JsonTemplateFactoriesContainer {
     }
 
     /**
-     * @return DBConnection
-     */
-    public function getDbconnection() {
-        return $this->applicationBuilder->getDbconnection();
-    }
-
-    /**
      * @return SessionWrapper
      */
     public function getSessionWrapper() {
@@ -119,13 +109,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function getServerWrapper() {
         return $this->pageStatus->getServerWrapper();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParameters() {
-        return $this->parameters;
     }
 
     /**
@@ -161,20 +144,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function getSetup() {
         return $this->applicationBuilder->getSetup();
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters($parameters): void {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setPostParameters($parameters): void {
-        $this->postparameters = $parameters;
     }
 
     /**
