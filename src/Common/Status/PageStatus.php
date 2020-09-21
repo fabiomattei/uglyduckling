@@ -41,6 +41,7 @@ class PageStatus {
 
     function setQueryExecutor( $queryExecuter ) {
         $this->queryExecuter = $queryExecuter;
+        $this->queryExecuter->setPageStatus( $this ); // connecting query executor with page status
     }
 
     /**
