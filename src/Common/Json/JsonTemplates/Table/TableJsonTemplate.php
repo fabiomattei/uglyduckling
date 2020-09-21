@@ -37,9 +37,9 @@ class TableJsonTemplate extends JsonTemplate {
     }
 
     public function createTable() {
-        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
+        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
         $queryExecutor = $pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the table
