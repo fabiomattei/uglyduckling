@@ -9,7 +9,6 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
@@ -18,8 +17,6 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class JsonTemplateFactoriesContainer {
 
-    protected /* QueryExecuter */ $queryExecuter;
-    protected /* QueryBuilder */ $queryBuilder;
     private /* array */ $factories;
     private /* array */ $parameters;
     private /* array */ $postparameters;
@@ -32,8 +29,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function __construct() {
         $this->factories = array();
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
     }
 
     /**
@@ -89,20 +84,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function setPageStatus(PageStatus $pageStatus): void {
         $this->pageStatus = $pageStatus;
-    }
-
-    /**
-     * @return QueryExecuter
-     */
-    public function getQueryExecuter(): QueryExecuter {
-        return $this->queryExecuter;
-    }
-
-    /**
-     * @return QueryBuilder
-     */
-    public function getQueryBuilder(): QueryBuilder {
-        return $this->queryBuilder;
     }
 
     /**

@@ -10,21 +10,16 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 class TableJsonTemplate extends JsonTemplate {
 
     const blocktype = 'table';
     const GET_METHOD = 'GET';
-    const POST_METHOD = 'POST';
     private $query;
     private $method;
 
     function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
         $this->query = '';
         $this->method = self::GET_METHOD;
     }
@@ -44,10 +39,9 @@ class TableJsonTemplate extends JsonTemplate {
     public function createTable() {
         $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
+        $queryExecutor = $pageStatus->getQueryExecutor();
 
-        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
         $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
-        $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $serverWrapper = $this->jsonTemplateFactoriesContainer->getServerWrapper();
@@ -59,19 +53,9 @@ class TableJsonTemplate extends JsonTemplate {
             // If there is a query I look for data to fill the table,
             // if there is not query I do not
             if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
-                $queryExecuter->setDBH( $dbconnection->getDBH() );
-				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-                $queryExecuter->setLogger( $logger );
-                $queryExecuter->setPageStatus( $pageStatus );
-                if ( $serverWrapper->isGetRequest() ) {
-                    $query = $this->resource->get->query;
-                    if (isset( $parameters ) ) $queryExecuter->setParameters( $parameters );
-                } else {
-                    $query = $this->resource->post->query;
-                    if (isset( $parameters ) ) $queryExecuter->setPostParameters( $parameters );
-                }
-                $queryExecuter->setQueryStructure( $query );
-                $entities = $queryExecuter->executeSql();
+                $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+                $queryExecutor->setQueryStructure( $this->resource->get->query );
+                $entities = $queryExecutor->executeSql();
             }
         }
 

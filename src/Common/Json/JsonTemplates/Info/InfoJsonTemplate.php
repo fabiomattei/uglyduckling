@@ -3,7 +3,6 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 /**
@@ -16,13 +15,10 @@ class InfoJsonTemplate extends JsonTemplate {
     const blocktype = 'info';
 
     public function createInfo() {
-        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
-        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
-        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
-        $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
+        $queryExecutor = $pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the info box
         if ( isset($this->resource->get->dummydata) ) {
@@ -31,13 +27,10 @@ class InfoJsonTemplate extends JsonTemplate {
             // If there is a query I look for data to fill the info box,
             // if there is not query I do not
             if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
-                $queryExecuter->setDBH( $dbconnection->getDBH() );
-				$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-                $queryExecuter->setQueryStructure( $this->resource->get->query );
-                $queryExecuter->setLogger( $logger );
-                $queryExecuter->setPageStatus( $pageStatus );
+                $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+                $queryExecutor->setQueryStructure( $this->resource->get->query );
 
-                $result = $queryExecuter->executeSql();
+                $result = $queryExecutor->executeSql();
                 $entity = $result->fetch();
             } else {
                 $entity = new \stdClass();
