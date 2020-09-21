@@ -108,6 +108,13 @@ class PageStatus {
     }
 
     /**
+     * @return DBConnection
+     */
+    public function getDbconnection(): DBConnection {
+        return $this->dbconnection;
+    }
+
+    /**
      * Get the value to populate a form, a table or a info panel or more.
      *
      * This Class contains all status for the application, consisting in:
