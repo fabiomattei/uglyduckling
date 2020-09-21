@@ -19,10 +19,12 @@ class JsonTemplateFactory {
     const blocktype = 'basebuilder';
 
     /**
-     * @param $container JsonTemplateFactoriesContainer
+     * BaseBuilder constructor.
      */
-    public function setJsonTemplateFactoriesContainer( JsonTemplateFactoriesContainer $container ) {
-        $this->jsonTemplateFactoriesContainer = $container;
+    public function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
+        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
+        $this->applicationBuilder = $applicationBuilder;
+        $this->pageStatus = $pageStatus;
     }
 
     /**

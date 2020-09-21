@@ -17,7 +17,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Uniform\UniformJsonTemplate;
 use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
-class JsonDefaultTemplateFactory extends JsonTemplate {
+class JsonDefaultTemplateFactory extends JsonTemplateFactory {
 
     private /* TableJsonTemplate */ $tableBuilder;
     private /* ChartjsJsonTemplate */ $chartjsBuilder;
