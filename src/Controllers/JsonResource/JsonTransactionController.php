@@ -13,19 +13,9 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
  * Time: 05:57
  */
 class JsonTransactionController extends JsonResourceBasicController {
-
-    /** @var QueryExecuter */
-    private $queryExecuter;
-    /** @var QueryBuilder */
-    private $queryBuilder;
-
-    function __construct() {
-		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
-    }
 	
 	public function getRequest() {
-        $this->queryExecuter = $this->pageStatus->getQueryExecutor();
+        $this->queryExecutor = $this->pageStatus->getQueryExecutor();
 
         $conn = $this->pageStatus->getDbconnection()->getDBH();
 
@@ -34,18 +24,17 @@ class JsonTransactionController extends JsonResourceBasicController {
             $returnedIds = new QueryReturnedValues;
             try {
                 //$conn->beginTransaction();
-                $this->queryExecuter->setDBH( $conn );
+                $this->queryExecutor->setDBH( $conn );
                 foreach ($this->resource->get->transactions as $transaction) {
-                    $this->queryExecuter->setQueryStructure( $transaction );
-                    $this->queryExecuter->setPageStatus($this->pageStatus);
-                    if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
+                    $this->queryExecutor->setQueryStructure( $transaction );
+                    if ( $this->queryExecutor->getSqlStatmentType() == QueryExecuter::INSERT) {
                         if (isset($transaction->label)) {
-                            $returnedIds->setValue($transaction->label, $this->queryExecuter->executeSql());
+                            $returnedIds->setValue($transaction->label, $this->queryExecutor->executeSql());
                         } else {
-                            $returnedIds->setValueNoKey($this->queryExecuter->executeSql());
+                            $returnedIds->setValueNoKey($this->queryExecutor->executeSql());
                         }
                     } else {
-                        $this->queryExecuter->executeSql();
+                        $this->queryExecutor->executeSql();
                     }
                 }
                 //$conn->commit();

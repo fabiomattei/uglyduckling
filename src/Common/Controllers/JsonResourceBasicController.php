@@ -119,7 +119,7 @@ class JsonResourceBasicController extends Controller {
      * This means all json Resources act in the same way when there is a post request
      */
     public function postRequest() {
-        $this->queryExecuter = $this->pageStatus->getQueryExecutor();
+        $this->queryExecutor = $this->pageStatus->getQueryExecutor();
 
         $conn = $this->pageStatus->getDbconnection()->getDBH();
 
@@ -128,18 +128,17 @@ class JsonResourceBasicController extends Controller {
             $returnedIds = new QueryReturnedValues;
             try {
                 //$conn->beginTransaction();
-                $this->queryExecuter->setDBH( $conn );
+                $this->queryExecutor->setDBH( $conn );
                 foreach ($this->resource->post->transactions as $transaction) {
-                    $this->queryExecuter->setQueryStructure( $transaction );
-                    $this->queryExecuter->setPageStatus($this->pageStatus);
-                    if ( $this->queryExecuter->getSqlStatmentType() == QueryExecuter::INSERT) {
+                    $this->queryExecutor->setQueryStructure( $transaction );
+                    if ( $this->queryExecutor->getSqlStatmentType() == QueryExecuter::INSERT) {
                         if (isset($transaction->label)) {
-                            $returnedIds->setValue($transaction->label, $this->queryExecuter->executeSql());
+                            $returnedIds->setValue($transaction->label, $this->queryExecutor->executeSql());
                         } else {
-                            $returnedIds->setValueNoKey($this->queryExecuter->executeSql());
+                            $returnedIds->setValueNoKey($this->queryExecutor->executeSql());
                         }
                     } else {
-                        $this->queryExecuter->executeSql();
+                        $this->queryExecutor->executeSql();
                     }
                 }
                 //$conn->commit();
