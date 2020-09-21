@@ -32,10 +32,6 @@ class TableJsonTemplate extends JsonTemplate {
         $this->method = $method;
     }
 
-    public function getTableFromResource() {
-        return $this->method === self::GET_METHOD ? $this->resource->get->table : $this->resource->post->table;
-    }
-
     public function createTable() {
         $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
@@ -55,7 +51,7 @@ class TableJsonTemplate extends JsonTemplate {
             }
         }
 
-        $table = $this->getTableFromResource();
+        $table = $this->resource->get->table;
 
 		$tableBlock = new BaseHTMLTable;
         $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );

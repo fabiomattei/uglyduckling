@@ -8,7 +8,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 
 class JsonTemplateFactory {
@@ -20,17 +19,9 @@ class JsonTemplateFactory {
     const blocktype = 'basebuilder';
 
     /**
-     * BaseBuilder constructor.
-     */
-    public function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
-    }
-
-    /**
      * @param $container JsonTemplateFactoriesContainer
      */
-    public function setJsonTemplateFactoriesContainer( JsonTemplateFactoriesContainer $container) {
+    public function setJsonTemplateFactoriesContainer( JsonTemplateFactoriesContainer $container ) {
         $this->jsonTemplateFactoriesContainer = $container;
     }
 
