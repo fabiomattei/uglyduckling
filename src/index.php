@@ -33,6 +33,9 @@ $dbconnection = new Fabiom\UglyDuckling\Common\Database\DBConnection(
 );
 $dbconnection->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 
+$queryExecutor = new \Fabiom\UglyDuckling\Common\Database\QueryExecuter();
+$queryExecutor->setDBH( $dbconnection );
+
 $request = new Fabiom\UglyDuckling\Common\Request\Request();
 $request->setServerRequestURI( $severWrapper->getRequestURI() );
 
@@ -56,6 +59,7 @@ $pageStatus->setGetParameters( $_GET );
 $pageStatus->setPostParameters( $_POST );
 $pageStatus->setFilesParameters( $_FILES );
 $pageStatus->setDbconnection( $dbconnection );
+$pageStatus->setQueryExecutor( $queryExecutor );
 
 $applicationBuilder = new Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 $applicationBuilder->setRouterContainer($routerContainer);

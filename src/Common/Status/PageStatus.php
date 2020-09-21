@@ -5,7 +5,6 @@ namespace Fabiom\UglyDuckling\Common\Status;
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Request\Request;
 use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
@@ -18,6 +17,7 @@ class PageStatus {
     public /* array */ $getParameters;
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
+    private /* QueryExecuter */ $queryExecuter;
     public /* stdClass */ $lastEntity; // result of last query in database
     public /* DBConnection */ $dbconnection;
 
@@ -37,6 +37,10 @@ class PageStatus {
 
     function setSessionWrapper($sessionWrapper) {
         $this->sessionWrapper = $sessionWrapper;
+    }
+
+    function setQueryExecutor( $queryExecuter ) {
+        $this->queryExecuter = $queryExecuter;
     }
 
     /**
@@ -93,6 +97,13 @@ class PageStatus {
      */
     public function getSessionWrapper(): SessionWrapper {
         return $this->sessionWrapper;
+    }
+
+    /**
+     * @return QueryExecuter
+     */
+    public function getQueryExecutor(): QueryExecuter {
+        return $this->queryExecuter;
     }
 
     /**
