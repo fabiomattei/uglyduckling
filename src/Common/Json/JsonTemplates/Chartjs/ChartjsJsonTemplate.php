@@ -15,21 +15,13 @@ class ChartjsJsonTemplate extends JsonTemplate {
     const blocktype = 'chartjs';
 
     public function createChart() {
-        $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
-        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
-        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
-        $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
-        $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
-        $sessionWrapper = $this->jsonTemplateFactoriesContainer->getSessionWrapper();
+        $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
+        $queryExecutor = $pageStatus->getQueryExecutor();
 
-        $queryExecuter->setDBH( $dbconnection->getDBH() );
-		$queryExecuter->setResourceName( $this->resource->name ?? 'undefined ');
-        $queryExecuter->setQueryStructure( $this->resource->get->query );
-        $queryExecuter->setLogger( $logger );
-        $queryExecuter->setSessionWrapper( $sessionWrapper );
-        if (isset( $parameters ) ) $queryExecuter->setParameters( $parameters );
-        $entities = $queryExecuter->executeSql();
+        $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+        $queryExecutor->setQueryStructure( $this->resource->get->query );
+        $entities = $queryExecutor->executeSql();
 
         $chartBlock = new BaseHTMLChart;
         $chartBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
