@@ -25,11 +25,9 @@ class JsonTransactionController extends JsonResourceBasicController {
     }
 	
 	public function getRequest() {
-        $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
-        $this->queryExecuter->setLogger( $this->applicationBuilder->getLogger() );
+        $this->queryExecuter = $this->pageStatus->getQueryExecutor();
 
-        $conn = $this->applicationBuilder->getDbconnection()->getDBH();
+        $conn = $this->pageStatus->getDbconnection()->getDBH();
 
         // performing transactions
         if (isset($this->resource->get->transactions)) {
