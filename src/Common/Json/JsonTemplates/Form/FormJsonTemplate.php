@@ -16,7 +16,6 @@ class FormJsonTemplate extends JsonTemplate {
 
     public function createForm() {
         $queryExecuter = $this->jsonTemplateFactoriesContainer->getQueryExecuter();
-        $queryBuilder = $this->jsonTemplateFactoriesContainer->getQueryBuilder();
         $dbconnection = $this->jsonTemplateFactoriesContainer->getDbconnection();
         $logger = $this->jsonTemplateFactoriesContainer->getLogger();
         $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
