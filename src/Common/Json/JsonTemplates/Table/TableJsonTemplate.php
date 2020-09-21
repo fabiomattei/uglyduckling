@@ -37,14 +37,10 @@ class TableJsonTemplate extends JsonTemplate {
     }
 
     public function createTable() {
+        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
         $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
         $pageStatus = $this->jsonTemplateFactoriesContainer->getPageStatus();
         $queryExecutor = $pageStatus->getQueryExecutor();
-
-        $parameters = $this->jsonTemplateFactoriesContainer->getParameters();
-        $logger = $this->jsonTemplateFactoriesContainer->getLogger();
-        $htmlTemplateLoader = $this->jsonTemplateFactoriesContainer->getHtmlTemplateLoader();
-        $serverWrapper = $this->jsonTemplateFactoriesContainer->getServerWrapper();
 
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {
@@ -52,7 +48,7 @@ class TableJsonTemplate extends JsonTemplate {
         } else {
             // If there is a query I look for data to fill the table,
             // if there is not query I do not
-            if ( isset($this->resource->get->query) AND isset($dbconnection) ) {
+            if ( isset($this->resource->get->query) ) {
                 $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
                 $queryExecutor->setQueryStructure( $this->resource->get->query );
                 $entities = $queryExecutor->executeSql();
