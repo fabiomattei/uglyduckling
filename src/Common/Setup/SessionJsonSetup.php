@@ -2,10 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Setup;
 
-use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class SessionJsonSetup {
@@ -15,11 +13,10 @@ class SessionJsonSetup {
      * To be used during login process
      *
      * @param string $sessionSetupPath
-     * @param QueryBuilder $queryBuilder
-     * @param QueryExecuter $queryExecuter
+     * @param QueryExecuter $queryExecutor
      * @param SessionWrapper $sessionWrapper
      */
-	public static function loadSessionVariables(string $sessionSetupPath, QueryBuilder $queryBuilder, QueryExecuter $queryExecuter, DBConnection $dbconnection, SessionWrapper $sessionWrapper) {
+	public static function loadSessionVariables(string $sessionSetupPath, QueryExecuter $queryExecutor, SessionWrapper $sessionWrapper) {
 		if (file_exists ( $sessionSetupPath )) {
 			$handle = fopen($sessionSetupPath, 'r');
 			$data = fread($handle,filesize($sessionSetupPath));
@@ -27,16 +24,9 @@ class SessionJsonSetup {
 
 			$querySet = new QuerySet;
 
-            $conn = $dbconnection->getDBH();
-
-            $queryExecuter->setDBH($conn);
-            $queryExecuter->setParameters(array());
-            $queryExecuter->setPostParameters(array());
-            $queryExecuter->setSessionWrapper($sessionWrapper);
-
 			foreach ($loadedfile->queryset as $query) {
-                $queryExecuter->setQueryStructure($query);
-                $result = $queryExecuter->executeSql();
+                $queryExecutor->setQueryStructure($query);
+                $result = $queryExecutor->executeSql();
                 $entity = $result->fetch();
                 if (isset($query->label)) {
                     $querySet->setResult($query->label, $entity);
