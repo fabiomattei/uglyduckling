@@ -39,8 +39,8 @@ class PageStatus {
         $this->sessionWrapper = $sessionWrapper;
     }
 
-    function setQueryExecutor( $queryExecuter ) {
-        $this->queryExecuter = $queryExecuter;
+    function setQueryExecutor( $queryExecutor ) {
+        $this->queryExecuter = $queryExecutor;
         $this->queryExecuter->setPageStatus( $this ); // connecting query executor with page status
     }
 
