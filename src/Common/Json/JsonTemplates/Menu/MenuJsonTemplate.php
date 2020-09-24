@@ -14,8 +14,6 @@ use stdClass;
 class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
-    protected /* ApplicationBuilder */$applicationBuilder;
-    protected /* PageStatus */ $pageStatus;
 
     /**
      * Set the json structure in order to build the menu
@@ -28,8 +26,7 @@ class MenuJsonTemplate extends JsonTemplate {
     }
 
     public function createMenu() {
-        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
-        $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
+        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
 
         $menu = new BaseHTMLMenu;
         $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
