@@ -80,17 +80,17 @@ class JsonResourceBasicController extends Controller {
         }
     }
 
-	/**
+    /**
      * check the parameters sent through the url and check if they are ok from
      * the point of view of the validation rules
      */
     public function check_post_request() {
-    	$this->secondGump = new Gump;
+        $this->secondGump = new Gump;
 
-    	$val = new ValidationBuilder;
+        $val = new ValidationBuilder;
         $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
-    	$validation_rules = $val->postValidationRoules( $parametersGetter->getPostParameters() );
-    	$filter_rules = $val->postValidationFilters( $parametersGetter->getPostParameters() );
+        $validation_rules = $val->postValidationRoules( $parametersGetter->getPostParameters() );
+        $filter_rules = $val->postValidationFilters( $parametersGetter->getPostParameters() );
 
         if ( count( $validation_rules ) == 0 ) {
             return true;
@@ -104,9 +104,9 @@ class JsonResourceBasicController extends Controller {
             $this->secondGump->filter_rules( $filter_rules );
             $this->postParameters = $this->secondGump->run( $parms );
             $this->pageStatus->setPostParameters( $this->postParameters );
-			$this->unvalidated_parameters = $parms;
+            $this->unvalidated_parameters = $parms;
             if ( $this->postParameters === false ) {
-				$this->readableErrors = $this->secondGump->get_readable_errors(true);
+                $this->readableErrors = $this->secondGump->get_readable_errors(true);
                 return false;
             } else {
                 return true;
@@ -179,12 +179,12 @@ class JsonResourceBasicController extends Controller {
 
         if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
             if ( $this->check_and_load_resource() ) {
-	            if ( $this->check_authorization_resource_request() ) {
+                if ( $this->check_authorization_resource_request() ) {
                     if ( $this->second_check_get_request() ) {
-	            		$this->getRequest();	
-	            	} else {
-	                	$this->show_second_get_error_page();
-	            	}
+                        $this->getRequest();	
+                    } else {
+                        $this->show_second_get_error_page();
+                    }
                 } else {
                     $this->show_get_authorization_error_page();
                 }

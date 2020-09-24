@@ -14,8 +14,8 @@ use stdClass;
 class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
-    private /* ApplicationBuilder */$applicationBuilder;
-    private /* PageStatus */ $pageStatus;
+    protected /* ApplicationBuilder */$applicationBuilder;
+    protected /* PageStatus */ $pageStatus;
 
     /**
      * Set the json structure in order to build the menu
@@ -27,19 +27,11 @@ class MenuJsonTemplate extends JsonTemplate {
         $this->menuStructure = $menuStructure;
     }
 
-    public function setApplicationBuilder( $applicationBuilder ) {
-        $this->applicationBuilder = $applicationBuilder;
-    }
-
-    public function setPageStatus( $pageStatus ) {
-        $this->pageStatus = $pageStatus;
-    }
-
     public function createMenu() {
         $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
         $htmlTemplateLoader = $applicationBuilder->getHtmlTemplateLoader();
 
-		$menu = new BaseHTMLMenu;
+        $menu = new BaseHTMLMenu;
         $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();

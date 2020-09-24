@@ -19,14 +19,16 @@ class JsonDashboardController extends JsonResourceBasicController {
     public /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;
 
     function __construct() {
-        $this->menubuilder = new MenuJsonTemplate;
-        $this->dashboardJsonTemplate = new DashboardJsonTemplate;
+        
     }
 
     /**
      * @throws GeneralException
      */
     public function getRequest() {
+        $this->menubuilder = new MenuJsonTemplate($this->jsonTemplateFactoriesContainer, $this->applicationBuilder, $this->pageStatus);
+        $this->dashboardJsonTemplate = new DashboardJsonTemplate($this->jsonTemplateFactoriesContainer, $this->applicationBuilder, $this->pageStatus);
+        
         $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
 
         // if resource->get->sessionupdates is set I need to update the session
@@ -37,9 +39,6 @@ class JsonDashboardController extends JsonResourceBasicController {
         $this->applicationBuilder->getJsonTemplateFactoriesContainer()->setAction( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, 'res='.$this->getParameters['res'] ) );
 
         $this->menubuilder->setMenuStructure( $menuresource );
-        $this->menubuilder->setJsonTemplateFactoriesContainer( $this->applicationBuilder->getJsonTemplateFactoriesContainer() );
-        $this->menubuilder->setApplicationBuilder( $this->applicationBuilder );
-        $this->menubuilder->setPageStatus( $this->pageStatus );
 
         $htmlBlock = $this->applicationBuilder->getHTMLBlock( $this->resource );
 

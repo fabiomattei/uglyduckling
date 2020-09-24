@@ -36,13 +36,13 @@ class FormJsonTemplate extends JsonTemplate {
             }
         }
 
-        $pageStatus->setLastEntity($entity);
+        $this->pageStatus->setLastEntity($entity);
 
-		$formBlock = new BaseHTMLForm;
+        $formBlock = new BaseHTMLForm;
         $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
-		$formBlock->setTitle($this->resource->get->form->title ?? '');
+        $formBlock->setTitle($this->resource->get->form->title ?? '');
 
-		// Setting the action to link the form to
+        // Setting the action to link the form to
         if ( isset($this->resource->get->form->action) ) {
             $url = $this->jsonTemplateFactoriesContainer->getApplicationBuilder()->make_resource_url(
                 $this->resource->get->form->action,
@@ -61,18 +61,18 @@ class FormJsonTemplate extends JsonTemplate {
         $formBlock->setAction( $url );
 
         $formBlock->setMethod( $this->resource->get->form->method ?? 'POST');
-		$fieldRows = array();
-		
-		foreach ($this->resource->get->form->fields as $field) {
-			if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
-			$fieldRows[$field->row][] = $field;
-		}
-		
+        $fieldRows = array();
+        
+        foreach ($this->resource->get->form->fields as $field) {
+            if( !array_key_exists($field->row, $fieldRows) ) $fieldRows[$field->row] = array();
+            $fieldRows[$field->row][] = $field;
+        }
+        
         $rowcounter = 1;
-		foreach ($fieldRows as $row) {
-			$formBlock->addRow();
-			foreach ($row as $field) {
-                $value = $pageStatus->getValue($field);
+        foreach ($fieldRows as $row) {
+            $formBlock->addRow();
+            foreach ($row as $field) {
+                $value = $this->pageStatus->getValue($field);
                 if (in_array( $field->type, array('textfield', 'number') )) {
                     $formBlock->addGenericField( $field, $value ?? '');
                 }
@@ -106,7 +106,7 @@ class FormJsonTemplate extends JsonTemplate {
                     }
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
                 }
-				if ($field->type === 'textarea') {
+                if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
                 }
                 if ($field->type === 'date') {
@@ -122,10 +122,10 @@ class FormJsonTemplate extends JsonTemplate {
                 if ($field->type === 'submitbutton') {
                     $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '', $field->label ?? '', $field->width ?? '12' );
                 }
-			}
-			$formBlock->closeRow('row '.$rowcounter);
+            }
+            $formBlock->closeRow('row '.$rowcounter);
             $rowcounter++;
-		}
+        }
         return $formBlock;
     }
 
