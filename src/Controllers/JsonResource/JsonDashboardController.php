@@ -16,7 +16,7 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplat
 class JsonDashboardController extends JsonResourceBasicController {
 
     public $menubuilder;
-    public /* MenuJsonTemplate */ $jsonTemplateFactoriesContainer;
+    public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
 
     function __construct() {
         
