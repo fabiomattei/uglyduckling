@@ -80,7 +80,7 @@ class TableJsonTemplate extends JsonTemplate {
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
-                    $links .= $applicationBuilder->getHTMLTag( $action, $pageStatus, $applicationBuilder );
+                    $links .= $applicationBuilder->getHTMLTag( $action, $this->pageStatus, $this->applicationBuilder );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );
