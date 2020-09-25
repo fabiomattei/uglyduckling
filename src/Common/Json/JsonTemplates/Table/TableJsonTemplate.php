@@ -72,7 +72,7 @@ class TableJsonTemplate extends JsonTemplate {
 		
 		$tableBlock->addTBody();
 		foreach ($entities as $entity) {
-            $pageStatus->setLastEntity($entity);
+            $this->pageStatus->setLastEntity($entity);
 			$tableBlock->addRow();
 			foreach ($table->fields as $field) {
 				$tableBlock->addColumn( $pageStatus->getValue($field) );
