@@ -44,15 +44,15 @@ class FormJsonTemplate extends JsonTemplate {
 
         // Setting the action to link the form to
         if ( isset($this->resource->get->form->action) ) {
-            $url = $this->jsonTemplateFactoriesContainer->getApplicationBuilder()->make_resource_url(
+            $url = $this->applicationBuilder->make_resource_url(
                 $this->resource->get->form->action,
-                $this->jsonTemplateFactoriesContainer->getApplicationBuilder()->getJsonloader(),
-                $this->jsonTemplateFactoriesContainer->getPageStatus()
+                $this->applicationBuilder->getJsonloader(),
+                $this->pageStatus
             );
             $formBlock->addHiddenField('res', $this->resource->get->form->action->resource);
             if ( isset( $this->resource->get->form->action->parameters ) AND is_array($this->resource->get->form->action->parameters) ) {
                 foreach ($this->resource->get->form->action->parameters as $par) {
-                    $formBlock->addHiddenField($par->name, $this->jsonTemplateFactoriesContainer->getPageStatus()->getValue($par));
+                    $formBlock->addHiddenField($par->name, $this->pageStatus->getValue($par));
                 }
             }
         } else {

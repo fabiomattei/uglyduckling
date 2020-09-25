@@ -57,18 +57,16 @@ class DashboardJsonTemplate extends JsonTemplate {
      * @return CardHTMLBlock
      */
     function getPanel($panel) {
-        $applicationBuilder = $this->jsonTemplateFactoriesContainer->getApplicationBuilder();
-
         $panelBlock = new CardHTMLBlock;
 
         $panelBlock->setTitle($panel->title ?? '');
         $panelBlock->setWidth($panel->width ?? '3');
-        $panelBlock->setHtmlTemplateLoader( $applicationBuilder->getHtmlTemplateLoader() );
+        $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
-        $resource = $applicationBuilder->loadResource( $panel->resource );
+        $resource = $this->applicationBuilder->loadResource( $panel->resource );
 
         $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($applicationBuilder->getHTMLBlock($resource));
+        $panelBlock->setBlock($this->applicationBuilder->getHTMLBlock($resource));
 
         return $panelBlock;
     }

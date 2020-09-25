@@ -13,7 +13,6 @@ class JsonTemplate {
 
     protected $resource;
     protected /* string */ $action;
-    protected /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
     protected /* JsonTemplateFactoriesContainer */ $applicationBuilder;
     protected /* JsonTemplateFactoriesContainer */ $pageStatus;
 
@@ -22,8 +21,7 @@ class JsonTemplate {
     /**
      * BaseBuilder constructor.
      */
-    public function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
-        $this->jsonTemplateFactoriesContainer = $jsonTemplateFactoriesContainer;
+    public function __construct( $applicationBuilder, $pageStatus ) {
         $this->applicationBuilder = $applicationBuilder;
         $this->pageStatus = $pageStatus;
     }

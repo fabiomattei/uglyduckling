@@ -21,10 +21,8 @@ class UniformJsonTemplate extends JsonTemplate {
      * @return EmptyHTMLBlock
      */
     public function createHTMLBlock() {
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
-
         $uniformBlock = new BaseHTMLUniform;
-        $uniformBlock->setHtmlTemplateLoader($htmlTemplateLoader);
+        $uniformBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $uniformBlock->setResourceName( $this->resource->name );
         $uniformBlock->setBodyFile( $this->resource->get->uniform->bodyfile );
         $uniformBlock->setAddToHeadFile( $this->resource->get->uniform->headfile );

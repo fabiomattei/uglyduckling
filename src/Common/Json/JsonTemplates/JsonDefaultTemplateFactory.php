@@ -30,13 +30,13 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
      * PanelBuilder constructor.
      * @param $tableBuilder
      */
-    public function __construct( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus ) {
-        $this->tableBuilder = new TableJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
-        $this->chartjsBuilder = new ChartjsJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
-        $this->infoBuilder = new InfoJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
-        $this->formBuilder = new FormJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
-        $this->dashboardJsonTemplate = new DashboardJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
-        $this->uniformJsonTemplate = new UniformJsonTemplate( $jsonTemplateFactoriesContainer, $applicationBuilder, $pageStatus );
+    public function __construct( $applicationBuilder, $pageStatus ) {
+        $this->tableBuilder = new TableJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->chartjsBuilder = new ChartjsJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->infoBuilder = new InfoJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->formBuilder = new FormJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->dashboardJsonTemplate = new DashboardJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->uniformJsonTemplate = new UniformJsonTemplate( $applicationBuilder, $pageStatus );
 
         $this->action = '';
     }
