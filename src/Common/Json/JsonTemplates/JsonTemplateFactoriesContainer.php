@@ -8,16 +8,12 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
-use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class JsonTemplateFactoriesContainer {
 
     private /* array */ $factories;
     private /* string */ $action;
-    private /* ApplicationBuilder */ $applicationBuilder;
-    private /* PageStatus */ $pageStatus;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
@@ -51,34 +47,6 @@ class JsonTemplateFactoriesContainer {
         }
 
         return new BaseHTMLBlock;
-    }
-
-    /**
-     * @return ApplicationBuilder
-     */
-    public function getApplicationBuilder(): ApplicationBuilder {
-        return $this->applicationBuilder;
-    }
-
-    /**
-     * @param ApplicationBuilder $applicationBuilder
-     */
-    public function setApplicationBuilder(ApplicationBuilder $applicationBuilder): void {
-        $this->applicationBuilder = $applicationBuilder;
-    }
-
-    /**
-     * @return PageStatus
-     */
-    public function getPageStatus(): PageStatus {
-        return $this->pageStatus;
-    }
-
-    /**
-     * @param PageStatus $applicationBuilder
-     */
-    public function setPageStatus(PageStatus $pageStatus): void {
-        $this->pageStatus = $pageStatus;
     }
 
     /**
