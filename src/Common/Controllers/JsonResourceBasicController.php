@@ -89,8 +89,8 @@ class JsonResourceBasicController extends Controller {
 
         $val = new ValidationBuilder;
         $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
-        $validation_rules = $val->postValidationRoules( $parametersGetter->getPostParameters() );
-        $filter_rules = $val->postValidationFilters( $parametersGetter->getPostParameters() );
+        $validation_rules = $val->getValidationRoules( $parametersGetter->getPostParameters() );
+        $filter_rules = $val->getValidationFilters( $parametersGetter->getPostParameters() );
 
         if ( count( $validation_rules ) == 0 ) {
             return true;

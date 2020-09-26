@@ -30,24 +30,4 @@ class ValidationBuilder {
 		return $filters;
 	}
 
-	public function postValidationRoules( $fields ) {
-		$rules = array();
-		if( is_array($fields) ) {
-			foreach ( $fields as $field ) {
-				$rules[$field->name] = $field->validation;
-			}
-		}
-		return $rules;
-	}
-	
-	public function postValidationFilters( $fields ) {
-		$filters = array();
-		if( is_array($fields) ) {
-			foreach ( $fields as $field ) {
-				$filters[$field->name] = 'trim';
-			}
-		}
-		return $filters;
-	}
-
 }
