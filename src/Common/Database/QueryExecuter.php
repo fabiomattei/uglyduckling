@@ -12,10 +12,8 @@ use PDOException;
 class QueryExecuter {
 
     private $queryStructure;
-    private $parameters;
     private $DBH;
     private /* Logger */ $logger;
-    private /* SessionWrapper */ $sessionWrapper;
     private /* QueryReturnedValues */ $queryReturnedValues;
     private /* PageStatus */ $pageStatus;
 	private /* string */ $resourceName = 'unknown';
@@ -50,30 +48,6 @@ class QueryExecuter {
      */
     public function setQueryStructure( $queryStructure ) {
         $this->queryStructure = $queryStructure;
-    }
-
-    /**
-     * @param mixed $parameters
-     * the $parameters variable contains all values for the query
-     */
-    public function setParameters( $parameters ) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $getParameters
-     * the $parameters variable contains all values for the query
-     */
-    public function setGetParameters( array $getParameters ): void {
-        $this->getParameters = $getParameters;
-    }
-
-    /**
-     * @param mixed $postParameters
-     * the $parameters variable contains all values for the query
-     */
-    public function setPostParameters( array $postParameters ): void {
-        $this->postParameters = $postParameters;
     }
 
     /**
@@ -359,27 +333,4 @@ class QueryExecuter {
             $this->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
-	
-	/**
-     * You can use show tables like this to see if a single table exists:
-     * 
-     * mysql> show tables like "test1";
-     * which would return:
-     * 
-     * +------------------------+
-     * | Tables_in_test (test1) |
-     * +------------------------+
-     * | test1                  |
-     * +------------------------+
-     * 1 row in set (0.00 sec)
-     * 
-     * If you ran show tables on a table that didn't exist you would get this:
-     * 
-     * mysql> show tables like "test3";
-     * Empty set (0.01 sec)
-	 */
-    public function tableExists( $tablename ) {
-        return 'SHOW TABLES LIKE \'' . $tablename . '\';';
-    }
-	
 }
