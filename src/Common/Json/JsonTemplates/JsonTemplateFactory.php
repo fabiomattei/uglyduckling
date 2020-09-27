@@ -32,12 +32,4 @@ class JsonTemplateFactory {
         $this->resource = $resource;
     }
 
-    /**
-     * Set the complete URL for the form action
-     * @param action $action
-     */
-    public function setAction( string $action ) {
-        $this->action = $action;
-    }
-
 }

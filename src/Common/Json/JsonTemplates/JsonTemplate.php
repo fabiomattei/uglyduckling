@@ -34,14 +34,6 @@ class JsonTemplate {
     }
 
     /**
-     * Set the complete URL for the form action
-     * @param action $action
-     */
-    public function setAction( string $action ): void {
-        $this->action = $action;
-    }
-
-    /**
      * Return a object that inherit from BaseHTMLBlock class
      * It is an object that has to generate HTML code
      *

@@ -40,8 +40,7 @@ class JsonTemplateFactoriesContainer {
     public function getHTMLBlock( $resource ): BaseHTMLBlock {
         foreach ($this->factories as $factory) {
             if ( $factory->isResourceSupported( $resource ) ) {
-                $factory->setResource($resource);
-                $factory->setAction($this->action);
+                $factory->setResource( $resource );
                 return $factory->getHTMLBlock( $resource );
             }
         }
@@ -54,21 +53,6 @@ class JsonTemplateFactoriesContainer {
      */
     public function getFactories(): array {
         return $this->factories;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAction() {
-        return $this->action;
-    }
-
-    /**
-     * Set the complete URL for the form action
-     * @param action $action
-     */
-    public function setAction( string $action ): void {
-        $this->action = $action;
     }
 
 }
