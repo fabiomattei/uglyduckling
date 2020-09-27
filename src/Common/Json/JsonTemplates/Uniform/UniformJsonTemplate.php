@@ -16,7 +16,7 @@ class UniformJsonTemplate extends JsonTemplate {
 
     /**
      * This Json template allows the user to created a structure of file to load.
-     * It is ment to be used when there is a javascript app to implant in a web application.
+     * It is meant to be used when there is a javascript app to implant in a web application.
      *
      * En example for a possible structure is the following:
      *
@@ -40,7 +40,7 @@ class UniformJsonTemplate extends JsonTemplate {
      *
      * In this case this Json structure tells UD to load the file listed for the appropriate section.
      *
-     * @return EmptyHTMLBlock
+     * @return BaseHTMLUniform
      */
     public function createHTMLBlock() {
         $uniformBlock = new BaseHTMLUniform;

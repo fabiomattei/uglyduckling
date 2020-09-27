@@ -10,6 +10,13 @@ use stdClass;
  * User: Fabio Mattei
  * Date: 29/09/18
  * Time: 11.54
+ *
+ * This class cares about creating a menu for a UD application.
+ * The Json menu structure is coded in group json structures
+ *
+ * Check the documentation
+ * http://www.uddocs.com/docs/group
+ *
  */
 class MenuJsonTemplate extends JsonTemplate {
 

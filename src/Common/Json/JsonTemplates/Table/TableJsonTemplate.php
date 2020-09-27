@@ -12,6 +12,12 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
+/**
+ * This class cares about creating a basic table for a UD application.
+ *
+ * Check the documentation
+ * http://www.uddocs.com/docs/table-page
+ */
 class TableJsonTemplate extends JsonTemplate {
 
     const blocktype = 'table';
@@ -95,7 +101,7 @@ class TableJsonTemplate extends JsonTemplate {
      * Return a object that inherit from BaseHTMLBlock class
      * It is an object that has to generate HTML code
      *
-     * @return EmptyHTMLBlock
+     * @return BaseHTMLTable
      */
     public function createHTMLBlock() {
         return $this->createTable();
