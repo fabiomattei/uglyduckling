@@ -33,28 +33,6 @@ class QueryBuilder {
     public function setParameters($parameters) {
         $this->parameters = $parameters;
     }
-
-	/**
-     * You can use show tables like this to see if a single table exists:
-     * 
-     * mysql> show tables like "test1";
-     * which would return:
-     * 
-     * +------------------------+
-     * | Tables_in_test (test1) |
-     * +------------------------+
-     * | test1                  |
-     * +------------------------+
-     * 1 row in set (0.00 sec)
-     * 
-     * If you ran show tables on a table that didn't exist you would get this:
-     * 
-     * mysql> show tables like "test3";
-     * Empty set (0.01 sec)
-	 */
-    public function tableExists( $tablename ) {
-        return 'SHOW TABLES LIKE \'' . $tablename . '\';';
-    }
 	
     public function tableDrop( $tablename ) {
         return 'DROP TABLE ' . $tablename . ';';

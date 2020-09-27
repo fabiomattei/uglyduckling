@@ -58,14 +58,12 @@ class InfoJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\QueryExecuter::class)->getMock();
-        $queryBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
 
         $this->info->setRouter($router);
         $this->info->setParameters( array( 'id' => '1' ) );
         $this->info->setResource( $this->infoBlock );
         $this->info->setDbconnection( $dbconnection );
         $this->info->setQueryExecuter( $this->queryExecuter );
-        $this->info->setQueryBuilder( $queryBuilder );
 	}
 	
 	/**

@@ -8,7 +8,6 @@ use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * 
@@ -17,7 +16,6 @@ class EntityDropTable extends Controller {
 
 	function __construct() {
 		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
     }
 	
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
@@ -47,7 +45,7 @@ class EntityDropTable extends Controller {
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 
-		$this->queryExecuter->executeTableDrop( $this->queryBuilder->tableDrop($this->resource->entity->tablename) );
+		$this->queryExecuter->executeTableDrop( $this->resource->droptable );
 			
 		$info->addParagraph( 'Table Dropped ', '' );
 		

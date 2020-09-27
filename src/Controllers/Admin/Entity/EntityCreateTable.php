@@ -8,7 +8,6 @@ use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * 
@@ -17,7 +16,6 @@ class EntityCreateTable extends Controller {
 	
 	function __construct() {
 		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
     }
 	
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
@@ -48,9 +46,9 @@ class EntityCreateTable extends Controller {
 		$info->addParagraph( 'Table name: '.$this->resource->entity->tablename, '' );
 
 		$this->queryBuilder->setQueryStructure( $this->resource->entity );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->create() );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->primarykey() );
-		$this->queryExecuter->executeTableCreate( $this->queryBuilder->autoincrement() );
+		$this->queryExecuter->executeTableCreate( $this->resource->create );
+		$this->queryExecuter->executeTableCreate( $this->resource->primarykey );
+		$this->queryExecuter->executeTableCreate( $this->resource->autoincrement );
 			
 		$info->addParagraph( 'Table created! ', '' );
 		

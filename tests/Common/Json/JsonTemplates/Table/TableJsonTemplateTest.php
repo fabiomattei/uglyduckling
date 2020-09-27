@@ -65,7 +65,6 @@ class TableJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
         $dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
         $this->queryExecuter = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\QueryExecuter::class)->getMock();
-        $queryBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder::class)->getMock();
         $linkBuilder = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Json\JsonTemplates\LinkBuilder::class)->getMock();
         $linkBuilder->expects($this->any())->method('getButton')->will($this->returnValue(''));
         $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
@@ -78,7 +77,6 @@ class TableJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $this->tableBuilder->setResource( $this->jsonform );
         $this->tableBuilder->setDbconnection( $dbconnection );
         $this->tableBuilder->setQueryExecuter( $this->queryExecuter );
-        $this->tableBuilder->setQueryBuilder( $queryBuilder );
         $this->tableBuilder->setLinkBuilder( $linkBuilder );
 	}
 	

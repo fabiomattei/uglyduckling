@@ -11,7 +11,6 @@ use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
 use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * 
@@ -20,7 +19,6 @@ class EntityView extends Controller {
 
 	function __construct() {
 		$this->queryExecuter = new QueryExecuter;
-		$this->queryBuilder = new QueryBuilder;
     }
 	
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
@@ -50,7 +48,7 @@ class EntityView extends Controller {
 		$info->setTitle( 'Entity name: '.$this->resource->name );
 		$info->addParagraph( 'Database table name: '.$this->resource->entity->tablename, '' );
 
-		$tableExists = $this->queryExecuter->executeTableExists( $this->queryBuilder->tableExists($this->resource->entity->tablename) );
+		$tableExists = $this->queryExecuter->executeTableExists( $this->queryExecuter->tableExists($this->resource->entity->tablename) );
 			
 		$info->addUnfilteredParagraph( 'Table exists: '.( $tableExists ? 
 			'true  '.Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_ENTITY_DROP_TABLE, 'res='.$this->resource->name ), 'Drop', Button::COLOR_GRAY.' '.Button::SMALL ) :
