@@ -11,14 +11,12 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class PdfJsonTemplate extends JsonTemplate {
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
     }
 
     public function createTable() {

@@ -5,7 +5,6 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 /**
  * User: Fabio

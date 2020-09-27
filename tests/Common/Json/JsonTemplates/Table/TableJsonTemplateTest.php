@@ -1,7 +1,5 @@
 <?php
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
-
 /**
 *  Testing the TableBuilder class
 *

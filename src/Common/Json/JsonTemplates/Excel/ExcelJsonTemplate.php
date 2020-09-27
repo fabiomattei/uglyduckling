@@ -12,19 +12,16 @@ use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\QueryBuilder;
 
 class ExcelJsonTemplate {
 
     private QueryExecuter $queryExecuter;
-    private QueryBuilder $queryBuilder;
     private DBConnection $dbconnection;
     private array $parameters;
     private $resource;
 
     function __construct() {
         $this->queryExecuter = new QueryExecuter;
-        $this->queryBuilder = new QueryBuilder;
     }
 
     /**
