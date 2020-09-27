@@ -37,8 +37,6 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
         $this->formBuilder = new FormJsonTemplate( $applicationBuilder, $pageStatus );
         $this->dashboardJsonTemplate = new DashboardJsonTemplate( $applicationBuilder, $pageStatus );
         $this->uniformJsonTemplate = new UniformJsonTemplate( $applicationBuilder, $pageStatus );
-
-        $this->action = '';
     }
 
     public function isResourceSupported( $resource ) {

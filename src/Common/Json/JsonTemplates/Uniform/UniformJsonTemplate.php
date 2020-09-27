@@ -15,8 +15,30 @@ class UniformJsonTemplate extends JsonTemplate {
     const blocktype = 'uniform';
 
     /**
-     * Return a object that inherit from BaseHTMLBlock class
-     * It is an object that has to generate HTML code
+     * This Json template allows the user to created a structure of file to load.
+     * It is ment to be used when there is a javascript app to implant in a web application.
+     *
+     * En example for a possible structure is the following:
+     *
+     * {
+     *   "name": "simplecarassetsnavigationtree",
+     *   "metadata": { "type":"uniform", "version": "1" },
+     *   "allowedgroups": [ "editor", "author" ],
+     *   "get": {
+     *     "request": {
+     *       "parameters": []
+     *     },
+     *     "uniform": {
+     *       "footfile" : "ZTree/addtofoot.html",
+     *       "headfile" : "ZTree/addtohead.html",
+     *       "footoncefile" : "",
+     *       "headoncefile" : "",
+     *       "bodyfile" : "ZTree/body.html"
+     *     }
+     *   }
+     * }
+     *
+     * In this case this Json structure tells UD to load the file listed for the appropriate section.
      *
      * @return EmptyHTMLBlock
      */
