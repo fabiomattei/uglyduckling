@@ -35,7 +35,6 @@ $dbconnection->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 
 $queryExecutor = new \Fabiom\UglyDuckling\Common\Database\QueryExecuter();
 $queryExecutor->setDBH( $dbconnection->getDBH() );
-$queryExecutor->setLogger(new Fabiom\UglyDuckling\Common\Loggers\EchoLogger());
 
 $request = new Fabiom\UglyDuckling\Common\Request\Request();
 $request->setServerRequestURI( $severWrapper->getRequestURI() );
@@ -75,6 +74,9 @@ $applicationBuilder->setJsonTemplateFactoriesContainer($jsonTemplateFactoriesCon
 $applicationBuilder->setMailer(new Fabiom\UglyDuckling\Common\Mailer\BaseMailer('', ''));
 
 $jsonTemplateFactoriesContainer->addJsonTemplateFactory( new Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonDefaultTemplateFactory( $applicationBuilder, $pageStatus ) );
+
+$queryExecutor->setPageStatus( $pageStatus );
+$queryExecutor->setApplicationBuilder( $applicationBuilder );
 
 if ( $sessionWrapper->isUserLoggedIn() ) {
 	// settings for logged in user
