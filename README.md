@@ -1,6 +1,14 @@
 Notes
 =====
 
+### Documentation
+
+If you are looking for a more complete description of the project check out the documentation site: <a href="https://www.uddocs.com/">https://www.uddocs.com/</a>
+
+### Demo
+
+This <a href="https://github.com/fabiomattei/ud-demo">demo</a> shows the main features of the library.
+
 ### The best code is the code you don't need to write
 
 I wrote this code in order to avoid to write over and over again the same stuff.
