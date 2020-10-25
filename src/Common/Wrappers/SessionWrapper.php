@@ -196,4 +196,27 @@ class SessionWrapper {
         return $_SESSION['prevprevrequest'];
     }
 
+    public function getCsrfToken(): string {
+        return $_SESSION['csrftoken'];
+    }
+
+    public function createCsrfToken() {
+        $_SESSION['csrftoken'] = $this->generateRandomString( 20 );
+    }
+
+    public static function generateRandomString($length = 8) {
+        $password = "";
+        $possible = "0123456789abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        $i = 0;
+        while ($i < $length) {
+            $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+            if (!strstr($password, $char)) {
+                $password .= $char;
+                $i++;
+            }
+        }
+        return $password;
+    }
+
 }

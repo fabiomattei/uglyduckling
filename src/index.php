@@ -6,6 +6,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $severWrapper = new Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 $sessionWrapper = new Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $sessionWrapper->createCsrfToken();
+}
 $htmlTemplateLoader = new Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 $htmlTagsFactory = new Fabiom\UglyDuckling\Common\Tags\HTMLTagsFactory;
 $htmlTemplateLoader->setPath('Templates/HTML/');
