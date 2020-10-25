@@ -29,7 +29,7 @@ class AdminGroupAddUser extends AdminController {
      * $this->getParameters['id'] resource key index
      */
     public function getRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Add user to a group';
 
@@ -62,7 +62,7 @@ class AdminGroupAddUser extends AdminController {
      * $this->postParameters['id'] resource key index
      */
     public function postRequest() {
-        $this->userGroupDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->userGroupDao->insert(
             array(
                 'ug_groupslug' => $this->postParameters['groupslug'],
@@ -74,7 +74,7 @@ class AdminGroupAddUser extends AdminController {
     }
 
     public function show_post_error_page() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $this->applicationBuilder->getMessages()->setError($this->readableErrors);
 

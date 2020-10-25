@@ -45,7 +45,7 @@ class UserNew extends AdminController {
      * $this->getParameters['id'] resource key index
      */
     public function getRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User';
 
@@ -94,8 +94,8 @@ class UserNew extends AdminController {
      * $this->postParameters['id'] resource key index
      */
     public function postRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
-        $this->userGroupDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
                 $iduser = $this->userDao->insert( array(
                     'usr_name' => $this->postParameters['usr_name'],
@@ -121,7 +121,7 @@ class UserNew extends AdminController {
     }
 
     public function show_post_error_page() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $this->applicationBuilder->getMessages()->setError($this->readableErrors);
 

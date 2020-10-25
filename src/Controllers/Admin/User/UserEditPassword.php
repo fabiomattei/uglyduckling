@@ -41,7 +41,7 @@ class UserEditPassword extends AdminController {
      * $this->getParameters['id'] resource key index
      */
     public function getRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit password';
@@ -79,7 +79,7 @@ class UserEditPassword extends AdminController {
      * @throws GeneralException
      */
     public function postRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $user = $this->userDao->getById( $this->postParameters[UserEditPassword::FIELD_USR_ID] );
 
@@ -99,7 +99,7 @@ class UserEditPassword extends AdminController {
     }
 
     public function show_post_error_page() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
         $this->applicationBuilder->getMessages()->setError($this->readableErrors);

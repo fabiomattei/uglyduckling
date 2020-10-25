@@ -48,7 +48,7 @@ class UserList extends AdminController {
         $table->closeRow();
         $table->closeTHead();
 
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $users = $this->userDao->getAll();
 
         $table->addTBody();

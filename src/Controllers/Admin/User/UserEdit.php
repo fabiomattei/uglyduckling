@@ -38,8 +38,8 @@ class UserEdit extends AdminController {
      * $this->getParameters['id'] resource key index
      */
     public function getRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
-        $this->userGroupDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
@@ -83,7 +83,7 @@ class UserEdit extends AdminController {
      * $this->postParameters['id'] resource key index
      */
     public function postRequest() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->userDao->update( $this->postParameters['usr_id'], array(
             'usr_defaultgroup' => $this->postParameters['usr_defaultgroup'],
             'usr_email' => $this->postParameters['usr_email'],
@@ -96,8 +96,8 @@ class UserEdit extends AdminController {
     }
 
     public function show_post_error_page() {
-        $this->userDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
-        $this->userGroupDao->setDBH( $this->applicationBuilder->getDbconnection()->getDBH() );
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
