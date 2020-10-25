@@ -8,6 +8,7 @@ use Fabiom\UglyDuckling\BusinessLogic\Ip\Daos\IpDao;
 use Fabiom\UglyDuckling\BusinessLogic\Ip\Daos\SecurityLogDao;
 use Fabiom\UglyDuckling\BusinessLogic\Ip\UseCases\AddDelayToIp;
 use Fabiom\UglyDuckling\BusinessLogic\Ip\UseCases\AddEscalationFailedAttemptToSecurityLog;
+use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
 
 /**
@@ -43,7 +44,11 @@ class AdminController extends Controller {
             );
             $addDelayToIp = new AddDelayToIp;
             $addDelayToIp->performAction( $this->pageStatus->getServerWrapper()->getRemoteAddress(), $ipDao );
-            $deactivatedUserDao->insertUser( $this->pageStatus->getSessionWrapper()->getSessionUsename() );
+
+            $userDao = new UserDao();
+            $userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+            $user = $userDao->getById( $this->pageStatus->getServerWrapper()->getSessionUserId() );
+            $deactivatedUserDao->insertUser( $user->usr_email );
 
             $this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( 'login' ) );
         }
