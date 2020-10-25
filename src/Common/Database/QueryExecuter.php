@@ -80,7 +80,19 @@ class QueryExecuter {
                     $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
                 }
                 foreach ($this->queryStructure->parameters as $cond) {
-                    $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                    if ( !isset( $cond->type ) ) {
+                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                    } else {
+                        if ( $cond->type == 'long' OR $cond->type == 'int' ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                        }
+                        if ( $cond->type == 'string' OR $cond->type == 'str' ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                        }
+                        if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
+                        }
+                    }
                 }
             }
 
@@ -181,7 +193,19 @@ class QueryExecuter {
                     $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
                 }
                 foreach ($this->queryStructure->parameters as $cond) {
-                    $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                    if ( !isset( $cond->type ) ) {
+                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                    } else {
+                        if ( $cond->type == 'long' OR $cond->type == 'int' ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                        }
+                        if ( $cond->type == 'string' OR $cond->type == 'str' ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                        }
+                        if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
+                        }
+                    }
                 }
             }
 
@@ -213,7 +237,19 @@ class QueryExecuter {
                         $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
                     }
                     foreach ($this->queryStructure->parameters as $cond) {
-                        $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                        if ( !isset( $cond->type ) ) {
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
+                        } else {
+                            if ( $cond->type == 'long' OR $cond->type == 'int' ) {
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                            }
+                            if ( $cond->type == 'string' OR $cond->type == 'str' ) {
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                            }
+                            if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
+                            }
+                        }
                     }
                 }
             }
