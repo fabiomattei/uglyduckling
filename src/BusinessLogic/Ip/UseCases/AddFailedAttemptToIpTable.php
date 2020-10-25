@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\BusinessLogic\Ip\UseCases;
 
 class AddFailedAttemptToIpTable {
 
-    public function performAction( $remote_address, $ipDao ) {
+    public function performAction( $remote_address, $username, $ipDao, $deactivatedUserDao ) {
         $ip = $ipDao->getByIpAddress( $remote_address );
         if ( $ip->ip_id == 0 ) {
             // I need to insert the ip in the table
@@ -15,6 +15,7 @@ class AddFailedAttemptToIpTable {
             } else {
                 // I need to delay the ip in the table
                 $ipDao->delayIp( $ip->ip_id );
+                $deactivatedUserDao->insertUser( $username );
             }
         }
     }
