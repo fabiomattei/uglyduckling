@@ -22,7 +22,7 @@ class AdminController extends Controller {
         $groupDao = new UserGroupDao;
         $groupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         if (
-            $this->pageStatus->getSessionWrapper()->getSessionGroup() != 'administrationgroup' OR
+            $this->pageStatus->getSessionWrapper()->getSessionGroup() == 'administrationgroup' AND
             $groupDao->checkUserHasAccessToGroup( $this->pageStatus->getSessionWrapper()->getSessionUserId(), 'administrationgroup' )
         ) {
             $this->applicationBuilder->getJsonloader()->loadIndex();

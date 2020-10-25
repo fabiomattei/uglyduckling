@@ -33,7 +33,7 @@ class DeactivatedUserDao extends BasicDao {
     function insertUser( string $username ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO deactivateduser (du_username, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:username, NOW() )');
+            $STH = $this->DBH->prepare('INSERT INTO deactivateduser (du_username, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:username, NOW() )');
             $STH->bindParam( ':username', $username, PDO::PARAM_STR );
             $STH->execute();
             $inserted_id = $this->DBH->lastInsertId();
