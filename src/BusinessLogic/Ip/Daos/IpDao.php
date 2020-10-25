@@ -78,11 +78,10 @@ class IpDao extends BasicDao {
         }
 	}
 	
-	function delayIp( string $remote_address, int $ip_id ) {
+	function delayIp( int $ip_id ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('UPDATE blockedip SET ip_time_to_remove = ip_time_to_remove + INTERVAL 1 DAY, ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW()');
-            $STH->bindParam( ':ipaddress', $remote_address, PDO::PARAM_STR );
+            $STH = $this->DBH->prepare('UPDATE blockedip SET ip_time_to_remove = ip_time_to_remove + INTERVAL 1 DAY, ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW() WHERE ip_id = :ipid');
 			$STH->bindParam( ':ipid', $ip_id, PDO::PARAM_INT );
             $STH->execute();
             $this->DBH->commit();
@@ -92,6 +91,20 @@ class IpDao extends BasicDao {
             throw new \Exception('General malfuction!!!');
         }
 	}
+
+    function incrementIpCounting( int $ip_id ) {
+        try {
+            $this->DBH->beginTransaction();
+            $STH = $this->DBH->prepare('UPDATE blockedip SET ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW() WHERE ip_id = :ipid');
+            $STH->bindParam( ':ipid', $ip_id, PDO::PARAM_INT );
+            $STH->execute();
+            $this->DBH->commit();
+        } catch (PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
 	
 	function getByIpAddress( string $remote_address ) {
         $query = 'SELECT * FROM blockedip WHERE ip_ipaddress = :ipaddress;';

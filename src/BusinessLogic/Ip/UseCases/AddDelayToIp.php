@@ -11,7 +11,7 @@ class AddDelayToIp {
 			$ipDao->insertip( $remote_address );
 		} else {
 			// I need to delay the ip in the table
-            $ipDao->delayIp( $remote_address, $ip->ip_id );
+            $ipDao->delayIp( $ip->ip_id );
 		}
 	}
 	
