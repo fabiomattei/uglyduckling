@@ -20,6 +20,7 @@ class AdminController extends Controller {
      */
     public function showPage() {
         $groupDao = new UserGroupDao;
+        $groupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         if (
             $this->pageStatus->getSessionWrapper()->getSessionGroup() != 'administrationgroup' OR
             $groupDao->checkUserHasAccessToGroup( $this->pageStatus->getSessionWrapper()->getSessionUserId(), 'administrationgroup' )
