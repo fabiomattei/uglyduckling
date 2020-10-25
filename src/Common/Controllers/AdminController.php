@@ -47,7 +47,7 @@ class AdminController extends Controller {
 
             $userDao = new UserDao();
             $userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
-            $user = $userDao->getById( $this->pageStatus->getServerWrapper()->getSessionUserId() );
+            $user = $userDao->getById( $this->pageStatus->getSessionWrapper()->getSessionUserId() );
             $deactivatedUserDao->insertUser( $user->usr_email );
 
             $this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( 'login' ) );
