@@ -103,8 +103,13 @@ class IpDao extends BasicDao {
 
             # setting the fetch mode
             $STH->setFetchMode(PDO::FETCH_OBJ);
+            $obj = $STH->fetch();
 
-            return $STH;
+            if ($obj == null) {
+                $obj = $this->getEmpty();
+            }
+
+            return $obj;
         }
         catch(PDOException $e) {
             $logger = new Logger();
