@@ -39,7 +39,7 @@ class SecurityLogDao extends BasicDao {
     function insertEvent( string $remote_address, string $username, string $password, string $description ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO securitylog (ip_ipaddress, username, password, description, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :username, NOW() + INTERVAL 1 DAY, NOW(), NOW() )');
+            $STH = $this->DBH->prepare('INSERT INTO securitylog (sl_ipaddress, sl_username, sl_password, sl_description, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :username, :password, :description, NOW() )');
             $STH->bindParam( ':ipaddress', $remote_address, PDO::PARAM_STR );
             $STH->bindParam( ':username', $username, PDO::PARAM_STR );
             $STH->bindParam( ':password', $password, PDO::PARAM_STR );
