@@ -13,6 +13,7 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
 class AdminGroupAddUser extends AdminController {
 
     private $userDao;
+    private $userGroupDao;
 
     public function __construct() {
         $this->userDao = new UserDao;
