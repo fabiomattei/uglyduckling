@@ -16,17 +16,12 @@ class IpDao extends BasicDao {
 	/*
 	Elenco campi
 	Fields list
-	usr_id                     Primary Key
-	usr_defaultgroup
-	usr_siteid
-	usr_name
-	usr_surname
-	usr_email
-	usr_salt
-	usr_hashedpsw
-	usr_password_updated
-    usr_updated
-    usr_created
+	ip_id                     Primary Key
+	ip_ipaddress
+	ip_failed_attepts
+	ip_time_to_remove
+    ip_updated
+    ip_created
 	*/
 	
 	/**
@@ -83,7 +78,7 @@ class IpDao extends BasicDao {
         }
 	}
 	
-	function delayIp( string $remote_addressm, int $ip_id ) {
+	function delayIp( string $remote_address, int $ip_id ) {
         try {
             $this->DBH->beginTransaction();
             $STH = $this->DBH->prepare('UPDATE blockedip SET ip_time_to_remove = ip_time_to_remove + INTERVAL 1 DAY, ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW()');
@@ -98,7 +93,7 @@ class IpDao extends BasicDao {
         }
 	}
 	
-	function getIpByIpAddress( string $remote_address ) {
+	function getByIpAddress( string $remote_address ) {
         $query = 'SELECT * FROM blockedip WHERE ip_ipaddress = :ipaddress;';
         try {
             $STH = $this->DBH->prepare( $query );
