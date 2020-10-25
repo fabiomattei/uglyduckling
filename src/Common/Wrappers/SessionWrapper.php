@@ -201,7 +201,7 @@ class SessionWrapper {
     }
 
     public function createCsrfToken() {
-        $_SESSION['csrftoken'] = $this->generateRandomString( 20 );
+        $_SESSION['csrftoken'] = $this->generateRandomString( 40 );
     }
 
     public static function generateRandomString($length = 8) {
