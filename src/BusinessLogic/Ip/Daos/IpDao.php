@@ -42,7 +42,7 @@ class IpDao extends BasicDao {
 	function checkIfIpIsBlocker( $remote_address ) {
 		try {
 			
-			$STH = $this->DBH->prepare('SELECT ip_ipaddress FROM blockedip WHERE ip_ipaddress = :ipaddress AND NOW() < ip_time_to_remove;');
+			$STH = $this->DBH->prepare('SELECT ip_ipaddress FROM blockedip WHERE ip_ipaddress = :ipaddress AND ip_failed_attepts > 5 AND NOW() < ip_time_to_remove;');
 			$STH->bindParam(':ipaddress', $remote_address, PDO::PARAM_STR);
 			$STH->execute();
 			
