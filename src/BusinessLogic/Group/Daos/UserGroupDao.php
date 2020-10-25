@@ -35,6 +35,34 @@ class UserGroupDao extends BasicDao {
 		return $empty;
 	}
 
+    /**
+     * In order to save the password it uses the algorithms created by the community
+     * password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
+     * password_verify('rasmuslerdorf', $hash)
+     */
+    function checkUserHasAccessToGroup( int $usr_id, string $slug ) {
+        try {
+            $STH = $this->DBH->prepare('SELECT ug_groupslug FROM usergroup WHERE ug_userid = :usrid AND ug_groupslug = :slug ;');
+            $STH->bindParam(':usrid', $usr_id, PDO::PARAM_INT);
+            $STH->bindParam(':slug', $slug, PDO::PARAM_STR);
+            $STH->execute();
+
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $obj = $STH->fetch();
+
+            // user with given email does not exist
+            if ($obj == null) {
+                return false;
+            }
+
+            return true;
+        }
+        catch(PDOException $e) {
+            $logger = new Logger();
+            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
 	function getUsersByGroupSlug( string $slug ) {
         $query = 'SELECT UG.*, U.usr_id, U.usr_name, U.usr_surname FROM '.$this::DB_TABLE.' as UG '.
             ' LEFT JOIN user as U ON UG.ug_userid = U.usr_id '.

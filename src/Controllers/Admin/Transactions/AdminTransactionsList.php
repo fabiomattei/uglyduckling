@@ -8,7 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\Transactions;
 
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
@@ -16,15 +16,7 @@ use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
 use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
-class AdminTransactionsList extends Controller {
-
-    /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-        $this->applicationBuilder->getJsonloader()->loadIndex();
-        parent::showPage();
-    }
+class AdminTransactionsList extends AdminController {
 
     /**
      * @throws GeneralException

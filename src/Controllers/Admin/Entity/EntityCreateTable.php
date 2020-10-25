@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\Entity;
 
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
@@ -12,7 +12,7 @@ use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 /**
  * 
  */
-class EntityCreateTable extends Controller {
+class EntityCreateTable extends AdminController {
 	
 	function __construct() {
 		$this->queryExecuter = new QueryExecuter;
@@ -20,15 +20,7 @@ class EntityCreateTable extends Controller {
 	
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
     public $get_filter_rules     = array( 'res' => 'trim' );
-	
-    /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-		$this->applicationBuilder->getJsonloader()->loadIndex();
-		parent::showPage(); 
-    }
-	
+
     /**
      * @throws GeneralException
      *

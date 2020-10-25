@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\Dashboard;
 
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
@@ -13,15 +13,7 @@ use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 /**
  * 
  */
-class AdminDashboard extends Controller {
-
-    /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-        $this->applicationBuilder->getJsonloader()->loadIndex();
-        parent::showPage();
-    }
+class AdminDashboard extends AdminController {
 
 	public function getRequest() {
 		$this->title                  = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin dashboard';

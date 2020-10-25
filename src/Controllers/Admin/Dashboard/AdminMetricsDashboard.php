@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\Dashboard;
 
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Json\Metrics\BaseResourceMetric;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
@@ -14,15 +14,7 @@ use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
  * This controller shows to the user an interface where all the resources are listed and 
  * the metric is calculated for each one of them
  */
-class AdminMetricsDashboard extends Controller {
-
-    /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-        $this->applicationBuilder->getJsonloader()->loadIndex();
-        parent::showPage();
-    }
+class AdminMetricsDashboard extends AdminController {
 
 	public function getRequest() {
 		$this->title                  = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin metrics';

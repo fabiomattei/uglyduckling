@@ -11,12 +11,12 @@ namespace Fabiom\UglyDuckling\Controllers\Admin\User;
 
 use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 
 /**
  * This class gives a list of all entities loaded in to the system
  */
-class UserDelete extends Controller {
+class UserDelete extends AdminController {
 
     private $userDao;
     private $userGroupDao;

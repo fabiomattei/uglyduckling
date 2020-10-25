@@ -10,9 +10,9 @@
 namespace Fabiom\UglyDuckling\Controllers\Admin\Group;
 
 use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 
-class AdminGroupRemoveUser extends Controller {
+class AdminGroupRemoveUser extends AdminController {
 
     private $userGroupDao;
 

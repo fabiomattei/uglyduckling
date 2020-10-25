@@ -4,13 +4,13 @@ namespace Fabiom\UglyDuckling\Controllers\Admin\Group;
 
 use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
 
-class AdminGroupAddUser extends Controller {
+class AdminGroupAddUser extends AdminController {
 
     private $userDao;
 

@@ -9,7 +9,7 @@
 namespace Fabiom\UglyDuckling\Controllers\Admin\User;
 
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
+use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
@@ -18,7 +18,7 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
 /**
  * This class gives a list of all entities loaded in to the system
  */
-class UserEditPassword extends Controller {
+class UserEditPassword extends AdminController {
 
     /* Defining constants in order to avoid any problem due to typos */
     const FIELD_USR_ID = 'usr_id';

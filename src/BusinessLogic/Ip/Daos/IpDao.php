@@ -62,11 +62,12 @@ class IpDao extends BasicDao {
 		}
 	}
 	
-	function insertIp( string $remote_address ) {
+	function insertIp( string $remote_address, int $failedAttempts = 1 ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO blockedip (ip_ipaddress, ip_failed_attepts, ip_time_to_remove, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, 1, NOW() + INTERVAL 1 DAY, NOW(), NOW() )');
+            $STH = $this->DBH->prepare('INSERT INTO blockedip (ip_ipaddress, ip_failed_attepts, ip_time_to_remove, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :failedattempts, NOW() + INTERVAL 1 DAY, NOW(), NOW() )');
             $STH->bindParam( ':ipaddress', $remote_address, PDO::PARAM_STR );
+            $STH->bindParam( ':failedattempts', $failedAttempts, PDO::PARAM_INT );
             $STH->execute();
             $inserted_id = $this->DBH->lastInsertId();
             $this->DBH->commit();
