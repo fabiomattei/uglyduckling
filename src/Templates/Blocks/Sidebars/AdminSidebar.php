@@ -96,6 +96,24 @@ class AdminSidebar extends BaseHTMLBlock {
                       Users
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link '.( $this->active === AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP ? 'active' : '' ).'" href="'.$this->router->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP ).'">
+                      <span data-feather="user"></span>
+                      Blocked IP\'s
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link '.( $this->active === AdminRouter::ROUTE_ADMIN_SECURITY_DEACTIVATED_USER ? 'active' : '' ).'" href="'.$this->router->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_DEACTIVATED_USER ).'">
+                      <span data-feather="user"></span>
+                        Deactivated Users
+                    </a>
+                  </li>    
+                  <li class="nav-item">
+                    <a class="nav-link '.( $this->active === AdminRouter::ROUTE_ADMIN_SECURITY_SECURITY_LOG ? 'active' : '' ).'" href="'.$this->router->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_SECURITY_LOG ).'">
+                      <span data-feather="user"></span>
+                      Security Logs
+                    </a>
+                  </li>
                 </ul>
                 </div>';
         return $out; 
