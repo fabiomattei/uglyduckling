@@ -1,5 +1,3 @@
-SecurityLog
-
 <?php
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\Security;
@@ -45,16 +43,16 @@ class SecurityLogList extends AdminController {
 		$table->closeTHead();
 	
 		$this->securityLogDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
-		$ips = $this->securityLogDao->getAll();
+        $logs = $this->securityLogDao->getAll();
 		
 		$table->addTBody();
 		foreach ( $logs as $log ) {
 			$table->addRow();
-			$table->addColumn($res->sl_ipaddress);
-			$table->addColumn($res->sl_username);
-			$table->addColumn($res->sl_password);
-			$table->addColumn($res->sl_description);
-			$table->addColumn($res->sl_created);
+			$table->addColumn($log->sl_ipaddress);
+			$table->addColumn($log->sl_username);
+			$table->addColumn($log->sl_password);
+			$table->addColumn($log->sl_description);
+			$table->addColumn($log->sl_created);
 			$table->addUnfilteredColumn('');
 			$table->closeRow();
 		}
