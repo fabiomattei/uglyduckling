@@ -1,5 +1,3 @@
-BlockedUserList
-
 <?php
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\Security;
@@ -47,8 +45,8 @@ class DeactivatedUserList extends AdminController {
 		$table->addTBody();
 		foreach ( $users as $user ) {
 			$table->addRow();
-			$table->addColumn($res->du_username);
-			$table->addColumn($res->du_created);
+			$table->addColumn($user->du_username);
+			$table->addColumn($user->du_created);
 			$table->addUnfilteredColumn('');
 			$table->closeRow();
 		}
