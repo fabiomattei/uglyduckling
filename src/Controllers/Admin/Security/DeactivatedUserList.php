@@ -47,7 +47,7 @@ class DeactivatedUserList extends AdminController {
 			$table->addRow();
 			$table->addColumn($user->du_username);
 			$table->addColumn($user->du_created);
-			$table->addUnfilteredColumn('');
+			$table->addUnfilteredColumn(Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_DEACTIVATED_USER_DELETE, 'duid='.$user->du_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL ));
 			$table->closeRow();
 		}
 		$table->closeTBody();
