@@ -5,6 +5,7 @@ namespace Fabiom\UglyDuckling\Common\Tags;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLButtonTag;
+use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLFormButtonTag;
 use Fabiom\UglyDuckling\Common\Tags\DefaultTags\HTMLLinkTag;
 
 class HTMLTagsFactory {
@@ -34,6 +35,10 @@ class HTMLTagsFactory {
                 return $this->htmlButtonTag->getHTML();
             }
             if ($jsonStructure->type === HTMLLinkTag::BLOCK_TYPE) {
+                $this->htmlLinkTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
+                return $this->htmlLinkTag->getHTML();
+            }
+            if ($jsonStructure->type === HTMLFormButtonTag::BLOCK_TYPE) {
                 $this->htmlLinkTag->setResources($jsonStructure, $pageStatus, $applicationBuilder);
                 return $this->htmlLinkTag->getHTML();
             }
