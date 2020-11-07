@@ -15,6 +15,7 @@ use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
+use Fabiom\UglyDuckling\Common\Blocks\ButtonForm;
 
 /**
  * This class gives a list of all entities loaded in to the system
