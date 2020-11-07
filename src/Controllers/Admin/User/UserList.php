@@ -60,7 +60,7 @@ class UserList extends AdminController {
             $table->addColumn( $user->usr_defaultgroup );
             $table->addUnfilteredColumn(
                 Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_VIEW, 'id='.$user->usr_id ), 'View', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-                ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+                ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_DELETE ), array('id' => $user->usr_id), 'Del', Button::COLOR_RED.' '.Button::SMALL )
             );
             $table->closeRow();
         }

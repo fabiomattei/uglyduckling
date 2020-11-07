@@ -33,8 +33,10 @@ class ButtonForm extends BaseHTMLBlock {
     /**
      *
      */
-    function get($url, $text, $properties = Button::COLOR_GRAY, $disabled = false) {
-        return '<form class="ud-inline-form" action="'.$url.'" method="POST"><button class="btn '.$properties.'" href="" role="button" >'.$text.'</button></form>';
+    function get($url, $text, $parameters, $properties = Button::COLOR_GRAY, $disabled = false) {
+        $pars = '';
+        foreach( $parameters as $key => $value ) { $pars .= '<input type="hidden" id="'.$key.'" name="'.$key.'" value="'.$value.'">' }
+        return '<form class="ud-inline-form" action="'.$url.'" method="POST">'.$pars.'<button class="btn '.$properties.'" href="" role="button" >'.$text.'</button></form>';
     }
 
 }
