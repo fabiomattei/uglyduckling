@@ -47,7 +47,7 @@ class UserView extends AdminController {
         $info->addUnfilteredParagraph(
             Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_EDIT, 'id='.$user->usr_id ), 'Edit', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
             Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_EDIT_PASSWORD, 'id='.$user->usr_id ), 'Edit password', Button::COLOR_GRAY.' '.Button::SMALL ) . ' ' .
-            Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_DELETE, 'id='.$user->usr_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL )
+            ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_USER_DELETE ), 'Del', $this->pageStatus->getSessionWrapper()->getCsrfToken(), array('usrid' => $user->usr_id), Button::COLOR_RED.' '.Button::SMALL )
             ,
             '6'
         );
