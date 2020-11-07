@@ -34,7 +34,7 @@ class ButtonForm extends BaseHTMLBlock {
      *
      */
     function get($url, $text, $properties = Button::COLOR_GRAY, $disabled = false) {
-        return '<form class="form-inline my-2 my-lg-0" action="'.$url.'" method="POST"><button class="btn '.$properties.'" href="" role="button" >'.$text.'</button></form>';
+        return '<form class="ud-inline-form" action="'.$url.'" method="POST"><button class="btn '.$properties.'" href="" role="button" >'.$text.'</button></form>';
     }
 
 }
