@@ -37,11 +37,17 @@ class IpDao extends BasicDao {
 	}
 	
 	/**
-	 * 
+	 * This method queries the database in order to control if the IP attempting to login
+     * is contained in the blocked IP list and if the time to remove has passed.
+     *
+     * If it is contained returns true
+     * otherwise it returns false
+     *
+     * @param string $remote_address
+     * @return bool
 	 */
-	function checkIfIpIsBlocker( $remote_address ) {
+	function checkIfIpIsBlocked( string $remote_address ) {
 		try {
-			
 			$STH = $this->DBH->prepare('SELECT ip_ipaddress FROM blockedip WHERE ip_ipaddress = :ipaddress AND ip_failed_attepts > 5 AND NOW() < ip_time_to_remove;');
 			$STH->bindParam(':ipaddress', $remote_address, PDO::PARAM_STR);
 			$STH->execute();
@@ -49,19 +55,26 @@ class IpDao extends BasicDao {
             $STH->setFetchMode(PDO::FETCH_OBJ);
             $obj = $STH->fetch();
 
-            // user with given email does not exist
             if ($obj == null) {
-                return false;
+                return false; // IP not contained
             }
-			
-			return true;
+			return true; // IP contained
 		}
 		catch(PDOException $e) {
 			$logger = new Logger();
 			$logger->write($e->getMessage(), __FILE__, __LINE__);
 		}
 	}
-	
+
+    /**
+     * This method insert an IP in the blokedip table
+     *
+     * @param string $remote_address
+     * @param int $failedAttempts
+     * @return mixed
+     * @throws \Exception
+     *
+     */
 	function insertIp( string $remote_address, int $failedAttempts = 1 ) {
         try {
             $this->DBH->beginTransaction();
@@ -78,7 +91,13 @@ class IpDao extends BasicDao {
             throw new \Exception('General malfuction!!!');
         }
 	}
-	
+
+    /**
+     * At any failed attempt to login to the system, the time required for a new attempt is going to increase by one day
+     *
+     * @param int $ip_id
+     * @throws \Exception
+     */
 	function delayIp( int $ip_id ) {
         try {
             $this->DBH->beginTransaction();
@@ -93,6 +112,12 @@ class IpDao extends BasicDao {
         }
 	}
 
+    /**
+     * At any failed attempt to login to the system the counter get increased
+     *
+     * @param int $ip_id
+     * @throws \Exception
+     */
     function incrementIpCounting( int $ip_id ) {
         try {
             $this->DBH->beginTransaction();
@@ -106,7 +131,13 @@ class IpDao extends BasicDao {
             throw new \Exception('General malfuction!!!');
         }
     }
-	
+
+    /**
+     * Gets all blocked IPS in the table
+     *
+     * @param string $remote_address
+     * @return stdClass|null
+     */
 	function getByIpAddress( string $remote_address ) {
         $query = 'SELECT * FROM blockedip WHERE ip_ipaddress = :ipaddress;';
         try {
