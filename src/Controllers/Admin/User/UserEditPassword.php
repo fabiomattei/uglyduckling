@@ -48,6 +48,7 @@ class UserEditPassword extends AdminController {
 
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+        $formBlock->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
         //$form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
