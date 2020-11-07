@@ -16,6 +16,7 @@
 	
 	<!-- Custom styles for this template -->
 	<link href="udassets/css/dashboard.css" rel="stylesheet">
+	<link href="udassets/css/udstyle.css" rel="stylesheet">
 
     <?php echo isset($this->addToHead) ? $this->addToHead : '' ?>
   </head>
