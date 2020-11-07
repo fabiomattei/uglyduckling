@@ -53,5 +53,41 @@ class AdminController extends Controller {
             $this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( 'login' ) );
         }
     }
+    
+    /**
+     * check the parameters sent through the url and check if they are ok from
+     * the point of view of the validation rules
+     */
+    public function check_post_request() {
+        if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $this->pageStatus->getSessionWrapper()->getCsrfToken() ) {
+            $this->secondGump = new Gump;
+
+            $val = new ValidationBuilder;
+            $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
+            $validation_rules = $val->getValidationRoules( $parametersGetter->getPostParameters() );
+            $filter_rules = $val->getValidationFilters( $parametersGetter->getPostParameters() );
+
+            if ( count( $validation_rules ) == 0 ) {
+                return true;
+            } else {
+                $parms = $this->secondGump->sanitize( array_merge(
+                        is_null($this->postParameters) ? array() : $this->postParameters,
+                        is_null($this->filesParameters) ? array() : $this->filesParameters
+                    )
+                );
+                $this->secondGump->validation_rules( $validation_rules );
+                $this->secondGump->filter_rules( $filter_rules );
+                $this->postParameters = $this->secondGump->run( $parms );
+                $this->pageStatus->setPostParameters( $this->postParameters );
+                $this->unvalidated_parameters = $parms;
+                if ( $this->postParameters === false ) {
+                    $this->readableErrors = $this->secondGump->get_readable_errors(true);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
 
 }

@@ -26,15 +26,15 @@ class UserDelete extends AdminController {
         $this->userGroupDao = New UserGroupDao();
     }
 
-    public $get_validation_rules = array( 'usrid' => 'required|numeric' );
-    public $get_filter_rules     = array( 'usrid' => 'trim' );
+    public $post_validation_rules = array( 'usrid' => 'required|numeric' );
+    public $post_filter_rules     = array( 'usrid' => 'trim' );
 
     /**
      * @throws GeneralException
      *
      * $this->getParameters['id'] resource key index
      */
-    public function getRequest() {
+    public function postRequest() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
