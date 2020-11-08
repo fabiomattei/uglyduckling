@@ -41,7 +41,9 @@ class UserDelete extends AdminController {
         $this->userGroupDao->deleteByFields( array( 'ug_userid' => $this->postParameters['usrid'] ) );
         $this->userDao->delete( $this->postParameters['usrid'] );
 
-        $this->redirectToPreviousPage();
+        $this->setSuccess( 'User successfully deleted' );
+
+        $this->redirectToPage( $this->applicationBuilder->getRouter()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
