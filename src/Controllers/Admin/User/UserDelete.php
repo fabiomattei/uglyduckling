@@ -12,6 +12,7 @@ namespace Fabiom\UglyDuckling\Controllers\Admin\User;
 use Fabiom\UglyDuckling\BusinessLogic\Group\Daos\UserGroupDao;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
 use Fabiom\UglyDuckling\Common\Controllers\AdminController;
+use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 
 /**
  * This class gives a list of all entities loaded in to the system
