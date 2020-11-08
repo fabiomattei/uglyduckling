@@ -29,9 +29,9 @@ class DeactivatedUserDelete extends AdminController {
     /**
      * @throws GeneralException
      *
-     * $this->getParameters['id'] resource key index
+     * $this->postParameters['duid'] resource key index
      */
-    public function getRequest() {
+    public function postRequest() {
         $this->deactivatedUserDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->deactivatedUserDao->delete( $this->postParameters['duid'] );
 

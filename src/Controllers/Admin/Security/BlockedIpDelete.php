@@ -29,9 +29,9 @@ class BlockedIpDelete extends AdminController {
     /**
      * @throws GeneralException
      *
-     * $this->getParameters['id'] resource key index
+     * $this->postParameters['biid'] resource key index
      */
-    public function getRequest() {
+    public function postRequest() {
         $this->ipDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->ipDao->delete( $this->postParameters['biid'] );
 
