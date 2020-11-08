@@ -37,7 +37,7 @@ class BlockedIpList extends AdminController {
 		$table->addTHead();
 		$table->addRow();
 		$table->addHeadLineColumn('IP');
-		$table->addHeadLineColumn('Failde attempts');
+		$table->addHeadLineColumn('Failed attempts');
 		$table->addHeadLineColumn('Time to remove');
 		$table->addHeadLineColumn('Updated');
 		$table->addHeadLineColumn('Created');
