@@ -43,7 +43,7 @@ class UserDelete extends AdminController {
 
         $this->setSuccess( 'User successfully deleted' );
 
-        $this->redirectToPage( $this->applicationBuilder->getRouter()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
+        $this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
