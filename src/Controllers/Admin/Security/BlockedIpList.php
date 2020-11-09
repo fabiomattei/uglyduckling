@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Controllers\Admin\Security;
 
 use Fabiom\UglyDuckling\BusinessLogic\Ip\Daos\IpDao;
+use Fabiom\UglyDuckling\Common\Blocks\ButtonForm;
 use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
@@ -53,7 +54,7 @@ class BlockedIpList extends AdminController {
 			$table->addColumn($ip->ip_time_to_remove);
 			$table->addColumn($ip->ip_updated);
 			$table->addColumn($ip->ip_created);
-			$table->addUnfilteredColumn(Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP_DELETE, 'biid='.$ip->ip_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL ));
+			$table->addUnfilteredColumn(ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP_DELETE ), 'Del', $this->pageStatus->getSessionWrapper()->getCsrfToken(), array('biid' => $ip->ip_id), Button::COLOR_RED.' '.Button::SMALL ));
 			$table->closeRow();
 		}
 		$table->closeTBody();

@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Controllers\Admin\Security;
 
 use Fabiom\UglyDuckling\BusinessLogic\Ip\Daos\DeactivatedUserDao;
+use Fabiom\UglyDuckling\Common\Blocks\ButtonForm;
 use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
@@ -47,7 +48,7 @@ class DeactivatedUserList extends AdminController {
 			$table->addRow();
 			$table->addColumn($user->du_username);
 			$table->addColumn($user->du_created);
-			$table->addUnfilteredColumn(Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_DEACTIVATED_USER_DELETE, 'duid='.$user->du_id ), 'Del', Button::COLOR_RED.' '.Button::SMALL ));
+			$table->addUnfilteredColumn(ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_DEACTIVATED_USER_DELETE ), 'Del', $this->pageStatus->getSessionWrapper()->getCsrfToken(), array('duid' => $user->du_id), Button::COLOR_RED.' '.Button::SMALL ));
 			$table->closeRow();
 		}
 		$table->closeTBody();
