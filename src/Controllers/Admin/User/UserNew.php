@@ -52,7 +52,7 @@ class UserNew extends AdminController {
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'New user: ' );
-        $formBlock->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
+        $form->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addTextField('usr_name', 'Name: ', 'Name', '', '6' );
         $form->addTextField('usr_surname', 'Surname: ', 'Surname', '', '6' );
@@ -131,6 +131,7 @@ class UserNew extends AdminController {
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'New user: ' );
+        $form->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
         $form->addTextField('usr_email', 'Email: ', 'Email', '', '6' );
         $form->addTextField('usr_name', 'Name: ', 'Name', '', '6' );
         $form->addTextField('usr_surname', 'Surname: ', 'Surname', '', '6' );
