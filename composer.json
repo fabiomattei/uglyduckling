@@ -13,7 +13,6 @@
     "require": {
 		"php": ">=7.3",
         "wixel/gump": "dev-master",
-        "twbs/bootstrap": "^4",
         "mpdf/mpdf": "^7.1",
         "phpoffice/phpspreadsheet": "^1.5"
     },
