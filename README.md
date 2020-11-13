@@ -12,10 +12,6 @@ This <a href="https://github.com/fabiomattei/ud-demo">demo</a> shows the main fe
 ### The best code is the code you don't need to write
 
 I wrote this code in order to avoid to write over and over again the same stuff.
-Do you really need a framework when the code you write looks always the same, with small almost not-existent changes?
-
-I don't think so!
-
 I have been writing web applications for many years. What were those applications doing? They were thaking data from a form, 
 saving that data in a database and then editing that data in another form and showing that data in a table or in a diagram ad 
 sometimes they were deleting that data (not very often to be fair).
@@ -28,7 +24,9 @@ I have learned many framework to speed up my process, I read many books: the new
 
 Then I started to notice that my work was repeatable and those frameworks were slowing me down.
 
-So I started to wonder: What do I need to do in order to make for example a table cotaining data taken from a database?
+With an MVC approach each change you wond to make to your application requires you open at least 3 files.
+
+So I started to wonder: What do I really need in order to make for example a table cotaining data taken from a database?
 The answer was: I need to make a SQL query, I need to define the structure of the table and I need to put the results of the query on the table. That's it.
 I need this three things, nothig more than that.
 
@@ -50,10 +48,9 @@ I put all this information in a json file and this came out:
 }
 ```
 
-No ORM, no MVC, no framework.
+No ORM, no MVC, and a framework that stays out of my way.
 
-I know I used SQL and not an ORM but I like SQL! SQL haven't changed in ages, and this means that it works!
-It is not sad to be old!
+I know I used SQL and not an ORM but I like SQL! SQL haven't changed in ages, and this means that it works! It is not sad to be old! 
 
 I gave a title to the table and in the fields array I defined the headlines and the sql fields that were taken from the query in order to fill the cells of that table.
 How many times have you solved this same simple problem?
@@ -84,9 +81,9 @@ I defined that in the json format too.
       {"headline": "Due date", "sqlfield": "duedate"}
     ],
     "actions": [
-      {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-      {"label": "Edit", "action": "entityform", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-      {"label": "Delete", "action": "entitylogic", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] }
+      {"label": "Info", "resource": "inforequest", "parameters":[{"name": "id", "sqlfield": "id"}] },
+      {"label": "Edit", "resource": "formrequest", "parameters":[{"name": "id", "sqlfield": "id"}] },
+      {"label": "Delete", "resource": "deletereport", "parameters":[{"name": "id", "sqlfield": "id"}] }
     ]
   }
 }
@@ -128,9 +125,9 @@ There is a get section in this file, it is there because all this configurations
         {"headline": "Due date", "sqlfield": "duedate"}
       ],
       "actions": [
-        {"label": "Info", "action": "entityinfo", "resource": "inforequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Edit", "action": "entityform", "resource": "formrequestv1", "parameters":[{"name": "id", "sqlfield": "id"}] },
-        {"label": "Delete", "action": "entitylogic", "resource": "deletereportv1", "parameters":[{"name": "id", "sqlfield": "id"}] }
+        {"label": "Info", "resource": "inforequest", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Edit", "resource": "formrequest", "parameters":[{"name": "id", "sqlfield": "id"}] },
+        {"label": "Delete", "resource": "deletereport", "parameters":[{"name": "id", "sqlfield": "id"}] }
       ]
     }
   }
