@@ -10,13 +10,12 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\GridJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Grid\GridJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Uniform\UniformJsonTemplate;
-use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 
 class JsonDefaultTemplateFactory extends JsonTemplateFactory {
 
