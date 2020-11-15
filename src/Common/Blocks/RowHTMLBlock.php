@@ -45,7 +45,7 @@ class RowHTMLBlock extends BaseHTMLBlock {
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
             array( '${htmlbody}' ),
             array( $htmlbody ),
-            'RowBlock/body.html');;
+            'RowBlock/body.html');
     }
 
     function addToHead(): string {

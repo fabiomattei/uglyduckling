@@ -10,6 +10,7 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\GridJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
@@ -25,6 +26,7 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
     private /* FormJsonTemplate */ $formBuilder;
     private /* DashboardJsonTemplate */ $dashboardJsonTemplate;
     private /* UniformJsonTemplate */ $uniformJsonTemplate;
+    private /* GridJsonTemplate */ $gridJsonTemplate;
 
     /**
      * PanelBuilder constructor.
@@ -37,6 +39,7 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
         $this->formBuilder = new FormJsonTemplate( $applicationBuilder, $pageStatus );
         $this->dashboardJsonTemplate = new DashboardJsonTemplate( $applicationBuilder, $pageStatus );
         $this->uniformJsonTemplate = new UniformJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->gridJsonTemplate = new GridJsonTemplate( $applicationBuilder, $pageStatus );
     }
 
     public function isResourceSupported( $resource ) {
@@ -46,7 +49,8 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
             TableJsonTemplate::blocktype,
             ChartjsJsonTemplate::blocktype,
             InfoJsonTemplate::blocktype,
-            FormJsonTemplate::blocktype
+            FormJsonTemplate::blocktype,
+            GridJsonTemplate::blocktype
         ));
     }
 
@@ -62,6 +66,11 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == DashboardJsonTemplate::blocktype ) {
             $this->dashboardJsonTemplate->setResource($resource);
             return $this->dashboardJsonTemplate->createHTMLBlock();
+        }
+
+        if ( $resource->metadata->type == GridJsonTemplate::blocktype ) {
+            $this->gridJsonTemplate->setResource($resource);
+            return $this->gridJsonTemplate->createHTMLBlock();
         }
 
         if ( $resource->metadata->type == UniformJsonTemplate::blocktype ) {
