@@ -14,26 +14,20 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 class JsonDashboardController extends JsonResourceBasicController {
 
     public $menubuilder;
-    public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
-
-    function __construct() {
-        
-    }
 
     /**
      * @throws GeneralException
      */
     public function getRequest() {
-        $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus);
-        
         $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
+        $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus);
+        $this->menubuilder->setMenuStructure( $menuresource );
 
         // if resource->get->sessionupdates is set I need to update the session
         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-        $this->menubuilder->setMenuStructure( $menuresource );
-
         $this->title = $this->applicationBuilder->getAppNameForPageTitle() . ' :: Dashboard';
+        $this->templateFile = $this->resource->templatefile ?? $this->applicationBuilder->getSetup()->getPrivateTemplateFileName();
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
