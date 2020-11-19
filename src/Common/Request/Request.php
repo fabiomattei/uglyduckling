@@ -44,8 +44,10 @@ class Request {
         # removing the first '/' from the path
         $this->action = substr($request, 1); // explode( '/', $request );
 
-        if (!StringUtils::validate_string( $this->action ))
-            throw new \Exception('Illegal access to calculateSplittedURL!!!');
+        if (!StringUtils::validate_string( $this->action )) {
+			echo "this: ".$this->action;
+        	throw new \Exception('Illegal access to calculateSplittedURL!!!');
+        }
     }
 
     public function getInfo(): string {
