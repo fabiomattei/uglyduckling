@@ -45,8 +45,7 @@ class Request {
         $this->action = substr($request, 1); // explode( '/', $request );
 
         if (!StringUtils::validate_string( $this->action )) {
-			echo "this: ".$this->action;
-        	throw new \Exception('Illegal access to calculateSplittedURL!!!');
+        	throw new \Exception('Illegal access to calculateSplittedURL!!! Unvalidated action: "' . $this->action .'" ');
         }
     }
 
