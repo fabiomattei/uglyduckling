@@ -19,6 +19,17 @@ class JsonResourceBasicController extends Controller {
     protected $resource; // Json structure
     /* TODO remove following parameter */
     protected $internalGetParameters;
+    protected $resourceName;
+    
+    /**
+     * This function allows to set a resource name to load for a particular instance
+     * This helps in case a resource want to be set at programming time and not 
+     * at run time.
+     * @param string $resourceName   the name of the json resource we want to load
+     */
+    public setResourceName(string $resourceName) {
+        $this->resourceName = $resourceName;
+    }
 
     /**
      * This method has to be implemented by inerithed class
@@ -35,12 +46,16 @@ class JsonResourceBasicController extends Controller {
      * load the json resource in $this->resource
      */
     public function check_and_load_resource() {
-        $resource_name = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);
-        if ( ! $resource_name ) {
+        if ( isset($this->resourceName) AND $this->resourceName != '' ) {
+            // nothing to do here
+        } else {
+            $this->resourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);    
+        }
+        if ( ! $this->resourceName ) {
             return false;
         } else {
-            if ( strlen( $resource_name ) > 0 ) {
-                $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $resource_name );
+            if ( strlen( $this->resourceName ) > 0 ) {
+                $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->resourceName );
                 return true;
             }
         }
