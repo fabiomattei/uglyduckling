@@ -27,7 +27,7 @@ class JsonResourceBasicController extends Controller {
      * at run time.
      * @param string $resourceName   the name of the json resource we want to load
      */
-    public setResourceName(string $resourceName) {
+    public function setResourceName(string $resourceName) {
         $this->resourceName = $resourceName;
     }
 
