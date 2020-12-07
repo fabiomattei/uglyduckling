@@ -12,7 +12,7 @@ class BaseHTMLTable extends BaseHTMLBlock {
 
     protected $html;
     protected $title;
-    private $htmlTemplateLoader;
+    protected $htmlTemplateLoader;
 
     function __construct() {
         $this->html = '';
@@ -28,45 +28,27 @@ class BaseHTMLTable extends BaseHTMLBlock {
     }
 
     function addRow() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'BaseTable/openrow.html');
+        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/openrow.html');
     }
 
     function closeRow() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'BaseTable/closerow.html');
+        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/closerow.html');
     }
 
     function addTHead() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'BaseTable/openthead.html');
+        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/openthead.html');
     }
 
     function closeTHead() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'BaseTable/closethead.html');
+        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/closethead.html');
     }
 
     function addTBody() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'BaseTable/opentbody.html');
+        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/opentbody.html');
     }
 
     function closeTBody() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'BaseTable/closetbody.html');
+        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/closetbody.html');
     }
 
     function addHeadLineColumn(string $value) {
