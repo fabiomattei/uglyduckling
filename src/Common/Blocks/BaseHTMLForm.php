@@ -70,6 +70,13 @@ class BaseHTMLForm extends BaseHTMLBlock {
             'Form/textarea.html');
     }
 
+    function addRadioButtonField( string $name, string $label, string $value, string $width ) {
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value )),
+            'Form/radiobuttonfield.html');
+    }
+
     /**
      * @param string $name
      * @param string $label
