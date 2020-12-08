@@ -108,7 +108,7 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
                 }
                 if ($field->type === 'radiobutton') {
-                    $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width);
+                    $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width, $field->checked ?? '');
                 }
                 if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
