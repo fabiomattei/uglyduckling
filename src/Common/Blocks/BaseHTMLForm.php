@@ -120,8 +120,8 @@ class BaseHTMLForm extends BaseHTMLBlock {
             }
         }
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${ColWidth}', '${name}', '${label}', '${value}', '${properties}'),
-            array(ColWidth::getWidth(ColWidth::MEDIUM, $field->width ?? 12), $field->name ?? '', $field->label ?? '', htmlspecialchars( $fieldValue ), $properties),
+            array('${ColWidth}', '${type}', '${name}', '${label}', '${value}', '${properties}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $field->width ?? 12), $field->type ?? 'text', $field->name ?? '', $field->label ?? '', htmlspecialchars( $fieldValue ), $properties),
             'Form/genericfield.html');
     }
 
