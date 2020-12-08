@@ -112,11 +112,11 @@ class FormJsonTemplate extends JsonTemplate {
                 }
                 if ($field->type === 'date') {
                     if (!isset($field->placeholder)) { $field->placeholder = date('Y-m-d'); }
-                    $formBlock->addGenericField( $field, $value ?? '');
+                    $formBlock->addGenericField( $field, $value ?? date('Y-m-d'));
                 }
                 if ($field->type === 'time') {
                     if (!isset($field->placeholder)) { $field->placeholder = date('H:i'); }
-                    $formBlock->addGenericField( $field, $value ?? '');
+                    $formBlock->addGenericField( $field, $value ?? date('H:i'));
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
