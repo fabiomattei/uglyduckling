@@ -174,7 +174,7 @@ class PageStatus {
             $replace = array();
             foreach( $field->parameters as $comVariable ) {
                 $search[] = $comVariable->name;
-                $replace[] = $this->pageStatus->getValue($comVariable);
+                $replace[] = $this->getValue($comVariable);
             }
             return str_replace( $search, $replace, $field->composite);
         }
