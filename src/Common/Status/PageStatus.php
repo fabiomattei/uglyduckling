@@ -169,6 +169,15 @@ class PageStatus {
         if ( isset($field->sessionparameter) ) {
             return ($this->sessionWrapper->isSessionParameterSet( $field->sessionparameter ) ? $this->sessionWrapper->getSessionParameter( $field->sessionparameter ) : $this->checkForDefaultValues($field) );
         }
+        if ( isset($field->composite) ) {
+            $search = array();
+            $replace = array();
+            foreach( $field->parameters as $comVariable ) {
+                $search[] = $comVariable->name;
+                $replace[] = $this->pageStatus->getValue($comVariable);
+            }
+            return str_replace( $search, $replace, $field->composite);
+        }
     }
 
     /**
