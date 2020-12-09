@@ -80,7 +80,9 @@ class TableJsonTemplate extends JsonTemplate {
 		foreach ($entities as $entity) {
             $this->pageStatus->setLastEntity($entity);
 			$tableBlock->addRow();
-            $tableBlock->addColumn( $this->pageStatus->getValue($field) );
+            foreach ($table->fields as $field) {
+                $tableBlock->addColumn( $this->pageStatus->getValue($field) );
+            }
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
