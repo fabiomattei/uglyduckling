@@ -178,6 +178,7 @@ class PageStatus {
             }
             return str_replace( $search, $replace, $field->composite);
         }
+        return '';
     }
 
     /**
