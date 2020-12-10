@@ -12,13 +12,15 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class BaseHTMLChart extends BaseHTMLBlock {
 
-    private $htmlBlockId;
-    private $lables;
-    private $dataset;
-    private $structure;
-    private $chartdataglue;
-    private $glue;
-    private $htmlTemplateLoader;
+    protected $htmlBlockId;
+    protected $lables;
+    protected $dataset;
+    protected $structure;
+    protected $chartdataglue;
+    protected $glue;
+    protected $htmlTemplateLoader;
+	protected $width;
+	protected $height;
 
     function __construct() {
         $this->htmlBlockId = 'myChart';
@@ -27,6 +29,8 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->structure = new \stdClass;
         $this->chartdataglue = array();
         $this->glue = array();
+		$this->width = '400';
+		$this->height = '400';
     }
 
     public function setHtmlTemplateLoader($htmlTemplateLoader) {
@@ -39,6 +43,14 @@ class BaseHTMLChart extends BaseHTMLBlock {
 
     function setChartDataGlue($chartDataGlue) {
         $this->chartdataglue = $chartDataGlue;
+    }
+	
+    function setWidth($width) {
+        $this->width = $width;
+    }
+	
+    function setHeight($height) {
+        $this->height = $height;
     }
 
     /**
@@ -79,8 +91,8 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
 		if (isset($this->glue['#amounts2'])) { $this->structure->data->datasets[1]->data = $this->glue['#amounts2']; }
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array( '${htmlBlockId}', '${structure}' ),
-            array( $this->htmlBlockId, json_encode( $this->structure ) ),
+            array( '${htmlBlockId}', '${structure}', '${width}', '${height}' ),
+            array( $this->htmlBlockId, json_encode( $this->structure ), $this->width, $this->height ),
             'Chartjs/body.html');
     }
 
