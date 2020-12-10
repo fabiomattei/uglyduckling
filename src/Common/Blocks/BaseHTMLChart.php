@@ -77,6 +77,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
             }
         }
         $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
+		if (isset($this->glue['#amounts2'])) { $this->structure->data->datasets[1]->data = $this->glue['#amounts2']; }
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
             array( '${htmlBlockId}', '${structure}' ),
             array( $this->htmlBlockId, json_encode( $this->structure ) ),
