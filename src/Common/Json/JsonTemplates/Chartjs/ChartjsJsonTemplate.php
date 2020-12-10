@@ -16,12 +16,21 @@ class ChartjsJsonTemplate extends JsonTemplate {
 
     public function createChart() {
         $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
-        $queryExecutor = $this->pageStatus->getQueryExecutor();
-
-        $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
-        $queryExecutor->setQueryStructure( $this->resource->get->query );
-        $entities = $queryExecutor->executeSql();
-
+		
+        // If there are dummy data they take precedence in order to fill the table
+        if ( isset($this->resource->get->dummydata) ) {
+            $entities = $this->resource->get->dummydata;
+        } else {
+            // If there is a query I look for data to fill the table,
+            // if there is not query I do not
+            if ( isset($this->resource->get->query) ) {
+		        $queryExecutor = $this->pageStatus->getQueryExecutor();
+		        $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+		        $queryExecutor->setQueryStructure( $this->resource->get->query );
+		        $entities = $queryExecutor->executeSql();
+            }
+        }
+        
         $chartBlock = new BaseHTMLChart;
         $chartBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $chartBlock->setHtmlBlockId($this->resource->name);
