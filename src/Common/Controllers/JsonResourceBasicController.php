@@ -57,6 +57,8 @@ class JsonResourceBasicController extends Controller {
             if ( strlen( $this->resourceName ) > 0 ) {
                 $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->resourceName );
                 return true;
+            } else {
+                throw new \Exception('Resource undefined');
             }
         }
         return false;
@@ -128,6 +130,8 @@ class JsonResourceBasicController extends Controller {
                     return true;
                 }
             }
+        } else {
+            throw new \Exception('Illegal csrftoken Exception');
         }
     }
 

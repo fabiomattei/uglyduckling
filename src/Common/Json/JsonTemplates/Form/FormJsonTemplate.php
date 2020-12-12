@@ -69,9 +69,9 @@ class FormJsonTemplate extends JsonTemplate {
         }
         
         $rowcounter = 1;
+        $formBlock->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
         foreach ($fieldRows as $row) {
             $formBlock->addRow();
-            $formBlock->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
             foreach ($row as $field) {
                 $value = $this->pageStatus->getValue($field);
                 if (in_array( $field->type, array('textfield', 'number') )) {
