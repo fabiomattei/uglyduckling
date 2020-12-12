@@ -149,7 +149,7 @@ class PageStatus {
         }
         if ( isset($field->sqlfield) ) {
             $fieldname = $field->sqlfield;
-            return ($this->lastEntity == null ? '' : ( isset($this->lastEntity->{$fieldname}) ? $this->lastEntity->{$fieldname} : '' ) );
+            return ($this->lastEntity == null ? '' : ( isset($this->lastEntity->{$fieldname}) ? $this->lastEntity->{$fieldname} : $this->checkForDefaultValues($field) ) );
         }
         if ( isset($field->constantparameter) ) {
             return $field->constantparameter;
