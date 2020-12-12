@@ -9,7 +9,6 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
-use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 /**

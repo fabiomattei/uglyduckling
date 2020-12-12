@@ -4,11 +4,8 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel\ExcelJsonTemplate;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
-use Fabiom\UglyDuckling\Common\Router\ResourceRouter;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf\PdfJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 
 /**
  * User: Fabio
@@ -17,39 +14,16 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
  */
 class JsonExportController extends JsonResourceBasicController {
 
-    private $formBuilder;
     private $pdfBuilder;
-    private $menubuilder;
     private $excelBuilder;
 
     function __construct() {
 		$this->queryExecuter = new QueryExecuter;
-		$this->formBuilder = new FormJsonTemplate;
 		$this->pdfBuilder = new PdfJsonTemplate;
         $this->excelBuilder = new ExcelJsonTemplate;
-		$this->menubuilder = new MenuJsonTemplate;
     }
-	
-    /**
-     * @throws GeneralException
-     */
-	public function getRequest() {
-        $this->formBuilder->setResource( $this->resource );
-        $this->formBuilder->setAction($this->routerContainer->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, 'res='.$this->getParameters['res'] ));
-		
-		$this->title = $this->setup->getAppNameForPageTitle() . ' :: Office export';
 
-		$menuresource = $this->jsonloader->loadResource( $this->sessionWrapper->getSessionGroup() );
-		$this->menubuilder->setMenuStructure( $menuresource );
-		$this->menubuilder->setRouter( $this->routerContainer );
-        $this->menubuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
-	
-		$this->menucontainer    = array( $this->menubuilder->createMenu() );
-		$this->leftcontainer    = array();
-		$this->centralcontainer = array( $this->formBuilder->createForm() );
-	}
-
-    public function postRequest() {
+    public function getRequest() {
         $this->templateFile = $this->setup->getEmptyTemplateFileName();
 	    if ($this->resource->documenttype == 'pdf' ) {
             $this->pdfBuilder->setResource( $this->resource );

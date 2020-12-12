@@ -10,25 +10,31 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class PdfJsonTemplate extends JsonTemplate {
 
-    function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-    }
-
     public function createTable() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryStructure( $this->resource->post->query );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
-        $entities = $this->queryExecuter->executeSql();
+        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
+        $queryExecutor = $this->pageStatus->getQueryExecutor();
 
-        $table = $this->resource->post->table;
+        // If there are dummy data they take precedence in order to fill the table
+        if ( isset($this->resource->get->dummydata) ) {
+            $entities = $this->resource->get->dummydata;
+        } else {
+            // If there is a query I look for data to fill the table,
+            // if there is not query I do not
+            if ( isset($this->resource->get->query) ) {
+                $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+                $queryExecutor->setQueryStructure( $this->resource->get->query );
+                $entities = $queryExecutor->executeSql();
+            }
+        }
+
+        $table = $this->resource->get->table;
 
         $tableBlock = new BaseHTMLTable;
-        $tableBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
+        $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $tableBlock->setTitle($table->title ?? '');
 
         $tableBlock->addTHead();

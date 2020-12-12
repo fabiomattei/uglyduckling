@@ -91,6 +91,7 @@ class JsonLoader {
             switch ( $this->resourcesIndex[$resource_key]->type ) {
                 case 'dashboard': return 'officeentitydashboard';
                 case 'transaction': return 'officeentitytransaction';
+                case 'export': return 'officeentityexport';
                 default: return 'officeentitydashboard';
             }
         } else {

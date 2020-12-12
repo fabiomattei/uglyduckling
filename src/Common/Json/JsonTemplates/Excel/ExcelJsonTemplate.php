@@ -8,50 +8,29 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel;
 
-use Fabiom\UglyDuckling\Common\Database\DBConnection;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class ExcelJsonTemplate {
-
-    private QueryExecuter $queryExecuter;
-    private DBConnection $dbconnection;
-    private array $parameters;
-    private $resource;
-
-    function __construct() {
-        $this->queryExecuter = new QueryExecuter;
-    }
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameters( $parameters ) {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @param mixed $resource
-     */
-    public function setResource( $resource ) {
-        $this->resource = $resource;
-    }
-
-    /**
-     * @param mixed $dbconnection
-     */
-    public function setDbconnection($dbconnection) {
-        $this->dbconnection = $dbconnection;
-    }
+class ExcelJsonTemplate extends JsonTemplate {
 
     public function getWriter() {
-        $this->queryExecuter->setDBH( $this->dbconnection->getDBH() );
-        $this->queryExecuter->setQueryStructure( $this->resource->post->query );
-        if (isset( $this->parameters ) ) $this->queryExecuter->setPostParameters( $this->parameters );
-        $entities = $this->queryExecuter->executeSql();
+        $queryExecutor = $this->pageStatus->getQueryExecutor();
 
-        $table = $this->resource->post->table;
+        // If there are dummy data they take precedence in order to fill the table
+        if ( isset($this->resource->get->dummydata) ) {
+            $entities = $this->resource->get->dummydata;
+        } else {
+            // If there is a query I look for data to fill the table,
+            // if there is not query I do not
+            if ( isset($this->resource->get->query) ) {
+                $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+                $queryExecutor->setQueryStructure( $this->resource->get->query );
+                $entities = $queryExecutor->executeSql();
+            }
+        }
+
+        $table = $this->resource->get->table;
 
         $spreadsheet = new Spreadsheet();
 

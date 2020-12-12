@@ -128,6 +128,9 @@ class RoutersContainer {
             case 'officeentitytransaction':
                 return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
                 break;
+            case 'officeentityexport':
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
+                break;
 
             default:
                 return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
