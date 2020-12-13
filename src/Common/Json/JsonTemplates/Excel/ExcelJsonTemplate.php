@@ -50,7 +50,7 @@ class ExcelJsonTemplate extends JsonTemplate {
             $col++;
         }
 
-        $row = 1;
+        $row = 2;
         foreach ($entities as $entity) {
             $this->pageStatus->setLastEntity($entity);
             $col = 1;
