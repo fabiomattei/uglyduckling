@@ -17,7 +17,7 @@ class JsonExportController extends JsonResourceBasicController {
     protected $excelBuilder;
 
     public function getRequest() {
-        $this->templateFile = $this->setup->getEmptyTemplateFileName();
+        $this->templateFile = $this->applicationBuilder->getSetup()->getEmptyTemplateFileName();
 	    if ($this->resource->documenttype == 'pdf' ) {
             $this->pdfBuilder = new PdfJsonTemplate( $this->applicationBuilder, $this->pageStatus );
             $this->pdfBuilder->setResource( $this->resource );
