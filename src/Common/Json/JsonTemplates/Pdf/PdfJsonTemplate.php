@@ -56,9 +56,10 @@ class PdfJsonTemplate extends JsonTemplate {
 
         $tableBlock->addTBody();
         foreach ($entities as $entity) {
+            $this->pageStatus->setLastEntity($entity);
             $tableBlock->addRow();
             foreach ($table->fields as $field) {
-                $tableBlock->addColumn($entity->{$field->sqlfield});
+                $tableBlock->addColumn($this->pageStatus->getValue($field));
             }
             $tableBlock->closeRow();
         }
