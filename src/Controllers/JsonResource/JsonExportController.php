@@ -4,7 +4,6 @@ namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Excel\ExcelJsonTemplate;
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf\PdfJsonTemplate;
 
 /**
@@ -14,18 +13,13 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Pdf\PdfJsonTemplate;
  */
 class JsonExportController extends JsonResourceBasicController {
 
-    private $pdfBuilder;
-    private $excelBuilder;
-
-    function __construct() {
-		$this->queryExecuter = new QueryExecuter;
-		$this->pdfBuilder = new PdfJsonTemplate;
-        $this->excelBuilder = new ExcelJsonTemplate;
-    }
+    protected $pdfBuilder;
+    protected $excelBuilder;
 
     public function getRequest() {
         $this->templateFile = $this->setup->getEmptyTemplateFileName();
 	    if ($this->resource->documenttype == 'pdf' ) {
+            $this->pdfBuilder = new PdfJsonTemplate( $this->applicationBuilder, $this->pageStatus );
             $this->pdfBuilder->setResource( $this->resource );
             $this->pdfBuilder->setParameters( $this->postParameters );
             $this->pdfBuilder->setDbconnection( $this->dbconnection );
@@ -37,6 +31,7 @@ class JsonExportController extends JsonResourceBasicController {
             //$mpdf->Output( $this->resource->filename.'.pdf', 'D');
             exit;
         } else {
+            $this->excelBuilder = new ExcelJsonTemplate( $this->applicationBuilder, $this->pageStatus );
             $this->excelBuilder->setResource( $this->resource );
             $this->excelBuilder->setParameters( $this->postParameters );
             $this->excelBuilder->setDbconnection( $this->dbconnection );
