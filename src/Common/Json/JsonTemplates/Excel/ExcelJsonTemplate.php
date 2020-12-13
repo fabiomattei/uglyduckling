@@ -48,7 +48,7 @@ class ExcelJsonTemplate extends JsonTemplate {
         // Add titles
         $col = 1;
         foreach ($table->fields as $field) {
-            $spreadsheet->setActiveSheetIndex(0)->getColumnDimension($this->columnNames[$col])->setWidth(200);
+            $spreadsheet->setActiveSheetIndex(0)->getColumnDimension($this->columnNames[$col])->setWidth($field->width ?? 20);
             $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $field->headline);
             $col++;
         }
