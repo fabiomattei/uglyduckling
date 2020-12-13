@@ -14,6 +14,15 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 
 class PdfJsonTemplate extends JsonTemplate {
 
+    /**
+     * PdfJsonTemplate constructor.
+     * @param $applicationBuilder
+     * @param $pageStatus
+     */
+    function __construct( $applicationBuilder, $pageStatus ) {
+        parent::__construct( $applicationBuilder, $pageStatus);
+    }
+
     public function createTable() {
         $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
         $queryExecutor = $this->pageStatus->getQueryExecutor();

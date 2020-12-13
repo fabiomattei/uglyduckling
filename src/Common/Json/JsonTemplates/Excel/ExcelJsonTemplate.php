@@ -14,6 +14,15 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExcelJsonTemplate extends JsonTemplate {
 
+    /**
+     * ExcelJsonTemplate constructor.
+     * @param $applicationBuilder
+     * @param $pageStatus
+     */
+    function __construct( $applicationBuilder, $pageStatus ) {
+        parent::__construct( $applicationBuilder, $pageStatus);
+    }
+
     public function getWriter() {
         $queryExecutor = $this->pageStatus->getQueryExecutor();
 
