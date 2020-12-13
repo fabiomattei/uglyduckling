@@ -14,6 +14,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExcelJsonTemplate extends JsonTemplate {
 
+    protected $columnNames = array( 1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F', 7 => 'G', 8 => 'H', 9 => 'I', 10 => 'J'  );
+
     /**
      * ExcelJsonTemplate constructor.
      * @param $applicationBuilder
@@ -46,7 +48,7 @@ class ExcelJsonTemplate extends JsonTemplate {
         // Add titles
         $col = 1;
         foreach ($table->fields as $field) {
-            $spreadsheet->setActiveSheetIndex(0)->getColumnDimension($col)->setWidth(200);
+            $spreadsheet->setActiveSheetIndex(0)->getColumnDimension($this->columnNames[$col])->setWidth(200);
             $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $field->headline);
             $col++;
         }
