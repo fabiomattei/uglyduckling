@@ -21,9 +21,6 @@ class JsonExportController extends JsonResourceBasicController {
 	    if ($this->resource->documenttype == 'pdf' ) {
             $this->pdfBuilder = new PdfJsonTemplate( $this->applicationBuilder, $this->pageStatus );
             $this->pdfBuilder->setResource( $this->resource );
-            $this->pdfBuilder->setParameters( $this->postParameters );
-            $this->pdfBuilder->setDbconnection( $this->dbconnection );
-            $this->pdfBuilder->setHtmlTemplateLoader( $this->htmlTemplateLoader );
 
             $mpdf = new \Mpdf\Mpdf();
             $mpdf->WriteHTML($this->pdfBuilder->createTable());
@@ -33,8 +30,6 @@ class JsonExportController extends JsonResourceBasicController {
         } else {
             $this->excelBuilder = new ExcelJsonTemplate( $this->applicationBuilder, $this->pageStatus );
             $this->excelBuilder->setResource( $this->resource );
-            $this->excelBuilder->setParameters( $this->postParameters );
-            $this->excelBuilder->setDbconnection( $this->dbconnection );
 
             // Redirect output to a client’s web browser (Excel5)
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
