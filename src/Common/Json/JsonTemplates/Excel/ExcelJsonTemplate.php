@@ -52,9 +52,10 @@ class ExcelJsonTemplate extends JsonTemplate {
 
         $row = 1;
         foreach ($entities as $entity) {
+            $this->pageStatus->setLastEntity($entity);
             $col = 1;
             foreach ($table->fields as $field) {
-                $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col,1, $entity->{$field->sqlfield});
+                $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($col, $row, $this->pageStatus->getValue($field));
                 $col++;
             }
             $row++;
