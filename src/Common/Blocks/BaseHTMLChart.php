@@ -72,10 +72,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
     }
 
     function addToHead(): string {
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array(),
-            array(),
-            'Chartjs/addtohead.html');
+        return $this->htmlTemplateLoader->loadTemplate('Chartjs/addtohead.html');
     }
 
     function show(): string {

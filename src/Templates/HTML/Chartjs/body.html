@@ -3,5 +3,18 @@
 <script>
     var ctx${htmlBlockId} = document.getElementById("${htmlBlockId}").getContext('2d');
     var chart${htmlBlockId} = new Chart(ctx${htmlBlockId}, ${structure} );
+    jQuery("#${htmlBlockId}").click(
+    function(evt){
+        var slice = chart${htmlBlockId}.getElementAtEvent(evt);
+        console.log(slice);
+        if (!slice.length) return; // return if not clicked on slice\n" +
+        var chartData = slice[0]['_chart'].config.data;
+        var idx = slice[0]['_index'];
+        var label = chartData.labels[idx];
+        var value = chartData.datasets[0].data[idx];
+        var udactiononclick = chartData.datasets[0].idcode[idx];
+        //alert(udactiononclick);\n" +
+        window.location.href = udactiononclick;
+    }
 </script>
 <!-- End: ${htmlBlockId} -->
