@@ -21,8 +21,9 @@ class BaseHTMLChart extends BaseHTMLBlock {
     protected $htmlTemplateLoader;
 	protected $width;
 	protected $height;
+	protected $actiononclick;
 
-    function __construct() {
+        function __construct() {
         $this->htmlBlockId = 'myChart';
         $this->lables = '';
         $this->dataset = '';
@@ -43,6 +44,20 @@ class BaseHTMLChart extends BaseHTMLBlock {
 
     function setChartDataGlue($chartDataGlue) {
         $this->chartdataglue = $chartDataGlue;
+    }
+
+    function setApplicationBuilder($applicationBuilder) {
+        $this->applicationBuilder = $applicationBuilder;
+    }
+
+    /**
+     * @param $chartDataGlue
+     *
+     * $chartDataGlue is action json structure like:
+     * "actiononclick": { "resource": "rootcauseschartdetailsdashboard", "parameters":[{"name": "rcid", "sqlfield": "r_rootcauseid"}]},
+     */
+    function setActionOnClick($actiononclick) {
+        $this->actiononclick = $actiononclick;
     }
 	
     function setWidth($width) {
@@ -77,7 +92,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
 
     function show(): string {
         $this->structure->data->labels = $this->glue['#labels'];
-        // $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
+
         foreach ($this->structure->data->datasets[0] as $dataset) {
             if ( isset($dataset->data) ) {
                 if ( isset($this->glue[$dataset->data]) ) {
@@ -85,9 +100,14 @@ class BaseHTMLChart extends BaseHTMLBlock {
                 }
             }
         }
+
         $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
+        if (isset($this->actiononclick) AND isset($this->actiononclick->resource)) {
+
+        }
 		if (isset($this->glue['#amounts2'])) { $this->structure->data->datasets[1]->data = $this->glue['#amounts2']; }
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+
+		return $this->htmlTemplateLoader->loadTemplateAndReplace(
             array( '${htmlBlockId}', '${structure}', '${width}', '${height}' ),
             array( $this->htmlBlockId, json_encode( $this->structure ), $this->width, $this->height ),
             'Chartjs/body.html');
