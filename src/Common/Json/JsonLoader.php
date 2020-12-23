@@ -37,7 +37,7 @@ class JsonLoader {
 		if (file_exists ( $indexPath )) {
 			$handle = fopen($indexPath, 'r');
 			$data = fread($handle,filesize($indexPath));
-			$loadedfile = $this->json_decode_with_error_control($data);
+			$loadedfile = $this->json_decode_with_error_control($data, $indexPath);
 			foreach ($loadedfile->scripts as $key) {
 				if($key->type === 'index') {
 					$this->loadIndex( $key->path );
@@ -140,29 +140,29 @@ class JsonLoader {
      * JSON_ERROR_UTF8
      *
      */
-	public function json_decode_with_error_control( string $data ) {
-		$loadeddata = json_decode($data);
+	public function json_decode_with_error_control( string $jsondata, string $fileNameAndPath ) {
+		$loadeddata = json_decode( $jsondata );
 		switch (json_last_error()) {
         	case JSON_ERROR_NONE:
         	    // throw new \Exception(' - No errors');
         	break;
         	case JSON_ERROR_DEPTH:
-        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Maximum stack depth exceeded ::'. json_last_error_msg());
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Maximum stack depth exceeded ::'. $fileNameAndPath .' '.json_last_error_msg());
         	break;
         	case JSON_ERROR_STATE_MISMATCH:
-        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Underflow or the modes mismatch ::'. json_last_error_msg());
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Underflow or the modes mismatch ::'. $fileNameAndPath .' '.json_last_error_msg());
         	break;
         	case JSON_ERROR_CTRL_CHAR:
-        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unexpected control character found ::'. json_last_error_msg());
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unexpected control character found ::'. $fileNameAndPath .' '.json_last_error_msg());
         	break;
         	case JSON_ERROR_SYNTAX:
-        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Syntax error, malformed JSON ::'. json_last_error_msg());
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Syntax error, malformed JSON ::'. $fileNameAndPath .' '.json_last_error_msg());
         	break;
         	case JSON_ERROR_UTF8:
-        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Malformed UTF-8 characters, possibly incorrectly encoded ::'. json_last_error_msg());
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Malformed UTF-8 characters, possibly incorrectly encoded ::'. $fileNameAndPath .' '.json_last_error_msg());
         	break;
         	default:
-        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unknown error ::'. json_last_error_msg());
+        	    throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unknown error ::'. $fileNameAndPath .' '. json_last_error_msg());
         	break;
     	}
 		return $loadeddata;
