@@ -68,7 +68,7 @@ class JsonLoader {
 		if ( array_key_exists( $key, $this->resourcesIndex ) ) {
 			if ( file_exists( $this->resourcesIndex[$key]->path ) ) {
 				$handle = fopen($this->resourcesIndex[$key]->path, 'r');
-                $resourceOut = $this->json_decode_with_error_control(fread($handle,filesize($this->resourcesIndex[$key]->path)));
+                $resourceOut = $this->json_decode_with_error_control(fread($handle, filesize($this->resourcesIndex[$key]->path)), $this->resourcesIndex[$key]->path );
                 $this->resourceCache[$key] = $resourceOut;
 				return $resourceOut;
 			} else {
