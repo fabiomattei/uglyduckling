@@ -90,6 +90,8 @@ class AdminController extends Controller {
                     return true;
                 }
             }
+        } else {
+            throw new \Exception('Illegal csrftoken Exception');
         }
     }
 
