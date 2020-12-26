@@ -82,28 +82,21 @@ class UserEditPassword extends AdminController {
     public function postRequest() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 
-        $user = $this->userDao->getById( $this->postParameters[UserEditPassword::FIELD_USR_ID] );
-
-        /* if ( $this->userDao->checkEmailAndPassword( $user->usr_email, $this->postParameters[UserEditPassword::FIELD_OLD_PASSWORD] ) ) { */
-            if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
-                $this->userDao->updatePassword( $this->postParameters[UserEditPassword::FIELD_USR_ID], $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
-                $this->setSuccess("Password successfully updated");
-                $this->redirectToSecondPreviousPage();
-            } else {
-                $this->setError("The two new password do not match");
-                $this->redirectToPreviousPage();
-            }
-        /* } else {
-            $this->setError("The old password does not match");
+        if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
+            $this->userDao->updatePassword( $this->postParameters[UserEditPassword::FIELD_USR_ID], $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
+            $this->setSuccess("Password successfully updated");
+            $this->redirectToSecondPreviousPage();
+        } else {
+            $this->setError("The two new password do not match");
             $this->redirectToPreviousPage();
-        } */
+        }
     }
 
     public function show_post_error_page() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
-        $this->applicationBuilder->getMessages()->setError($this->readableErrors);
+        $this->applicationBuilder->getMessages()->setError( $this->readableErrors ?? '');
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit password';
 
