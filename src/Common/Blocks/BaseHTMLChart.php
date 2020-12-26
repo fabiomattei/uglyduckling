@@ -42,22 +42,8 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->structure = $structure;
     }
 
-    function setChartDataGlue($chartDataGlue) {
-        $this->chartdataglue = $chartDataGlue;
-    }
-
     function setApplicationBuilder($applicationBuilder) {
         $this->applicationBuilder = $applicationBuilder;
-    }
-
-    /**
-     * @param $chartDataGlue
-     *
-     * $chartDataGlue is action json structure like:
-     * "actiononclick": { "resource": "rootcauseschartdetailsdashboard", "parameters":[{"name": "rcid", "sqlfield": "r_rootcauseid"}]},
-     */
-    function setActionOnClick($actiononclick) {
-        $this->actiononclick = $actiononclick;
     }
 	
     function setWidth($width) {
@@ -78,12 +64,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
     }
 
     function setData($data) {
-        foreach ( $data as $dt ) {
-            foreach ($this->chartdataglue as $dg) {
-                if(!isset($this->glue[$dg->placeholder])) $this->glue[$dg->placeholder] = array();
-                $this->glue[$dg->placeholder][] = $dt->{$dg->sqlfield};
-            }
-        }
+        $this->glue = $data;
     }
 
     function addToHead(): string {
@@ -91,26 +72,38 @@ class BaseHTMLChart extends BaseHTMLBlock {
     }
 
     function show(): string {
-        $this->structure->data->labels = $this->glue['#labels'];
-
-        foreach ($this->structure->data->datasets[0] as $dataset) {
-            if ( isset($dataset->data) ) {
-                if ( isset($this->glue[$dataset->data]) ) {
-                    $dataset->data = $this->glue[$dataset->data];
-                }
-            }
-        }
-
-        $this->structure->data->datasets[0]->data = $this->glue['#amounts'];
-        if (isset($this->actiononclick) AND isset($this->actiononclick->resource)) {
-
-        }
-		if (isset($this->glue['#amounts2'])) { $this->structure->data->datasets[1]->data = $this->glue['#amounts2']; }
+        $this->structure = $this->lookForTagsToSobstitute($this->structure);
 
 		return $this->htmlTemplateLoader->loadTemplateAndReplace(
             array( '${htmlBlockId}', '${structure}', '${width}', '${height}' ),
             array( $this->htmlBlockId, json_encode( $this->structure ), $this->width, $this->height ),
             'Chartjs/body.html');
+    }
+
+    /**
+     * This method iterates recursively in the json structure and
+     * make a substitution of the placeholders with the arrays
+     * created using data coming from the query
+     *
+     * @param $source
+     * @return mixed
+     */
+    function lookForTagsToSobstitute( $source ) {
+        $keys = array_keys($this->glue);
+        foreach ( $source as $key => $value ) {
+            if ( is_string( $value ) ) {
+                if ( in_array($value, $keys) ) {
+                    $source->{$key} = $this->glue[$value];
+                }
+            }
+            if ( is_object( $value ) ) {
+                $this->lookForTagsToSobstitute( $value );
+            }
+            if ( is_array( $value ) ) {
+                $this->lookForTagsToSobstitute( $value );
+            }
+        }
+        return $source;
     }
 
 }

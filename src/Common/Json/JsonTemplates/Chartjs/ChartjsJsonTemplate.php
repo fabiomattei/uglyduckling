@@ -31,6 +31,20 @@ class ChartjsJsonTemplate extends JsonTemplate {
             }
         }
 
+        $glue = [];
+        foreach ( $entities as $entity ) {
+            $this->pageStatus->setLastEntity($entity);
+            foreach ($this->resource->get->chartdataglue as $dg) {
+                if ( !isset($glue[$dg->placeholder]) ) $glue[$dg->placeholder] = array();
+                if ( in_array($dg->type, ['string', 'int', 'integer', 'long', 'float']) ) {
+                    $glue[$dg->placeholder][] = $this->pageStatus->getValue($dg);
+                }
+                if ( $dg->type == 'action') {
+                    $glue[$dg->placeholder][] = $this->applicationBuilder->make_resource_url_simplified( $dg->action, $this->pageStatus );
+                }
+            }
+        }
+
         $chartBlock = new BaseHTMLChart;
         $chartBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $chartBlock->setApplicationBuilder( $this->applicationBuilder );
@@ -38,9 +52,7 @@ class ChartjsJsonTemplate extends JsonTemplate {
         $chartBlock->setStructure($this->resource->get->chart);
 		$chartBlock->setWidth($this->resource->get->width ?? '400');
 		$chartBlock->setHeight($this->resource->get->height ?? '400');
-        $chartBlock->setChartDataGlue($this->resource->get->chartdataglue);
-        $chartBlock->setActionOnClick($this->resource->get->actiononclick);
-        $chartBlock->setData($entities);
+        $chartBlock->setData($glue);
         return $chartBlock;
     }
 
