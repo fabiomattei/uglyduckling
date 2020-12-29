@@ -95,16 +95,16 @@ class FormJsonTemplate extends JsonTemplate {
                         $fieldOptions = array();
                     }
 
-                    $options = array();
-                    foreach ($fieldOptions as $op) {
-                        if ( !isset($op->valuesqlfield) ) {
-                            $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter valuesqlfield in json object', __FILE__, __LINE__);
-                        }
-                        if ( !isset($op->labelsqlfield) ) {
-                            $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter labelsqlfield in json object', __FILE__, __LINE__);
-                        }
-                        $options[$op->valuesqlfield] = $op->labelsqlfield;
-                    }
+					$options = array();
+					foreach ($fieldOptions as $op) {
+					    if ( !isset($field->valuesqlfield) ) {
+					        $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter valuesqlfield in json object', __FILE__, __LINE__);
+					    }
+					    if ( !isset($field->labelsqlfield) ) {
+					        $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter labelsqlfield in json object', __FILE__, __LINE__);
+					    }
+					    $options[$op->{$field->valuesqlfield}] = $op->{$field->labelsqlfield};
+					}
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
                 }
                 if ($field->type === 'radiobutton') {
