@@ -143,6 +143,24 @@ class PageStatus {
      * @param $entity: possible entity loaded from the database
      */
     public function getValue( $field ) {
+        if ( !isset($field->filter) ) {
+            return $this->retriveValue( $field );
+        } else {
+        	return $this->applyFilter( $field, $this->retriveValue( $field ) );
+        }
+    }
+	
+	public function applyFilter( $field, $value ) {
+		if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
+		$filters = explode('|', $field->filter);
+		foreach ( $filters as $item ) {
+			$filtercall = explode( ',', $item );
+			if ( $filtercall == 'substr' AND count( $filtercall ) == 3 ) $value = substr( $filtercall[0], $filtercall[1], $filtercall[2] ); 
+		}
+		return $value;
+	}
+	
+    public function retriveValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
             return ($this->lastEntity == null ? '' : ( isset($this->lastEntity->{$fieldname}) ? $this->lastEntity->{$fieldname} : '' ) );
