@@ -199,7 +199,7 @@ class JsonResourceBasicController extends Controller {
         $this->applicationBuilder->getJsonloader()->loadIndex();
 
         if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
-            $this->sessionWrapper->createCsrfToken();
+            $this->pageStatus->getSessionWrapper->createCsrfToken();
             if ( $this->check_and_load_resource() ) {
                 if ( $this->check_authorization_resource_request() ) {
                     if ( $this->second_check_get_request() ) {
