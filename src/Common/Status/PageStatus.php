@@ -146,19 +146,35 @@ class PageStatus {
         if ( !isset($field->filter) ) {
             return $this->retriveValue( $field );
         } else {
-        	return $this->applyFilter( $field, $this->retriveValue( $field ) );
+        	return $this->applyFilters( $field, $this->retriveValue( $field ) );
         }
     }
 	
-	public function applyFilter( $field, $value ) {
+	public function applyFilters( $field, $value ): string {
 		if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
 		$filters = explode('|', $field->filter);
 		foreach ( $filters as $item ) {
 			$filtercall = explode( ',', $item );
-			if ( $filtercall == 'substr' AND count( $filtercall ) == 3 ) $value = substr( $filtercall[0], $filtercall[1], $filtercall[2] ); 
+			$value = $this->applyFilter($filtercall, $value);
 		}
 		return $value;
 	}
+	
+	/**
+	 * This method can be overridden for each project implementation.
+	 * 
+	 * @param array $filtercall: contains the function call and the parameters to call 
+	 * @param string $value: contains the value we need to apply the filter to
+	 *
+	 * Ex: substr: $filtercall = [ 'substr', 2, 5 ]    =>    $value = substr($value, 2, 5)
+	 *     substr: $filtercall = [ 'substr', 7 ]       =>    $value = substr($value, 7)
+	 *
+	 * This function can be overridden and customized
+	 */
+    function applyFilter(array $filtercall, string $value): string {
+        if ( $filtercall == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] ); 
+		if ( $filtercall == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] ); 
+    }
 	
     public function retriveValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
@@ -202,27 +218,27 @@ class PageStatus {
     /**
      * @param $sessionupdates
      *
-       "sessionupdates": {
-         "queryset": [
-           {
-             "label": "query1",
-             "sql": "SELECT usr_siteid, usr_usrofid, usr_depid FROM user where usr_id = :usrid ;",
-             "parameters":[
-               { "type":"long", "placeholder": ":usrid", "sessionparameter": "user_id" }
-             ]
-           }
-         ],
-         "sessionvars": [
-             { "name":"user_id", "system":"ud" },
-             { "name":"username", "system":"ud" },
-             { "name":"group", "system":"ud" },
-             { "name":"logged_in", "system":"ud" },
-             { "name":"ip", "system":"ud" },
-             { "name":"last_login", "system":"ud" },
-             { "name":"siteid", "sqlfield":"usr_siteid", "querylabel":"query1" },
-             { "name":"tryaconstantparameter", "constantparamenter":"4" }
-           ]
-         }
+     * "sessionupdates": {
+     *   "queryset": [
+     *     {
+     *       "label": "query1",
+     *       "sql": "SELECT usr_siteid, usr_usrofid, usr_depid FROM user where usr_id = :usrid ;",
+     *       "parameters":[
+     *         { "type":"long", "placeholder": ":usrid", "sessionparameter": "user_id" }
+     *       ]
+     *     }
+     *   ],
+     *   "sessionvars": [
+     *       { "name":"user_id", "system":"ud" },
+     *       { "name":"username", "system":"ud" },
+     *       { "name":"group", "system":"ud" },
+     *       { "name":"logged_in", "system":"ud" },
+     *       { "name":"ip", "system":"ud" },
+     *       { "name":"last_login", "system":"ud" },
+     *       { "name":"siteid", "sqlfield":"usr_siteid", "querylabel":"query1" },
+     *       { "name":"tryaconstantparameter", "constantparamenter":"4" }
+     *     ]
+     *   }
      */
     public function updateSession( $sessionupdates ) {
         $querySet = new QuerySet;
