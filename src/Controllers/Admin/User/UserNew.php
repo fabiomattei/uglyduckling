@@ -32,14 +32,6 @@ class UserNew extends AdminController {
     }
 
     /**
-     * Overwrite parent showPage method in order to add the functionality of loading a json resource.
-     */
-    public function showPage() {
-        $this->applicationBuilder->getJsonloader()->loadIndex();
-        parent::showPage();
-    }
-
-    /**
      * @throws GeneralException
      *
      * $this->getParameters['id'] resource key index
