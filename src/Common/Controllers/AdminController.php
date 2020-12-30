@@ -23,9 +23,6 @@ class AdminController extends Controller {
      * Overwrite parent showPage method in order to add the functionality of loading a json resource.
      */
     public function showPage() {
-        if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
-            $this->sessionWrapper->createCsrfToken();
-        }
         $groupDao = new UserGroupDao;
         $groupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         if (
