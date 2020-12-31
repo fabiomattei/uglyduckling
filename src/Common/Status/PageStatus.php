@@ -213,8 +213,8 @@ class PageStatus {
 	 * This function can be overridden and customized
 	 */
     function applyFilter(array $filtercall, string $value): string {
-        if ( $filtercall == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] ); 
-		if ( $filtercall == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] ); 
+        if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] );
+		if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
     }
 	
     public function retriveFieldValue( $field ) {
