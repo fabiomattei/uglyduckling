@@ -150,6 +150,41 @@ class PageStatus {
         }
     }
 	
+    /**
+	 * Check if there is a "value" property in field.
+	 * If it is present iterates over tre structure and return the first value he finds different from empty string.
+	 * If there is not tries to find a value in the field itself
+	 */	
+	public function retriveValue( $field ) {
+		if (isset( $field->value ) AND is_array( $field->value ) ) {
+			return $this->getValueFromArrayValue( $field->value )
+		} else {
+			return $this->retriveFieldValue( $field )
+		}
+	}
+	
+	/**
+	 * Iterates over this structure until it finds a value
+     * "value": [
+     *   { "type":"long", "sqlfield":"cv_FREQUE", "filter":"substr,1,1" },
+     *   { "type":"long", "constant":"0" }
+     * ],
+	 */
+	public function getValueFromArrayValue( $fieldvalue ) {
+		$value = '';
+		foreach ($fieldvalue as $valuedef) {
+			$value = $this->getValue( $valuedef );
+			if ( $value != '' ) continue;
+		}
+		return $value;
+	}
+	
+	/**
+	 * Get a filter stirng and iterates over it in order to call $this->applyFilter
+	 * A filter string contains all function calls divide by a pipe simbol |
+	 *
+	 * Ex: "filter":"substr,3,6|substr,1,1"
+	 */
 	public function applyFilters( $field, $value ): string {
 		if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
 		$filters = explode('|', $field->filter);
@@ -176,7 +211,7 @@ class PageStatus {
 		if ( $filtercall == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] ); 
     }
 	
-    public function retriveValue( $field ) {
+    public function retriveFieldValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
             return ($this->lastEntity == null ? '' : ( isset($this->lastEntity->{$fieldname}) ? $this->lastEntity->{$fieldname} : '' ) );
