@@ -137,7 +137,7 @@ class RoutersContainer {
             }
             return $this->makeRelativeUrl( $resource, $url_parameters );
         }
-        if (isset($json_action->controller)) {
+        if (isset($json_action->resource)) {
             $resource = $json_action->resource;
             $url_parameters = 'res='.$resource.'&';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
