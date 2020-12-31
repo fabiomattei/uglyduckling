@@ -77,6 +77,13 @@ class BaseHTMLForm extends BaseHTMLBlock {
             'Form/radiobuttonfield.html');
     }
 
+    function addCheckBoxField( string $name, string $label, string $value, string $width, string $checked ) {
+        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            array('${ColWidth}', '${name}', '${label}', '${value}', '${checked}'),
+            array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $checked ?? ''),
+            'Form/checkboxfield.html');
+    }
+
     /**
      * @param string $name
      * @param string $label

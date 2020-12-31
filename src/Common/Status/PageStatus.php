@@ -146,7 +146,7 @@ class PageStatus {
         if ( !isset($field->filter) ) {
             return $this->retriveValue( $field );
         } else {
-        	return $this->applyFilters( $field, $this->retriveValue( $field ) );
+        	return $this->applyFilters( $field->filter, $this->retriveValue( $field ) );
         }
     }
 	
@@ -157,9 +157,9 @@ class PageStatus {
 	 */	
 	public function retriveValue( $field ) {
 		if (isset( $field->value ) AND is_array( $field->value ) ) {
-			return $this->getValueFromArrayValue( $field->value )
+			return $this->getValueFromArrayValue( $field->value );
 		} else {
-			return $this->retriveFieldValue( $field )
+			return $this->retriveFieldValue( $field );
 		}
 	}
 	
@@ -174,7 +174,13 @@ class PageStatus {
 		$value = '';
 		foreach ($fieldvalue as $valuedef) {
 			$value = $this->getValue( $valuedef );
-			if ( $value != '' ) continue;
+			if ( $value != '' ) {
+			    if ( isset($valuedef->filter) ) {
+			        return $this->applyFilters( $valuedef->filter, $value );
+                } else {
+                    return $value;
+                }
+            }
 		}
 		return $value;
 	}
@@ -185,9 +191,9 @@ class PageStatus {
 	 *
 	 * Ex: "filter":"substr,3,6|substr,1,1"
 	 */
-	public function applyFilters( $field, $value ): string {
+	public function applyFilters( $filterString, $value ): string {
 		if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
-		$filters = explode('|', $field->filter);
+		$filters = explode('|', $filterString->filter);
 		foreach ( $filters as $item ) {
 			$filtercall = explode( ',', $item );
 			$value = $this->applyFilter($filtercall, $value);
