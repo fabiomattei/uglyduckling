@@ -111,7 +111,7 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width, $field->checked ?? '');
                 }
                 if ($field->type === 'checkbox') {
-                    $checkedValue = $this->pageStatus->getValue($field);
+                    $checkedValue = $this->pageStatus->getValueFromArrayValue($field->checked);
                     $checkedString = '';
                     if ( $checkedValue == $value ) {
                         $checkedString = 'checked="checked"';
