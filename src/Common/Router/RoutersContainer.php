@@ -107,35 +107,65 @@ class RoutersContainer {
      *   ]
      * }
      *
+     * I case I want to link a controller
+     * {
+     *   "type": "link",
+     *   "label": "Info",
+     *   "controller": "myinfopanel",
+     *   "tooltip": "My tool tip text",
+     *   "onclick": "My on click text",
+     *   "buttoncolor": "green",
+     *   "outline": false,
+     *   "parameters":[
+     *     {"name": "id", "sqlfield": "id"},
+     *     {"name": "secondid", "constantparameter": "3"},
+     *     {"name": "thirdid", "getparameter": "mygetparameter"}
+     *   ]
+     * }
+     *
      * Check out: http://www.uddocs.com/docs/actions
      */
     function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
-        $resource = $json_action->resource;
-        $url_parameters = 'res='.$resource.'&';
-        if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
-            foreach ($json_action->parameters as $par) {
-                $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+        if (isset($json_action->controller)) {
+            $resource = $json_action->controller;
+            $url_parameters = '';
+            if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+                foreach ($json_action->parameters as $par) {
+                    $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+                }
+                $url_parameters = rtrim($url_parameters, '&');
             }
-            $url_parameters = rtrim($url_parameters, '&');
+            return $this->makeRelativeUrl( $resource, $url_parameters );
         }
+        if (isset($json_action->controller)) {
+            $resource = $json_action->resource;
+            $url_parameters = 'res='.$resource.'&';
+            if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+                foreach ($json_action->parameters as $par) {
+                    $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+                }
+                $url_parameters = rtrim($url_parameters, '&');
+            }
 
-        $action = ( isset($resource) ? $jsonloader->getActionRelatedToResource( $resource ) : '#');
+            $action = ( isset($resource) ? $jsonloader->getActionRelatedToResource( $resource ) : '#');
 
-        switch ( $action ) {
-            case 'officeentitydashboard':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
-                break;
-            case 'officeentitytransaction':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
-                break;
-            case 'officeentityexport':
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
-                break;
+            switch ( $action ) {
+                case 'officeentitydashboard':
+                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                    break;
+                case 'officeentitytransaction':
+                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
+                    break;
+                case 'officeentityexport':
+                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
+                    break;
 
-            default:
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
-                break;
+                default:
+                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+                    break;
+            }
         }
+        throw new \Exception('[UD Error] No action or controller defined');
     }
 
     /**
