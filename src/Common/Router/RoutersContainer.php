@@ -180,7 +180,7 @@ class RoutersContainer {
                     break;
             }
         }
-        throw new \Exception('[UD Error] No action or controller defined');
+        throw new \Exception('[UD Error] No action or controller or URL defined');
     }
 
     /**
