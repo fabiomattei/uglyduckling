@@ -195,8 +195,8 @@ class PageStatus {
 		if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
 		$filters = explode('|', $filterString->filter);
 		foreach ( $filters as $item ) {
-			$filtercall = explode( ',', $item );
-			$value = $this->applyFilter($filtercall, $value);
+			$filterCall = explode( ',', $item );
+			$value = $this->applyFilter($filterCall, $value);
 		}
 		return $value;
 	}
@@ -215,6 +215,7 @@ class PageStatus {
     function applyFilter(array $filtercall, string $value): string {
         if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] );
 		if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
+		return $value;
     }
 	
     public function retriveFieldValue( $field ) {
