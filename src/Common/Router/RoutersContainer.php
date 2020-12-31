@@ -123,9 +123,24 @@ class RoutersContainer {
      *   ]
      * }
      *
+     * In case I want to link a URL
+     * {
+     *   "type": "link",
+     *   "label": "Info",
+     *   "url": "www.google.com",
+     *   "tooltip": "My tool tip text",
+     *   "onclick": "My on click text",
+     *   "buttoncolor": "green",
+     *   "outline": false
+     * }
+     *
+     *
      * Check out: http://www.uddocs.com/docs/actions
      */
     function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
+        if (isset($json_action->url)) {
+            return $json_action->url;
+        }
         if (isset($json_action->controller)) {
             $resource = $json_action->controller;
             $url_parameters = '';
