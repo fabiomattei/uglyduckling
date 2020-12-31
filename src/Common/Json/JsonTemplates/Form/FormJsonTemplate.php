@@ -111,12 +111,15 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width, $field->checked ?? '');
                 }
                 if ($field->type === 'checkbox') {
-                    $checkedValue = $this->pageStatus->getValueFromArrayValue($field->checked);
-                    $checkedString = '';
+                    $checkedValue = '';   // value the field should have if checked
+                    $checkedString = '';  // string to put in actual HTML tag
+                    if ( isset($field->checked) AND is_array($field->checked) ) {
+                        $checkedValue = $this->pageStatus->getValueFromArrayValue($field->checked);
+                    }
                     if ( $checkedValue == $value ) {
                         $checkedString = 'checked="checked"';
                     }
-                    $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width, $checkedString);
+                    $formBlock->addCheckBoxField($field->name, $field->label, $value ?? '', $field->width, $checkedString);
                 }
                 if ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);

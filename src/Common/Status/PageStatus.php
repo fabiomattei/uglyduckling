@@ -146,78 +146,78 @@ class PageStatus {
         if ( !isset($field->filter) ) {
             return $this->retriveValue( $field );
         } else {
-        	return $this->applyFilters( $field->filter, $this->retriveValue( $field ) );
+            return $this->applyFilters( $field->filter, $this->retriveValue( $field ) );
         }
     }
-	
+
     /**
-	 * Check if there is a "value" property in field.
-	 * If it is present iterates over tre structure and return the first value he finds different from empty string.
-	 * If there is not tries to find a value in the field itself
-	 */	
-	public function retriveValue( $field ) {
-		if (isset( $field->value ) AND is_array( $field->value ) ) {
-			return $this->getValueFromArrayValue( $field->value );
-		} else {
-			return $this->retriveFieldValue( $field );
-		}
-	}
-	
-	/**
-	 * Iterates over this structure until it finds a value
+     * Check if there is a "value" property in field.
+     * If it is present iterates over tre structure and return the first value he finds different from empty string.
+     * If there is not tries to find a value in the field itself
+     */
+    public function retriveValue( $field ) {
+        if (isset( $field->value ) AND is_array( $field->value ) ) {
+            return $this->getValueFromArrayValue( $field->value );
+        } else {
+            return $this->retriveFieldValue( $field );
+        }
+    }
+
+    /**
+     * Iterates over this structure until it finds a value
      * "value": [
      *   { "type":"long", "sqlfield":"cv_FREQUE", "filter":"substr,1,1" },
      *   { "type":"long", "constant":"0" }
      * ],
-	 */
-	public function getValueFromArrayValue( $fieldvalue ) {
-		$value = '';
-		foreach ($fieldvalue as $valuedef) {
-			$value = $this->getValue( $valuedef );
-			if ( $value != '' ) {
-			    if ( isset($valuedef->filter) ) {
-			        return $this->applyFilters( $valuedef->filter, $value );
+     */
+    public function getValueFromArrayValue( $fieldvalue ) {
+        $value = '';
+        foreach ($fieldvalue as $valuedef) {
+            $value = $this->retriveFieldValue( $valuedef );
+            if ( $value != '' ) {
+                if ( isset($valuedef->filter) ) {
+                    return $this->applyFilters( $valuedef->filter, $value );
                 } else {
                     return $value;
                 }
             }
-		}
-		return $value;
-	}
-	
-	/**
-	 * Get a filter stirng and iterates over it in order to call $this->applyFilter
-	 * A filter string contains all function calls divide by a pipe simbol |
-	 *
-	 * Ex: "filter":"substr,3,6|substr,1,1"
-	 */
-	public function applyFilters( $filterString, $value ): string {
-		if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
-		$filters = explode('|', $filterString->filter);
-		foreach ( $filters as $item ) {
-			$filterCall = explode( ',', $item );
-			$value = $this->applyFilter($filterCall, $value);
-		}
-		return $value;
-	}
-	
-	/**
-	 * This method can be overridden for each project implementation.
-	 * 
-	 * @param array $filtercall: contains the function call and the parameters to call 
-	 * @param string $value: contains the value we need to apply the filter to
-	 *
-	 * Ex: substr: $filtercall = [ 'substr', 2, 5 ]    =>    $value = substr($value, 2, 5)
-	 *     substr: $filtercall = [ 'substr', 7 ]       =>    $value = substr($value, 7)
-	 *
-	 * This function can be overridden and customized
-	 */
+        }
+        return $value;
+    }
+
+    /**
+     * Get a filter stirng and iterates over it in order to call $this->applyFilter
+     * A filter string contains all function calls divide by a pipe simbol |
+     *
+     * Ex: "filter":"substr,3,6|substr,1,1"
+     */
+    public function applyFilters( string $filterString, string $value ): string {
+        if ( !isset( $value ) OR $value == '' ) return '';  // stopping many errors from happenings
+        $filters = explode('|', $filterString);
+        foreach ( $filters as $item ) {
+            $filterCall = explode( ',', $item );
+            $value = $this->applyFilter($filterCall, $value);
+        }
+        return $value;
+    }
+
+    /**
+     * This method can be overridden for each project implementation.
+     *
+     * @param array $filtercall: contains the function call and the parameters to call
+     * @param string $value: contains the value we need to apply the filter to
+     *
+     * Ex: substr: $filtercall = [ 'substr', 2, 5 ]    =>    $value = substr($value, 2, 5)
+     *     substr: $filtercall = [ 'substr', 7 ]       =>    $value = substr($value, 7)
+     *
+     * This function can be overridden and customized
+     */
     function applyFilter(array $filtercall, string $value): string {
         if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] );
-		if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
-		return $value;
+        if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
+        return $value;
     }
-	
+
     public function retriveFieldValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
@@ -349,7 +349,7 @@ class PageStatus {
         if ( isset($field->defaultfunction) ) return $this->callDefaultFunction($field->defaultfunction);
         return '';
     }
-    
+
     /**
      * This method specifies a set of strings corresponding to function for a default setting
      * It is used in form fields, info panel fields, table fields and more
