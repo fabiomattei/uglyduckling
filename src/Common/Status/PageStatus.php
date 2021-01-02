@@ -286,13 +286,8 @@ class PageStatus {
         $querySet = new QuerySet;
 
         if (isset($sessionupdates->queryset) AND is_array($sessionupdates->queryset)) {
-            $queryExecuter = new QueryExecuter;
-
-            $queryExecuter->setDBH($this->dbconnection);
-            $queryExecuter->setSessionWrapper($this->sessionWrapper);
-
             foreach ($sessionupdates->queryset as $query) {
-                $queryExecuter->setQueryStructure($query);
+                $this->queryExecuter->setQueryStructure($query);
                 $result = $queryExecuter->executeSql();
                 $entity = $result->fetch();
                 if (isset($query->label)) {
@@ -307,17 +302,17 @@ class PageStatus {
             foreach ($sessionupdates->sessionvars as $sessionvar) {
                 if ( isset( $sessionvar->querylabel ) AND isset( $sessionvar->sqlfield ) ) {
                     if ( isset($querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield}) ) {
-                        $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
+                        $this->sessionWrapper->setSessionParameter($sessionvar->name, $querySet->getResult($sessionvar->querylabel)->{$sessionvar->sqlfield} );
                     }
                 }
                 if ( isset( $sessionvar->constantparamenter ) ) {
-                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
+                    $this->sessionWrapper->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
                 }
                 if ( isset( $sessionvar->getparameter ) ) {
-                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparameter]);
+                    $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparameter]);
                 }
                 if ( isset( $sessionvar->postparameter ) ) {
-                    $this->getSessionWrapper()->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparameter]);
+                    $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->postParameters[$sessionvar->postparameter]);
                 }
             }
         }
