@@ -180,7 +180,18 @@ class RoutersContainer {
                     break;
             }
         }
-        throw new \Exception('[UD Error] No action or controller or URL defined');
+
+        // going to default controller
+        if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+            foreach ($json_action->parameters as $par) {
+                $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+            }
+            $url_parameters = rtrim($url_parameters, '&');
+        }
+        return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+
+        // TODO Activate this in future
+        //throw new \Exception('[UD Error] No action or controller or URL defined');
     }
 
     /**
