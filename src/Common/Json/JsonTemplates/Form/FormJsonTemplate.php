@@ -49,7 +49,9 @@ class FormJsonTemplate extends JsonTemplate {
                 $this->applicationBuilder->getJsonloader(),
                 $this->pageStatus
             );
-            $formBlock->addHiddenField('res', $this->resource->get->form->action->resource);
+            if ( isset($this->resource->get->form->action->resource) ) {
+                $formBlock->addHiddenField('res', $this->resource->get->form->action->resource);    
+            }
             if ( isset( $this->resource->get->form->action->parameters ) AND is_array($this->resource->get->form->action->parameters) ) {
                 foreach ($this->resource->get->form->action->parameters as $par) {
                     $formBlock->addHiddenField($par->name, $this->pageStatus->getValue($par));
