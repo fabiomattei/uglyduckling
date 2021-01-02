@@ -289,7 +289,7 @@ class PageStatus {
             $queryExecuter = new QueryExecuter;
 
             $queryExecuter->setDBH($this->dbconnection);
-            $queryExecuter->setSessionWrapper($this->getSessionWrapper());
+            $queryExecuter->setSessionWrapper($this->sessionWrapper);
 
             foreach ($sessionupdates->queryset as $query) {
                 $queryExecuter->setQueryStructure($query);
