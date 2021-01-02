@@ -140,7 +140,6 @@ class PageStatus {
      * or default function
      *
      * @param $field: stdClass must contain fieldname attibute
-     * @param $entity: possible entity loaded from the database
      */
     public function getValue( $field ) {
         if ( !isset($field->filter) ) {
@@ -186,7 +185,7 @@ class PageStatus {
     }
 
     /**
-     * Get a filter stirng and iterates over it in order to call $this->applyFilter
+     * Get a filter string and iterates over it in order to call $this->applyFilter
      * A filter string contains all function calls divide by a pipe simbol |
      *
      * Ex: "filter":"substr,3,6|substr,1,1"
@@ -202,22 +201,32 @@ class PageStatus {
     }
 
     /**
-     * This method can be overridden for each project implementation.
+	 * This function retrieves a value from a field checking the current status of the page
      *
-     * @param array $filtercall: contains the function call and the parameters to call
-     * @param string $value: contains the value we need to apply the filter to
+     * This Class contains all status for the application, consisting in:
+     * - GET parameters
+     * - POST paramenters
+     * - FILES parameters
+     * - SESSION parameters
+     * - SERVER parameters
      *
-     * Ex: substr: $filtercall = [ 'substr', 2, 5 ]    =>    $value = substr($value, 2, 5)
-     *     substr: $filtercall = [ 'substr', 7 ]       =>    $value = substr($value, 7)
+     * Example:
+     * Imagine there is a json resource of type table containing the following fields:
+     * "fields": [
+     *    {"headline": "Title", "sqlfield": "title", "default":"" },
+     *    {"headline": "Description", "sqlfield": "description", "default":"" },
+     *    {"headline": "Date", "sqlfield": "created", "defaultfunction":"getcurrentdate" }
+     * ]
+     * This method is going to return the SQL field returned from the query for each field:
+     * - SQL field title
+     * - SQL field description
+     * - SQL field created
      *
-     * This function can be overridden and customized
+     * In case the field is null for any reason this method is going to call de defined defaul value
+     * or default function
+     *
+     * @param $field: stdClass must contain fieldname attibute
      */
-    function applyFilter(array $filtercall, string $value): string {
-        if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] );
-        if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
-        return $value;
-    }
-
     public function retriveFieldValue( $field ) {
         if ( isset($field->value) ) {  // used for info builder but I need to remove this
             $fieldname = $field->value;
@@ -316,6 +325,23 @@ class PageStatus {
                 }
             }
         }
+    }
+
+    /**
+     * This method can be overridden for each project implementation.
+     *
+     * @param array $filtercall: contains the function call and the parameters to call
+     * @param string $value: contains the value we need to apply the filter to
+     *
+     * Ex: substr: $filtercall = [ 'substr', 2, 5 ]    =>    $value = substr($value, 2, 5)
+     *     substr: $filtercall = [ 'substr', 7 ]       =>    $value = substr($value, 7)
+     *
+     * This function can be overridden and customized
+     */
+    function applyFilter(array $filtercall, string $value): string {
+        if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] );
+        if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
+        return $value;
     }
 
     /**
