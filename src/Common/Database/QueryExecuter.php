@@ -92,6 +92,13 @@ class QueryExecuter {
                         if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
                             $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
                         }
+                        if ( $cond->type == 'float' ) {
+							if ( is_numeric($queryParameters[$cond->placeholder]) ) {
+								$STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+							} else {
+								$STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
+							}
+                        }
                     }
                 }
             }
