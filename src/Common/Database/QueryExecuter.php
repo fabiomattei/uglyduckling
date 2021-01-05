@@ -108,7 +108,7 @@ class QueryExecuter {
 			$endtime = microtime(true);
 			
 	        if (($endtime - $starttime) > 5) {
-	            $this->applicationBuilder->getLogger()->write('WARNING QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
+	            $this->applicationBuilder->getLogger()->write('[UD WARNING] QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
 	        }
 
 	        if ( isset( $this->queryStructure->debug ) ) {
