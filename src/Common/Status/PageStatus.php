@@ -17,7 +17,7 @@ class PageStatus {
     public /* array */ $getParameters;
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
-    private /* QueryExecuter */ $queryExecuter;
+    public /* QueryExecuter */ $queryExecuter;
     public /* stdClass */ $lastEntity; // result of last query in database
     public /* DBConnection */ $dbconnection;
 
@@ -297,7 +297,7 @@ class PageStatus {
         if (isset($sessionupdates->queryset) AND is_array($sessionupdates->queryset)) {
             foreach ($sessionupdates->queryset as $query) {
                 $this->queryExecuter->setQueryStructure($query);
-                $result = $queryExecuter->executeSql();
+                $result = $this->queryExecuter->executeSql();
                 $entity = $result->fetch();
                 if (isset($query->label)) {
                     $querySet->setResult($query->label, $entity);
