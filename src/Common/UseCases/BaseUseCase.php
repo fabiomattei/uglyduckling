@@ -9,6 +9,7 @@ class BaseUseCase {
     public /* PageStatus */ $pageStatus;
     public $useCaseJsonStructure;
     public $errors = array();
+    public $useCaseParameters = array();
 
     /**
      * BaseUseCase constructor.
@@ -35,6 +36,18 @@ class BaseUseCase {
      */
     function endedSuccessfully() {
         return true;
+    }
+
+    /**
+     * Load all parameters sent with the json structure
+     */
+    function loadParameters() {
+        $this->useCaseParameters = array();
+        if (isset($this->useCaseJsonStructure->parameters) AND is_array( $this->useCaseJsonStructure->parameters)) {
+            foreach ($this->useCaseJsonStructure->parameters as $parameter) {
+                $this->useCaseParameters[$parameter->name] = $this->pageStatus->getValue( $parameter );
+            }
+        }
     }
 
     /**
