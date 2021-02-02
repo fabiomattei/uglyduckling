@@ -8,6 +8,7 @@ class BaseUseCase {
 
     public /* PageStatus */ $pageStatus;
     public $useCaseJsonStructure;
+    public $errors = array();
 
     /**
      * BaseUseCase constructor.
@@ -46,8 +47,8 @@ class BaseUseCase {
     /**
      * @return array of strings containing all error messages
      */
-    function getErrors() {
-        return array();
+    function getErrors(): array {
+        return $this->errors;
     }
 
 }
