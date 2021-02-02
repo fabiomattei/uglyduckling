@@ -37,6 +37,13 @@ class BaseUseCase {
     }
 
     /**
+     * This method contains the usecase business logic
+     * Implement this method in order to implement this use case
+     */
+    function performAction() {
+    }
+
+    /**
      * @return array of strings containing all error messages
      */
     function getErrors() {

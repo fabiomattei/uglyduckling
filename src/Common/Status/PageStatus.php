@@ -52,7 +52,7 @@ class PageStatus {
     public function setDbconnection(DBConnection $dbconnection): void {
         $this->dbconnection = $dbconnection;
     }
-    
+
     function setUseCasesIndex( $useCasesIndex ) {
         $this->useCasesIndex = $useCasesIndex;
     }
