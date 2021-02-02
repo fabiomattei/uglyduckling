@@ -6,6 +6,7 @@ use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Request\Request;
+use Fabiom\UglyDuckling\Common\UseCases\UseCasesIndex;
 use Fabiom\UglyDuckling\Common\Wrappers\ServerWrapper;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
@@ -20,6 +21,7 @@ class PageStatus {
     public /* QueryExecuter */ $queryExecuter;
     public /* stdClass */ $lastEntity; // result of last query in database
     public /* DBConnection */ $dbconnection;
+    public /* UseCasesIndex */ $useCasesIndex;
 
     /**
      * PageStatus constructor.
@@ -49,6 +51,10 @@ class PageStatus {
      */
     public function setDbconnection(DBConnection $dbconnection): void {
         $this->dbconnection = $dbconnection;
+    }
+    
+    function setUseCasesIndex( $useCasesIndex ) {
+        $this->useCasesIndex = $useCasesIndex;
     }
 
     /**
@@ -105,6 +111,13 @@ class PageStatus {
      */
     public function getQueryExecutor(): QueryExecuter {
         return $this->queryExecuter;
+    }
+
+    /**
+     * @return UseCasesIndex
+     */
+    public function getUseCasesIndex(): UseCasesIndex {
+        return $this->useCasesIndex;
     }
 
     /**
