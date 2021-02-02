@@ -173,7 +173,7 @@ class JsonResourceBasicController extends Controller {
         // performing usecases
         if (isset($this->resource->post->usecases) and is_array($this->resource->post->usecases)) {
             foreach ($this->resource->post->usecases as $jsonusecase) {
-                $useCase = $this->pageStatus->getUseCasesIndex()->getUseCasesIndex($jsonusecase, $this->pageStatus);
+                $useCase = $this->pageStatus->getUseCasesIndex()->getUseCase($jsonusecase, $this->pageStatus);
                 $useCase->performAction();
             }
         }

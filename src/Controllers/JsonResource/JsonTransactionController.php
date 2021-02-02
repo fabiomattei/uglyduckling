@@ -47,7 +47,7 @@ class JsonTransactionController extends JsonResourceBasicController {
         // performing usecases
         if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
             foreach ($this->resource->get->usecases as $jsonusecase) {
-                $useCase = $this->pageStatus->getUseCasesIndex()->getUseCasesIndex($jsonusecase, $this->pageStatus);
+                $useCase = $this->pageStatus->getUseCasesIndex()->getUseCase($jsonusecase, $this->pageStatus);
                 $useCase->performAction();
             }
         }
