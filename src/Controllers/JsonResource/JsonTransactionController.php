@@ -44,6 +44,14 @@ class JsonTransactionController extends JsonResourceBasicController {
             }
         }
 
+        // performing usecases
+        if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
+            foreach ($this->resource->get->usecases as $jsonusecase) {
+                $useCase = $this->pageStatus->getUseCasesIndex()->getUseCasesIndex($jsonusecase);
+                $useCase->performAction();
+            }
+        }
+
         // if resource->get->sessionupdates is set I need to update the session
         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
