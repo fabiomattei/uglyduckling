@@ -56,7 +56,7 @@ class DBConnection {
 			$this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return $this->DBH;
         } catch (PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            echo $e->getMessage();
             throw new \Exception('General malfuction!!!');
         }   
     }
