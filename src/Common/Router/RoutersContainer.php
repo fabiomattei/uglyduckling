@@ -57,6 +57,14 @@ class RoutersContainer {
 	public function setDefaultController( $controller ) {
 		$this->defaultController = $controller;
 	}
+
+    /**
+     * Set the default controller when no controller has been requested by the user
+     * it usually happens when user is at his first connection to the application
+     */
+    public function getDefaultController() {
+        return $this->defaultController;
+    }
 	
 	/**
 	 * Search all contained routers in order to get the right controller
