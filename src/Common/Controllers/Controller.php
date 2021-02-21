@@ -197,10 +197,16 @@ class Controller {
     }
 
     public function show_get_authorization_error_page() {
+        if ( !$this->pageStatus->getSessionWrapper()->isUserLoggedIn() ) {
+            $this->redirectToDefaultPage();
+        }
         throw new AuthorizationException('Authorization exception function show_get_authorization_error_page()');
     }
 
     public function show_post_authorization_error_page() {
+        if ( !$this->pageStatus->getSessionWrapper()->isUserLoggedIn() ) {
+            $this->redirectToDefaultPage();
+        }
         throw new AuthorizationException('Authorization exception function show_post_authorization_error_page()');
     }
 
@@ -338,6 +344,18 @@ class Controller {
      */
     public function redirectToPage( $url ) {
         $this->applicationBuilder->getRedirector()->setURL( $url );
+        $this->applicationBuilder->getRedirector()->redirect();
+    }
+
+    /**
+     * Redirect the script to a selected url
+     */
+    public function redirectToDefaultPage() {
+        $this->applicationBuilder->getRedirector()->setURL(
+            $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
+                $this->applicationBuilder->getRouterContainer()->getDefaultController()::CONTROLLER_NAME
+            )
+        );
         $this->applicationBuilder->getRedirector()->redirect();
     }
 

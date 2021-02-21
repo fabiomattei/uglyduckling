@@ -107,7 +107,7 @@ class SessionWrapper {
 	}
 	
 	public function getMsgInfo() {
-		return $_SESSION['msginfo'];
+		return $_SESSION['msginfo'] ?? '';
 	}
 
 	public function setMsgWarning( $msgwarning ) {
@@ -115,7 +115,7 @@ class SessionWrapper {
 	}
 	
 	public function getMsgWarning() {
-		return $_SESSION['msgwarning'];
+		return $_SESSION['msgwarning'] ?? '';
 	}
 
 	public function setMsgError( $msgerror ) {
@@ -123,7 +123,7 @@ class SessionWrapper {
 	}
 	
 	public function getMsgError() {
-		return $_SESSION['msgerror'];
+		return $_SESSION['msgerror'] ?? '';
 	}
 
 	public function setMsgSuccess( $msgsuccess ) {
@@ -131,7 +131,7 @@ class SessionWrapper {
 	}
 	
 	public function getMsgSuccess() {
-		return $_SESSION['msgsuccess'];
+		return $_SESSION['msgsuccess'] ?? '';
 	}
 
 	public function setFlashVariable( $flashvariable ) {
@@ -139,7 +139,7 @@ class SessionWrapper {
 	}
 	
 	public function getFlashVariable() {
-		return $_SESSION['flashvariable'];
+		return $_SESSION['flashvariable'] ?? '';
 	}
 
 	/**
