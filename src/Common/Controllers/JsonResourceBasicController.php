@@ -189,9 +189,7 @@ class JsonResourceBasicController extends Controller {
                 $this->redirectToSecondPreviousPage();
             } elseif ( isset($this->resource->post->redirect->action) AND isset($this->resource->post->redirect->action->resource) ) {
                 $this->redirectToPage(
-                    $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
-                        $this->applicationBuilder->getJsonloader()->getActionRelatedToResource($this->resource->post->redirect->action->resource), 'res='.$this->resource->post->redirect->action->resource
-                    )
+                    $this->applicationBuilder->make_resource_url( $this->resource->post->redirect->action, $this->applicationBuilder->getJsonloader(), $this->pageStatus )
                 );
             } else {
                 $this->redirectToPreviousPage();
