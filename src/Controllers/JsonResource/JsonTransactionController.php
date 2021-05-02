@@ -57,19 +57,7 @@ class JsonTransactionController extends JsonResourceBasicController {
 
         // redirect
         if (isset($this->resource->get->redirect)) {
-            if (isset($this->resource->get->redirect->internal) AND $this->resource->get->redirect->internal->type === 'onepageback') {
-                $this->redirectToPreviousPage();
-            } elseif (isset($this->resource->get->redirect->internal) AND $this->resource->get->redirect->internal->type === 'twopagesback') {
-                $this->redirectToSecondPreviousPage();
-            } elseif ( isset($this->resource->get->redirect->action) AND isset($this->resource->get->redirect->action->resource) ) {
-                $this->redirectToPage(
-                    $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
-                        $this->applicationBuilder->getJsonloader()->getActionRelatedToResource($this->resource->get->redirect->action->resource), 'res='.$this->resource->get->redirect->action->resource
-                    )
-                );
-            } else {
-                $this->redirectToPreviousPage();
-            }
+            $this->jsonRedirector($this->resource->get->redirect);
         } else {
             $this->redirectToPreviousPage();
         }

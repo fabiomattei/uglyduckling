@@ -183,17 +183,7 @@ class JsonResourceBasicController extends Controller {
 
         // redirect
         if (isset($this->resource->post->redirect)) {
-            if (isset($this->resource->post->redirect->internal) AND $this->resource->post->redirect->internal->type === 'onepageback') {
-                $this->redirectToPreviousPage();
-            } elseif (isset($this->resource->post->redirect->internal) AND $this->resource->post->redirect->internal->type === 'twopagesback') {
-                $this->redirectToSecondPreviousPage();
-            } elseif ( isset($this->resource->post->redirect->action) AND isset($this->resource->post->redirect->action->resource) ) {
-                $this->redirectToPage(
-                    $this->applicationBuilder->make_resource_url( $this->resource->post->redirect->action, $this->applicationBuilder->getJsonloader(), $this->pageStatus )
-                );
-            } else {
-                $this->redirectToPreviousPage();
-            }
+            $this->jsonRedirector($this->resource->post->redirect);
         } else {
             $this->redirectToPreviousPage();
         }
@@ -245,6 +235,21 @@ class JsonResourceBasicController extends Controller {
 
     public function show_second_get_error_page() {
         throw new \Exception('Mismatch with get parameters');
+    }
+
+    public function jsonRedirector( $jsonRedirect ): void
+    {
+        if (isset($jsonRedirect->internal) and $jsonRedirect->internal->type === 'onepageback') {
+            $this->redirectToPreviousPage();
+        } elseif (isset($jsonRedirect->internal) and $jsonRedirect->internal->type === 'twopagesback') {
+            $this->redirectToSecondPreviousPage();
+        } elseif (isset($jsonRedirect->action) and isset($jsonRedirect->action->resource)) {
+            $this->redirectToPage(
+                $this->applicationBuilder->make_resource_url($jsonRedirect->action, $this->applicationBuilder->getJsonloader(), $this->pageStatus)
+            );
+        } else {
+            $this->redirectToPreviousPage();
+        }
     }
 
 }
