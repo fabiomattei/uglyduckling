@@ -103,6 +103,11 @@ class QueryExecuter {
                 }
             }
 
+            if ( isset( $this->queryStructure->debug ) ) {
+                print_r($queryParameters);
+                echo strtr($this->queryStructure->sql, $queryParameters);
+            }
+
             $STH->execute();
 			
 			$endtime = microtime(true);
@@ -189,6 +194,11 @@ class QueryExecuter {
         	        $cont++;
         	    }
         	}
+
+            if ( isset( $this->queryStructure->debug ) ) {
+                print_r($queryParameters);
+                echo strtr($this->queryStructure->sql, $queryParameters);
+            }
 			
 			$STH->execute();
 
@@ -246,6 +256,11 @@ class QueryExecuter {
                 }
             }
 
+            if ( isset( $this->queryStructure->debug ) ) {
+                print_r($queryParameters);
+                echo strtr($this->queryStructure->sql, $queryParameters);
+            }
+
             $STH->execute();
 
             if ( isset( $this->queryStructure->debug ) ) {
@@ -300,6 +315,11 @@ class QueryExecuter {
                         }
                     }
                 }
+            }
+
+            if ( isset( $this->queryStructure->debug ) ) {
+                print_r($queryParameters);
+                echo strtr($this->queryStructure->sql, $queryParameters);
             }
 
             $STH->execute();
