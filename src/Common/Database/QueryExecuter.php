@@ -191,6 +191,10 @@ class QueryExecuter {
         	}
 			
 			$STH->execute();
+
+            if ( isset( $this->queryStructure->debug ) ) {
+                $STH->debugDumpParams();
+            }
 			
 		} catch (PDOException $e) {
         	$this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
@@ -244,6 +248,10 @@ class QueryExecuter {
 
             $STH->execute();
 
+            if ( isset( $this->queryStructure->debug ) ) {
+                $STH->debugDumpParams();
+            }
+
             // uncomment for debug purpose
             // $STH->debugDumpParams();
 
@@ -295,6 +303,10 @@ class QueryExecuter {
             }
 
             $STH->execute();
+
+            if ( isset( $this->queryStructure->debug ) ) {
+                $STH->debugDumpParams();
+            }
 
             // $STH->debugDumpParams();
 
