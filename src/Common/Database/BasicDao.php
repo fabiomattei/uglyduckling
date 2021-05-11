@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Common\Database;
 
 use PDO;
+use PDOException;
 
 /**
  * Basic class for all dao's
@@ -90,16 +91,15 @@ class BasicDao {
         $filedslist = substr($filedslist, 0, -2);
         $filedsarguments = substr($filedsarguments, 0, -2);
         try {
-            $this->DBH->beginTransaction();
             $STH = $this->DBH->prepare('INSERT INTO ' . $this::DB_TABLE . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")');
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
             $STH->execute();
             $inserted_id = $this->DBH->lastInsertId();
-            $this->DBH->commit();
             return $inserted_id;
         } catch (PDOException $e) {
+            $STH->debugDumpParams();
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -130,6 +130,7 @@ class BasicDao {
             $STH->bindParam(':id', $id);
             $STH->execute();
         } catch (PDOException $e) {
+            $STH->debugDumpParams();
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');

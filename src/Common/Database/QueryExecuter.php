@@ -123,7 +123,7 @@ class QueryExecuter {
             // $STH->debugDumpParams();
 
             return $STH;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
