@@ -63,7 +63,7 @@ class UserDao extends BasicDao {
 
             return $usersForDropDown;
         }
-        catch(PDOException $e) {
+        catch(\PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
         }
@@ -93,7 +93,7 @@ class UserDao extends BasicDao {
 			
 			return password_verify($password, $obj->usr_hashedpsw);
 		}
-		catch(PDOException $e) {
+		catch(\PDOException $e) {
 			$logger = new Logger();
 			$logger->write($e->getMessage(), __FILE__, __LINE__);
 		}
