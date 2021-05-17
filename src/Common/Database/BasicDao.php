@@ -80,7 +80,7 @@ class BasicDao {
      * EX.
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
-    function insert($fields) {
+    function insert($fields, $debug = false) {
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';
@@ -91,15 +91,29 @@ class BasicDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         $filedsarguments = substr($filedsarguments, 0, -2);
+
+        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
+
         try {
-            $STH = $this->DBH->prepare('INSERT INTO ' . $this::DB_TABLE . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")');
+            $STH = $this->DBH->prepare( $sqlstring );
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
+
+            if ( $debug ) {
+                print_r($fields);
+                echo strtr( $sqlstring, $fields );
+            }
+
             $STH->execute();
+
+            if ( $debug ) {
+                $STH->debugDumpParams();
+            }
+
             $inserted_id = $this->DBH->lastInsertId();
             return $inserted_id;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $STH->debugDumpParams();
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
@@ -115,7 +129,7 @@ class BasicDao {
      * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
      *
      */
-    function update($id, $fields) {
+    function update($id, $fields, $debug = false) {
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';
@@ -124,13 +138,27 @@ class BasicDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id');
+            $sqlstring = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id';
+
+            $STH = $this->DBH->prepare( $sqlstring );
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
             $STH->bindParam(':id', $id);
+
+            if ( $debug ) {
+                $fields['id'] = $id;
+                print_r($fields);
+                echo strtr( $sqlstring, $fields );
+            }
+
             $STH->execute();
-        } catch (PDOException $e) {
+
+            if ( $debug ) {
+                $STH->debugDumpParams();
+            }
+
+        } catch (\PDOException $e) {
             $STH->debugDumpParams();
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
@@ -173,7 +201,7 @@ class BasicDao {
                 $STH->bindParam($key, $value);
             }
             $STH->execute();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -199,7 +227,7 @@ class BasicDao {
             $STH = $this->DBH->prepare('DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $this::DB_TABLE_PK . ' = :id');
             $STH->bindParam(':id', $id);
             $STH->execute();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -231,7 +259,7 @@ class BasicDao {
                 $STH->bindParam($key, $value);
             }
             $STH->execute();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -279,7 +307,7 @@ class BasicDao {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
             return $STH;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $logger = new Logger();
             $logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -328,7 +356,7 @@ class BasicDao {
                 $STH->setFetchMode(PDO::FETCH_OBJ);
 
                 return $STH;
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 $logger = new Logger();
                 $logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
