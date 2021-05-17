@@ -102,13 +102,16 @@ class BasicDao {
 
             if ( $debug ) {
                 print_r($fields);
-                echo strtr( $sqlstring, $fields );
+                echo "Pre-calculating query:<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
             }
 
             $STH->execute();
 
             if ( $debug ) {
+                echo "debugDumpParams:<br />";
                 $STH->debugDumpParams();
+                echo "<br />";
             }
 
             $inserted_id = $this->DBH->lastInsertId();
@@ -149,13 +152,16 @@ class BasicDao {
             if ( $debug ) {
                 $fields['id'] = $id;
                 print_r($fields);
-                echo strtr( $sqlstring, $fields );
+                echo "Pre-calculating query:<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
             }
 
             $STH->execute();
 
             if ( $debug ) {
+                echo "debugDumpParams:<br />";
                 $STH->debugDumpParams();
+                echo "<br />";
             }
 
         } catch (\PDOException $e) {
