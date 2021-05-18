@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Database;
 
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
 use PDO;
 use PDOException;
 
@@ -15,7 +16,7 @@ class BasicDao {
     const DB_TABLE_UPDATED_FIELD_NAME = 'abstract';
     const DB_TABLE_CREATED_FLIED_NAME = 'abstract';
     protected $DBH;
-    protected $logger;
+    protected /* Logger */ $logger;
 
     function __construct() {
 		// epnty as you see
@@ -31,7 +32,7 @@ class BasicDao {
     /**
      * Database connection handler setter
      */
-    public function setLogger( $logger ) {
+    public function setLogger( Logger $logger ) {
         $this->logger = $logger;
     }
 
