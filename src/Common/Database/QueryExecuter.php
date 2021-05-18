@@ -123,7 +123,7 @@ class QueryExecuter {
             // $STH->debugDumpParams();
 
             return $STH;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
@@ -206,7 +206,7 @@ class QueryExecuter {
                 $STH->debugDumpParams();
             }
 			
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
         	$this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
     	}
 
@@ -271,7 +271,7 @@ class QueryExecuter {
             // $STH->debugDumpParams();
 
             return $STH;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
@@ -331,7 +331,7 @@ class QueryExecuter {
             // $STH->debugDumpParams();
 
             return $STH;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
@@ -396,7 +396,7 @@ class QueryExecuter {
 				$out = true;
 			}
             return $out;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
             $this->applicationBuilder->getLogger()->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
@@ -409,7 +409,7 @@ class QueryExecuter {
         $STH = $this->DBH->prepare( $query );
         try {
             $STH->execute();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
             $this->applicationBuilder->getLogger()->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
@@ -422,7 +422,7 @@ class QueryExecuter {
         $STH = $this->DBH->prepare( $query );
         try {
             $STH->execute();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
             $this->applicationBuilder->getLogger()->write($STH->activeQueryString(), __FILE__, __LINE__);
         }

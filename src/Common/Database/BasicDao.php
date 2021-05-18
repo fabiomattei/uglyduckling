@@ -15,6 +15,7 @@ class BasicDao {
     const DB_TABLE_UPDATED_FIELD_NAME = 'abstract';
     const DB_TABLE_CREATED_FLIED_NAME = 'abstract';
     protected $DBH;
+    protected $logger;
 
     function __construct() {
 		// epnty as you see
@@ -28,17 +29,23 @@ class BasicDao {
     }
 
     /**
+     * Database connection handler setter
+     */
+    public function setLogger( $logger ) {
+        $this->logger = $logger;
+    }
+
+    /**
      * It gets all rows contained in a table
      */
     function getAll() {
         try {
             $STH = $this->DBH->query('SELECT * FROM ' . $this::DB_TABLE);
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             return $STH;
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -54,7 +61,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
             $obj = $STH->fetch();
 
             if ($obj == null) {
@@ -62,9 +69,8 @@ class BasicDao {
             }
 
             return $obj;
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -118,8 +124,7 @@ class BasicDao {
             return $inserted_id;
         } catch (\PDOException $e) {
             $STH->debugDumpParams();
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -166,8 +171,7 @@ class BasicDao {
 
         } catch (\PDOException $e) {
             $STH->debugDumpParams();
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -208,8 +212,7 @@ class BasicDao {
             }
             $STH->execute();
         } catch (\PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -234,8 +237,7 @@ class BasicDao {
             $STH->bindParam(':id', $id);
             $STH->execute();
         } catch (\PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -266,8 +268,7 @@ class BasicDao {
             }
             $STH->execute();
         } catch (\PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -314,8 +315,7 @@ class BasicDao {
 
             return $STH;
         } catch (\PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -363,8 +363,7 @@ class BasicDao {
 
                 return $STH;
             } catch (\PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
             }
         } else {
@@ -421,18 +420,13 @@ class BasicDao {
 
 			    return $out;
             } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
             }
         } else {
             return array();
         }
     }
-	
-	
-	
-
 
     /**
      * This is the basic function for getting one element from a table.
@@ -475,8 +469,7 @@ class BasicDao {
 
             return $obj;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -530,8 +523,7 @@ class BasicDao {
 
             return $out;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -574,8 +566,7 @@ class BasicDao {
 
             return $out;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
@@ -628,8 +619,7 @@ class BasicDao {
 
                 return $out;
             } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
             }
         } else {
@@ -677,8 +667,7 @@ class BasicDao {
             }
 
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
