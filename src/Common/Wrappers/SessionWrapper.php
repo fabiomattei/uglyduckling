@@ -21,7 +21,7 @@ class SessionWrapper {
      * @return string
      */
     public function getSessionParameter( string $parameterName ): string {
-        return $_SESSION[$parameterName];
+        return $_SESSION[$parameterName] ?? '';
     }
 
     /**
@@ -51,7 +51,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionUserId() {
-		return $_SESSION['user_id'];
+		return $_SESSION['user_id'] ?? '';
 	}
 	
 	public function setSessionUsername( $username ) {
@@ -59,7 +59,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionUsename() {
-		return $_SESSION['username'];
+		return $_SESSION['username'] ?? '';
 	}
 
 	public function setSessionGroup( $group ) {
@@ -67,7 +67,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionGroup() {
-		return $_SESSION['group'];
+		return $_SESSION['group'] ?? '';
 	}
 	
 	public function setSessionLoggedIn( $logged_in ) {
@@ -75,7 +75,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionLoggedIn() {
-		return $_SESSION['logged_in'];
+		return $_SESSION['logged_in'] ?? '';
 	}
 	
 	public function setSessionIp( $ip ) {
@@ -83,7 +83,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionIp() {
-		return $_SESSION['ip'];
+		return $_SESSION['ip'] ?? '';
 	}
 	
 	public function setSessionUserAgent( $user_agent ) {
@@ -91,7 +91,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionUserAgent() {
-		return $_SESSION['user_agent'];
+		return $_SESSION['user_agent'] ?? '';
 	}
 	
 	public function setSessionLastLogin( $last_login ) {
@@ -99,7 +99,7 @@ class SessionWrapper {
 	}
 	
 	public function getSessionLastLogin() {
-		return $_SESSION['last_login'];
+		return $_SESSION['last_login'] ?? '';
 	}
 
 	public function setmMsgInfo( $msginfo ) {
