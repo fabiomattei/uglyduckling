@@ -16,10 +16,18 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $this->htmlTemplateLoader = new \Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader();
         $this->htmlTemplateLoader->setPath( 'src/Templates/HTML/' );
         $echologger = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Loggers\EchoLogger::class)->getMock();
-        $this->form = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate();
-        $this->form->setHtmlTemplateLoader($this->htmlTemplateLoader);
-        $this->form->setLogger($echologger);
+        $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
+        $dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
+        $this->queryExecuter = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\QueryExecuter::class)->getMock();
 
+        $pageStatus = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Status\PageStatus::class)->getMock();
+        $pageStatus->setDbconnection( $dbconnection );
+
+        $applicationBuilder = new Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+        $applicationBuilder->setLogger($echologger);
+        $applicationBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
+        
+        $this->form = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate($applicationBuilder, $pageStatus);
 		$this->entity = new stdClass;
 	    $this->entity->fl_id   = 3;	
 	    $this->entity->fl_name = 'prova';
@@ -82,15 +90,8 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
 	}
 }');
 
-        $router = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Router\RoutersContainer::class)->setConstructorArgs( array('http://localhost:18080/') )->getMock();
-        $dbconnection = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\DBConnection::class)->setConstructorArgs( array('', '', '', ''))->getMock();
-        $this->queryExecuter = $this->getMockBuilder(Fabiom\UglyDuckling\Common\Database\QueryExecuter::class)->getMock();
 
-        $this->form->setRouter($router);
-        $this->form->setParameters( array( 'id' => '1' ) );
         $this->form->setResource( $this->jsonform );
-        $this->form->setDbconnection( $dbconnection );
-        $this->form->setQueryExecuter( $this->queryExecuter );
 	}
 	
 	/**

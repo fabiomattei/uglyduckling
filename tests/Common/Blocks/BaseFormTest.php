@@ -33,7 +33,7 @@ class BaseFormTest extends PHPUnit\Framework\TestCase{
   * Checking empty form
   */
   public function testItShowsAnEmpyForm(){
-	$this->assertStringContainsString('<form action="" method="POST" class="form-horizontal">', $this->form->show());
+	$this->assertStringContainsString('<form action="" method="POST"  enctype="multipart/form-data" class="form-horizontal">', $this->form->show());
 	unset($form);
   }
 
@@ -99,7 +99,7 @@ class BaseFormTest extends PHPUnit\Framework\TestCase{
   */
   public function testItShowsAFormWithASubmitButton(){
 	$this->form->addSubmitButton( 'myfield', 'My Value' );
-	$this->assertStringContainsString('<input class="form-control" type="submit" name="myfield" value="My Value"/>', $this->form->show());
+	$this->assertStringContainsString('<input class="form-control col-md-12" type="submit" name="myfield" value="My Value"/>', $this->form->show());
 	unset($form);
   }
   
