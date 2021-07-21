@@ -26,7 +26,7 @@ class FormJsonTemplateTest extends PHPUnit\Framework\TestCase {
         $applicationBuilder = new Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
         $applicationBuilder->setLogger($echologger);
         $applicationBuilder->setHtmlTemplateLoader($this->htmlTemplateLoader);
-        
+
         $this->form = new Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate($applicationBuilder, $pageStatus);
 		$this->entity = new stdClass;
 	    $this->entity->fl_id   = 3;	

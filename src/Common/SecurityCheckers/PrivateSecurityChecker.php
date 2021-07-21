@@ -12,12 +12,12 @@ class PrivateSecurityChecker implements SecurityChecker {
 
     public function isSessionValid($sessionLoggedIn, $sessionIp, $sessionUserAgent, $sessionLastLogin, $serverRemoteAddr, $serverHttpUserAgent) {
         // check if user logged in
-        if (!(isset($sessionLoggedIn) && $sessionLoggedIn)) {
+        if (empty($sessionLoggedIn)) {
             return false;
         }
 
         // check if ip matches
-        if (!isset($sessionIp) || !isset($serverRemoteAddr)) {
+        if (empty($sessionIp) || empty($serverRemoteAddr)) {
             return false;
         }
         if (!$sessionIp === $serverRemoteAddr) {
@@ -25,7 +25,7 @@ class PrivateSecurityChecker implements SecurityChecker {
         }
 
         // check user agent
-        if (!isset($sessionUserAgent) || !isset($serverHttpUserAgent)) {
+        if (empty($sessionUserAgent) || empty($serverHttpUserAgent)) {
             return false;
         }
         if (!$sessionUserAgent === $serverHttpUserAgent) {
@@ -35,7 +35,7 @@ class PrivateSecurityChecker implements SecurityChecker {
         // check elapsed time
         $max_elapsed = 60 * 60 * 24; // 1 day
         // return false if value is not set
-        if (!isset($sessionLastLogin)) {
+        if (empty($sessionLastLogin)) {
             return false;
         }
         if (!($sessionLastLogin + $max_elapsed) >= time()) {
