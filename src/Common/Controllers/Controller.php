@@ -197,22 +197,26 @@ class Controller {
     }
 
     public function show_get_authorization_error_page() {
-        $this->applicationBuilder->getLogger()->write(
+        /*
+         * $this->applicationBuilder->getLogger()->write(
             'ERROR :: show_get_authorization_error_page illegal access from user **' .
             $this->pageStatus->getSessionWrapper()->getSessionUsename() .
             '** having group set to **' .
             $this->pageStatus->getSessionWrapper()->getSessionGroup() .
             '** ', __FILE__, __LINE__);
+        */
         $this->redirectToDefaultPage();
     }
 
     public function show_post_authorization_error_page() {
-        $this->applicationBuilder->getLogger()->write(
+        /*
+         * $this->applicationBuilder->getLogger()->write(
             'ERROR :: show_get_authorization_error_page illegal access from user **' .
             $this->pageStatus->getSessionWrapper()->getSessionUsename() .
             '** having group set to **' .
             $this->pageStatus->getSessionWrapper()->getSessionGroup() .
             '** ', __FILE__, __LINE__);
+        */
         $this->redirectToDefaultPage();
     }
 
