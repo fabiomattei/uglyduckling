@@ -64,8 +64,7 @@ class UserDao extends BasicDao {
             return $usersForDropDown;
         }
         catch(\PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 	
@@ -94,8 +93,7 @@ class UserDao extends BasicDao {
 			return password_verify($password, $obj->usr_hashedpsw);
 		}
 		catch(\PDOException $e) {
-			$logger = new Logger();
-			$logger->write($e->getMessage(), __FILE__, __LINE__);
+			$this->logger->write($e->getMessage(), __FILE__, __LINE__);
 		}
 	}
 
@@ -108,10 +106,8 @@ class UserDao extends BasicDao {
             $STH->bindParam(':hashedpsw', $hashedPassword);
             $STH->bindParam(':id', $id);
             $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 	
