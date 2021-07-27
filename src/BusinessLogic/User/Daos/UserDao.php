@@ -8,7 +8,7 @@ use stdClass;
 
 class UserDao extends BasicDao {
 	
-	const DB_TABLE = 'user';
+	const DB_TABLE = 'ud_users';
 	const DB_TABLE_PK = 'usr_id';
     const DB_TABLE_UPDATED_FIELD_NAME = 'usr_updated';
     const DB_TABLE_CREATED_FLIED_NAME = 'usr_created';
