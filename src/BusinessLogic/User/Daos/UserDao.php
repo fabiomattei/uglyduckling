@@ -76,7 +76,7 @@ class UserDao extends BasicDao {
 	 */
 	function checkEmailAndPassword($email, $password) {
 		try {
-			$STH = $this->DBH->prepare('SELECT usr_hashedpsw FROM user WHERE usr_email = :email;');
+			$STH = $this->DBH->prepare('SELECT usr_hashedpsw FROM ud_users WHERE usr_email = :email;');
 			$STH->bindParam(':email', $email, PDO::PARAM_STR);
 			$STH->execute();
 			
