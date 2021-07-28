@@ -17,6 +17,7 @@ class CardHTMLBlock extends BaseHTMLBlock {
     private $subtitle;
     private $block;
     private $width;
+	private $cssClass;
     private $htmlTemplateLoader;
     private /* string */ $cardExternalContainerId;
 	private /* string */ $cardId;
@@ -26,6 +27,7 @@ class CardHTMLBlock extends BaseHTMLBlock {
         $this->subtitle = '';
         $this->cardExternalContainerId = '';
         $this->cardId = '';
+		$this->cssClass = '';
         $this->block = new EmptyHTMLBlock;
         $this->width = ColWidth::getWidth(ColWidth::MEDIUM, 3);
     }
@@ -37,6 +39,8 @@ class CardHTMLBlock extends BaseHTMLBlock {
     function setBlock( $block ) {
         $this->block = $block;
     }
+	
+	
 
     /**
      * Set block name in odre to generate CARDBLOCK External ID and internal ID
@@ -50,6 +54,12 @@ class CardHTMLBlock extends BaseHTMLBlock {
 
     function setWidth( int $width ) {
         $this->width = ColWidth::getWidth(ColWidth::MEDIUM, $width);
+    }
+	
+    function setCssClass( string $cssClass ) {
+		if ( $cssClass !== '' ) {
+			$this->width = $cssClass;
+		}
     }
 
     /**
