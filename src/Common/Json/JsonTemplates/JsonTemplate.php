@@ -13,8 +13,8 @@ class JsonTemplate {
 
     protected $resource;
     protected /* string */ $action;
-    protected /* JsonTemplateFactoriesContainer */ $applicationBuilder;
-    protected /* JsonTemplateFactoriesContainer */ $pageStatus;
+    protected /* ApplicationBuilder */ $applicationBuilder;
+    protected /* PageStatus */ $pageStatus;
 
     const blocktype = 'basebuilder';
 
