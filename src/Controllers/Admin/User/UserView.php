@@ -37,9 +37,9 @@ class UserView extends AdminController
      *
      * $this->getParameters['res'] resource key index
      */
-    public function getRequest()
-    {
-        $this->userDao->setDBH($this->pageStatus->getDbconnection()->getDBH());
+    public function getRequest() {
+        $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->userDao->setLogger( $this->applicationBuilder->getLogger() );
         $user = $this->userDao->getById($this->getParameters['id']);
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User view';

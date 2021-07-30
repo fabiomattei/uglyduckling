@@ -42,6 +42,7 @@ class UserEditPassword extends AdminController {
      */
     public function getRequest() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->userDao->setLogger( $this->applicationBuilder->getLogger() );
         $user = $this->userDao->getById( $this->getParameters['id'] );
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User edit password';

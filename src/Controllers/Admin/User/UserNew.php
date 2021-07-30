@@ -38,6 +38,7 @@ class UserNew extends AdminController {
      */
     public function getRequest() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->userDao->setLogger( $this->applicationBuilder->getLogger() );
 
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: User';
 

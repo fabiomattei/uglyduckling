@@ -36,7 +36,9 @@ class UserDelete extends AdminController {
      */
     public function postRequest() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->userDao->setLogger( $this->applicationBuilder->getLogger() );
         $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->userGroupDao->setLogger( $this->applicationBuilder->getLogger() );
 
         $this->userGroupDao->deleteByFields( array( 'ug_userid' => $this->postParameters['usrid'] ) );
         $this->userDao->delete( $this->postParameters['usrid'] );
