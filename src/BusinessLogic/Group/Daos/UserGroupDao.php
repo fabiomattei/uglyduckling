@@ -65,7 +65,7 @@ class UserGroupDao extends BasicDao {
 
 	function getUsersByGroupSlug( string $slug ) {
         $query = 'SELECT UG.*, U.usr_id, U.usr_name, U.usr_surname FROM '.$this::DB_TABLE.' as UG '.
-            ' LEFT JOIN user as U ON UG.ug_userid = U.usr_id '.
+            ' LEFT JOIN ud_users as U ON UG.ug_userid = U.usr_id '.
             ' WHERE UG.ug_groupslug = :groupslug '.
             ' ORDER BY U.usr_name, U.usr_surname  ';
         try {
