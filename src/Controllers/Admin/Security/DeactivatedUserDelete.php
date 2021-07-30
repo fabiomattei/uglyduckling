@@ -33,6 +33,8 @@ class DeactivatedUserDelete extends AdminController {
      */
     public function postRequest() {
         $this->deactivatedUserDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->deactivatedUserDao->setLogger( $this->applicationBuilder->getLogger() );
+		
         $this->deactivatedUserDao->delete( $this->postParameters['duid'] );
 
         $this->setSuccess( 'Blocked User successfully deleted' );

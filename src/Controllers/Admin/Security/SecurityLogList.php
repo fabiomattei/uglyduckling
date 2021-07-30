@@ -43,6 +43,8 @@ class SecurityLogList extends AdminController {
 		$table->closeTHead();
 	
 		$this->securityLogDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->securityLogDao->setLogger( $this->applicationBuilder->getLogger() );
+		
         $logs = $this->securityLogDao->getAll();
 		
 		$table->addTBody();

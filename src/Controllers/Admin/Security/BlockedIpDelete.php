@@ -34,7 +34,8 @@ class BlockedIpDelete extends AdminController {
     public function postRequest() {
         $this->ipDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->ipDao->delete( $this->postParameters['biid'] );
-
+		$this->ipDao->setLogger( $this->applicationBuilder->getLogger() );
+		
         $this->setSuccess( 'Blocked ip address successfully deleted' );
         $this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP ) );
 

@@ -27,6 +27,7 @@ class BlockedIpList extends AdminController {
 	 */
 	public function getRequest() {
 		$this->ipDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->ipDao->setLogger( $this->applicationBuilder->getLogger() );
 		$ips = $this->ipDao->getAll();
 		
 		$this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin Documents list';

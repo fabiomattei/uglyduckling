@@ -41,6 +41,8 @@ class DeactivatedUserList extends AdminController {
 		$table->closeTHead();
 		
 		$this->deactivatedUserDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+		$this->deactivatedUserDao->setLogger( $this->applicationBuilder->getLogger() );
+		
 		$users = $this->deactivatedUserDao->getAll();
 
 		$table->addTBody();
