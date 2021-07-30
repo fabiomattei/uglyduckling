@@ -25,6 +25,8 @@ class AdminController extends Controller {
     public function showPage() {
         $groupDao = new UserGroupDao;
         $groupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $groupDao->setLogger( $this->applicationBuilder->getLogger() );
+		
         if (
             $this->pageStatus->getSessionWrapper()->getSessionGroup() == 'administrationgroup' AND
             $groupDao->checkUserHasAccessToGroup( $this->pageStatus->getSessionWrapper()->getSessionUserId(), 'administrationgroup' )
@@ -33,11 +35,15 @@ class AdminController extends Controller {
             parent::showPage();
         } else {
             $securityLogDao = new SecurityLogDao;
-            $ipDao = new IpDao;
-            $deactivatedUserDao = new DeactivatedUserDao;
             $securityLogDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+			$securityLogDao->setLogger( $this->applicationBuilder->getLogger() );
+            $ipDao = new IpDao;
             $ipDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+			$ipDao->setLogger( $this->applicationBuilder->getLogger() );
+            $deactivatedUserDao = new DeactivatedUserDao;
             $deactivatedUserDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+			$deactivatedUserDao->setLogger( $this->applicationBuilder->getLogger() );
+						
             $addEscalationFailedAttemptToSecurityLog = new AddEscalationFailedAttemptToSecurityLog;
             $addEscalationFailedAttemptToSecurityLog->performAction(
                 $this->pageStatus->getServerWrapper()->getRemoteAddress(),
@@ -50,6 +56,7 @@ class AdminController extends Controller {
 
             $userDao = new UserDao();
             $userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+			$userDao->setLogger( $this->applicationBuilder->getLogger() );
             $user = $userDao->getById( $this->pageStatus->getSessionWrapper()->getSessionUserId() );
             $deactivatedUserDao->insertUser( $user->usr_email );
 
