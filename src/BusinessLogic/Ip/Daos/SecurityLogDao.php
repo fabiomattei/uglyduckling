@@ -8,7 +8,7 @@ use stdClass;
 
 class SecurityLogDao extends BasicDao {
 
-    const DB_TABLE = 'securitylog';
+    const DB_TABLE = 'ud_securitylog';
     const DB_TABLE_PK = 'sl_id';
     const DB_TABLE_CREATED_FLIED_NAME = 'sl_created';
 
@@ -39,7 +39,7 @@ class SecurityLogDao extends BasicDao {
     function insertEvent( string $remote_address, string $username, string $password, string $description ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO securitylog (sl_ipaddress, sl_username, sl_password, sl_description, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :username, :password, :description, NOW() )');
+            $STH = $this->DBH->prepare('INSERT INTO '.$this::DB_TABLE.' (sl_ipaddress, sl_username, sl_password, sl_description, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :username, :password, :description, NOW() )');
             $STH->bindParam( ':ipaddress', $remote_address, PDO::PARAM_STR );
             $STH->bindParam( ':username', $username, PDO::PARAM_STR );
             $STH->bindParam( ':password', $password, PDO::PARAM_STR );

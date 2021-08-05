@@ -8,7 +8,7 @@ use stdClass;
 
 class IpDao extends BasicDao {
 	
-	const DB_TABLE = 'blockedip';
+	const DB_TABLE = 'ud_blockedip';
 	const DB_TABLE_PK = 'ip_id';
     const DB_TABLE_UPDATED_FIELD_NAME = 'ip_updated';
     const DB_TABLE_CREATED_FLIED_NAME = 'ip_created';
@@ -48,7 +48,7 @@ class IpDao extends BasicDao {
 	 */
 	function checkIfIpIsBlocked( string $remote_address ) {
 		try {
-			$STH = $this->DBH->prepare('SELECT ip_ipaddress FROM blockedip WHERE ip_ipaddress = :ipaddress AND ip_failed_attepts > 5 AND NOW() < ip_time_to_remove;');
+			$STH = $this->DBH->prepare('SELECT ip_ipaddress FROM '.$this::DB_TABLE.' WHERE ip_ipaddress = :ipaddress AND ip_failed_attepts > 5 AND NOW() < ip_time_to_remove;');
 			$STH->bindParam(':ipaddress', $remote_address, PDO::PARAM_STR);
 			$STH->execute();
 			
@@ -78,7 +78,7 @@ class IpDao extends BasicDao {
 	function insertIp( string $remote_address, int $failedAttempts = 1 ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO blockedip (ip_ipaddress, ip_failed_attepts, ip_time_to_remove, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :failedattempts, NOW() + INTERVAL 1 DAY, NOW(), NOW() )');
+            $STH = $this->DBH->prepare('INSERT INTO '.$this::DB_TABLE.' (ip_ipaddress, ip_failed_attepts, ip_time_to_remove, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:ipaddress, :failedattempts, NOW() + INTERVAL 1 DAY, NOW(), NOW() )');
             $STH->bindParam( ':ipaddress', $remote_address, PDO::PARAM_STR );
             $STH->bindParam( ':failedattempts', $failedAttempts, PDO::PARAM_INT );
             $STH->execute();
@@ -101,7 +101,7 @@ class IpDao extends BasicDao {
 	function delayIp( int $ip_id ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('UPDATE blockedip SET ip_time_to_remove = ip_time_to_remove + INTERVAL 1 DAY, ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW() WHERE ip_id = :ipid');
+            $STH = $this->DBH->prepare('UPDATE '.$this::DB_TABLE.' SET ip_time_to_remove = ip_time_to_remove + INTERVAL 1 DAY, ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW() WHERE ip_id = :ipid');
 			$STH->bindParam( ':ipid', $ip_id, PDO::PARAM_INT );
             $STH->execute();
             $this->DBH->commit();
@@ -121,7 +121,7 @@ class IpDao extends BasicDao {
     function incrementIpCounting( int $ip_id ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('UPDATE blockedip SET ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW() WHERE ip_id = :ipid');
+            $STH = $this->DBH->prepare('UPDATE '.$this::DB_TABLE.' SET ip_failed_attepts = ip_failed_attepts + 1, ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = NOW() WHERE ip_id = :ipid');
             $STH->bindParam( ':ipid', $ip_id, PDO::PARAM_INT );
             $STH->execute();
             $this->DBH->commit();
@@ -139,7 +139,7 @@ class IpDao extends BasicDao {
      * @return stdClass|null
      */
 	function getByIpAddress( string $remote_address ) {
-        $query = 'SELECT * FROM blockedip WHERE ip_ipaddress = :ipaddress;';
+        $query = 'SELECT * FROM '.$this::DB_TABLE.' WHERE ip_ipaddress = :ipaddress;';
         try {
             $STH = $this->DBH->prepare( $query );
             $STH->bindParam( ':ipaddress', $remote_address, PDO::PARAM_STR );

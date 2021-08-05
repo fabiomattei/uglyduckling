@@ -8,7 +8,7 @@ use stdClass;
 
 class DeactivatedUserDao extends BasicDao {
 
-    const DB_TABLE = 'deactivateduser';
+    const DB_TABLE = 'ud_deactivateduser';
     const DB_TABLE_PK = 'du_id';
     const DB_TABLE_CREATED_FLIED_NAME = 'du_created';
 
@@ -33,7 +33,7 @@ class DeactivatedUserDao extends BasicDao {
     function insertUser( string $username ) {
         try {
             $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO deactivateduser (du_username, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:username, NOW() )');
+            $STH = $this->DBH->prepare('INSERT INTO '.$this::DB_TABLE.' (du_username, ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (:username, NOW() )');
             $STH->bindParam( ':username', $username, PDO::PARAM_STR );
             $STH->execute();
             $inserted_id = $this->DBH->lastInsertId();
@@ -48,7 +48,7 @@ class DeactivatedUserDao extends BasicDao {
 
     function checkIfIpIsDeactivated( string $username ) {
         try {
-            $STH = $this->DBH->prepare('SELECT du_username FROM deactivateduser WHERE du_username = :username;');
+            $STH = $this->DBH->prepare('SELECT du_username FROM '.$this::DB_TABLE.' WHERE du_username = :username;');
             $STH->bindParam(':username', $username, PDO::PARAM_STR);
             $STH->execute();
 

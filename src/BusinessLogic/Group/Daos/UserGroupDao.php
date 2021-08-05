@@ -8,7 +8,7 @@ use stdClass;
 
 class UserGroupDao extends BasicDao {
 	
-	const DB_TABLE = 'usergroup';
+	const DB_TABLE = 'ud_usergroup';
 	const DB_TABLE_PK = 'ug_id';
     const DB_TABLE_UPDATED_FIELD_NAME = 'ug_updated';
     const DB_TABLE_CREATED_FLIED_NAME = 'ug_created';
@@ -42,7 +42,7 @@ class UserGroupDao extends BasicDao {
      */
     function checkUserHasAccessToGroup( int $usr_id, string $slug ) {
         try {
-            $STH = $this->DBH->prepare('SELECT ug_groupslug FROM usergroup WHERE ug_userid = :usrid AND ug_groupslug = :slug ;');
+            $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :usrid AND ug_groupslug = :slug ;');
             $STH->bindParam(':usrid', $usr_id, PDO::PARAM_INT);
             $STH->bindParam(':slug', $slug, PDO::PARAM_STR);
             $STH->execute();
