@@ -247,13 +247,13 @@ class JsonResourceBasicController extends Controller {
 
     public function jsonRedirector( $jsonRedirect ): void
     {
-        if (isset($jsonRedirect->internal) and $jsonRedirect->internal->type === 'onepageback') {
+        if ( isset( $jsonRedirect->internal ) and $jsonRedirect->internal->type === 'onepageback') {
             $this->redirectToPreviousPage();
-        } elseif (isset($jsonRedirect->internal) and $jsonRedirect->internal->type === 'twopagesback') {
+        } elseif ( isset( $jsonRedirect->internal ) and $jsonRedirect->internal->type === 'twopagesback') {
             $this->redirectToSecondPreviousPage();
-        } elseif (isset($jsonRedirect->action) and isset($jsonRedirect->action->resource)) {
+        } elseif ( isset( $jsonRedirect->action ) ) {
             $this->redirectToPage(
-                $this->applicationBuilder->make_resource_url($jsonRedirect->action, $this->applicationBuilder->getJsonloader(), $this->pageStatus)
+                $this->applicationBuilder->make_resource_url( $jsonRedirect->action, $this->applicationBuilder->getJsonloader(), $this->pageStatus )
             );
         } else {
             $this->redirectToPreviousPage();
