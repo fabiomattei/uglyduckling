@@ -144,11 +144,12 @@ class JsonResourceBasicController extends Controller {
     }
 
     /**
-     * This method implements POST Request logic for all posible json resources.
+     * This method implements POST Request logic for all possible json resources.
      * This means all json Resources act in the same way when there is a post request
      */
     public function postRequest() {
         $this->queryExecutor = $this->pageStatus->getQueryExecutor();
+        $this->queryExecutor->setApplicationBuilder( $this->applicationBuilder );
 
         $conn = $this->pageStatus->getDbconnection()->getDBH();
 
