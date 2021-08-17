@@ -48,7 +48,7 @@ class HTMLFormButtonTag extends BaseHTMLTag {
      */
     function getHTML(): string {
         $buttoncolor = ( isset($this->jsonStructure->buttoncolor) ? self::getColor($this->jsonStructure->buttoncolor) : self::COLOR_GRAY );
-        $url = $this->applicationBuilder->make_resource_url( $this->jsonStructure, $this->applicationBuilder->getJsonloader(), $this->pageStatus );
+        $url = $this->applicationBuilder->make_resource_url( $this->jsonStructure, $this->pageStatus );
         return '<form action="'.$url.'" method="POST"><button class="btn '.$buttoncolor.' pull-right m-l-20 btn-rounded ${outline} hidden-xs hidden-sm waves-effect waves-light" ${onclickstring} ${dataoriginaltitle}>'.$this->jsonStructure->label.'</button></form>';
     }
 

@@ -69,8 +69,8 @@ class ApplicationBuilder {
      *
      * Check out: http://www.uddocs.com/docs/actions
      */
-    public function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
-        return $this->routerContainer->make_resource_url( $json_action, $jsonloader, $pageStatus );
+    public function make_resource_url( $json_action, PageStatus $pageStatus ) {
+        return $this->routerContainer->make_resource_url( $json_action, $pageStatus );
     }
 
     /**
@@ -99,7 +99,7 @@ class ApplicationBuilder {
      * Check out: http://www.uddocs.com/docs/actions
      */
     public function make_resource_url_simplified( $json_action, PageStatus $pageStatus ) {
-        return $this->routerContainer->make_resource_url( $json_action, $this->jsonloader, $pageStatus );
+        return $this->routerContainer->make_resource_url( $json_action, $pageStatus );
     }
 
     /**

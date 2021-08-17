@@ -254,7 +254,7 @@ class JsonResourceBasicController extends Controller {
             $this->redirectToSecondPreviousPage();
         } elseif ( isset( $jsonRedirect->action ) ) {
             $this->redirectToPage(
-                $this->applicationBuilder->make_resource_url( $jsonRedirect->action, $this->applicationBuilder->getJsonloader(), $this->pageStatus )
+                $this->applicationBuilder->make_resource_url( $jsonRedirect->action, $this->pageStatus )
             );
         } else {
             $this->redirectToPreviousPage();

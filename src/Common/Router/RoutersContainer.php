@@ -144,7 +144,7 @@ class RoutersContainer {
      *
      * Check out: http://www.uddocs.com/docs/actions
      */
-    function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
+    function make_resource_url( $json_action, PageStatus $pageStatus ) {
         if ( isset( $json_action->url ) ) {
             return $json_action->url;
         }

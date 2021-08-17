@@ -46,7 +46,6 @@ class FormJsonTemplate extends JsonTemplate {
         if ( isset($this->resource->get->form->action) ) {
             $url = $this->applicationBuilder->make_resource_url(
                 $this->resource->get->form->action,
-                $this->applicationBuilder->getJsonloader(),
                 $this->pageStatus
             );
             if ( isset($this->resource->get->form->action->resource) ) {
