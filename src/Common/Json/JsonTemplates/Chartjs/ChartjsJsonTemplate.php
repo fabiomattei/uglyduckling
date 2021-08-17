@@ -40,7 +40,7 @@ class ChartjsJsonTemplate extends JsonTemplate {
                     $glue[$dg->placeholder][] = $this->pageStatus->getValue($dg);
                 }
                 if ( $dg->type == 'action') {
-                    $glue[$dg->placeholder][] = $this->applicationBuilder->make_resource_url_simplified( $dg->action, $this->pageStatus );
+                    $glue[$dg->placeholder][] = $this->applicationBuilder->make_resource_url( $dg->action, $this->pageStatus );
                 }
             }
         }

@@ -46,17 +46,17 @@ class MenuJsonTemplate extends JsonTemplate {
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label;
-                    $mi->url = $this->applicationBuilder->make_resource_url_simplified( $item, $this->pageStatus );
+                    $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
                 }
                 $menu->addNavItemWithDropdown( $menuitem->label,
-                    $this->applicationBuilder->make_resource_url_simplified( $menuitem, $this->pageStatus ),
+                    $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
                     false, false, 
                     $submenuItems 
                 );
             } else {
                 $menu->addNavItem( $menuitem->label,
-                    $this->applicationBuilder->make_resource_url_simplified( $menuitem, $this->pageStatus ),
+                    $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
                     false, false 
                 );
             }
