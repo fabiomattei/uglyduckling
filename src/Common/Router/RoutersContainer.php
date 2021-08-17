@@ -142,14 +142,14 @@ class RoutersContainer {
      *   "outline": false
      * }
      *
-     *
      * Check out: http://www.uddocs.com/docs/actions
      */
     function make_resource_url( $json_action, JsonLoader $jsonloader, PageStatus $pageStatus ) {
-        if (isset($json_action->url)) {
+        if ( isset( $json_action->url ) ) {
             return $json_action->url;
         }
-        if (isset($json_action->controller)) {
+
+        if ( isset( $json_action->controller ) ) {
             $resource = $json_action->controller;
             $url_parameters = '';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
@@ -160,7 +160,8 @@ class RoutersContainer {
             }
             return $this->makeRelativeUrl( $resource, $url_parameters );
         }
-        if (isset($json_action->resource)) {
+
+        if ( isset( $json_action->resource ) ) {
             $resource = $json_action->resource;
             $url_parameters = 'res='.$resource.'&';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
@@ -170,22 +171,10 @@ class RoutersContainer {
                 $url_parameters = rtrim($url_parameters, '&');
             }
 
-            $action = ( isset($resource) ? $jsonloader->getActionRelatedToResource( $resource ) : '#');
-
-            switch ( $action ) {
-                case 'officeentitydashboard':
-                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
-                    break;
-                case 'officeentitytransaction':
-                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_LOGIC, $url_parameters );
-                    break;
-                case 'officeentityexport':
-                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_EXPORT, $url_parameters );
-                    break;
-
-                default:
-                    return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
-                    break;
+            if ( isset( $json_action->controller ) ) {
+                return $this->makeRelativeUrl( $json_action->controller, $url_parameters );
+            } else {
+                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
             }
         }
 

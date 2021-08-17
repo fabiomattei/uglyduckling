@@ -80,26 +80,6 @@ class JsonLoader {
 	}
 
     /**
-     * Given the key of a specific resource id checks if the resource is defined and it returns the action to link it
-     *
-     * @param string $resource_key
-     * @return string
-     * @throws \Exception
-     */
-	public function getActionRelatedToResource( string $resource_key ): string {
-        if ( array_key_exists( $resource_key, $this->resourcesIndex ) ) {
-            switch ( $this->resourcesIndex[$resource_key]->type ) {
-                case 'dashboard': return 'officeentitydashboard';
-                case 'transaction': return 'officeentitytransaction';
-                case 'export': return 'officeentityexport';
-                default: return 'officeentitydashboard';
-            }
-        } else {
-            throw new \Exception('[JsonLoader] :: It is not possible to associate an action to Resource: '.$resource_key);
-        }
-    }
-
-    /**
      * Return the index of all resources loaded from the main index
      *
      * The index is an array of stdClass containing attributes
