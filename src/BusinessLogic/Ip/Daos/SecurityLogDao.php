@@ -49,8 +49,7 @@ class SecurityLogDao extends BasicDao {
             $this->DBH->commit();
             return $inserted_id;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
     }
