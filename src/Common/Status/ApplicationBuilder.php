@@ -4,10 +4,10 @@ namespace Fabiom\UglyDuckling\Common\Status;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
-use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Common\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
 use Fabiom\UglyDuckling\Common\Router\RoutersContainer;
 use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
@@ -18,17 +18,17 @@ use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class ApplicationBuilder {
 
-    public /* RoutersContainer */ $routerContainer;
-    public /* Setup */ $setup;
-    public /* SecurityChecker */ $securityChecker;
-    public /* Redirector */ $redirector;
-    public /* JsonLoader */ $jsonloader;
-    public /* Logger */ $logger;
-    public /* BaseHTMLMessages */ $messages;
-    public /* HtmlTemplateLoader */ $htmlTemplateLoader;
-    public /* HTMLTagsFactory */ $htmlTagsFactory;
-    public /* JsonTemplateFactoriesContainer */ $jsonTemplateFactoriesContainer;
-	public /* BaseMailer */ $mailer;
+    public RoutersContainer $routerContainer;
+    public Setup $setup;
+    public SecurityChecker $securityChecker;
+    public Redirector $redirector;
+    public JsonLoader $jsonloader;
+    public Logger $logger;
+    public BaseHTMLMessages $messages;
+    public HtmlTemplateLoader $htmlTemplateLoader;
+    public HTMLTagsFactory $htmlTagsFactory;
+    public JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer;
+	public BaseMailer $mailer;
 
     /**
      * Gets the appropriate HTML tag from the tag factory
@@ -46,7 +46,6 @@ class ApplicationBuilder {
      * @deprecated
      *
      * @param $json_action
-     * @param JsonLoader $jsonloader
      * @param PageStatus $pageStatus
      * @return mixed
      *
@@ -233,16 +232,16 @@ class ApplicationBuilder {
     }
 	
     /**
-     * @return Mailer
+     * @return BaseMailer
      */
     public function getMailer() {
         return $this->mailer;
     }
 
     /**
-     * @param Mailer $mailer
+     * @param BaseMailer $mailer
      */
-    public function setMailer($mailer) {
+    public function setMailer(BaseMailer $mailer) {
         $this->mailer = $mailer;
     }
 
