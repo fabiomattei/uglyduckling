@@ -12,16 +12,16 @@ use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
 
 class PageStatus {
 
-    public /* Request */ $request;
-    public /* ServerWrapper */ $serverWrapper;
-    public /* SessionWrapper */ $sessionWrapper;
+    public Request $request;
+    public ServerWrapper $serverWrapper;
+    public SessionWrapper $sessionWrapper;
     public /* array */ $getParameters;
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
-    public /* QueryExecuter */ $queryExecuter;
+    public QueryExecuter $queryExecuter;
     public /* stdClass */ $lastEntity; // result of last query in database
-    public /* DBConnection */ $dbconnection;
-    public /* UseCasesIndex */ $useCasesIndex;
+    public DBConnection $dbconnection;
+    public UseCasesIndex $useCasesIndex;
 
     /**
      * PageStatus constructor.
