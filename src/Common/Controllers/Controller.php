@@ -17,8 +17,8 @@ use GUMP;
 
 class Controller {
 
-    public /* ApplicationBuilder */ $applicationBuilder;
-    public /* PageStatus */ $pageStatus;
+    public ApplicationBuilder $applicationBuilder;
+    public PageStatus $pageStatus;
     public /* GUMP */ $gump;
     public /* array */ $get_validation_rules = array();
     public /* array */ $get_filter_rules = array();
