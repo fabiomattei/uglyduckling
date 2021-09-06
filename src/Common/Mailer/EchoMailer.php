@@ -14,7 +14,7 @@ namespace Fabiom\UglyDuckling\Common\Mailer;
  * This class gives the structure to create a Mail.
  *
  */
-class EchoMailer {
+class EchoMailer extends BaseMailer {
 
 	function send( string $dest_email, string $from_email, string $subject, string $message ) { 
 		echo('Destination: ' . $dest_email . ' From: '. $from_email . ' Subject: ' . $subject . ' Message: ' . $message ); 
