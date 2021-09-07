@@ -8,13 +8,15 @@
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+use Fabiom\UglyDuckling\Common\Status\PageStatus;
 
 class JsonTemplate {
 
     protected $resource;
     protected /* string */ $action;
-    protected /* ApplicationBuilder */ $applicationBuilder;
-    protected /* PageStatus */ $pageStatus;
+    protected ApplicationBuilder $applicationBuilder;
+    protected PageStatus $pageStatus;
 
     const blocktype = 'basebuilder';
 
@@ -29,7 +31,7 @@ class JsonTemplate {
     /**
      * @param mixed $resource
      */
-    public function setResource($resource) {
+    public function setResource( $resource ) {
         $this->resource = $resource;
     }
 
