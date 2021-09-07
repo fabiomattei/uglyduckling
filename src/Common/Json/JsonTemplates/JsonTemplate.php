@@ -7,6 +7,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
@@ -39,7 +40,7 @@ class JsonTemplate {
      * Return a object that inherit from BaseHTMLBlock class
      * It is an object that has to generate HTML code
      *
-     * @return EmptyHTMLBlock
+     * @return BaseHTMLBlock
      */
     public function createHTMLBlock() {
         return new EmptyHTMLBlock;
