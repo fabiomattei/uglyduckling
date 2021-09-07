@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Common\Blocks;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\ColWidth;
+use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class BaseHTMLForm extends BaseHTMLBlock {
 
@@ -12,7 +13,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
     private $action;
     private $body;
     private $method;
-    private $htmlTemplateLoader;
+    private HtmlTemplateLoader $htmlTemplateLoader;
 
     function __construct() {
         $this->body = '';
@@ -22,7 +23,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
         $this->body = '';
     }
 
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
+    public function setHtmlTemplateLoader( HtmlTemplateLoader $htmlTemplateLoader ) {
         $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 	
