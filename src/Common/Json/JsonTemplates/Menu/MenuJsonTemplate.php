@@ -55,7 +55,7 @@ class MenuJsonTemplate extends JsonTemplate {
                     $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
                     if ( $resourceName == $item->resource || $resourceName == $item->controller ) {
-                        $active = true;
+                        $current = true;
                     }
                 }
 
@@ -72,7 +72,7 @@ class MenuJsonTemplate extends JsonTemplate {
                 // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
                     if ( $resourceName == $menuitem->resource || $resourceName == $menuitem->controller ) {
-                        $active = true;
+                        $current = true;
                     }
 
                     $menu->addNavItem( $menuitem->label,
