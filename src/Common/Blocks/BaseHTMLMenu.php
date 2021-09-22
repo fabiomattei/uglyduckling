@@ -24,8 +24,8 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     function addBrand( string $brand, string $url ) {
         $this->brand = $this->htmlTemplateLoader->loadTemplateAndReplace(
             array('${url}', '${title}'),
-                array($url, $brand),
-                'Menu/brand.html');
+            array($url, $brand),
+            'Menu/brand.html');
     }
 
     function addButtonToggler() {
@@ -46,11 +46,13 @@ class BaseHTMLMenu extends BaseHTMLBlock {
             'Menu/navitem.html');
     }
 
-    function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $resourceName = '' ) {
+    function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $controllerName = '', string $resourceName = '' ) {
         $submenu = '';
         foreach ($submenuItems as $item) {
-            $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
-            $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
+            if ( $controllerName == $item->controller || $resourceName == $item->resource ) {
+                $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
+                $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
+            }
 
             $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
                 array('${active}', '${current}', '${url}', '${label}'),

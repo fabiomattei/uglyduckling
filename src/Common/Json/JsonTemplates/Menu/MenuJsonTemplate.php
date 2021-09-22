@@ -50,8 +50,7 @@ class MenuJsonTemplate extends JsonTemplate {
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
 
-        // TODO it could be a controller, we neet to set it from outside
-        $resourceName = $this->resource->name ?? 'noname';
+        echo $this->controllerName.$this->resourceName;
 
         foreach ($this->menuStructure->menu as $menuitem) {
             $active = false;
@@ -62,9 +61,11 @@ class MenuJsonTemplate extends JsonTemplate {
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label;
+                    $mi->controller = $item->controller;
+                    $mi->resource = $item->resource;
                     $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
-                    if ( $resourceName == $item->resource || $resourceName == $item->controller ) {
+                    if ( $this->resourceName == $item->resource || $this->controllerName == $item->controller ) {
                         $current = true;
                     }
                 }
@@ -73,7 +74,7 @@ class MenuJsonTemplate extends JsonTemplate {
                     $menu->addNavItemWithDropdown( $menuitem->label,
                         $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
                         $active, $current,
-                        $submenuItems, $resourceName
+                        $submenuItems, $this->controllerName, $this->resourceName
                     );
                 } else {
                     $menu->addNavItemWithDropdown( $menuitem->label, '#', false, false, $submenuItems );
@@ -81,7 +82,7 @@ class MenuJsonTemplate extends JsonTemplate {
             } else {
                 // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
-                    if ( $resourceName == $menuitem->resource || $resourceName == $menuitem->controller ) {
+                    if ( $this->resourceName == $menuitem->resource || $this->controllerName == $menuitem->controller ) {
                         $current = true;
                     }
 

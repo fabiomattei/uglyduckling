@@ -20,7 +20,7 @@ class JsonDashboardController extends JsonResourceBasicController {
      */
     public function getRequest() {
         $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
-        $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus, 'JsonDashboardController', $this->resource);
+        $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus, 'JsonDashboardController', $this->resource->name);
         $this->menubuilder->setMenuStructure( $menuresource );
 
         // if resource->get->sessionupdates is set I need to update the session
