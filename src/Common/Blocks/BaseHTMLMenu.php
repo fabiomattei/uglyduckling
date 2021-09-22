@@ -48,16 +48,25 @@ class BaseHTMLMenu extends BaseHTMLBlock {
 
     function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $controllerName = '', string $resourceName = '' ) {
         $submenu = '';
+        $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
+        $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
         foreach ($submenuItems as $item) {
-            if ( $controllerName == $item->controller || $resourceName == $item->resource ) {
-                $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
-                $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
+            if ( isset( $controllerName ) AND $item->controller == $controllerName ) {
+                $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                    array('${active}', '${current}', '${url}', '${label}'),
+                    array($activestr, $currentstr, $item->url, $item->label),
+                    'Menu/submenuitem.html');
+            } elseif ( isset( $resourceName ) AND $item->resource == $resourceName) {
+                $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                    array('${active}', '${current}', '${url}', '${label}'),
+                    array($activestr, $currentstr, $item->url, $item->label),
+                    'Menu/submenuitem.html');
+            } else {
+                $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                    array('${active}', '${current}', '${url}', '${label}'),
+                    array('', '', $item->url, $item->label),
+                    'Menu/submenuitem.html');
             }
-
-            $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-                array('${active}', '${current}', '${url}', '${label}'),
-                array($activestr, $currentstr, $item->url, $item->label),
-                'Menu/submenuitem.html');
         }
 
         $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';

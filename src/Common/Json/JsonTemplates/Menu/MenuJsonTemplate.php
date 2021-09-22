@@ -67,7 +67,6 @@ class MenuJsonTemplate extends JsonTemplate {
                         $current = true;
                     }
                 }
-
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
                     $menu->addNavItemWithDropdown( $menuitem->label,
                         $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
@@ -75,7 +74,7 @@ class MenuJsonTemplate extends JsonTemplate {
                         $submenuItems, $this->controllerName, $this->resourceName
                     );
                 } else {
-                    $menu->addNavItemWithDropdown( $menuitem->label, '#', false, false, $submenuItems );
+                    $menu->addNavItemWithDropdown( $menuitem->label, '#', $active, $current, $submenuItems, $this->controllerName, $this->resourceName );
                 }
             } else {
                 // there is no submenu
