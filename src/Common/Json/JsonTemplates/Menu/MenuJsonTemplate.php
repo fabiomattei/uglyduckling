@@ -21,6 +21,8 @@ use stdClass;
 class MenuJsonTemplate extends JsonTemplate {
 
     private $menuStructure;
+    protected string $controllerName;
+    protected string $resourceName;
 
     /**
      * JsonTemplate constructor.
