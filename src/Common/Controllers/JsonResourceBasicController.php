@@ -246,6 +246,11 @@ class JsonResourceBasicController extends Controller {
         throw new \Exception('Mismatch with get parameters');
     }
 
+    /**
+     * Method to manage a redirect defined in a json file
+     *
+     * @param $jsonRedirect
+     */
     public function jsonRedirector( $jsonRedirect ): void
     {
         if ( isset( $jsonRedirect->internal ) and $jsonRedirect->internal->type === 'onepageback') {

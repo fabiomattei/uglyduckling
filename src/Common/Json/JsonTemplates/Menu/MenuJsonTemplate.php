@@ -40,29 +40,44 @@ class MenuJsonTemplate extends JsonTemplate {
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
 
+        // TODO it could be a controller, we neet to set it from outside
+        $resourceName = $this->resource->name ?? 'noname';
+
         foreach ($this->menuStructure->menu as $menuitem) {
-            if (isset($menuitem->submenu)) {
+            $active = false;
+            $current = false;
+            if ( isset($menuitem->submenu) ) {
+                // A submenu is present
                 $submenuItems = array();
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label;
                     $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
+                    if ( $resourceName == $item->resource || $resourceName == $item->controller ) {
+                        $active = true;
+                    }
                 }
+
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
                     $menu->addNavItemWithDropdown( $menuitem->label,
                         $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
-                        false, false,
+                        $active, $current,
                         $submenuItems
                     );
                 } else {
                     $menu->addNavItemWithDropdown( $menuitem->label, '#', false, false, $submenuItems );
                 }
             } else {
+                // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+                    if ( $resourceName == $menuitem->resource || $resourceName == $menuitem->controller ) {
+                        $active = true;
+                    }
+
                     $menu->addNavItem( $menuitem->label,
                         $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
-                        false, false
+                        $active, $current
                     );
                 } else {
                     $menu->addNavItem( $menuitem->label, '#',false, false );
