@@ -23,6 +23,16 @@ class MenuJsonTemplate extends JsonTemplate {
     private $menuStructure;
 
     /**
+     * JsonTemplate constructor.
+     */
+    public function __construct( $applicationBuilder, $pageStatus, $controllerName = '', $resourceName = '' ) {
+        $this->applicationBuilder = $applicationBuilder;
+        $this->pageStatus = $pageStatus;
+        $this->controllerName = $controllerName;
+        $this->resourceName = $resourceName;
+    }
+
+    /**
      * Set the json structure in order to build the menu
      * Usually the structure is set in a json group file
      *
