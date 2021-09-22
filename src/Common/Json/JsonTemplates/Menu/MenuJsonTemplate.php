@@ -50,8 +50,6 @@ class MenuJsonTemplate extends JsonTemplate {
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
 
-        echo $this->controllerName.$this->resourceName;
-
         foreach ($this->menuStructure->menu as $menuitem) {
             $active = false;
             $current = false;
