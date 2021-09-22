@@ -55,10 +55,14 @@ class MenuJsonTemplate extends JsonTemplate {
                     $submenuItems 
                 );
             } else {
-                $menu->addNavItem( $menuitem->label,
-                    $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
-                    false, false 
-                );
+                if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+                    $menu->addNavItem( $menuitem->label,
+                        $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
+                        false, false
+                    );
+                } else {
+                    $menu->addNavItem( $menuitem->label, '#',false, false );
+                }
             }
         }
 
