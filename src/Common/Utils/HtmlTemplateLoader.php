@@ -25,7 +25,11 @@ class HtmlTemplateLoader {
      * @return string
      */
     public function loadTemplateAndReplace($search, $replace, $filename): string {
-        return str_replace( $search, $replace, file_get_contents($this->path.$filename));
+        if ( file_exists($this->path.$filename ) ) {
+            return str_replace( $search, $replace, file_get_contents($this->path.$filename ) );
+        } else {
+            return 'Template ' . $filename .' does not exist';
+        }
     }
 
     /**
@@ -37,7 +41,11 @@ class HtmlTemplateLoader {
      * @return string
      */
     public function loadTemplate($filename): string {
-        return file_get_contents($this->path.$filename);
+        if ( file_exists($this->path.$filename ) ) {
+            return file_get_contents($this->path.$filename);
+        } else {
+            return 'Template ' . $filename .' does not exist';
+        }
     }
 
 }

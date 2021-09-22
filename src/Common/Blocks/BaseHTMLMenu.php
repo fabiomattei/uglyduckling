@@ -7,7 +7,7 @@ use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class BaseHTMLMenu extends BaseHTMLBlock {
 
-    private /* HtmlTemplateLoader */ $htmlTemplateLoader;
+    private HtmlTemplateLoader $htmlTemplateLoader;
 
     function __construct() {
         $this->brand = '';
@@ -46,12 +46,15 @@ class BaseHTMLMenu extends BaseHTMLBlock {
             'Menu/navitem.html');
     }
 
-    function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems ) {
+    function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $resourceName = '' ) {
         $submenu = '';
         foreach ($submenuItems as $item) {
+            $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
+            $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
+
             $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-                array('${url}', '${label}'),
-                array($item->url, $item->label),
+                array('${active}', '${current}', '${url}', '${label}'),
+                array($activestr, $currentstr, $item->url, $item->label),
                 'Menu/submenuitem.html');
         }
 

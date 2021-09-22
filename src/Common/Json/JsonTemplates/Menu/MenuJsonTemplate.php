@@ -63,7 +63,7 @@ class MenuJsonTemplate extends JsonTemplate {
                     $menu->addNavItemWithDropdown( $menuitem->label,
                         $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
                         $active, $current,
-                        $submenuItems
+                        $submenuItems, $resourceName
                     );
                 } else {
                     $menu->addNavItemWithDropdown( $menuitem->label, '#', false, false, $submenuItems );
