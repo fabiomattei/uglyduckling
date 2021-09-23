@@ -13,11 +13,19 @@ class ColWidth extends BaseHTMLBlock {
 	const EXTRA_LARGE = 'col-xl-';      // >= 1200px
 	
 	public function get( $type, $width ) {
-		return $type.$width.'';
+	    if ( !isset( $width ) OR $width == '' ) {
+	        return '';
+        } else {
+            return $type.$width.'';
+        }
 	}
 
 	public static function getWidth($type, $width ) {
-        return $type.$width.'';
+        if ( !isset( $width ) OR $width == '' ) {
+            return '';
+        } else {
+            return $type.$width.'';
+        }
     }
 	
 }
