@@ -54,16 +54,16 @@ class InfoJsonTemplate extends JsonTemplate {
 			foreach ($row as $field) {
                 $value = $this->pageStatus->getValue($field);
                 if ($field->type === 'textfield') {
-                    $infoBlock->addTextField($field->label, $value, $field->width, $field->cssclass);
+                    $infoBlock->addTextField($field->label, $value, $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'textarea') {
-                    $infoBlock->addTextAreaField($field->label, $value, $field->width, $field->cssclass);
+                    $infoBlock->addTextAreaField($field->label, $value, $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'currency') {
-                    $infoBlock->addCurrencyField($field->label, $value, $field->width);
+                    $infoBlock->addCurrencyField($field->label, $value, $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'date') {
-                    $infoBlock->addDateField($field->label, $value, $field->width);
+                    $infoBlock->addDateField($field->label, $value, $field->width ?? '', $field->cssclass ?? '');
                 }
 			}
 			$infoBlock->closeRow('row '.$rowcounter);

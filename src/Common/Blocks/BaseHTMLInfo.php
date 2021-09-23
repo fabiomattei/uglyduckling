@@ -46,28 +46,28 @@ class BaseHTMLInfo extends BaseHTMLBlock {
             'Info/textfield.html');
     }
 
-    function addDropdownField( string $label, array $options, string $value, string $width ) {
+    function addDropdownField( string $label, array $options, string $value, string $width, string $cssClass = '' ) {
         $selectedvalue = '';
         foreach ($options as $key => $val) {
             $selectedvalue .= ( $key == $value ? $val : '' );
         }
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, htmlspecialchars( $selectedvalue ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
+            array($label, htmlspecialchars( $selectedvalue ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
     }
 	
-	function addCurrencyField( string $label, string $value, string $width ) {
+	function addCurrencyField( string $label, string $value, string $width, string $cssClass = '' ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
+            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
 	}
 	
-	function addDateField( string $label, string $value, string $width ) {
+	function addDateField( string $label, string $value, string $width, string $cssClass = '' ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, date( 'd/m/Y', strtotime(htmlspecialchars( $value ))), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
+            array($label, date( 'd/m/Y', strtotime(htmlspecialchars( $value ))), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
 	}
 
@@ -82,10 +82,10 @@ class BaseHTMLInfo extends BaseHTMLBlock {
             'Info/textfield.html');
     }
 	
-    function addParagraph( string $text, string $width ) {
+    function addParagraph( string $text, string $width, string $cssClass = '' ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${text}', '${ColWidth}'),
-            array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            array('${text}', '${ColWidth}', '${cssClass}'),
+            array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/paragraph.html');
     }
 
