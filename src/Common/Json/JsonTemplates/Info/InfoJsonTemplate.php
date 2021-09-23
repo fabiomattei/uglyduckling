@@ -57,7 +57,7 @@ class InfoJsonTemplate extends JsonTemplate {
                     $infoBlock->addTextField($field->label, $value, $field->width, $field->cssclass);
                 }
                 if ($field->type === 'textarea') {
-                    $infoBlock->addTextAreaField($field->label, $value, $field->width);
+                    $infoBlock->addTextAreaField($field->label, $value, $field->width, $field->cssclass);
                 }
                 if ($field->type === 'currency') {
                     $infoBlock->addCurrencyField($field->label, $value, $field->width);
