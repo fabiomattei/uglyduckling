@@ -32,10 +32,10 @@ class BaseHTMLInfo extends BaseHTMLBlock {
             'Info/body.html');
     }
 
-    function addTextField( string $label, string $value, string $width ) {
+    function addTextField( string $label, string $value, string $width, string $cssClass = '' ) {
         $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${label}', '${value}', '${ColWidth}'),
-            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
+            array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
+            array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
     }
 

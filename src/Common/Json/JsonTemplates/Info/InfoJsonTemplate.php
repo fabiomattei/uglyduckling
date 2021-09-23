@@ -54,7 +54,7 @@ class InfoJsonTemplate extends JsonTemplate {
 			foreach ($row as $field) {
                 $value = $this->pageStatus->getValue($field);
                 if ($field->type === 'textfield') {
-                    $infoBlock->addTextField($field->label, $value, $field->width);
+                    $infoBlock->addTextField($field->label, $value, $field->width, $field->cssclass);
                 }
                 if ($field->type === 'textarea') {
                     $infoBlock->addTextAreaField($field->label, $value, $field->width);
