@@ -83,7 +83,7 @@ class FormJsonTemplate extends JsonTemplate {
                     foreach ($field->options as $op) {
                         $options[$op->value] = $op->label;
                     }
-                    $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
+                    $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'sqldropdown') {
                     if ( isset($field->query) ) {
@@ -106,10 +106,10 @@ class FormJsonTemplate extends JsonTemplate {
 					    }
 					    $options[$op->{$field->valuesqlfield}] = $op->{$field->labelsqlfield};
 					}
-                    $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width);
+                    $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'radiobutton') {
-                    $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width, $field->checked ?? '');
+                    $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width ?? '', $field->checked ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'checkbox') {
                     $checkedValue = '';   // value the field should have if checked
@@ -120,33 +120,33 @@ class FormJsonTemplate extends JsonTemplate {
                     if ( $checkedValue == $value ) {
                         $checkedString = 'checked="checked"';
                     }
-                    $formBlock->addCheckBoxField($field->name, $field->label, $value ?? '', $field->width, $checkedString);
+                    $formBlock->addCheckBoxField($field->name, $field->label, $value ?? '', $field->width ?? '', $checkedString ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'textarea') {
-                    $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width);
+                    $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'date') {
                     if (!isset($field->placeholder)) { $field->placeholder = date('Y-m-d'); }
-                    $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('Y-m-d'));
+                    $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('Y-m-d'), $field->cssclass ?? '');
                 }
                 if ($field->type === 'time') {
                     if (!isset($field->placeholder)) { $field->placeholder = date('H:i'); }
-                    $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('H:i'));
+                    $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('H:i'), $field->cssclass ?? '');
                 }
                 if ($field->type === 'infotext') {
-                    $formBlock->addHelpingText( $field->label, $field->text, $field->width );
+                    $formBlock->addHelpingText( $field->label, $field->text, $field->width ?? '', $field->cssclass ?? '' );
                 }
                 if ($field->type === 'infovalue') {
-                    $formBlock->addHelpingText( $field->label, $value, $field->width );
+                    $formBlock->addHelpingText( $field->label, $value, $field->width ?? '', $field->cssclass ?? '' );
                 }
                 if ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
                 }
                 if ($field->type === 'file') {
-                    $formBlock->addFileUploadField($field->name, $field->label, $field->width);
+                    $formBlock->addFileUploadField($field->name, $field->label, $field->width ?? '', $field->cssclass ?? '');
                 }
                 if ($field->type === 'submitbutton') {
-                    $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '', $field->label ?? '', $field->width ?? '12' );
+                    $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '', $field->label ?? '', $field->width ?? '12', $field->cssclass ?? '');
                 }
             }
             $formBlock->closeRow('row '.$rowcounter);
