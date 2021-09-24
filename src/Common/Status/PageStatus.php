@@ -354,6 +354,7 @@ class PageStatus {
     function applyFilter(array $filtercall, string $value): string {
         if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 3 ) return substr( $value, $filtercall[1], $filtercall[2] );
         if ( $filtercall[0] == 'substr' AND count( $filtercall ) == 2 ) return substr( $value, $filtercall[1] );
+        if ( $filtercall[0] == 'mysqltohumandate' ) return date ('d/m/Y', strtotime( $value ) );
         return $value;
     }
 
