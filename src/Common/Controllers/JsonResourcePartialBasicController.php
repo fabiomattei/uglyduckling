@@ -2,10 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Controllers;
 
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
-
 class JsonResourcePartialBasicController extends JsonResourceBasicController {
 
     /**
