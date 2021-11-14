@@ -2,11 +2,13 @@
 
 namespace Fabiom\UglyDuckling\Common\UseCases;
 
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 
 class BaseUseCase {
 
-    public /* PageStatus */ $pageStatus;
+    public PageStatus $pageStatus;
+    public ApplicationBuilder $applicationBuilder;
     public $useCaseJsonStructure;
     public $errors = array();
     public $useCaseParameters = array();
@@ -15,9 +17,10 @@ class BaseUseCase {
      * BaseUseCase constructor.
      * @param $pageStatus
      */
-    function __construct( $useCaseJsonStructure, PageStatus $pageStatus ) {
+    function __construct( $useCaseJsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder ) {
         $this->useCaseJsonStructure = $useCaseJsonStructure;
         $this->pageStatus = $pageStatus;
+        $this->applicationBuilder = $applicationBuilder;
     }
 
     /**
