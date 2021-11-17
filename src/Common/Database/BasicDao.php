@@ -116,6 +116,7 @@ class BasicDao {
             $STH->execute();
 
             if ( $debug ) {
+                echo strtr( $sqlstring, $fields );
                 echo "debugDumpParams:<br />";
                 $STH->debugDumpParams();
                 echo "<br />";
@@ -124,6 +125,7 @@ class BasicDao {
             $inserted_id = $this->DBH->lastInsertId();
             return $inserted_id;
         } catch (\PDOException $e) {
+            echo strtr( $sqlstring, $fields );
             $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
