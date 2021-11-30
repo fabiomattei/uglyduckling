@@ -149,7 +149,7 @@ class RoutersContainer {
             return $json_action->url;
         }
 
-        if ( isset( $json_action->controller ) ) {
+        if ( isset( $json_action->controller ) AND !isset( $json_action->resource ) ) {
             $resource = $json_action->controller;
             $url_parameters = '';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
