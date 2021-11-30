@@ -22,8 +22,8 @@ class BaseHTMLTag {
 
     const BLOCK_TYPE = '';
     protected $jsonStructure;
-    protected /* PageStatus */ $pageStatus;
-    protected /* ApplicationBuilder */ $applicationBuilder;
+    protected PageStatus $pageStatus;
+    protected ApplicationBuilder $applicationBuilder;
 
     function setResources($jsonStructure, PageStatus $pageStatus, ApplicationBuilder $applicationBuilder) {
         $this->jsonStructure = $jsonStructure;
