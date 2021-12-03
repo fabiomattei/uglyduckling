@@ -97,6 +97,11 @@ class FormJsonTemplate extends JsonTemplate {
                     }
 
 					$options = array();
+					if (is_array($field->options) || is_object($values)) {
+                        foreach ($field->options as $op) {
+                    	    $options[$op->value] = $op->label;
+                        }
+                    }
 					foreach ($fieldOptions as $op) {
 					    if ( !isset($field->valuesqlfield) ) {
 					        $logger->write('ERROR <FormJsonTemplate> <sqldropdown> - Missing parameter valuesqlfield in json object', __FILE__, __LINE__);
