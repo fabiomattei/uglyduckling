@@ -149,7 +149,7 @@ class RoutersContainer {
             return $json_action->url;
         }
 
-        if ( isset( $json_action->resource ) ) {
+        if ( isset( $json_action->resource ) AND isset( $json_action->controller ) ) {
             $resource = $json_action->resource;
             $url_parameters = 'res='.$resource.'&';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
@@ -158,12 +158,7 @@ class RoutersContainer {
                 }
                 $url_parameters = rtrim($url_parameters, '&');
             }
-
-            if ( isset( $json_action->controller ) ) {
-                return $this->makeRelativeUrl( $json_action->controller, $url_parameters );
-            } else {
-                return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
-            }
+            return $this->makeRelativeUrl( $json_action->controller, $url_parameters );
         }
 
         if ( isset( $json_action->controller ) ) {
@@ -176,6 +171,18 @@ class RoutersContainer {
                 $url_parameters = rtrim($url_parameters, '&');
             }
             return $this->makeRelativeUrl( $resource, $url_parameters );
+        }
+
+        if ( isset( $json_action->resource ) ) {
+            $resource = $json_action->resource;
+            $url_parameters = 'res='.$resource.'&';
+            if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+                foreach ($json_action->parameters as $par) {
+                    $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
+                }
+                $url_parameters = rtrim($url_parameters, '&');
+            }
+            return $this->makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
         }
 
         // going to default controller
