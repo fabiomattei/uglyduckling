@@ -35,9 +35,8 @@ class Request {
     * Diventa array( 'action', array( 'par1', 'par2', 'par3' ) )
     */
     public function calculateSplittedURL() {
-        $request2 = str_replace( '.html', '', $this->requestURI );
-        $request3 = str_replace( '.pdf', '', $request2 );
-        $request  = preg_replace( '/\?.*/', '', $request3 );
+        $request2 = str_replace( ['.html', '.pdf', '.svg'], '', $this->requestURI );
+        $request  = preg_replace( '/\?.*/', '', $request2 );
 
         if ( $request == '' ) throw new \Exception('General malfuction!!!');
 
