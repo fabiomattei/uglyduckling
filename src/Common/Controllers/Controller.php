@@ -19,6 +19,7 @@ class Controller {
 
     public ApplicationBuilder $applicationBuilder;
     public PageStatus $pageStatus;
+    public string $templateFile;
     public /* GUMP */ $gump;
     public /* array */ $get_validation_rules = array();
     public /* array */ $get_filter_rules = array();
