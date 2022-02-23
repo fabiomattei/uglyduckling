@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Common\Status;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
+use Fabiom\UglyDuckling\Common\HTMLStaticBlocks\HTMLStaticBlockFactory;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 use Fabiom\UglyDuckling\Common\Loggers\Logger;
@@ -28,6 +29,7 @@ class ApplicationBuilder {
     public HtmlTemplateLoader $htmlTemplateLoader;
     public HTMLTagsFactory $htmlTagsFactory;
     public JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer;
+    public HTMLStaticBlockFactory $htmlStaticBlockFactory;
 	public BaseMailer $mailer;
 
     /**
@@ -103,6 +105,13 @@ class ApplicationBuilder {
      */
     public function setRouterContainer(RoutersContainer $routerContainer): void {
         $this->routerContainer = $routerContainer;
+    }
+
+    /**
+     * @param HTMLStaticBlockFactory $htmlStaticBlockFactory
+     */
+    public function setHtmlStaticBlockFactory(HTMLStaticBlockFactory $htmlStaticBlockFactory): void {
+        $this->htmlStaticBlockFactory = $htmlStaticBlockFactory;
     }
 
     /**
