@@ -34,14 +34,14 @@ class JsonTemplateFactoriesContainer {
      * Given a specific json resource select between all JsonTemplateFactories
      * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
      *
-     * @param $resource
+     * @param $jsonResource
      * @return BaseHTMLBlock
      */
-    public function getHTMLBlock( $resource ): BaseHTMLBlock {
+    public function getHTMLBlock($jsonResource ): BaseHTMLBlock {
         foreach ($this->factories as $factory) {
-            if ( $factory->isResourceSupported( $resource ) ) {
-                $factory->setResource( $resource );
-                return $factory->getHTMLBlock( $resource );
+            if ( $factory->isResourceSupported( $jsonResource ) ) {
+                $factory->setResource( $jsonResource );
+                return $factory->getHTMLBlock( $jsonResource );
             }
         }
 

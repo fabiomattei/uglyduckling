@@ -64,10 +64,10 @@ class DashboardJsonTemplate extends JsonTemplate {
 		$panelBlock->setCssClass($panel->cssclass ?? '');
         $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
-        $resource = $this->applicationBuilder->loadResource( $panel->resource );
+        $jsonResource = $this->applicationBuilder->loadResource( $panel->resource );
 
-        $panelBlock->setInternalBlockName( $resource->name ?? '' );
-        $panelBlock->setBlock($this->applicationBuilder->getHTMLBlock($resource));
+        $panelBlock->setInternalBlockName( $jsonResource->name ?? '' );
+        $panelBlock->setBlock( $this->applicationBuilder->getHTMLBlock( $jsonResource ) );
 
         return $panelBlock;
     }

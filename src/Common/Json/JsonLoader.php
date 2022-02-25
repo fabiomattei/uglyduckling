@@ -57,25 +57,25 @@ class JsonLoader {
     /**
      * Load a resource from file specified with array index
      *
-     * @param string $key
+     * @param string $resourceName
      * @return mixed, a php structure that mirrors the json structure
      * @throws \Exception
      */
-	public function loadResource( string $key ) {
-        if ( array_key_exists( $key, $this->resourceCache ) ) {
-            return $this->resourceCache[$key];
+	public function loadResource( string $resourceName ) {
+        if ( array_key_exists( $resourceName, $this->resourceCache ) ) {
+            return $this->resourceCache[$resourceName];
         }
-		if ( array_key_exists( $key, $this->resourcesIndex ) ) {
-			if ( file_exists( $this->resourcesIndex[$key]->path ) ) {
-				$handle = fopen($this->resourcesIndex[$key]->path, 'r');
-                $resourceOut = $this->json_decode_with_error_control(fread($handle, filesize($this->resourcesIndex[$key]->path)), $this->resourcesIndex[$key]->path );
-                $this->resourceCache[$key] = $resourceOut;
+		if ( array_key_exists( $resourceName, $this->resourcesIndex ) ) {
+			if ( file_exists( $this->resourcesIndex[$resourceName]->path ) ) {
+				$handle = fopen($this->resourcesIndex[$resourceName]->path, 'r');
+                $resourceOut = $this->json_decode_with_error_control(fread($handle, filesize($this->resourcesIndex[$resourceName]->path)), $this->resourcesIndex[$resourceName]->path );
+                $this->resourceCache[$resourceName] = $resourceOut;
 				return $resourceOut;
 			} else {
-				throw new \Exception('[JsonLoader] :: Path associated to resource does not exists!!! Path required: ' . $this->resourcesIndex[$key]->path);
+				throw new \Exception('[JsonLoader] :: Path associated to resource does not exists!!! Path required: ' . $this->resourcesIndex[$resourceName]->path);
 			}
 		} else {
-			throw new \Exception('[JsonLoader] :: Resource '.$key.' undefined in array index!!!');
+			throw new \Exception('[JsonLoader] :: Resource '.$resourceName.' undefined in array index!!!');
 		}
 	}
 
