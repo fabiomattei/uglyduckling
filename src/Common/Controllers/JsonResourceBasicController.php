@@ -2,7 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Controllers;
 
-use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\ValidationBuilder;

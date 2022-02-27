@@ -78,17 +78,41 @@ class ApplicationBuilder {
      * Given a specific json resource select between all JsonTemplateFactories
      * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
      *
+     * @param $resourceName
+     * @return BaseHTMLBlock
+     */
+    public function getBlock( string $resourceName ): BaseHTMLBlock {
+        return HtmlBlockBuilder::getHTMLBlock($resourceName, $this->jsonloader, $this->jsonTemplateFactoriesContainer, $this->htmlStaticBlockFactory);
+    }
+
+    public function getBlockName( string $resourceName ): BaseHTMLBlock {
+        return HtmlBlockBuilder::getBlockName($resourceName, $this->jsonloader, $this->jsonTemplateFactoriesContainer, $this->htmlStaticBlockFactory);
+    }
+
+    /**
+     * @deprecated
+     *
+     * Given a specific json resource select between all JsonTemplateFactories
+     * and return an instance of BaseHTMLBlock or a subclass of BaseHTMLBlock
+     *
      * @param $resource
      * @return BaseHTMLBlock
      */
-    public function getHTMLBlock( $resource ): BaseHTMLBlock {
-        return $this->jsonTemplateFactoriesContainer->getHTMLBlock( $resource );
+    public function getHTMLBlock( $jsonResource ): BaseHTMLBlock {
+        return $this->jsonTemplateFactoriesContainer->getHTMLBlock( $jsonResource );
     }
 
     public function getAppNameForPageTitle(): string  {
         return $this->setup->getAppNameForPageTitle();
     }
 
+    /**
+     * @deprecated
+     *
+     * @param $resourcename
+     * @return mixed
+     * @throws \Exception
+     */
     public function loadResource( $resourcename ) {
         return $this->jsonloader->loadResource($resourcename);
     }

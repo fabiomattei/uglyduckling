@@ -14,6 +14,8 @@ use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
  */
 class BaseHTMLBlock {
 
+    const BLOCK_NAME = 'basehtmlblock';
+
     /**
      * @deprecated
      *
