@@ -45,7 +45,7 @@ class HtmlBlockBuilder {
      */
     public static function getBlockName( string $resourceName, JsonLoader $jsonLoader, JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer, HTMLStaticBlockFactory $htmlStaticBlockFactory ): string {
         if ( $htmlStaticBlockFactory->isHTMLBlockSupported( $resourceName ) ) {
-            return $htmlStaticBlockFactory->getHTMLBlock( $resourceName )::BLOCK_NAME;
+            return $htmlStaticBlockFactory->getHTMLBlock( $resourceName )::HTML_BLOCK_NAME;
         } else {
             return $jsonLoader->loadResource( $resourceName )->name;
         }
