@@ -22,7 +22,7 @@ class HtmlBlockBuilder {
      * @return BaseHTMLBlock
      * @throws \Exception
      */
-    public static function getHTMLBlock( string $resourceName, JsonLoader $jsonLoader, JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer, HTMLStaticBlockFactory $htmlStaticBlockFactory ): BaseHTMLBlock  {
+    public static function getHTMLBlock( string $resourceName, $jsonLoader, $jsonTemplateFactoriesContainer, $htmlStaticBlockFactory ): BaseHTMLBlock  {
         if ( $htmlStaticBlockFactory->isHTMLBlockSupported( $resourceName ) ) {
             return $htmlStaticBlockFactory->getHTMLBlock( $resourceName );
         } else {
@@ -43,7 +43,7 @@ class HtmlBlockBuilder {
      * @return BaseHTMLBlock
      * @throws \Exception
      */
-    public static function getBlockName( string $resourceName, JsonLoader $jsonLoader, JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer, HTMLStaticBlockFactory $htmlStaticBlockFactory ): string {
+    public static function getBlockName( string $resourceName, $jsonLoader, $jsonTemplateFactoriesContainer, $htmlStaticBlockFactory ): string {
         if ( $htmlStaticBlockFactory->isHTMLBlockSupported( $resourceName ) ) {
             return $htmlStaticBlockFactory->getHTMLBlock( $resourceName )::HTML_BLOCK_NAME;
         } else {
