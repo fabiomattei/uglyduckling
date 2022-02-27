@@ -13,7 +13,7 @@ class HTMLStaticBlockFactory {
     public function __construct( $applicationBuilder, $pageStatus ) {
     }
 
-    public function isHTMLBlockSupported( $resource ) {
+    public function isHTMLBlockSupported( $htmlBlockName ) {
         return false;
     }
 
@@ -24,7 +24,7 @@ class HTMLStaticBlockFactory {
      *
      * @param $blockName string
      */
-    public function getHTMLBlock( $blockName ) {
+    public function getHTMLBlock( $htmlBlockName ) {
 
         return new BaseHTMLBlock;
 
