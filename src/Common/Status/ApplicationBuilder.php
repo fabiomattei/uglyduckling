@@ -85,7 +85,7 @@ class ApplicationBuilder {
         return HtmlBlockBuilder::getHTMLBlock($resourceName, $this->jsonloader, $this->jsonTemplateFactoriesContainer, $this->htmlStaticBlockFactory);
     }
 
-    public function getBlockName( string $resourceName ): BaseHTMLBlock {
+    public function getBlockName( string $resourceName ): string {
         return HtmlBlockBuilder::getBlockName($resourceName, $this->jsonloader, $this->jsonTemplateFactoriesContainer, $this->htmlStaticBlockFactory);
     }
 
