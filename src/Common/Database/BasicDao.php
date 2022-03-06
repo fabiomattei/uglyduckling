@@ -19,14 +19,14 @@ class BasicDao {
     protected /* Logger */ $logger;
 
     function __construct() {
-		// epnty as you see
+        // epnty as you see
     }
-	
+
     /**
      * Database connection handler setter
      */
     public function setDBH( $DBH ) {
-		$this->DBH = $DBH;
+        $this->DBH = $DBH;
     }
 
     /**
@@ -110,6 +110,7 @@ class BasicDao {
             if ( $debug ) {
                 print_r($fields);
                 echo "Pre-calculating query:<br />";
+                echo $filedslist."<br />";
                 echo strtr( $sqlstring, $fields )."<br />";
             }
 
@@ -192,7 +193,7 @@ class BasicDao {
      * @param $fields :: array of fields to update
      * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
      */
-    function updateByFields($conditionsfields, $fields) {
+    function updateByFields($conditionsfields, $fields, $debug = false) {
         $conditionslist = $this->organizeConditionsFields($conditionsfields);
         $presentmoment = date('Y-m-d H:i:s', time());
         $filedslist = '';
@@ -203,7 +204,7 @@ class BasicDao {
         try {
             $query = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" ';
             if ($conditionslist != '') {
-                $query .= 'WHERE ' . $conditionslist . ' ';
+                $query .= 'WHERE ' . $conditionslist . '; ';
             }
 
             $STH = $this->DBH->prepare($query);
@@ -213,7 +214,19 @@ class BasicDao {
             foreach ($conditionsfields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $query."<br />";
+                print_r($conditionsfields);
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
             $STH->execute();
+
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -373,7 +386,7 @@ class BasicDao {
             return array();
         }
     }
-	
+
     /**
      * This function allows user to get a set of elements from a table.
      *
@@ -410,18 +423,18 @@ class BasicDao {
                     $STH->bindParam($key, $value);
                 }
 
-	            $STH->execute();
+                $STH->execute();
 
-	            # setting the fetch mode
-	            $STH->setFetchMode(PDO::FETCH_OBJ);
+                # setting the fetch mode
+                $STH->setFetchMode(PDO::FETCH_OBJ);
 
-			    $out = array();
-			    while ($item = $STH->fetch()) {
-			        $id = $item->{$this::DB_TABLE_PK};
-			        $out[$id] = $item;
-			    }
+                $out = array();
+                while ($item = $STH->fetch()) {
+                    $id = $item->{$this::DB_TABLE_PK};
+                    $out[$id] = $item;
+                }
 
-			    return $out;
+                return $out;
             } catch (PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
