@@ -181,6 +181,51 @@ class BasicDao {
     }
 
     /**
+     * This function updates a single row of the delared table.
+     * It uptades the row haveing id = $id
+     * @param $id :: integer id
+     * @param $fields :: array of fields to update
+     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
+     *
+     */
+    function updateNoDate($id, $fields, $debug = false) {
+        $filedslist = '';
+        foreach ($fields as $key => $value) {
+            $filedslist .= $key . ' = :' . $key . ', ';
+        }
+        $filedslist = substr($filedslist, 0, -2);
+        try {
+            $sqlstring = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ' WHERE ' . $this::DB_TABLE_PK . ' = :id';
+
+            $STH = $this->DBH->prepare( $sqlstring );
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+            $STH->bindParam(':id', $id);
+
+            if ( $debug ) {
+                $fields['id'] = $id;
+                print_r($fields);
+                echo "Pre-calculating query:<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
+            }
+
+            $STH->execute();
+
+            if ( $debug ) {
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+                echo "<br />";
+            }
+
+        } catch (\PDOException $e) {
+            $STH->debugDumpParams();
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
      * This method allow to update many rows of a single table at the same time
      *
      * @param $conditionsfields :: array of fields to put in where clause
