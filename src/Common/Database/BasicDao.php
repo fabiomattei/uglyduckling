@@ -279,6 +279,59 @@ class BasicDao {
     }
 
     /**
+     * This method allow to update many rows of a single table at the same time
+     *
+     * @param $conditionsfields :: array of fields to put in where clause
+     * $tododao->getByFields( array( 'open' => '0' ) );
+     * this will get all the row having the field open = 0
+     *
+     * you can set more then a search parameter (evaluated in AND)
+     * $tododao->getByFields( array( 'open' => '0', 'handling' => '1' ) );
+     *
+     * @param $fields :: array of fields to update
+     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
+     */
+    function updateByFieldsNoDate($conditionsfields, $fields, $debug = false) {
+        $conditionslist = $this->organizeConditionsFields($conditionsfields);
+        $presentmoment = date('Y-m-d H:i:s', time());
+        $filedslist = '';
+        foreach ($fields as $key => $value) {
+            $filedslist .= $key . ' = :' . $key . ', ';
+        }
+        $filedslist = substr($filedslist, 0, -2);
+        try {
+            $query = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ' ';
+            if ($conditionslist != '') {
+                $query .= 'WHERE ' . $conditionslist . '; ';
+            }
+
+            $STH = $this->DBH->prepare($query);
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+            foreach ($conditionsfields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $query."<br />";
+                print_r($conditionsfields);
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
+            $STH->execute();
+
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
      * This is the basic function for one row from a table specifying the primary key
      * of the row you want to delete.
      * Once you created a instance of the DAO object you can do for example:
