@@ -435,6 +435,45 @@ class BasicDao {
     }
 
     /**
+     * This is the basic function for running a SQL query.
+     * Once you created a instance of the DAO object you can do for example:
+     *
+     * $sqlQuery string containing the query
+     *
+     * $tododao->getBySQLQuery( 'SELECT * FROM mytable WHERE myfield = :myfieldcontent;', [ ':myfieldcontent' => '0' ] );
+     * this will get all the row having the field myfield = 0
+     */
+    public function getBySQLQuery($sqlQuery, $fields, $debug = false) {
+        $filedslist = $this->organizeConditionsFields($conditionsfields);
+
+        try {
+            $STH = $this->DBH->prepare($sqlQuery);
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $sqlQuery."<br />";
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
      * This function allows user to get a set of elements from a table.
      *
      * @param $fieldname                name of field that needs to be confronted with the array of ids
