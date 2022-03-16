@@ -444,8 +444,6 @@ class BasicDao {
      * this will get all the row having the field myfield = 0
      */
     public function getBySQLQuery($sqlQuery, $fields, $debug = false) {
-        $filedslist = $this->organizeConditionsFields($conditionsfields);
-
         try {
             $STH = $this->DBH->prepare($sqlQuery);
             foreach ($fields as $key => &$value) {
