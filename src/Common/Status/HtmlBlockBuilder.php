@@ -51,4 +51,25 @@ class HtmlBlockBuilder {
         }
     }
 
+    /**
+     * It takes a resource name ($resourceName), it checks if there is any static HTMLBlock having that name,
+     * if it is it returns an HTMLBlock,
+     * it there is not it returns a dynamic HTMLBlock built on the base of the json resource file having
+     * the name $resourceName
+     *
+     * @param string $resourceName
+     * @param JsonLoader $jsonLoader
+     * @param JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer
+     * @param HTMLStaticBlockFactory $htmlStaticBlockFactory
+     * @return BaseHTMLBlock
+     * @throws \Exception
+     */
+    public static function getBlockGetParameters( string $resourceName, JsonLoader $jsonLoader, JsonTemplateFactoriesContainer $jsonTemplateFactoriesContainer, HTMLStaticBlockFactory $htmlStaticBlockFactory ): string {
+        if ( $htmlStaticBlockFactory->isHTMLBlockSupported( $resourceName ) ) {
+            return $htmlStaticBlockFactory->getHTMLBlock( $resourceName )::HTML_BLOCK_NAME;
+        } else {
+            return $jsonLoader->loadResource( $resourceName )->get->request->parameters;
+        }
+    }
+
 }

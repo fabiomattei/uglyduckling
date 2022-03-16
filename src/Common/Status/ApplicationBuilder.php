@@ -89,6 +89,10 @@ class ApplicationBuilder {
         return HtmlBlockBuilder::getBlockName($resourceName, $this->jsonloader, $this->jsonTemplateFactoriesContainer, $this->htmlStaticBlockFactory);
     }
 
+    public function getBlockGetParameters( string $resourceName ): string {
+        return HtmlBlockBuilder::getBlockGetParameters($resourceName, $this->jsonloader, $this->jsonTemplateFactoriesContainer, $this->htmlStaticBlockFactory);
+    }
+
     /**
      * @deprecated
      *
