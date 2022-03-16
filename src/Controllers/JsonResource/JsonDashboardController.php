@@ -31,7 +31,7 @@ class JsonDashboardController extends JsonResourceBasicController {
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = ( $this->applicationBuilder->getHTMLBlock( $this->resource ) );
+        $this->centralcontainer = array( $this->applicationBuilder->getHTMLBlock( $this->resource ) );
     }
 
     public function show_second_get_error_page() {
