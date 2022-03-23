@@ -31,12 +31,14 @@ class AdminDashboard extends AdminController {
         $resourceGeneralChecks->closeTHead();
         $resourceGeneralChecks->addTBody();
         foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
-            $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
-            $checker = BasicJsonChecker::basicJsonCheckerFactory($tmpres);
-            $resourceGeneralChecks->addRow();
-            $resourceGeneralChecks->addColumn( $tmpres->name );
-            $resourceGeneralChecks->addUnfilteredColumn($checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString());
-            $resourceGeneralChecks->closeRow();
+            if ($this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists( $reskey )) {
+                $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
+                $checker = BasicJsonChecker::basicJsonCheckerFactory($tmpres);
+                $resourceGeneralChecks->addRow();
+                $resourceGeneralChecks->addColumn( $tmpres->name );
+                $resourceGeneralChecks->addUnfilteredColumn($checker->isResourceBlockWellStructured() ? 'Ok' : $checker->getErrorsString());
+                $resourceGeneralChecks->closeRow();
+            }
         }
         $resourceGeneralChecks->closeTBody();
 
@@ -51,16 +53,20 @@ class AdminDashboard extends AdminController {
         $resourcesTable->closeTHead();
         $resourcesTable->addTBody();
         foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $restocheck => $restocheckvalue ) {
-            $tmprestocheck = $this->applicationBuilder->getJsonloader()->loadResource( $restocheck );
-            foreach ( $this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue ) {
-                $tmpres = $this->applicationBuilder->getJsonloader()->loadResource( $reskey );
-                $checker = BasicJsonChecker::basicJsonCheckerFactory( $tmpres );
-                if ($checker->isActionPresent($tmprestocheck->name)) {
-                    $resourcesTable->addRow();
-                    $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
-                    $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $tmprestocheck, $this->applicationBuilder->getJsonloader() );
-                    $resourcesTable->addUnfilteredColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString());
-                    $resourcesTable->closeRow();
+            if ($this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists( $restocheck )) {
+                $tmprestocheck = $this->applicationBuilder->getJsonloader()->loadResource($restocheck);
+                foreach ($this->applicationBuilder->getJsonloader()->getResourcesIndex() as $reskey => $resvalue) {
+                    if ($this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists( $reskey )) {
+                        $tmpres = $this->applicationBuilder->getJsonloader()->loadResource($reskey);
+                        $checker = BasicJsonChecker::basicJsonCheckerFactory($tmpres);
+                        if ($checker->isActionPresent($tmprestocheck->name)) {
+                            $resourcesTable->addRow();
+                            $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
+                            $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory($tmprestocheck, $this->applicationBuilder->getJsonloader());
+                            $resourcesTable->addUnfilteredColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters()) ? 'Ok' : $checker->getErrorsString());
+                            $resourcesTable->closeRow();
+                        }
+                    }
                 }
             }
         }

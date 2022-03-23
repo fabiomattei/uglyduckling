@@ -55,6 +55,21 @@ class JsonLoader {
 	}
 
     /**
+     * Return true if the resource has been set in index and file exists
+     *
+     * @param string $resourceName
+     * @return bool
+     */
+    public function isJsonResourceIndexedAndFileExists( string $resourceName ): bool {
+        if ( array_key_exists( $resourceName, $this->resourcesIndex ) ) {
+            if ( file_exists( $this->resourcesIndex[$resourceName]->path ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Load a resource from file specified with array index
      *
      * @param string $resourceName
