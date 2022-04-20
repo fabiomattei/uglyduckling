@@ -13,6 +13,8 @@ class BaseHTMLTable extends BaseHTMLBlock {
     protected $html;
     protected $title;
     protected $htmlTemplateLoader;
+    protected $topActions;
+    protected $bottomActions;
 
     function __construct() {
         $this->html = '';
@@ -25,6 +27,14 @@ class BaseHTMLTable extends BaseHTMLBlock {
 
     function setTitle( string $title ) {
         $this->title = $title;
+    }
+
+    function setTopActions(string $topActions) {
+        $this->topActions = $topActions;
+    }
+
+    function setBottomActions(string $bottomActions) {
+        $this->bottomActions = $bottomActions;
     }
 
     function addRow() {
@@ -95,8 +105,8 @@ class BaseHTMLTable extends BaseHTMLBlock {
 
     function show(): string {
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${title}', '${html}'),
-            array( $this->title, $this->html),
+            array('${title}', '${html}', '${menutoptable}', '${menusubtable}'),
+            array( $this->title, $this->html, $this->topActions, $this->bottomActions),
             'BaseTable/body.html');
     }
 

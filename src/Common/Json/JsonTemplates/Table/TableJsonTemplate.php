@@ -92,6 +92,22 @@ class TableJsonTemplate extends JsonTemplate {
 			$tableBlock->closeRow();
 		}
 		$tableBlock->closeTBody();
+
+        $topActions = '';
+        if (isset($this->resource->get->table->topactions)) {
+            foreach( $this->resource->get->table->topactions as $action ) {
+                $topActions .= $this->applicationBuilder->getHTMLTag( $action, $this->pageStatus, $this->applicationBuilder );
+            }
+        }
+        $tableBlock->setTopActions($topActions);
+
+        $bottomActions = '';
+        if (isset($this->resource->get->table->bottomactions)) {
+            foreach( $this->resource->get->table->bottomactions as $action ) {
+                $bottomActions .= $this->applicationBuilder->getHTMLTag( $action, $this->pageStatus, $this->applicationBuilder );
+            }
+        }
+        $tableBlock->setBottomActions($bottomActions);
 		
         return $tableBlock;
     }
