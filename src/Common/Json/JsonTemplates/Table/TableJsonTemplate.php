@@ -58,13 +58,26 @@ class TableJsonTemplate extends JsonTemplate {
                 $queryExecutor->setQueryStructure( $this->resource->get->query );
                 $entities = $queryExecutor->executeSql();
             }
+
+            if ( isset($this->resource->get->titlequery) ) {
+                $queryExecutor->setResourceName( $this->resource->name ?? 'undefined ');
+                $queryExecutor->setQueryStructure( $this->resource->get->titlequery );
+                $result_title = $queryExecutor->executeSql();
+                $title_entity = $result_title->fetch();
+            }
         }
 
         $table = $this->resource->get->table;
 
 		$tableBlock = new BaseHTMLTable;
         $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
-		$tableBlock->setTitle($table->title ?? '');
+
+        if ( isset( $title_entity ) AND $title_entity != '' AND is_object($table->title) ) {
+            $this->pageStatus->setLastEntity($title_entity);
+            $tableBlock->setTitle($this->pageStatus->getValue($table->title));
+        } else {
+            $tableBlock->setTitle($table->title ?? '');
+        }
 		
 		$tableBlock->addTHead();
 		$tableBlock->addRow();
