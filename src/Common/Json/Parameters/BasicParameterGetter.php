@@ -16,12 +16,10 @@ use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 
 class BasicParameterGetter {
 
-    protected $resource;
-
     /**
      * Factory that defines the right parameter loader for a given resource
      *
-     * @param $resource
+     * @param $resource (it may be a Json Resource or a HTMLStaticBlock resource)
      * @param ApplicationBuilder $applicationBuilder
      * @return ParameterGetter
      */
