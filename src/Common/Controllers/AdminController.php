@@ -10,7 +10,6 @@ use Fabiom\UglyDuckling\BusinessLogic\Ip\UseCases\AddDelayToIp;
 use Fabiom\UglyDuckling\BusinessLogic\Ip\UseCases\AddEscalationFailedAttemptToSecurityLog;
 use Fabiom\UglyDuckling\BusinessLogic\User\Daos\UserDao;
 use Fabiom\UglyDuckling\Common\Controllers\Controller;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\ValidationBuilder;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use GUMP;
 

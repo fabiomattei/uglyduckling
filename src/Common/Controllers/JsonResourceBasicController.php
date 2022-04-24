@@ -4,7 +4,6 @@ namespace Fabiom\UglyDuckling\Common\Controllers;
 
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\ValidationBuilder;
 use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Gump;
 
