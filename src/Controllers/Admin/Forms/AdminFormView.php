@@ -99,8 +99,8 @@ class AdminFormView extends AdminController {
 			if ( $checker->isActionPresent( $this->resource->name ) ) {
 	            $resourcesTable->addRow();
 	            $resourcesTable->addColumn( $reskey );
-                $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
-	            $resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString() );
+                //$parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
+	            //$resourcesTable->addColumn( $checker->isActionPresentAndWellStructured( $this->resource->name, $parametersGetter->getGetParameters() ) ? 'Ok' : $checker->getErrorsString() );
 	            $resourcesTable->closeRow();
 			}
             

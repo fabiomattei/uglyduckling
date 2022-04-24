@@ -9,18 +9,25 @@
 namespace Fabiom\UglyDuckling\Common\Json\Parameters;
 
 use \Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\DashboardParameterGetter;
+use Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\HTMLStaticBlockParametersGetter;
+use Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\JsonResourceParametersGetter;
+use Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\ParameterGetter;
+use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 
 class BasicParameterGetter {
 
-    protected $resource; // Json structure of a resource
-    protected $jsonloader;
+    protected $resource;
 
-    function __construct( $resource, $jsonloader ) {
+    /**
+     * @deprecated
+     * @param $resource
+     */
+    function __construct( $resource ) {
         $this->resource = $resource;
-        $this->jsonloader = $jsonloader;
     }
 
     /**
+     * @deprecated
      * Check if an array of parameters is defined for a json resource in a get request
      * and eventually return an array containing all of them
      *
@@ -35,6 +42,7 @@ class BasicParameterGetter {
     }
 
     /**
+     * @deprecated
      * Check if an array of parameters is defined for a json resource in a post request
      * and eventually return an array containing all of them
      *
@@ -49,6 +57,7 @@ class BasicParameterGetter {
     }
 
     /**
+     * @deprecated
      * Factory that defines the right parameter loader for a given resource
      *
      * @param $resource
@@ -58,6 +67,23 @@ class BasicParameterGetter {
     public static function basicParameterCheckerFactory( $resource, $jsonloader ): BasicParameterGetter {
         if ( $resource->metadata->type === "dashboard" ) return new DashboardParameterGetter( $resource, $jsonloader );
         return new BasicParameterGetter( $resource, $jsonloader );
+    }
+
+    /**
+     * Factory that defines the right parameter loader for a given resource
+     *
+     * @param $resource
+     * @param ApplicationBuilder $applicationBuilder
+     * @return ParameterGetter
+     */
+    public static function parameterGetterFactory( $resource, ApplicationBuilder $applicationBuilder ): ParameterGetter {
+        if ( is_a($resource, 'Fabiom\UglyDuckling\Common\Blocks\BaseHTMLStaticBlock') ) {
+            return new HTMLStaticBlockParametersGetter($resource);
+        }
+        if ( $resource->metadata->type === "dashboard" ) {
+            return new DashboardParameterGetter( $resource, $applicationBuilder );
+        }
+        return new JsonResourceParametersGetter( $resource );
     }
 
 }

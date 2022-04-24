@@ -8,8 +8,16 @@
 
 namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
+/**
+ * @deprecated
+ */
 class ValidationBuilder {
-	
+
+    /**
+     * @deprecated
+     * @param $parameters
+     * @return array
+     */
 	public function getValidationRoules( $parameters ) {
 		$rules = array();
         if( is_array($parameters) ) {
@@ -19,7 +27,12 @@ class ValidationBuilder {
         }
 		return $rules;
 	}
-	
+
+    /**
+     * @deprecated
+     * @param $parameters
+     * @return array
+     */
 	public function getValidationFilters( array $parameters ) {
 		$filters = array();
         if( is_array($parameters) ) {

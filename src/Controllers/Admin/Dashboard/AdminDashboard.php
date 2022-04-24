@@ -62,8 +62,8 @@ class AdminDashboard extends AdminController {
                         if ($checker->isActionPresent($tmprestocheck->name)) {
                             $resourcesTable->addRow();
                             $resourcesTable->addColumn($reskey . ' -> ' . $tmprestocheck->name);
-                            $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory($tmprestocheck, $this->applicationBuilder->getJsonloader());
-                            $resourcesTable->addUnfilteredColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters()) ? 'Ok' : $checker->getErrorsString());
+                            //$parametersGetter = BasicParameterGetter::basicParameterCheckerFactory($tmprestocheck, $this->applicationBuilder->getJsonloader());
+                            //$resourcesTable->addUnfilteredColumn($checker->isActionPresentAndWellStructured($tmprestocheck->name, $parametersGetter->getGetParameters()) ? 'Ok' : $checker->getErrorsString());
                             $resourcesTable->closeRow();
                         }
                     }

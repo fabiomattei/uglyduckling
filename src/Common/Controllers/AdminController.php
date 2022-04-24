@@ -72,10 +72,9 @@ class AdminController extends Controller {
         if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $this->pageStatus->getSessionWrapper()->getCsrfToken() ) {
             $this->secondGump = new Gump;
 
-            $val = new ValidationBuilder;
-            $parametersGetter = BasicParameterGetter::basicParameterCheckerFactory( $this->resource, $this->applicationBuilder->getJsonloader() );
-            $validation_rules = $val->getValidationRoules( $parametersGetter->getPostParameters() );
-            $filter_rules = $val->getValidationFilters( $parametersGetter->getPostParameters() );
+            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
+            $validation_rules = $parametersGetter->getValidationRoules();
+            $filter_rules = $parametersGetter->getFiltersRoules();
 
             if ( count( $validation_rules ) == 0 ) {
                 return true;
