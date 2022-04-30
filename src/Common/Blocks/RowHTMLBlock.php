@@ -27,6 +27,7 @@ class RowHTMLBlock extends BaseHTMLBlock {
      */
     public function __construct() {
         $this->blocks = array();
+        $this->rowblockid = '';
     }
 
     public function setHtmlTemplateLoader($htmlTemplateLoader) {
@@ -37,14 +38,18 @@ class RowHTMLBlock extends BaseHTMLBlock {
         $this->blocks[] = $block;
     }
 
+    function setRowBlockId( string $rowblockid ) {
+        $this->rowblockid = $rowblockid;
+    }
+
     function show(): string {
         $htmlbody = '';
         foreach ($this->blocks as $bl) {
             $htmlbody .= $bl->show();
         }
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array( '${htmlbody}' ),
-            array( $htmlbody ),
+            array( '${htmlbody}', '${rowblockid}' ),
+            array( $htmlbody, $this->rowblockid ),
             'RowBlock/body.html');
     }
 
