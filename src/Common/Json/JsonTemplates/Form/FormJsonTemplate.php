@@ -79,14 +79,14 @@ class FormJsonTemplate extends JsonTemplate {
                 if (in_array( $field->type, array('textfield', 'number') )) {
                     $formBlock->addGenericField( $field, $value ?? '');
                 }
-                if ($field->type === 'dropdown') {
+                elseif ($field->type === 'dropdown') {
                     $options = array();
                     foreach ($field->options as $op) {
                         $options[$op->value] = $op->label;
                     }
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width ?? '', $field->cssclass ?? '');
                 }
-                if ($field->type === 'sqldropdown') {
+                elseif ($field->type === 'sqldropdown') {
                     if ( isset($field->query) ) {
                         $queryExecutor->setQueryStructure( $field->query );
 
@@ -114,10 +114,10 @@ class FormJsonTemplate extends JsonTemplate {
 					}
                     $formBlock->addDropdownField($field->name, $field->label, $options, $value ?? '', $field->width ?? '', $field->cssclass ?? '');
                 }
-                if ($field->type === 'radiobutton') {
+                elseif ($field->type === 'radiobutton') {
                     $formBlock->addRadioButtonField($field->name, $field->label, $value ?? '', $field->width ?? '', $field->checked ?? '', $field->cssclass ?? '');
                 }
-                if ($field->type === 'checkbox') {
+                elseif ($field->type === 'checkbox') {
                     $checkedValue = '';   // value the field should have if checked
                     $checkedString = '';  // string to put in actual HTML tag
                     if ( isset($field->checked) AND is_array($field->checked) ) {
@@ -128,32 +128,36 @@ class FormJsonTemplate extends JsonTemplate {
                     }
                     $formBlock->addCheckBoxField($field->name, $field->label, $value ?? '', $field->width ?? '', $checkedString ?? '', $field->cssclass ?? '');
                 }
-                if ($field->type === 'textarea') {
+                elseif ($field->type === 'textarea') {
                     $formBlock->addTextAreaField($field->name, $field->label, $value ?? '', $field->width ?? '', $field->cssclass ?? '');
                 }
-                if ($field->type === 'date') {
+                elseif ($field->type === 'date') {
                     if (!isset($field->placeholder)) { $field->placeholder = date('Y-m-d'); }
                     $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('Y-m-d'), $field->cssclass ?? '');
                 }
-                if ($field->type === 'time') {
+                elseif ($field->type === 'time') {
                     if (!isset($field->placeholder)) { $field->placeholder = date('H:i'); }
                     $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('H:i'), $field->cssclass ?? '');
                 }
-                if ($field->type === 'infotext') {
+                elseif ($field->type === 'infotext') {
                     $formBlock->addHelpingText( $field->label, $field->text, $field->width ?? '', $field->cssclass ?? '' );
                 }
-                if ($field->type === 'infovalue') {
+                elseif ($field->type === 'infovalue') {
                     $formBlock->addHelpingText( $field->label, $value, $field->width ?? '', $field->cssclass ?? '' );
                 }
-                if ($field->type === 'hidden') {
+                elseif ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
                 }
-                if ($field->type === 'file') {
+                elseif ($field->type === 'file') {
                     $formBlock->addFileUploadField($field->name, $field->label, $field->width ?? '', $field->cssclass ?? '');
                 }
-                if ($field->type === 'submitbutton') {
+                elseif ($field->type === 'submitbutton') {
                     $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '', $field->label ?? '', $field->width ?? '12', $field->cssclass ?? '');
                 }
+                else {
+                    $formBlock->addHTMLTag( $this->applicationBuilder->getHTMLTag( $field, $this->pageStatus, $this->applicationBuilder ) );
+                }
+
             }
             $formBlock->closeRow('row '.$rowcounter);
             $rowcounter++;

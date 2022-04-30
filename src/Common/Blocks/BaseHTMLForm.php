@@ -187,4 +187,8 @@ class BaseHTMLForm extends BaseHTMLBlock {
             'Form/closerow.html');
 	}
 
+    function addHTMLTag( string $tag ) {
+        $this->body .= $tag;
+    }
+
 }
