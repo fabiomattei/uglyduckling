@@ -41,6 +41,7 @@ class FormJsonTemplate extends JsonTemplate {
         $formBlock = new BaseHTMLForm;
         $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $formBlock->setTitle($this->resource->get->form->title ?? '');
+        $formBlock->setFormId($this->resource->get->form->formid ?? '');
 
         // Setting the action to link the form to
         if ( isset($this->resource->get->form->action) ) {

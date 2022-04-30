@@ -17,6 +17,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
 
     function __construct() {
         $this->body = '';
+        $this->formid = '';
 		$this->adddate = false;
 		$this->action = '';
         $this->method = 'POST';
@@ -43,10 +44,14 @@ class BaseHTMLForm extends BaseHTMLBlock {
         $this->method = $method;
     }
 
+    function setFormId( string $formid ) {
+        $this->formid = $formid;
+    }
+
     function show(): string {
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${title}', '${subtitle}', '${action}', '${body}', '${method}'),
-            array($this->title, $this->subtitle, $this->action, $this->body, $this->method),
+            array('${title}', '${subtitle}', '${action}', '${body}', '${method}', '${formid}'),
+            array($this->title, $this->subtitle, $this->action, $this->body, $this->method, $this->formid),
             'Form/body.html');
     }
 
