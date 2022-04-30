@@ -192,6 +192,12 @@ class JsonResourceBasicController extends Controller {
         } else {
             $this->redirectToPreviousPage();
         }
+
+        if (isset($this->resource->post->render)) {
+            $this->applicationBuilder->getHTMLBlock(
+                $this->applicationBuilder->loadResource(
+                    $this->resource->post->render->resource ) )->getHTML();
+        }
     }
 
     public function showPage() {
