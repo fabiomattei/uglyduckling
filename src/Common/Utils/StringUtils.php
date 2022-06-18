@@ -123,4 +123,26 @@ class StringUtils {
         return StringUtils::isStringBetween( strtolower($word), strtolower($container), strtolower($start), strtolower($end) );
     }
 
+    /**
+     * Return a random string of a given length
+     * The string is composed by numbers, upper case letters and lower case letters
+     *
+     * @param $length
+     * @return string
+     */
+    public static function generateRandomString($length = 8) {
+        $password = "";
+        $possible = "0123456789abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        $i = 0;
+        while ($i < $length) {
+            $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+            if (!strstr($password, $char)) {
+                $password .= $char;
+                $i++;
+            }
+        }
+        return $password;
+    }
+
 }

@@ -2,6 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Common\Wrappers;
 
+use Fabiom\UglyDuckling\Common\Utils\StringUtils;
+
 class SessionWrapper {
 
     /**
@@ -201,22 +203,7 @@ class SessionWrapper {
     }
 
     public function createCsrfToken() {
-        $_SESSION['csrftoken'] = $this->generateRandomString( 40 );
-    }
-
-    public static function generateRandomString($length = 8) {
-        $password = "";
-        $possible = "0123456789abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        $i = 0;
-        while ($i < $length) {
-            $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
-            if (!strstr($password, $char)) {
-                $password .= $char;
-                $i++;
-            }
-        }
-        return $password;
+        $_SESSION['csrftoken'] = StringUtils::generateRandomString( 40 );
     }
 
 }
