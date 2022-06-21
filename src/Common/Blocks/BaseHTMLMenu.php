@@ -10,6 +10,7 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     private HtmlTemplateLoader $htmlTemplateLoader;
 
     function __construct() {
+        parent::__construct();
         $this->brand = '';
         $this->buttonToggler = '';
         $this->body = '';

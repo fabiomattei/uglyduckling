@@ -19,6 +19,7 @@ class BaseHTMLGrid extends BaseHTMLBlock {
      * BaseHTMLGrid constructor.
      */
     public function __construct(ApplicationBuilder $applicationBuilder, PageStatus $pageStatus, $jsonResource) {
+        parent::__construct();
         $this->applicationBuilder = $applicationBuilder;
         $this->pageStatus = $pageStatus;
         $this->jsonResource = $jsonResource;

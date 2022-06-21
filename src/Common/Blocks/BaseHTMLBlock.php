@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Common\Blocks;
 
 use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
+use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 
 /**
  * Class BaseHTMLBlock
@@ -15,6 +16,14 @@ use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
 class BaseHTMLBlock {
 
     const HTML_BLOCK_NAME = 'basehtmlblock';
+    protected string $uniqueBlockId = '';
+
+    /**
+     * BaseHTMLBlock constructor
+     */
+    public function __construct() {
+        $this->uniqueBlockId = '';
+    }
 
     /**
      * @deprecated
@@ -86,6 +95,13 @@ class BaseHTMLBlock {
      */
     function subAddToFoot(): string {
         return '';
+    }
+
+    function getUniqueBlockId(): string {
+        if ( $this->uniqueBlockId === '' ) {
+            $this->uniqueBlockId = StringUtils::generateRandomString();
+        }
+        return $this->uniqueBlockId;
     }
 
 }

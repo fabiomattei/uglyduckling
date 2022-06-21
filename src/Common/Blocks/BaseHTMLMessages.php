@@ -9,6 +9,7 @@ class BaseHTMLMessages extends BaseHTMLBlock {
 	private $htmlTemplateLoader;
 	
 	function __construct() {
+        parent::__construct();
 	    $this->info = '';
 		$this->success = '';
 		$this->warning = '';

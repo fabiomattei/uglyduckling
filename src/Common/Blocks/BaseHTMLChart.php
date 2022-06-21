@@ -23,7 +23,8 @@ class BaseHTMLChart extends BaseHTMLBlock {
 	protected $height;
 	protected $actiononclick;
 
-        function __construct() {
+    function __construct() {
+        parent::__construct();
         $this->htmlBlockId = 'myChart';
         $this->lables = '';
         $this->dataset = '';

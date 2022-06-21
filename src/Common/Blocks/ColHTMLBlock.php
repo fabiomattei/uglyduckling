@@ -26,6 +26,7 @@ class ColHTMLBlock extends BaseHTMLBlock {
      * @param $blocks
      */
     public function __construct() {
+        parent::__construct();
         $this->blocks = array();
     }
 

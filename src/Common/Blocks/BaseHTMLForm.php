@@ -16,6 +16,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
     private HtmlTemplateLoader $htmlTemplateLoader;
 
     function __construct() {
+        parent::__construct();
         $this->body = '';
         $this->formid = '';
 		$this->adddate = false;

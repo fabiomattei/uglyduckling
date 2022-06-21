@@ -10,6 +10,7 @@ class BaseHTMLInfo extends BaseHTMLBlock {
     private $htmlTemplateLoader;
 
     function __construct() {
+        parent::__construct();
         $this->body = '';
     }
 

@@ -20,7 +20,8 @@ class BaseHTMLUniform extends BaseHTMLBlock {
     private $addToHeadOnceFile;
     private $addToFootOnce;
 
-    public function __controller() {
+    public function __construct() {
+        parent::__construct();
     	$this->resourceName = '';
     	$this->bodyFile = '';
     	$this->addToHeadFile = '';

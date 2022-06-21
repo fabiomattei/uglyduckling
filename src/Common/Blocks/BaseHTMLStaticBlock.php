@@ -11,6 +11,7 @@ class BaseHTMLStaticBlock extends BaseHTMLBlock {
     public PageStatus $pageStatus;
 
     public function __construct( ApplicationBuilder $applicationBuilder, PageStatus $pageStatus) {
+        parent::__construct();
         $this->applicationBuilder = $applicationBuilder;
         $this->pageStatus = $pageStatus;
     }

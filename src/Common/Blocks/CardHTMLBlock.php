@@ -23,6 +23,7 @@ class CardHTMLBlock extends BaseHTMLBlock {
 	private /* string */ $cardId;
 
     function __construct() {
+        parent::__construct();
         $this->title = '';
         $this->subtitle = '';
         $this->cardExternalContainerId = '';

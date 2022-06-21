@@ -27,6 +27,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
      * @param $rows
      */
     public function __construct() {
+        parent::__construct();
         $this->rows = array();
     }
 

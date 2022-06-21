@@ -17,6 +17,7 @@ class BaseHTMLTable extends BaseHTMLBlock {
     protected $bottomActions;
 
     function __construct() {
+        parent::__construct();
         $this->html = '';
         $this->title = '';
     }
