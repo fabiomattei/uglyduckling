@@ -151,19 +151,17 @@ class RoutersContainer {
         }
 
         if ( isset( $json_action->resource ) AND isset( $json_action->controller ) ) {
-            $resource = $json_action->resource;
-            $url_parameters = 'res='.$resource.'&';
+            $url_parameters = 'res=' . $json_action->resource . '&';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
                 foreach ($json_action->parameters as $par) {
                     $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
                 }
-                $url_parameters = rtrim($url_parameters, '&');
+                $url_parameters = rtrim( $url_parameters, '&' );
             }
             return $this->makeRelativeUrl( $json_action->controller, $url_parameters );
         }
 
         if ( isset( $json_action->controller ) ) {
-            $resource = $json_action->controller;
             $url_parameters = '';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
                 foreach ($json_action->parameters as $par) {
@@ -171,7 +169,7 @@ class RoutersContainer {
                 }
                 $url_parameters = rtrim($url_parameters, '&');
             }
-            return $this->makeRelativeUrl( $resource, $url_parameters );
+            return $this->makeRelativeUrl( $json_action->controller, $url_parameters );
         }
 
         if ( isset( $json_action->resource ) ) {
