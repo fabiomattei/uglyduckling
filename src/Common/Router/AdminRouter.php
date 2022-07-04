@@ -125,8 +125,8 @@ class AdminRouter extends RouterBase {
         ));
     }
 
-    function getController( string $action ) {
-        switch ( $action ) {
+    function getController( string $controllerSlug ) {
+        switch ( $controllerSlug ) {
             case self::ROUTE_ADMIN_DASHBOARD:                        $controller = new AdminDashboard; break;
             case self::ROUTE_ADMIN_METRICS_DASHBOARD:                $controller = new AdminMetricsDashboard; break;
             case self::ROUTE_ADMIN_ENTITY_LIST:                      $controller = new EntityList; break;

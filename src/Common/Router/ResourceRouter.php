@@ -28,10 +28,10 @@ class ResourceRouter extends RouterBase {
     /**
      * Overwrite this function
      *
-     * @param string $action
+     * @param string $controller
      */
-    function isActionSupported( string $action ) {
-        return in_array($action, array(
+    function isActionSupported( string $controllerSlug ) {
+        return in_array($controllerSlug, array(
             self::ROUTE_OFFICE_ENTITY_CHART,
             self::ROUTE_OFFICE_ENTITY_TABLE,
             self::ROUTE_OFFICE_ENTITY_FORM,
@@ -45,14 +45,14 @@ class ResourceRouter extends RouterBase {
         ));
     }
 
-    function getController( string $action ) {
-        if ( $action === self::ROUTE_OFFICE_ENTITY_LOGIC ) {
+    function getController( string $controllerSlug ) {
+        if ( $controllerSlug === self::ROUTE_OFFICE_ENTITY_LOGIC ) {
             return new JsonTransactionController;
         }
-        if ( $action === self::ROUTE_OFFICE_ENTITY_EXPORT ) {
+        if ( $controllerSlug === self::ROUTE_OFFICE_ENTITY_EXPORT ) {
             return new JsonExportController();
         }
-        if ( $action === JsonAjax::CONTROLLER_NAME ) {
+        if ( $controllerSlug === JsonAjax::CONTROLLER_NAME ) {
             return new JsonAjax();
         }
         return new JsonDashboardController;

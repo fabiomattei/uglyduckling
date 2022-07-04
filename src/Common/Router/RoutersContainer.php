@@ -69,9 +69,9 @@ class RoutersContainer {
 	/**
 	 * Search all contained routers in order to get the right controller
 	 */
-	function getController( string $action ) {
+	function getController( string $controllerSlug ) {
         foreach ( $this->routers as $router ) {
-            if ( $router->isActionSupported( $action ) ) return $router->getController( $action );
+            if ( $router->isActionSupported( $controllerSlug ) ) return $router->getController( $controllerSlug );
         }
 
         return $this->defaultController;
@@ -210,11 +210,11 @@ class RoutersContainer {
      *
      * @return       string     The url well formed
      */
-    function makeRelativeUrl( $action = '', $parameters = '', $extension = '.html' ) {
-        if ( $action == '' ) {
+    function makeRelativeUrl( $controllerSlug = '', $parameters = '', $extension = '.html' ) {
+        if ( $controllerSlug == '' ) {
             return '#';
         } else {
-            return $action.$extension.( $parameters == '' ? '' : '?'.$parameters );
+            return $controllerSlug.$extension.( $parameters == '' ? '' : '?'.$parameters );
         }
     }
 	

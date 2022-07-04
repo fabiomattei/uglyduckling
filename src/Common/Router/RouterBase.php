@@ -18,9 +18,9 @@ class RouterBase {
     /**
      * Overwrite this function
      *
-     * @param string $action
+     * @param string $controller
      */
-    function isActionSupported( string $action ) {
+    function isActionSupported( string $controllerSlug ) {
         return false;
     }
 
@@ -29,7 +29,7 @@ class RouterBase {
      *
      * @param string $action
      */
-    function getController( string $action ) {
+    function getController( string $controllerSlug ) {
 		// overwrite this function
     }
 
