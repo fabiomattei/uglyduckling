@@ -29,24 +29,25 @@ class RoutersContainer {
 	/**
 	 * Array of routers
 	 */
-    private $routers;
-    private /* string */ $defaultController;
+    private $routerContainers;
+    private string $defaultController;
+    private string $basepath;
 
     /**
      * JsonTemplateFactoriesContainer constructor.
 	 * string $basepath app base path like www.myapp.com/myappfolder
      */
     public function __construct( $basepath ) {
-        $this->routers = array();
+        $this->routerContainers = array();
         $this->basepath = $basepath;
     }
 
 	/**
 	 * Sarch all contained routers in order to get the right router
 	 */
-    public function getRouter( $resource ) {
-        foreach ( $this->routers as $router ) {
-            if ( $router->supports( $resource ) ) return $router;
+    public function getRouter( $controllerSlug ) {
+        foreach ($this->routerContainers as $routerContainer ) {
+            if ( $routerContainer->supports( $controllerSlug ) ) return $routerContainer;
         }
     }
 	
@@ -54,8 +55,8 @@ class RoutersContainer {
 	 * Set the default controller when no controller has been requested by the user
 	 * it usually happens when user is at his first connection to the application
 	 */
-	public function setDefaultController( $controller ) {
-		$this->defaultController = $controller;
+	public function setDefaultController( $controllerSlug ) {
+		$this->defaultController = $controllerSlug;
 	}
 
     /**
@@ -70,7 +71,7 @@ class RoutersContainer {
 	 * Search all contained routers in order to get the right controller
 	 */
 	function getController( string $controllerSlug ) {
-        foreach ( $this->routers as $router ) {
+        foreach ($this->routerContainers as $router ) {
             if ( $router->isActionSupported( $controllerSlug ) ) return $router->getController( $controllerSlug );
         }
 
@@ -82,7 +83,7 @@ class RoutersContainer {
      * @param $router
      */
     public function addRouter( $router ) {
-        $this->routers[] = $router;
+        $this->routerContainers[] = $router;
     }
 	
 	/**
