@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Router;
 
+use Fabiom\UglyDuckling\Common\Controllers\JsonResourceJInPlaceBasicController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonAjax;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonDashboardController;
 use Fabiom\UglyDuckling\Controllers\JsonResource\JsonExportController;
@@ -50,10 +51,13 @@ class ResourceRouter extends RouterBase {
             return new JsonTransactionController;
         }
         if ( $controllerSlug === self::ROUTE_OFFICE_ENTITY_EXPORT ) {
-            return new JsonExportController();
+            return new JsonExportController;
         }
         if ( $controllerSlug === JsonAjax::CONTROLLER_NAME ) {
-            return new JsonAjax();
+            return new JsonAjax;
+        }
+        if ( $controllerSlug === JsonResourceJInPlaceBasicController::CONTROLLER_NAME ) {
+            return new JsonResourceJInPlaceBasicController;
         }
         return new JsonDashboardController;
     }

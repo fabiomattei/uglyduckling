@@ -4,6 +4,8 @@ namespace Fabiom\UglyDuckling\Common\Controllers;
 
 class JsonResourceJInPlaceBasicController extends JsonResourceBasicController {
 
+    const CONTROLLER_NAME = 'partial';
+
     /**
      * @throws GeneralException
      */
