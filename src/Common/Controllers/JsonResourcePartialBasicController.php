@@ -12,7 +12,10 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
     public function getRequest() {
         $this->templateFile = 'empty';
 
-        parent::getRequest();
+        if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+
+        $myBlocks = $this->applicationBuilder->getHTMLBlock( $this->resource );
+        echo $myBlocks->show();
     }
 
     /**
