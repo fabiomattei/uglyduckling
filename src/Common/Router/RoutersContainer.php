@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Router;
 
+use Fabiom\UglyDuckling\Common\Controllers\Controller;
 use Fabiom\UglyDuckling\Common\Json\JsonLoader;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 
@@ -30,7 +31,7 @@ class RoutersContainer {
 	 * Array of routers
 	 */
     private $routerContainers;
-    private RouterBase $defaultController;
+    private Controller $defaultController;
     private string $basepath;
 
     /**
