@@ -30,7 +30,7 @@ class RoutersContainer {
 	 * Array of routers
 	 */
     private $routerContainers;
-    private string $defaultController;
+    private RouterBase $defaultController;
     private string $basepath;
 
     /**
@@ -55,8 +55,8 @@ class RoutersContainer {
 	 * Set the default controller when no controller has been requested by the user
 	 * it usually happens when user is at his first connection to the application
 	 */
-	public function setDefaultController( $controllerSlug ) {
-		$this->defaultController = $controllerSlug;
+	public function setDefaultController( $defaultController ) {
+		$this->defaultController = $defaultController;
 	}
 
     /**
