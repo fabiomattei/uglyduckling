@@ -3,8 +3,7 @@
 namespace Fabiom\UglyDuckling\Controllers\JsonResource;
 
 use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
-use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
+use Fabiom\UglyDuckling\Common\Status\Logics;
 
 /**
  * User: Fabio
@@ -14,35 +13,8 @@ use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 class JsonTransactionController extends JsonResourceBasicController {
 	
 	public function getRequest() {
-        $this->queryExecutor = $this->pageStatus->getQueryExecutor();
 
-        $conn = $this->pageStatus->getDbconnection()->getDBH();
-
-        // performing transactions
-        if (isset($this->resource->get->transactions)) {
-            $returnedIds = new QueryReturnedValues;
-            try {
-                //$conn->beginTransaction();
-                $this->queryExecutor->setDBH( $conn );
-                foreach ($this->resource->get->transactions as $transaction) {
-                    $this->queryExecutor->setQueryStructure( $transaction );
-                    if ( $this->queryExecutor->getSqlStatmentType() == QueryExecuter::INSERT) {
-                        if (isset($transaction->label)) {
-                            $returnedIds->setValue($transaction->label, $this->queryExecutor->executeSql());
-                        } else {
-                            $returnedIds->setValueNoKey($this->queryExecutor->executeSql());
-                        }
-                    } else {
-                        $this->queryExecutor->executeSql();
-                    }
-                }
-                //$conn->commit();
-            }
-            catch (\PDOException $e) {
-                $conn->rollBack();
-                $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
-            }
-        }
+        Logics::performTransactions( $this->pageStatus, $this->applicationBuilder, $this->resource );
 
         // performing usecases
         if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {

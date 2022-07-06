@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Common\Status;
 
 use Fabiom\UglyDuckling\Common\Database\DBConnection;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Common\Database\QueryReturnedValues;
 use Fabiom\UglyDuckling\Common\Database\QuerySet;
 use Fabiom\UglyDuckling\Common\Request\Request;
 use Fabiom\UglyDuckling\Common\UseCases\UseCasesIndex;
@@ -22,6 +23,7 @@ class PageStatus {
     public /* stdClass */ $lastEntity; // result of last query in database
     public DBConnection $dbconnection;
     public UseCasesIndex $useCasesIndex;
+    public QueryReturnedValues $queryReturnedValues;
 
     /**
      * PageStatus constructor.
@@ -86,6 +88,13 @@ class PageStatus {
     }
 
     /**
+     * @param QueryReturnedValues $queryReturnedValues
+     */
+    public function setQueryReturnedValues(QueryReturnedValues $queryReturnedValues): void {
+        $this->queryReturnedValues = $queryReturnedValues;
+    }
+
+    /**
      * @return Request
      */
     public function getRequest(): Request {
@@ -118,6 +127,13 @@ class PageStatus {
      */
     public function getUseCasesIndex(): UseCasesIndex {
         return $this->useCasesIndex;
+    }
+
+    /**
+     * @return QueryReturnedValues
+     */
+    public function getQueryReturnedValues(): QueryReturnedValues {
+        return $this->queryReturnedValues;
     }
 
     /**
@@ -222,6 +238,7 @@ class PageStatus {
      * - FILES parameters
      * - SESSION parameters
      * - SERVER parameters
+     * - QueryReturnedValues parameters
      *
      * Example:
      * Imagine there is a json resource of type table containing the following fields:
