@@ -16,11 +16,14 @@ class JsonTransactionController extends JsonResourceBasicController {
 
         Logics::performTransactions( $this->pageStatus, $this->applicationBuilder, $this->resource );
 
-        // performing usecases
         Logics::performUseCases( $this->pageStatus, $this->applicationBuilder, $this->resource );
 
         // if resource->get->sessionupdates is set I need to update the session
         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+
+        if ( isset($jsonResource->get->ajax) ) {
+            echo Logics::performAjaxCallGet( $this->pageStatus, $this->applicationBuilder, $this->resource );
+        }
 
         // redirect
         if (isset($this->resource->get->redirect)) {

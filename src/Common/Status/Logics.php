@@ -76,4 +76,90 @@ class Logics {
         }
     }
 
+    public static function performAjaxCallGet( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
+        if ( isset($jsonResource->get->ajax) and is_array($jsonResource->get->ajax)) {
+            $out = [];
+            foreach ($jsonResource->get->ajax as $ajax) {
+                if ( $ajax->type == 'delete' ) {
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = 'delete';
+                    if (is_string( $ajax->destination )) {
+                        $myAjaxResponse->destination = $ajax->destination;
+                    } else if ( is_object( $ajax->destination ) ) {
+                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                    } else {
+                        $myAjaxResponse->destination = '';
+                    }
+                    $out[] = $myAjaxResponse;
+                }
+
+                if ( $ajax->type == 'add' OR $ajax->type == 'update') {
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = $ajax->type;
+                    if (is_string( $ajax->destination )) {
+                        $myAjaxResponse->destination = $ajax->destination;
+                    } else if ( is_object( $ajax->destination ) ) {
+                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                    } else {
+                        $myAjaxResponse->destination = '';
+                    }
+                    if (is_string( $ajax->body )) {
+                        $myAjaxResponse->body = $ajax->body;
+                    } else if ( is_object( $ajax->body ) ) {
+                        $myAjaxResponse->body = $pageStatus->getValue( $ajax->body );
+                    } else {
+                        $myAjaxResponse->body = '';
+                    }
+                    $out[] = $myAjaxResponse;
+                }
+            }
+
+            return json_encode($out);
+        }
+        return '';
+    }
+
+    public static function performAjaxCallPost( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
+        if ( isset($jsonResource->post->ajax) and is_array($jsonResource->post->ajax)) {
+            $out = [];
+            foreach ($jsonResource->post->ajax as $ajax) {
+                if ( $ajax->type == 'delete' ) {
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = 'delete';
+                    if (is_string( $ajax->destination )) {
+                        $myAjaxResponse->destination = $ajax->destination;
+                    } else if ( is_object( $ajax->destination ) ) {
+                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                    } else {
+                        $myAjaxResponse->destination = '';
+                    }
+                    $out[] = $myAjaxResponse;
+                }
+
+                if ( $ajax->type == 'add' OR $ajax->type == 'update') {
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = $ajax->type;
+                    if (is_string( $ajax->destination )) {
+                        $myAjaxResponse->destination = $ajax->destination;
+                    } else if ( is_object( $ajax->destination ) ) {
+                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                    } else {
+                        $myAjaxResponse->destination = '';
+                    }
+                    if (is_string( $ajax->body )) {
+                        $myAjaxResponse->body = $ajax->body;
+                    } else if ( is_object( $ajax->body ) ) {
+                        $myAjaxResponse->body = $pageStatus->getValue( $ajax->body );
+                    } else {
+                        $myAjaxResponse->body = '';
+                    }
+                    $out[] = $myAjaxResponse;
+                }
+            }
+
+            return json_encode($out);
+        }
+        return '';
+    }
+
 }
