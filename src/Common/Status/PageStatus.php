@@ -24,7 +24,7 @@ class PageStatus {
     public DBConnection $dbconnection;
     public UseCasesIndex $useCasesIndex;
     public QueryReturnedValues $queryReturnedValues;
-    
+
     /**
      * PageStatus constructor.
      */
