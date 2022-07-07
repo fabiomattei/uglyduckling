@@ -24,11 +24,12 @@ class PageStatus {
     public DBConnection $dbconnection;
     public UseCasesIndex $useCasesIndex;
     public QueryReturnedValues $queryReturnedValues;
-
+    
     /**
      * PageStatus constructor.
      */
     public function __construct() {
+        $this->queryReturnedValues = new QueryReturnedValues;
     }
 
     function setRequest($request) {
