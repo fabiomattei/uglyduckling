@@ -12,9 +12,8 @@ class QueryExecuter {
 
     private $queryStructure;
     private $DBH;
-    private /* QueryReturnedValues */ $queryReturnedValues;
-    private /* PageStatus */ $pageStatus;
-    private /* ApplicationBuilder */ $applicationBuilder;
+    private PageStatus $pageStatus;
+    private ApplicationBuilder $applicationBuilder;
 	private /* string */ $resourceName = 'unknown';
 
     public const SELECT = 'SELECT';
@@ -51,15 +50,6 @@ class QueryExecuter {
      */
     public function setQueryStructure( $queryStructure ) {
         $this->queryStructure = $queryStructure;
-    }
-
-    /**
-     * Set the arrary that is going to contain the INSERT SQL statement returned Id's
-     *
-     * @param $returnedIds
-     */
-    public function setQueryReturnedValues( $queryReturnedValues ) {
-        $this->queryReturnedValues = $queryReturnedValues;
     }
 
     /**
@@ -151,7 +141,12 @@ class QueryExecuter {
                             $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                         } else {
                             if ( $cond->type == 'long' OR $cond->type == 'int' ) {
-                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                                if ( isset( $cond->returnedid ) AND $this->pageStatus->getQueryReturnedValues()->isValueSet($cond->returnedid) ) {
+                                    $par =& $this->pageStatus->getQueryReturnedValues()->getPointerToValue($cond->returnedid);
+                                    $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
+                                } else {
+                                    $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                                }
                             }
                             if ( $cond->type == 'string' OR $cond->type == 'str' ) {
                                 $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
@@ -171,8 +166,7 @@ class QueryExecuter {
 
                     /*
         	        } elseif ( isset( $cond->returnedid ) AND $this->queryReturnedValues->isValueSet($cond->returnedid) ) {
-        	            $par =& $this->queryReturnedValues->getPointerToValue($cond->returnedid);
-        	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
+
         	        } elseif ( isset( $cond->fileparameter ) AND isset( $_FILES[$cond->fileparameter] ) ) {
         	            $mime[$cont] = $_FILES[$cond->fileparameter]['type'] ?? '';
         	            $size[$cont] = $_FILES[$cond->fileparameter]['size'] ?? '';

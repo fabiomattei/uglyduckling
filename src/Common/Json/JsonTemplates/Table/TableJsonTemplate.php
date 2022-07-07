@@ -20,9 +20,6 @@ use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 class TableJsonTemplate extends JsonTemplate {
 
     const blocktype = 'table';
-    const GET_METHOD = 'GET';
-    private $query;
-    private $method;
 
     /**
      * TableJsonTemplate constructor.
@@ -31,16 +28,6 @@ class TableJsonTemplate extends JsonTemplate {
      */
     function __construct( $applicationBuilder, $pageStatus ) {
         parent::__construct( $applicationBuilder, $pageStatus);
-        $this->query = '';
-        $this->method = self::GET_METHOD;
-    }
-
-    /**
-     * @param string $method
-     * refers to http method: GET or POST
-     */
-    public function setMethod(string $method) {
-        $this->method = $method;
     }
 
     public function createTable() {
