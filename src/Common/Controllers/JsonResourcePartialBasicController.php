@@ -82,15 +82,16 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
         // GETTING json resource name from parameter
         $jsonResourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);
-
-        // loading json resource
         if ( ! $jsonResourceName ) {
             if ( isset( $_POST['res'] ) ) {
                 $jsonResourceName = filter_var($_POST['res'], FILTER_SANITIZE_STRING);
-            } else {
-                echo 'missing resource name';
-                $jsonResource = new \stdClass;
             }
+        }
+
+        // loading json resource
+        if ( ! $jsonResourceName ) {
+            echo 'missing resource name';
+            $jsonResource = new \stdClass;
         } else {
             if ( strlen( $jsonResourceName ) > 0 ) {
                 $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource( $jsonResourceName );
@@ -101,7 +102,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
         // checking parameters
         $secondGump = new \Gump;
-        if( isset($jsonResource->get->request) AND isset($jsonResource->get->request->parameters)) {
+        if( isset($jsonResource->post->request) AND isset($jsonResource->post->request->parameters)) {
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $jsonResource, $this->applicationBuilder );
             $validation_rules = $parametersGetter->getPostValidationRoules();
             $filter_rules = $parametersGetter->getPostFiltersRoules();
