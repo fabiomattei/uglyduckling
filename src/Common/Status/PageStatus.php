@@ -294,6 +294,11 @@ class PageStatus {
             }
             return str_replace( $search, $replace, $field->composite);
         }
+        if ( isset($field->returnedid) ) {
+            if ( $this->queryReturnedValues->isValueSet( $field->returnedid ) ) {
+                return $this->queryReturnedValues->getValue( $field->returnedid );
+            }
+        }
         return '';
     }
 
