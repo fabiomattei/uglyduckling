@@ -12,8 +12,8 @@ class QueryExecuter {
 
     private $queryStructure;
     private $DBH;
-    private PageStatus $pageStatus;
-    private ApplicationBuilder $applicationBuilder;
+    private /* PageStatus */ $pageStatus;
+    private /* ApplicationBuilder */ $applicationBuilder;
 	private /* string */ $resourceName = 'unknown';
 
     public const SELECT = 'SELECT';
