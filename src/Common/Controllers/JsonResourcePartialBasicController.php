@@ -85,8 +85,12 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
         // loading json resource
         if ( ! $jsonResourceName ) {
-            echo 'missing resource name';
-            $jsonResource = new \stdClass;
+            if ( isset( $_POST['res'] ) ) {
+                $jsonResourceName = filter_var($_POST['res'], FILTER_SANITIZE_STRING);
+            } else {
+                echo 'missing resource name';
+                $jsonResource = new \stdClass;
+            }
         } else {
             if ( strlen( $jsonResourceName ) > 0 ) {
                 $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource( $jsonResourceName );
