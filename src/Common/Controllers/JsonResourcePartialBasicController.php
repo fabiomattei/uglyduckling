@@ -105,8 +105,8 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             $parms = $secondGump->sanitize( array_merge($_GET, $_POST) );
             $secondGump->validation_rules( $validation_rules );
             $secondGump->filter_rules( $filter_rules );
-            $cleanGETParameters = $secondGump->run( $parms );
-            $this->pageStatus->setGetParameters( $cleanGETParameters );
+            $cleanPostParameters = $secondGump->run( $parms );
+            $this->pageStatus->setPostParameters( $cleanPostParameters );
             $this->unvalidated_parameters = $parms;
         }
 
@@ -115,11 +115,9 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         Logics::performUseCases( $this->pageStatus, $this->applicationBuilder, $jsonResource );
 
         // if resource->get->sessionupdates is set I need to update the session
-        if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+        if ( isset($this->resource->post->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->post->sessionupdates );
 
-        if ( isset($jsonResource->post->ajax) ) {
-            echo Logics::performAjaxCallPost( $this->pageStatus, $this->applicationBuilder, $jsonResource );
-        }
+        echo Logics::performAjaxCallPost( $this->pageStatus, $this->applicationBuilder, $jsonResource );
     }
 
 }
