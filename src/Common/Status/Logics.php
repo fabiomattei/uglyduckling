@@ -136,7 +136,7 @@ class Logics {
                     $out[] = $myAjaxResponse;
                 }
 
-                if ( $ajax->type == 'add' OR $ajax->type == 'update') {
+                if ( $ajax->type == 'append' OR $ajax->type == 'overwrite') {
                     $myAjaxResponse = new \stdClass();
                     $myAjaxResponse->type = $ajax->type;
                     if (is_string( $ajax->destination )) {
@@ -152,6 +152,26 @@ class Logics {
                         $myAjaxResponse->body = $pageStatus->getValue( $ajax->body );
                     } else {
                         $myAjaxResponse->body = '';
+                    }
+                    $out[] = $myAjaxResponse;
+                }
+
+                if ( $ajax->type == 'appendurl' OR $ajax->type == 'overwriteurl') {
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = $ajax->type;
+                    if (is_string( $ajax->destination )) {
+                        $myAjaxResponse->destination = $ajax->destination;
+                    } else if ( is_object( $ajax->destination ) ) {
+                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                    } else {
+                        $myAjaxResponse->destination = '';
+                    }
+                    if (is_string( $ajax->url )) {
+                        $myAjaxResponse->url = $ajax->url;
+                    } else if ( is_object( $ajax->url ) ) {
+                        $myAjaxResponse->url = $applicationBuilder->getRouterContainer()->make_resource_url( $ajax->url, $pageStatus );
+                    } else {
+                        $myAjaxResponse->url = '';
                     }
                     $out[] = $myAjaxResponse;
                 }
