@@ -8,12 +8,12 @@ use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 
 class BaseHTMLForm extends BaseHTMLBlock {
 
-    private $title;
-    private $subtitle;
-    private $action;
-    private $body;
-    private $method;
-    private HtmlTemplateLoader $htmlTemplateLoader;
+    protected $title;
+    protected $subtitle;
+    protected $action;
+    protected $body;
+    protected $method;
+    protected HtmlTemplateLoader $htmlTemplateLoader;
 
     function __construct() {
         parent::__construct();
