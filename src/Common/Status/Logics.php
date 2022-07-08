@@ -120,9 +120,9 @@ class Logics {
     }
 
     public static function performAjaxCallPost( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
-        if ( isset($jsonResource->post->ajax) and is_array($jsonResource->post->ajax)) {
+        if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
             $out = [];
-            foreach ($jsonResource->post->ajax as $ajax) {
+            foreach ($jsonResource->post->ajaxreponses as $ajax) {
                 if ( $ajax->type == 'delete' ) {
                     $myAjaxResponse = new \stdClass();
                     $myAjaxResponse->type = 'delete';
