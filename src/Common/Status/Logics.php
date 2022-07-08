@@ -176,7 +176,7 @@ class Logics {
                     if ( isset($ajax->url) AND is_string( $ajax->url ) ) {
                         $myAjaxResponse->method = $ajax->method;
                     } else {
-                        $myAjaxResponse->url = 'GET';
+                        $myAjaxResponse->method = 'GET';
                     }
 
                     $out[] = $myAjaxResponse;
