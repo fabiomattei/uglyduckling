@@ -178,6 +178,11 @@ class Logics {
                     } else {
                         $myAjaxResponse->method = 'GET';
                     }
+                    if ( isset($ajax->position) AND is_string( $ajax->position ) ) {
+                        $myAjaxResponse->position = $ajax->position;
+                    } else {
+                        $myAjaxResponse->position = 'beforeend';
+                    }
 
                     $out[] = $myAjaxResponse;
                 }
