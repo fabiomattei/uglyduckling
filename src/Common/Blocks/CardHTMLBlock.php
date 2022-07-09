@@ -8,9 +8,6 @@
 
 namespace Fabiom\UglyDuckling\Common\Blocks;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
-use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
-
 class CardHTMLBlock extends BaseHTMLBlock {
 
     private $title;
@@ -48,9 +45,8 @@ class CardHTMLBlock extends BaseHTMLBlock {
      *
      * @param $name
      */
-    function setInternalBlockName( $name ) {
-        $this->cardExternalContainerId = 'externalcalrdcontainer-'.$name;
-        $this->cardId = 'cardcontainer-'.$name;
+    function setInternalBlockName( $id ) {
+        $this->cardId = $id;
     }
 
     function setWidth( int $width ) {
