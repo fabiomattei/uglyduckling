@@ -153,6 +153,12 @@ class Logics {
                     } else {
                         $myAjaxResponse->body = '';
                     }
+                    if ( isset($ajax->position) AND is_string( $ajax->position ) ) {
+                        $myAjaxResponse->position = $ajax->position;
+                    } else {
+                        $myAjaxResponse->position = 'beforeend';
+                    }
+
                     $out[] = $myAjaxResponse;
                 }
 
