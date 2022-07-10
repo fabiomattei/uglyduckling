@@ -35,7 +35,9 @@ class BaseHTMLGrid extends BaseHTMLBlock {
     function getHTML(): string {
         $htmlbody = '<div class="'.$this->jsonResource->cssclass.'">';
         foreach ($this->jsonResource->panels as $panel) {
-            $htmlbody .= '<div class="'.$panel->cssclass.'">';
+            $id = $panel->id ?? '';
+            $cssclass = $panel->cssclass ?? '';
+            $htmlbody .= '<div id="'.$id.'" class="'.$cssclass.'">';
             $htmlbody .= $this->gridBlocks[$panel->id]->show();
             $htmlbody .= '</div>';
         }
