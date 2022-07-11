@@ -123,9 +123,9 @@ class Logics {
         if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
             $out = [];
             foreach ($jsonResource->post->ajaxreponses as $ajax) {
-                if ( $ajax->type == 'delete' ) {
+                if ( $ajax->type == 'delete' OR $ajax->type == 'empty' ) {
                     $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = 'delete';
+                    $myAjaxResponse->type = $ajax->type;
                     if (is_string( $ajax->destination )) {
                         $myAjaxResponse->destination = $ajax->destination;
                     } else if ( is_object( $ajax->destination ) ) {
