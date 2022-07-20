@@ -285,6 +285,9 @@ class PageStatus {
         if ( isset($field->sessionparameter) ) {
             return ($this->sessionWrapper->isSessionParameterSet( $field->sessionparameter ) ? $this->sessionWrapper->getSessionParameter( $field->sessionparameter ) : $this->checkForDefaultValues($field) );
         }
+        if ( isset($field->defaultfunction) AND !( isset( $field->parameter ) OR isset( $field->getparameter ) OR isset( $field->postparameter ) OR isset( $field->sessionparameter ) ) ) {
+            return $this->checkForDefaultValues($field);
+        }
         if ( isset($field->composite) ) {
             $search = array();
             $replace = array();
