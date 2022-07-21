@@ -122,8 +122,15 @@ class Logics {
     }
 
     public static function performAjaxCallPost( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
-        if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
-            $out = [];
+        $out = [];
+        if ( $pageStatus->areThereErrors() ) {
+            $myAjaxResponse = new \stdClass();
+            $myAjaxResponse->type = "error";
+            $myAjaxResponse->body = $pageStatus->getErrors();
+            $out[] = $myAjaxResponse;
+
+            return json_encode($out);
+        } else if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
             foreach ($jsonResource->post->ajaxreponses as $ajax) {
                 if ( $ajax->type == 'delete' OR $ajax->type == 'empty' ) {
                     $myAjaxResponse = new \stdClass();

@@ -156,7 +156,7 @@ class PageStatus {
      * @return array
      */
     public function areThereErrors(): array {
-        return empty( $this->errors );
+        return !empty( $this->errors );
     }
 
     /**
@@ -177,7 +177,7 @@ class PageStatus {
      * @return array
      */
     public function areThereWarnings(): array {
-        return empty( $this->warnings );
+        return !empty( $this->warnings );
     }
 
     /**
@@ -198,7 +198,7 @@ class PageStatus {
      * @return array
      */
     public function areThereInfos(): array {
-        return empty( $this->infos );
+        return !empty( $this->infos );
     }
 
     /**
@@ -219,7 +219,7 @@ class PageStatus {
      * @return array
      */
     public function areThereSuccesses(): array {
-        return empty( $this->successes );
+        return !empty( $this->successes );
     }
 
 
