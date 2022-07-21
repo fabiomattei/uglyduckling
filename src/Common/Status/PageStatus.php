@@ -221,7 +221,7 @@ class PageStatus {
     public function areThereSuccesses(): bool {
         return !empty( $this->successes );
     }
-    
+
     /**
      * @return array
      */
