@@ -176,6 +176,13 @@ class PageStatus {
     /**
      * @return array
      */
+    public function addErrors( array $errors ) {
+        $this->errors = array_merge($this->errors, $errors);
+    }
+
+    /**
+     * @return array
+     */
     public function areThereWarnings(): bool {
         return !empty( $this->warnings );
     }
