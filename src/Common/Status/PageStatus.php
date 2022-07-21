@@ -24,12 +24,20 @@ class PageStatus {
     public DBConnection $dbconnection;
     public UseCasesIndex $useCasesIndex;
     public QueryReturnedValues $queryReturnedValues;
+    public /* array */ $errors;
+    public /* array */ $warnings;
+    public /* array */ $infos;
+    public /* array */ $successes;
 
     /**
      * PageStatus constructor.
      */
     public function __construct() {
         $this->queryReturnedValues = new QueryReturnedValues;
+        $this->errors = [];
+        $this->warnings = [];
+        $this->infos = [];
+        $this->successes = [];
     }
 
     function setRequest($request) {
@@ -142,6 +150,91 @@ class PageStatus {
      */
     public function getDbconnection(): DBConnection {
         return $this->dbconnection;
+    }
+
+    /**
+     * @return array
+     */
+    public function areThereErrors(): array {
+        return empty( $this->errors );
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array {
+        return $this->errors;
+    }
+
+    /**
+     * @return array
+     */
+    public function addError( string $error ): array {
+        return $this->errors[] = $error;
+    }
+
+    /**
+     * @return array
+     */
+    public function areThereWarnings(): array {
+        return empty( $this->warnings );
+    }
+
+    /**
+     * @return array
+     */
+    public function getWarnings(): array {
+        return $this->warnings;
+    }
+
+    /**
+     * @return array
+     */
+    public function addWarning( string $warning ): array {
+        return $this->warnings[] = $warning;
+    }
+
+    /**
+     * @return array
+     */
+    public function areThereInfos(): array {
+        return empty( $this->infos );
+    }
+
+    /**
+     * @return array
+     */
+    public function getInfos(): array {
+        return $this->infos;
+    }
+
+    /**
+     * @return array
+     */
+    public function addInfo( string $info ): array {
+        return $this->infos[] = $info;
+    }
+
+    /**
+     * @return array
+     */
+    public function areThereSuccesses(): array {
+        return empty( $this->successes );
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getSuccesses(): array {
+        return $this->successes;
+    }
+
+    /**
+     * @return array
+     */
+    public function addSuccess( string $success ): array {
+        return $this->successes[] = $success;
     }
 
     /**

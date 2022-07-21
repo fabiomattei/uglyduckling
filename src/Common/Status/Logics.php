@@ -30,6 +30,7 @@ class Logics {
                 }
                 //$conn->commit();
             } catch (\PDOException $e) {
+                $pageStatus->addError("There was an error in the transaction");
                 $conn->rollBack();
                 $applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
             }
@@ -55,6 +56,7 @@ class Logics {
                 }
                 //$conn->commit();
             } catch (\PDOException $e) {
+                $pageStatus->addError("There was an error in the transaction");
                 $conn->rollBack();
                 $applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
             }
