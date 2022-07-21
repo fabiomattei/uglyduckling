@@ -124,8 +124,8 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             // if resource->get->sessionupdates is set I need to update the session
             if ( isset($this->resource->post->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->post->sessionupdates );
 
-            echo Logics::performAjaxCallPost( $this->pageStatus, $this->applicationBuilder, $jsonResource );
-        }
 
+        }
+        echo Logics::performAjaxCallPost( $this->pageStatus, $this->applicationBuilder, $jsonResource );
     }
 }
