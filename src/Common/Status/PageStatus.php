@@ -169,8 +169,8 @@ class PageStatus {
     /**
      * @return array
      */
-    public function addError( string $error ): array {
-        return $this->errors[] = $error;
+    public function addError( string $error ) {
+        $this->errors[] = $error;
     }
 
     /**
@@ -190,8 +190,8 @@ class PageStatus {
     /**
      * @return array
      */
-    public function addWarning( string $warning ): array {
-        return $this->warnings[] = $warning;
+    public function addWarning( string $warning ) {
+        $this->warnings[] = $warning;
     }
 
     /**
@@ -211,8 +211,8 @@ class PageStatus {
     /**
      * @return array
      */
-    public function addInfo( string $info ): array {
-        return $this->infos[] = $info;
+    public function addInfo( string $info ) {
+        $this->infos[] = $info;
     }
 
     /**
@@ -233,8 +233,8 @@ class PageStatus {
     /**
      * @return array
      */
-    public function addSuccess( string $success ): array {
-        return $this->successes[] = $success;
+    public function addSuccess( string $success ) {
+        $this->successes[] = $success;
     }
 
     /**
