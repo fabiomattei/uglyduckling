@@ -126,7 +126,8 @@ class Logics {
         if ( $pageStatus->areThereErrors() ) {
             $myAjaxResponse = new \stdClass();
             $myAjaxResponse->type = "error";
-            $myAjaxResponse->destination = $jsonResource->post->errordestination ?? '#messagescontainer';
+            $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
+            $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
             $myAjaxResponse->body = $pageStatus->getErrors();
             $out[] = $myAjaxResponse;
 
