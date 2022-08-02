@@ -134,6 +134,63 @@ class BasicDao {
     }
 
     /**
+     * Insert a row in the database and automaticalli calls UUID for the table primary key.
+     * Set the updated and created fields to current date and time
+     * It accepts an array containing as key the field name and as value
+     * the field content.
+     *
+     * @param $fields :: array of fields to insert
+     *
+     * EX.
+     * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
+     */
+    function insertWithUUID($fields, $debug = false) {
+        $presentmoment = date('Y-m-d H:i:s', time());
+
+        $filedslist = '';
+        $filedsarguments = '';
+        foreach ($fields as $key => $value) {
+            $filedslist .= $key . ', ';
+            $filedsarguments .= ':' . $key . ', ';
+        }
+        $filedslist = substr($filedslist, 0, -2);
+        $filedsarguments = substr($filedsarguments, 0, -2);
+
+        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' ('.$this::DB_TABLE_PK.', ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (UUID(), ' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
+
+        try {
+            $STH = $this->DBH->prepare( $sqlstring );
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+
+            if ( $debug ) {
+                print_r($fields);
+                echo "Pre-calculating query:<br />";
+                echo $filedslist."<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
+            }
+
+            $STH->execute();
+
+            if ( $debug ) {
+                echo strtr( $sqlstring, $fields );
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+                echo "<br />";
+            }
+
+            $inserted_id = $this->DBH->lastInsertId();
+            return $inserted_id;
+        } catch (\PDOException $e) {
+            echo strtr( $sqlstring, $fields );
+            $STH->debugDumpParams();
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
      * This function updates a single row of the delared table.
      * It uptades the row haveing id = $id
      * @param $id :: integer id
