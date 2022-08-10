@@ -166,7 +166,7 @@ class BasicDao {
         $filedslist = substr($filedslist, 0, -2);
         $filedsarguments = substr($filedsarguments, 0, -2);
 
-        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' ('.$this::DB_TABLE_PK.', ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $newuuid . ', ' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
+        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' ('.$this::DB_TABLE_PK.', ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES ("' . $newuuid . '", ' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
 
         try {
             $STH = $this->DBH->prepare( $sqlstring );
@@ -189,7 +189,7 @@ class BasicDao {
                 $STH->debugDumpParams();
                 echo "<br />";
             }
-            
+
             return $newuuid;
         } catch (\PDOException $e) {
             echo strtr( $sqlstring, $fields );
