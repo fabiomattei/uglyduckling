@@ -73,7 +73,7 @@ class Translator {
         $path_to_file = $this->localesDir . '/' . $this->selected_language . '/' . $chapter . '.php';
 
         if ( !file_exists( $path_to_file ) ) {
-            throw new Exception('Language locale not found for language '.$this->selected_language.' chapter '.$chapter.' !');
+            throw new \Exception('Language locale not found for language '.$this->selected_language.' chapter '.$chapter.' !');
         }
 
         // include the file containing the string tranlations
