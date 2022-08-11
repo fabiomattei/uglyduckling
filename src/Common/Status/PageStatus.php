@@ -455,6 +455,9 @@ class PageStatus {
                 if ( isset( $sessionvar->constantparamenter ) ) {
                     $this->sessionWrapper->setSessionParameter($sessionvar->name, $sessionvar->constantparamenter);
                 }
+                if ( isset( $sessionvar->constant ) ) {
+                    $this->sessionWrapper->setSessionParameter($sessionvar->name, $sessionvar->constant);
+                }
                 if ( isset( $sessionvar->getparameter ) ) {
                     $this->sessionWrapper->setSessionParameter($sessionvar->name, $this->getParameters[$sessionvar->getparameter]);
                 }
