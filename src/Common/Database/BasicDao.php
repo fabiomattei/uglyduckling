@@ -145,6 +145,16 @@ class BasicDao {
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
     function insertWithUUID($fields, $debug = false) {
+        $sqlstringUUID = 'SELECT UUID() AS newuuid;';
+        $STH = $this->DBH->prepare( $sqlstringUUID );
+        $STH->execute();
+        $STH->setFetchMode(PDO::FETCH_OBJ);
+
+        $newuuid = '';
+        while ($item = $STH->fetch()) {
+            $newuuid = $item->newuuid;
+        }
+
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';
@@ -156,7 +166,7 @@ class BasicDao {
         $filedslist = substr($filedslist, 0, -2);
         $filedsarguments = substr($filedsarguments, 0, -2);
 
-        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' ('.$this::DB_TABLE_PK.', ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (UUID(), ' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
+        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' ('.$this::DB_TABLE_PK.', ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES ("' . $newuuid . '", ' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
 
         try {
             $STH = $this->DBH->prepare( $sqlstring );
@@ -180,8 +190,7 @@ class BasicDao {
                 echo "<br />";
             }
 
-            $inserted_id = $this->DBH->lastInsertId();
-            return $inserted_id;
+            return $newuuid;
         } catch (\PDOException $e) {
             echo strtr( $sqlstring, $fields );
             $STH->debugDumpParams();
