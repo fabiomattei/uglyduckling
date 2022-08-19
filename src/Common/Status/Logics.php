@@ -24,6 +24,12 @@ class Logics {
                         } else {
                             $returnedIds->setValueNoKey($queryExecutor->executeSql());
                         }
+                    } else if ($queryExecutor->getSqlStatmentType() == QueryExecuter::SELECT) {
+                        if (isset($transaction->label)) {
+                            $returnedIds->setValue($transaction->label, $queryExecutor->executeSql());
+                        } else {
+                            $returnedIds->setValueNoKey($queryExecutor->executeSql());
+                        }
                     } else {
                         $queryExecutor->executeSql();
                     }
@@ -45,6 +51,12 @@ class Logics {
                 foreach ($jsonResource->post->transactions as $transaction) {
                     $queryExecutor->setQueryStructure($transaction);
                     if ($queryExecutor->getSqlStatmentType() == QueryExecuter::INSERT) {
+                        if (isset($transaction->label)) {
+                            $returnedIds->setValue($transaction->label, $queryExecutor->executeSql());
+                        } else {
+                            $returnedIds->setValueNoKey($queryExecutor->executeSql());
+                        }
+                    } else if ($queryExecutor->getSqlStatmentType() == QueryExecuter::SELECT) {
                         if (isset($transaction->label)) {
                             $returnedIds->setValue($transaction->label, $queryExecutor->executeSql());
                         } else {

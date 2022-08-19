@@ -362,7 +362,13 @@ class QueryExecuter {
      */
     function executeSql() {
         if ( strpos(strtoupper($this->queryStructure->sql), self::SELECT) !== false ) {
-            return $this->executeSqlSelect();
+            if (isset( $this->queryStructure->fieldtosave )) {
+                $obj = $this->executeSqlSelect()->fetch();
+                $field = $this->queryStructure->fieldtosave;
+                return $obj->$field;
+            } else {
+                return $this->executeSqlSelect();
+            }
         }
         if ( strpos(strtoupper($this->queryStructure->sql), self::INSERT) !== false ) {
             return $this->executeSqlInsert();
