@@ -138,8 +138,9 @@ class Logics {
         $out = [];
         if ( $pageStatus->areThereErrors() ) {
             $out = array_map(
-                function( $errorstring ) {
+                function( $errorstring ) use ( $applicationBuilder ) {
                     $msgBlock = new BaseHTMLMessages;
+                    $msgBlock->setHtmlTemplateLoader( $applicationBuilder->getHtmlTemplateLoader() );
                     $msgBlock->setError( $errorstring );
 
                     $myAjaxResponse = new \stdClass();
