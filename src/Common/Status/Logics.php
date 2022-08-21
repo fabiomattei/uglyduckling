@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Status;
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 
 class Logics {
@@ -136,12 +137,21 @@ class Logics {
     public static function performAjaxCallPost( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
         $out = [];
         if ( $pageStatus->areThereErrors() ) {
-            $myAjaxResponse = new \stdClass();
-            $myAjaxResponse->type = "error";
-            $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
-            $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
-            $myAjaxResponse->body = $pageStatus->getErrors();
-            $out[] = $myAjaxResponse;
+            $out = array_map(
+                function( $errorstring ) {
+                    $msgBlock = new BaseHTMLMessages;
+                    $msgBlock->setError( $errorstring );
+
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = "error";
+                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
+                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
+                    $myAjaxResponse->html = $msgBlock->show();
+
+                    return $myAjaxResponse;
+                },
+                $pageStatus->getErrors()
+            );
 
             return json_encode($out);
         } else if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
