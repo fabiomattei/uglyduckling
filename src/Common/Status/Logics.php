@@ -135,28 +135,14 @@ class Logics {
     }
 
     public static function performAjaxCallPost( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
-        $out = [];
         if ( $pageStatus->areThereErrors() ) {
-            $out = array_map(
-                function( $errorstring ) use ( $applicationBuilder ) {
-                    $msgBlock = new BaseHTMLMessages;
-                    $msgBlock->setHtmlTemplateLoader( $applicationBuilder->getHtmlTemplateLoader() );
-                    $msgBlock->setError( $errorstring );
-
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = "error";
-                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
-                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
-                    $myAjaxResponse->html = $msgBlock->show();
-
-                    return $myAjaxResponse;
-                },
-                $pageStatus->getErrors()
-            );
+            $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder);
 
             return json_encode($out);
         } else if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
+            $out = [];
             foreach ($jsonResource->post->ajaxreponses as $ajax) {
+
                 if ( $ajax->type == 'delete' OR $ajax->type == 'empty' ) {
                     $myAjaxResponse = new \stdClass();
                     $myAjaxResponse->type = $ajax->type;
@@ -226,11 +212,129 @@ class Logics {
 
                     $out[] = $myAjaxResponse;
                 }
+
+                $out = array_merge( $out, self::createErrorMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
+                $out = array_merge( $out, self::createInfoMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
+                $out = array_merge( $out, self::createWarningMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
+                $out = array_merge( $out, self::createSuccessMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
+
             }
 
             return json_encode($out);
         }
         return '';
+    }
+
+    /**
+     * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
+     * @return array|\stdClass[]
+     */
+    public static function createErrorMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+        $out = [];
+        if ($pageStatus->areThereErrors()) {
+            $out = array_map(
+                function ($errorstring) use ($applicationBuilder) {
+                    $msgBlock = new BaseHTMLMessages;
+                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
+                    $msgBlock->setError($errorstring);
+
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = "error";
+                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
+                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
+                    $myAjaxResponse->html = $msgBlock->show();
+
+                    return $myAjaxResponse;
+                },
+                $pageStatus->getErrors()
+            );
+        }
+        return $out;
+    }
+
+    /**
+     * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
+     * @return array|\stdClass[]
+     */
+    public static function createInfoMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+        $out = [];
+        if ($pageStatus->areThereInfos()) {
+            $out = array_map(
+                function ($infoString) use ($applicationBuilder) {
+                    $msgBlock = new BaseHTMLMessages;
+                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
+                    $msgBlock->setInfo($infoString);
+
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = "info";
+                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
+                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
+                    $myAjaxResponse->html = $msgBlock->show();
+
+                    return $myAjaxResponse;
+                },
+                $pageStatus->getErrors()
+            );
+        }
+        return $out;
+    }
+
+    /**
+     * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
+     * @return array|\stdClass[]
+     */
+    public static function createWarningMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+        $out = [];
+        if ($pageStatus->areThereWarnings()) {
+            $out = array_map(
+                function ($warningString) use ($applicationBuilder) {
+                    $msgBlock = new BaseHTMLMessages;
+                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
+                    $msgBlock->setWarning($warningString);
+
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = "warning";
+                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
+                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
+                    $myAjaxResponse->html = $msgBlock->show();
+
+                    return $myAjaxResponse;
+                },
+                $pageStatus->getErrors()
+            );
+        }
+        return $out;
+    }
+
+    /**
+     * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
+     * @return array|\stdClass[]
+     */
+    public static function createSuccessMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+        $out = [];
+        if ($pageStatus->areThereSuccesses()) {
+            $out = array_map(
+                function ($successString) use ($applicationBuilder) {
+                    $msgBlock = new BaseHTMLMessages;
+                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
+                    $msgBlock->setSuccess($successString);
+
+                    $myAjaxResponse = new \stdClass();
+                    $myAjaxResponse->type = "success";
+                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
+                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
+                    $myAjaxResponse->html = $msgBlock->show();
+
+                    return $myAjaxResponse;
+                },
+                $pageStatus->getErrors()
+            );
+        }
+        return $out;
     }
 
 }
