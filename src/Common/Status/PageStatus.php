@@ -332,8 +332,7 @@ class PageStatus {
     }
 
     public function applyFunction( string $functionName, array $functionParameters ): string {
-        $params = array_map( fn($jsonPar) => $this->getValue( $jsonPar ), $functionParameters );
-        return call_user_func_array( [$this, $functionName] , $params );
+        return call_user_func_array( [$this, $functionName] , array_map( fn($jsonPar) => $this->getValue( $jsonPar ), $functionParameters ) );
     }
 
     /**
