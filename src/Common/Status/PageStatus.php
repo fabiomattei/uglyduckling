@@ -271,11 +271,13 @@ class PageStatus {
      * @param $field: stdClass must contain fieldname attibute
      */
     public function getValue( $field ) {
-        if ( !isset($field->filter) ) {
-            return $this->retriveValue( $field );
-        } else {
+        if ( isset($field->filter) ) {
             return $this->applyFilters( $field->filter, $this->retriveValue( $field ) );
         }
+        if ( isset($field->function) ) {
+            return $this->applyFunction( $field->function->name, $field->function->parameters );
+        }
+        return $this->retriveValue( $field );
     }
 
     /**
@@ -327,6 +329,11 @@ class PageStatus {
             $value = $this->applyFilter($filterCall, $value);
         }
         return $value;
+    }
+
+    public function applyFunction( string $functionName, array $functionParameters ): string {
+        $params = array_map( fn($jsonPar) => $this->getValue( $jsonPar ), $functionParameters );
+        return call_user_func_array( [$this, $functionName] , $params );
     }
 
     /**
