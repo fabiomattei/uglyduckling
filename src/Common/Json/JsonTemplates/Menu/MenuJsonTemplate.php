@@ -60,12 +60,12 @@ class MenuJsonTemplate extends JsonTemplate {
                 $submenuItems = array();
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
-                    $mi->label = $item->label;
-                    $mi->controller = $item->controller;
-                    $mi->resource = $item->resource;
+                    $mi->label = $item->label ?? '';
+                    $mi->controller = $item->controller ?? '';
+                    $mi->resource = $item->resource ?? '';
                     $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
-                    if ( $this->resourceName == $item->resource || $this->controllerName == $item->controller ) {
+                    if ( (isset($item->resource) AND $this->resourceName == $item->resource) OR (isset($item->controller) AND $this->controllerName == $item->controller) ) {
                         $current = true;
                     }
                 }
