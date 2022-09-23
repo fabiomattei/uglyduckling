@@ -140,10 +140,10 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addGenericField( $field, ( isset($value) AND $value != '' ) ? $value : date('H:i'), $field->cssclass ?? '');
                 }
                 elseif ($field->type === 'infotext') {
-                    $formBlock->addHelpingText( $field->label, $field->text, $field->width ?? '', $field->cssclass ?? '' );
+                    $formBlock->addHelpingText( $field->label ?? '', $field->text ?? '', $field->width ?? '', $field->cssclass ?? '' );
                 }
                 elseif ($field->type === 'infovalue') {
-                    $formBlock->addHelpingText( $field->label, $value, $field->width ?? '', $field->cssclass ?? '' );
+                    $formBlock->addHelpingText( $field->label ?? '', $value ?? '', $field->width ?? '', $field->cssclass ?? '' );
                 }
                 elseif ($field->type === 'hidden') {
                     $formBlock->addHiddenField($field->name, $value);
