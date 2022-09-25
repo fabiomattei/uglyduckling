@@ -89,7 +89,9 @@ class UserNew extends AdminController {
      */
     public function postRequest() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $this->userDao->setLogger( $this->applicationBuilder->getLogger() );
         $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $this->userGroupDao->setLogger( $this->applicationBuilder->getLogger() );
         if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
                 $iduser = $this->userDao->insertWithUUID( array(
                     'usr_name' => $this->postParameters['usr_name'],
@@ -116,6 +118,7 @@ class UserNew extends AdminController {
 
     public function show_post_error_page() {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
+        $this->userDao->setLogger( $this->applicationBuilder->getLogger() );
 
         $this->applicationBuilder->getMessages()->setError($this->readableErrors);
 
