@@ -40,10 +40,10 @@ class UserGroupDao extends BasicDao {
      * password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
      * password_verify('rasmuslerdorf', $hash)
      */
-    function checkUserHasAccessToGroup( int $usr_id, string $slug ) {
+    function checkUserHasAccessToGroup( string $usr_id, string $slug ) {
         try {
             $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :usrid AND ug_groupslug = :slug ;');
-            $STH->bindParam(':usrid', $usr_id, PDO::PARAM_INT);
+            $STH->bindParam(':usrid', $usr_id, PDO::PARAM_STR);
             $STH->bindParam(':slug', $slug, PDO::PARAM_STR);
             $STH->execute();
 
