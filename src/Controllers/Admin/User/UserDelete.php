@@ -26,7 +26,7 @@ class UserDelete extends AdminController {
         $this->userGroupDao = New UserGroupDao();
     }
 
-    public $post_validation_rules = array( 'usrid' => 'required|numeric' );
+    public $post_validation_rules = array( 'usrid' => 'required|alpha_numeric_dash' );
     public $post_filter_rules     = array( 'usrid' => 'trim' );
 
     /**

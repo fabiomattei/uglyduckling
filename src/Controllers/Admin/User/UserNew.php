@@ -91,7 +91,7 @@ class UserNew extends AdminController {
         $this->userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         $this->userGroupDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
         if ( $this->parameters[UserEditPassword::FIELD_NEW_PASSWORD] == $this->parameters[UserEditPassword::FIELD_RETYPE_NEW_PASSWORD] ) {
-                $iduser = $this->userDao->insert( array(
+                $iduser = $this->userDao->insertWithUUID( array(
                     'usr_name' => $this->postParameters['usr_name'],
                     'usr_surname' => $this->postParameters['usr_surname'],
                     'usr_email' => $this->postParameters['usr_email'],
@@ -99,7 +99,7 @@ class UserNew extends AdminController {
                     'usr_password_updated' => date('Y-m-d'),
                 ) );
                 $this->userDao->updatePassword( $iduser, $this->postParameters[UserEditPassword::FIELD_NEW_PASSWORD]);
-                $this->userGroupDao->insert(
+                $this->userGroupDao->insertWithUUID(
                     array(
                         'ug_groupslug' => $this->postParameters['usr_defaultgroup'],
                         'ug_userid' => $iduser

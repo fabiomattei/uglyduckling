@@ -29,7 +29,7 @@ class UserEdit extends AdminController {
         $this->userGroupDao = new UserGroupDao();
     }
 
-    public $get_validation_rules = array( 'id' => 'required|numeric' );
+    public $get_validation_rules = array( 'id' => 'required|alpha_numeric_dash' );
     public $get_filter_rules     = array( 'id' => 'trim' );
 
     /**
@@ -66,7 +66,7 @@ class UserEdit extends AdminController {
     }
 
     public $post_validation_rules = array(
-        'usr_id' => 'required|numeric',
+        'usr_id' => 'required|alpha_numeric_dash',
         'usr_defaultgroup' => 'required|alpha_numeric|max_len,100',
         'usr_email' => 'required|valid_email',
         'usr_name' => 'max_len,100',

@@ -29,7 +29,7 @@ class UserView extends AdminController
         $this->userDao = new UserDao;
     }
 
-    public $get_validation_rules = array( 'id' => 'required|numeric' );
+    public $get_validation_rules = array( 'id' => 'required|alpha_numeric_dash' );
     public $get_filter_rules     = array( 'id' => 'trim' );
 
     /**
