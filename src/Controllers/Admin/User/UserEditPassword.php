@@ -32,7 +32,7 @@ class UserEditPassword extends AdminController {
         $this->userDao = new UserDao;
     }
 
-    public $get_validation_rules = array( 'id' => 'required|numeric' );
+    public $get_validation_rules = array( 'id' => 'required|alpha_numeric_dash' );
     public $get_filter_rules     = array( 'id' => 'trim' );
 
     /**
@@ -65,7 +65,7 @@ class UserEditPassword extends AdminController {
     }
 
     public $post_validation_rules = array(
-        UserEditPassword::FIELD_USR_ID => 'required|numeric',
+        UserEditPassword::FIELD_USR_ID => 'required|alpha_numeric_dash',
         //UserEditPassword::FIELD_OLD_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_NEW_PASSWORD => 'required|max_len,100|min_len,6',
         UserEditPassword::FIELD_RETYPE_NEW_PASSWORD => 'required|max_len,100|min_len,6',
