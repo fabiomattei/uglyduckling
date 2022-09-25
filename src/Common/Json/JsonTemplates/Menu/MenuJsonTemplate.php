@@ -81,7 +81,7 @@ class MenuJsonTemplate extends JsonTemplate {
             } else {
                 // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
-                    if ( $this->resourceName == $menuitem->resource || $this->controllerName == $menuitem->controller ) {
+                    if ( ( isset( $menuitem->resource ) AND $this->resourceName == $menuitem->resource) OR ( isset( $menuitem->controller ) AND $this->controllerName == $menuitem->controller) ) {
                         $current = true;
                     }
 
