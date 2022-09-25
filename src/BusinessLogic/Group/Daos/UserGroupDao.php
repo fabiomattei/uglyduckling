@@ -83,7 +83,7 @@ class UserGroupDao extends BasicDao {
         }
 	}
 
-    public function makeListForDropdownByUserId( int $usrid ) {
+    public function makeListForDropdownByUserId( string $usrid ) {
         $query = 'SELECT * FROM '.$this::DB_TABLE.
             ' WHERE ug_userid = :usrid'.
             ' ORDER BY ug_groupslug  ';
