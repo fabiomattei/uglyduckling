@@ -323,18 +323,26 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setSuccess($successString);
 
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = "success";
-                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
-                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
-                    $myAjaxResponse->html = $msgBlock->show();
-
+                    $myAjaxResponse = Logics::createAjaxObjectForAjaxOutput( 'success',
+                        $jsonResource->post->error->destination ?? '#messagescontainer',
+                        $jsonResource->post->error->position ?? 'beforeend',
+                        $msgBlock->show()
+                    );
                     return $myAjaxResponse;
                 },
                 $pageStatus->getErrors()
             );
         }
         return $out;
+    }
+
+    public static function createAjaxObjectForAjaxOutput( $type, $destination, $position, $html ) {
+        $myAjaxResponse = new \stdClass();
+        $myAjaxResponse->type = $type;
+        $myAjaxResponse->destination = $destination;
+        $myAjaxResponse->position = $position;
+        $myAjaxResponse->html = $html;
+        return $myAjaxResponse;
     }
 
 }
