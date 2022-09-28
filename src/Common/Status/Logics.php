@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Common\Status;
 
+use Fabiom\UglyDuckling\Common\Ajax\AjaxObjectsBuilder;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Common\Database\QueryExecuter;
 
@@ -239,12 +240,11 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setError($errorstring);
 
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = "error";
-                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
-                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
-                    $myAjaxResponse->html = $msgBlock->show();
-
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'error',
+                        $jsonResource->post->error->destination ?? '#messagescontainer',
+                        $jsonResource->post->error->position ?? 'beforeend',
+                        $msgBlock->show()
+                    );
                     return $myAjaxResponse;
                 },
                 $pageStatus->getErrors()
@@ -267,12 +267,11 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setInfo($infoString);
 
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = "info";
-                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
-                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
-                    $myAjaxResponse->html = $msgBlock->show();
-
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'info',
+                        $jsonResource->post->error->destination ?? '#messagescontainer',
+                        $jsonResource->post->error->position ?? 'beforeend',
+                        $msgBlock->show()
+                    );
                     return $myAjaxResponse;
                 },
                 $pageStatus->getErrors()
@@ -295,12 +294,11 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setWarning($warningString);
 
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = "warning";
-                    $myAjaxResponse->destination = $jsonResource->post->error->destination ?? '#messagescontainer';
-                    $myAjaxResponse->position = $jsonResource->post->error->position ?? 'beforeend';
-                    $myAjaxResponse->html = $msgBlock->show();
-
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'warning',
+                        $jsonResource->post->error->destination ?? '#messagescontainer',
+                        $jsonResource->post->error->position ?? 'beforeend',
+                        $msgBlock->show()
+                    );
                     return $myAjaxResponse;
                 },
                 $pageStatus->getErrors()
@@ -323,7 +321,7 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setSuccess($successString);
 
-                    $myAjaxResponse = Logics::createAjaxObjectForAjaxOutput( 'success',
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'success',
                         $jsonResource->post->error->destination ?? '#messagescontainer',
                         $jsonResource->post->error->position ?? 'beforeend',
                         $msgBlock->show()
@@ -335,14 +333,4 @@ class Logics {
         }
         return $out;
     }
-
-    public static function createAjaxObjectForAjaxOutput( $type, $destination, $position, $html ) {
-        $myAjaxResponse = new \stdClass();
-        $myAjaxResponse->type = $type;
-        $myAjaxResponse->destination = $destination;
-        $myAjaxResponse->position = $position;
-        $myAjaxResponse->html = $html;
-        return $myAjaxResponse;
-    }
-
 }
