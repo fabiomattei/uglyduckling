@@ -145,71 +145,71 @@ class Logics {
             foreach ($jsonResource->post->ajaxreponses as $ajax) {
 
                 if ( $ajax->type == 'delete' OR $ajax->type == 'empty' ) {
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = $ajax->type;
                     if (is_string( $ajax->destination )) {
-                        $myAjaxResponse->destination = $ajax->destination;
+                        $destination = $ajax->destination;
                     } else if ( is_object( $ajax->destination ) ) {
-                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                        $destination = $pageStatus->getValue( $ajax->destination );
                     } else {
-                        $myAjaxResponse->destination = '';
+                        $destination = '';
                     }
+
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxDeleteObject(
+                        $ajax->type,
+                        $destination
+                    );
+
                     $out[] = $myAjaxResponse;
                 }
 
                 if ( $ajax->type == 'append' OR $ajax->type == 'overwrite') {
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = $ajax->type;
-                    if (is_string( $ajax->destination )) {
-                        $myAjaxResponse->destination = $ajax->destination;
+                    if ( is_string( $ajax->destination ) ) {
+                        $destination = $ajax->destination;
                     } else if ( is_object( $ajax->destination ) ) {
-                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                        $destination = $pageStatus->getValue( $ajax->destination );
                     } else {
-                        $myAjaxResponse->destination = '';
+                        $destination = '';
                     }
-                    if (is_string( $ajax->body )) {
-                        $myAjaxResponse->body = $ajax->body;
+                    if ( is_string( $ajax->body ) ) {
+                        $body = $ajax->body;
                     } else if ( is_object( $ajax->body ) ) {
-                        $myAjaxResponse->body = $pageStatus->getValue( $ajax->body );
+                        $body = $pageStatus->getValue( $ajax->body );
                     } else {
-                        $myAjaxResponse->body = '';
+                        $body = '';
                     }
-                    if ( isset($ajax->position) AND is_string( $ajax->position ) ) {
-                        $myAjaxResponse->position = $ajax->position;
-                    } else {
-                        $myAjaxResponse->position = 'beforeend';
-                    }
+
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxHtmlBlockObject(
+                        $ajax->type,
+                        $destination,
+                        $body,
+                        ( isset($ajax->position) AND is_string( $ajax->position ) ) ? $ajax->position : 'beforeend'
+                    );
 
                     $out[] = $myAjaxResponse;
                 }
 
                 if ( $ajax->type == 'appendurl' OR $ajax->type == 'overwriteurl') {
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = $ajax->type;
                     if (is_string( $ajax->destination )) {
-                        $myAjaxResponse->destination = $ajax->destination;
+                        $destination = $ajax->destination;
                     } else if ( is_object( $ajax->destination ) ) {
-                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                        $destination = $pageStatus->getValue( $ajax->destination );
                     } else {
-                        $myAjaxResponse->destination = '';
+                        $destination = '';
                     }
                     if (is_string( $ajax->url )) {
-                        $myAjaxResponse->url = $ajax->url;
+                        $url = $ajax->url;
                     } else if ( is_object( $ajax->url ) ) {
-                        $myAjaxResponse->url = $applicationBuilder->getRouterContainer()->make_resource_url( $ajax->url, $pageStatus );
+                        $url = $applicationBuilder->getRouterContainer()->make_resource_url( $ajax->url, $pageStatus );
                     } else {
-                        $myAjaxResponse->url = '';
+                        $url = '';
                     }
-                    if ( isset($ajax->url) AND is_string( $ajax->url ) ) {
-                        $myAjaxResponse->method = $ajax->method;
-                    } else {
-                        $myAjaxResponse->method = 'GET';
-                    }
-                    if ( isset($ajax->position) AND is_string( $ajax->position ) ) {
-                        $myAjaxResponse->position = $ajax->position;
-                    } else {
-                        $myAjaxResponse->position = 'beforeend';
-                    }
+
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxURLBlockObject(
+                        $ajax->type,
+                        $destination,
+                        $url,
+                        ( isset($ajax->position) AND is_string( $ajax->position ) ) ? $ajax->position : 'beforeend',
+                        ( isset($ajax->url) AND is_string( $ajax->url ) AND isset($ajax->method) AND is_string( $ajax->method ) ) ? $ajax->method : 'GET'
+                    );
 
                     $out[] = $myAjaxResponse;
                 }
@@ -240,7 +240,7 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setError($errorstring);
 
-                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'error',
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'error',
                         $jsonResource->post->error->destination ?? '#messagescontainer',
                         $jsonResource->post->error->position ?? 'beforeend',
                         $msgBlock->show()
@@ -267,7 +267,7 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setInfo($infoString);
 
-                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'info',
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'info',
                         $jsonResource->post->error->destination ?? '#messagescontainer',
                         $jsonResource->post->error->position ?? 'beforeend',
                         $msgBlock->show()
@@ -294,7 +294,7 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setWarning($warningString);
 
-                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'warning',
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'warning',
                         $jsonResource->post->error->destination ?? '#messagescontainer',
                         $jsonResource->post->error->position ?? 'beforeend',
                         $msgBlock->show()
@@ -321,7 +321,7 @@ class Logics {
                     $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setSuccess($successString);
 
-                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxOutput( 'success',
+                    $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'success',
                         $jsonResource->post->error->destination ?? '#messagescontainer',
                         $jsonResource->post->error->position ?? 'beforeend',
                         $msgBlock->show()
