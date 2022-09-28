@@ -97,36 +97,40 @@ class Logics {
             $out = [];
             foreach ($jsonResource->get->ajax as $ajax) {
                 if ( $ajax->type == 'delete' ) {
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = 'delete';
                     if (is_string( $ajax->destination )) {
-                        $myAjaxResponse->destination = $ajax->destination;
+                        $destination = $ajax->destination;
                     } else if ( is_object( $ajax->destination ) ) {
-                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                        $destination = $pageStatus->getValue( $ajax->destination );
                     } else {
-                        $myAjaxResponse->destination = '';
+                        $destination = '';
                     }
-                    $out[] = $myAjaxResponse;
+                    $out[] = AjaxObjectsBuilder::createAjaxObjectForAjaxDeleteObject(
+                        $ajax->type,
+                        $destination
+                    );
                 }
 
                 if ( $ajax->type == 'add' OR $ajax->type == 'update') {
-                    $myAjaxResponse = new \stdClass();
-                    $myAjaxResponse->type = $ajax->type;
-                    if (is_string( $ajax->destination )) {
-                        $myAjaxResponse->destination = $ajax->destination;
+                    if ( is_string( $ajax->destination ) ) {
+                        $destination = $ajax->destination;
                     } else if ( is_object( $ajax->destination ) ) {
-                        $myAjaxResponse->destination = $pageStatus->getValue( $ajax->destination );
+                        $destination = $pageStatus->getValue( $ajax->destination );
                     } else {
-                        $myAjaxResponse->destination = '';
+                        $destination = '';
                     }
-                    if (is_string( $ajax->body )) {
-                        $myAjaxResponse->body = $ajax->body;
+                    if ( is_string( $ajax->body ) ) {
+                        $body = $ajax->body;
                     } else if ( is_object( $ajax->body ) ) {
-                        $myAjaxResponse->body = $pageStatus->getValue( $ajax->body );
+                        $body = $pageStatus->getValue( $ajax->body );
                     } else {
-                        $myAjaxResponse->body = '';
+                        $body = '';
                     }
-                    $out[] = $myAjaxResponse;
+                    $out[] = AjaxObjectsBuilder::createAjaxObjectForAjaxHtmlBlockObject(
+                        $ajax->type,
+                        $destination,
+                        ( isset($ajax->position) AND is_string( $ajax->position ) ) ? $ajax->position : 'beforeend',
+                        $body
+                    );
                 }
             }
 
@@ -180,8 +184,8 @@ class Logics {
                     $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxHtmlBlockObject(
                         $ajax->type,
                         $destination,
-                        $body,
-                        ( isset($ajax->position) AND is_string( $ajax->position ) ) ? $ajax->position : 'beforeend'
+                        ( isset($ajax->position) AND is_string( $ajax->position ) ) ? $ajax->position : 'beforeend',
+                        $body
                     );
 
                     $out[] = $myAjaxResponse;
@@ -206,8 +210,8 @@ class Logics {
                     $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxURLBlockObject(
                         $ajax->type,
                         $destination,
-                        $url,
                         ( isset($ajax->position) AND is_string( $ajax->position ) ) ? $ajax->position : 'beforeend',
+                        $url,
                         ( isset($ajax->url) AND is_string( $ajax->url ) AND isset($ajax->method) AND is_string( $ajax->method ) ) ? $ajax->method : 'GET'
                     );
 
