@@ -56,8 +56,8 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                     $cleanGETParameters = $secondGump->run( $parms );
                     $this->pageStatus->setGetParameters( $cleanGETParameters );
                     $this->unvalidated_parameters = $parms;
-                    if ( $this->internalGetParameters === false ) {
-                        $this->readableErrors = $this->secondGump->get_readable_errors(true);
+                    if ($secondGump->errors()) {
+                        $this->readableErrors = $secondGump->get_readable_errors(true);
                     } else {
                         if ( isset($jsonResource->get->sessionupdates) ) $this->pageStatus->updateSession( $jsonResource->get->sessionupdates );
 
