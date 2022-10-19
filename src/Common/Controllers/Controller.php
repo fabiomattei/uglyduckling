@@ -201,7 +201,7 @@ class Controller {
         /*
          * $this->applicationBuilder->getLogger()->write(
             'ERROR :: show_get_authorization_error_page illegal access from user **' .
-            $this->pageStatus->getSessionWrapper()->getSessionUsename() .
+            $_SESSION['username'] .
             '** having group set to **' .
             $_SESSION['group'] .
             '** ', __FILE__, __LINE__);
@@ -213,7 +213,7 @@ class Controller {
         /*
          * $this->applicationBuilder->getLogger()->write(
             'ERROR :: show_get_authorization_error_page illegal access from user **' .
-            $this->pageStatus->getSessionWrapper()->getSessionUsename() .
+            $_SESSION['username'] .
             '** having group set to **' .
             $_SESSION['group'] .
             '** ', __FILE__, __LINE__);

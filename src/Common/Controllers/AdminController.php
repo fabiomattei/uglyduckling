@@ -28,7 +28,7 @@ class AdminController extends Controller {
 		
         if (
             $_SESSION['group'] == 'administrationgroup' AND
-            $groupDao->checkUserHasAccessToGroup( $this->pageStatus->getSessionWrapper()->getSessionUserId(), 'administrationgroup' )
+            $groupDao->checkUserHasAccessToGroup( $_SESSION['user_id'], 'administrationgroup' )
         ) {
             $this->applicationBuilder->getJsonloader()->loadIndex();
             parent::showPage();
@@ -46,7 +46,7 @@ class AdminController extends Controller {
             $addEscalationFailedAttemptToSecurityLog = new AddEscalationFailedAttemptToSecurityLog;
             $addEscalationFailedAttemptToSecurityLog->performAction(
                 $this->pageStatus->getServerWrapper()->getRemoteAddress(),
-                $this->pageStatus->getSessionWrapper()->getSessionUsename(),
+                $_SESSION['username'],
                 'FAILED ESCALATION',
                 $securityLogDao
             );
@@ -56,7 +56,7 @@ class AdminController extends Controller {
             $userDao = new UserDao();
             $userDao->setDBH( $this->pageStatus->getDbconnection()->getDBH() );
 			$userDao->setLogger( $this->applicationBuilder->getLogger() );
-            $user = $userDao->getById( $this->pageStatus->getSessionWrapper()->getSessionUserId() );
+            $user = $userDao->getById( $_SESSION['user_id'] );
             $deactivatedUserDao->insertUser( $user->usr_email );
 
             $this->redirectToPage( $this->applicationBuilder->getRouterContainer()->makeRelativeUrl( 'login' ) );
