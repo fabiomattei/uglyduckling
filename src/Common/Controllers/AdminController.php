@@ -68,7 +68,7 @@ class AdminController extends Controller {
      * the point of view of the validation rules
      */
     public function check_post_request() {
-        if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $this->pageStatus->getSessionWrapper()->getCsrfToken() ) {
+        if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $_SESSION['csrftoken'] ) {
             $this->secondGump = new Gump;
 
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );

@@ -50,7 +50,7 @@ class UserEditPassword extends AdminController {
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
+        $form->addHiddenField('csrftoken', $_SESSION['csrftoken'] );
         //$form->addPasswordField(UserEditPassword::FIELD_OLD_PASSWORD, 'Old password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_NEW_PASSWORD, 'New password:', '6' );
         $form->addPasswordField(UserEditPassword::FIELD_RETYPE_NEW_PASSWORD, 'Retype new password:', '6' );

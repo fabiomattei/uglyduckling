@@ -55,7 +55,7 @@ class BlockedIpList extends AdminController {
 			$table->addColumn($ip->ip_time_to_remove);
 			$table->addColumn($ip->ip_updated);
 			$table->addColumn($ip->ip_created);
-			$table->addUnfilteredColumn(ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP_DELETE ), 'Del', $this->pageStatus->getSessionWrapper()->getCsrfToken(), array('biid' => $ip->ip_id), Button::COLOR_RED.' '.Button::SMALL ));
+			$table->addUnfilteredColumn(ButtonForm::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_SECURITY_BLOCKED_IP_DELETE ), 'Del', $_SESSION['csrftoken'], array('biid' => $ip->ip_id), Button::COLOR_RED.' '.Button::SMALL ));
 			$table->closeRow();
 		}
 		$table->closeTBody();
