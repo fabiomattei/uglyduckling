@@ -27,7 +27,7 @@ class AdminController extends Controller {
         $groupDao->setLogger( $this->applicationBuilder->getLogger() );
 		
         if (
-            $this->pageStatus->getSessionWrapper()->getSessionGroup() == 'administrationgroup' AND
+            $_SESSION['group'] == 'administrationgroup' AND
             $groupDao->checkUserHasAccessToGroup( $this->pageStatus->getSessionWrapper()->getSessionUserId(), 'administrationgroup' )
         ) {
             $this->applicationBuilder->getJsonloader()->loadIndex();

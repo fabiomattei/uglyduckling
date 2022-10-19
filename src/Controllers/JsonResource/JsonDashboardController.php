@@ -19,7 +19,7 @@ class JsonDashboardController extends JsonResourceBasicController {
      * @throws GeneralException
      */
     public function getRequest() {
-        $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $this->pageStatus->getSessionWrapper()->getSessionGroup() );
+        $menuresource = $this->applicationBuilder->getJsonloader()->loadResource( $_SESSION['group'] );
         $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus, 'JsonDashboardController', $this->resource->name);
         $this->menubuilder->setMenuStructure( $menuresource );
 
