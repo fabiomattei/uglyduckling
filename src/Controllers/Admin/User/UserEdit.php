@@ -50,7 +50,7 @@ class UserEdit extends AdminController {
         $form = new BaseHTMLForm;
         $form->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
         $form->setTitle( 'User: ' . $user->usr_name . ' ' . $user->usr_surname );
-        $form->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
+        $form->addHiddenField('csrftoken', $_SESSION['csrftoken'] );
         $form->addDropdownField( 'usr_defaultgroup', 'Default group:', $this->userGroupDao->makeListForDropdownByUserId( $this->getParameters['id'] ), $user->usr_defaultgroup, '6' );
         $form->addTextField('usr_email', 'Email: ', 'Email', $user->usr_email, '6' );
         $form->addTextField('usr_name', 'Name: ', 'Name', $user->usr_name, '6' );

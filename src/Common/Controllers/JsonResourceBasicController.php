@@ -38,10 +38,10 @@ class JsonResourceBasicController extends Controller {
             //$this->applicationBuilder->getLogger()->write('ERROR :: allowedgroups array undefined for resource ' . $this->resourceName, __FILE__, __LINE__);
             return false;
         }
-        if ( in_array( $this->pageStatus->getSessionWrapper()->getSessionGroup(), $this->resource->allowedgroups ) ) {
+        if ( in_array( $_SESSION['group'], $this->resource->allowedgroups ) ) {
             return true;
         } else {
-            //$this->applicationBuilder->getLogger()->write('ERROR :: illegal access to resource' . $this->resourceName .' from user having group set to **' . $this->pageStatus->getSessionWrapper()->getSessionGroup() .'** ', __FILE__, __LINE__);
+            //$this->applicationBuilder->getLogger()->write('ERROR :: illegal access to resource' . $this->resourceName .' from user having group set to **' . $_SESSION['group'] .'** ', __FILE__, __LINE__);
             return false;
         }
     }
@@ -107,7 +107,7 @@ class JsonResourceBasicController extends Controller {
      * the point of view of the validation rules
      */
     public function check_post_request() {
-        if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $this->pageStatus->getSessionWrapper()->getCsrfToken() ) {
+        if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $_SESSION['csrftoken'] ) {
             $this->secondGump = new Gump;
 
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );

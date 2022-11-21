@@ -71,7 +71,7 @@ class FormJsonTemplate extends JsonTemplate {
         }
         
         $rowcounter = 1;
-        $formBlock->addHiddenField('csrftoken', $this->pageStatus->getSessionWrapper()->getCsrfToken() );
+        $formBlock->addHiddenField('csrftoken', $_SESSION['csrftoken'] );
         foreach ($fieldRows as $row) {
             $formBlock->addRow();
             foreach ($row as $field) {
