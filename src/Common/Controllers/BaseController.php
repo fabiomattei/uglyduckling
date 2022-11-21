@@ -32,7 +32,7 @@ class BaseController {
     public DBConnection $dbconnection;
 
     public function __construct() {
-        $this->gump = new GUMP();
+        $this->gump = new \GUMP();
         $this->parameters = [];
     }
 
