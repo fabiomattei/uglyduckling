@@ -17,6 +17,8 @@ use GUMP;
 
 class Controller {
 
+    const CONTROLLER_NAME = 'controller';
+
     public ApplicationBuilder $applicationBuilder;
     public PageStatus $pageStatus;
     public string $templateFile;
