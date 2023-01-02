@@ -16,7 +16,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         $this->applicationBuilder->getJsonloader()->loadIndex();
 
         // GETTING json resource name from parameter
-        $jsonResourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);
+        $jsonResourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_UNSAFE_RAW);
 
         // loading json resource
         if ( ! $jsonResourceName ) {
@@ -81,10 +81,10 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         $this->applicationBuilder->getJsonloader()->loadIndex();
 
         // GETTING json resource name from parameter
-        $jsonResourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);
+        $jsonResourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_UNSAFE_RAW);
         if ( ! $jsonResourceName ) {
             if ( isset( $_POST['res'] ) ) {
-                $jsonResourceName = filter_var($_POST['res'], FILTER_SANITIZE_STRING);
+                $jsonResourceName = filter_var($_POST['res'], FILTER_UNSAFE_RAW);
             }
         }
 

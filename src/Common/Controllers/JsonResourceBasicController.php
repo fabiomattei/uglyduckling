@@ -55,7 +55,7 @@ class JsonResourceBasicController extends Controller {
         if ( isset($this->resourceName) AND $this->resourceName != '' ) {
             // nothing to do here
         } else {
-            $this->resourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_SANITIZE_STRING);    
+            $this->resourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_UNSAFE_RAW);
         }
         if ( ! $this->resourceName ) {
             return false;
