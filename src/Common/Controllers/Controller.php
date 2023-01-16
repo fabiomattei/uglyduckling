@@ -49,6 +49,8 @@ class Controller {
     public $addToFoot = '';
     public $subAddToHead = '';
     public $subAddToFoot = '';
+    public $parameters;
+    public $flashvariable;
 
     /**
      * This method makes all necessary presets to activate a controller
