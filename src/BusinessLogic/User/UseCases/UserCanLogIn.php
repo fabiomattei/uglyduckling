@@ -3,6 +3,10 @@
 namespace Fabiom\UglyDuckling\BusinessLogic\User\UseCases;
 
 class UserCanLogIn {
+
+    public $parameters;
+    public $userDao;
+    public $userCanLogIn;
 	
 	public function setParameters( $parameters ) {
 		$this->parameters = $parameters;
