@@ -33,6 +33,23 @@ class Controller {
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
 
+    public $title;
+    public $menucontainer = array();
+    public $topcontainer = array();
+    public $messagescontainer = array();
+    public $leftcontainer = array();
+    public $rightcontainer = array();
+    public $centralcontainer = array();
+    public $secondcentralcontainer = array();
+    public $thirdcentralcontainer = array();
+    public $bottomcontainer = array();
+    public $sidebarcontainer = array();
+
+    public $addToHead = '';
+    public $addToFoot = '';
+    public $subAddToHead = '';
+    public $subAddToFoot = '';
+
     /**
      * This method makes all necessary presets to activate a controller
      *
