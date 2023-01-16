@@ -6,6 +6,8 @@ class Setup {
 
     public $appNameForPageTitle;
     public $privateTemplateFileName;
+
+    public $htmlTemplatePath;
     public $privateTemplateWithSidebarFileName;
     public $publicTemplateFileName;
     public $emptyTemplateFileName;

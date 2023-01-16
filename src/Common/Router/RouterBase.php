@@ -11,6 +11,8 @@ namespace Fabiom\UglyDuckling\Common\Router;
 
 class RouterBase {
 
+    public $basepath;
+
     public function __construct( $basepath ) {
         $this->basepath = $basepath;
     }

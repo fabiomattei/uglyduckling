@@ -14,6 +14,8 @@ class JsonTemplateFactory {
 
     protected $resource;
     protected $action;
+    public $applicationBuilder;
+    public $pageStatus;
 
     const blocktype = 'basebuilder';
 
