@@ -5,6 +5,9 @@ namespace Fabiom\UglyDuckling\Templates\Blocks\Menus;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class PublicMenu extends BaseHTMLBlock {
+
+    public $appname;
+    public $active;
 	
 	function __construct( string $appname, string $active = 'home' ) {
 		$this->appname = $appname;

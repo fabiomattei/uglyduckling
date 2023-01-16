@@ -13,6 +13,7 @@ class HTMLTagsFactory {
 
     protected /* HTMLButtonTag */ $htmlButtonTag;
     protected /* HTMLLinkTag */ $htmlLinkTag;
+    public $htmlAjaxButtonTag;
 
     /**
      * HTMLTagsFactory constructor.
