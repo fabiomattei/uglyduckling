@@ -5,6 +5,7 @@ namespace Fabiom\UglyDuckling\Common\Database;
 class QuerySet {
 
 	private $results = array();
+    public $values;
 
 	/**
 	 * Check if a value has been set using isset
