@@ -7,13 +7,13 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 class BaseHTMLMessages extends BaseHTMLBlock {
 
 	private $htmlTemplateLoader;
+    public $info = '';
+	public $success = '';
+	public $warning = '';
+	public $error = '';
 	
 	function __construct() {
         parent::__construct();
-	    $this->info = '';
-		$this->success = '';
-		$this->warning = '';
-		$this->error = '';
 	}
 
 	public function setHtmlTemplateLoader($htmlTemplateLoader) {
