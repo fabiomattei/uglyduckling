@@ -34,20 +34,27 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function addForm() {
-        $this->rightBody .= $this->htmlTemplateLoader->loadTemplate('Menu/form.html');
+        $this->rightBody .= $this->htmlTemplateLoader->loadTemplate('Menu/rightbody.html');
     }
 
-    function addNavItem( string $label, string $url, bool $active, bool $current ) {
+    function addNavItem( string $label, string $url, bool $active, bool $current, bool $right = false ) {
         $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';
         $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
 
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${active}', '${current}', '${url}', '${label}'),
-            array($activestr, $currentstr, $url, $label),
-            'Menu/navitem.html');
+        if ( $right ) {
+            $this->rightBody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${active}', '${current}', '${url}', '${label}'),
+                array($activestr, $currentstr, $url, $label),
+                'Menu/navitem.html');
+        } else {
+            $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${active}', '${current}', '${url}', '${label}'),
+                array($activestr, $currentstr, $url, $label),
+                'Menu/navitem.html');
+        }
     }
 
-    function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $controllerName = '', string $resourceName = '' ) {
+    function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $controllerName = '', string $resourceName = '', bool $right = false ) {
         $submenu = '';
         $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
         $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
@@ -73,17 +80,35 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';
         $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
 
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
-            array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
-            'Menu/menuitem.html');
+        if ( $right ) {
+            $this->rightBody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
+                array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
+                'Menu/menuitem.html');
+        } else {
+            $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
+                array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
+                'Menu/menuitem.html');
+        }
+
         $this->dropdownCounter++;
     }
 
     function show(): string {
+        if ( $this->rightBody != '' ) {
+            $rightSubmenu = $this->rightBody;
+            $rightSubmenu = $this->htmlTemplateLoader->loadTemplateAndReplace(
+                array('${rightbody}'),
+                array($rightSubmenu),
+                'Menu/rightbody.html');
+        } else {
+            $rightSubmenu = '';
+        }
+
         return $this->htmlTemplateLoader->loadTemplateAndReplace(
-            array('${brand}', '${buttonToggler}', '${body}', '${rightBody}'),
-            array($this->brand, $this->buttonToggler, $this->body, $this->rightBody),
+            array('${brand}', '${buttonToggler}', '${body}', '${rightbody}'),
+            array($this->brand, $this->buttonToggler, $this->body, $rightSubmenu),
             'Menu/body.html');
     }
 
