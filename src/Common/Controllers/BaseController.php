@@ -29,6 +29,9 @@ class BaseController {
         $postParameters;
     public /* array */
         $filesParameters;
+
+    public /* array */
+        $parameters;
     public DBConnection $dbconnection;
 
     public function __construct() {
