@@ -42,6 +42,8 @@ class BaseController {
     public string $headViewFile = '';
     public string $footViewFile = '';
 
+    public $unvalidated_parameters;
+
     public function __construct() {
         $this->gump = new \GUMP();
         $this->parameters = [];
