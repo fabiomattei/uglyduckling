@@ -33,6 +33,8 @@ class Controller {
     public /* array */ $postParameters;
     public /* array */ $filesParameters;
 
+    public $unvalidated_parameters;
+
     public $title;
     public $menucontainer = array();
     public $topcontainer = array();
