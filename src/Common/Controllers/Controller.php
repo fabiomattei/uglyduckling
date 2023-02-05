@@ -34,6 +34,7 @@ class Controller {
     public /* array */ $filesParameters;
 
     public $unvalidated_parameters;
+    public $filteredParameters;
 
     public $title;
     public $menucontainer = array();
