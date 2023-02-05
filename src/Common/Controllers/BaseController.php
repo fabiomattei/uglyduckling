@@ -33,6 +33,14 @@ class BaseController {
     public /* array */
         $parameters;
     public DBConnection $dbconnection;
+    public string $classCompleteName;
+    public string $className;
+    public string $chapter;
+    public string $viewFile;
+    public $controllerPointer;
+    public string $appTitle;
+    public string $headViewFile = '';
+    public string $footViewFile = '';
 
     public function __construct() {
         $this->gump = new \GUMP();
