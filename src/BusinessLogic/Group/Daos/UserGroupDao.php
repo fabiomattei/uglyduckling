@@ -62,6 +62,32 @@ class UserGroupDao extends BasicDao {
         }
     }
 
+    /**
+     * @param string $usr_id
+     * @return bool|void
+     */
+    function listGroupsUserHasAccessTo( string $usr_id ) {
+        try {
+            try {
+                $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :usrid ;');
+                $STH->bindParam( ':userid', $usr_id );
+
+                $STH->execute();
+
+                # setting the fetch mode
+                $STH->setFetchMode(PDO::FETCH_OBJ);
+
+                return $STH;
+            }
+            catch(\PDOException $e) {
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            }
+        }
+        catch(\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
 	function getUsersByGroupSlug( string $slug ) {
         $query = 'SELECT UG.*, U.usr_id, U.usr_name, U.usr_surname FROM '.$this::DB_TABLE.' as UG '.
             ' LEFT JOIN ud_users as U ON UG.ug_userid = U.usr_id '.
