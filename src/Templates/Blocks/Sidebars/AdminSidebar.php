@@ -37,7 +37,7 @@ class AdminSidebar extends BaseHTMLBlock {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link '.( $this->active === AdminRouter::ROUTE_ADMIN_DOCUMENT_LIST ? 'active' : '' ).'" href="'.$this->router->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_DOCUMENT_LIST ).'">
+                    <a class="nav-link '.( $this->active === AdminRouter::ROUTE_ADMIN_DOCUMENT_LIST ? 'active' : '' ).'" href="'.AdminRouter::ROUTE_ADMIN_DOCUMENT_LIST.'.html">
                       <span data-feather="file"></span>
                       Docs export
                     </a>

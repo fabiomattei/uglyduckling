@@ -14,7 +14,7 @@ class AdminDocsExport  extends AdminController {
      * @throws GeneralException
      */
     public function getRequest() {
-        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin Documents list';
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin Docs export';
 
         $table = new StaticTable;
         $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
