@@ -4,7 +4,6 @@ namespace Fabiom\UglyDuckling\Controllers\Admin\Dashboard;
 
 use Fabiom\UglyDuckling\Common\Controllers\AdminController;
 use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
-use Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 use Fabiom\UglyDuckling\Templates\Blocks\Menus\AdminMenu;
 use Fabiom\UglyDuckling\Templates\Blocks\Sidebars\AdminSidebar;

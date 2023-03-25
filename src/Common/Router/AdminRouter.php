@@ -122,7 +122,8 @@ class AdminRouter extends RouterBase {
             self::ROUTE_ADMIN_USER_EDIT_PASSWORD,
             self::ROUTE_ADMIN_USER_LIST,
             self::ROUTE_ADMIN_USER_NEW,
-            self::ROUTE_ADMIN_USER_VIEW
+            self::ROUTE_ADMIN_USER_VIEW,
+            self::ROUTE_ADMIN_DOCUMENT_LIST
         ));
     }
 
