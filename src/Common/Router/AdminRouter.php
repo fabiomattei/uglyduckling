@@ -10,6 +10,7 @@ namespace Fabiom\UglyDuckling\Common\Router;
 
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminDashboard;
 use Fabiom\UglyDuckling\Controllers\Admin\Dashboard\AdminMetricsDashboard;
+use Fabiom\UglyDuckling\Controllers\Admin\DocsExport\AdminDocsExport;
 use Fabiom\UglyDuckling\Controllers\Admin\Entity\EntityList;
 use Fabiom\UglyDuckling\Controllers\Admin\Entity\EntityView;
 use Fabiom\UglyDuckling\Controllers\Admin\Entity\EntityCreateTable;
@@ -53,7 +54,7 @@ class AdminRouter extends RouterBase {
     const ROUTE_ADMIN_ENTITY_DROP_TABLE         = 'adminentitydroptable';
     const ROUTE_ADMIN_FORM_LIST                 = 'adminformslist';
     const ROUTE_ADMIN_FORM_VIEW                 = 'adminformview';
-    const ROUTE_ADMIN_DOCUMENT_LIST             = 'admindocumentlist';
+    const ROUTE_ADMIN_DOCUMENT_LIST             = 'admindocsexport';
     const ROUTE_ADMIN_TABLE_LIST                = 'admintablelist';
     const ROUTE_ADMIN_TABLE_VIEW                = 'admintableview';
     const ROUTE_ADMIN_EXPORT_LIST               = 'adminexportlist';
@@ -161,6 +162,7 @@ class AdminRouter extends RouterBase {
             case self::ROUTE_ADMIN_USER_LIST:                        $controller = new UserList; break;
             case self::ROUTE_ADMIN_USER_NEW:                         $controller = new UserNew; break;
             case self::ROUTE_ADMIN_USER_VIEW:                        $controller = new UserView; break;
+            case self::ROUTE_ADMIN_DOCUMENT_LIST:                    $controller = new AdminDocsExport; break;
         }
         return $controller;
     }
