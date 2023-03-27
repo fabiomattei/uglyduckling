@@ -18,18 +18,19 @@ class AdminDocsExport extends AdminController {
 
         $table = new StaticTable;
         $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-        $table->setTitle('Groups list');
+        $table->setTitle('Docs');
 
-        $table->addTHead();
-        $table->addRow();
-        $table->addHeadLineColumn('Name');
-        $table->addHeadLineColumn('Type');
-        $table->addHeadLineColumn(''); // adding one more for actions
-        $table->closeRow();
-        $table->closeTHead();
 
-        $table->addTBody();
         foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'group' ) as $res ) {
+            $table->addTHead();
+            $table->addRow();
+            $table->addHeadLineColumn('Name');
+            $table->addHeadLineColumn('Type');
+            $table->addHeadLineColumn(''); // adding one more for actions
+            $table->closeRow();
+            $table->closeTHead();
+
+            $table->addTBody();
             $table->addRow();
             $table->addColumn($res->name);
             $table->addColumn($res->type);
@@ -38,8 +39,8 @@ class AdminDocsExport extends AdminController {
                 Button::get($this->applicationBuilder->getRouterContainer()->makeRelativeUrl( AdminRouter::ROUTE_ADMIN_GROUP_DOC, 'res='.$res->name ), 'Doc', Button::COLOR_GRAY.' '.Button::SMALL )
             );
             $table->closeRow();
+            $table->closeTBody();
         }
-        $table->closeTBody();
 
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST, $this->applicationBuilder->getRouterContainer() ) );
