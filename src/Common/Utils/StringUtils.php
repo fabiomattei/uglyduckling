@@ -123,13 +123,6 @@ class StringUtils {
         return StringUtils::isStringBetween( strtolower($word), strtolower($container), strtolower($start), strtolower($end) );
     }
 
-    /**
-     * Return a random string of a given length
-     * The string is composed by numbers, upper case letters and lower case letters
-     *
-     * @param $length
-     * @return string
-     */
     public static function generateRandomString($length = 8) {
         $password = "";
         $possible = "0123456789abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -143,6 +136,18 @@ class StringUtils {
             }
         }
         return $password;
+    }
+
+    /**
+     * If $string is longer than $lenght characters it truncate the string and adds $suspensionPoints
+     *
+     * @param string $string
+     * @param int $lenght
+     * @param string $suspensionPoints default '...'
+     * @return string
+     */
+    public static function stringMaxLenght(string $string, int $lenght, string $suspensionPoints = '...') {
+        return (strlen($string) > 13) ? substr($string,0,$lenght).$suspensionPoints : $string;
     }
 
 }
