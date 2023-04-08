@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Common\Controllers;
 
 class PublicBaseController extends BaseController {
 
-    private function isSessionValid() {
+    public function isSessionValid() {
         return true;
     }
 

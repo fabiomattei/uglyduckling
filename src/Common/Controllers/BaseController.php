@@ -84,7 +84,7 @@ class BaseController {
         return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 
-    private function isSessionValid() {
+    public function isSessionValid() {
         // check if user logged in
         if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'])) {
             return false;
