@@ -70,9 +70,15 @@ class BaseController {
         // setting an array containing all parameters
         $this->parameters = [];
 
-        if (!$this->isSessionValid()) {
-            header('Location: ' . BASEPATH . 'public/login.html');
-            die();
+        if ( !$this->applicationBuilder->getSecurityChecker()->isSessionValid(
+            $this->pageStatus->getSessionWrapper()->getSessionLoggedIn(),
+            $this->pageStatus->getSessionWrapper()->getSessionIp(),
+            $this->pageStatus->getSessionWrapper()->getSessionUserAgent(),
+            $this->pageStatus->getSessionWrapper()->getSessionLastLogin(),
+            $this->pageStatus->getServerWrapper()->getRemoteAddress(),
+            $this->pageStatus->getServerWrapper()->getHttpUserAgent() ) ) {
+            $this->applicationBuilder->getRedirector()->setURL($this->applicationBuilder->getSetup()->getBasePath() . 'public/login.html');
+            $this->applicationBuilder->getRedirector()->redirect();
         }
     }
 
