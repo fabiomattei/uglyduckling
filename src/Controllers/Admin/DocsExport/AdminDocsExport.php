@@ -65,6 +65,70 @@ class AdminDocsExport extends AdminController {
             $docsList[] = $table;
         }
 
+        if ( isset($jsonGroup->menu) and is_array($jsonGroup->menu) ) {
+            foreach ( $jsonGroup->menu as $menu) {
+                if (isset($menu->resource)) {
+                    $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
+                    $infoMenuItem = new BaseHTMLInfo;
+                    $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+
+                    $infoMenuItem->setTitle($jsonResource->name);
+                    if ( isset($jsonResource->table->name) ) {
+                        $infoMenuItem->setTitle('Table: ' . $jsonResource->table->name);
+                    }
+
+                    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+                        $info->addParagraph($jsonResource->description, 12);
+                    }
+                    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+                        foreach ( $jsonResource->docs as $paragraph) {
+                            $info->addParagraph($paragraph, 12);
+                        }
+                    }
+
+                    $docsList[] = $infoMenuItem;
+                }
+
+                if ( isset($menu->submenu) and is_array($menu->submenu) ) {
+                    foreach ( $menu->submenu as $submenuitem) {
+                        if (isset($submenuitem->resource)) {
+                            if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
+                                $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
+                                print_r($jsonResource);
+                                $infoMenuItem = new BaseHTMLInfo;
+                                $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+
+                                $infoMenuItem->setTitle($jsonResource->name);
+                                if ( isset($jsonResource->get->table->title) ) {
+                                    $infoMenuItem->setTitle('Table: ' . $jsonResource->get->table->title);
+                                }
+                                if ( isset($jsonResource->get->info->title) ) {
+                                    $infoMenuItem->setTitle('Info: ' . $jsonResource->get->info->title);
+                                }
+                                if ( isset($jsonResource->get->form->title) ) {
+                                    $infoMenuItem->setTitle('Form: ' . $jsonResource->get->form->title);
+                                }
+
+                                if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+                                    $info->addParagraph($jsonResource->description, 12);
+                                }
+                                if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+                                    foreach ( $jsonResource->docs as $paragraph) {
+                                        $info->addParagraph($paragraph, 12);
+                                    }
+                                }
+
+                                $docsList[] = $infoMenuItem;
+                            } else {
+                                echo "error ".$submenuitem->resource;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST, $this->applicationBuilder->getRouterContainer() ) );
         $this->centralcontainer = $docsList;
