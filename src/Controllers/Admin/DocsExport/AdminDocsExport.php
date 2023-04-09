@@ -99,15 +99,8 @@ class AdminDocsExport extends AdminController {
                                 $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
                                 $infoMenuItem->setTitle($jsonResource->name);
-                                if ( isset($jsonResource->get->table->title) ) {
-                                    $infoMenuItem->setTitle('Table: ' . $jsonResource->get->table->title);
-                                }
-                                if ( isset($jsonResource->get->info->title) ) {
-                                    $infoMenuItem->setTitle('Info: ' . $jsonResource->get->info->title);
-                                }
-                                if ( isset($jsonResource->get->form->title) ) {
-                                    $infoMenuItem->setTitle('Form: ' . $jsonResource->get->form->title);
-                                }
+
+                                $infoMenuItem->setTitle($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()));
 
                                 if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
                                     $info->addParagraph($jsonResource->description, 12);
