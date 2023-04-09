@@ -16,12 +16,11 @@ class AdminDocsExport extends AdminController {
     public function getRequest() {
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin Docs export';
 
-        $table = new StaticTable;
-        $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-        $table->setTitle('Docs');
-
-
+        $docsList = [];
         foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'group' ) as $res ) {
+            $table = new StaticTable;
+            $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+            $table->setTitle('Docs');
             $table->addTHead();
             $table->addRow();
             $table->addHeadLineColumn('Name');
@@ -40,11 +39,12 @@ class AdminDocsExport extends AdminController {
             );
             $table->closeRow();
             $table->closeTBody();
+            $docsList[] = $table;
         }
 
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
         $this->leftcontainer    = array( new AdminSidebar( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST, $this->applicationBuilder->getRouterContainer() ) );
-        $this->centralcontainer = array( $table );
+        $this->centralcontainer = array( $docsList );
 
         $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateWithSidebarFileName();
     }
