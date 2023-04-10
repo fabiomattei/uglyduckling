@@ -8,6 +8,9 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $tableJsonStructure, $jsonL
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
             $out .= $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
+        } else {
+            $out .= $panel->resource;
+            $out .= $panel->resource;
         }
     }
     return $out;
