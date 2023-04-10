@@ -31,7 +31,7 @@ class AdminDocsExport extends AdminController {
             }
 
             $doc->h3('Menu structure');
-            $doc->
+            $doc->openTable();
             $doc->openRow();
             $doc->th('Menu');
             $doc->th('Sub-menu');
@@ -53,6 +53,7 @@ class AdminDocsExport extends AdminController {
                     }
                 }
             }
+            $doc->closeTable();
 
             $docsList[] = $doc;
 
@@ -60,18 +61,16 @@ class AdminDocsExport extends AdminController {
                 foreach ( $jsonGroup->menu as $menu) {
                     if (isset($menu->resource)) {
                         $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
-                        $infoMenuItem = new BaseHTMLInfo;
-                        $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-
-                        $infoMenuItem->setTitle($menu->label);
-                        $infoMenuItem->addParagraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
+                        $infoMenuItem = new BaseHtmlDoc;
+                        $infoMenuItem->h3($menu->label);
+                        $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                         if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                            $doc->addParagraph($jsonResource->description, 12);
+                            $doc->paragraph($jsonResource->description, 12);
                         }
                         if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                             foreach ( $jsonResource->docs as $paragraph) {
-                                $doc->addParagraph($paragraph, 12);
+                                $doc->paragraph($paragraph, 12);
                             }
                         }
 
@@ -83,18 +82,16 @@ class AdminDocsExport extends AdminController {
                             if (isset($submenuitem->resource)) {
                                 if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
                                     $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
-                                    $infoMenuItem = new BaseHTMLInfo;
-                                    $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-
-                                    $infoMenuItem->setTitle($menu->label);
-                                    $infoMenuItem->addParagraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
+                                    $infoMenuItem = new BaseHtmlDoc;
+                                    $infoMenuItem->h3($menu->label);
+                                    $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                                     if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                                        $doc->addParagraph($jsonResource->description, 12);
+                                        $doc->paragraph($jsonResource->description, 12);
                                     }
                                     if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                                         foreach ( $jsonResource->docs as $paragraph) {
-                                            $doc->addParagraph($paragraph, 12);
+                                            $doc->paragraph($paragraph, 12);
                                         }
                                     }
 
