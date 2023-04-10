@@ -47,11 +47,11 @@ class BaseHtmlDoc extends BaseHTMLBlock {
     }
 
     function th(string $text) {
-        $this->html .= $this->html .= '<th>'.$text.'</th>';
+        $this->html .= '<th>'.$text.'</th>';
     }
 
     function td(string $text) {
-        $this->html .= $this->html .= '<td>'.$text.'</td>';
+        $this->html .= '<td>'.$text.'</td>';
     }
 
     function openOl() {
