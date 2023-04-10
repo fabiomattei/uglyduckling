@@ -38,6 +38,14 @@ class BaseHtmlDoc extends BaseHTMLBlock {
         $this->html .= '<p>'.$text.'</p>';
     }
 
+    function openTable() {
+        $this->html .= '<table>';
+    }
+
+    function closeTable() {
+        $this->html .= '</table>';
+    }
+
     function openRow() {
         $this->html .= '<tr>';
     }
@@ -71,22 +79,22 @@ class BaseHtmlDoc extends BaseHTMLBlock {
     }
 
     function li( $text ) {
-        $this->html .= $this->html .= '<li>'.$text.'</li>';
+        $this->html .= '<li>'.$text.'</li>';
     }
 
     function label( $text ) {
-        $this->html .= $this->html .= '<label>'.$text.'</label>';
+        $this->html .= '<label>'.$text.'</label>';
     }
     function input( $text ) {
-        $this->html .= $this->html .= '<input>'.$text.'</input>';
+        $this->html .= '<input>'.$text.'</input>';
     }
 
     function textarea( $text ) {
-        $this->html .= $this->html .= '<textarea>'.$text.'</textarea>';
+        $this->html .= '<textarea>'.$text.'</textarea>';
     }
 
     function select( $text ) {
-        $this->html .= $this->html .= '<select><option selected="selected">'.$text.'</option></select>';
+        $this->html .= '<select><option selected="selected">'.$text.'</option></select>';
     }
 
     function show(): string {

@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Controllers\Admin\DocsExport;
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHtmlDoc;
 use Fabiom\UglyDuckling\Common\Blocks\Button;
 use Fabiom\UglyDuckling\Common\Blocks\StaticTable;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
@@ -21,48 +22,39 @@ class AdminDocsExport extends AdminController {
         foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'group' ) as $jsonGroupName ) {
             $jsonGroup = $this->applicationBuilder->getJsonloader()->loadResource($jsonGroupName->name);
 
-            $info = new BaseHTMLInfo;
-            $info->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-            $info->setTitle('Group: ' . $jsonGroup->name);
+            $doc = new BaseHtmlDoc;
+            $doc->h1('Group: ' . $jsonGroup->name);
             if ( isset($jsonGroup->docs) and is_array($jsonGroup->docs) ) {
                 foreach ( $jsonGroup->docs as $paragraph) {
-                    $info->addParagraph($paragraph, 12);
+                    $doc->paragraph($paragraph, 12);
                 }
             }
 
-            $docsList[] = $info;
-
-            $table = new StaticTable;
-            $table->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
-            $table->setTitle('Menu structure');
-            $table->addTHead();
-            $table->addRow();
-            $table->addHeadLineColumn('Menu');
-            $table->addHeadLineColumn('Sub-menu');
-            $table->closeRow();
-            $table->closeTHead();
-
-            $table->addTBody();
+            $doc->h3('Menu structure');
+            $doc->
+            $doc->openRow();
+            $doc->th('Menu');
+            $doc->th('Sub-menu');
+            $doc->closeRow();
 
             if ( isset($jsonGroup->menu) and is_array($jsonGroup->menu) ) {
                 foreach ( $jsonGroup->menu as $menu) {
-                    $table->addRow();
-                    $table->addColumn( $menu->label );
-                    $table->addColumn( '');
-                    $table->closeRow();
+                    $doc->openRow();
+                    $doc->td( $menu->label );
+                    $doc->td( '');
+                    $doc->closeRow();
                     if ( isset($menu->submenu) and is_array($menu->submenu) ) {
                         foreach ( $menu->submenu as $submenuitem) {
-                            $table->addRow();
-                            $table->addColumn( '');
-                            $table->addColumn( $submenuitem->label );
-                            $table->closeRow();
+                            $doc->openRow();
+                            $doc->td( '');
+                            $doc->td( $submenuitem->label );
+                            $doc->closeRow();
                         }
                     }
                 }
             }
 
-            $table->closeTBody();
-            $docsList[] = $table;
+            $docsList[] = $doc;
 
             if ( isset($jsonGroup->menu) and is_array($jsonGroup->menu) ) {
                 foreach ( $jsonGroup->menu as $menu) {
@@ -75,11 +67,11 @@ class AdminDocsExport extends AdminController {
                         $infoMenuItem->addParagraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                         if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                            $info->addParagraph($jsonResource->description, 12);
+                            $doc->addParagraph($jsonResource->description, 12);
                         }
                         if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                             foreach ( $jsonResource->docs as $paragraph) {
-                                $info->addParagraph($paragraph, 12);
+                                $doc->addParagraph($paragraph, 12);
                             }
                         }
 
@@ -98,11 +90,11 @@ class AdminDocsExport extends AdminController {
                                     $infoMenuItem->addParagraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                                     if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                                        $info->addParagraph($jsonResource->description, 12);
+                                        $doc->addParagraph($jsonResource->description, 12);
                                     }
                                     if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                                         foreach ( $jsonResource->docs as $paragraph) {
-                                            $info->addParagraph($paragraph, 12);
+                                            $doc->addParagraph($paragraph, 12);
                                         }
                                     }
 
