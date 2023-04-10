@@ -63,59 +63,54 @@ class AdminDocsExport extends AdminController {
 
             $table->closeTBody();
             $docsList[] = $table;
-        }
 
-        if ( isset($jsonGroup->menu) and is_array($jsonGroup->menu) ) {
-            foreach ( $jsonGroup->menu as $menu) {
-                if (isset($menu->resource)) {
-                    $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
-                    $infoMenuItem = new BaseHTMLInfo;
-                    $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+            if ( isset($jsonGroup->menu) and is_array($jsonGroup->menu) ) {
+                foreach ( $jsonGroup->menu as $menu) {
+                    if (isset($menu->resource)) {
+                        $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
+                        $infoMenuItem = new BaseHTMLInfo;
+                        $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
-                    $infoMenuItem->setTitle($jsonResource->name);
-                    if ( isset($jsonResource->table->name) ) {
-                        $infoMenuItem->setTitle('Table: ' . $jsonResource->table->name);
-                    }
+                        $infoMenuItem->setTitle($menu->label);
+                        $infoMenuItem->addParagraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
-                    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                        $info->addParagraph($jsonResource->description, 12);
-                    }
-                    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
-                        foreach ( $jsonResource->docs as $paragraph) {
-                            $info->addParagraph($paragraph, 12);
+                        if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+                            $info->addParagraph($jsonResource->description, 12);
                         }
+                        if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+                            foreach ( $jsonResource->docs as $paragraph) {
+                                $info->addParagraph($paragraph, 12);
+                            }
+                        }
+
+                        $docsList[] = $infoMenuItem;
                     }
 
-                    $docsList[] = $infoMenuItem;
-                }
+                    if ( isset($menu->submenu) and is_array($menu->submenu) ) {
+                        foreach ( $menu->submenu as $submenuitem) {
+                            if (isset($submenuitem->resource)) {
+                                if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
+                                    $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
+                                    $infoMenuItem = new BaseHTMLInfo;
+                                    $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
-                if ( isset($menu->submenu) and is_array($menu->submenu) ) {
-                    foreach ( $menu->submenu as $submenuitem) {
-                        if (isset($submenuitem->resource)) {
-                            if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
-                                $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
-                                print_r($jsonResource);
-                                $infoMenuItem = new BaseHTMLInfo;
-                                $infoMenuItem->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
+                                    $infoMenuItem->setTitle($menu->label);
+                                    $infoMenuItem->addParagraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
-                                $infoMenuItem->setTitle($jsonResource->name);
-
-                                $infoMenuItem->setTitle($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()));
-
-                                if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                                    $info->addParagraph($jsonResource->description, 12);
-                                }
-                                if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
-                                    foreach ( $jsonResource->docs as $paragraph) {
-                                        $info->addParagraph($paragraph, 12);
+                                    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+                                        $info->addParagraph($jsonResource->description, 12);
                                     }
+                                    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+                                        foreach ( $jsonResource->docs as $paragraph) {
+                                            $info->addParagraph($paragraph, 12);
+                                        }
+                                    }
+
+                                    $docsList[] = $infoMenuItem;
+                                } else {
+                                    echo "error ".$submenuitem->resource;
                                 }
-
-                                $docsList[] = $infoMenuItem;
-                            } else {
-                                echo "error ".$submenuitem->resource;
                             }
-
                         }
                     }
                 }

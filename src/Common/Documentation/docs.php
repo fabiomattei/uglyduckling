@@ -1,38 +1,46 @@
 <?php
 
-$myDocFunctions = [];
+$GLOBALS['myDocFunctions'] = [];
 
-$myDocFunctions['dashboard'] = function ( $tableJsonStructure, $jsonLoader ) {
-    $out = '';
+$GLOBALS['myDocFunctions']['dashboard'] = function ( $tableJsonStructure, $jsonLoader ) {
+    $out = 'This page is composed by '. count($tableJsonStructure->panels) . ' sections ';
     foreach ($tableJsonStructure->panels as $panel) {
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
-            $out += $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
+            $out .= $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
         }
     }
     return $out;
 };
 
-$myDocFunctions['table'] = function ( $tableJsonStructure, $jsonLoader ) {
+$GLOBALS['myDocFunctions']['table'] = function ( $tableJsonStructure, $jsonLoader ) {
     if ( isset($tableJsonStructure->get->table->title) ) {
         return $tableJsonStructure->get->table->title;
     }
-    return '';
+    return 'table';
 };
 
-$myDocFunctions['form'] = function ($formJsonStructure, $jsonLoader ) {
+$GLOBALS['myDocFunctions']['datatable'] = function ( $tableJsonStructure, $jsonLoader ) {
+    if ( isset($tableJsonStructure->get->table->title) ) {
+        return $tableJsonStructure->get->table->title;
+    }
+    return 'datatable';
+};
+
+$GLOBALS['myDocFunctions']['form'] = function ($formJsonStructure, $jsonLoader ) {
     if ( isset($formJsonStructure->get->form->title) ) {
         return $formJsonStructure->get->form->title;
     }
-    return '';
+    return 'form';
 };
 
-$myDocFunctions['info'] = function ($infoJsonStructure, $jsonLoader ) {
+$GLOBALS['myDocFunctions']['info'] = function ($infoJsonStructure, $jsonLoader ) {
     if ( isset($infoJsonStructure->get->info->title) ) {
         return $infoJsonStructure->get->info->title;
     }
-    return '';
+    return 'info';
 };
 
-
-
+$GLOBALS['myDocFunctions']['chartjs'] = function ($infoJsonStructure, $jsonLoader ) {
+    return 'chartjs';
+};
