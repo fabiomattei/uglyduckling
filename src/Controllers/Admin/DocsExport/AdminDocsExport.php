@@ -66,11 +66,11 @@ class AdminDocsExport extends AdminController {
                         $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                         if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                            $doc->paragraph($jsonResource->description, 12);
+                            $infoMenuItem->paragraph($jsonResource->description, 12);
                         }
                         if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                             foreach ( $jsonResource->docs as $paragraph) {
-                                $doc->paragraph($paragraph, 12);
+                                $infoMenuItem->paragraph($paragraph, 12);
                             }
                         }
 
@@ -87,11 +87,11 @@ class AdminDocsExport extends AdminController {
                                     $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                                     if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                                        $doc->paragraph($jsonResource->description, 12);
+                                        $infoMenuItem->paragraph($jsonResource->description, 12);
                                     }
                                     if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                                         foreach ( $jsonResource->docs as $paragraph) {
-                                            $doc->paragraph($paragraph, 12);
+                                            $infoMenuItem->paragraph($paragraph, 12);
                                         }
                                     }
 
