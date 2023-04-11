@@ -83,7 +83,7 @@ class AdminDocsExport extends AdminController {
                                 if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
                                     $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
                                     $infoMenuItem = new BaseHtmlDoc;
-                                    $infoMenuItem->h3($menu->label);
+                                    $infoMenuItem->h3($menu->label.': '.$submenuitem->label);
                                     $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
 
                                     if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {

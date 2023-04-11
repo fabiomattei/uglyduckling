@@ -10,7 +10,6 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $tableJsonStructure, $jsonL
             $out .= $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
         } else {
             $out .= $panel->resource;
-            $out .= $panel->resource;
         }
     }
     return $out;
