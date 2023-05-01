@@ -4,13 +4,21 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHtmlDoc;
 
 $GLOBALS['myDocFunctions'] = [];
 
-$GLOBALS['myDocFunctions']['dashboard'] = function ( $tableJsonStructure, $jsonLoader ) {
+$GLOBALS['myDocFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader ) {
     $doc = new BaseHtmlDoc;
     $docs = [$doc];
-    if (count($tableJsonStructure->panels) > 1) {
-        $out = 'This page is composed by '. count($tableJsonStructure->panels) . ' sections ';
+    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+        $doc->paragraph($jsonResource->description);
     }
-    foreach ($tableJsonStructure->panels as $panel) {
+    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+        foreach ( $jsonResource->docs as $paragraph) {
+            $doc->paragraph($paragraph);
+        }
+    }
+    if (count($jsonResource->panels) > 1) {
+        $doc->paragraph('This page is composed by '. count($jsonResource->panels) . ' sections ');
+    }
+    foreach ($jsonResource->panels as $panel) {
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
             $items = $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
