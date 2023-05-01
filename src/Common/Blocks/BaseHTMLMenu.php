@@ -96,7 +96,7 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function show(): string {
-        if ( $this->rightBody != '' ) {
+        if ( isset($this->rightBody) AND $this->rightBody != '' ) {
             $rightSubmenu = $this->rightBody;
             $rightSubmenu = $this->htmlTemplateLoader->loadTemplateAndReplace(
                 array('${rightbody}'),
