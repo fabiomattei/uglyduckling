@@ -1,48 +1,105 @@
 <?php
 
+use Fabiom\UglyDuckling\Common\Blocks\BaseHtmlDoc;
+
 $GLOBALS['myDocFunctions'] = [];
 
 $GLOBALS['myDocFunctions']['dashboard'] = function ( $tableJsonStructure, $jsonLoader ) {
-    $out = 'This page is composed by '. count($tableJsonStructure->panels) . ' sections ';
+    $doc = new BaseHtmlDoc;
+    $docs = [$doc];
+    if (count($tableJsonStructure->panels) > 1) {
+        $out = 'This page is composed by '. count($tableJsonStructure->panels) . ' sections ';
+    }
     foreach ($tableJsonStructure->panels as $panel) {
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
-            $out .= $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
+            $items = $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
+            if (is_array($items)) {
+                $docs = array_merge($docs, $items);
+            } else {
+                $docs[] = $items;
+            }
         } else {
-            $out .= $panel->resource;
+            echo $panel->resource." does not exist<br>";
         }
     }
-    return $out;
+    return $docs;
 };
 
-$GLOBALS['myDocFunctions']['table'] = function ( $tableJsonStructure, $jsonLoader ) {
-    if ( isset($tableJsonStructure->get->table->title) ) {
-        return $tableJsonStructure->get->table->title;
+$GLOBALS['myDocFunctions']['table'] = function ( $jsonResource, $jsonLoader ) {
+    $doc = new BaseHtmlDoc;
+    if ( isset($jsonResource->get->table->title) ) {
+        $doc->h3($jsonResource->get->table->title);
     }
-    return 'table';
+    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+        $doc->paragraph($jsonResource->description);
+    }
+    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+        foreach ( $jsonResource->docs as $paragraph) {
+            $doc->paragraph($paragraph);
+        }
+    }
+    return $doc;
 };
 
-$GLOBALS['myDocFunctions']['datatable'] = function ( $tableJsonStructure, $jsonLoader ) {
-    if ( isset($tableJsonStructure->get->table->title) ) {
-        return $tableJsonStructure->get->table->title;
+$GLOBALS['myDocFunctions']['datatable'] = function ( $jsonResource, $jsonLoader ) {
+    $doc = new BaseHtmlDoc;
+    if ( isset($jsonResource->get->table->title) ) {
+        $doc->h3($jsonResource->get->table->title);
     }
-    return 'datatable';
+    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+        $doc->paragraph($jsonResource->description);
+    }
+    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+        foreach ( $jsonResource->docs as $paragraph) {
+            $doc->paragraph($paragraph);
+        }
+    }
+    return $doc;
 };
 
-$GLOBALS['myDocFunctions']['form'] = function ($formJsonStructure, $jsonLoader ) {
-    if ( isset($formJsonStructure->get->form->title) ) {
-        return $formJsonStructure->get->form->title;
+$GLOBALS['myDocFunctions']['form'] = function ($jsonResource, $jsonLoader ) {
+    $doc = new BaseHtmlDoc;
+    if ( isset($jsonResource->get->form->title) ) {
+        $doc->h3($jsonResource->get->form->title);
     }
-    return 'form';
+    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+        $doc->paragraph($jsonResource->description);
+    }
+    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+        foreach ( $jsonResource->docs as $paragraph) {
+            $doc->paragraph($paragraph);
+        }
+    }
+    return $doc;
 };
 
-$GLOBALS['myDocFunctions']['info'] = function ($infoJsonStructure, $jsonLoader ) {
-    if ( isset($infoJsonStructure->get->info->title) ) {
-        return $infoJsonStructure->get->info->title;
+$GLOBALS['myDocFunctions']['info'] = function ($jsonResource, $jsonLoader ) {
+    $doc = new BaseHtmlDoc;
+    if ( isset($jsonResource->get->info->title) ) {
+        $doc->h3($jsonResource->get->info->title);
     }
-    return 'info';
+    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+        $doc->paragraph($jsonResource->description);
+    }
+    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+        foreach ( $jsonResource->docs as $paragraph) {
+            $doc->paragraph($paragraph);
+        }
+    }
+    return $doc;
 };
 
 $GLOBALS['myDocFunctions']['chartjs'] = function ($infoJsonStructure, $jsonLoader ) {
-    return 'chartjs';
+    $doc = new BaseHtmlDoc;
+    $doc->h1('chartjs');
+    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
+        $doc->paragraph($jsonResource->description);
+    }
+    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
+        foreach ( $jsonResource->docs as $paragraph) {
+            $doc->paragraph($paragraph);
+        }
+    }
+    return $doc;
 };

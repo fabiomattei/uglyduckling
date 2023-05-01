@@ -31,7 +31,7 @@ class AdminDocsExport extends AdminController {
             }
 
             $doc->h3('Menu structure');
-            $doc->openTable();
+            $doc->openTable( [ 'border' => 1 ] );
             $doc->openRow();
             $doc->th('Menu');
             $doc->th('Sub-menu');
@@ -63,18 +63,14 @@ class AdminDocsExport extends AdminController {
                         $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
                         $infoMenuItem = new BaseHtmlDoc;
                         $infoMenuItem->h3($menu->label);
-                        $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()));
-
-                        if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                            $infoMenuItem->paragraph($jsonResource->description);
-                        }
-                        if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
-                            foreach ( $jsonResource->docs as $paragraph) {
-                                $infoMenuItem->paragraph($paragraph);
-                            }
-                        }
-
+                        $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader());
                         $docsList[] = $infoMenuItem;
+
+                        if ( is_array($items)) {
+                            $docsList = array_merge($docsList, $items);
+                        } else {
+                            array_push($docsList, $items);
+                        }
                     }
 
                     if ( isset($menu->submenu) and is_array($menu->submenu) ) {
@@ -84,18 +80,14 @@ class AdminDocsExport extends AdminController {
                                     $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
                                     $infoMenuItem = new BaseHtmlDoc;
                                     $infoMenuItem->h3($menu->label.': '.$submenuitem->label);
-                                    $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()));
-
-                                    if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                                        $infoMenuItem->paragraph($jsonResource->description);
-                                    }
-                                    if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
-                                        foreach ( $jsonResource->docs as $paragraph) {
-                                            $infoMenuItem->paragraph($paragraph);
-                                        }
-                                    }
+                                    $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader());
 
                                     $docsList[] = $infoMenuItem;
+                                    if ( is_array($items)) {
+                                        $docsList = array_merge($docsList, $items);
+                                    } else {
+                                        array_push($docsList, $items);
+                                    }
                                 } else {
                                     echo "error ".$submenuitem->resource;
                                 }

@@ -201,7 +201,7 @@ class BaseHtmlDoc extends BaseHTMLBlock {
     private function addAttributes( $attributes ): string {
         return implode(' ', array_map(
             function ($v, $k) {
-                return $k.':="'.$v.'"';
+                return $k.'="'.$v.'"';
             },
             $attributes,
             array_keys($attributes)
