@@ -66,6 +66,14 @@ class BaseHtmlDoc extends BaseHTMLBlock {
         }
     }
 
+    function img( string $src, array $attributes = [] ) {
+        if (count($attributes) > 0) {
+            $this->html .= '<img src="'.$src.'" '.$this->addAttributes($attributes).' />';
+        } else {
+            $this->html .= '<img src="'.$src.'" />';
+        }
+    }
+
     function openTable( array $attributes = [] ) {
         if (count($attributes) > 0) {
             $this->html .= '<table '.$this->addAttributes($attributes).'>';

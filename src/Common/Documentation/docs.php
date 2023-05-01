@@ -18,6 +18,9 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader 
     if (count($jsonResource->panels) > 1) {
         $doc->paragraph('This page is composed by '. count($jsonResource->panels) . ' sections ');
     }
+    if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
+        $doc->img($jsonResource->docimg, ['width'=>'700']);
+    }
     foreach ($jsonResource->panels as $panel) {
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
@@ -47,6 +50,9 @@ $GLOBALS['myDocFunctions']['table'] = function ( $jsonResource, $jsonLoader ) {
             $doc->paragraph($paragraph);
         }
     }
+    if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
+        $doc->img($jsonResource->docimg, ['width'=>'700']);
+    }
     return $doc;
 };
 
@@ -62,6 +68,9 @@ $GLOBALS['myDocFunctions']['datatable'] = function ( $jsonResource, $jsonLoader 
         foreach ( $jsonResource->docs as $paragraph) {
             $doc->paragraph($paragraph);
         }
+    }
+    if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
+        $doc->img($jsonResource->docimg, ['width'=>'700']);
     }
     return $doc;
 };
@@ -79,6 +88,9 @@ $GLOBALS['myDocFunctions']['form'] = function ($jsonResource, $jsonLoader ) {
             $doc->paragraph($paragraph);
         }
     }
+    if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
+        $doc->img($jsonResource->docimg, ['width'=>'700']);
+    }
     return $doc;
 };
 
@@ -95,6 +107,9 @@ $GLOBALS['myDocFunctions']['info'] = function ($jsonResource, $jsonLoader ) {
             $doc->paragraph($paragraph);
         }
     }
+    if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
+        $doc->img($jsonResource->docimg, ['width'=>'700']);
+    }
     return $doc;
 };
 
@@ -108,6 +123,9 @@ $GLOBALS['myDocFunctions']['chartjs'] = function ($infoJsonStructure, $jsonLoade
         foreach ( $jsonResource->docs as $paragraph) {
             $doc->paragraph($paragraph);
         }
+    }
+    if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
+        $doc->img($jsonResource->docimg, ['width'=>'700']);
     }
     return $doc;
 };
