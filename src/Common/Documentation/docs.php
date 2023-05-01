@@ -24,6 +24,8 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader 
     foreach ($jsonResource->panels as $panel) {
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
+            // echo( gettype($panelResource->metadata->type));
+            // echo($panelResource->metadata->type."<br>");
             $items = $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
             if (is_array($items)) {
                 $docs = array_merge($docs, $items);
@@ -161,6 +163,8 @@ $GLOBALS['myDocFunctions']['form'] = function ($jsonResource, $jsonLoader ) {
     }
     return $docs;
 };
+
+$GLOBALS['myDocFunctions']['ismiform'] = $GLOBALS['myDocFunctions']['form'];
 
 $GLOBALS['myDocFunctions']['info'] = function ($jsonResource, $jsonLoader ) {
     $doc = new BaseHtmlDoc;
