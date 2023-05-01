@@ -62,7 +62,7 @@ class AdminDocsExport extends AdminController {
                     if (isset($menu->resource)) {
                         $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
                         $infoMenuItem = new BaseHtmlDoc;
-                        $infoMenuItem->h3($menu->label);
+                        $infoMenuItem->h2('Menu: '.$menu->label);
                         $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader());
                         $docsList[] = $infoMenuItem;
 
@@ -79,7 +79,7 @@ class AdminDocsExport extends AdminController {
                                 if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
                                     $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
                                     $infoMenuItem = new BaseHtmlDoc;
-                                    $infoMenuItem->h3($menu->label.': '.$submenuitem->label);
+                                    $infoMenuItem->h2('Sub-Menu: '.$menu->label.' - '.$submenuitem->label);
                                     $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader());
 
                                     $docsList[] = $infoMenuItem;
