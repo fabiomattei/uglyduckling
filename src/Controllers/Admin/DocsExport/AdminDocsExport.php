@@ -26,7 +26,7 @@ class AdminDocsExport extends AdminController {
             $doc->h1('Group: ' . $jsonGroup->name);
             if ( isset($jsonGroup->docs) and is_array($jsonGroup->docs) ) {
                 foreach ( $jsonGroup->docs as $paragraph) {
-                    $doc->paragraph($paragraph, 12);
+                    $doc->paragraph($paragraph);
                 }
             }
 
@@ -66,11 +66,11 @@ class AdminDocsExport extends AdminController {
                         $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()));
 
                         if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                            $infoMenuItem->paragraph($jsonResource->description, 12);
+                            $infoMenuItem->paragraph($jsonResource->description);
                         }
                         if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                             foreach ( $jsonResource->docs as $paragraph) {
-                                $infoMenuItem->paragraph($paragraph, 12);
+                                $infoMenuItem->paragraph($paragraph);
                             }
                         }
 
@@ -84,14 +84,14 @@ class AdminDocsExport extends AdminController {
                                     $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
                                     $infoMenuItem = new BaseHtmlDoc;
                                     $infoMenuItem->h3($menu->label.': '.$submenuitem->label);
-                                    $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()), 12);
+                                    $infoMenuItem->paragraph($GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader()));
 
                                     if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
-                                        $infoMenuItem->paragraph($jsonResource->description, 12);
+                                        $infoMenuItem->paragraph($jsonResource->description);
                                     }
                                     if ( isset($jsonResource->docs) and is_array($jsonResource->docs) ) {
                                         foreach ( $jsonResource->docs as $paragraph) {
-                                            $infoMenuItem->paragraph($paragraph, 12);
+                                            $infoMenuItem->paragraph($paragraph);
                                         }
                                     }
 
