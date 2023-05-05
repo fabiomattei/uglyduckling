@@ -21,6 +21,11 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader 
     if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
         $doc->img($jsonResource->docimg, ['width'=>'700']);
     }
+    if (isset($jsonResource->docimgs) and is_array($jsonResource->docimgs) ) {
+        foreach ( $jsonResource->docimgs as $imgs) {
+            $doc->img($imgs, ['width'=>'700']);
+        }
+    }
     foreach ($jsonResource->panels as $panel) {
         if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
             $panelResource = $jsonLoader->loadResource($panel->resource);
