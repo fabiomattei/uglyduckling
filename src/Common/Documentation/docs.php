@@ -26,19 +26,21 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader 
             $doc->img($imgs, ['width'=>'700']);
         }
     }
-    foreach ($jsonResource->panels as $panel) {
-        if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
-            $panelResource = $jsonLoader->loadResource($panel->resource);
-            // echo( gettype($panelResource->metadata->type));
-            // echo($panelResource->metadata->type."<br>");
-            $items = $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
-            if (is_array($items)) {
-                $docs = array_merge($docs, $items);
+    if ( !isset($jsonResource->nopanels) ) {
+        foreach ($jsonResource->panels as $panel) {
+            if ( $jsonLoader->isJsonResourceIndexedAndFileExists($panel->resource) ) {
+                $panelResource = $jsonLoader->loadResource($panel->resource);
+                // echo( gettype($panelResource->metadata->type));
+                // echo($panelResource->metadata->type."<br>");
+                $items = $GLOBALS['myDocFunctions'][$panelResource->metadata->type]($panelResource, $jsonLoader);
+                if (is_array($items)) {
+                    $docs = array_merge($docs, $items);
+                } else {
+                    $docs[] = $items;
+                }
             } else {
-                $docs[] = $items;
+                echo $panel->resource." does not exist<br>";
             }
-        } else {
-            echo $panel->resource." does not exist<br>";
         }
     }
     if (isset($jsonResource->docprocess) and is_array($jsonResource->docprocess)) {
