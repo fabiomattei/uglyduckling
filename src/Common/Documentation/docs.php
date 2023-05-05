@@ -211,7 +211,6 @@ $GLOBALS['myDocFunctions']['chartjs'] = function ($infoJsonStructure, $jsonLoade
     $doc = new BaseHtmlDoc;
     $docs = [$doc];
 
-    $doc->h1('chartjs');
     if ( isset($jsonResource->description) and is_string($jsonResource->description) ) {
         $doc->paragraph($jsonResource->description);
     }
