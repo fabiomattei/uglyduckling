@@ -16,7 +16,7 @@ $GLOBALS['myDocFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader 
         }
     }
     if (count($jsonResource->panels) > 1) {
-        $doc->paragraph('This page is composed by '. count($jsonResource->panels) . ' sections ');
+        // $doc->paragraph('This page is composed by '. count($jsonResource->panels) . ' sections ');
     }
     if (isset($jsonResource->docimg) and is_string($jsonResource->docimg) ) {
         $doc->img($jsonResource->docimg, ['width'=>'700']);
@@ -164,8 +164,6 @@ $GLOBALS['myDocFunctions']['form'] = function ($jsonResource, $jsonLoader ) {
     return $docs;
 };
 
-$GLOBALS['myDocFunctions']['ismiform'] = $GLOBALS['myDocFunctions']['form'];
-
 $GLOBALS['myDocFunctions']['info'] = function ($jsonResource, $jsonLoader ) {
     $doc = new BaseHtmlDoc;
     $docs = [$doc];
@@ -235,3 +233,7 @@ $GLOBALS['myDocFunctions']['chartjs'] = function ($infoJsonStructure, $jsonLoade
     }
     return $docs;
 };
+
+$GLOBALS['myDocFunctions']['ismiform'] = $GLOBALS['myDocFunctions']['form'];
+$GLOBALS['myDocFunctions']['coloreddatatable'] = $GLOBALS['myDocFunctions']['datatable'];
+
