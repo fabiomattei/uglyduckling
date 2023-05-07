@@ -19,18 +19,19 @@ class AdminDocsExport extends AdminController {
         $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle() . ' :: Admin Docs export';
 
         $docsList = [];
+        $chapterNumber = 1;
         foreach ( $this->applicationBuilder->getJsonloader()->getResourcesByType( 'group' ) as $jsonGroupName ) {
             $jsonGroup = $this->applicationBuilder->getJsonloader()->loadResource($jsonGroupName->name);
 
             $doc = new BaseHtmlDoc;
-            $doc->h1('Group: ' . $jsonGroup->name);
+            $doc->h1($chapterNumber . ' Group: ' . $jsonGroup->doctitle ?? $jsonGroup->name ?? '');
             if ( isset($jsonGroup->docs) and is_array($jsonGroup->docs) ) {
                 foreach ( $jsonGroup->docs as $paragraph) {
                     $doc->paragraph($paragraph);
                 }
             }
 
-            $doc->h3('Menu structure');
+            $doc->h3($chapterNumber . '.1 Menu structure');
             $doc->openTable( [ 'border' => 1 ] );
             $doc->openRow();
             $doc->th('Menu');
@@ -57,13 +58,14 @@ class AdminDocsExport extends AdminController {
 
             $docsList[] = $doc;
 
+            $subChapterNumber = 2;
             if ( isset($jsonGroup->menu) and is_array($jsonGroup->menu) ) {
                 foreach ( $jsonGroup->menu as $menu) {
                     if (isset($menu->resource)) {
                         $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($menu->resource);
                         $infoMenuItem = new BaseHtmlDoc;
-                        $infoMenuItem->h2('Menu: '.$menu->label);
-                        $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader());
+                        $infoMenuItem->h2($chapterNumber . '.'.$subChapterNumber . ' Menu: '.$menu->label);
+                        $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader(), $chapterNumber . '.'.$subChapterNumber, 1);
                         $docsList[] = $infoMenuItem;
 
                         if ( is_array($items)) {
@@ -73,14 +75,18 @@ class AdminDocsExport extends AdminController {
                         }
                     }
 
+                    $subSubChapterNumber =1;
                     if ( isset($menu->submenu) and is_array($menu->submenu) ) {
+                        $infoMenuItem = new BaseHtmlDoc;
+                        $infoMenuItem->h2($chapterNumber . '.'.$subChapterNumber . ' Menu: '.$menu->label);
+                        $docsList[] = $infoMenuItem;
                         foreach ( $menu->submenu as $submenuitem) {
                             if (isset($submenuitem->resource)) {
                                 if ( $this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists($submenuitem->resource) ) {
                                     $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource($submenuitem->resource);
                                     $infoMenuItem = new BaseHtmlDoc;
-                                    $infoMenuItem->h2('Sub-Menu: '.$menu->label.' - '.$submenuitem->label);
-                                    $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader());
+                                    $infoMenuItem->h3($chapterNumber . '.'.$subChapterNumber .'.'.$subSubChapterNumber . ' Menu: '.$menu->label.' - Sub-Menu: '.$submenuitem->label);
+                                    $items = $GLOBALS['myDocFunctions'][$jsonResource->metadata->type]($jsonResource, $this->applicationBuilder->getJsonloader(), $chapterNumber . '.'.$subChapterNumber .'.'.$subSubChapterNumber, 2);
 
                                     $docsList[] = $infoMenuItem;
                                     if ( is_array($items)) {
@@ -92,10 +98,13 @@ class AdminDocsExport extends AdminController {
                                     echo "error ".$submenuitem->resource;
                                 }
                             }
+                            $subSubChapterNumber +=1;
                         }
                     }
+                    $subChapterNumber +=1;
                 }
             }
+            $chapterNumber += 1;
         }
 
         $this->menucontainer    = array( new AdminMenu( $this->applicationBuilder->getSetup()->getAppNameForPageTitle(), AdminRouter::ROUTE_ADMIN_GROUP_LIST ) );
