@@ -8,6 +8,11 @@ use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
 class BaseHTMLMenu extends BaseHTMLBlock {
 
     private HtmlTemplateLoader $htmlTemplateLoader;
+    public $brand;
+    public $buttonToggler;
+    public $body;
+    public $rightBody;
+    public $dropdownCounter;
 
     function __construct() {
         parent::__construct();
