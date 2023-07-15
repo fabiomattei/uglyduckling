@@ -21,6 +21,8 @@ class RowHTMLBlock extends BaseHTMLBlock {
     private $blocks;
     private $htmlTemplateLoader;
 
+    public $rowblockid;
+
     /**
      * RowHTMLBlock constructor.
      * @param $blocks

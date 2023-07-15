@@ -98,7 +98,7 @@ class FormJsonTemplate extends JsonTemplate {
                     }
 
 					$options = array();
-					if (is_array($field->options) || is_object($values)) {
+					if (is_array($field->options)) {    // || is_object($op)
                         foreach ($field->options as $op) {
                     	    $options[$op->value] = $op->label;
                         }

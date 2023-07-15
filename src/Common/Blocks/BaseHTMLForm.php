@@ -14,6 +14,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
     protected $body;
     protected $method;
     protected HtmlTemplateLoader $htmlTemplateLoader;
+    protected $formid;
 
     function __construct() {
         parent::__construct();
