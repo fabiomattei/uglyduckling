@@ -42,6 +42,7 @@ class TableV1JsonChecker extends BasicJsonChecker {
         }
 
         // check if all query sql parameters are passed in the get parameters array
+        /*
         foreach ($querySqlParameters as $sqlRequiredPar) {
             if (!array_filter($getParameters, function ($parToCheck) use ($sqlRequiredPar) {
                 return property_exists($sqlRequiredPar, 'getparameter') AND $parToCheck->name === $sqlRequiredPar->getparameter;
@@ -53,6 +54,7 @@ class TableV1JsonChecker extends BasicJsonChecker {
                 return false;
             }
         }
+        */
 
         return true;
     }

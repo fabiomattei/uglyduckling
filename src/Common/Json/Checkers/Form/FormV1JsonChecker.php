@@ -53,16 +53,18 @@ class FormV1JsonChecker extends BasicJsonChecker {
         }
 
         // for POST request it checks if all query sql parameters are passed between post parameters
+        /*
         foreach ( $form_transactions as $transaction ) {
             foreach ($transaction->parameters as $sqlRequiredPar) {
                 if (!array_filter($postParameters, function ($parToCheck) use ($sqlRequiredPar) {
                     return $parToCheck->name === $sqlRequiredPar->postparameter;
                 })) {
-                    $this->errors[] = 'Error for form, SQL Transaction parameter ' . $sqlRequiredPar->postparameter . ' it is not part of the get parameters array';
+                    $this->errors[] = 'Error fosr form, SQL Transaction parameter ' . $sqlRequiredPar->postparameter . ' it is not part of the get parameters array';
                     $out = false;
                 }
             }
         }
+        */
         
 	    return $out;
     }
