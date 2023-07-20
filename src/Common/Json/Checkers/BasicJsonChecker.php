@@ -50,7 +50,7 @@ class BasicJsonChecker {
 	function isActionPresent( $action ): bool {
 		$out = false;
         foreach ( $this->getActionsDefinedInResource() as $definedAction ) {
-            if ( $definedAction->resource === $action ) {
+            if ( property_exists($definedAction, 'resource') AND $definedAction->resource === $action ) {
                 $out = true;
             }
 			// echo $definedAction->resource . '===' . $action . '  -  ';
