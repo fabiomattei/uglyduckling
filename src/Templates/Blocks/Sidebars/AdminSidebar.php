@@ -6,6 +6,10 @@ use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Common\Router\AdminRouter;
 
 class AdminSidebar extends BaseHTMLBlock {
+
+    public $appname;
+    public $active;
+    public $router;
 	
 	function __construct( string $appname, string $active, $router ) {
 		$this->appname = $appname;

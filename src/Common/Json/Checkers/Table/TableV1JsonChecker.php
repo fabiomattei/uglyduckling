@@ -21,7 +21,7 @@ class TableV1JsonChecker extends BasicJsonChecker {
         foreach ( $tableFields as $field ) {
             if ( isset( $field->sqlfield ) ) {
                 if ( !$this->isFieldInQuery( $field->sqlfield, $querysql ) ) {
-                    $this->errors[] = "Error for table field " . $field->name . " its sqlfield " . $field->sqlfield . " is not in query " . $querysql;
+                    $this->errors[] = "Error for table field " . ( $field->name ?? '' ) . " its sqlfield " . $field->sqlfield . " is not in query " . $querysql;
                     return false;
                 }
             }
