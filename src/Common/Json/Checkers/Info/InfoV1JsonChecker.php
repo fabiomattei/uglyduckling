@@ -23,7 +23,7 @@ class InfoV1JsonChecker extends BasicJsonChecker {
             foreach ( $infoFields as $field ) {
                 if ( isset( $field->sqlfield ) AND isset( $querysql ) ) {
                     if ( !$this->isFieldInQuery( $field->sqlfield, $querysql ) ) {
-                        $this->errors[] = 'Error for form field ' . $field->name . ' its sqlfield ' . $field->sqlfield . ' is not in query ' . $querysql;
+                        $this->errors[] = 'Error for form field ' . ($field->name ?? '') . ' its sqlfield ' . $field->sqlfield . ' is not in query ' . $querysql;
                         $out = false;
                     }
                 }

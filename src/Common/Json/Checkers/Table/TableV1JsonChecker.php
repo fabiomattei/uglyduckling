@@ -11,7 +11,7 @@ use Fabiom\UglyDuckling\Common\Utils\StringUtils;
 class TableV1JsonChecker extends BasicJsonChecker {
 
     function isResourceBlockWellStructured() : bool {
-        $querysql = $this->resource->get->query->sql;
+        $querysql = $this->resource->get->query->sql ?? '';
         $querySqlParameters = $this->resource->get->query->parameters ?? array();
         $getParameters = $this->resource->get->request->parameters ?? array();
         $tableFields = $this->resource->get->table->fields;
