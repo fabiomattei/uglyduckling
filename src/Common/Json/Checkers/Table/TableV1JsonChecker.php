@@ -44,10 +44,13 @@ class TableV1JsonChecker extends BasicJsonChecker {
         // check if all query sql parameters are passed in the get parameters array
         foreach ($querySqlParameters as $sqlRequiredPar) {
             if (!array_filter($getParameters, function ($parToCheck) use ($sqlRequiredPar) {
-                return $parToCheck->name === $sqlRequiredPar->getparameter;
+                return property_exists($sqlRequiredPar, 'getparameter') AND $parToCheck->name === $sqlRequiredPar->getparameter;
             })) {
+                if ( !property_exists($sqlRequiredPar, 'getparameter') ) {
+                    $this->errors[] = 'Error for table, GET parameter ' . $sqlRequiredPar->getparameter . ' it is not defined';
+                }
                 $this->errors[] = 'Error for table, SQL parameter ' . $sqlRequiredPar->getparameter . ' it is not part of the get parameters array';
-                $out = false;
+                return false;
             }
         }
 
