@@ -35,8 +35,6 @@ class StringUtils {
      *
      * @param string $field
      * @param string $container
-     * @param string $start
-     * @param string $end
      * @return bool
      */
     static function isFieldInSqlSelect( string $field, string $sql ): bool {
@@ -47,7 +45,7 @@ class StringUtils {
             $ini = strpos( $sql, strtolower('SELECT') ); // finding the position of the last occurrence of $start in $sql    
         }
         if ($ini == 0) return false;
-        $ini += strlen($start);
+        $ini += strlen('SELECT');
         $len = strpos($sql, strtolower('FROM'), $ini) - $ini;
         $string_in_the_middle = substr($sql, $ini, $len);
         if ( strpos( $string_in_the_middle, $field ) !== false ) {
@@ -68,8 +66,6 @@ class StringUtils {
      *
      * @param string $word
      * @param string $container
-     * @param string $start
-     * @param string $end
      * @return bool
      */
     static function isFieldInSqlSelectCaseUnsensitive( string $field, string $container ): bool {
