@@ -12,10 +12,10 @@ class TableV1JsonChecker extends BasicJsonChecker {
 
     function isResourceBlockWellStructured() : bool {
         $querysql = $this->resource->get->query->sql ?? '';
-        $querySqlParameters = $this->resource->get->query->parameters ?? array();
-        $getParameters = $this->resource->get->request->parameters ?? array();
-        $tableFields = $this->resource->get->table->fields;
-        $tableActions = $this->resource->get->table->actions;
+        $querySqlParameters = $this->resource->get->query->parameters ?? [];
+        $getParameters = $this->resource->get->request->parameters ?? [];
+        $tableFields = $this->resource->get->table->fields ?? [];
+        $tableActions = $this->resource->get->table->actions ?? [];
         
         // check if all table fields are contained in the query selected fields
         foreach ( $tableFields as $field ) {
