@@ -18,6 +18,8 @@ class JsonResourceBasicController extends Controller {
     /* TODO remove following parameter */
     protected $internalGetParameters;
     protected $resourceName;
+
+    protected $secondGump;
     
     /**
      * This function allows to set a resource name to load for a particular instance
