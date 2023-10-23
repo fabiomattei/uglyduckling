@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: fabio
- * Date: 15/06/2016
- * Time: 17:26
- */
+namespace Fabiom\UglyDuckling\Framework\PaperWorks;
 
 class CheckList {
 

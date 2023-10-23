@@ -4,7 +4,7 @@
  * Date: 03/02/2016
  * Time: 10:51
  */
-
+namespace Fabiom\UglyDuckling\Framework\Utils;
 class XMLSerializer {
 
     /**

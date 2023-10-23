@@ -1,5 +1,7 @@
 <?php
 
+namespace Fabiom\UglyDuckling\Framework\Utils;
+
 /**
 * This class make possible to create applications that supports multilanguage.
 *

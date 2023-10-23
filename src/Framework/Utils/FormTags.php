@@ -1,12 +1,6 @@
 <?php
 
-/* ==============================================================
- * This file contains functions that helps you to deal with forms
- * this file it in not loaded by default, if you want to use this 
- * functions you need to load it using the line:
- *
- * utils( 'form' );
- * ============================================================== */
+namespace Fabiom\UglyDuckling\Framework\Utils;
 
 // fuctions that symplifies the selected property in a form
 function selected( $variable, $term ) {

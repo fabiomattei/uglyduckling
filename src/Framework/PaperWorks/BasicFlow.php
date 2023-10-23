@@ -1,5 +1,8 @@
 <?php
 
+
+namespace Fabiom\UglyDuckling\Framework\PaperWorks;
+
 /**
  * Created by Fabio Mattei <matteif@tcd.ie>
  * Date: 20/05/2016

@@ -1,5 +1,7 @@
 <?php
 
+namespace Fabiom\UglyDuckling\Framework\Utils;
+
 /**
  * @param $request             a string containing the request
  *

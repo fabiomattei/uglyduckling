@@ -1,5 +1,7 @@
 <?php
 
+namespace Fabiom\UglyDuckling\Framework\DataBase;
+
 /**
  * Basic class for all dao's
  */

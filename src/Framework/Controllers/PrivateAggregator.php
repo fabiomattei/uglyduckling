@@ -1,7 +1,6 @@
 <?php
 
-require_once 'framework/libs/gump/gump.class.php';
-
+namespace Fabiom\UglyDuckling\Framework\Controllers;
 class PrivateAggregator {
 
     public $get_validation_rules = array();

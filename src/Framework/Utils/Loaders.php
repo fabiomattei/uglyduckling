@@ -1,9 +1,6 @@
 <?php
 
-/* ==============================================================
- * This file contains all function that mockupper uses in order
- * to load the files that composes the pages
- * ============================================================== */
+namespace Fabiom\UglyDuckling\Framework\Utils;
 
 /**
  * Load a block file.

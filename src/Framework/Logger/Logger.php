@@ -1,5 +1,6 @@
 <?php
 
+namespace Fabiom\UglyDuckling\Framework\Logger;
 class Logger {
 	
 	function __construct() {
