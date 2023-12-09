@@ -531,13 +531,13 @@ function controller( $team, $chapter, $action = 'index' ) {
 }
 
 function private_aggregator() {
-	if ( !class_exists( 'PrivateAggregator' ) ) {
+	if ( !class_exists( 'PrivateController' ) ) {
 		require_once 'framework/aggregators/privateaggregator.php';
 	}
 }
 
 function public_aggregator() {
-	if ( !class_exists( 'PublicAggregator' ) ) {
+	if ( !class_exists( 'PublicController' ) ) {
 		require_once 'framework/aggregators/publicaggregator.php';
 	}
 }

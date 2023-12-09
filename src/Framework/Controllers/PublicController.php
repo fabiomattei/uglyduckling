@@ -1,25 +1,25 @@
 <?php
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
-class PublicAggregator {
+class PublicController {
 
 	public $get_validation_rules = array();
     public $get_filter_rules = array();
     public $post_validation_rules = array();
     public $post_filter_rules = array();
-	
+
 	public function __construct() {
 		session_start();
-		
+
 		$_SESSION['office'] = PUBLICFAMILY;
-		
+
 		// setting an array containing all parameters
 		$this->parameters = array();
-		
+
 		// messages block loaded by default from all pages
 		block( 'template', 'message/messages' );
 		$this->messages = new Messages();
-		
+
 		$this->title                  = APPNAMEFORPAGETITLE;
 		$this->menucontainer          = array();
 		$this->topcontainer           = array();
@@ -32,26 +32,26 @@ class PublicAggregator {
 		$this->templateFile           = PUBLICTEMPLATE;
 
 		$this->gump = new GUMP();
-		
+
 		$this->addToHead = '';
 		$this->addToFoot = '';
 	}
-	
+
 	public function isGetRequest() {
 		return $_SERVER["REQUEST_METHOD"] == "GET";
 	}
-	
+
 	public function isPostRequest() {
 		return $_SERVER["REQUEST_METHOD"] == "POST";
 	}
-	
+
 	/**
 	 * Method to override (eventually)
 	 */
 	public function getRequest() {
 		echo 'not implemented yet';
 	}
-	
+
 	/**
 	 * Method to override (eventually)
 	 */
@@ -110,7 +110,7 @@ class PublicAggregator {
     public function show_post_error_page() {
         throw new GeneralException('General malfuction!!!');
     }
-	
+
 	public function showPage() {
 		$time_start = microtime(true); 
 		
@@ -136,24 +136,24 @@ class PublicAggregator {
 			$logger->write('WARNING TIME :: '.$_SERVER["REQUEST_METHOD"].' '.$_SERVER['PHP_SELF'].' '.($time_end - $time_start).' sec', __FILE__, __LINE__);
 		}
 	}
-	
+
 	// ** next section load textual messages for messages block
 	function setSuccess($success) {
 		$this->messages->setSuccess($success);
 	}
-	
+
 	function setError($error) {
 		$this->messages->setError($error);
 	}
-	
+
 	function setInfo($info) {
 		$this->messages->setInfo($info);
 	}
-	
+
 	function setWarning($warning) {
 		$this->messages->setWarning($warning);
 	}
-	
+
 	/* ** functions for setting parameters array */
 	public function setParameters( $parameters ) {
 		if (is_array( $parameters )) {

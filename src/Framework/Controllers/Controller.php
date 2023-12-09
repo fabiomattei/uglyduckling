@@ -1,7 +1,8 @@
 <?php
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
-class PrivateAggregator {
+
+class Controller {
 
     public $get_validation_rules = array();
     public $get_filter_rules = array();
@@ -99,9 +100,9 @@ class PrivateAggregator {
             $this->gump->validation_rules( $this->get_validation_rules );
             $this->gump->filter_rules( $this->get_filter_rules );
             $this->parameters = $this->gump->run( $parms );
-			$this->unvalidated_parameters = $parms;
+            $this->unvalidated_parameters = $parms;
             if ( $this->parameters === false ) {
-				$this->readableErrors = $this->gump->get_readable_errors(true);
+                $this->readableErrors = $this->gump->get_readable_errors(true);
                 return false;
             } else {
                 return true;
@@ -121,9 +122,9 @@ class PrivateAggregator {
             $this->gump->validation_rules( $this->post_validation_rules );
             $this->gump->filter_rules( $this->post_filter_rules );
             $this->parameters = $this->gump->run( $parms );
-			$this->unvalidated_parameters = $parms;
+            $this->unvalidated_parameters = $parms;
             if ( $this->parameters === false ) {
-				$this->readableErrors = $this->gump->get_readable_errors(true);
+                $this->readableErrors = $this->gump->get_readable_errors(true);
                 return false;
             } else {
                 return true;
@@ -138,10 +139,10 @@ class PrivateAggregator {
     public function show_post_error_page() {
         throw new GeneralException('General malfuction!!!');
     }
-	
+
     /**
      * This method has to be implemented by inerithed class
-	 * It return true by defult for compatiblity issues
+     * It return true by defult for compatiblity issues
      */
     public function check_authorization_get_request() {
         return true;
@@ -149,7 +150,7 @@ class PrivateAggregator {
 
     /**
      * This method has to be implemented by inerithed class
-	 * It return true by defult for compatiblity issues
+     * It return true by defult for compatiblity issues
      */
     public function check_authorization_post_request() {
         return true;
@@ -167,25 +168,25 @@ class PrivateAggregator {
         $time_start = microtime(true);
 
         if ($this->isGetRequest()) {
-			if ( $this->check_authorization_get_request() ) {
-	            if ( $this->check_get_request() ) {
-	                $this->getRequest();
-	            } else {
-	                $this->show_get_error_page();
-	            }
-			} else {
-				$this->check_authorization_get_request();
-			}
+            if ( $this->check_authorization_get_request() ) {
+                if ( $this->check_get_request() ) {
+                    $this->getRequest();
+                } else {
+                    $this->show_get_error_page();
+                }
+            } else {
+                $this->check_authorization_get_request();
+            }
         } else {
-			if ( $this->check_authorization_post_request() ) {
-	            if ( $this->check_post_request() ) {
-	                $this->postRequest();
-	            } else {
-	                $this->show_post_error_page();
-	            }
-			} else {
-				$this->check_authorization_post_request();
-			}
+            if ( $this->check_authorization_post_request() ) {
+                if ( $this->check_post_request() ) {
+                    $this->postRequest();
+                } else {
+                    $this->show_post_error_page();
+                }
+            } else {
+                $this->check_authorization_post_request();
+            }
         }
 
         $this->loadTemplate();
@@ -250,13 +251,13 @@ class PrivateAggregator {
     }
 
     /**
-     * This method give to the programmer the possibility of setting a flashvariable, a 
+     * This method give to the programmer the possibility of setting a flashvariable, a
      * variable that will be active up the the next call.
-     * This is ment to be used for instance to send variable from a GET form request to a 
+     * This is ment to be used for instance to send variable from a GET form request to a
      * Post form request or in any case a variable is meant to last only to the next browser
      * request.
      * The variable as not a specific type, maybe it is better to use it with strings
-     * 
+     *
      * @param [string] $flashvariable [variable that last for a request in the same session]
      */
     function setFlashVariable($flashvariable) {
@@ -266,7 +267,7 @@ class PrivateAggregator {
     /**
      * This method return a variable set in the prevoius broser request.
      * To have a better understanging look at setFlashVariable description
-     * 
+     *
      * @return [string] [variable that last for a request in the same session]
      */
     function getFlashVariable() {
@@ -293,7 +294,7 @@ class PrivateAggregator {
             $this->request = $request;
             $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
             $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
-            $_SESSION['request'] = $request;    
+            $_SESSION['request'] = $request;
         }
     }
 
