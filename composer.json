@@ -19,7 +19,7 @@
 		"etsy/phan": "^4.0"
     },
 	"autoload": {
-      "files": ["src/Common/Documentation/docs.php"],
+      "files": ["src/Framework/Json/docs.php", "src/Framework/Json/templates.php"],
       "psr-4": {
             "Fabiom\\UglyDuckling\\": "src/"
         }
