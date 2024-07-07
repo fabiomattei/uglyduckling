@@ -9,43 +9,26 @@ class Request {
     private /* string */ $requestURI = '';
     private /* string */ $action = '';
 
-	function __construct() {
-	}
+    function __construct() {
+    }
 
-    public function setServerRequestURI( string $requestURI ) {
+    public function setServerRequestURI( string $requestURI, string $pathToApp = '/' ) {
         $this->requestURI = $requestURI;
-        $this->calculateSplittedURL();
-    }
-
-    public function getAction() {
-        return $this->action;
-    }
-
-    /**
-    * @param $request  a string containing the request
-    *
-    * @return array    an array containing the results
-    *
-    * @throws \Exception    in case of empty request
-    *
-    * Prende una stringa e la divide nelle sue parti.
-    * Restituisce poi le parti ottenute attraverso un array.
-    *
-    * Es. 'folder-subfolder/action/par1/par2/par3'
-    * Diventa array( 'action', array( 'par1', 'par2', 'par3' ) )
-    */
-    public function calculateSplittedURL() {
-        $request2 = str_replace( ['.html', '.pdf', '.svg'], '', $this->requestURI );
+        $request2 = str_replace( ['.html', '.pdf', '.svg'], '',$requestURI );
         $request  = preg_replace( '/\?.*/', '', $request2 );
 
         if ( $request == '' ) throw new \Exception('General malfuction!!!');
 
         # removing the first '/' from the path
-        $this->action = substr($request, 1); // explode( '/', $request );
+        $this->action = substr( $request, strlen($pathToApp) ); // explode( '/', $request );
 
         if (!StringUtils::validate_string( $this->action )) {
-        	throw new \Exception('Illegal access to calculateSplittedURL!!! Unvalidated action: "' . $this->action . '" over request: ' . $this->requestURI);
+            throw new \Exception('Illegal access to calculateSplittedURL!!! Unvalidated action: "' . $this->action . '" over request: ' . $this->requestURI);
         }
+    }
+
+    public function getAction() {
+        return $this->action;
     }
 
     public function getInfo(): string {
