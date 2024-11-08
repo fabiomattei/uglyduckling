@@ -31,7 +31,7 @@ class RoutersContainer {
 	 * Array of routers
 	 */
     private $routerContainers;
-    private Controller $defaultController;
+    private $defaultController;
     private string $basepath;
 
     /**
