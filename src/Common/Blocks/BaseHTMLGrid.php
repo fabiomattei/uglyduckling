@@ -14,6 +14,8 @@ class BaseHTMLGrid extends BaseHTMLBlock {
 
     private /* array */ $gridBlocks;
     private /* Json Resource */ $jsonResource;
+    public $pageStatus;
+    public $applicationBuilder;
 
     /**
      * BaseHTMLGrid constructor.
