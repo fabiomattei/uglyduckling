@@ -13,7 +13,7 @@ class UrlServices {
         # removing the first '/' from the path
         $action = substr( $request, strlen($pathToApp) ); // explode( '/', $request );
 
-        if (validate_string( $action )) {
+        if (UrlServices::validate_string( $action )) {
             throw new \Exception('Illegal access to calculateSplittedURL!!! Unvalidated action: "' . $action . '" over request: ' . $requestURI);
         }
 
@@ -22,6 +22,13 @@ class UrlServices {
 
     public static function getRequestURI(): string {
         return filter_var((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : NULL), FILTER_SANITIZE_URL);
+    }
+
+    public static function validate_string( $string_var ) {
+        if ( strlen( $string_var ) == 0 ) return true;
+        if ( strlen( $string_var ) > 40 ) return false;
+        if ( ctype_alnum( $string_var ) ) return true;
+        return false;
     }
 
 }
