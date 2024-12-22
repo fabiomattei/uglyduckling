@@ -21,7 +21,7 @@ class UrlServices {
     }
 
     public static function getRequestURI(): string {
-        return filter_var((isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : NULL), FILTER_SANITIZE_URL);
+        return ServerWrapper::getRequestURI();
     }
 
     public static function validate_string( $string_var ) {
