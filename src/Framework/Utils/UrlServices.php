@@ -13,7 +13,7 @@ class UrlServices {
         # removing the first '/' from the path
         $action = substr( $request, strlen($pathToApp) ); // explode( '/', $request );
 
-        if (UrlServices::validate_string( $action )) {
+        if (!UrlServices::validate_string( $action )) {
             throw new \Exception('Illegal access to calculateSplittedURL!!! Unvalidated action: "' . $action . '" over request: ' . $requestURI);
         }
 
