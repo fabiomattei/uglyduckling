@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Utils;
 
 class UrlServices {
 
-    public static function setServerRequestURI( string $requestURI, string $pathToApp = '/' ) {
+    public static function extractActionName( string $requestURI, string $pathToApp = '/' ) {
         $request2 = str_replace( ['.html', '.pdf', '.svg'], '',$requestURI );
         $request  = preg_replace( '/\?.*/', '', $request2 );
 
