@@ -2,6 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Framework\Utils\StringUtils;
+
 class BaseController {
     
     public string $templateFile;
