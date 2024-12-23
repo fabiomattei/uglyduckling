@@ -2,7 +2,14 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
+use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\StringUtils;
+use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Common\Mailer\BaseMailer;
+use Fabiom\UglyDuckling\Common\Redirectors\Redirector;
+use Fabiom\UglyDuckling\Common\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 
 class BaseController {
     
@@ -35,6 +42,10 @@ class BaseController {
     public string $appTitle;
     public string $headViewFile = '';
     public string $footViewFile = '';
+    public Redirector $redirector;
+    public Logger $logger;
+    public SecurityChecker $securityChecker;
+    public BaseMailer $mailer;
 
     public $unvalidated_parameters;
 
@@ -49,30 +60,26 @@ class BaseController {
 
     /**
      * This method makes all necessary presets to activate a controller
-     *
-     * @param ApplicationBuilder $routerContainer
-     * @param PageStatus $PageStatus
      * @throws \Exception
      */
-    public function makeAllPresets(
-        ApplicationBuilder $applicationBuilder,
-        PageStatus         $pageStatus
-    ) {
-        $this->applicationBuilder = $applicationBuilder;
-        $this->pageStatus = $pageStatus;
-
+    public function makeAllPresets(DBConnection $dbconnection, Redirector $redirector, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
         // setting an array containing all parameters
         $this->parameters = [];
+        $this->redirector = $redirector;
+        $this->logger = $logger;
+        $this->securityChecker = $securityChecker;
+        $this->mailer = $mailer;
+        $this->dbconnection = $dbconnection;
 
-        if ( !$this->applicationBuilder->getSecurityChecker()->isSessionValid(
-            $this->pageStatus->getSessionWrapper()->getSessionLoggedIn(),
-            $this->pageStatus->getSessionWrapper()->getSessionIp(),
-            $this->pageStatus->getSessionWrapper()->getSessionUserAgent(),
-            $this->pageStatus->getSessionWrapper()->getSessionLastLogin(),
-            $this->pageStatus->getServerWrapper()->getRemoteAddress(),
-            $this->pageStatus->getServerWrapper()->getHttpUserAgent() ) ) {
-            $this->applicationBuilder->getRedirector()->setURL($this->applicationBuilder->getSetup()->getBasePath() . 'public/login.html');
-            $this->applicationBuilder->getRedirector()->redirect();
+        if ( !$this->securityChecker->isSessionValid(
+            SessionWrapper::getSessionLoggedIn(),
+            SessionWrapper::getSessionIp(),
+            SessionWrapper::getSessionUserAgent(),
+            SessionWrapper::getSessionLastLogin(),
+            ServerWrapper::getRemoteAddress(),
+            ServerWrapper::getHttpUserAgent() ) ) {
+            $this->redirector->setURL(getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+            $this->redirector->redirect();
         }
     }
 
