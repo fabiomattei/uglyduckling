@@ -19,6 +19,8 @@ class JsonResourceController {
     protected $resourceName;
 
     protected $secondGump;
+    public /* array */
+        $parameters;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
