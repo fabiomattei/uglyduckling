@@ -2,8 +2,14 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
+use Fabiom\UglyDuckling\Framework\Loggers\Logger;
+use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
+use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
+use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 
 class JsonResourceController {
 
@@ -22,6 +28,29 @@ class JsonResourceController {
      */
     public function setResourceName(string $resourceName) {
         $this->resourceName = $resourceName;
+    }
+
+    /**
+     * This method makes all necessary presets to activate a controller
+     * @throws \Exception
+     */
+    public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
+        // setting an array containing all parameters
+        $this->parameters = [];
+        $this->logger = $logger;
+        $this->securityChecker = $securityChecker;
+        $this->mailer = $mailer;
+        $this->dbconnection = $dbconnection;
+
+        if ( !$this->securityChecker->isSessionValid(
+            SessionWrapper::getSessionLoggedIn(),
+            SessionWrapper::getSessionIp(),
+            SessionWrapper::getSessionUserAgent(),
+            SessionWrapper::getSessionLastLogin(),
+            ServerWrapper::getRemoteAddress(),
+            ServerWrapper::getHttpUserAgent() ) ) {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
     }
 
     /**
