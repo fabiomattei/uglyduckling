@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\DataBase;
 
 use PDO;
 use PDOException;
-use Fabiom\UglyDuckling\Common\Loggers\Logger;
+use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 
 /**
  * Basic class for all dao's
