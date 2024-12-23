@@ -19,6 +19,10 @@ class JsonResourceController {
     protected $resourceName;
 
     protected $secondGump;
+    public DBConnection $dbconnection;
+    public Logger $logger;
+    public SecurityChecker $securityChecker;
+    public BaseMailer $mailer;
 
     /**
      * This function allows to set a resource name to load for a particular instance
