@@ -10,6 +10,7 @@ use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 
@@ -24,10 +25,12 @@ class JsonResourceController {
     public /* array */ $parameters;
     public array $resourceIndex;
     public array $groupsIndex;
+    public array $useCasesIndex;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
+    public PageStatus $pageStatus;
     protected $menubuilder;
     protected string $title;
     protected string $templateFile;
@@ -42,12 +45,20 @@ class JsonResourceController {
         $this->resourceName = $resourceName;
     }
 
+    public function setPageStatus(string $pageStatus) {
+        $this->pageStatus = $pageStatus;
+    }
+
     public function setResourceIndex( $resourceIndex ) {
         $this->resourceIndex = $resourceIndex;
     }
 
     public function setGroupsIndex( $groupsIndex ) {
         $this->groupsIndex = $groupsIndex;
+    }
+
+    public function setUseCasesIndex( $useCasesIndex ) {
+        $this->useCasesIndex = $useCasesIndex;
     }
 
     /**
