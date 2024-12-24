@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
@@ -22,6 +23,7 @@ class JsonResourceController {
     protected $secondGump;
     public /* array */ $parameters;
     public array $resourceIndex;
+    public array $groupsIndex;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
@@ -39,6 +41,10 @@ class JsonResourceController {
 
     public function setResourceIndex( $resourceIndex ) {
         $this->resourceIndex = $resourceIndex;
+    }
+
+    public function setGroupsIndex( $groupsIndex ) {
+        $this->groupsIndex = $groupsIndex;
     }
 
     /**
@@ -104,6 +110,22 @@ class JsonResourceController {
             }
         }
         return false;
+    }
+
+    public function getRequest() {
+        $menuresource = JsonLoader::loadResource( $this->groupsIndex, $_SESSION['group'] );
+        $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus, 'JsonDashboardController', $this->resource->name);
+        $this->menubuilder->setMenuStructure( $menuresource );
+
+        // if resource->get->sessionupdates is set I need to update the session
+        if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+
+        $this->title = $this->applicationBuilder->getAppNameForPageTitle() . ' :: Dashboard';
+        $this->templateFile = $this->resource->templatefile ?? $this->applicationBuilder->getSetup()->getPrivateTemplateFileName();
+
+        $this->menucontainer    = array( $this->menubuilder->createMenu() );
+        $this->leftcontainer    = array();
+        $this->centralcontainer = array( $this->applicationBuilder->getHTMLBlock( $this->resource ) );
     }
 
     /**
