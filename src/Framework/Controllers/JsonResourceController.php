@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Menu\MenuJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
@@ -114,7 +114,7 @@ class JsonResourceController {
 
     public function getRequest() {
         $menuresource = JsonLoader::loadResource( $this->groupsIndex, $_SESSION['group'] );
-        $this->menubuilder = new MenuJsonTemplate($this->applicationBuilder, $this->pageStatus, 'JsonDashboardController', $this->resource->name);
+        $this->menubuilder = new MenuJsonTemplate('JsonDashboardController', $this->resource->name);
         $this->menubuilder->setMenuStructure( $menuresource );
 
         // if resource->get->sessionupdates is set I need to update the session
