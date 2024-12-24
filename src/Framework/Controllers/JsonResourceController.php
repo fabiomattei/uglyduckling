@@ -29,6 +29,8 @@ class JsonResourceController {
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
     protected $menubuilder;
+    protected string $title;
+    protected string $templateFile;
 
     /**
      * This function allows to set a resource name to load for a particular instance
