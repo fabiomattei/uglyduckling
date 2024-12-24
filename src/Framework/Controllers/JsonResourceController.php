@@ -45,7 +45,7 @@ class JsonResourceController {
         $this->resourceName = $resourceName;
     }
 
-    public function setPageStatus(string $pageStatus) {
+    public function setPageStatus($pageStatus) {
         $this->pageStatus = $pageStatus;
     }
 
