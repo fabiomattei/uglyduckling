@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu;
 
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 use stdClass;
 
 /**
@@ -43,10 +44,8 @@ class MenuJsonTemplate extends JsonTemplate {
     }
 
     public function createMenu() {
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
 
         $menu = new BaseHTMLMenu;
-        $menu->setHtmlTemplateLoader( $htmlTemplateLoader );
         $menu->addBrand( $this->menuStructure->home->label, $this->menuStructure->home->action );
         $menu->addButtonToggler();
 
@@ -61,7 +60,7 @@ class MenuJsonTemplate extends JsonTemplate {
                     $mi->label = $item->label ?? '';
                     $mi->controller = $item->controller ?? '';
                     $mi->resource = $item->resource ?? '';
-                    $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
+                    $mi->url = UrlServices::make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
                     if ( (isset($item->resource) AND $this->resourceName == $item->resource) OR (isset($item->controller) AND $this->controllerName == $item->controller) ) {
                         $current = true;
@@ -69,7 +68,7 @@ class MenuJsonTemplate extends JsonTemplate {
                 }
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
                     $menu->addNavItemWithDropdown( $menuitem->label,
-                        $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
+                        UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                         $active, $current,
                         $submenuItems, $this->controllerName, $this->resourceName
                     );
@@ -84,7 +83,7 @@ class MenuJsonTemplate extends JsonTemplate {
                     }
 
                     $menu->addNavItem( $menuitem->label,
-                        $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
+                        UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                         $active, $current
                     );
                 } else {
@@ -105,7 +104,7 @@ class MenuJsonTemplate extends JsonTemplate {
                         $mi->label = $item->label ?? '';
                         $mi->controller = $item->controller ?? '';
                         $mi->resource = $item->resource ?? '';
-                        $mi->url = $this->applicationBuilder->make_resource_url( $item, $this->pageStatus );
+                        $mi->url = UrlServices::make_resource_url( $item, $this->pageStatus );
                         $submenuItems[] = $mi;
                         if ( (isset($item->resource) AND $this->resourceName == $item->resource) OR (isset($item->controller) AND $this->controllerName == $item->controller) ) {
                             $current = true;
@@ -113,7 +112,7 @@ class MenuJsonTemplate extends JsonTemplate {
                     }
                     if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
                         $menu->addNavItemWithDropdown( $menuitem->label,
-                            $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
+                            UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                             $active, $current,
                             $submenuItems, $this->controllerName, $this->resourceName, true
                         );
@@ -128,7 +127,7 @@ class MenuJsonTemplate extends JsonTemplate {
                         }
 
                         $menu->addNavItem( $menuitem->label,
-                            $this->applicationBuilder->make_resource_url( $menuitem, $this->pageStatus ),
+                            UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                             $active, $current, true
                         );
                     } else {
