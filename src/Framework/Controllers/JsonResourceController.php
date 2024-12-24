@@ -5,6 +5,7 @@ namespace Fabiom\UglyDuckling\Framework\Controllers;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
+use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
@@ -91,7 +92,7 @@ class JsonResourceController {
             return false;
         } else {
             if ( strlen( $this->resourceName ) > 0 ) {
-                $this->resource = $this->applicationBuilder->getJsonloader()->loadResource( $this->resourceName );
+                $this->resource = JsonLoader::loadResource( $this->resourceName );
                 return true;
             } else {
                 throw new \Exception('Resource undefined');
