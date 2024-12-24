@@ -20,8 +20,8 @@ class JsonResourceController {
     protected $resourceName;
 
     protected $secondGump;
-    public /* array */
-        $parameters;
+    public /* array */ $parameters;
+    public array $resourceIndex;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
@@ -35,6 +35,10 @@ class JsonResourceController {
      */
     public function setResourceName(string $resourceName) {
         $this->resourceName = $resourceName;
+    }
+
+    public function setResourceIndex( $resourceIndex ) {
+        $this->resourceIndex = $resourceIndex;
     }
 
     /**
@@ -92,7 +96,7 @@ class JsonResourceController {
             return false;
         } else {
             if ( strlen( $this->resourceName ) > 0 ) {
-                $this->resource = JsonLoader::loadResource( $this->resourceName );
+                $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
                 return true;
             } else {
                 throw new \Exception('Resource undefined');
