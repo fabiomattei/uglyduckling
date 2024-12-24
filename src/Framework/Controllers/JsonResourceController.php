@@ -233,10 +233,8 @@ class JsonResourceController {
     public function showPage() {
         $time_start = microtime(true);
 
-        $this->applicationBuilder->getJsonloader()->loadIndex();
-
-        if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
-            $this->pageStatus->getSessionWrapper()->createCsrfToken();
+        if (ServerWrapper::isGetRequest()) {
+            SessionWrapper::createCsrfToken();
             if ( $this->check_and_load_resource() ) {
                 if ( $this->check_authorization_resource_request() ) {
                     if ( $this->second_check_get_request() ) {
@@ -270,7 +268,7 @@ class JsonResourceController {
 
         $time_end = microtime(true);
         if ( ($time_end - $time_start) > 5 ) {
-            $this->applicationBuilder->getLogger()->write('WARNING TIME :: ' . $this->resource->name . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->logger->write('WARNING TIME :: ' . $this->resource->name . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 
@@ -283,8 +281,7 @@ class JsonResourceController {
      *
      * @param $jsonRedirect
      */
-    public function jsonRedirector( $jsonRedirect ): void
-    {
+    public function jsonRedirector( $jsonRedirect ): void {
         if ( isset( $jsonRedirect->internal ) and $jsonRedirect->internal->type === 'onepageback') {
             $this->redirectToPreviousPage();
         } elseif ( isset( $jsonRedirect->internal ) and $jsonRedirect->internal->type === 'twopagesback') {
