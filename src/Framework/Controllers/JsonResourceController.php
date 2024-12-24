@@ -28,6 +28,7 @@ class JsonResourceController {
     public Logger $logger;
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
+    protected $menubuilder;
 
     /**
      * This function allows to set a resource name to load for a particular instance
@@ -114,14 +115,14 @@ class JsonResourceController {
 
     public function getRequest() {
         $menuresource = JsonLoader::loadResource( $this->groupsIndex, $_SESSION['group'] );
-        $this->menubuilder = new MenuJsonTemplate('JsonDashboardController', $this->resource->name);
+        $this->menubuilder = new MenuJsonTemplate('JsonResourceController', $this->resource->name);
         $this->menubuilder->setMenuStructure( $menuresource );
 
         // if resource->get->sessionupdates is set I need to update the session
         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-        $this->title = $this->applicationBuilder->getAppNameForPageTitle() . ' :: Dashboard';
-        $this->templateFile = $this->resource->templatefile ?? $this->applicationBuilder->getSetup()->getPrivateTemplateFileName();
+        $this->title = APP_NAME . ' :: Dashboard';
+        $this->templateFile = $this->resource->templatefile ?? TEMPLATE_FILE_NAME;
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
