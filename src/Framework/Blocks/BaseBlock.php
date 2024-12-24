@@ -1,6 +1,7 @@
 <?php
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
+
 class BaseBlock {
   
   	/**
