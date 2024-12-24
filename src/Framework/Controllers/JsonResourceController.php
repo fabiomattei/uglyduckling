@@ -72,8 +72,9 @@ class JsonResourceController {
         if( !isset($this->resource->allowedgroups) ) {
             //$this->applicationBuilder->getLogger()->write('ERROR :: allowedgroups array undefined for resource ' . $this->resourceName, __FILE__, __LINE__);
             return false;
-        }
-        if ( in_array( $_SESSION['group'], $this->resource->allowedgroups ) ) {
+        } elseif ( count($this->resource->allowedgroups) == 0) {
+            return true;
+        } elseif ( in_array( $_SESSION['group'], $this->resource->allowedgroups ) ) {
             return true;
         } else {
             //$this->applicationBuilder->getLogger()->write('ERROR :: illegal access to resource' . $this->resourceName .' from user having group set to **' . $_SESSION['group'] .'** ', __FILE__, __LINE__);
