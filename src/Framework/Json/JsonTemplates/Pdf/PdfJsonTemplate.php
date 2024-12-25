@@ -9,8 +9,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Pdf;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLTable;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 
 class PdfJsonTemplate extends JsonTemplate {
 

@@ -2,8 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Info;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLInfo;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLInfo;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 
 /**
  * User: Fabio Mattei

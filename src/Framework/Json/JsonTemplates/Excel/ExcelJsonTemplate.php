@@ -8,7 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Excel;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 

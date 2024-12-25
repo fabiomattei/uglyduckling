@@ -8,8 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Table;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLTable;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLTable;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 
 /**
  * This class cares about creating a basic table for a UD application.

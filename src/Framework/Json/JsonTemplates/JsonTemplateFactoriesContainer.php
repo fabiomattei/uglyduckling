@@ -8,7 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
 
 class JsonTemplateFactoriesContainer {
 

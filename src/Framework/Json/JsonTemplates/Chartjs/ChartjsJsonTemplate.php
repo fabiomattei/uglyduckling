@@ -2,8 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Chartjs;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLChart;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLChart;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 
 /**
  * Created by Fabio Mattei

@@ -8,14 +8,14 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Grid\GridJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Table\TableJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Uniform\UniformJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\CardHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Form\FormJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Grid\GridJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Info\InfoJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Table\TableJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Dashboard\DashboardJsonTemplate;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Uniform\UniformJsonTemplate;
 
 class JsonDefaultTemplateFactory extends JsonTemplateFactory {
 

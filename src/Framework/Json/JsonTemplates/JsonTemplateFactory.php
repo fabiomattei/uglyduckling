@@ -8,13 +8,12 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplateFactoriesContainer;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplateFactoriesContainer;
 
 class JsonTemplateFactory {
 
     protected $resource;
     protected $action;
-    public $applicationBuilder;
     public $pageStatus;
 
     const blocktype = 'basebuilder';
@@ -22,8 +21,7 @@ class JsonTemplateFactory {
     /**
      * BaseBuilder constructor.
      */
-    public function __construct( $applicationBuilder, $pageStatus ) {
-        $this->applicationBuilder = $applicationBuilder;
+    public function __construct( $pageStatus ) {
         $this->pageStatus = $pageStatus;
     }
 

@@ -8,8 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Grid;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLGrid;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLGrid;
 
 class GridJsonTemplate extends JsonTemplate {
 

@@ -2,8 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu;
 
-use Fabiom\UglyDuckling\Common\Json\JsonTemplates\JsonTemplate;
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLMenu;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLMenu;
 use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 use stdClass;
 

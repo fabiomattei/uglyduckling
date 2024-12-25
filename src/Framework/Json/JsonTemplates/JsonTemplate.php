@@ -7,16 +7,14 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates;
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
-use Fabiom\UglyDuckling\Common\Blocks\EmptyHTMLBlock;
-use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
-use Fabiom\UglyDuckling\Common\Status\PageStatus;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Blocks\EmptyHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
 class JsonTemplate {
 
     protected $resource;
     protected /* string */ $action;
-    protected ApplicationBuilder $applicationBuilder;
     protected PageStatus $pageStatus;
 
     const blocktype = 'basebuilder';
@@ -24,8 +22,7 @@ class JsonTemplate {
     /**
      * BaseBuilder constructor.
      */
-    public function __construct( $applicationBuilder, $pageStatus ) {
-        $this->applicationBuilder = $applicationBuilder;
+    public function __construct( $pageStatus ) {
         $this->pageStatus = $pageStatus;
     }
 
