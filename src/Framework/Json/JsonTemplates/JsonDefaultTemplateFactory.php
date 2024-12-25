@@ -16,7 +16,7 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
      * PanelBuilder constructor.
      * @param $tableBuilder
      */
-    private static function getHTMLBlock( $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates, $pageStatus, $resourceName ) {
+    public static function getHTMLBlock( $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates, $pageStatus, $resourceName ) {
         if ( array_key_exists( $resourceName, $resourcesIndex ) ) {
             $jsonResource = JsonDefaultTemplateFactory::loadResource($resourcesIndex, $resourceName);
             if ( array_key_exists( $jsonResource->metadata->type, $jsonResourceTemplates ) ) {
