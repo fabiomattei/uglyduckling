@@ -18,11 +18,10 @@ class ExcelJsonTemplate extends JsonTemplate {
 
     /**
      * ExcelJsonTemplate constructor.
-     * @param $applicationBuilder
      * @param $pageStatus
      */
-    function __construct( $applicationBuilder, $pageStatus ) {
-        parent::__construct( $applicationBuilder, $pageStatus);
+    function __construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
+        parent::__construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates);
     }
 
     public function getWriter() {

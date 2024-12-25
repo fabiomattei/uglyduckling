@@ -25,8 +25,8 @@ class TableJsonTemplate extends JsonTemplate {
      * TableJsonTemplate constructor.
      * @param $pageStatus
      */
-    function __construct( $pageStatus ) {
-        parent::__construct( $pageStatus);
+    function __construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
+        parent::__construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates);
     }
 
     public function createTable() {
