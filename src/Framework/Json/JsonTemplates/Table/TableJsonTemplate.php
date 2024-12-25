@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Table;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLTable;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 
 /**
@@ -82,7 +83,7 @@ class TableJsonTemplate extends JsonTemplate {
 			$links = '';
             if (isset($table->actions) AND is_array($table->actions)) {
                 foreach ( $table->actions as $action ) {
-                    $links .= $this->applicationBuilder->getHTMLTag( $action, $this->pageStatus, $this->applicationBuilder );
+                    $links .= JsonDefaultTemplateFactory::getHTMLTag( $action, $this->pageStatus, $this->jsonTabTemplates );
                 }
             }
 			$tableBlock->addUnfilteredColumn( $links );
@@ -93,7 +94,7 @@ class TableJsonTemplate extends JsonTemplate {
         $topActions = '';
         if (isset($this->resource->get->table->topactions)) {
             foreach( $this->resource->get->table->topactions as $action ) {
-                $topActions .= $this->applicationBuilder->getHTMLTag( $action, $this->pageStatus, $this->applicationBuilder );
+                $topActions .= JsonDefaultTemplateFactory::getHTMLTag( $action, $this->pageStatus, $this->jsonTabTemplates );
             }
         }
         $tableBlock->setTopActions($topActions);
@@ -101,7 +102,7 @@ class TableJsonTemplate extends JsonTemplate {
         $bottomActions = '';
         if (isset($this->resource->get->table->bottomactions)) {
             foreach( $this->resource->get->table->bottomactions as $action ) {
-                $bottomActions .= $this->applicationBuilder->getHTMLTag( $action, $this->pageStatus, $this->applicationBuilder );
+                $bottomActions .= JsonDefaultTemplateFactory::getHTMLTag( $action, $this->pageStatus, $this->jsonTabTemplates );
             }
         }
         $tableBlock->setBottomActions($bottomActions);

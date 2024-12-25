@@ -12,6 +12,23 @@ use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 
 class JsonDefaultTemplateFactory extends JsonTemplateFactory {
 
+        /**
+         * @param $jsonStructure
+         * @param PageStatus $pageStatus
+         * @param ApplicationBuilder $applicationBuilder
+         * @return BaseHTMLTag
+         */
+    public static function getHTMLTag( $jsonStructure, PageStatus $pageStatus, array $jsonTagTemplates ): string {
+        if ( isset($jsonStructure->type) ) {
+            if ( array_key_exists( $jsonStructure->type, $jsonTagTemplates) ){
+                $tag = new $jsonTagTemplates[$jsonStructure->type]( $jsonStructure, $pageStatus, $jsonTagTemplates );
+                return $tag->getHTML();
+            }
+        }
+        return 'undefined tag';
+    }
+
+
     /**
      * PanelBuilder constructor.
      * @param $tableBuilder
