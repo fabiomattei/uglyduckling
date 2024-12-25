@@ -326,7 +326,7 @@ class JsonResourceController {
             }
         }
 
-        HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH.$this->templateFile );
+        HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->templateFile );
 
         $time_end = microtime(true);
         if ( ($time_end - $time_start) > 5 ) {
