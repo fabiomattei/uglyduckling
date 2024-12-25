@@ -18,19 +18,21 @@ class JsonTemplate {
     protected PageStatus $pageStatus;
 
     const blocktype = 'basebuilder';
+    private array $resourcesIndex;
+    private array $tagsIndex;
+    private array $jsonResourceTemplates;
+    private array $jsonTabTemplates;
 
     /**
      * BaseBuilder constructor.
      */
-    public function __construct( $pageStatus ) {
+    public function __construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
         $this->pageStatus = $pageStatus;
-    }
-
-    /**
-     * @param mixed $resource
-     */
-    public function setResource( $resource ) {
-        $this->resource = $resource;
+        $this->resourcesIndex = $resourcesIndex;
+        $this->tagsIndex = $tagsIndex;
+        $this->jsonResourceTemplates = $jsonResourceTemplates;
+        $this->jsonTabTemplates = $jsonTabTemplates;
+        $this->resource = $jsonResource;
     }
 
     /**
