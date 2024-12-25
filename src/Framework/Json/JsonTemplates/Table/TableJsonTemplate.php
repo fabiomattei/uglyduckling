@@ -23,15 +23,13 @@ class TableJsonTemplate extends JsonTemplate {
 
     /**
      * TableJsonTemplate constructor.
-     * @param $applicationBuilder
      * @param $pageStatus
      */
-    function __construct( $applicationBuilder, $pageStatus ) {
-        parent::__construct( $applicationBuilder, $pageStatus);
+    function __construct( $pageStatus ) {
+        parent::__construct( $pageStatus);
     }
 
     public function createTable() {
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
         $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the table
@@ -57,7 +55,6 @@ class TableJsonTemplate extends JsonTemplate {
         $table = $this->resource->get->table;
 
 		$tableBlock = new BaseHTMLTable;
-        $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 
         if ( isset( $title_entity ) AND $title_entity != '' AND is_object($table->title) ) {
             $this->pageStatus->setLastEntity($title_entity);

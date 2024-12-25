@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Chartjs;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLChart;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 /**
  * Created by Fabio Mattei
@@ -15,7 +16,6 @@ class ChartjsJsonTemplate extends JsonTemplate {
     const blocktype = 'chartjs';
 
     public function createChart() {
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
 		
         // If there are dummy data they take precedence in order to fill the table
         if ( isset($this->resource->get->dummydata) ) {
@@ -40,14 +40,12 @@ class ChartjsJsonTemplate extends JsonTemplate {
                     $glue[$dg->placeholder][] = $this->pageStatus->getValue($dg);
                 }
                 if ( $dg->type == 'action') {
-                    $glue[$dg->placeholder][] = $this->applicationBuilder->make_resource_url( $dg->action, $this->pageStatus );
+                    $glue[$dg->placeholder][] = UrlServices::make_resource_url( $dg->action, $this->pageStatus );
                 }
             }
         }
 
         $chartBlock = new BaseHTMLChart;
-        $chartBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
-        $chartBlock->setApplicationBuilder( $this->applicationBuilder );
         $chartBlock->setHtmlBlockId($this->resource->name);
         $chartBlock->setStructure($this->resource->get->chart);
 		$chartBlock->setWidth($this->resource->get->width ?? '400');

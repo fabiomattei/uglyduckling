@@ -75,7 +75,7 @@ $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $resource ) {
 
     // Setting the action to link the form to
     if ( isset($this->resource->get->form->action) ) {
-        $url = $this->applicationBuilder->make_resource_url(
+        $url = UrlServices::make_resource_url(
             $this->resource->get->form->action,
             $this->pageStatus
         );

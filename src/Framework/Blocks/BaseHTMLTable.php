@@ -12,7 +12,6 @@ class BaseHTMLTable extends BaseHTMLBlock {
 
     protected $html;
     protected $title;
-    protected $htmlTemplateLoader;
     protected $topActions;
     protected $bottomActions;
 
@@ -20,10 +19,6 @@ class BaseHTMLTable extends BaseHTMLBlock {
         parent::__construct();
         $this->html = '';
         $this->title = '';
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function setTitle( string $title ) {

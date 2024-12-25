@@ -34,6 +34,9 @@ class JsonResourceController {
     protected $menubuilder;
     protected string $title;
     protected string $templateFile;
+    protected $menucontainer;
+    protected $leftcontainer;
+    protected $centralcontainer;
 
     /**
      * This function allows to set a resource name to load for a particular instance
@@ -330,7 +333,7 @@ class JsonResourceController {
             $this->redirectToSecondPreviousPage();
         } elseif ( isset( $jsonRedirect->action ) ) {
             $this->redirectToPage(
-                $this->applicationBuilder->make_resource_url( $jsonRedirect->action, $this->pageStatus )
+                UrlServices::make_resource_url( $jsonRedirect->action, $this->pageStatus )
             );
         } else {
             $this->redirectToPreviousPage();

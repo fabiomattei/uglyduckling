@@ -16,7 +16,6 @@ class FormJsonTemplate extends JsonTemplate {
 
     public function createForm() {
         $logger = $this->applicationBuilder->getLogger();
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
         $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the form
@@ -45,7 +44,7 @@ class FormJsonTemplate extends JsonTemplate {
 
         // Setting the action to link the form to
         if ( isset($this->resource->get->form->action) ) {
-            $url = $this->applicationBuilder->make_resource_url(
+            $url = UrlServices::make_resource_url(
                 $this->resource->get->form->action,
                 $this->pageStatus
             );

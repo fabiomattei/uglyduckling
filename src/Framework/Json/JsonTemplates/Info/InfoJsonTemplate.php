@@ -16,7 +16,6 @@ class InfoJsonTemplate extends JsonTemplate {
 
     public function createInfo() {
         $dbconnection = $this->pageStatus->getDbconnection();
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
         $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the info box
@@ -39,7 +38,6 @@ class InfoJsonTemplate extends JsonTemplate {
         $this->pageStatus->setLastEntity($entity);
 
 		$infoBlock = new BaseHTMLInfo;
-        $infoBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
 		$infoBlock->setTitle($this->resource->get->info->title ?? '');
 		$fieldRows = array();
 		
