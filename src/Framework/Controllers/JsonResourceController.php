@@ -158,7 +158,7 @@ class JsonResourceController {
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = array( JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->tagsIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resource ) );
+        $this->centralcontainer = array( JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->tagsIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName ) );
     }
 
     /**
