@@ -11,7 +11,6 @@ use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
-use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
@@ -326,7 +325,7 @@ class JsonResourceController {
             }
         }
 
-        HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->templateFile );
+        $this->loadTemplate();
 
         $time_end = microtime(true);
         if ( ($time_end - $time_start) > 5 ) {
@@ -336,6 +335,10 @@ class JsonResourceController {
 
     public function show_second_get_error_page() {
         throw new \Exception('Mismatch with get parameters');
+    }
+
+    function loadTemplate() {
+        require_once TEMPLATES_PATH . $this->templateFile . '.php';
     }
 
     /**
