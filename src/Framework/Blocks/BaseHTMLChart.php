@@ -75,7 +75,7 @@ class BaseHTMLChart extends BaseHTMLBlock {
     function show(): string {
         $this->structure = $this->lookForTagsToSobstitute($this->structure);
 
-		return $this->htmlTemplateLoader->loadTemplateAndReplace(
+		return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array( '${htmlBlockId}', '${structure}', '${width}', '${height}' ),
             array( $this->htmlBlockId, json_encode( $this->structure ), $this->width, $this->height ),
             'Chartjs/body.html');

@@ -43,7 +43,7 @@ class ColHTMLBlock extends BaseHTMLBlock {
         foreach ($this->blocks as $bl) {
             $htmlbody .= $bl->show();
         }
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array( '${htmlbody}' ),
             array( $htmlbody ),
             'RowBlock/body.html');;

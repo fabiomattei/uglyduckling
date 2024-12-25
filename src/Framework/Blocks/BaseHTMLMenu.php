@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 
 class BaseHTMLMenu extends BaseHTMLBlock {
 
@@ -22,7 +23,7 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function addBrand( string $brand, string $url ) {
-        $this->brand = $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->brand = HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${url}', '${title}'),
             array($url, $brand),
             'Menu/brand.html');
@@ -41,12 +42,12 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
 
         if ( $right ) {
-            $this->rightBody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                 array('${active}', '${current}', '${url}', '${label}'),
                 array($activestr, $currentstr, $url, $label),
                 'Menu/navitem.html');
         } else {
-            $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                 array('${active}', '${current}', '${url}', '${label}'),
                 array($activestr, $currentstr, $url, $label),
                 'Menu/navitem.html');
@@ -59,17 +60,17 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
         foreach ($submenuItems as $item) {
             if ( isset( $controllerName ) AND $item->controller == $controllerName ) {
-                $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                     array('${active}', '${current}', '${url}', '${label}'),
                     array($activestr, $currentstr, $item->url, $item->label),
                     'Menu/submenuitem.html');
             } elseif ( isset( $resourceName ) AND $item->resource == $resourceName) {
-                $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                     array('${active}', '${current}', '${url}', '${label}'),
                     array($activestr, $currentstr, $item->url, $item->label),
                     'Menu/submenuitem.html');
             } else {
-                $submenu .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                     array('${active}', '${current}', '${url}', '${label}'),
                     array('', '', $item->url, $item->label),
                     'Menu/submenuitem.html');
@@ -80,12 +81,12 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
 
         if ( $right ) {
-            $this->rightBody .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                 array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
                 array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
                 'Menu/menuitem.html');
         } else {
-            $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                 array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
                 array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
                 'Menu/menuitem.html');
@@ -97,7 +98,7 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     function show(): string {
         if ( isset($this->rightBody) AND $this->rightBody != '' ) {
             $rightSubmenu = $this->rightBody;
-            $rightSubmenu = $this->htmlTemplateLoader->loadTemplateAndReplace(
+            $rightSubmenu = HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                 array('${rightbody}'),
                 array($rightSubmenu),
                 'Menu/rightbody.html');
@@ -105,7 +106,7 @@ class BaseHTMLMenu extends BaseHTMLBlock {
             $rightSubmenu = '';
         }
 
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${brand}', '${buttonToggler}', '${body}', '${rightbody}'),
             array($this->brand, $this->buttonToggler, $this->body, $rightSubmenu),
             'Menu/body.html');

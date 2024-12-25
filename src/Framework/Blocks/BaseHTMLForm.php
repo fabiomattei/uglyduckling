@@ -52,42 +52,42 @@ class BaseHTMLForm extends BaseHTMLBlock {
     }
 
     function show(): string {
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${title}', '${subtitle}', '${action}', '${body}', '${method}', '${formid}'),
             array($this->title, $this->subtitle, $this->action, $this->body, $this->method, $this->formid),
             'Form/body.html');
     }
 
     function addTextField( string $name, string $label, string $placeholder, string $value, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${value}', '${placeholder}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $placeholder),
             'Form/textfield.html');
     }
 
     function addPasswordField( string $name, string $label, string $width = '', string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${cssClass}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, $cssClass),
             'Form/passwordfield.html');
     }
 
     function addTextAreaField( string $name, string $label, string $value, string $width = '', string $cssClass = ''  ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${value}', '${cssClass}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $cssClass),
             'Form/textarea.html');
     }
 
     function addRadioButtonField( string $name, string $label, string $value, string $width, string $checked, string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${value}', '${checked}', '${cssClass}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $checked ?? '', $cssClass),
             'Form/radiobuttonfield.html');
     }
 
     function addCheckBoxField( string $name, string $label, string $value, string $width, string $checked, string $cssClass = ''  ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${value}', '${checked}', '${cssClass}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, htmlspecialchars( $value ), $checked ?? '', $cssClass),
             'Form/checkboxfield.html');
@@ -108,12 +108,12 @@ class BaseHTMLForm extends BaseHTMLBlock {
     function addDropdownField( string $name, string $label, array $options, string $value, string $width, string $cssClass = ''  ) {
         $htmloptions = '';
         foreach ($options as $key => $val) {
-            $htmloptions .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+            $htmloptions .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
                 array('${key}', '${selected}', '${val}', '${cssClass}'),
                 array($key, ( $key==$value ? 'selected="selected"' : '' ), htmlspecialchars( $val ), $cssClass),
                 'Form/selectfieldoption.html');
         }
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${htmloptions}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, $htmloptions),
             'Form/selectfield.html');
@@ -142,49 +142,49 @@ class BaseHTMLForm extends BaseHTMLBlock {
                 $properties .= $key . '=' .'"' . $value . '" ' ;
             }
         }
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${type}', '${name}', '${label}', '${value}', '${properties}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $field->width ?? 12), $field->type ?? 'text', $field->name ?? '', $field->label ?? '', htmlspecialchars( $fieldValue ), $properties),
             'Form/genericfield.html');
     }
 
     function addFileUploadField( string $name, string $label, string $width, string $cssClass = ''  ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${name}', '${label}', '${cssClass}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $name, $label, $cssClass),
             'Form/fileuploadfield.html');
     }
 
     function addHelpingText( string $title, string $text, string $width, string $cssClass = ''  ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${ColWidth}', '${title}', '${text}', '${cssClass}'),
             array(ColWidth::getWidth(ColWidth::MEDIUM, $width), $title, $text, $cssClass),
             'Form/helpingtext.html');
     }
 
     function addHiddenField( string $name, string $value ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${name}', '${value}'),
             array($name, htmlspecialchars( $value )),
             'Form/hiddenfield.html');
     }
 
     function addSubmitButton( string $name = 'save', string $value = 'Save', string $label = '', string $width = '12', string $cssClass = ''  ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${name}', '${value}', '${label}', '${ColWidth}', '${cssClass}'),
             array($name, htmlspecialchars( $value ), $label, ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Form/submitbutton.html');
     }
 	
 	function addRow() {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array(),
             array(),
             'Form/addrow.html');
     }
 	
 	function closeRow( string $comment = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${comment}'),
             array($comment),
             'Form/closerow.html');

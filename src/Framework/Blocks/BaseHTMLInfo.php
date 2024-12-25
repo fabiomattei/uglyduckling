@@ -27,21 +27,21 @@ class BaseHTMLInfo extends BaseHTMLBlock {
 	}
 
     function show(): string {
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${title}', '${subtitle}', '${body}'),
             array($this->title, $this->subtitle, $this->body),
             'Info/body.html');
     }
 
     function addTextField( string $label, string $value, string $width, string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
             array($label ?? '', htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
     }
 
     function addTextAreaField( string $label, string $value, string $width, string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
             array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
@@ -52,21 +52,21 @@ class BaseHTMLInfo extends BaseHTMLBlock {
         foreach ($options as $key => $val) {
             $selectedvalue .= ( $key == $value ? $val : '' );
         }
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
             array($label, htmlspecialchars( $selectedvalue ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
     }
 	
 	function addCurrencyField( string $label, string $value, string $width, string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
             array($label, htmlspecialchars( $value ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
 	}
 	
 	function addDateField( string $label, string $value, string $width, string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${label}', '${value}', '${ColWidth}', '${cssClass}'),
             array($label, date( 'd/m/Y', strtotime(htmlspecialchars( $value ))), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/textfield.html');
@@ -77,35 +77,35 @@ class BaseHTMLInfo extends BaseHTMLBlock {
     }
 
     function addHelpingText( string $title, string $text, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${label}', '${value}', '${ColWidth}'),
             array($title, htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width)),
             'Info/textfield.html');
     }
 	
     function addParagraph( string $text, string $width, string $cssClass = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${text}', '${ColWidth}', '${cssClass}'),
             array(htmlspecialchars( $text ), ColWidth::getWidth(ColWidth::MEDIUM, $width), $cssClass),
             'Info/paragraph.html');
     }
 
     function addUnfilteredParagraph( string $text, string $width ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${text}', '${ColWidth}'),
             array($text, ColWidth::getWidth(ColWidth::MEDIUM, $width)),
             'Info/paragraph.html');
     }
 
     function addRow() {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array(),
             array(),
             'Form/addrow.html');
     }
 
     function closeRow( string $comment = '' ) {
-        $this->body .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${comment}'),
             array($comment),
             'Form/closerow.html');

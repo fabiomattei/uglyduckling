@@ -50,7 +50,7 @@ class RowHTMLBlock extends BaseHTMLBlock {
         foreach ($this->blocks as $bl) {
             $htmlbody .= $bl->show();
         }
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array( '${htmlbody}', '${rowblockid}' ),
             array( $htmlbody, $this->rowblockid ),
             'RowBlock/body.html');

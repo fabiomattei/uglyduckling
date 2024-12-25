@@ -74,14 +74,14 @@ class CardHTMLBlock extends BaseHTMLBlock {
     }
 
     public function showSubTitle(): string {
-         return ( $this->subtitle === '' ? '' : $this->htmlTemplateLoader->loadTemplateAndReplace(
+         return ( $this->subtitle === '' ? '' : HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array( '${subtitle}' ),
             array( $this->subtitle ),
             'Card/subtitle.html') );
     }
 
     function show(): string {
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array( '${width}', '${title}', '${subtitle}', '${body}', '${cardExternalContainerId}', '${cardId}' ),
             array( $this->width, $this->title, $this->showSubTitle(), $this->block->show(), $this->cardExternalContainerId, $this->cardId ),
             'Card/body.html');

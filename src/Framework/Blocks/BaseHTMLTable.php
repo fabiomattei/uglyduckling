@@ -63,49 +63,49 @@ class BaseHTMLTable extends BaseHTMLBlock {
     }
 
     function addHeadLineColumn(string $value) {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${value}'),
             array($value),
             'BaseTable/headlinecolumn.html');
     }
 
     function addColumn(string $value) {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${value}'),
             array( htmlspecialchars( $value ) ),
             'BaseTable/tablecolumn.html');
     }
 
     function addUnfilteredColumn(string $value) {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${value}'),
             array( $value ),
             'BaseTable/tablecolumn.html');
     }
 
     function addColumnDate(string $value) {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${value}'),
             array( date( 'd/m/Y', strtotime( htmlspecialchars( $value ) ) ) ),
             'BaseTable/tablecolumn.html');
     }
 
     function addColumnDateTime(string $value) {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${value}'),
             array( date( 'H:i d/m/Y', strtotime( htmlspecialchars( $value ) ) ) ),
             'BaseTable/tablecolumn.html');
     }
 
     function addColumnNoFilters(string $value) {
-        $this->html .= $this->htmlTemplateLoader->loadTemplateAndReplace(
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${value}'),
             array( $value ),
             'BaseTable/tablecolumn.html');
     }
 
     function show(): string {
-        return $this->htmlTemplateLoader->loadTemplateAndReplace(
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${title}', '${html}', '${menutoptable}', '${menusubtable}'),
             array( $this->title, $this->html, $this->topActions, $this->bottomActions),
             'BaseTable/body.html');

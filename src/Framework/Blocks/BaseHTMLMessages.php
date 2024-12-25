@@ -23,16 +23,16 @@ class BaseHTMLMessages extends BaseHTMLBlock {
     function show(): string {
 		$out = '';
 		if ($this->info != '') {
-			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${info}'), array($this->info), 'Messages/info.html');
+			$out.= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,  array('${info}'), array($this->info), 'Messages/info.html');
 		}
 		if ($this->success != '') {
-			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${success}'), array($this->success), 'Messages/success.html');
+			$out.= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,  array('${success}'), array($this->success), 'Messages/success.html');
 		}
 		if ($this->warning != '') {
-			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${warning}'), array($this->warning), 'Messages/warning.html');
+			$out.= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,  array('${warning}'), array($this->warning), 'Messages/warning.html');
 		}
 		if ($this->error != '') {
-			$out.= $this->htmlTemplateLoader->loadTemplateAndReplace( array('${error}'), array($this->error), 'Messages/error.html');
+			$out.= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,  array('${error}'), array($this->error), 'Messages/error.html');
 		}
         return $out;
     }
