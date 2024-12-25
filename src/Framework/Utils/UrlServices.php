@@ -148,7 +148,7 @@ class UrlServices {
      *
      * @return       string     The url well formed
      */
-    public static makeRelativeUrl( $controllerSlug = '', $parameters = '', $extension = '.html' ) {
+    public static function makeRelativeUrl( $controllerSlug = '', $parameters = '', $extension = '.html' ) {
         if ( $controllerSlug == '' ) {
             return '#';
         } else {
