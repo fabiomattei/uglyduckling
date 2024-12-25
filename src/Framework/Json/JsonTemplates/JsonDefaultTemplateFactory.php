@@ -34,11 +34,11 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
      * PanelBuilder constructor.
      * @param $tableBuilder
      */
-    public static function getHTMLBlock( $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates, $pageStatus, $resourceName ) {
+    public static function getHTMLBlock($resourcesIndex, $jsonResourceTemplates, $jsonTagTemplates, $pageStatus, $resourceName ) {
         if ( array_key_exists( $resourceName, $resourcesIndex ) ) {
             $jsonResource = JsonDefaultTemplateFactory::loadResource($resourcesIndex, $resourceName);
             if ( array_key_exists( $jsonResource->metadata->type, $jsonResourceTemplates ) ) {
-                $respourceJsonTemplate = new $jsonResourceTemplates[$jsonResource->metadata->type]( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates );
+                $respourceJsonTemplate = new $jsonResourceTemplates[$jsonResource->metadata->type]( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTagTemplates );
                 return $respourceJsonTemplate->createHTMLBlock();
             }
         }

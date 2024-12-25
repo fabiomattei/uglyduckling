@@ -19,8 +19,8 @@ class PdfJsonTemplate extends JsonTemplate {
      * @param $applicationBuilder
      * @param $pageStatus
      */
-    function __construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
-        parent::__construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates);
+    function __construct( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
+        parent::__construct( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTabTemplates);
     }
 
     public function createTable() {

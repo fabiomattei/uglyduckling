@@ -40,7 +40,6 @@ class JsonResourceController {
     protected $leftcontainer;
     protected $centralcontainer;
     protected $jsonTabTemplates;
-    protected $tagsIndex;
     protected $jsonResourceTemplates;
 
     /**
@@ -71,10 +70,6 @@ class JsonResourceController {
 
     public function setJsonTagTemplates( $index_json_tag_templates ) {
         $this->jsonTabTemplates = $index_json_tag_templates;
-    }
-
-    public function setJsonTags( $index_tags ) {
-        $this->tagsIndex = $index_tags;
     }
 
     public function setJsonResourceTemplates( $index_json_resource_templates ) {
@@ -159,7 +154,7 @@ class JsonResourceController {
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = array( JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->tagsIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName ) );
+        $this->centralcontainer = array( JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName ) );
     }
 
     /**

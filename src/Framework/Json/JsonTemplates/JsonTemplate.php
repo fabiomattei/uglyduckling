@@ -19,17 +19,15 @@ class JsonTemplate {
 
     const blocktype = 'basebuilder';
     public array $resourcesIndex;
-    public array $tagsIndex;
     public array $jsonResourceTemplates;
     public array $jsonTabTemplates;
 
     /**
      * BaseBuilder constructor.
      */
-    public function __construct( $jsonResource, $pageStatus, $resourcesIndex, $tagsIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
+    public function __construct( $jsonResource, $pageStatus, $resourcesIndex,  $jsonResourceTemplates, $jsonTabTemplates ) {
         $this->pageStatus = $pageStatus;
         $this->resourcesIndex = $resourcesIndex;
-        $this->tagsIndex = $tagsIndex;
         $this->jsonResourceTemplates = $jsonResourceTemplates;
         $this->jsonTabTemplates = $jsonTabTemplates;
         $this->resource = $jsonResource;
