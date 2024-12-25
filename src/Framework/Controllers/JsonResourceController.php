@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
@@ -37,6 +38,9 @@ class JsonResourceController {
     protected $menucontainer;
     protected $leftcontainer;
     protected $centralcontainer;
+    protected $jsonTabTemplates;
+    protected $tagsIndex;
+    protected $jsonResourceTemplates;
 
     /**
      * This function allows to set a resource name to load for a particular instance
@@ -62,6 +66,18 @@ class JsonResourceController {
 
     public function setUseCasesIndex( $useCasesIndex ) {
         $this->useCasesIndex = $useCasesIndex;
+    }
+
+    public function setJsonTagTemplates( $index_json_tag_templates ) {
+        $this->jsonTabTemplates = $index_json_tag_templates;
+    }
+
+    public function setJsonTags( $index_tags ) {
+        $this->tagsIndex = $index_tags;
+    }
+
+    public function setJsonResourceTemplates( $index_json_resource_templates ) {
+        $this->jsonResourceTemplates = $index_json_resource_templates;
     }
 
     /**
@@ -142,7 +158,7 @@ class JsonResourceController {
 
         $this->menucontainer    = array( $this->menubuilder->createMenu() );
         $this->leftcontainer    = array();
-        $this->centralcontainer = array( $this->applicationBuilder->getHTMLBlock( $this->resource ) );
+        $this->centralcontainer = array( JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->tagsIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resource ) );
     }
 
     /**
