@@ -18,10 +18,10 @@ class JsonTemplate {
     protected PageStatus $pageStatus;
 
     const blocktype = 'basebuilder';
-    private array $resourcesIndex;
-    private array $tagsIndex;
-    private array $jsonResourceTemplates;
-    private array $jsonTabTemplates;
+    public array $resourcesIndex;
+    public array $tagsIndex;
+    public array $jsonResourceTemplates;
+    public array $jsonTabTemplates;
 
     /**
      * BaseBuilder constructor.

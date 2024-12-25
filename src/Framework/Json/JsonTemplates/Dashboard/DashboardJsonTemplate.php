@@ -63,7 +63,7 @@ class DashboardJsonTemplate extends JsonTemplate {
 		$panelBlock->setCssClass($panel->cssclass ?? '');
 
         $panelBlock->setInternalBlockName( $panel->id ?? '' );
-        $panelBlock->setBlock( JsonDefaultTemplateFactory::getHTMLBlock()  );
+        $panelBlock->setBlock( JsonDefaultTemplateFactory::getHTMLBlock($this->resourcesIndex, $this->tagsIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $panel->resource)  );
 
         return $panelBlock;
     }
