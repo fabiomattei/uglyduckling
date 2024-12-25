@@ -2,25 +2,25 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\Parameters\Dashboard;
 
-use \Fabiom\UglyDuckling\Common\Json\Parameters\BasicParameterGetter;
-use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
+use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
 
 class DashboardParameterGetter implements ParameterGetter {
 
     protected $resource;
-    protected ApplicationBuilder $applicationBuilder;
+    protected array $resourceIndex;
 
-    public function __construct($resource, $applicationBuilder) {
+    public function __construct($resource, $resourceIndex) {
         $this->resource = $resource;
-        $this->applicationBuilder = $applicationBuilder;
+        $this->resourceIndex = $resourceIndex;
     }
 
     function getValidationRoules(): array {
         $parameters = array();
         foreach( $this->resource->panels as $panel ) {
-            if ($this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists( $panel->resource )) {
-                $json_resource = $this->applicationBuilder->getJsonloader()->loadResource( $panel->resource );
-                $parGetter = BasicParameterGetter::parameterGetterFactory( $json_resource, $this->applicationBuilder );
+            if (JsonLoader::isJsonResourceIndexedAndFileExists( $this->resourceIndex, $panel->resource )) {
+                $json_resource = JsonLoader::loadResource( $this->resourceIndex, $panel->resource );
+                $parGetter = BasicParameterGetter::parameterGetterFactory( $json_resource, $this->resourceIndex );
                 $parameters = array_merge( $parameters, $parGetter->getValidationRoules() );
             }
         }

@@ -172,7 +172,7 @@ class JsonResourceController {
 
         $this->secondGump = new \GUMP();
 
-        $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
+        $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
         $validation_rules = $parametersGetter->getValidationRoules();
         $filter_rules = $parametersGetter->getFiltersRoules();
 

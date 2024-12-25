@@ -8,11 +8,10 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\Parameters;
 
-use \Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\DashboardParameterGetter;
-use Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\HTMLStaticBlockParametersGetter;
-use Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\JsonResourceParametersGetter;
-use Fabiom\UglyDuckling\Common\Json\Parameters\Dashboard\ParameterGetter;
-use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
+use \Fabiom\UglyDuckling\Framework\Json\Parameters\Dashboard\DashboardParameterGetter;
+use Fabiom\UglyDuckling\Framework\Json\Parameters\Dashboard\HTMLStaticBlockParametersGetter;
+use Fabiom\UglyDuckling\Framework\Json\Parameters\Dashboard\JsonResourceParametersGetter;
+use Fabiom\UglyDuckling\Framework\Json\Parameters\Dashboard\ParameterGetter;
 
 class BasicParameterGetter {
 
@@ -23,12 +22,12 @@ class BasicParameterGetter {
      * @param ApplicationBuilder $applicationBuilder
      * @return ParameterGetter
      */
-    public static function parameterGetterFactory( $resource, ApplicationBuilder $applicationBuilder ): ParameterGetter {
+    public static function parameterGetterFactory( $resource, $resourceIndex ): ParameterGetter {
         if ( is_a($resource, 'Fabiom\UglyDuckling\Common\Blocks\BaseHTMLStaticBlock') ) {
             return new HTMLStaticBlockParametersGetter($resource);
         }
         if ( $resource->metadata->type === "dashboard" ) {
-            return new DashboardParameterGetter( $resource, $applicationBuilder );
+            return new DashboardParameterGetter( $resource, $resourceIndex );
         }
         return new JsonResourceParametersGetter( $resource );
     }

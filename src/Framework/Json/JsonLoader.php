@@ -17,10 +17,23 @@ class JsonLoader {
                 $handle = fopen($index_resources[$resourceName], 'r');
                 return JsonLoader::json_decode_with_error_control(fread($handle, filesize($index_resources[$resourceName])), $index_resources[$resourceName] );
             } else {
-                throw new \Exception('[JsonLoader] :: Path associated to resource does not exists!!! Path required: ' . $this->resourcesIndex[$resourceName]->path);
+                throw new \Exception('[JsonLoader] :: Path associated to resource does not exists!!! Path required: ' . $index_resources[$resourceName]->path);
             }
         } else {
             throw new \Exception('[JsonLoader] :: Resource '.$resourceName.' undefined in array index!!!');
+        }
+    }
+
+
+    static public function isJsonResourceIndexedAndFileExists( array $index_resources, string $resourceName ) {
+        if ( array_key_exists( $resourceName, $index_resources ) ) {
+            if ( file_exists( $index_resources[$resourceName] ) ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 
