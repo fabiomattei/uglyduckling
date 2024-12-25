@@ -34,7 +34,6 @@ class UrlServices {
 
     /**
      * @param mixed $json_action
-     * @param JsonLoader $jsonloader
      * @param PageStatus $pageStatus
      * @return mixed
      *
@@ -84,7 +83,7 @@ class UrlServices {
      *
      * Check out: http://www.uddocs.com/docs/actions
      */
-    public static function make_resource_url( $pageStatus, $json_action ) {
+    public static function make_resource_url( PageStatus $pageStatus, $json_action ) {
         if ( isset( $json_action->url ) ) {
             return $json_action->url;
         }
@@ -120,7 +119,7 @@ class UrlServices {
                 }
                 $url_parameters = rtrim($url_parameters, '&');
             }
-            return UrlServices::makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+            return UrlServices::makeRelativeUrl( 'JsonResourceController', $url_parameters );
         }
 
         // going to default controller
@@ -130,7 +129,7 @@ class UrlServices {
             }
             $url_parameters = rtrim($url_parameters, '&');
         }
-        return UrlServices::makeRelativeUrl( ResourceRouter::ROUTE_OFFICE_ENTITY_DASHBOARD, $url_parameters );
+        return UrlServices::makeRelativeUrl( 'JsonResourceController', $url_parameters );
 
         // TODO Activate this in future
         //throw new \Exception('[UD Error] No action or controller or URL defined');
