@@ -11,7 +11,7 @@ namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
-class JsonDefaultTemplateFactory extends JsonTemplateFactory {
+class JsonDefaultTemplateFactory {
 
         /**
          * @param $jsonStructure
