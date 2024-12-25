@@ -338,7 +338,7 @@ class JsonResourceController {
     }
 
     function loadTemplate() {
-        require_once TEMPLATES_PATH . $this->templateFile . '.php';
+        require_once TEMPLATES_DIRECTORY . $this->templateFile . '.php';
     }
 
     /**
