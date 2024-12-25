@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu;
 
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLMenu;
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 use stdClass;
 
@@ -24,11 +25,13 @@ class MenuJsonTemplate extends JsonTemplate {
     private $menuStructure;
     protected string $controllerName;
     protected string $resourceName;
+    protected PageStatus $pageStatus;
 
     /**
      * JsonTemplate constructor.
      */
-    public function __construct( $controllerName = '', $resourceName = '' ) {
+    public function __construct( $pageStatus, $controllerName = '', $resourceName = '' ) {
+        $this->pageStatus = $pageStatus;
         $this->controllerName = $controllerName;
         $this->resourceName = $resourceName;
     }
