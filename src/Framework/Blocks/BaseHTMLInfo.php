@@ -2,6 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
+
 class BaseHTMLInfo extends BaseHTMLBlock {
 
     private $title;

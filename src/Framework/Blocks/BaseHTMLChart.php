@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 
 class BaseHTMLChart extends BaseHTMLBlock {
 
@@ -18,7 +19,6 @@ class BaseHTMLChart extends BaseHTMLBlock {
     protected $structure;
     protected $chartdataglue;
     protected $glue;
-    protected $htmlTemplateLoader;
 	protected $width;
 	protected $height;
 	protected $actiononclick;
@@ -33,10 +33,6 @@ class BaseHTMLChart extends BaseHTMLBlock {
         $this->glue = array();
 		$this->width = '400';
 		$this->height = '400';
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function setStructure($structure) {

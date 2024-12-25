@@ -8,6 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
+
 class CardHTMLBlock extends BaseHTMLBlock {
 
     private $title;
@@ -15,7 +17,6 @@ class CardHTMLBlock extends BaseHTMLBlock {
     private $block;
     private $width;
 	private $cssClass;
-    private $htmlTemplateLoader;
     private /* string */ $cardExternalContainerId;
 	private /* string */ $cardId;
 
@@ -28,10 +29,6 @@ class CardHTMLBlock extends BaseHTMLBlock {
 		$this->cssClass = '';
         $this->block = new EmptyHTMLBlock;
         $this->width = ColWidth::getWidth(ColWidth::MEDIUM, 3);
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function setBlock( $block ) {

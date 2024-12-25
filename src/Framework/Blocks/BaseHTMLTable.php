@@ -8,6 +8,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
+
 class BaseHTMLTable extends BaseHTMLBlock {
 
     protected $html;

@@ -19,7 +19,6 @@ use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
 class ColHTMLBlock extends BaseHTMLBlock {
 
     private $blocks;
-    private $htmlTemplateLoader;
 
     /**
      * RowHTMLBlock constructor.
@@ -28,10 +27,6 @@ class ColHTMLBlock extends BaseHTMLBlock {
     public function __construct() {
         parent::__construct();
         $this->blocks = array();
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function addBlock($block) {

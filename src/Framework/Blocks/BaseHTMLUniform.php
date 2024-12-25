@@ -2,6 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
+
 /**
  * Class BaseHTMLUniform
  *
@@ -12,7 +14,6 @@ class BaseHTMLUniform extends BaseHTMLBlock {
     /**
      * Necessary in order to load the HTML surrounding code
      */
-    private $htmlTemplateLoader;
     private $resourceName;
     private $bodyFile;
     private $addToHeadFile;
@@ -28,10 +29,6 @@ class BaseHTMLUniform extends BaseHTMLBlock {
     	$this->addToFootFile = '';
     	$this->addToHeadOnceFile = '';
     	$this->addToFootOnce = '';
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     public function setResourceName( string $resourceName ) {

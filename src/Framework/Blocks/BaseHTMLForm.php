@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Blocks;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
 use Fabiom\UglyDuckling\Framework\Blocks\ColWidth;
-use Fabiom\UglyDuckling\Common\Utils\HtmlTemplateLoader;
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 
 class BaseHTMLForm extends BaseHTMLBlock {
 
@@ -13,7 +13,6 @@ class BaseHTMLForm extends BaseHTMLBlock {
     protected $action;
     protected $body;
     protected $method;
-    protected HtmlTemplateLoader $htmlTemplateLoader;
     protected $formid;
     protected $adddate;
 
@@ -25,10 +24,6 @@ class BaseHTMLForm extends BaseHTMLBlock {
 		$this->action = '';
         $this->method = 'POST';
         $this->body = '';
-    }
-
-    public function setHtmlTemplateLoader( HtmlTemplateLoader $htmlTemplateLoader ) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 	
 	function setTitle( string $title ) {

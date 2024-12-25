@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 
 /**
  * This class is a container
@@ -19,7 +20,6 @@ use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
 class RowHTMLBlock extends BaseHTMLBlock {
 
     private $blocks;
-    private $htmlTemplateLoader;
 
     public $rowblockid;
 
@@ -31,10 +31,6 @@ class RowHTMLBlock extends BaseHTMLBlock {
         parent::__construct();
         $this->blocks = array();
         $this->rowblockid = '';
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     function addBlock($block) {

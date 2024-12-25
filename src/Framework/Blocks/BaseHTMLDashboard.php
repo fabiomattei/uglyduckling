@@ -18,21 +18,12 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
     private $rows;
 
     /**
-     * Necessary in order to load the HTML surrounding code
-     */
-    private $htmlTemplateLoader;
-
-    /**
      * BaseHTMLDashboard constructor.
      * @param $rows
      */
     public function __construct() {
         parent::__construct();
         $this->rows = array();
-    }
-
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
     }
 
     /**
@@ -58,7 +49,6 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
         $htmlbody = '';
         foreach ($this->rows as $row) {
             $rowBlock = new RowHTMLBlock;
-            $rowBlock->setHtmlTemplateLoader( $this->htmlTemplateLoader );
             foreach ($row as $panel) {
                 $rowBlock->addBlock( $panel );
         	}

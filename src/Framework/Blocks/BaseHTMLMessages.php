@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 
 class BaseHTMLMessages extends BaseHTMLBlock {
 
