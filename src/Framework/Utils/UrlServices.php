@@ -83,7 +83,7 @@ class UrlServices {
      *
      * Check out: http://www.uddocs.com/docs/actions
      */
-    public static function make_resource_url( PageStatus $pageStatus, $json_action ) {
+    public static function make_resource_url( $json_action, PageStatus $pageStatus ) {
         if ( isset( $json_action->url ) ) {
             return $json_action->url;
         }
