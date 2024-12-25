@@ -169,7 +169,7 @@ class JsonResourceController {
         // checking if resource defines any get parameter
         if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) return true;
 
-        $this->secondGump = new Gump;
+        $this->secondGump = new GUMP();
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
         $validation_rules = $parametersGetter->getValidationRoules();
