@@ -39,27 +39,27 @@ class BaseHTMLTable extends BaseHTMLBlock {
     }
 
     function addRow() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/openrow.html');
+        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/openrow.html');
     }
 
     function closeRow() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/closerow.html');
+        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/closerow.html');
     }
 
     function addTHead() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/openthead.html');
+        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/openthead.html');
     }
 
     function closeTHead() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/closethead.html');
+        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/closethead.html');
     }
 
     function addTBody() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/opentbody.html');
+        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/opentbody.html');
     }
 
     function closeTBody() {
-        $this->html .= $this->htmlTemplateLoader->loadTemplate('BaseTable/closetbody.html');
+        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/closetbody.html');
     }
 
     function addHeadLineColumn(string $value) {

@@ -30,16 +30,16 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function addButtonToggler() {
-        $this->buttonToggler = $this->htmlTemplateLoader->loadTemplate('Menu/buttontoggeler.html');
+        $this->buttonToggler = HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/buttontoggeler.html');
     }
 
     function addForm() {
-        $this->rightBody .= $this->htmlTemplateLoader->loadTemplate('Menu/rightbody.html');
+        $this->rightBody .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/rightbody.html');
     }
 
     function addNavItem( string $label, string $url, bool $active, bool $current, bool $right = false ) {
-        $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';
-        $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
+        $activestr = $active ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/active.html') : '';
+        $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/current.html') : '';
 
         if ( $right ) {
             $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
@@ -56,8 +56,8 @@ class BaseHTMLMenu extends BaseHTMLBlock {
 
     function addNavItemWithDropdown( string $label, string $url, bool $active, bool $current, array $submenuItems, string $controllerName = '', string $resourceName = '', bool $right = false ) {
         $submenu = '';
-        $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemactive.html') : '';
-        $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/submenuitemcurrent.html') : '';
+        $activestr = $active ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/submenuitemactive.html') : '';
+        $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/submenuitemcurrent.html') : '';
         foreach ($submenuItems as $item) {
             if ( isset( $controllerName ) AND $item->controller == $controllerName ) {
                 $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
@@ -77,8 +77,8 @@ class BaseHTMLMenu extends BaseHTMLBlock {
             }
         }
 
-        $activestr = $active ? $this->htmlTemplateLoader->loadTemplate('Menu/active.html') : '';
-        $currentstr = $current ? $this->htmlTemplateLoader->loadTemplate('Menu/current.html') : '';
+        $activestr = $active ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/active.html') : '';
+        $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/current.html') : '';
 
         if ( $right ) {
             $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 

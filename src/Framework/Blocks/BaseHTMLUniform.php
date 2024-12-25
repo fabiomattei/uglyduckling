@@ -62,7 +62,7 @@ class BaseHTMLUniform extends BaseHTMLBlock {
      * it return the HTML code for the web page built on data structure
      */
     function getHTML(): string {
-        if ( $this->bodyFile != '' ) return $this->htmlTemplateLoader->loadTemplate( $this->bodyFile );
+        if ( $this->bodyFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->bodyFile );
         else return '';
     }
 
@@ -80,7 +80,7 @@ class BaseHTMLUniform extends BaseHTMLBlock {
      * in the data structure
      */
     function addToHead(): string {
-        if ( $this->addToHeadFile != '' ) return $this->htmlTemplateLoader->loadTemplate( $this->addToHeadFile );
+        if ( $this->addToHeadFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToHeadFile );
         else return '';
     }
 
@@ -89,17 +89,17 @@ class BaseHTMLUniform extends BaseHTMLBlock {
      * in the data structure
      */
     function addToFoot(): string {
-        if ( $this->addToFootFile != '' ) return $this->htmlTemplateLoader->loadTemplate( $this->addToFootFile );
+        if ( $this->addToFootFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToFootFile );
         else return '';
     }
 
     function newAddToHeadOnce(): array {
-        if ( $this->addToHeadOnceFile != '' ) return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToHeadOnceFile ) );
+        if ( $this->addToHeadOnceFile != '' ) return array( $this->resourceName, HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToHeadOnceFile ) );
         else return array();
     }
 
     function newAddToFootOnce(): array {
-        if ( $this->addToFootOnceFile != '' ) return array( $this->resourceName, $this->htmlTemplateLoader->loadTemplate( $this->addToFootOnceFile ) );
+        if ( $this->addToFootOnceFile != '' ) return array( $this->resourceName, HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToFootOnceFile ) );
         else return array();
     }
 
