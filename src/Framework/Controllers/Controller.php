@@ -58,7 +58,7 @@ class Controller {
             unset($_SESSION['flashvariable']);
         }
 
-        $this->gump = new GUMP();
+        $this->gump = new \GUMP();
 
         if (!$this->isSessionValid()) {
             header('Location: ' . BASEPATH . 'public/login.html');
