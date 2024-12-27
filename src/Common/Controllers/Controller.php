@@ -54,6 +54,7 @@ class Controller {
     public $subAddToFoot = '';
     public $parameters;
     public $flashvariable;
+    public $readableErrors;
 
     /**
      * This method makes all necessary presets to activate a controller
