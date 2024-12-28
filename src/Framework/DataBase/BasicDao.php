@@ -2,6 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\DataBase;
 
+use Fabiom\UglyDuckling\Framework\Loggers\Logger;
+
 /**
  * Basic class for all dao's
  */
@@ -12,38 +14,24 @@ class BasicDao {
     const DB_TABLE_UPDATED_FIELD_NAME = 'abstract';
     const DB_TABLE_CREATED_FLIED_NAME = 'abstract';
     protected $DBH;
+    protected /* Logger */ $logger;
 
-    function __construct( $PDO = '' ) {
-        // if no database connection has been passed I try to make a new connection through the
-        // values in the settings
-        if ($PDO == '') {
-            try {
-                $this->DBH = new PDO(DBHOST . DBNAME, DBUSERNAME, DBPASSWORD);
-                $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new GeneralException('General malfuction!!!');
-            }
-        } else {
-            // I can use the passed connection
-            $this->DBH = $PDO;
-        }
+    function __construct() {
+        // epnty as you see
     }
 
     /**
-     * Setter method for database connection
+     * Database connection handler setter
      */
-    public function setDBH($DBH) {
+    public function setDBH( $DBH ) {
         $this->DBH = $DBH;
     }
 
     /**
-     * Database connection getter
-     * I can use the already made connection for next database call
+     * Database connection handler setter
      */
-    public function getDBH() {
-        return $this->DBH;
+    public function setLogger( Logger $logger ) {
+        $this->logger = $logger;
     }
 
     /**
@@ -52,12 +40,11 @@ class BasicDao {
     function getAll() {
         try {
             $STH = $this->DBH->query('SELECT * FROM ' . $this::DB_TABLE);
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             return $STH;
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -73,7 +60,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
             $obj = $STH->fetch();
 
             if ($obj == null) {
@@ -81,10 +68,9 @@ class BasicDao {
             }
 
             return $obj;
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -99,7 +85,7 @@ class BasicDao {
      * EX.
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
-    function insert($fields) {
+    function insert($fields, $debug = false) {
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';
@@ -110,20 +96,104 @@ class BasicDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         $filedsarguments = substr($filedsarguments, 0, -2);
+
+        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
+
         try {
-            $this->DBH->beginTransaction();
-            $STH = $this->DBH->prepare('INSERT INTO ' . $this::DB_TABLE . ' (' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES (' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")');
+            $STH = $this->DBH->prepare( $sqlstring );
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
+
+            if ( $debug ) {
+                print_r($fields);
+                echo "Pre-calculating query:<br />";
+                echo $filedslist."<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
+            }
+
             $STH->execute();
+
+            if ( $debug ) {
+                echo strtr( $sqlstring, $fields );
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+                echo "<br />";
+            }
+
             $inserted_id = $this->DBH->lastInsertId();
-            $this->DBH->commit();
             return $inserted_id;
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+        } catch (\PDOException $e) {
+            echo strtr( $sqlstring, $fields );
+            $STH->debugDumpParams();
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * Insert a row in the database and automaticalli calls UUID for the table primary key.
+     * Set the updated and created fields to current date and time
+     * It accepts an array containing as key the field name and as value
+     * the field content.
+     *
+     * @param $fields :: array of fields to insert
+     *
+     * EX.
+     * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
+     */
+    function insertWithUUID($fields, $debug = false) {
+        $sqlstringUUID = 'SELECT UUID() AS newuuid;';
+        $STH = $this->DBH->prepare( $sqlstringUUID );
+        $STH->execute();
+        $STH->setFetchMode(PDO::FETCH_OBJ);
+
+        $newuuid = '';
+        while ($item = $STH->fetch()) {
+            $newuuid = $item->newuuid;
+        }
+
+        $presentmoment = date('Y-m-d H:i:s', time());
+
+        $filedslist = '';
+        $filedsarguments = '';
+        foreach ($fields as $key => $value) {
+            $filedslist .= $key . ', ';
+            $filedsarguments .= ':' . $key . ', ';
+        }
+        $filedslist = substr($filedslist, 0, -2);
+        $filedsarguments = substr($filedsarguments, 0, -2);
+
+        $sqlstring = 'INSERT INTO ' . $this::DB_TABLE . ' ('.$this::DB_TABLE_PK.', ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ', ' . $this::DB_TABLE_CREATED_FLIED_NAME . ') VALUES ("' . $newuuid . '", ' . $filedsarguments . ', "' . $presentmoment . '", "' . $presentmoment . '")';
+
+        try {
+            $STH = $this->DBH->prepare( $sqlstring );
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+
+            if ( $debug ) {
+                print_r($fields);
+                echo "Pre-calculating query:<br />";
+                echo $filedslist."<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
+            }
+
+            $STH->execute();
+
+            if ( $debug ) {
+                echo strtr( $sqlstring, $fields );
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+                echo "<br />";
+            }
+
+            return $newuuid;
+        } catch (\PDOException $e) {
+            echo strtr( $sqlstring, $fields );
+            $STH->debugDumpParams();
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -135,7 +205,7 @@ class BasicDao {
      * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
      *
      */
-    function update($id, $fields) {
+    function update($id, $fields, $debug = false) {
         $presentmoment = date('Y-m-d H:i:s', time());
 
         $filedslist = '';
@@ -144,16 +214,78 @@ class BasicDao {
         }
         $filedslist = substr($filedslist, 0, -2);
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id');
+            $sqlstring = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id';
+
+            $STH = $this->DBH->prepare( $sqlstring );
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
             $STH->bindParam(':id', $id);
+
+            if ( $debug ) {
+                $fields['id'] = $id;
+                print_r($fields);
+                echo "Pre-calculating query:<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
+            }
+
             $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+
+            if ( $debug ) {
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+                echo "<br />";
+            }
+
+        } catch (\PDOException $e) {
+            $STH->debugDumpParams();
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * This function updates a single row of the delared table.
+     * It uptades the row haveing id = $id
+     * @param $id :: integer id
+     * @param $fields :: array of fields to update
+     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
+     *
+     */
+    function updateNoDate($id, $fields, $debug = false) {
+        $filedslist = '';
+        foreach ($fields as $key => $value) {
+            $filedslist .= $key . ' = :' . $key . ', ';
+        }
+        $filedslist = substr($filedslist, 0, -2);
+        try {
+            $sqlstring = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ' WHERE ' . $this::DB_TABLE_PK . ' = :id';
+
+            $STH = $this->DBH->prepare( $sqlstring );
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+            $STH->bindParam(':id', $id);
+
+            if ( $debug ) {
+                $fields['id'] = $id;
+                print_r($fields);
+                echo "Pre-calculating query:<br />";
+                echo strtr( $sqlstring, $fields )."<br />";
+            }
+
+            $STH->execute();
+
+            if ( $debug ) {
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+                echo "<br />";
+            }
+
+        } catch (\PDOException $e) {
+            $STH->debugDumpParams();
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -170,7 +302,7 @@ class BasicDao {
      * @param $fields :: array of fields to update
      * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
      */
-    function updateByFields($conditionsfields, $fields) {
+    function updateByFields($conditionsfields, $fields, $debug = false) {
         $conditionslist = $this->organizeConditionsFields($conditionsfields);
         $presentmoment = date('Y-m-d H:i:s', time());
         $filedslist = '';
@@ -181,7 +313,7 @@ class BasicDao {
         try {
             $query = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ', ' . $this::DB_TABLE_UPDATED_FIELD_NAME . ' = "' . $presentmoment . '" ';
             if ($conditionslist != '') {
-                $query .= 'WHERE ' . $conditionslist . ' ';
+                $query .= 'WHERE ' . $conditionslist . '; ';
             }
 
             $STH = $this->DBH->prepare($query);
@@ -191,11 +323,75 @@ class BasicDao {
             foreach ($conditionsfields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $query."<br />";
+                print_r($conditionsfields);
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
             $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * This method allow to update many rows of a single table at the same time
+     *
+     * @param $conditionsfields :: array of fields to put in where clause
+     * $tododao->getByFields( array( 'open' => '0' ) );
+     * this will get all the row having the field open = 0
+     *
+     * you can set more then a search parameter (evaluated in AND)
+     * $tododao->getByFields( array( 'open' => '0', 'handling' => '1' ) );
+     *
+     * @param $fields :: array of fields to update
+     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
+     */
+    function updateByFieldsNoDate($conditionsfields, $fields, $debug = false) {
+        $conditionslist = $this->organizeConditionsFields($conditionsfields);
+        $presentmoment = date('Y-m-d H:i:s', time());
+        $filedslist = '';
+        foreach ($fields as $key => $value) {
+            $filedslist .= $key . ' = :' . $key . ', ';
+        }
+        $filedslist = substr($filedslist, 0, -2);
+        try {
+            $query = 'UPDATE ' . $this::DB_TABLE . ' SET ' . $filedslist . ' ';
+            if ($conditionslist != '') {
+                $query .= 'WHERE ' . $conditionslist . '; ';
+            }
+
+            $STH = $this->DBH->prepare($query);
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+            foreach ($conditionsfields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $query."<br />";
+                print_r($conditionsfields);
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
+            $STH->execute();
+
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -218,10 +414,9 @@ class BasicDao {
             $STH = $this->DBH->prepare('DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $this::DB_TABLE_PK . ' = :id');
             $STH->bindParam(':id', $id);
             $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -250,10 +445,9 @@ class BasicDao {
                 $STH->bindParam($key, $value);
             }
             $STH->execute();
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -280,16 +474,15 @@ class BasicDao {
 
         $orderbyfieldlist = $this->organizeOrderByFields($orderby);
 
-        // building the query
-        $query = 'SELECT ' . $requestedfieldlist . ' FROM ' . $this::DB_TABLE . ' ';
-        if ($filedslist != '') {
-            $query .= 'WHERE ' . $filedslist . ' ';
-        }
-        $query .= $orderbyfieldlist;
-
-        $STH = $this->DBH->prepare($query);
-
         try {
+            // building the query
+            $query = 'SELECT ' . $requestedfieldlist . ' FROM ' . $this::DB_TABLE . ' ';
+            if ($filedslist != '') {
+                $query .= 'WHERE ' . $filedslist . ' ';
+            }
+            $query .= $orderbyfieldlist;
+
+            $STH = $this->DBH->prepare($query);
             foreach ($conditionsfields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
@@ -299,11 +492,46 @@ class BasicDao {
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
             return $STH;
-        } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            $logger->write($STH->activeQueryString(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
+        }
+    }
+
+    /**
+     * This is the basic function for running a SQL query.
+     * Once you created a instance of the DAO object you can do for example:
+     *
+     * $sqlQuery string containing the query
+     *
+     * $tododao->getBySQLQuery( 'SELECT * FROM mytable WHERE myfield = :myfieldcontent;', [ ':myfieldcontent' => '0' ] );
+     * this will get all the row having the field myfield = 0
+     */
+    public function getBySQLQuery($sqlQuery, $fields, $debug = false) {
+        try {
+            $STH = $this->DBH->prepare($sqlQuery);
+            foreach ($fields as $key => &$value) {
+                $STH->bindParam($key, $value);
+            }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $sqlQuery."<br />";
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
+            $STH->execute();
+
+            # setting the fetch mode
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            return $STH;
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -316,7 +544,7 @@ class BasicDao {
      * @param string $orderby
      * @param string $requestedfields
      * @return array|PDOStatement
-     * @throws GeneralException
+     * @throws\Exception
      */
     public function getByFieldList($fieldname, $ids, $conditionsfields, $orderby = 'none', $requestedfields = 'none') {
         if (count($ids) > 0) {
@@ -349,16 +577,15 @@ class BasicDao {
                 $STH->setFetchMode(PDO::FETCH_OBJ);
 
                 return $STH;
-            } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new GeneralException('General malfuction!!!');
+            } catch (\PDOException $e) {
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+                throw new \Exception('General malfuction!!!');
             }
         } else {
             return array();
         }
     }
-	
+
     /**
      * This function allows user to get a set of elements from a table.
      *
@@ -368,7 +595,7 @@ class BasicDao {
      * @param  string $orderby
      * @param  string $requestedfields
      * @return array|PDOStatement
-     * @throws GeneralException
+     * @throws\Exception
      */
     public function getArrayByFieldList($fieldname, $ids, $conditionsfields, $orderby = 'none', $requestedfields = 'none') {
         if (count($ids) > 0) {
@@ -395,31 +622,26 @@ class BasicDao {
                     $STH->bindParam($key, $value);
                 }
 
-	            $STH->execute();
+                $STH->execute();
 
-	            # setting the fetch mode
-	            $STH->setFetchMode(PDO::FETCH_OBJ);
+                # setting the fetch mode
+                $STH->setFetchMode(PDO::FETCH_OBJ);
 
-			    $out = array();
-			    while ($item = $STH->fetch()) {
-			        $id = $item->{$this::DB_TABLE_PK};
-			        $out[$id] = $item;
-			    }
+                $out = array();
+                while ($item = $STH->fetch()) {
+                    $id = $item->{$this::DB_TABLE_PK};
+                    $out[$id] = $item;
+                }
 
-			    return $out;
+                return $out;
             } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new GeneralException('General malfuction!!!');
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+                throw new \Exception('General malfuction!!!');
             }
         } else {
             return array();
         }
     }
-	
-	
-	
-
 
     /**
      * This is the basic function for getting one element from a table.
@@ -462,9 +684,8 @@ class BasicDao {
 
             return $obj;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -517,9 +738,8 @@ class BasicDao {
 
             return $out;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -561,9 +781,8 @@ class BasicDao {
 
             return $out;
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
@@ -577,7 +796,7 @@ class BasicDao {
      * @param string $orderby
      * @param string $requestedfields
      * @return array|PDOStatement
-     * @throws GeneralException
+     * @throws\Exception
      */
     public function countByFieldList($fieldname, $ids, $conditionsfields, $orderby = 'none', $requestedfields = 'none') {
         if (count($ids) > 0) {
@@ -615,9 +834,8 @@ class BasicDao {
 
                 return $out;
             } catch (PDOException $e) {
-                $logger = new Logger();
-                $logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new GeneralException('General malfuction!!!');
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+                throw new \Exception('General malfuction!!!');
             }
         } else {
             return array();
@@ -630,7 +848,7 @@ class BasicDao {
      * @param $fieldname                name of field to get
      * @param $conditionsfields         conditions evaluated in AND
      * @return the field content
-     * @throws GeneralException
+     * @throws\Exception
      */
     public function getOneField($fieldname, $conditionsfields) {
         $filedslist = $this->organizeConditionsFields($conditionsfields);
@@ -664,9 +882,8 @@ class BasicDao {
             }
 
         } catch (PDOException $e) {
-            $logger = new Logger();
-            $logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new GeneralException('General malfuction!!!');
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('General malfuction!!!');
         }
     }
 
