@@ -489,7 +489,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             return $STH;
         } catch (\PDOException $e) {
@@ -526,7 +526,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             return $STH;
         } catch (\PDOException $e) {
@@ -574,7 +574,7 @@ class BasicDao {
                 $STH->execute();
 
                 # setting the fetch mode
-                $STH->setFetchMode(PDO::FETCH_OBJ);
+                $STH->setFetchMode(\PDO::FETCH_OBJ);
 
                 return $STH;
             } catch (\PDOException $e) {
@@ -625,7 +625,7 @@ class BasicDao {
                 $STH->execute();
 
                 # setting the fetch mode
-                $STH->setFetchMode(PDO::FETCH_OBJ);
+                $STH->setFetchMode(\PDO::FETCH_OBJ);
 
                 $out = array();
                 while ($item = $STH->fetch()) {
@@ -675,7 +675,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
             $obj = $STH->fetch();
 
             if ($obj == null) {
@@ -728,7 +728,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             $out = array();
             while ($item = $STH->fetch()) {
@@ -737,7 +737,7 @@ class BasicDao {
             }
 
             return $out;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
@@ -772,7 +772,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             $out = 0;
             if ( $item = $STH->fetch() ) {
@@ -780,7 +780,7 @@ class BasicDao {
             }
 
             return $out;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
@@ -825,7 +825,7 @@ class BasicDao {
                 $STH->execute();
 
                 # setting the fetch mode
-                $STH->setFetchMode(PDO::FETCH_OBJ);
+                $STH->setFetchMode(\PDO::FETCH_OBJ);
 
                 $out = array();
                 while ($item = $STH->fetch()) {
@@ -833,7 +833,7 @@ class BasicDao {
                 }
 
                 return $out;
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
             }
@@ -869,7 +869,7 @@ class BasicDao {
             $STH->execute();
 
             # setting the fetch mode
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
             while ($item = $STH->fetch()) {
                 $out = $item->countresult;
@@ -881,7 +881,7 @@ class BasicDao {
                 return '';
             }
 
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
