@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\BusinessLogic\Ip\UseCases;
 
-use Fabiom\UglyDuckling\BusinessLogic\Ip\Daos\DeactivatedUserDao;
+use Fabiom\UglyDuckling\Framework\BusinessLogic\Ip\Daos\DeactivatedUserDao;
 
 class UserIsNotDeactivated {
 
