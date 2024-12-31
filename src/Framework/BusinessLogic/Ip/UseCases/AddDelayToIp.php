@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\BusinessLogic\Ip\UseCases;
+namespace Fabiom\UglyDuckling\Framework\BusinessLogic\Ip\UseCases;
 
 use Fabiom\UglyDuckling\Framework\BusinessLogic\Ip\Daos\IpDao;
 
