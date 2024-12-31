@@ -97,6 +97,35 @@ class UserDao extends BasicDao {
 		}
 	}
 
+    /**
+     * In order to save the password it uses the algorithms created by the community
+     * password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
+     * password_verify('rasmuslerdorf', $hash)
+     */
+    function checkUserNameAndPassword($username, $password) {
+        try {
+            $STH = $this->DBH->prepare('SELECT usr_hashedpsw FROM ud_users WHERE usr_username = :username;');
+            $STH->bindParam(':username', $username, PDO::PARAM_STR);
+            $STH->execute();
+
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $obj = $STH->fetch();
+
+            // user with given email does not exist
+            if ($obj == null) {
+                return false;
+            }
+
+            // To fix some password issue:
+            // echo 'Password: '.$password.' password hash:'.password_hash($password, PASSWORD_DEFAULT).' dbpassword hash:'.$obj->usr_hashedpsw;
+
+            return password_verify($password, $obj->usr_hashedpsw);
+        }
+        catch(\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
 	function updatePassword($id, $password) {
 	    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $presentmoment = date('Y-m-d H:i:s', time());
