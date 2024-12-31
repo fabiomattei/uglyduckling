@@ -44,6 +44,7 @@ class BaseController {
     public Logger $logger;
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
+    public array $groupsIndex;
 
     public $unvalidated_parameters;
 
@@ -54,6 +55,10 @@ class BaseController {
 
     public function setDBConnection( DBConnection $dbconnection ) {
         $this->dbconnection = $dbconnection;
+    }
+
+    public function setGroupsIndex( $groupsIndex ) {
+        $this->groupsIndex = $groupsIndex;
     }
 
     /**
