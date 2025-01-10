@@ -146,7 +146,7 @@ class BasicDao {
         $sqlstringUUID = 'SELECT UUID() AS newuuid;';
         $STH = $this->DBH->prepare( $sqlstringUUID );
         $STH->execute();
-        $STH->setFetchMode(PDO::FETCH_OBJ);
+        $STH->setFetchMode(\PDO::FETCH_OBJ);
 
         $newuuid = '';
         while ($item = $STH->fetch()) {
