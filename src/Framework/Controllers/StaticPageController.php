@@ -16,6 +16,8 @@ class StaticPageController {
     public function __construct( $templateFile, $staticPageFile ) {
         $this->templateFile = $templateFile;
         $this->viewFile = $staticPageFile;
+        $this->controllerPointer = $this;
+        $this->appTitle = APP_NAME;
     }
 
     public function showPage() {
