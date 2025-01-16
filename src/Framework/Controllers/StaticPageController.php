@@ -12,6 +12,7 @@ class StaticPageController {
     public string $templateFile;
     public string $viewFile;
     public $controllerPointer;
+    public string $appTitle;
 
     public function __construct( $templateFile, $staticPageFile ) {
         $this->templateFile = $templateFile;
