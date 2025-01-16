@@ -70,6 +70,11 @@ class Controller {
     public BaseMailer $mailer;
     public array $groupsIndex;
 
+    public function __construct() {
+        $this->gump = new \GUMP();
+        $this->parameters = [];
+    }
+
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
@@ -460,7 +465,7 @@ class Controller {
         $this->addToHeadAndToFoot($this->secondcentralcontainer);
         $this->addToHeadAndToFoot($this->thirdcentralcontainer);
         $this->addToHeadAndToFoot($this->bottomcontainer);
-        
+
         require_once 'src/Templates/' . $this->templateFile . '.php';
     }
 
