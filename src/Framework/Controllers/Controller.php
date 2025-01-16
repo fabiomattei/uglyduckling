@@ -1,28 +1,116 @@
 <?php
 
+/**
+ * User: Fabio Mattei
+ * Date: 24/06/2019
+ * Time: 09:49
+ */
+
 namespace Fabiom\UglyDuckling\Framework\Controllers;
+
+use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
+use Fabiom\UglyDuckling\Framework\Loggers\Logger;
+use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
+use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
+use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
+use Fabiom\UglyDuckling\Framework\Utils\StringUtils;
 
 class Controller {
 
-    public $get_validation_rules = array();
-    public $get_filter_rules = array();
-    public $post_validation_rules = array();
-    public $post_filter_rules = array();
+    const CONTROLLER_NAME = 'controller';
 
-    public function __construct() {
-        session_start();
+    public string $templateFile;
+    public /* GUMP */
+        $gump;
+    public /* array */
+        $get_validation_rules = array();
+    public /* array */
+        $get_filter_rules = array();
+    public /* array */
+        $post_validation_rules = array();
+    public /* array */
+        $post_filter_rules = array();
+    public /* array */
+        $post_get_validation_rules = array();
+    public /* array */
+        $post_get_filter_rules = array();
+    public /* array */
+        $getParameters;
+    public /* array */
+        $postParameters;
+    public /* array */
+        $filesParameters;
+
+    public $unvalidated_parameters;
+    public $filteredParameters;
+
+    public $title;
+    public $menucontainer = array();
+    public $topcontainer = array();
+    public $messagescontainer = array();
+    public $leftcontainer = array();
+    public $rightcontainer = array();
+    public $centralcontainer = array();
+    public $secondcentralcontainer = array();
+    public $thirdcentralcontainer = array();
+    public $bottomcontainer = array();
+    public $sidebarcontainer = array();
+
+    public $addToHead = '';
+    public $addToFoot = '';
+    public $subAddToHead = '';
+    public $subAddToFoot = '';
+    public $parameters;
+    public $flashvariable;
+    public $readableErrors;
+
+    /**
+     * This method makes all necessary presets to activate a controller
+     * @throws \Exception
+     */
+    public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
+        // setting an array containing all parameters
+        $this->parameters = [];
+        $this->logger = $logger;
+        $this->securityChecker = $securityChecker;
+        $this->mailer = $mailer;
+        $this->dbconnection = $dbconnection;
+
+        if ( !$this->securityChecker->isSessionValid(
+            SessionWrapper::getSessionLoggedIn(),
+            SessionWrapper::getSessionIp(),
+            SessionWrapper::getSessionUserAgent(),
+            SessionWrapper::getSessionLastLogin(),
+            ServerWrapper::getRemoteAddress(),
+            ServerWrapper::getHttpUserAgent() ) ) {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
+    }
+
+    /**
+     * This method makes all necessary presets to activate a controller
+     *
+     * @param ApplicationBuilder $routerContainer
+     * @param PageStatus $PageStatus
+     * @throws \Exception
+     */
+    public function makeAllPresets(
+        ApplicationBuilder $applicationBuilder,
+        PageStatus         $pageStatus
+    )
+    {
+        $this->applicationBuilder = $applicationBuilder;
+        $this->pageStatus = $pageStatus;
+        $this->gump = new \GUMP();
 
         // setting an array containing all parameters
         $this->parameters = array();
 
-        // messages block loaded by default from all pages
-        block('template', 'message/messages');
-        $this->messages = new Messages();
-
-        $this->title = APPNAMEFORPAGETITLE;
+        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle();
         $this->menucontainer = array();
         $this->topcontainer = array();
-        $this->messagescontainer = array($this->messages);
+        $this->messagescontainer = array($this->applicationBuilder->getMessages());
         $this->leftcontainer = array();
         $this->rightcontainer = array();
         $this->centralcontainer = array();
@@ -30,61 +118,44 @@ class Controller {
         $this->thirdcentralcontainer = array();
         $this->bottomcontainer = array();
         $this->sidebarcontainer = array();
-        $this->templateFile = PRIVATETEMPLATE;
+        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateFileName();
 
         $this->addToHead = '';
         $this->addToFoot = '';
+        $this->subAddToHead = '';
+        $this->subAddToFoot = '';
 
-        $this->loadlinks();
+        $this->applicationBuilder->getMessages()->info = $this->pageStatus->getSessionWrapper()->getMsgInfo();
+        $this->applicationBuilder->getMessages()->warning = $this->pageStatus->getSessionWrapper()->getMsgWarning();
+        $this->applicationBuilder->getMessages()->error = $this->pageStatus->getSessionWrapper()->getMsgError();
+        $this->applicationBuilder->getMessages()->success = $this->pageStatus->getSessionWrapper()->getMsgSuccess();
+        $this->flashvariable = $this->pageStatus->getSessionWrapper()->getFlashVariable();
 
-        if (isset($_SESSION['msginfo'])) {
-            $this->messages->info = $_SESSION['msginfo'];
-            unset($_SESSION['msginfo']);
+        if (!$this->applicationBuilder->getSecurityChecker()->isSessionValid(
+            $this->pageStatus->getSessionWrapper()->getSessionLoggedIn(),
+            $this->pageStatus->getSessionWrapper()->getSessionIp(),
+            $this->pageStatus->getSessionWrapper()->getSessionUserAgent(),
+            $this->pageStatus->getSessionWrapper()->getSessionLastLogin(),
+            $this->pageStatus->getServerWrapper()->getRemoteAddress(),
+            $this->pageStatus->getServerWrapper()->getHttpUserAgent())) {
+            $this->applicationBuilder->getRedirector()->setURL($this->applicationBuilder->getSetup()->getBasePath() . 'public/login.html');
+            $this->applicationBuilder->getRedirector()->redirect();
         }
-        if (isset($_SESSION['msgwarning'])) {
-            $this->messages->warning = $_SESSION['msgwarning'];
-            unset($_SESSION['msgwarning']);
-        }
-        if (isset($_SESSION['msgerror'])) {
-            $this->messages->error = $_SESSION['msgerror'];
-            unset($_SESSION['msgerror']);
-        }
-        if (isset($_SESSION['msgsuccess'])) {
-            $this->messages->success = $_SESSION['msgsuccess'];
-            unset($_SESSION['msgsuccess']);
-        }
-        if (isset($_SESSION['flashvariable'])) {
-            $this->flashvariable = $_SESSION['flashvariable'];
-            unset($_SESSION['flashvariable']);
-        }
-
-        $this->gump = new \GUMP();
-
-        if (!$this->isSessionValid()) {
-            header('Location: ' . BASEPATH . 'public/login.html');
-            die();
-        }
-    }
-
-    public function isGetRequest() {
-        return $_SERVER["REQUEST_METHOD"] == "GET";
-    }
-
-    public function isPostRequest() {
-        return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 
     /**
      * Method to override (eventually)
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         echo 'not implemented yet';
     }
 
     /**
      * Method to override (eventually)
      */
-    public function postRequest() {
+    public function postRequest()
+    {
         echo 'not implemented yet';
     }
 
@@ -92,16 +163,17 @@ class Controller {
      * check the parameters sent through the url and check if they are ok from
      * the point of view of the validation rules
      */
-    public function check_get_request() {
-        if ( count( $this->get_validation_rules ) == 0 ) {
+    public function check_get_request()
+    {
+        if (count($this->get_validation_rules) == 0) {
             return true;
         } else {
-            $parms = $this->gump->sanitize($this->parameters);
-            $this->gump->validation_rules( $this->get_validation_rules );
-            $this->gump->filter_rules( $this->get_filter_rules );
-            $this->parameters = $this->gump->run( $parms );
+            $parms = $this->gump->sanitize($this->getParameters);
+            $this->gump->validation_rules($this->get_validation_rules);
+            $this->gump->filter_rules($this->get_filter_rules);
+            $this->getParameters = $this->gump->run($parms);
             $this->unvalidated_parameters = $parms;
-            if ( $this->parameters === false ) {
+            if ($this->getParameters === false) {
                 $this->readableErrors = $this->gump->get_readable_errors(true);
                 return false;
             } else {
@@ -114,37 +186,71 @@ class Controller {
      * check the parameters sent through the url and check if they are ok from
      * the point of view of the validation rules
      */
-    public function check_post_request() {
-        if ( count( $this->post_validation_rules ) == 0 ) {
+    public function check_post_request()
+    {
+        if (count($this->post_validation_rules) == 0) {
             return true;
         } else {
-            $parms = $this->gump->sanitize( $_POST );
-            $this->gump->validation_rules( $this->post_validation_rules );
-            $this->gump->filter_rules( $this->post_filter_rules );
-            $this->parameters = $this->gump->run( $parms );
+            $out = false;
+
+            // checking get parameters in post request
+            $parms = $this->gump->sanitize($this->getParameters);
+            $this->gump->validation_rules($this->post_get_validation_rules);
+            $this->gump->filter_rules($this->post_get_filter_rules);
+            $this->getParameters = $this->gump->run($parms);
             $this->unvalidated_parameters = $parms;
-            if ( $this->parameters === false ) {
+            if ($this->getParameters === false) {
                 $this->readableErrors = $this->gump->get_readable_errors(true);
-                return false;
+                $out = false;
             } else {
-                return true;
+                $out = true;
             }
+
+            // checking post parameters in post request
+            $parms = $this->gump->sanitize($this->postParameters);
+            $this->gump->validation_rules($this->post_validation_rules);
+            $this->gump->filter_rules($this->post_filter_rules);
+            $this->postParameters = $this->gump->run($parms);
+            $this->unvalidated_parameters = $parms;
+            if ($this->postParameters === false) {
+                $this->readableErrors = $this->gump->get_readable_errors(true);
+                $out = false;
+            } else {
+                $out = true;
+            }
+
+            return $out;
         }
     }
 
-    public function show_get_error_page() {
-        throw new GeneralException('General malfuction!!!');
+    /**
+     * This method has to be overriden, if id does not it throws an unhandled ErrorPageException
+     * The ovverriding method need to show the page containing the errors that prevent the validation to pass
+     *
+     * @throws ErrorPageException
+     */
+    public function show_get_error_page()
+    {
+        throw new ErrorPageException('Error page exception function show_get_error_page()');
     }
 
-    public function show_post_error_page() {
-        throw new GeneralException('General malfuction!!!');
+    /**
+     * This method has to be overriden, if id does not it throws an unhandled ErrorPageException
+     * The ovverriding method need to show the page containing the errors that prevent the validation to pass
+     *
+     * @throws ErrorPageException
+     */
+    public function show_post_error_page()
+    {
+        throw new ErrorPageException('Error page exception function show_post_error_page()');
     }
 
     /**
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_get_request() {
+    public function check_authorization_get_request()
+    {
         return true;
     }
 
@@ -152,24 +258,45 @@ class Controller {
      * This method has to be implemented by inerithed class
      * It return true by defult for compatiblity issues
      */
-    public function check_authorization_post_request() {
+    public function check_authorization_post_request()
+    {
         return true;
     }
 
-    public function show_get_authorization_error_page() {
-        throw new GeneralException('Authorization error!!!');
+    public function show_get_authorization_error_page()
+    {
+        /*
+         * $this->applicationBuilder->getLogger()->write(
+            'ERROR :: show_get_authorization_error_page illegal access from user **' .
+            $_SESSION['username'] .
+            '** having group set to **' .
+            $_SESSION['group'] .
+            '** ', __FILE__, __LINE__);
+        */
+        $this->redirectToDefaultPage();
     }
 
-    public function show_post_authorization_error_page() {
-        throw new GeneralException('Authorization error!!!');
+    public function show_post_authorization_error_page()
+    {
+        /*
+         * $this->applicationBuilder->getLogger()->write(
+            'ERROR :: show_get_authorization_error_page illegal access from user **' .
+            $_SESSION['username'] .
+            '** having group set to **' .
+            $_SESSION['group'] .
+            '** ', __FILE__, __LINE__);
+        */
+        $this->redirectToDefaultPage();
     }
 
-    public function showPage() {
+    public function showPage()
+    {
         $time_start = microtime(true);
 
-        if ($this->isGetRequest()) {
-            if ( $this->check_authorization_get_request() ) {
-                if ( $this->check_get_request() ) {
+        if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
+            $this->pageStatus->getSessionWrapper()->createCsrfToken();
+            if ($this->check_authorization_get_request()) {
+                if ($this->check_get_request()) {
                     $this->getRequest();
                 } else {
                     $this->show_get_error_page();
@@ -178,8 +305,8 @@ class Controller {
                 $this->check_authorization_get_request();
             }
         } else {
-            if ( $this->check_authorization_post_request() ) {
-                if ( $this->check_post_request() ) {
+            if ($this->check_authorization_post_request()) {
+                if ($this->check_post_request()) {
                     $this->postRequest();
                 } else {
                     $this->show_post_error_page();
@@ -193,61 +320,29 @@ class Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $logger = new Logger();
-            $logger->write('WARNING TIME :: ' . $_SERVER["REQUEST_METHOD"] . ' ' . $_SERVER['PHP_SELF'] . ' ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->applicationBuilder->getLogger()->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
-    }
-
-    private function isSessionValid() {
-        // check if user logged in
-        if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'])) {
-            return false;
-        }
-
-        // check if ip matches
-        if (!isset($_SESSION['ip']) || !isset($_SERVER['REMOTE_ADDR'])) {
-            return false;
-        }
-        if (!$_SESSION['ip'] === $_SERVER['REMOTE_ADDR']) {
-            return false;
-        }
-
-        // check user agent
-        if (!isset($_SESSION['user_agent']) || !isset($_SERVER['HTTP_USER_AGENT'])) {
-            return false;
-        }
-        if (!$_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']) {
-            return false;
-        }
-
-        // check elapsed time
-        $max_elapsed = 60 * 60 * 24; // 1 day
-        // return false if value is not set
-        if (!isset($_SESSION['last_login'])) {
-            return false;
-        }
-        if (!($_SESSION['last_login'] + $max_elapsed) >= time()) {
-            return false;
-        }
-
-        return true;
     }
 
     // ** next section load textual messages for messages block
-    function setSuccess($success) {
-        $this->messages->setSuccess($success);
+    function setSuccess(string $success)
+    {
+        $this->pageStatus->getSessionWrapper()->setMsgSuccess($success);
     }
 
-    function setError($error) {
-        $this->messages->setError($error);
+    function setError(string $error)
+    {
+        $this->pageStatus->getSessionWrapper()->setMsgError($error);
     }
 
-    function setInfo($info) {
-        $this->messages->setInfo($info);
+    function setInfo(string $info)
+    {
+        $this->pageStatus->getSessionWrapper()->setMsgInfo($info);
     }
 
-    function setWarning($warning) {
-        $this->messages->setWarning($warning);
+    function setWarning(string $warning)
+    {
+        $this->pageStatus->getSessionWrapper()->setMsgWarning($warning);
     }
 
     /**
@@ -260,8 +355,9 @@ class Controller {
      *
      * @param [string] $flashvariable [variable that last for a request in the same session]
      */
-    function setFlashVariable($flashvariable) {
-        $_SESSION['flashvariable'] = $flashvariable;
+    function setFlashVariable(string $flashvariable)
+    {
+        $this->pageStatus->getSessionWrapper()->setFlashVariable($flashvariable);
     }
 
     /**
@@ -270,31 +366,46 @@ class Controller {
      *
      * @return [string] [variable that last for a request in the same session]
      */
-    function getFlashVariable() {
-        return $this->flashvariable;
+    function getFlashVariable(): string
+    {
+        return $this->pageStatus->getSessionWrapper()->getFlashVariable();
     }
 
-    /*     * * functions for setting parameters array */
+    /**
+     * Return the SessionWrapper variable set for this controller
+     */
+    function getSessionWrapper(): SessionWrapper
+    {
+        return $this->pageStatus->getSessionWrapper();
+    }
 
-    public function setParameters($parameters) {
+    /**
+     * Function for setting parameters array
+     */
+    public function setGetParameters($parameters)
+    {
         if (is_array($parameters)) {
-            $this->parameters = $parameters;
+            $this->getParameters = $parameters;
         }
     }
 
     /**
-     * Saving the request made to webserver but only for get requests
-     * It saves the STRING in $_SESSION['request'] variable and moves the previous request
-     * to STRING $_SESSION['prevrequest']
-     *
-     * @param $request STRING containing URL complete of parameters
+     * Function for setting parameters array
      */
-    public function setRequest($request) {
-        if ( $this->isGetRequest() ) {
-            $this->request = $request;
-            $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
-            $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
-            $_SESSION['request'] = $request;
+    public function setPostParameters($parameters)
+    {
+        if (is_array($parameters)) {
+            $this->postParameters = $parameters;
+        }
+    }
+
+    /**
+     * Function for setting parameters array
+     */
+    public function setFilesParameters($parameters)
+    {
+        if (is_array($parameters)) {
+            $this->filesParameters = $parameters;
         }
     }
 
@@ -302,72 +413,49 @@ class Controller {
      * Redirect the script to $_SESSION['prevrequest'] with a header request
      * It send flash messages to new controller [info, warning, error, success]
      */
-    public function redirectToPreviousPage() {
-        if ($this->messages->info != '')
-            $_SESSION['msginfo'] = $this->messages->info;
-        if ($this->messages->warning != '')
-            $_SESSION['msgwarning'] = $this->messages->warning;
-        if ($this->messages->error != '')
-            $_SESSION['msgerror'] = $this->messages->error;
-        if ($this->messages->success != '')
-            $_SESSION['msgsuccess'] = $this->messages->success;
-        if (isset($this->flashvariable) AND $this->flashvariable != '')
-            $_SESSION['flashvariable'] = $this->flashvariable;
-        header('Location: ' . BASEPATH . $_SESSION['prevrequest']);
+    public function redirectToPreviousPage()
+    {
+        // avoid end of round here...
+        $this->applicationBuilder->getRedirector()->setURL($this->pageStatus->getSessionWrapper()->getSecondRequestedURL());
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     /**
      * Redirect the script to $_SESSION['prevprevrequest'] with a header request
      * It send flash messages to new controller [info, warning, error, success]
      */
-    public function redirectToSecondPreviousPage() {
-        if ($this->messages->info != '')
-            $_SESSION['msginfo'] = $this->messages->info;
-        if ($this->messages->warning != '')
-            $_SESSION['msgwarning'] = $this->messages->warning;
-        if ($this->messages->error != '')
-            $_SESSION['msgerror'] = $this->messages->error;
-        if ($this->messages->success != '')
-            $_SESSION['msgsuccess'] = $this->messages->success;
-        if (isset($this->flashvariable) AND $this->flashvariable != '')
-            $_SESSION['flashvariable'] = $this->flashvariable;
-        header('Location: ' . BASEPATH . $_SESSION['prevprevrequest']);
+    public function redirectToSecondPreviousPage()
+    {
+        // avoid end of round here...
+        $this->applicationBuilder->getRedirector()->setURL($this->pageStatus->getSessionWrapper()->getThirdRequestedURL());
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     /**
-     * Redirect the script to a selected page
-     * it creates the url using the library function make_url form loaders.php
-     * It send flash messages to new controller [info, warning, error, success]
+     * Redirect the script to a selected url
      */
-    public function redirectToPage($group = 'main', $action = '', $parameters = '', $extension = '.html') {
-        if ($this->messages->info != '')
-            $_SESSION['msginfo'] = $this->messages->info;
-        if ($this->messages->warning != '')
-            $_SESSION['msgwarning'] = $this->messages->warning;
-        if ($this->messages->error != '')
-            $_SESSION['msgerror'] = $this->messages->error;
-        if ($this->messages->success != '')
-            $_SESSION['msgsuccess'] = $this->messages->success;
-        if (isset($this->flashvariable) AND $this->flashvariable != '')
-            $_SESSION['flashvariable'] = $this->flashvariable;
-        header( 'Location: ' . make_url($group, $action, $parameters, $extension) );
+    public function redirectToPage($url)
+    {
+        $this->applicationBuilder->getRedirector()->setURL($url);
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     /**
-     * Saving URL controller PATH in the controller
-     *
-     * @param $family      STRING coming from URL slicing
-     * @param $subfamily   STRING coming from URL slicing
-     * @param $aggregator  STRING coming from URL slicing
+     * Redirect the script to a selected url
      */
-    public function setControllerPath($family, $subfamily, $aggregator) {
-        $this->family = $family;
-        $this->subfamily = $subfamily;
-        $this->aggregator = $aggregator;
+    public function redirectToDefaultPage()
+    {
+        $this->applicationBuilder->getRedirector()->setURL(
+            $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
+                $this->applicationBuilder->getRouterContainer()->getDefaultController()::CONTROLLER_NAME
+            )
+        );
+        $this->applicationBuilder->getRedirector()->redirect();
     }
 
     // taken from page script
-    function loadTemplate() {
+    function loadTemplate()
+    {
         $this->addToHeadAndToFoot($this->menucontainer);
         $this->addToHeadAndToFoot($this->topcontainer);
         $this->addToHeadAndToFoot($this->messagescontainer);
@@ -377,37 +465,63 @@ class Controller {
         $this->addToHeadAndToFoot($this->thirdcentralcontainer);
         $this->addToHeadAndToFoot($this->bottomcontainer);
 
-        require_once 'templates/' . $this->templateFile . '.php';
+        require_once $this->applicationBuilder->getSetup()->getHTMLTemplatePath() . $this->templateFile . '.php';
     }
 
-    function addToHeadAndToFoot($container) {
+    function addToHeadAndToFoot($container)
+    {
         if (isset($container)) {
             if (gettype($container) == 'array') {
                 foreach ($container as $obj) {
                     $this->addToHead .= $obj->addToHead();
                     $this->addToFoot .= $obj->addToFoot();
+                    $this->subAddToHead .= $obj->subAddToHead();
+                    $this->subAddToFoot .= $obj->subAddToFoot();
                 }
             }
             if (gettype($container) == 'object') {
                 $this->addToHead .= $container->addToHead();
                 $this->addToFoot .= $container->addToFoot();
+                $this->subAddToHead .= $container->subAddToHead();
+                $this->subAddToFoot .= $container->subAddToFoot();
             }
         }
+
+        /* new add once section */
+        if (isset($container)) {
+            if (gettype($container) == 'array') {
+                $arraysHeads = array_reduce($container, function ($carry, $htmlBlock) {
+                    return array_merge($carry, $htmlBlock->newAddToHeadOnce());
+                }, []);
+                $this->addToHead .= array_reduce($arraysHeads, function ($carry, $htmlCode) {
+                    return $carry . ' ' . $htmlCode;
+                }, '');
+                $arraysFoots = array_reduce($container, function ($carry, $htmlBlock) {
+                    return array_merge($carry, $htmlBlock->newAddToFootOnce());
+                }, []);
+                $this->addToFoot .= array_reduce($arraysFoots, function ($carry, $htmlCode) {
+                    return $carry . ' ' . $htmlCode;
+                }, '');
+            }
+            if (gettype($container) == 'object') {
+                $this->addToHead .= array_reduce($container->newAddToHeadOnce(), function ($carry, $htmlCode) {
+                    return $carry . ' ' . $htmlCode;
+                }, '');
+                $this->addToFoot .= array_reduce($container->newAddToFootOnce(), function ($carry, $htmlCode) {
+                    return $carry . ' ' . $htmlCode;
+                }, '');
+            }
+        }
+        /* new add once section end */
     }
 
-    /**
-     * Load links directory from a file
-     */
-    function loadlinks() {
-
-        if (!isset($_SESSION['office']))
-            throw new GeneralException('Office has not been set!!!');
-
-        $filepath = 'controllers/' . $_SESSION['office'] . '/links.php';
-
-        if (file_exists($filepath)) {
-            require_once $filepath;
-        }
+    /*
+            $this->securityChecker = $securityChecker;
+            $this->logger          = $logger;
+    */
+    public function getInfo(): string
+    {
+        return '<br>' . $this->applicationBuilder->getRouterContainer()->getInfo() . '<br>' . $this->pageStatus->getRequest()->getInfo() . '<br>';
     }
 
 }
