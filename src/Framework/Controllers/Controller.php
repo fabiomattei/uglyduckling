@@ -69,12 +69,7 @@ class Controller {
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
     public array $groupsIndex;
-
-    public function __construct() {
-        $this->gump = new \GUMP();
-        $this->parameters = [];
-    }
-
+    
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
@@ -86,6 +81,7 @@ class Controller {
         $this->securityChecker = $securityChecker;
         $this->mailer = $mailer;
         $this->dbconnection = $dbconnection;
+        $this->gump = new \GUMP();
 
         if ( !$this->securityChecker->isSessionValid(
             SessionWrapper::getSessionLoggedIn(),
