@@ -64,6 +64,10 @@ class Controller {
     public $parameters;
     public $flashvariable;
     public $readableErrors;
+    public Logger $logger;
+    public SecurityChecker $securityChecker;
+    public BaseMailer $mailer;
+    public array $groupsIndex;
 
     /**
      * This method makes all necessary presets to activate a controller
@@ -87,7 +91,7 @@ class Controller {
             header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
         }
     }
-    
+
     public function setDBConnection( DBConnection $dbconnection ) {
         $this->dbconnection = $dbconnection;
     }
