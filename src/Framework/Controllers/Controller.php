@@ -64,6 +64,7 @@ class Controller {
     public $parameters;
     public $flashvariable;
     public $readableErrors;
+    public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
