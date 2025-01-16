@@ -69,7 +69,7 @@ class Controller {
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
     public array $groupsIndex;
-    
+
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
@@ -208,7 +208,7 @@ class Controller {
             $out = false;
 
             // checking get parameters in post request
-            $parms = $this->gump->sanitize($this->getParameters);
+            $parms = $this->gump->sanitize($_GET);
             $this->gump->validation_rules($this->post_get_validation_rules);
             $this->gump->filter_rules($this->post_get_filter_rules);
             $this->getParameters = $this->gump->run($parms);
@@ -221,7 +221,7 @@ class Controller {
             }
 
             // checking post parameters in post request
-            $parms = $this->gump->sanitize($this->postParameters);
+            $parms = $this->gump->sanitize($_POST);
             $this->gump->validation_rules($this->post_validation_rules);
             $this->gump->filter_rules($this->post_filter_rules);
             $this->postParameters = $this->gump->run($parms);
