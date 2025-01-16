@@ -95,7 +95,7 @@ class Controller {
      * @param PageStatus $PageStatus
      * @throws \Exception
      */
-    public function makeAllPresets(
+    public function makeAllPresetsOld(
         ApplicationBuilder $applicationBuilder,
         PageStatus         $pageStatus
     )
