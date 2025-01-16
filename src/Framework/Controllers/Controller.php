@@ -460,8 +460,8 @@ class Controller {
         $this->addToHeadAndToFoot($this->secondcentralcontainer);
         $this->addToHeadAndToFoot($this->thirdcentralcontainer);
         $this->addToHeadAndToFoot($this->bottomcontainer);
-
-        require_once $this->applicationBuilder->getSetup()->getHTMLTemplatePath() . $this->templateFile . '.php';
+        
+        require_once 'src/Templates/' . $this->templateFile . '.php';
     }
 
     function addToHeadAndToFoot($container)
