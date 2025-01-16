@@ -25,7 +25,7 @@ class StaticPageController {
 
     function loadTemplate() {
         ob_start();
-        require_once 'src/Templates/' . $this->staticPageFile . '.php';
+        require_once 'src/Templates/' . $this->staticPageFile;
         return ob_end_flush();
     }
 
