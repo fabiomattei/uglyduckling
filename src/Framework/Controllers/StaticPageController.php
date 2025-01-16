@@ -36,7 +36,6 @@ class StaticPageController {
     }
 
     public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
-        $this->parameters = [];
         $this->logger = $logger;
         $this->securityChecker = $securityChecker;
         $this->mailer = $mailer;
