@@ -13,6 +13,10 @@ class StaticPageController {
     public string $viewFile;
     public $controllerPointer;
     public string $appTitle;
+    public Logger $logger;
+    public SecurityChecker $securityChecker;
+    public BaseMailer $mailer;
+    public DBConnection $dbconnection;
 
     public function __construct( $templateFile, $staticPageFile ) {
         $this->templateFile = $templateFile;
@@ -32,7 +36,11 @@ class StaticPageController {
     }
 
     public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
-        // nothing to do
+        $this->parameters = [];
+        $this->logger = $logger;
+        $this->securityChecker = $securityChecker;
+        $this->mailer = $mailer;
+        $this->dbconnection = $dbconnection;
     }
 
 }
