@@ -20,12 +20,12 @@ class StaticPageController {
     }
 
     public function showPage() {
-        $this->viewFile = $this->staticPageFile;
+        $this->loadTemplate();
     }
 
     function loadTemplate() {
         ob_start();
-        require_once 'src/Templates/' . $this->templateFile . '.php';
+        require_once 'src/Templates/' . $this->staticPageFile . '.php';
         return ob_end_flush();
     }
 
