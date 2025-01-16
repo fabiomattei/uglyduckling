@@ -6,17 +6,15 @@ use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
-use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
-use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 
 class StaticPageController {
 
     public string $templateFile;
-    public string $staticPageFile;
+    public string $viewFile;
 
     public function __construct( $templateFile, $staticPageFile ) {
         $this->templateFile = $templateFile;
-        $this->staticPageFile = $staticPageFile;
+        $this->viewFile = $staticPageFile;
     }
 
     public function showPage() {
@@ -24,8 +22,8 @@ class StaticPageController {
     }
 
     function loadTemplate() {
-        ob_start();
-        require_once 'src/Templates/' . $this->staticPageFile;
+        ob_start() && extract(get_object_vars($this->controllerPointer), EXTR_SKIP);
+        require_once 'src/Templates/' . $this->templateFile . '.php';
         return ob_end_flush();
     }
 
