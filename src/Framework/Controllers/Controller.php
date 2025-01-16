@@ -138,17 +138,17 @@ class Controller {
         $this->subAddToHead = '';
         $this->subAddToFoot = '';
 
-        $this->applicationBuilder->getMessages()->info = $this->pageStatus->getSessionWrapper()->getMsgInfo();
-        $this->applicationBuilder->getMessages()->warning = $this->pageStatus->getSessionWrapper()->getMsgWarning();
-        $this->applicationBuilder->getMessages()->error = $this->pageStatus->getSessionWrapper()->getMsgError();
-        $this->applicationBuilder->getMessages()->success = $this->pageStatus->getSessionWrapper()->getMsgSuccess();
-        $this->flashvariable = $this->pageStatus->getSessionWrapper()->getFlashVariable();
+        $this->applicationBuilder->getMessages()->info = SessionWrapper::getMsgInfo();
+        $this->applicationBuilder->getMessages()->warning = SessionWrapper::getMsgWarning();
+        $this->applicationBuilder->getMessages()->error = SessionWrapper::getMsgError();
+        $this->applicationBuilder->getMessages()->success = SessionWrapper::getMsgSuccess();
+        $this->flashvariable = SessionWrapper::getFlashVariable();
 
         if (!$this->applicationBuilder->getSecurityChecker()->isSessionValid(
-            $this->pageStatus->getSessionWrapper()->getSessionLoggedIn(),
-            $this->pageStatus->getSessionWrapper()->getSessionIp(),
-            $this->pageStatus->getSessionWrapper()->getSessionUserAgent(),
-            $this->pageStatus->getSessionWrapper()->getSessionLastLogin(),
+            SessionWrapper::getSessionLoggedIn(),
+            SessionWrapper::getSessionIp(),
+            SessionWrapper::getSessionUserAgent(),
+            SessionWrapper::getSessionLastLogin(),
             $this->pageStatus->getServerWrapper()->getRemoteAddress(),
             $this->pageStatus->getServerWrapper()->getHttpUserAgent())) {
             $this->applicationBuilder->getRedirector()->setURL($this->applicationBuilder->getSetup()->getBasePath() . 'public/login.html');
@@ -306,8 +306,8 @@ class Controller {
     {
         $time_start = microtime(true);
 
-        if ($this->pageStatus->getServerWrapper()->isGetRequest()) {
-            $this->pageStatus->getSessionWrapper()->createCsrfToken();
+        if (ServerWrapper::isGetRequest()) {
+            SessionWrapper::createCsrfToken();
             if ($this->check_authorization_get_request()) {
                 if ($this->check_get_request()) {
                     $this->getRequest();
@@ -340,22 +340,22 @@ class Controller {
     // ** next section load textual messages for messages block
     function setSuccess(string $success)
     {
-        $this->pageStatus->getSessionWrapper()->setMsgSuccess($success);
+        SessionWrapper::setMsgSuccess($success);
     }
 
     function setError(string $error)
     {
-        $this->pageStatus->getSessionWrapper()->setMsgError($error);
+        SessionWrapper::setMsgError($error);
     }
 
     function setInfo(string $info)
     {
-        $this->pageStatus->getSessionWrapper()->setMsgInfo($info);
+        SessionWrapper::setMsgInfo($info);
     }
 
     function setWarning(string $warning)
     {
-        $this->pageStatus->getSessionWrapper()->setMsgWarning($warning);
+        SessionWrapper::setMsgWarning($warning);
     }
 
     /**
@@ -370,7 +370,7 @@ class Controller {
      */
     function setFlashVariable(string $flashvariable)
     {
-        $this->pageStatus->getSessionWrapper()->setFlashVariable($flashvariable);
+        SessionWrapper::setFlashVariable($flashvariable);
     }
 
     /**
@@ -381,15 +381,7 @@ class Controller {
      */
     function getFlashVariable(): string
     {
-        return $this->pageStatus->getSessionWrapper()->getFlashVariable();
-    }
-
-    /**
-     * Return the SessionWrapper variable set for this controller
-     */
-    function getSessionWrapper(): SessionWrapper
-    {
-        return $this->pageStatus->getSessionWrapper();
+        return SessionWrapper::getFlashVariable();
     }
 
     /**
@@ -426,44 +418,35 @@ class Controller {
      * Redirect the script to $_SESSION['prevrequest'] with a header request
      * It send flash messages to new controller [info, warning, error, success]
      */
-    public function redirectToPreviousPage()
-    {
-        // avoid end of round here...
-        $this->applicationBuilder->getRedirector()->setURL($this->pageStatus->getSessionWrapper()->getSecondRequestedURL());
-        $this->applicationBuilder->getRedirector()->redirect();
+    public function redirectToPreviousPage() {
+        header('Location: ' . $_SESSION['prevrequest'] );
+        exit();
     }
 
     /**
      * Redirect the script to $_SESSION['prevprevrequest'] with a header request
      * It send flash messages to new controller [info, warning, error, success]
      */
-    public function redirectToSecondPreviousPage()
-    {
+    public function redirectToSecondPreviousPage() {
         // avoid end of round here...
-        $this->applicationBuilder->getRedirector()->setURL($this->pageStatus->getSessionWrapper()->getThirdRequestedURL());
-        $this->applicationBuilder->getRedirector()->redirect();
+        header('Location: ' . $_SESSION['prevprevrequest'] );
+        exit();
     }
 
     /**
      * Redirect the script to a selected url
      */
-    public function redirectToPage($url)
-    {
-        $this->applicationBuilder->getRedirector()->setURL($url);
-        $this->applicationBuilder->getRedirector()->redirect();
+    public function redirectToPage($url) {
+        header('Location: ' . $url );
+        exit();
     }
 
     /**
      * Redirect the script to a selected url
      */
-    public function redirectToDefaultPage()
-    {
-        $this->applicationBuilder->getRedirector()->setURL(
-            $this->applicationBuilder->getRouterContainer()->makeRelativeUrl(
-                $this->applicationBuilder->getRouterContainer()->getDefaultController()::CONTROLLER_NAME
-            )
-        );
-        $this->applicationBuilder->getRedirector()->redirect();
+    public function redirectToDefaultPage() {
+        header('Location: login.html');
+        exit();
     }
 
     // taken from page script
