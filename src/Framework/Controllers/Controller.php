@@ -87,6 +87,14 @@ class Controller {
             header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
         }
     }
+    
+    public function setDBConnection( DBConnection $dbconnection ) {
+        $this->dbconnection = $dbconnection;
+    }
+
+    public function setGroupsIndex( $groupsIndex ) {
+        $this->groupsIndex = $groupsIndex;
+    }
 
     /**
      * This method makes all necessary presets to activate a controller
