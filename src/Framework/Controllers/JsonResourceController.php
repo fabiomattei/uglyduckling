@@ -174,7 +174,7 @@ class JsonResourceController {
         if ( count( $validation_rules ) == 0 ) {
             return true;
         } else {
-            $parms = $this->secondGump->sanitize( $this->getParameters );
+            $parms = $this->secondGump->sanitize( $_GET );
             $this->secondGump->validation_rules( $validation_rules );
             $this->secondGump->filter_rules( $filter_rules );
             $this->internalGetParameters = $this->secondGump->run( $parms );
@@ -194,10 +194,10 @@ class JsonResourceController {
      * the point of view of the validation rules
      */
     public function check_post_request() {
-        if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $_SESSION['csrftoken'] ) {
+        if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
             $this->secondGump = new Gump;
 
-            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
+            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
             $validation_rules = $parametersGetter->getPostValidationRoules();
             $filter_rules = $parametersGetter->getPostFiltersRoules();
 
@@ -205,8 +205,8 @@ class JsonResourceController {
                 return true;
             } else {
                 $parms = $this->secondGump->sanitize( array_merge(
-                        is_null($this->postParameters) ? array() : $this->postParameters,
-                        is_null($this->filesParameters) ? array() : $this->filesParameters
+                        is_null($_POST) ? [] : $_POST,
+                        is_null($_FILES) ? [] : $_FILES
                     )
                 );
                 $this->secondGump->validation_rules( $validation_rules );
