@@ -23,7 +23,7 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
      */
     public function __construct() {
         parent::__construct();
-        $this->rows = array();
+        $this->rows = [];
     }
 
     /**
@@ -120,6 +120,5 @@ class BaseHTMLDashboard extends BaseHTMLBlock {
 
         return array_merge( parent::newAddToFootOnce(), $addToFootDictionary);
     }
-
 
 }

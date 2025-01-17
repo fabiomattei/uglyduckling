@@ -2,9 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
-use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
-use Fabiom\UglyDuckling\Common\Status\PageStatus;
-
 /**
  * Class BaseHTMLGrid
  *
@@ -13,30 +10,15 @@ use Fabiom\UglyDuckling\Common\Status\PageStatus;
 class BaseHTMLGrid extends BaseHTMLBlock {
 
     private /* array */ $gridBlocks;
-    private /* Json Resource */ $jsonResource;
-    public $pageStatus;
-    public $applicationBuilder;
-
-    /**
-     * BaseHTMLGrid constructor.
-     */
-    public function __construct(ApplicationBuilder $applicationBuilder, PageStatus $pageStatus, $jsonResource) {
-        parent::__construct();
-        $this->applicationBuilder = $applicationBuilder;
-        $this->pageStatus = $pageStatus;
-        $this->jsonResource = $jsonResource;
-        $this->gridBlocks = array();
-        foreach ($this->jsonResource->panels as $panel) {
-            $this->gridBlocks[$panel->id] = $this->applicationBuilder->getHTMLBlock( $this->applicationBuilder->loadResource( $panel->resource ) );
-        }
-    }
+    private /* array */ $gridPanels;
+    private string $cssClass;
 
     /**
      * it return the HTML code for the web page built on data structure
      */
     function getHTML(): string {
-        $htmlbody = '<div class="'.$this->jsonResource->cssclass.'">';
-        foreach ($this->jsonResource->panels as $panel) {
+        $htmlbody = '<div class="'.$this->cssClass.'">';
+        foreach ($this->gridPanels as $panel) {
             $id = $panel->id ?? '';
             $cssclass = $panel->cssclass ?? '';
             $htmlbody .= '<div id="'.$id.'" class="'.$cssclass.'">';
@@ -45,6 +27,18 @@ class BaseHTMLGrid extends BaseHTMLBlock {
         }
         $htmlbody .= '</div>';
         return $htmlbody;
+    }
+
+    public function setBlocks($gridBlocks) {
+        $this->gridBlocks = $gridBlocks;
+    }
+
+    public function setPanels($gridPanels) {
+        $this->gridPanels = $gridPanels;
+    }
+
+    public function setCssClass($cssClass) {
+        $this->cssClass = $cssClass;
     }
 
     /**
@@ -62,7 +56,7 @@ class BaseHTMLGrid extends BaseHTMLBlock {
      */
     function addToHead(): string {
         $globalAddToHead = '';
-        foreach ($this->jsonResource->panels as $panel) {
+        foreach ($this->gridPanels as $panel) {
             $globalAddToHead .= $this->gridBlocks[$panel->id]->addToHead();
         }
         return $globalAddToHead;
@@ -74,7 +68,7 @@ class BaseHTMLGrid extends BaseHTMLBlock {
      */
     function addToFoot(): string {
         $globalAddToFoot = '';
-        foreach ($this->jsonResource->panels as $panel) {
+        foreach ($this->gridPanels as $panel) {
             $globalAddToFoot .= $this->gridBlocks[$panel->id]->addToFoot();
         }
         return $globalAddToFoot;
@@ -82,7 +76,7 @@ class BaseHTMLGrid extends BaseHTMLBlock {
 
     function newAddToHeadOnce(): array {
         $addToHeadDictionary = array();
-        foreach ($this->jsonResource->panels as $panel) {
+        foreach ($this->gridPanels as $panel) {
             $addToHeadDictionary = array_merge($addToHeadDictionary, $this->gridBlocks[$panel->id]->newAddToHeadOnce());
         }
         return array_merge( parent::newAddToHeadOnce(), $addToHeadDictionary) ;
@@ -90,7 +84,7 @@ class BaseHTMLGrid extends BaseHTMLBlock {
 
     function newAddToFootOnce(): array {
         $addToFootDictionary = array();
-        foreach ($this->jsonResource->panels as $panel) {
+        foreach ($this->gridPanels as $panel) {
             $addToFootDictionary = array_merge($addToFootDictionary, $this->gridBlocks[$panel->id]->newAddToFootOnce());
         }
         return array_merge( parent::newAddToFootOnce(), $addToFootDictionary);

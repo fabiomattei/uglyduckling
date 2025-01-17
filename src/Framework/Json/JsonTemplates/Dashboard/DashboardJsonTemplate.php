@@ -28,7 +28,7 @@ class DashboardJsonTemplate extends JsonTemplate {
         // this first section of the code run trough all defined panels for the specific
         // dashboard and add each of them to the array $panelRows
         // I am separating panels by row
-		$panelRows = array();
+		$panelRows = [];
 
         foreach ($this->resource->panels as $panel) {
             // if there is not array of panels defined for that specific row I am going to create one

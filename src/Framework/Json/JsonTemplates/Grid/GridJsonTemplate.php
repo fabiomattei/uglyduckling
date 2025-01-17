@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Grid;
 
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLGrid;
 
@@ -22,7 +23,17 @@ class GridJsonTemplate extends JsonTemplate {
      * @return BaseHTMLGrid
      */
     public function createHTMLBlock(): BaseHTMLGrid {
-        return new BaseHTMLGrid($this->applicationBuilder, $this->pageStatus, $this->resource);
+        $gridBlocks = [];
+        foreach ($this->resource->panels as $panel) {
+            $gridBlocks[$panel->id] = JsonDefaultTemplateFactory::getHTMLBlock($this->resourcesIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $panel->resource);
+        }
+
+        $grid = new BaseHTMLGrid;
+        $grid->setBlocks($gridBlocks);
+        $grid->setPanels($this->resource->panels);
+        $grid->setCssClass($this->resource->cssclass);
+
+        return $grid;
     }
 
 }
