@@ -36,8 +36,8 @@ class DashboardParameterGetter implements ParameterGetter {
     function getFiltersRoules(): array {
         $parameters = array();
         foreach( $this->resource->panels as $panel ) {
-            if ($this->applicationBuilder->getJsonloader()->isJsonResourceIndexedAndFileExists( $panel->resource )) {
-                $json_resource = $this->applicationBuilder->getJsonloader()->loadResource( $panel->resource );
+            if (JsonLoader::isJsonResourceIndexedAndFileExists( $this->resourceIndex, $panel->resource )) {
+                $json_resource = JsonLoader::loadResource( $this->resourceIndex, $panel->resource );
                 $parGetter = BasicParameterGetter::parameterGetterFactory( $json_resource, $this->applicationBuilder );
                 $parameters = array_merge( $parameters, $parGetter->getFiltersRoules() );
             }
