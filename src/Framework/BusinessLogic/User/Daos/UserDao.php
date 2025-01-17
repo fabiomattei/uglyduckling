@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\BusinessLogic\User\Daos;
 
-use Fabiom\UglyDuckling\Framework\Database\BasicDao;
+use Fabiom\UglyDuckling\Framework\DataBase\BasicDao;
 use PDO;
 use stdClass;
 
