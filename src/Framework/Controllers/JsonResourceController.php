@@ -41,6 +41,7 @@ class JsonResourceController {
     protected $centralcontainer;
     protected $jsonTabTemplates;
     protected $jsonResourceTemplates;
+    public $unvalidated_parameters;
 
     /**
      * This function allows to set a resource name to load for a particular instance
