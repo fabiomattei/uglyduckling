@@ -65,6 +65,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
     public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
         // setting an array containing all parameters
         $this->parameters = [];
+        $this->templateFile = "empty";
         $this->logger = $logger;
         $this->securityChecker = $securityChecker;
         $this->mailer = $mailer;
