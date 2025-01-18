@@ -2,7 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
-use Fabiom\UglyDuckling\Common\Status\HtmlBlockBuilder;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
@@ -132,7 +131,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                 }
             }
         } else {
-            echo 'resource '.$jsonResourceName.' undefined';
+            echo 'resource '.$this->resourceName.' undefined';
         }
     }
 
@@ -141,34 +140,17 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
      * This means all json Resources act in the same way when there is a post request
      */
     public function postRequest() {
-        $this->templateFile = "empty";
-
-        $this->applicationBuilder->getJsonloader()->loadIndex();
-
-        // GETTING json resource name from parameter
-        $jsonResourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_UNSAFE_RAW);
-        if ( ! $jsonResourceName ) {
-            if ( isset( $_POST['res'] ) ) {
-                $jsonResourceName = filter_var($_POST['res'], FILTER_UNSAFE_RAW);
-            }
-        }
-
         // loading json resource
-        if ( ! $jsonResourceName ) {
-            echo 'missing resource name';
-            $jsonResource = new \stdClass;
+        if ( strlen( $this->resourceName ) > 0 ) {
+            $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
         } else {
-            if ( strlen( $jsonResourceName ) > 0 ) {
-                $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource( $this->resourceIndex, $jsonResourceName );
-            } else {
-                $jsonResource = new \stdClass;
-            }
+            throw new \Exception('Resource undefined');
         }
 
         // checking parameters
         $secondGump = new \Gump;
-        if( isset($jsonResource->post->request) AND isset($jsonResource->post->request->postparameters)) {
-            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $jsonResource, $this->applicationBuilder );
+        if( isset($this->resource->post->request) AND isset($this->resource->post->request->postparameters)) {
+            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
             $validation_rules = $parametersGetter->getPostValidationRoules();
             $filter_rules = $parametersGetter->getPostFiltersRoules();
 
@@ -188,8 +170,6 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
             // if resource->get->sessionupdates is set I need to update the session
             if ( isset($this->resource->post->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->post->sessionupdates );
-
-
         }
         echo Logics::performAjaxCallPost( $this->pageStatus, $this->applicationBuilder, $jsonResource );
     }
