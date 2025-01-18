@@ -9,7 +9,7 @@ use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
 class Logics {
 
-    public static function performTransactions( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): void {
+    public static function performTransactions( PageStatus $pageStatus, $jsonResource ): void {
         $queryExecutor = $pageStatus->getQueryExecutor();
         $conn = $pageStatus->getDbconnection()->getDBH();
 
@@ -41,7 +41,7 @@ class Logics {
             } catch (\PDOException $e) {
                 $pageStatus->addError("There was an error in the transaction");
                 $conn->rollBack();
-                $applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
+                $pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
             }
         }
 
@@ -73,7 +73,7 @@ class Logics {
             } catch (\PDOException $e) {
                 $pageStatus->addError("There was an error in the transaction");
                 $conn->rollBack();
-                $applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
+                $pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
             }
         }
     }

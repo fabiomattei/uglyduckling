@@ -150,7 +150,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         // checking parameters
         $secondGump = new \Gump;
         if( isset($this->resource->post->request) AND isset($this->resource->post->request->postparameters)) {
-            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
+            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
             $validation_rules = $parametersGetter->getPostValidationRoules();
             $filter_rules = $parametersGetter->getPostFiltersRoules();
 
