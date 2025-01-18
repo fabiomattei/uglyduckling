@@ -2,8 +2,10 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Common\Status\HtmlBlockBuilder;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
@@ -89,7 +91,6 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         // loading json resource
         if ( strlen( $this->resourceName ) > 0 ) {
             $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
-            return true;
         } else {
             throw new \Exception('Resource undefined');
         }
@@ -102,12 +103,12 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) {
                 if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-                $myBlocks = $this->applicationBuilder->getHTMLBlock( $this->resource );
+                $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                 echo $myBlocks->show();
             } else {
                 $secondGump = new \Gump;
 
-                $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
+                $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
                 $validation_rules = $parametersGetter->getValidationRoules();
                 $filter_rules = $parametersGetter->getFiltersRoules();
 
@@ -125,7 +126,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                     } else {
                         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-                        $myBlocks = $this->applicationBuilder->getHTMLBlock( $this->resource );
+                        $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                         echo $myBlocks->show();
                     }
                 }
