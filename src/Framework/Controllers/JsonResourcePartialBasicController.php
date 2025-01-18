@@ -96,7 +96,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             return false;
         } else {
             if ( strlen( $this->resourceName ) > 0 ) {
-                $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
+                $this->resource = JsonLoader::loadResource( $this->resourceName, $this->resourceIndex );
                 return true;
             } else {
                 throw new \Exception('Resource undefined');
@@ -115,7 +115,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             $jsonResource = new \stdClass;
         } else {
             if ( strlen( $jsonResourceName ) > 0 ) {
-                $jsonResource = $this->applicationBuilder->getJsonloader()->loadResource( $jsonResourceName );
+                $jsonResource = JsonLoader::loadResource( $jsonResourceName, $this->resourceIndex );
             } else {
                 $jsonResource = new \stdClass;
             }
