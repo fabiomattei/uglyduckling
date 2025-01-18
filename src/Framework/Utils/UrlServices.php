@@ -122,25 +122,25 @@ class UrlServices {
         }
 
         if ( isset( $json_action->resource ) ) {
-            $resource = $json_action->resource;
-            $url_parameters = 'res='.$resource.'&';
+            $url_parameters = '';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
                 foreach ($json_action->parameters as $par) {
                     $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
                 }
                 $url_parameters = rtrim($url_parameters, '&');
             }
-            return UrlServices::makeRelativeUrl( 'JsonResourceController', $url_parameters );
+            return UrlServices::makeRelativeUrl( $json_action->resource, $url_parameters );
         }
 
         // going to default controller
         if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+            $url_parameters = '';
             foreach ($json_action->parameters as $par) {
                 $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
             }
             $url_parameters = rtrim($url_parameters, '&');
         }
-        return UrlServices::makeRelativeUrl( 'JsonResourceController', $url_parameters );
+        return UrlServices::makeRelativeUrl( $json_action->resource, $url_parameters );
 
         // TODO Activate this in future
         //throw new \Exception('[UD Error] No action or controller or URL defined');

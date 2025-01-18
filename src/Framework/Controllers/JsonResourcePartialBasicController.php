@@ -82,59 +82,31 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
     }
 
     /**
-     * Check the presence of res variable in GET or POST array
-     * Filter the string
-     * load the json resource in $this->resource
-     */
-    public function check_and_load_resource() {
-        if ( isset($this->resourceName) AND $this->resourceName != '' ) {
-            // nothing to do here
-        } else {
-            $this->resourceName = filter_input(INPUT_POST | INPUT_GET, 'res', FILTER_UNSAFE_RAW);
-        }
-        if ( ! $this->resourceName ) {
-            return false;
-        } else {
-            if ( strlen( $this->resourceName ) > 0 ) {
-                $this->resource = JsonLoader::loadResource( $this->resourceName, $this->resourceIndex );
-                return true;
-            } else {
-                throw new \Exception('Resource undefined');
-            }
-        }
-        return false;
-    }
-
-    /**
      * @throws GeneralException
      */
     public function getRequest() {
         // loading json resource
-        if ( ! $jsonResourceName ) {
-            echo 'missing resource name';
-            $jsonResource = new \stdClass;
+        if ( strlen( $this->resourceName ) > 0 ) {
+            $this->resource = JsonLoader::loadResource( $this->resourceName, $this->resourceIndex );
+            return true;
         } else {
-            if ( strlen( $jsonResourceName ) > 0 ) {
-                $jsonResource = JsonLoader::loadResource( $jsonResourceName, $this->resourceIndex );
-            } else {
-                $jsonResource = new \stdClass;
-            }
+            throw new \Exception('Resource undefined');
         }
 
         // if json resource was correctly loaded
-        if ( is_object( $jsonResource ) ) {
+        if ( is_object( $this->resource ) ) {
             $this->templateFile = 'empty';
 
             // if json resource has parameters
-            if(!isset($jsonResource->get->request) OR !isset($jsonResource->get->request->parameters)) {
-                if ( isset($jsonResource->get->sessionupdates) ) $this->pageStatus->updateSession( $jsonResource->get->sessionupdates );
+            if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) {
+                if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-                $myBlocks = $this->applicationBuilder->getHTMLBlock( $jsonResource );
+                $myBlocks = $this->applicationBuilder->getHTMLBlock( $this->resource );
                 echo $myBlocks->show();
             } else {
                 $secondGump = new \Gump;
 
-                $parametersGetter = BasicParameterGetter::parameterGetterFactory( $jsonResource, $this->applicationBuilder );
+                $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
                 $validation_rules = $parametersGetter->getValidationRoules();
                 $filter_rules = $parametersGetter->getFiltersRoules();
 
@@ -150,9 +122,9 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                     if ($secondGump->errors()) {
                         $this->readableErrors = $secondGump->get_readable_errors(true);
                     } else {
-                        if ( isset($jsonResource->get->sessionupdates) ) $this->pageStatus->updateSession( $jsonResource->get->sessionupdates );
+                        if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-                        $myBlocks = $this->applicationBuilder->getHTMLBlock( $jsonResource );
+                        $myBlocks = $this->applicationBuilder->getHTMLBlock( $this->resource );
                         echo $myBlocks->show();
                     }
                 }
