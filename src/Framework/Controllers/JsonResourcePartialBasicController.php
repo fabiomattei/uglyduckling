@@ -164,9 +164,9 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         if ($secondGump->errors()) {
             $this->pageStatus->addErrors( $secondGump->get_readable_errors() );
         } else {
-            Logics::performTransactions( $this->pageStatus, $this->applicationBuilder, $jsonResource );
+            Logics::performTransactions( $this->pageStatus, $this->resource );
 
-            Logics::performUseCases( $this->pageStatus, $this->applicationBuilder, $jsonResource );
+            Logics::performUseCases( $this->pageStatus, $this->resource );
 
             // if resource->get->sessionupdates is set I need to update the session
             if ( isset($this->resource->post->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->post->sessionupdates );
