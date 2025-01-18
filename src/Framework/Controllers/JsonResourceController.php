@@ -106,14 +106,14 @@ class JsonResourceController {
      */
     public function check_authorization_resource_request(): bool {
         if( !isset($this->resource->allowedgroups) ) {
-            //$this->applicationBuilder->getLogger()->write('ERROR :: allowedgroups array undefined for resource ' . $this->resourceName, __FILE__, __LINE__);
+            //$this->logger->write('ERROR :: allowedgroups array undefined for resource ' . $this->resourceName, __FILE__, __LINE__);
             return false;
         } elseif ( count($this->resource->allowedgroups) == 0) {
             return true;
         } elseif ( in_array( $_SESSION['group'], $this->resource->allowedgroups ) ) {
             return true;
         } else {
-            //$this->applicationBuilder->getLogger()->write('ERROR :: illegal access to resource' . $this->resourceName .' from user having group set to **' . $_SESSION['group'] .'** ', __FILE__, __LINE__);
+            //$this->logger->write('ERROR :: illegal access to resource' . $this->resourceName .' from user having group set to **' . $_SESSION['group'] .'** ', __FILE__, __LINE__);
             return false;
         }
     }
