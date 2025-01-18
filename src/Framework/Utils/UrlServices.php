@@ -89,14 +89,14 @@ class UrlServices {
         }
 
         if ( isset( $json_action->resource ) AND isset( $json_action->controller ) AND $json_action->controller == 'partial') {
-            $url_parameters = $json_action->resource . '.html?udpartial=true&';
+            $url_parameters = 'udpartial=true&';
             if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
                 foreach ($json_action->parameters as $par) {
                     $url_parameters .= $par->name.'='.$pageStatus->getValue($par).'&';
                 }
                 $url_parameters = rtrim( $url_parameters, '&' );
             }
-            return UrlServices::makeRelativeUrl( $json_action->controller, $url_parameters );
+            return UrlServices::makeRelativeUrl( $json_action->resource, $url_parameters );
         }
 
         if ( isset( $json_action->resource ) AND isset( $json_action->controller ) ) {
