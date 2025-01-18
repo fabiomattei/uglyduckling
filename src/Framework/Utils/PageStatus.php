@@ -6,6 +6,7 @@ use Fabiom\UglyDuckling\Framework\Database\DBConnection;
 use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\Database\QuerySet;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
+use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 
 class PageStatus {
 
@@ -20,6 +21,7 @@ class PageStatus {
     public /* array */ $warnings;
     public /* array */ $infos;
     public /* array */ $successes;
+    public Logger $logger;
 
     /**
      * PageStatus constructor.
@@ -46,6 +48,10 @@ class PageStatus {
 
     function setUseCasesIndex( $useCasesIndex ) {
         $this->useCasesIndex = $useCasesIndex;
+    }
+
+    function setLogger( $logger ) {
+        $this->logger = $logger;
     }
 
     /**
