@@ -8,8 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Tags\DefaultTags;
 
-use Fabiom\UglyDuckling\Common\Status\PageStatus;
-use Fabiom\UglyDuckling\Common\Tags\BaseHTMLTag;
+use Fabiom\UglyDuckling\Framework\Tags\BaseHTMLTag;
 
 /**
  * A Json small block is a JSON resource (object or array or composite)

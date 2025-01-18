@@ -8,8 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Tags;
 
-use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
-use Fabiom\UglyDuckling\Common\Status\PageStatus;
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
 /**
  * Class BaseHTMLTag
