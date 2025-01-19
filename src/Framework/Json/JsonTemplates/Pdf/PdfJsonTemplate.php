@@ -16,7 +16,6 @@ class PdfJsonTemplate extends JsonTemplate {
 
     /**
      * PdfJsonTemplate constructor.
-     * @param $applicationBuilder
      * @param $pageStatus
      */
     function __construct( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTabTemplates ) {
@@ -24,7 +23,6 @@ class PdfJsonTemplate extends JsonTemplate {
     }
 
     public function createTable() {
-        $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
         $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the table
@@ -43,7 +41,6 @@ class PdfJsonTemplate extends JsonTemplate {
         $table = $this->resource->get->table;
 
         $tableBlock = new BaseHTMLTable;
-        $tableBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $tableBlock->setTitle($table->title ?? '');
 
         $tableBlock->addTHead();
