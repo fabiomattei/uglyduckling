@@ -153,7 +153,7 @@ class Logics {
 
     public static function performAjaxCallPost( PageStatus $pageStatus, $jsonResource ): string {
         if ( $pageStatus->areThereErrors() ) {
-            $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder);
+            $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus);
 
             return json_encode($out);
         } else if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
