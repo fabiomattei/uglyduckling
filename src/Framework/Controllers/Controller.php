@@ -14,7 +14,6 @@ use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
-use Fabiom\UglyDuckling\Framework\Utils\StringUtils;
 
 class Controller {
 
