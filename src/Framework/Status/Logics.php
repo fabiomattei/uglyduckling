@@ -78,7 +78,7 @@ class Logics {
         }
     }
 
-    public static function performUseCases( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): void {
+    public static function performUseCases( PageStatus $pageStatus, $jsonResource, $useCasesIndex ): void {
         if (isset($jsonResource->get->usecases) and is_array($jsonResource->get->usecases)) {
             foreach ($jsonResource->get->usecases as $jsonusecase) {
                 $useCase = $pageStatus->getUseCasesIndex()->getUseCase($jsonusecase, $pageStatus, $applicationBuilder);
@@ -93,7 +93,7 @@ class Logics {
         }
     }
 
-    public static function performAjaxCallGet( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
+    public static function performAjaxCallGet( PageStatus $pageStatus, $jsonResource, $useCasesIndex ): string {
         if ( isset($jsonResource->get->ajax) and is_array($jsonResource->get->ajax)) {
             $out = [];
             foreach ($jsonResource->get->ajax as $ajax) {
