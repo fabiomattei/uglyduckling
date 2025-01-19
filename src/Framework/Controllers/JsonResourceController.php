@@ -259,7 +259,7 @@ class JsonResourceController {
             }
             catch (\PDOException $e) {
                 $conn->rollBack();
-                $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
+                $this->pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
             }
         }
 

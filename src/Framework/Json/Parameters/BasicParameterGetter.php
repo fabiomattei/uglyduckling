@@ -19,7 +19,6 @@ class BasicParameterGetter {
      * Factory that defines the right parameter loader for a given resource
      *
      * @param $resource (it may be a Json Resource or a HTMLStaticBlock resource)
-     * @param ApplicationBuilder $applicationBuilder
      * @return ParameterGetter
      */
     public static function parameterGetterFactory( $resource, $resourceIndex ): ParameterGetter {

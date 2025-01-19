@@ -38,10 +38,6 @@ class BaseHTMLChart extends BaseHTMLBlock {
     function setStructure($structure) {
         $this->structure = $structure;
     }
-
-    function setApplicationBuilder($applicationBuilder) {
-        $this->applicationBuilder = $applicationBuilder;
-    }
 	
     function setWidth($width) {
         $this->width = $width;

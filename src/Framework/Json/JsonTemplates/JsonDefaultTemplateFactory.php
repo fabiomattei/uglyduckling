@@ -16,8 +16,8 @@ class JsonDefaultTemplateFactory {
     /**
      * @param $jsonStructure
      * @param PageStatus $pageStatus
-     * @param ApplicationBuilder $applicationBuilder
-     * @return BaseHTMLTag
+     * @param $jsonTagTemplates: index listing all defined json tags, array list having the tag template name as key and the tag template file path as value
+     * @return string
      */
     public static function getHTMLTag( $jsonStructure, PageStatus $pageStatus, array $jsonTagTemplates ): string {
         if ( isset($jsonStructure->type) ) {

@@ -244,7 +244,7 @@ class BaseController {
 
     public function show_get_authorization_error_page() {
         /*
-         * $this->applicationBuilder->getLogger()->write(
+         * $this->pageStatus->logger->write(
             'ERROR :: show_get_authorization_error_page illegal access from user **' .
             $_SESSION['username'] .
             '** having group set to **' .
@@ -257,7 +257,7 @@ class BaseController {
     public function show_post_authorization_error_page()
     {
         /*
-         * $this->applicationBuilder->getLogger()->write(
+         * $this->pageStatus->logger->write(
             'ERROR :: show_get_authorization_error_page illegal access from user **' .
             $_SESSION['username'] .
             '** having group set to **' .
@@ -317,7 +317,7 @@ class BaseController {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->applicationBuilder->getLogger()->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->pageStatus->logger->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 

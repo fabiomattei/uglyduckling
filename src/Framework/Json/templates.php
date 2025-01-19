@@ -1,14 +1,12 @@
 <?php
 
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLDashboard;
-use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLForm;
-use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLDashboard;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLForm;
+use Fabiom\UglyDuckling\Framework\Blocks\CardHTMLBlock;
 
 $GLOBALS['myTemplateFunctions'] = [];
 
 $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $jsonResource, $jsonLoader ): BaseHTMLDashboard {
-    $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
-
     // this first section of the code run trough all defined panels for the specific
     // dashboard and add each of them to the array $panelRows
     // I am separating panels by row
@@ -22,7 +20,6 @@ $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $jsonResource, $jsonLo
     }
 
     $htmlDashboard = new BaseHTMLDashboard;
-    $htmlDashboard->setHtmlTemplateLoader( $htmlTemplateLoader );
 
     foreach ($panelRows as $row) {
         $htmlDashboard->createNewRow();
@@ -32,7 +29,6 @@ $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $jsonResource, $jsonLo
             $panelBlock->setTitle($panel->title ?? '');
             $panelBlock->setWidth($panel->width ?? '3');
             $panelBlock->setCssClass($panel->cssclass ?? '');
-            $panelBlock->setHtmlTemplateLoader( $this->applicationBuilder->getHtmlTemplateLoader() );
 
             $panelBlock->setInternalBlockName( $panel->id ?? '' );
             $panelBlock->setBlock( $this->applicationBuilder->getBlock($panel->resource)  );
@@ -45,8 +41,7 @@ $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $jsonResource, $jsonLo
 };
 
 $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $resource ) {
-    $logger = $this->applicationBuilder->getLogger();
-    $htmlTemplateLoader = $this->applicationBuilder->getHtmlTemplateLoader();
+    $logger = $this->pageStatus->logger;
     $queryExecutor = $this->pageStatus->getQueryExecutor();
 
     // If there are dummy data they take precedence in order to fill the form
@@ -69,7 +64,6 @@ $GLOBALS['myTemplateFunctions']['dashboard'] = function ( $resource ) {
     $this->pageStatus->setLastEntity($entity);
 
     $formBlock = new BaseHTMLForm;
-    $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
     $formBlock->setTitle($this->resource->get->form->title ?? '');
     $formBlock->setFormId($this->resource->get->form->formid ?? '');
 

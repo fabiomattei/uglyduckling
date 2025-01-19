@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\DataBase;
 
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use PDO;
 use PDOException;
 
@@ -12,9 +13,8 @@ class QueryExecuter {
 
     private $queryStructure;
     private $DBH;
-    private /* PageStatus */ $pageStatus;
-    private /* ApplicationBuilder */ $applicationBuilder;
-	private /* string */ $resourceName = 'unknown';
+    private PageStatus $pageStatus;
+	private string $resourceName = 'unknown';
 
     public const SELECT = 'SELECT';
     public const INSERT = 'INSERT';
@@ -31,10 +31,6 @@ class QueryExecuter {
 
     public function setPageStatus( $pageStatus ) {
         $this->pageStatus = $pageStatus;
-    }
-
-    public function setApplicationBuilder( $applicationBuilder ) {
-        $this->applicationBuilder = $applicationBuilder;
     }
 
     /**
@@ -103,7 +99,7 @@ class QueryExecuter {
 			$endtime = microtime(true);
 			
 	        if (($endtime - $starttime) > 5) {
-	            $this->applicationBuilder->getLogger()->write('[UD WARNING] QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
+	            $this->pageStatus->logger->write('[UD WARNING] QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
 	        }
 
 	        if ( isset( $this->queryStructure->debug ) ) {
@@ -114,7 +110,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (\PDOException $e) {
-            $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -201,7 +197,7 @@ class QueryExecuter {
             }
 			
 		} catch (\PDOException $e) {
-        	$this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
     	}
 
     	// uncomment for debug purpose
@@ -266,7 +262,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (\PDOException $e) {
-            $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -326,7 +322,7 @@ class QueryExecuter {
 
             return $STH;
         } catch (\PDOException $e) {
-            $this->applicationBuilder->getLogger()->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
         }
     }
 
@@ -397,8 +393,8 @@ class QueryExecuter {
 			}
             return $out;
         } catch (\PDOException $e) {
-            $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
-            $this->applicationBuilder->getLogger()->write($STH->activeQueryString(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 	
@@ -410,8 +406,8 @@ class QueryExecuter {
         try {
             $STH->execute();
         } catch (\PDOException $e) {
-            $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
-            $this->applicationBuilder->getLogger()->write($STH->activeQueryString(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 	
@@ -423,8 +419,8 @@ class QueryExecuter {
         try {
             $STH->execute();
         } catch (\PDOException $e) {
-            $this->applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
-            $this->applicationBuilder->getLogger()->write($STH->activeQueryString(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
+            $this->pageStatus->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
 }
