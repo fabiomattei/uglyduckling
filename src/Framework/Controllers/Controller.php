@@ -182,7 +182,7 @@ class Controller {
         if (count($this->get_validation_rules) == 0) {
             return true;
         } else {
-            $parms = $this->gump->sanitize($this->getParameters);
+            $parms = $this->gump->sanitize($_GET);
             $this->gump->validation_rules($this->get_validation_rules);
             $this->gump->filter_rules($this->get_filter_rules);
             $this->getParameters = $this->gump->run($parms);
