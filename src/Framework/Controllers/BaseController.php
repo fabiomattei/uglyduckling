@@ -6,6 +6,7 @@ use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\StringUtils;
@@ -45,12 +46,23 @@ class BaseController {
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
     public array $groupsIndex;
-
     public $unvalidated_parameters;
+    public $menubuilder;
+    public $menucontainer;
+    public $controllerName;
+    public PageStatus $pageStatus;
 
     public function __construct() {
         $this->gump = new \GUMP();
         $this->parameters = [];
+    }
+
+    public function setControllerName( $controllerName ) {
+        $this->controllerName = $controllerName;
+    }
+
+    public function setPageStatus( PageStatus $pageStatus ) {
+        $this->pageStatus = $pageStatus;
     }
 
     public function setDBConnection( DBConnection $dbconnection ) {

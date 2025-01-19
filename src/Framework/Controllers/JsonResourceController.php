@@ -144,7 +144,7 @@ class JsonResourceController {
 
     public function getRequest() {
         $menuresource = JsonLoader::loadResource( $this->groupsIndex, $_SESSION['group'] );
-        $this->menubuilder = new MenuJsonTemplate( $this->pageStatus, 'JsonResourceController', $this->resource->name);
+        $this->menubuilder = new MenuJsonTemplate( $this->pageStatus, $this->resourceName, $this->resource->name);
         $this->menubuilder->setMenuStructure( $menuresource );
 
         // if resource->get->sessionupdates is set I need to update the session
@@ -153,9 +153,9 @@ class JsonResourceController {
         $this->title = APP_NAME . ' :: Dashboard';
         $this->templateFile = $this->resource->templatefile ?? TEMPLATE_FILE_NAME;
 
-        $this->menucontainer    = array( $this->menubuilder->createMenu() );
-        $this->leftcontainer    = array();
-        $this->centralcontainer = array( JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName ) );
+        $this->menucontainer    = [ $this->menubuilder->createMenu() ];
+        $this->leftcontainer    = [];
+        $this->centralcontainer = [ JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName ) ];
     }
 
     /**
