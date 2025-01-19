@@ -11,6 +11,15 @@ use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 class Logics {
 
+    /**
+     * @param PageStatus $pageStatus: object containing all the status of the page we are composing with a URL call
+     * @param $jsonResource: json structure containing the transaction section: resource->get->transactions or resource->post->transactions
+     * @return void
+     * @throws \Exception
+     *
+     * Documentation: https://www.uddocs.com/resources/transaction
+     *
+     */
     public static function performTransactions( PageStatus $pageStatus, $jsonResource ): void {
         $queryExecutor = $pageStatus->getQueryExecutor();
         $conn = $pageStatus->getDbconnection()->getDBH();
@@ -86,7 +95,7 @@ class Logics {
      * @param $useCasesIndex: index listing all defined usecases, array list having the use case name as key and the use case file path as value
      * @return void
      *
-     * To see a description of a use case: https://www.uddocs.com/baseresources/usecase
+     * Documentation: https://www.uddocs.com/baseresources/usecase
      *
      */
     public static function performUseCases(PageStatus $pageStatus, $resource, array $useCasesIndex ): void {
@@ -104,7 +113,13 @@ class Logics {
         }
     }
 
-    public static function performAjaxCallGet( PageStatus $pageStatus, $jsonResource, $useCasesIndex ): string {
+    /**
+     * @param PageStatus $pageStatus: object containing all the status of the page we are composing with a URL call
+     * @param $jsonResource
+     * @param $useCasesIndex
+     * @return string
+     */
+    public static function performAjaxCallGet( PageStatus $pageStatus, $jsonResource ): string {
         if ( isset($jsonResource->get->ajax) and is_array($jsonResource->get->ajax)) {
             $out = [];
             foreach ($jsonResource->get->ajax as $ajax) {
@@ -151,6 +166,11 @@ class Logics {
         return '';
     }
 
+    /**
+     * @param PageStatus $pageStatus: object containing all the status of the page we are composing with a URL call
+     * @param $jsonResource
+     * @return string
+     */
     public static function performAjaxCallPost( PageStatus $pageStatus, $jsonResource ): string {
         if ( $pageStatus->areThereErrors() ) {
             $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus);
