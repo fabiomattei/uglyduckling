@@ -164,7 +164,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         if ($secondGump->errors()) {
             $this->pageStatus->addErrors( $secondGump->get_readable_errors() );
         } else {
-            Logics::performTransactions( $this->pageStatus, $this->resource, $this->useCasesIndex );
+            Logics::performTransactions( $this->pageStatus, $this->resource );
 
             Logics::performUseCases( $this->pageStatus, $this->resource, $this->useCasesIndex );
 

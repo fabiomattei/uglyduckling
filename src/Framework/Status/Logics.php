@@ -5,6 +5,7 @@ namespace Fabiom\UglyDuckling\Framework\Status;
 use Fabiom\UglyDuckling\Framework\Ajax\AjaxObjectsBuilder;
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
 class Logics {
@@ -78,16 +79,25 @@ class Logics {
         }
     }
 
-    public static function performUseCases( PageStatus $pageStatus, $jsonResource, $useCasesIndex ): void {
-        if (isset($jsonResource->get->usecases) and is_array($jsonResource->get->usecases)) {
-            foreach ($jsonResource->get->usecases as $jsonusecase) {
-                $useCase = $pageStatus->getUseCasesIndex()->getUseCase($jsonusecase, $pageStatus, $applicationBuilder);
+    /**
+     * @param PageStatus $pageStatus: object containig all the status of the page we are composing with a URL call
+     * @param $resource: json resource containing the usecases section: resource->get->usecases or resource->post->usecases
+     * @param $useCasesIndex: index listing all defined usecases, array list having the use case name as key and the use case file path as value
+     * @return void
+     *
+     * To see a description of a use case: https://www.uddocs.com/baseresources/usecase
+     *
+     */
+    public static function performUseCases(PageStatus $pageStatus, $resource, array $useCasesIndex ): void {
+        if (isset($resource->get->usecases) and is_array($resource->get->usecases)) {
+            foreach ($resource->get->usecases as $jsonUseCase) {
+                $useCase = JsonDefaultTemplateFactory::getUseCase( $useCasesIndex, $jsonUseCase, $pageStatus );
                 $useCase->performAction();
             }
         }
-        if (isset($jsonResource->post->usecases) and is_array($jsonResource->post->usecases)) {
-            foreach ($jsonResource->post->usecases as $jsonusecase) {
-                $useCase = $pageStatus->getUseCasesIndex()->getUseCase($jsonusecase, $pageStatus, $applicationBuilder);
+        if (isset($resource->post->usecases) and is_array($resource->post->usecases)) {
+            foreach ($resource->post->usecases as $jsonUseCase) {
+                $useCase = JsonDefaultTemplateFactory::getUseCase( $useCasesIndex, $jsonUseCase, $pageStatus );
                 $useCase->performAction();
             }
         }
@@ -140,7 +150,7 @@ class Logics {
         return '';
     }
 
-    public static function performAjaxCallPost( PageStatus $pageStatus, ApplicationBuilder $applicationBuilder, $jsonResource ): string {
+    public static function performAjaxCallPost( PageStatus $pageStatus, $jsonResource ): string {
         if ( $pageStatus->areThereErrors() ) {
             $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder);
 

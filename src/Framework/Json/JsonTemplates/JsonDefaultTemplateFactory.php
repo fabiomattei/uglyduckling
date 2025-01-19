@@ -13,12 +13,12 @@ use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
 class JsonDefaultTemplateFactory {
 
-        /**
-         * @param $jsonStructure
-         * @param PageStatus $pageStatus
-         * @param ApplicationBuilder $applicationBuilder
-         * @return BaseHTMLTag
-         */
+    /**
+     * @param $jsonStructure
+     * @param PageStatus $pageStatus
+     * @param ApplicationBuilder $applicationBuilder
+     * @return BaseHTMLTag
+     */
     public static function getHTMLTag( $jsonStructure, PageStatus $pageStatus, array $jsonTagTemplates ): string {
         if ( isset($jsonStructure->type) ) {
             if ( array_key_exists( $jsonStructure->type, $jsonTagTemplates) ){
@@ -28,7 +28,6 @@ class JsonDefaultTemplateFactory {
         }
         return 'undefined tag';
     }
-
 
     /**
      * PanelBuilder constructor.
@@ -44,6 +43,19 @@ class JsonDefaultTemplateFactory {
         }
     }
 
+    /**
+     * Return an instantiated object of a use case
+     *
+     * @param $useCasesIndex: index listing all defined usecases, array list having the use case name as key and the use case file path as value
+     * @param $resourceName
+     * @param $pageStatus: object containig all the status of the page we are composing with a URL call
+     * @return mixed|void
+     */
+    public static function getUseCase( array $useCasesIndex, $jsonUseCase, PageStatus $pageStatus ) {
+        if ( array_key_exists( $jsonUseCase->name, $useCasesIndex ) ) {
+            return new $useCasesIndex[$jsonUseCase->name]($jsonUseCase, $pageStatus);
+        }
+    }
 
     /**
      * Load a resource from file specified with array index

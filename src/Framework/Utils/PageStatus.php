@@ -8,6 +8,9 @@ use Fabiom\UglyDuckling\Framework\Database\QuerySet;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 
+/**
+ * object containing all the status of the page we are composing with a URL call
+ */
 class PageStatus {
 
     public /* array */ $getParameters;
@@ -23,9 +26,6 @@ class PageStatus {
     public /* array */ $successes;
     public Logger $logger;
 
-    /**
-     * PageStatus constructor.
-     */
     public function __construct() {
         $this->queryReturnedValues = new QueryReturnedValues;
         $this->errors = [];
