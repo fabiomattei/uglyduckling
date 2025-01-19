@@ -7,6 +7,7 @@ use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLMessages;
 use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 class Logics {
 
@@ -213,7 +214,7 @@ class Logics {
                     if (is_string( $ajax->url )) {
                         $url = $ajax->url;
                     } else if ( is_object( $ajax->url ) ) {
-                        $url = $applicationBuilder->getRouterContainer()->make_resource_url( $ajax->url, $pageStatus );
+                        $url = UrlServices::make_resource_url( $ajax->url, $pageStatus );
                     } else {
                         $url = '';
                     }
@@ -229,10 +230,10 @@ class Logics {
                     $out[] = $myAjaxResponse;
                 }
 
-                $out = array_merge( $out, self::createErrorMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
-                $out = array_merge( $out, self::createInfoMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
-                $out = array_merge( $out, self::createWarningMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
-                $out = array_merge( $out, self::createSuccessMessagesReadyForAjaxOutput($pageStatus, $applicationBuilder) );
+                $out = array_merge( $out, self::createErrorMessagesReadyForAjaxOutput($pageStatus) );
+                $out = array_merge( $out, self::createInfoMessagesReadyForAjaxOutput($pageStatus) );
+                $out = array_merge( $out, self::createWarningMessagesReadyForAjaxOutput($pageStatus) );
+                $out = array_merge( $out, self::createSuccessMessagesReadyForAjaxOutput($pageStatus) );
 
             }
 
@@ -243,16 +244,14 @@ class Logics {
 
     /**
      * @param PageStatus $pageStatus
-     * @param ApplicationBuilder $applicationBuilder
      * @return array|\stdClass[]
      */
-    public static function createErrorMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+    public static function createErrorMessagesReadyForAjaxOutput(PageStatus $pageStatus ): array {
         $out = [];
         if ($pageStatus->areThereErrors()) {
             $out = array_map(
-                function ($errorstring) use ($applicationBuilder) {
+                function ($errorstring) {
                     $msgBlock = new BaseHTMLMessages;
-                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setError($errorstring);
 
                     $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'error',
@@ -270,16 +269,14 @@ class Logics {
 
     /**
      * @param PageStatus $pageStatus
-     * @param ApplicationBuilder $applicationBuilder
      * @return array|\stdClass[]
      */
-    public static function createInfoMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+    public static function createInfoMessagesReadyForAjaxOutput(PageStatus $pageStatus): array {
         $out = [];
         if ($pageStatus->areThereInfos()) {
             $out = array_map(
-                function ($infoString) use ($applicationBuilder) {
+                function ($infoString) {
                     $msgBlock = new BaseHTMLMessages;
-                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setInfo($infoString);
 
                     $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'info',
@@ -297,16 +294,14 @@ class Logics {
 
     /**
      * @param PageStatus $pageStatus
-     * @param ApplicationBuilder $applicationBuilder
      * @return array|\stdClass[]
      */
-    public static function createWarningMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+    public static function createWarningMessagesReadyForAjaxOutput(PageStatus $pageStatus): array {
         $out = [];
         if ($pageStatus->areThereWarnings()) {
             $out = array_map(
-                function ($warningString) use ($applicationBuilder) {
+                function ($warningString) {
                     $msgBlock = new BaseHTMLMessages;
-                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setWarning($warningString);
 
                     $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'warning',
@@ -324,16 +319,14 @@ class Logics {
 
     /**
      * @param PageStatus $pageStatus
-     * @param ApplicationBuilder $applicationBuilder
      * @return array|\stdClass[]
      */
-    public static function createSuccessMessagesReadyForAjaxOutput(PageStatus $pageStatus, ApplicationBuilder $applicationBuilder): array {
+    public static function createSuccessMessagesReadyForAjaxOutput(PageStatus $pageStatus): array {
         $out = [];
         if ($pageStatus->areThereSuccesses()) {
             $out = array_map(
-                function ($successString) use ($applicationBuilder) {
+                function ($successString) {
                     $msgBlock = new BaseHTMLMessages;
-                    $msgBlock->setHtmlTemplateLoader($applicationBuilder->getHtmlTemplateLoader());
                     $msgBlock->setSuccess($successString);
 
                     $myAjaxResponse = AjaxObjectsBuilder::createAjaxObjectForAjaxMessageObject( 'success',
