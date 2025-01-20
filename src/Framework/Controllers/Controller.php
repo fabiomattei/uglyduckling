@@ -12,6 +12,7 @@ use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
+use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 
@@ -68,6 +69,8 @@ class Controller {
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
     public array $groupsIndex;
+    public $controllerName;
+    public PageStatus $pageStatus;
 
     /**
      * This method makes all necessary presets to activate a controller
@@ -99,6 +102,14 @@ class Controller {
 
     public function setGroupsIndex( $groupsIndex ) {
         $this->groupsIndex = $groupsIndex;
+    }
+    
+    public function setControllerName( $controllerName ) {
+        $this->controllerName = $controllerName;
+    }
+
+    public function setPageStatus( PageStatus $pageStatus ) {
+        $this->pageStatus = $pageStatus;
     }
 
     /**
