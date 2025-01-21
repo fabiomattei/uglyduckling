@@ -51,6 +51,7 @@ class BaseController {
     public $menucontainer;
     public $controllerName;
     public PageStatus $pageStatus;
+    public $readableErrors;
 
     public function __construct() {
         $this->gump = new \GUMP();
