@@ -203,7 +203,7 @@ class BaseController {
             $out = false;
 
             // checking post parameters in post request
-            $parms = $this->gump->sanitize($_POST);
+            $parms = $this->gump->sanitize(array_merge($_POST, $_FILES));
             $this->gump->validation_rules($this->post_validation_rules);
             $this->gump->filter_rules($this->post_filter_rules);
             $this->postParameters = $this->gump->run($parms);
