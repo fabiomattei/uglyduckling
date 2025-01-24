@@ -5,22 +5,22 @@ namespace Fabiom\UglyDuckling\Framework\Utils;
 /** Controller code
 $file = uploadFile('file', true, true);
 if (is_array($file['error'])) {
-    $message = '';
-    foreach ($file['error'] as $msg) {
-        $message .= '<p>'.$msg.'</p>';
-    }
+$message = '';
+foreach ($file['error'] as $msg) {
+$message .= '<p>'.$msg.'</p>';
+}
 } else {
-    $message = "File uploaded successfully ".$file['filepath'].$file['filename'];
+$message = "File uploaded successfully ".$file['filepath'].$file['filename'];
 }
 echo $message;
-*/
+ */
 
 /** HTML Code
 <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
 <input name="file" type="file" id="image" />
 <input name="submit" type="submit" value="Upload" />
 </form>
-*/
+ */
 
 class FileUpload {
 
@@ -37,7 +37,8 @@ class FileUpload {
     static function uploadFile($file_field = null, $check_image = false, $random_name = false, $path = 'uploads/', $max_size = 1000000, $whitelist_ext = ['jpeg','jpg','png','gif'], $whitelist_type = ['image/jpeg', 'image/jpg', 'image/png','image/gif']) {
         //The Validation
         // Create an array to hold any output
-        $out = ['error'=>null];
+        $out = [];
+        $out['error'] = [];
 
         if (!$file_field) {
             $out['error'][] = "Please specify a valid form field name";
@@ -72,7 +73,7 @@ class FileUpload {
             if (!in_array($_FILES[$file_field]["type"], $whitelist_type)) {
                 $out['error'][] = "Invalid file Type";
             }
-            if (!in_array(mime_content_type($_FILES['input_name']['tmp_name']), $whitelist_type)) {
+            if (!in_array(mime_content_type($_FILES[$file_field]['tmp_name']), $whitelist_type)) {
                 $out['error'][] = "Invalid file Type";
             }
 
