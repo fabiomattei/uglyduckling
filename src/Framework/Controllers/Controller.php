@@ -103,7 +103,7 @@ class Controller {
     public function setGroupsIndex( $groupsIndex ) {
         $this->groupsIndex = $groupsIndex;
     }
-    
+
     public function setControllerName( $controllerName ) {
         $this->controllerName = $controllerName;
     }
