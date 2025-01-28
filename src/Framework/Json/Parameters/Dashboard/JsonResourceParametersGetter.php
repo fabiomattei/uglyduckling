@@ -12,7 +12,7 @@ class JsonResourceParametersGetter implements ParameterGetter {
 
     public function getValidationRoules() {
         $rules = array();
-        if( is_array($this->resource->get->request->parameters) ) {
+        if( isset($this->resource->get->request->parameters) and is_array($this->resource->get->request->parameters) ) {
             foreach ($this->resource->get->request->parameters as $par) {
                 $rules[$par->name] = $par->validation;
             }
