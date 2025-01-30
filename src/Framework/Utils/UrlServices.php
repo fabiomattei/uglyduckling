@@ -166,4 +166,9 @@ class UrlServices {
         }
     }
 
+    public static function urlencode($parameter)
+    {
+        return urlencode($parameter);
+    }
+
 }
