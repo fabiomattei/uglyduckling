@@ -310,7 +310,7 @@ class BaseController {
                     $this->viewFile .= 'GetError.php';
                 }
             } else {
-                $this->check_authorization_get_request();
+                $this->redirectToPage('index.html');
             }
         } else {
             if ($this->check_authorization_post_request()) {
@@ -322,7 +322,7 @@ class BaseController {
                     $this->viewFile .= 'PostError.php';
                 }
             } else {
-                $this->check_authorization_post_request();
+                $this->redirectToPage('index.html');
             }
         }
 
