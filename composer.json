@@ -16,7 +16,8 @@
     },
 	"require-dev": {
 		"phpunit/phpunit": "^8",
-		"etsy/phan": "^4.0"
+		"etsy/phan": "^4.0",
+        "phpstan/phpstan": "^2.1"
     },
 	"autoload": {
       "files": ["src/Framework/Json/docs.php", "src/Framework/Json/templates.php"],

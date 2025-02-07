@@ -136,5 +136,8 @@ There is a get section in this file, it is there because all this configurations
 
 If you can use the standard templates you can make an entire application just filling the src/Custom folder with all the resources you need. Open that folder and have a look so you can see how the other resources are defined.
  
+### Static check using phpstan
 
-
+```bash
+vendor/bin/phpstan --memory-limit=1G analyse src
+```

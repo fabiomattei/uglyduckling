@@ -5,6 +5,7 @@
  * Time: 10:51
  */
 namespace Fabiom\UglyDuckling\Framework\Utils;
+
 class XMLSerializer {
 
     /**
@@ -39,7 +40,7 @@ class XMLSerializer {
      * @param  string        node_name
      * @return string        containing the XML
      */
-    public static function generateValidXmlFromObj(stdClass $obj, $node_block='nodes', $node_name='node') {
+    public static function generateValidXmlFromObj(\stdClass $obj, $node_block='nodes', $node_name='node') {
         $arr = get_object_vars($obj);
         return self::generateValidXmlFromArray($arr, $node_block, $node_name);
     }

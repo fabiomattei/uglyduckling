@@ -2,9 +2,9 @@
 
 namespace Fabiom\UglyDuckling\Framework\Utils;
 
-use Fabiom\UglyDuckling\Framework\Database\DBConnection;
-use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Framework\Database\QuerySet;
+use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
+use Fabiom\UglyDuckling\Framework\DataBase\QuerySet;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 
@@ -25,6 +25,7 @@ class PageStatus {
     public /* array */ $infos;
     public /* array */ $successes;
     public Logger $logger;
+    public $useCasesIndex;
 
     public function __construct() {
         $this->queryReturnedValues = new QueryReturnedValues;

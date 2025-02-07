@@ -20,7 +20,7 @@ namespace Fabiom\UglyDuckling\Framework\Utils;
  */
 function block( $type, $path ) {
 
-	if ( $type == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $type == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	if ( $type == 'template') {
 
@@ -55,7 +55,7 @@ function block( $type, $path ) {
  */
 function usecase( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/usecases/'.$path.'.php';
 
@@ -88,7 +88,7 @@ function usecase( $chapter, $path ) {
  */
 function dao( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/dao/'.$path.'.php';
 
@@ -123,7 +123,7 @@ function dao( $chapter, $path ) {
  */
 function dao_exp( $chapter, $path, $connection = '' ) {
 
- 	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+ 	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
  	$filepath = 'chapters/'.$chapter.'/dao/'.strtolower($path).'.php';
 
@@ -170,7 +170,7 @@ function dao_exp( $chapter, $path, $connection = '' ) {
  */
 function paperwork( $chapter, $class_name ) {
 
-	if ( $chapter == '' OR $class_name == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $class_name == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'custom/paperworks/'.$chapter.'/'.strtolower($class_name).'.php';
 
@@ -241,7 +241,7 @@ function paperflow( $chapter, $class_name ) {
  */
 function helper( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/helpers/'.$path.'.php';
 
@@ -274,7 +274,7 @@ function helper( $chapter, $path ) {
  */
 function partial( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/partial/'.$path.'.php';
 
@@ -307,7 +307,7 @@ function partial( $chapter, $path ) {
  */
 function importer( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/importers/'.$path.'.php';
 
@@ -340,7 +340,7 @@ function importer( $chapter, $path ) {
  */
 function exporter( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/exporters/'.$path.'.php';
 
@@ -373,7 +373,7 @@ function exporter( $chapter, $path ) {
  */
 function model( $chapter, $path ) {
 
-	if ( $chapter == '' OR $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $chapter == '' OR $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'chapters/'.$chapter.'/model/'.$path.'.php';
 
@@ -403,7 +403,7 @@ function model( $chapter, $path ) {
  */
 function page( $page_folder, $page_file ) {
 
-	if ( $page_folder == '' OR $page_file == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $page_folder == '' OR $page_file == '' ) throw new \GeneralException('General malfuction!!!');
 
 	$filepath = 'pages/'.$page_folder.'/'.$page_file.'.php';
 
@@ -435,7 +435,7 @@ function page( $page_folder, $page_file ) {
  */
 function lib( $path ) {
 
-	if ( $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	if ( file_exists( 'framework/libs/'.$path.'.php' ) ) {
 
@@ -472,7 +472,7 @@ function lib( $path ) {
  * @return       string     Just for testing purpose
  */
 function utils( $path ) {
-	if ( $path == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $path == '' ) throw new \GeneralException('General malfuction!!!');
 
 	if ( file_exists( 'framework/utils/'.$path.'.php' ) ) {
 

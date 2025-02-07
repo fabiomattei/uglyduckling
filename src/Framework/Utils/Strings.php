@@ -17,7 +17,7 @@ namespace Fabiom\UglyDuckling\Framework\Utils;
  */
 function spliturl( $request ) {
 	
-	if ( $request == '' ) throw new GeneralException('General malfuction!!!');
+	if ( $request == '' ) throw new \GeneralException('General malfuction!!!');
 	
 	#split the string by '/'
 	$params = explode( '/', $request );
@@ -41,7 +41,7 @@ function spliturl( $request ) {
 	if ( validate_string( $folder ) AND validate_string( $subfolder ) AND validate_string( $action ) )
 		return array( $folder, $subfolder, $action, $parameters );
 	else 
-		throw new GeneralException('Illegal access to spliturl!!!');
+		throw new \GeneralException('Illegal access to spliturl!!!');
 }
 
 /**
