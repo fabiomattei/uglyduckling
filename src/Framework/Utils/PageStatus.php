@@ -98,13 +98,6 @@ class PageStatus {
     }
 
     /**
-     * @return UseCasesIndex
-     */
-    public function getUseCasesIndex(): UseCasesIndex {
-        return $this->useCasesIndex;
-    }
-
-    /**
      * @return QueryReturnedValues
      */
     public function getQueryReturnedValues(): QueryReturnedValues {
@@ -133,21 +126,23 @@ class PageStatus {
     }
 
     /**
-     * @return array
+     * @param string $error
+     * @return void
      */
     public function addError( string $error ) {
         $this->errors[] = $error;
     }
 
     /**
-     * @return array
+     * @param array $errors
+     * @return void
      */
     public function addErrors( array $errors ) {
         $this->errors = array_merge($this->errors, $errors);
     }
 
     /**
-     * @return array
+     * @return bool
      */
     public function areThereWarnings(): bool {
         return !empty( $this->warnings );
@@ -161,14 +156,15 @@ class PageStatus {
     }
 
     /**
-     * @return array
+     * @param string $warning
+     * @return void
      */
     public function addWarning( string $warning ) {
         $this->warnings[] = $warning;
     }
 
     /**
-     * @return array
+     * @return bool
      */
     public function areThereInfos(): bool {
         return !empty( $this->infos );
@@ -182,7 +178,8 @@ class PageStatus {
     }
 
     /**
-     * @return array
+     * @param string $info
+     * @return void
      */
     public function addInfo( string $info ) {
         $this->infos[] = $info;
@@ -203,7 +200,8 @@ class PageStatus {
     }
 
     /**
-     * @return array
+     * @param string $success
+     * @return void
      */
     public function addSuccess( string $success ) {
         $this->successes[] = $success;
