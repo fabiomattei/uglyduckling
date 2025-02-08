@@ -20,7 +20,6 @@
         "phpstan/phpstan": "^2.1"
     },
 	"autoload": {
-      "files": ["src/Framework/Json/docs.php", "src/Framework/Json/templates.php"],
       "psr-4": {
             "Fabiom\\UglyDuckling\\": "src/"
         }
