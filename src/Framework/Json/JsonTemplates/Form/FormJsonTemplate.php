@@ -3,7 +3,9 @@
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Form;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLForm;
+use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 /**
  * User: Fabio Mattei
@@ -38,7 +40,6 @@ class FormJsonTemplate extends JsonTemplate {
         $this->pageStatus->setLastEntity($entity);
 
         $formBlock = new BaseHTMLForm;
-        $formBlock->setHtmlTemplateLoader( $htmlTemplateLoader );
         $formBlock->setTitle($this->resource->get->form->title ?? '');
         $formBlock->setFormId($this->resource->get->form->formid ?? '');
 
@@ -154,7 +155,7 @@ class FormJsonTemplate extends JsonTemplate {
                     $formBlock->addSubmitButton( $field->name, $field->constantparameter ?? '', $field->label ?? '', $field->width ?? '12', $field->cssclass ?? '');
                 }
                 else {
-                    $formBlock->addHTMLTag( $this->applicationBuilder->getHTMLTag( $field, $this->pageStatus, $this->applicationBuilder ) );
+                    $formBlock->addHTMLTag( JsonDefaultTemplateFactory::getHTMLTag( $field, $this->pageStatus, $this->jsonTabTemplates ) );
                 }
 
             }

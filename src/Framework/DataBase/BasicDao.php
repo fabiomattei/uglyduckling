@@ -634,7 +634,7 @@ class BasicDao {
                 }
 
                 return $out;
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
                 throw new \Exception('General malfuction!!!');
             }
@@ -683,7 +683,7 @@ class BasicDao {
             }
 
             return $obj;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
