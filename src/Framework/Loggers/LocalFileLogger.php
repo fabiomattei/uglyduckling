@@ -10,6 +10,8 @@ namespace Fabiom\UglyDuckling\Framework\Loggers;
 
 class LocalFileLogger implements Logger {
 
+    private $logfile;
+
     function __construct() {
         $this->logfile = 'logs/log'.date('Y-m-d').'.log';
     }

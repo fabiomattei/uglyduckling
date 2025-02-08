@@ -4,7 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Status;
 
 use Fabiom\UglyDuckling\Framework\Ajax\AjaxObjectsBuilder;
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLMessages;
-use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\UrlServices;

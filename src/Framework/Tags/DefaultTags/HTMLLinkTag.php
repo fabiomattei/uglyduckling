@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Framework\Tags\DefaultTags;
 
 use Fabiom\UglyDuckling\Framework\Tags\BaseHTMLTag;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 /**
  * A Json small block is a JSON resource (object or array or composite)
@@ -22,7 +23,7 @@ class HTMLLinkTag extends BaseHTMLTag {
      * Takes a JSON resource (object or array or composite) and convert it in HTML
      */
     function getHTML(): string {
-        $url = $this->applicationBuilder->make_resource_url( $this->jsonStructure, $this->pageStatus );
+        $url = UrlServices::make_resource_url( $this->jsonStructure, $this->pageStatus );
         return '<a href="'.$url.'">'.$this->jsonStructure->label.'</a>';
     }
 

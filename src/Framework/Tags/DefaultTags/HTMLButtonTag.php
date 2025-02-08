@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Framework\Tags\DefaultTags;
 
 use Fabiom\UglyDuckling\Framework\Tags\BaseHTMLTag;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 /**
  * A Json small block is a JSON resource (object or array or composite)
@@ -47,7 +48,7 @@ class HTMLButtonTag extends BaseHTMLTag {
      */
     function getHTML(): string {
         $buttoncolor = ( isset($this->jsonStructure->buttoncolor) ? self::getColor($this->jsonStructure->buttoncolor) : self::COLOR_GRAY );
-        $url = $this->applicationBuilder->make_resource_url( $this->jsonStructure, $this->pageStatus );
+        $url = UrlServices::make_resource_url( $this->jsonStructure, $this->pageStatus );
         return '<a href="'.$url.'" class="btn '.$buttoncolor.' pull-right m-l-20 btn-rounded ${outline} hidden-xs hidden-sm waves-effect waves-light" ${onclickstring} ${dataoriginaltitle}>'.$this->jsonStructure->label.'</a>';
     }
 
