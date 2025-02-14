@@ -26,7 +26,7 @@ class UrlServices {
 
     public static function validate_string( $string_var ) {
         if ( strlen( $string_var ) == 0 ) return true;
-        if ( strlen( $string_var ) > 40 ) return false;
+        if ( strlen( $string_var ) > 200 ) return false;
         if ( ctype_alnum( str_replace( ['-', '_'], '', $string_var) ) ) return true;
         return false;
     }
