@@ -115,9 +115,8 @@ class StringUtils {
         return StringUtils::isStringBetween( strtolower($word), strtolower($container), strtolower($start), strtolower($end) );
     }
 
-    public static function generateRandomString($length = 8) {
+    public static function generateRandomString($length = 8, $possible = "0123456789abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") {
         $password = "";
-        $possible = "0123456789abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         $i = 0;
         while ($i < $length) {
