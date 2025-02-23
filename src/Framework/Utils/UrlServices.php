@@ -5,7 +5,7 @@ namespace Fabiom\UglyDuckling\Framework\Utils;
 class UrlServices {
 
     public static function extractActionName( string $requestURI, string $pathToApp = '/' ) {
-        $request2 = str_replace( ['.html', '.pdf', '.svg', '.json'], '',$requestURI );
+        $request2 = str_replace( ['.html', '.pdf', '.svg', '.json', '.xml'], '',$requestURI );
         $request  = preg_replace( '/\?.*/', '', $request2 );
 
         if ( $request == '' ) throw new \Exception('General malfuction!!!');
