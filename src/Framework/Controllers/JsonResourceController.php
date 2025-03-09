@@ -25,6 +25,7 @@ class JsonResourceController {
 
     protected $secondGump;
     public /* array */ $parameters;
+    public /* array */ $postParameters;
     public array $resourceIndex;
     public array $groupsIndex;
     public array $useCasesIndex;
@@ -33,6 +34,7 @@ class JsonResourceController {
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
     public PageStatus $pageStatus;
+    public $queryExecutor;
     protected $menubuilder;
     protected string $title;
     protected string $templateFile;
@@ -196,7 +198,7 @@ class JsonResourceController {
      */
     public function check_post_request() {
         if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
-            $this->secondGump = new Gump;
+            $this->secondGump = new \Gump;
 
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
             $validation_rules = $parametersGetter->getPostValidationRoules();
@@ -206,6 +208,7 @@ class JsonResourceController {
                 return true;
             } else {
                 $parms = $this->secondGump->sanitize( array_merge(
+                        is_null($_GET) ? [] : $_GET,
                         is_null($_POST) ? [] : $_POST,
                         is_null($_FILES) ? [] : $_FILES
                     )
@@ -232,14 +235,16 @@ class JsonResourceController {
      * This means all json Resources act in the same way when there is a post request
      */
     public function postRequest() {
+        $out = '';
+
         $this->queryExecutor = $this->pageStatus->getQueryExecutor();
-        $this->queryExecutor->setApplicationBuilder( $this->applicationBuilder );
 
         $conn = $this->pageStatus->getDbconnection()->getDBH();
 
+        $returnedIds = new QueryReturnedValues;
+
         // performing transactions
         if (isset($this->resource->post->transactions)) {
-            $returnedIds = new QueryReturnedValues;
             try {
                 //$conn->beginTransaction();
                 $this->queryExecutor->setDBH( $conn );
@@ -263,6 +268,35 @@ class JsonResourceController {
             }
         }
 
+        // performing inplace edits
+        if (isset($this->resource->post->inplaceeditor)) {
+            foreach ($this->resource->post->inplaceeditor->updates as $inplaceTransaction) {
+                if ( $inplaceTransaction->fieldcontent == $this->pageStatus->getValue($inplaceTransaction->fieldvalue) ) {
+                    $this->queryExecutor->setQueryStructure( $inplaceTransaction->updatequery );
+                    if ( $this->queryExecutor->getSqlStatmentType() == QueryExecuter::INSERT) {
+                        if (isset($transaction->label)) {
+                            $returnedIds->setValue($inplaceTransaction->label, $this->queryExecutor->executeSql());
+                        } else {
+                            $returnedIds->setValueNoKey($this->queryExecutor->executeSql());
+                        }
+                    } else {
+                        $this->queryExecutor->executeSql();
+                    }
+
+                    $this->queryExecutor->setQueryStructure( $inplaceTransaction->reloadquery );
+                    if ( $this->queryExecutor->getSqlStatmentType() == QueryExecuter::INSERT) {
+                        if (isset($transaction->label)) {
+                            $returnedIds->setValue($inplaceTransaction->label, $this->queryExecutor->executeSql());
+                        } else {
+                            $returnedIds->setValueNoKey($this->queryExecutor->executeSql());
+                        }
+                    } else {
+                        $out .= $this->queryExecutor->executeSql();
+                    }
+                }
+            }
+        }
+
         // performing usecases
         if (isset($this->resource->post->usecases) and is_array($this->resource->post->usecases)) {
             foreach ($this->resource->post->usecases as $jsonusecase) {
@@ -277,8 +311,6 @@ class JsonResourceController {
         // redirect
         if (isset($this->resource->post->redirect)) {
             $this->jsonRedirector($this->resource->post->redirect);
-        } else {
-            $this->redirectToPreviousPage();
         }
 
         if (isset($this->resource->post->render)) {
@@ -286,6 +318,8 @@ class JsonResourceController {
                 $this->applicationBuilder->loadResource(
                     $this->resource->post->render->resource ) )->getHTML();
         }
+
+        echo $out;
     }
 
     public function showPage() {
@@ -322,7 +356,9 @@ class JsonResourceController {
             }
         }
 
-        $this->loadTemplate();
+        if (ServerWrapper::isGetRequest()) {
+            $this->loadTemplate();
+        }
 
         $time_end = microtime(true);
         if ( ($time_end - $time_start) > 5 ) {
