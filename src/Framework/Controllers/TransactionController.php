@@ -2,8 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
-use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Framework\Database\QueryReturnedValues;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
 
 class TransactionController extends JsonResourceBasicController {
 
@@ -17,7 +17,6 @@ class TransactionController extends JsonResourceBasicController {
      */
     public function getRequest() {
         $this->queryExecutor = $this->pageStatus->getQueryExecutor();
-        $this->queryExecutor->setApplicationBuilder( $this->applicationBuilder );
 
         $conn = $this->dbconnection;
 

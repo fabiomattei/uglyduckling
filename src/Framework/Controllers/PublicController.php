@@ -104,11 +104,11 @@ class PublicController {
     }
 
     public function show_get_error_page() {
-        throw new GeneralException('General malfuction!!!');
+        throw new \GeneralException('General malfuction!!!');
     }
 
     public function show_post_error_page() {
-        throw new GeneralException('General malfuction!!!');
+        throw new \GeneralException('General malfuction!!!');
     }
 
 	public function showPage() {

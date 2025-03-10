@@ -132,11 +132,11 @@ class HtmlTemplateController {
     }
 
     public function show_get_error_page() {
-        throw new GeneralException('General malfuction!!!');
+        throw new \GeneralException('General malfuction!!!');
     }
 
     public function show_post_error_page() {
-        throw new GeneralException('General malfuction!!!');
+        throw new \GeneralException('General malfuction!!!');
     }
 
     /**
@@ -156,11 +156,11 @@ class HtmlTemplateController {
     }
 
     public function show_get_authorization_error_page() {
-        throw new GeneralException('Authorization error!!!');
+        throw new \GeneralException('Authorization error!!!');
     }
 
     public function show_post_authorization_error_page() {
-        throw new GeneralException('Authorization error!!!');
+        throw new \GeneralException('Authorization error!!!');
     }
 
     public function showPage() {
@@ -404,7 +404,7 @@ class HtmlTemplateController {
     function loadlinks() {
 
         if (!isset($_SESSION['office']))
-            throw new GeneralException('Office has not been set!!!');
+            throw new \GeneralException('Office has not been set!!!');
 
         $filepath = 'controllers/' . $_SESSION['office'] . '/links.php';
 

@@ -5,7 +5,7 @@ namespace Fabiom\UglyDuckling\Framework\Utils;
 class UrlServices {
 
     public static function extractActionName( string $requestURI, string $pathToApp = '/' ) {
-        $request2 = str_replace( ['.html', '.pdf', '.svg', '.json'], '',$requestURI );
+        $request2 = str_replace( ['.html', '.pdf', '.svg', '.json', '.xml'], '',$requestURI );
         $request  = preg_replace( '/\?.*/', '', $request2 );
 
         if ( $request == '' ) throw new \Exception('General malfuction!!!');
@@ -26,7 +26,7 @@ class UrlServices {
 
     public static function validate_string( $string_var ) {
         if ( strlen( $string_var ) == 0 ) return true;
-        if ( strlen( $string_var ) > 40 ) return false;
+        if ( strlen( $string_var ) > 200 ) return false;
         if ( ctype_alnum( str_replace( ['-', '_'], '', $string_var) ) ) return true;
         return false;
     }
@@ -164,6 +164,11 @@ class UrlServices {
         } else {
             return $controllerSlug.$extension.( $parameters == '' ? '' : '?'.$parameters );
         }
+    }
+
+    public static function urlencode($parameter)
+    {
+        return urlencode($parameter);
     }
 
 }

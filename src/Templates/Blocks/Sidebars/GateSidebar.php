@@ -5,6 +5,9 @@ namespace Fabiom\UglyDuckling\Templates\Blocks\Sidebars;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class GateSidebar extends BaseHTMLBlock {
+
+    public $appname;
+    public $active;
 	
 	function __construct( string $appname, string $active = 'home' ) {
 		$this->appname = $appname;

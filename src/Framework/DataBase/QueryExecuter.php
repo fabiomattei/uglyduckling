@@ -14,7 +14,7 @@ class QueryExecuter {
     private $queryStructure;
     private $DBH;
     private PageStatus $pageStatus;
-	private string $resourceName = 'unknown';
+    private string $resourceName = 'unknown';
 
     public const SELECT = 'SELECT';
     public const INSERT = 'INSERT';
@@ -55,8 +55,8 @@ class QueryExecuter {
      */
     function executeSqlSelect() {
         try {
-			$starttime = microtime(true);
-			
+            $starttime = microtime(true);
+
             $STH = $this->DBH->prepare( $this->queryStructure->sql );
             $STH->setFetchMode(PDO::FETCH_OBJ);
 
@@ -79,11 +79,11 @@ class QueryExecuter {
                             $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
                         }
                         if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
-							if ( is_numeric($queryParameters[$cond->placeholder]) ) {                                
-								$STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
-							} else {
-								$STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
-							}
+                            if ( is_numeric($queryParameters[$cond->placeholder]) ) {
+                                $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                            } else {
+                                $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
+                            }
                         }
                     }
                 }
@@ -95,17 +95,17 @@ class QueryExecuter {
             }
 
             $STH->execute();
-			
-			$endtime = microtime(true);
-			
-	        if (($endtime - $starttime) > 5) {
-	            $this->pageStatus->logger->write('[UD WARNING] QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
-	        }
 
-	        if ( isset( $this->queryStructure->debug ) ) {
+            $endtime = microtime(true);
+
+            if (($endtime - $starttime) > 5) {
+                $this->pageStatus->logger->write('[UD WARNING] QUERY TIME :: ' . ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $this->queryStructure->sql . ' - TIME: ' . ($endtime - $starttime) . ' sec', __FILE__, __LINE__);
+            }
+
+            if ( isset( $this->queryStructure->debug ) ) {
                 $STH->debugDumpParams();
             }
-	        // to debug
+            // to debug
             // $STH->debugDumpParams();
 
             return $STH;
@@ -121,13 +121,13 @@ class QueryExecuter {
      * @return mixed
      */
     function executeSqlInsert() {
-		try {
-        	$STH = $this->DBH->prepare( $this->queryStructure->sql );
-        	$STH->setFetchMode(PDO::FETCH_OBJ);
-        	
-        	if ( isset($this->queryStructure->parameters) ) {
-        	    $cont = 1;
-        	    foreach ($this->queryStructure->parameters as $cond) {
+        try {
+            $STH = $this->DBH->prepare( $this->queryStructure->sql );
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+
+            if ( isset($this->queryStructure->parameters) ) {
+                $cont = 1;
+                foreach ($this->queryStructure->parameters as $cond) {
                     $queryParameters = array();
                     foreach ($this->queryStructure->parameters as $cond) {
                         $queryParameters[$cond->placeholder] = $this->pageStatus->getValue( $cond );
@@ -151,7 +151,7 @@ class QueryExecuter {
                                 $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
                             }
                             if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
-                                if ( is_numeric($queryParameters[$cond->placeholder]) ) {                                
+                                if ( is_numeric($queryParameters[$cond->placeholder]) ) {
                                     $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
                                 } else {
                                     $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
@@ -181,26 +181,26 @@ class QueryExecuter {
         	            $STH->bindParam($cond->placeholder, $par, PDO::PARAM_LOB);
         	        */
 
-        	        $cont++;
-        	    }
-        	}
+                    $cont++;
+                }
+            }
 
             if ( isset( $this->queryStructure->debug ) ) {
                 print_r($queryParameters);
                 echo strtr($this->queryStructure->sql, $queryParameters);
             }
-			
-			$STH->execute();
+
+            $STH->execute();
 
             if ( isset( $this->queryStructure->debug ) ) {
                 $STH->debugDumpParams();
             }
-			
-		} catch (\PDOException $e) {
-            $this->pageStatus->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
-    	}
 
-    	// uncomment for debug purpose
+        } catch (\PDOException $e) {
+            $this->pageStatus->logger->write( ($this->resourceName === 'unknown' ? '' : 'Resource: ' . $this->resourceName . ' ' ) . $e->getMessage(), __FILE__, __LINE__);
+        }
+
+        // uncomment for debug purpose
         // $STH->debugDumpParams();
 
         return $this->DBH->lastInsertId();
@@ -236,7 +236,7 @@ class QueryExecuter {
                             $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
                         }
                         if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
-                            if ( is_numeric($queryParameters[$cond->placeholder]) ) {                                
+                            if ( is_numeric($queryParameters[$cond->placeholder]) ) {
                                 $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
                             } else {
                                 $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
@@ -296,7 +296,7 @@ class QueryExecuter {
                                 $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
                             }
                             if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
-                                if ( is_numeric($queryParameters[$cond->placeholder]) ) {                                
+                                if ( is_numeric($queryParameters[$cond->placeholder]) ) {
                                     $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
                                 } else {
                                     $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
@@ -362,6 +362,10 @@ class QueryExecuter {
                 $obj = $this->executeSqlSelect()->fetch();
                 $field = $this->queryStructure->fieldtosave;
                 return $obj->$field;
+            } elseif (isset( $this->queryStructure->fieldtoload )) {
+                $obj = $this->executeSqlSelect()->fetch();
+                $field = $this->queryStructure->fieldtoload;
+                return $obj->$field;
             } else {
                 return $this->executeSqlSelect();
             }
@@ -376,7 +380,7 @@ class QueryExecuter {
             return $this->executeSqlDelete();
         }
     }
-	
+
     /**
      * It gets all rows contained in a table
      */
@@ -388,16 +392,16 @@ class QueryExecuter {
 
             $STH->execute();
 
-			foreach ($STH as $table) {
-				$out = true;
-			}
+            foreach ($STH as $table) {
+                $out = true;
+            }
             return $out;
         } catch (\PDOException $e) {
             $this->pageStatus->logger->write($e->getMessage(), __FILE__, __LINE__);
             $this->pageStatus->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
-	
+
     /**
      * It creates a table
      */
@@ -410,7 +414,7 @@ class QueryExecuter {
             $this->pageStatus->logger->write($STH->activeQueryString(), __FILE__, __LINE__);
         }
     }
-	
+
     /**
      * It drops a table
      */

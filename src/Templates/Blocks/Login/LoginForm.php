@@ -5,6 +5,9 @@ namespace Fabiom\UglyDuckling\Templates\Blocks\Login;
 use Fabiom\UglyDuckling\Common\Blocks\BaseHTMLBlock;
 
 class LoginForm extends BaseHTMLBlock {
+
+    public $appname;
+    public $error;
 	
 	function __construct( string $appname, string $error ) {
 		$this->appname = $appname;
