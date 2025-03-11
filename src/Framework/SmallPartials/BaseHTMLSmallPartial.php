@@ -9,11 +9,13 @@ class BaseHTMLSmallPartial
 
     const BLOCK_TYPE = '';
     protected $jsonStructure;
+    protected $mainJsonStricture;
     protected PageStatus $pageStatus;
     protected array $jsonSmallPartialTemplates;
 
-    function __construct($jsonStructure, PageStatus $pageStatus, array $jsonSmallPartialTemplates) {
+    function __construct($jsonStructure, $mainJsonStricture, PageStatus $pageStatus, array $jsonSmallPartialTemplates) {
         $this->jsonStructure = $jsonStructure;
+        $this->mainJsonStricture = $mainJsonStricture;
         $this->pageStatus = $pageStatus;
         $this->jsonSmallPartialTemplates = $jsonSmallPartialTemplates;
     }
