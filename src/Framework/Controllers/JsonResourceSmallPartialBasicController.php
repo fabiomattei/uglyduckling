@@ -24,6 +24,7 @@ class JsonResourceSmallPartialBasicController extends ControllerNoCSRFTokenRenew
     public array $useCasesIndex;
     protected $jsonTabTemplates;
     protected $jsonResourceTemplates;
+    public array $index_json_smallpartial_templates;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
@@ -56,6 +57,10 @@ class JsonResourceSmallPartialBasicController extends ControllerNoCSRFTokenRenew
 
     public function setJsonResourceTemplates( $index_json_resource_templates ) {
         $this->jsonResourceTemplates = $index_json_resource_templates;
+    }
+
+    public function setJsonSmallPartialTemplates( $index_json_smallpartial_templates ) {
+        $this->index_json_smallpartial_templates = $index_json_smallpartial_templates;
     }
 
     /**
@@ -125,7 +130,7 @@ class JsonResourceSmallPartialBasicController extends ControllerNoCSRFTokenRenew
                             } else {
                                 if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-                                echo JsonDefaultTemplateFactory::getHTMLSmallPartial( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
+                                echo JsonDefaultTemplateFactory::getHTMLSmallPartial( $smallpartial, $this->resource, $this->pageStatus, $this->resourceIndex, $this->jsonTabTemplates );
                             }
                         }
                     }

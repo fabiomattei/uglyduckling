@@ -25,6 +25,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
     public array $useCasesIndex;
     protected $jsonTabTemplates;
     protected $jsonResourceTemplates;
+    public array $index_json_smallpartial_templates;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
@@ -57,6 +58,10 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
     public function setJsonResourceTemplates( $index_json_resource_templates ) {
         $this->jsonResourceTemplates = $index_json_resource_templates;
+    }
+
+    public function setJsonSmallPartialTemplates( $index_json_smallpartial_templates ) {
+        $this->index_json_smallpartial_templates = $index_json_smallpartial_templates;
     }
 
     /**
