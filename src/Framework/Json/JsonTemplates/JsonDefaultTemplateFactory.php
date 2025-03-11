@@ -37,8 +37,6 @@ class JsonDefaultTemplateFactory {
      */
     public static function getHTMLSmallPartial( $jsonStructure, $mainJsonStructure, PageStatus $pageStatus, array $jsonSmallPartialTemplates, array $jsonTagTemplates ): string {
         if ( isset($jsonStructure->type) ) {
-            echo $jsonStructure->type;
-            print_r($jsonSmallPartialTemplates);
             if ( array_key_exists( $jsonStructure->type, $jsonSmallPartialTemplates) ){
                 $smallPartial = new $jsonSmallPartialTemplates[$jsonStructure->type]( $jsonStructure, $mainJsonStructure, $pageStatus, $jsonSmallPartialTemplates, $jsonTagTemplates );
                 return $smallPartial->getHTML();
