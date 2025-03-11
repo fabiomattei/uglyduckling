@@ -45,6 +45,7 @@ class JsonResourceController {
     protected $jsonResourceTemplates;
     public $unvalidated_parameters;
     public array $index_json_smallpartial_templates;
+    public $readableErrors;
 
     /**
      * This function allows to set a resource name to load for a particular instance
