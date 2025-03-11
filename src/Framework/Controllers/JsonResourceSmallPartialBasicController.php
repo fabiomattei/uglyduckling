@@ -100,7 +100,7 @@ class JsonResourceSmallPartialBasicController extends ControllerNoCSRFTokenRenew
             // if json resource has parameters
             if(isset($this->resource->get->smallpartials)) {
                 foreach ($this->resource->get->smallpartials as $smallpartial) {
-                    if ($smallpartial->name == $_GET['udsmallpartial']) {
+                    if ($smallpartial->type == $_GET['udsmallpartial']) {
                         $secondGump = new \Gump;
 
                         $validation_rules = [];
@@ -125,8 +125,7 @@ class JsonResourceSmallPartialBasicController extends ControllerNoCSRFTokenRenew
                             } else {
                                 if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
-                                $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
-                                echo $myBlocks->show();
+                                echo JsonDefaultTemplateFactory::getHTMLSmallPartial( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                             }
                         }
                     }

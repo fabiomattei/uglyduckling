@@ -30,6 +30,22 @@ class JsonDefaultTemplateFactory {
     }
 
     /**
+     * @param $jsonStructure
+     * @param PageStatus $pageStatus
+     * @param $jsonTagTemplates: index listing all defined json tags, array list having the tag template name as key and the tag template file path as value
+     * @return string
+     */
+    public static function getHTMLSmallPartial( $jsonStructure, $mainJsonStructure, PageStatus $pageStatus, array $jsonSmallPartialTemplates, array $jsonTagTemplates ): string {
+        if ( isset($jsonStructure->type) ) {
+            if ( array_key_exists( $jsonStructure->type, $jsonSmallPartialTemplates) ){
+                $smallPartial = new $jsonSmallPartialTemplates[$jsonStructure->type]( $jsonStructure, $mainJsonStructure, $pageStatus, $jsonSmallPartialTemplates, $jsonTagTemplates );
+                return $smallPartial->getHTML();
+            }
+        }
+        return 'undefined tag';
+    }
+
+    /**
      * PanelBuilder constructor.
      * @param $tableBuilder
      */
