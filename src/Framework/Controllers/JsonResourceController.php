@@ -203,7 +203,7 @@ class JsonResourceController {
      * the point of view of the validation rules
      */
     public function check_post_request() {
-        if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
+        //if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
             $this->secondGump = new \Gump;
 
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
@@ -231,9 +231,9 @@ class JsonResourceController {
                     return true;
                 }
             }
-        } else {
-            throw new \Exception('Illegal csrftoken Exception');
-        }
+        //} else {
+        //    throw new \Exception('Illegal csrftoken Exception');
+        //}
     }
 
     /**
