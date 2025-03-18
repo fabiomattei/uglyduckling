@@ -251,11 +251,11 @@ class JsonResourceController {
         $returnedIds = $this->pageStatus->getQueryReturnedValues();
 
         // performing transactions
-        if (isset($jsonResource->get->transactions)) {
+        if (isset($this->resource->post->transactions)) {
             try {
                 //$conn->beginTransaction();
                 $this->pageStatus->getQueryExecutor()->setDBH($conn);
-                foreach ($jsonResource->get->transactions as $transaction) {
+                foreach ($this->resource->post->transactions as $transaction) {
                     $this->pageStatus->getQueryExecutor()->setQueryStructure($transaction);
                     if ($this->pageStatus->getQueryExecutor()->getSqlStatmentType() == \Fabiom\UglyDuckling\Common\Database\QueryExecuter::INSERT) {
                         if (isset($transaction->label)) {
