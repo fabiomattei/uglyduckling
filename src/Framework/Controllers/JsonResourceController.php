@@ -248,37 +248,36 @@ class JsonResourceController {
 
         $conn = $this->pageStatus->getDbconnection()->getDBH();
 
-        $returnedIds = new QueryReturnedValues;
+        $returnedIds = $this->pageStatus->getQueryReturnedValues();
 
         // performing transactions
         if (isset($jsonResource->get->transactions)) {
-            $returnedIds = $pageStatus->getQueryReturnedValues();
             try {
                 //$conn->beginTransaction();
-                $queryExecutor->setDBH($conn);
+                $this->pageStatus->getQueryExecutor()->setDBH($conn);
                 foreach ($jsonResource->get->transactions as $transaction) {
-                    $queryExecutor->setQueryStructure($transaction);
-                    if ($queryExecutor->getSqlStatmentType() == \Fabiom\UglyDuckling\Common\Database\QueryExecuter::INSERT) {
+                    $this->pageStatus->getQueryExecutor()->setQueryStructure($transaction);
+                    if ($this->pageStatus->getQueryExecutor()->getSqlStatmentType() == \Fabiom\UglyDuckling\Common\Database\QueryExecuter::INSERT) {
                         if (isset($transaction->label)) {
-                            $returnedIds->setValue($transaction->label, $queryExecutor->executeSql());
+                            $returnedIds->setValue($transaction->label, $this->pageStatus->getQueryExecutor()->executeSql());
                         } else {
-                            $returnedIds->setValueNoKey($queryExecutor->executeSql());
+                            $returnedIds->setValueNoKey($this->pageStatus->getQueryExecutor()->executeSql());
                         }
-                    } else if ($queryExecutor->getSqlStatmentType() == QueryExecuter::SELECT) {
+                    } else if ($this->pageStatus->getQueryExecutor()->getSqlStatmentType() == QueryExecuter::SELECT) {
                         if (isset($transaction->label)) {
-                            $returnedIds->setValue($transaction->label, $queryExecutor->executeSql());
+                            $returnedIds->setValue($transaction->label, $this->pageStatus->getQueryExecutor()->executeSql());
                         } else {
-                            $returnedIds->setValueNoKey($queryExecutor->executeSql());
+                            $returnedIds->setValueNoKey($this->pageStatus->getQueryExecutor()->executeSql());
                         }
                     } else {
-                        $queryExecutor->executeSql();
+                        $this->pageStatus->getQueryExecutor()->executeSql();
                     }
                 }
                 //$conn->commit();
             } catch (\PDOException $e) {
-                $pageStatus->addError("There was an error in the transaction");
+                $this->pageStatus->addError("There was an error in the transaction");
                 $conn->rollBack();
-                $applicationBuilder->getLogger()->write($e->getMessage(), __FILE__, __LINE__);
+                $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             }
         }
 
