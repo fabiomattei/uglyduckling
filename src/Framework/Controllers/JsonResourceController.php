@@ -15,6 +15,7 @@ use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
+use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
 class JsonResourceController {
 
@@ -397,5 +398,32 @@ class JsonResourceController {
         } else {
             $this->redirectToPreviousPage();
         }
+    }
+
+    /**
+     * Redirect the script to $_SESSION['prevrequest'] with a header request
+     * It send flash messages to new controller [info, warning, error, success]
+     */
+    public function redirectToPreviousPage() {
+        header('Location: ' . $_SESSION['prevrequest'] );
+        exit();
+    }
+
+    /**
+     * Redirect the script to $_SESSION['prevprevrequest'] with a header request
+     * It send flash messages to new controller [info, warning, error, success]
+     */
+    public function redirectToSecondPreviousPage() {
+        // avoid end of round here...
+        header('Location: ' . $_SESSION['prevprevrequest'] );
+        exit();
+    }
+
+    /**
+     * Redirect the script to a selected url
+     */
+    public function redirectToPage($url) {
+        header('Location: ' . $url );
+        exit();
     }
 }

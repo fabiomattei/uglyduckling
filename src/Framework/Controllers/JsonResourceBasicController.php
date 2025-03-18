@@ -74,7 +74,7 @@ class JsonResourceBasicController extends Controller {
         // checking if resource defines any get parameter
         if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) return true;
 
-        $this->secondGump = new Gump;
+        $this->secondGump = new \Gump;
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
         $validation_rules = $parametersGetter->getValidationRoules();
@@ -104,7 +104,7 @@ class JsonResourceBasicController extends Controller {
      */
     public function check_post_request() {
         if ( isset($this->postParameters['csrftoken']) AND $this->postParameters['csrftoken'] == $_SESSION['csrftoken'] ) {
-            $this->secondGump = new Gump;
+            $this->secondGump = new \Gump;
 
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->applicationBuilder );
             $validation_rules = $parametersGetter->getPostValidationRoules();
