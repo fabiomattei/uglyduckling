@@ -59,7 +59,7 @@ class BaseHTMLCode extends BaseHTMLBlock {
      * it return the HTML code for the web page built on data structure
      */
     function getHTML(): string {
-        if ( $this->bodyFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->bodyFile );
+        if ( $this->bodyFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->bodyFile );
         else return '';
     }
 
@@ -77,7 +77,7 @@ class BaseHTMLCode extends BaseHTMLBlock {
      * in the data structure
      */
     function addToHead(): string {
-        if ( $this->addToHeadFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToHeadFile );
+        if ( $this->addToHeadFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->addToHeadFile );
         else return '';
     }
 
@@ -86,17 +86,17 @@ class BaseHTMLCode extends BaseHTMLBlock {
      * in the data structure
      */
     function addToFoot(): string {
-        if ( $this->addToFootFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToFootFile );
+        if ( $this->addToFootFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->addToFootFile );
         else return '';
     }
 
     function newAddToHeadOnce(): array {
-        if ( $this->addToHeadOnceFile != '' ) return array( $this->resourceName, HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToHeadOnceFile ) );
+        if ( $this->addToHeadOnceFile != '' ) return array( $this->resourceName, HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->addToHeadOnceFile ) );
         else return array();
     }
 
     function newAddToFootOnce(): array {
-        if ( $this->addToFootOnceFile != '' ) return array( $this->resourceName, HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH, $this->addToFootOnceFile ) );
+        if ( $this->addToFootOnceFile != '' ) return array( $this->resourceName, HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->addToFootOnceFile ) );
         else return array();
     }
 
