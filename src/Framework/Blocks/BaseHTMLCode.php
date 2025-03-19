@@ -9,7 +9,7 @@ use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
  *
  * It is un unparemitrized block
  */
-class BaseHTMLUniform extends BaseHTMLBlock {
+class BaseHTMLCode extends BaseHTMLBlock {
 
     /**
      * Necessary in order to load the HTML surrounding code

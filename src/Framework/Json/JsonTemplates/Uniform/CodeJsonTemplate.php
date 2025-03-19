@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Uniform;
 
-use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLUniform;
+use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLCode;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 
 /**
@@ -10,9 +10,9 @@ use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
  * Date: 24/05/2020
  * Time: 00:50
  */
-class UniformJsonTemplate extends JsonTemplate {
+class CodeJsonTemplate extends JsonTemplate {
 
-    const blocktype = 'uniform';
+    const blocktype = 'code';
 
     /**
      * This Json template allows the user to created a structure of file to load.
@@ -21,14 +21,14 @@ class UniformJsonTemplate extends JsonTemplate {
      * En example for a possible structure is the following:
      *
      * {
-     *   "name": "simplecarassetsnavigationtree",
-     *   "metadata": { "type":"uniform", "version": "1" },
+     *   "name": "simplecodeblock",
+     *   "metadata": { "type":"code", "version": "1" },
      *   "allowedgroups": [ "editor", "author" ],
      *   "get": {
      *     "request": {
      *       "parameters": []
      *     },
-     *     "uniform": {
+     *     "code": {
      *       "footfile" : "ZTree/addtofoot.html",
      *       "headfile" : "ZTree/addtohead.html",
      *       "footoncefile" : "",
@@ -40,18 +40,18 @@ class UniformJsonTemplate extends JsonTemplate {
      *
      * In this case this Json structure tells UD to load the file listed for the appropriate section.
      *
-     * @return BaseHTMLUniform
+     * @return BaseHTMLCode
      */
     public function createHTMLBlock() {
-        $uniformBlock = new BaseHTMLUniform;
-        $uniformBlock->setResourceName( $this->resource->name );
-        $uniformBlock->setBodyFile( $this->resource->get->uniform->bodyfile );
-        $uniformBlock->setAddToHeadFile( $this->resource->get->uniform->headfile );
-        $uniformBlock->setAddToFootFile( $this->resource->get->uniform->footfile );
-        $uniformBlock->setAddToHeadOnceFile( $this->resource->get->uniform->headoncefile );
-        $uniformBlock->setAddToFootOnceFile( $this->resource->get->uniform->footoncefile );
+        $codeBlock = new BaseHTMLCode;
+        $codeBlock->setResourceName( $this->resource->name );
+        $codeBlock->setBodyFile( $this->resource->get->code->bodyfile );
+        $codeBlock->setAddToHeadFile( $this->resource->get->code->headfile );
+        $codeBlock->setAddToFootFile( $this->resource->get->code->footfile );
+        $codeBlock->setAddToHeadOnceFile( $this->resource->get->code->headoncefile );
+        $codeBlock->setAddToFootOnceFile( $this->resource->get->code->footoncefile );
 
-        return $uniformBlock;
+        return code;
     }
 
 }

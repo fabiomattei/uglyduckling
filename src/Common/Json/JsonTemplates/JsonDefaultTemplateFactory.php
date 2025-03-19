@@ -24,7 +24,7 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
     private /* InfoJsonTemplate */ $infoBuilder;
     private /* FormJsonTemplate */ $formBuilder;
     private /* DashboardJsonTemplate */ $dashboardJsonTemplate;
-    private /* UniformJsonTemplate */ $uniformJsonTemplate;
+    private /* CodeJsonTemplate */ $uniformJsonTemplate;
     private /* GridJsonTemplate */ $gridJsonTemplate;
 
     /**
