@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Uniform;
+namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Code;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLCode;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
