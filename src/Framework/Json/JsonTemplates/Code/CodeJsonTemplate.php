@@ -51,7 +51,7 @@ class CodeJsonTemplate extends JsonTemplate {
         $codeBlock->setAddToHeadOnceFile( $this->resource->get->code->headoncefile );
         $codeBlock->setAddToFootOnceFile( $this->resource->get->code->footoncefile );
 
-        return code;
+        return $codeBlock;
     }
 
 }
