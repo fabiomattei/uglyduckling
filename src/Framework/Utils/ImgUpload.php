@@ -22,16 +22,20 @@ echo $message;
 </form>
  */
 
-class FileUpload {
+class ImgUpload
+{
 
     /**
      * @param $file_field
      * @param $check_image
      * @param $random_name
      * @param $path            //Set file upload path with trailing slash
+     * @param $max_size        //Set max file size in bytes
+     * @param $whitelist_ext   //Set file extension whitelist
+     * @param $whitelist_type  //Sets file type whitelist example: 'image/png', 'image/jpeg', 'application/pdf'
      * @return array|null[]|void
      */
-    static function uploadFile($file_field = null, $check_image = false, $random_name = false, $path = 'uploads/') {
+    static function uploadFile($file_field = null, $check_image = false, $random_name = false, $path = 'uploads/', $max_size = 1000000, $whitelist_ext = ['jpeg','jpg','png','gif'], $whitelist_type = ['image/jpeg', 'image/jpg', 'image/png','image/gif']) {
         //The Validation
         // Create an array to hold any output
         $out = [];
@@ -59,6 +63,24 @@ class FileUpload {
 
             if (!is_uploaded_file($_FILES[$file_field]['tmp_name'])) {
                 $out['error'][] = "File upload error";
+            }
+
+            //Check file has the right extension
+            if (!in_array($ext, $whitelist_ext)) {
+                $out['error'][] = "Invalid file Extension";
+            }
+
+            //Check that the file is of the right type
+            if (!in_array($_FILES[$file_field]["type"], $whitelist_type)) {
+                $out['error'][] = "Invalid file Type";
+            }
+            if (!in_array(mime_content_type($_FILES[$file_field]['tmp_name']), $whitelist_type)) {
+                $out['error'][] = "Invalid file Type";
+            }
+
+            //Check that the file is not too big
+            if ($_FILES[$file_field]["size"] > $max_size) {
+                $out['error'][] = "File exceeds the allowed size";
             }
 
             //If $check image is set as true

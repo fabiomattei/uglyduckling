@@ -380,6 +380,9 @@ class BaseController {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToPreviousPage() {
+        if (defined('BASE_PATH')) {
+            header('Location: ' . BASE_PATH . $_SESSION['prevrequest'] );
+        }
         header('Location: ' . $_SESSION['prevrequest'] );
         exit();
     }
@@ -389,7 +392,9 @@ class BaseController {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToSecondPreviousPage() {
-        // avoid end of round here...
+        if (defined('BASE_PATH')) {
+            header('Location: ' . BASE_PATH . $_SESSION['prevprevrequest'] );
+        }
         header('Location: ' . $_SESSION['prevprevrequest'] );
         exit();
     }
@@ -398,6 +403,9 @@ class BaseController {
      * Redirect the script to a selected url
      */
     public function redirectToPage($url) {
+        if (defined('BASE_PATH')) {
+            header('Location: ' . BASE_PATH . $url );
+        }
         header('Location: ' . $url );
         exit();
     }
@@ -406,7 +414,11 @@ class BaseController {
      * Redirect the script to a selected url
      */
     public function redirectToDefaultPage() {
+        if (defined('BASE_PATH')) {
+            header('Location: ' . BASE_PATH . 'login.html' );
+        }
         header('Location: login.html');
+        
         exit();
     }
 
