@@ -74,6 +74,10 @@ class BaseController {
         $this->groupsIndex = $groupsIndex;
     }
 
+    public function setTemplateFile( $templateFile ) {
+        $this->templateFile = $templateFile;
+    }
+
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
