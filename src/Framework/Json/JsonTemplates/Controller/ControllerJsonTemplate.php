@@ -38,8 +38,8 @@ class ControllerJsonTemplate extends JsonTemplate {
         $controllerBlock = new BaseHTMLController;
         $controllerBlock->setResourceName( $this->resource->name );
         $controllerBlock->setClassName( $this->resource->get->controller->name );
-        $controllerBlock->setTemplateFile( $this->resource->get->controller->name );
-        $controllerBlock->setPageStatus($this->templateFile);
+        $controllerBlock->setTemplateFile( $this->resource->get->controller->templateFile );
+        $controllerBlock->setPageStatus($this->pageStatus);
 
         return $controllerBlock;
     }
