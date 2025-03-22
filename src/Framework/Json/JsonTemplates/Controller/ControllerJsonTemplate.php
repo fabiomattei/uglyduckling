@@ -16,32 +16,32 @@ class ControllerJsonTemplate extends JsonTemplate {
      * En example for a possible structure is the following:
      *
      * {
-     *   "name": "simplecodeblock",
-     *   "metadata": { "type":"code", "version": "1" },
-     *   "allowedgroups": [ "editor", "author" ],
-     *   "get": {
-     *     "request": {
+     *    "name": "moc-list",
+     *    "metadata": { "type":"controller", "version": "1" },
+     *    "allowedgroups":  [ "managergroup", "basegroup" ],
+     *    "get": {
+     *       "request": {
      *       "parameters": []
      *     },
-     *     "code": {
-     *       "footfile" : "ZTree/addtofoot.html",
-     *       "headfile" : "ZTree/addtohead.html",
-     *       "footoncefile" : "",
-     *       "headoncefile" : "",
-     *       "bodyfile" : "ZTree/body.html"
+     *     "controller": {
+     *       "name" : "FabioM\\DEMO\\Chapters\\User\\Controllers\\MyController",
+     *       "templateFile": "emptyapptemplate"
      *     }
-     *   }
+     *    }
      * }
      *
      * In this case this Json structure tells UD to load the file listed for the appropriate section.
      *
-     * @return BaseHTMLCode
+     * @return BaseHTMLController
      */
     public function createHTMLBlock() {
-        $codeBlock = new BaseHTMLController;
-        $codeBlock->setPageStatus($this->pageStatus);
+        $controllerBlock = new BaseHTMLController;
+        $controllerBlock->setResourceName( $this->resource->name );
+        $controllerBlock->setClassName( $this->resource->get->controller->name );
+        $controllerBlock->setTemplateFile( $this->resource->get->controller->name );
+        $controllerBlock->setPageStatus($this->templateFile);
 
-        return $codeBlock;
+        return $controllerBlock;
     }
 
 }

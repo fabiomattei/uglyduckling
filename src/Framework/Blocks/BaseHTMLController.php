@@ -2,7 +2,6 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
-use DeepBlue\HIRM\Chapters\Moc\Controllers\MocCreateList;
 use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\PublicSecurityChecker;
@@ -19,46 +18,28 @@ class BaseHTMLController extends BaseHTMLBlock {
      * Necessary in order to load the HTML surrounding code
      */
     private $resourceName;
-    private $bodyFile;
-    private $addToHeadFile;
-    private $addToFootFile;
-    private $addToHeadOnceFile;
-    private $addToFootOnce;
+    private $className;
+    private $templateFile;
 
     private PageStatus $pageStatus;
 
     public function __construct() {
         parent::__construct();
         $this->resourceName = '';
-        $this->bodyFile = '';
-        $this->addToHeadFile = '';
-        $this->addToFootFile = '';
-        $this->addToHeadOnceFile = '';
-        $this->addToFootOnce = '';
+        $this->className = '';
+        $this->templateFile = '';
     }
 
     public function setResourceName( string $resourceName ) {
         $this->resourceName = $resourceName;
     }
 
-    public function setBodyFile( string $bodyFile ) {
-        $this->bodyFile = $bodyFile;
+    public function setClassName( string $className ) {
+        $this->className = $className;
     }
 
-    public function setAddToHeadFile( string $addToHeadFile ) {
-        $this->addToHeadFile = $addToHeadFile;
-    }
-
-    public function setAddToFootFile( string $addToFootFile ) {
-        $this->addToFootFile = $addToFootFile;
-    }
-
-    public function setAddToHeadOnceFile( string $addToHeadOnceFile ) {
-        $this->addToHeadOnceFile = $addToHeadOnceFile;
-    }
-
-    public function setAddToFootOnceFile( string $addToFootOnce ) {
-        $this->addToFootOnce = $addToFootOnce;
+    public function setTemplateFile( string $templateFile ) {
+        $this->templateFile = $templateFile;
     }
 
     public function setPageStatus( PageStatus $pageStatus ) {
@@ -66,17 +47,16 @@ class BaseHTMLController extends BaseHTMLBlock {
     }
 
     /**
-     * it return the HTML code for the web page built on data structure
+     * it return the HTML code for the web page
      */
     function getHTML(): string {
-        //$controller = new $index_controllers[$controllerName];
-        $controller = new MocCreateList;
+        $controller = new $this->className;
         //$controller->setGroupsIndex( $index_groups );
         $controller->setGroupsIndex( [] );
         $controller->setPageStatus($this->pageStatus);
-        $controller->setTemplateFile('emptyapptemplate');   // $this->templateFile = 'apptemplate';
+        $controller->setTemplateFile($this->templateFile);
         //$controller->setControllerName($controllerName);
-        $controller->setControllerName('moccreate');
+        $controller->setControllerName($this->resourceName);
         $controller->makeAllPresets(
             $this->pageStatus->dbconnection,
             $this->pageStatus->logger,
