@@ -418,10 +418,12 @@ class BaseController {
      * Redirect the script to a selected url
      */
     public function redirectToDefaultPage() {
-        if (defined('BASE_PATH')) {
-            header('Location: ' . BASE_PATH . 'login.html' );
+        if (defined('BASE_PATH') AND defined('DEFAULT_PAGE')) {
+            header('Location: ' . BASE_PATH . DEFAULT_PAGE );
+        } else if (defined('BASE_PATH')) {
+            header('Location: ' . BASE_PATH . 'index.html' );
         }
-        header('Location: login.html');
+        header('Location: index.html');
         
         exit();
     }
