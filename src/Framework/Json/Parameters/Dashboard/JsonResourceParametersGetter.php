@@ -24,7 +24,7 @@ class JsonResourceParametersGetter implements ParameterGetter {
         $filters = array();
         if( isset($this->resource->get->request->parameters) and is_array($this->resource->get->request->parameters) ) {
             foreach ($this->resource->get->request->parameters as $par) {
-                $filters[$par->name] = 'trim';
+                $filters[$par->name] = $par->filter ?? 'trim';
             }
         }
         return $filters;
@@ -44,7 +44,7 @@ class JsonResourceParametersGetter implements ParameterGetter {
         $filters = array();
         if( is_array($this->resource->post->request->postparameters) ) {
             foreach ($this->resource->post->request->postparameters as $par) {
-                $filters[$par->name] = 'trim';
+                $filters[$par->name] = $par->filter ?? 'trim';
             }
         }
         return $filters;
