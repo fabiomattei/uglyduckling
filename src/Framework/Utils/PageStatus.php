@@ -371,6 +371,11 @@ class PageStatus {
                 return $this->queryReturnedValues->getValue( $field->returnedid );
             }
         }
+        if ( isset($field->returnedentity) AND isset($field->returnedfield) ) {
+            if ( $this->queryReturnedValues->isValueSet( $field->returnedentity ) ) {
+                return $this->queryReturnedValues->getValue( $field->returnedentity )->returnedfield;
+            }
+        }
         return '';
     }
 
