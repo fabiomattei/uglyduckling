@@ -3,6 +3,7 @@
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
@@ -152,6 +153,10 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             throw new \Exception('Resource undefined');
         }
 
+        $conn = $this->pageStatus->getDbconnection()->getDBH();
+
+        $returnedIds = $this->pageStatus->getQueryReturnedValues();
+
         // checking parameters
         $secondGump = new \Gump;
         if( isset($this->resource->post->request) AND isset($this->resource->post->request->postparameters)) {
@@ -169,8 +174,36 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         if ($secondGump->errors()) {
             $this->pageStatus->addErrors( $secondGump->get_readable_errors() );
         } else {
-            Logics::performTransactions( $this->pageStatus, $this->resource );
-
+            if (isset($this->resource->post->transactions)) {
+                try {
+                    //$conn->beginTransaction();
+                    $this->pageStatus->getQueryExecutor()->setDBH($conn);
+                    foreach ($this->resource->post->transactions as $transaction) {
+                        $this->pageStatus->getQueryExecutor()->setQueryStructure($transaction);
+                        if ($this->pageStatus->getQueryExecutor()->getSqlStatmentType() == \Fabiom\UglyDuckling\Common\Database\QueryExecuter::INSERT) {
+                            if (isset($transaction->label)) {
+                                $returnedIds->setValue($transaction->label, $this->pageStatus->getQueryExecutor()->executeSql());
+                            } else {
+                                $returnedIds->setValueNoKey($this->pageStatus->getQueryExecutor()->executeSql());
+                            }
+                        } else if ($this->pageStatus->getQueryExecutor()->getSqlStatmentType() == QueryExecuter::SELECT) {
+                            if (isset($transaction->label)) {
+                                $returnedIds->setValue($transaction->label, $this->pageStatus->getQueryExecutor()->executeSql());
+                            } else {
+                                $returnedIds->setValueNoKey($this->pageStatus->getQueryExecutor()->executeSql());
+                            }
+                        } else {
+                            $this->pageStatus->getQueryExecutor()->executeSql();
+                        }
+                    }
+                    //$conn->commit();
+                } catch (\PDOException $e) {
+                    $this->pageStatus->addError("There was an error in the transaction");
+                    $conn->rollBack();
+                    $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+                }
+            }
+            
             Logics::performUseCases( $this->pageStatus, $this->resource, $this->useCasesIndex );
 
             // if resource->get->sessionupdates is set I need to update the session
