@@ -119,6 +119,8 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
                 if ( count( $validation_rules ) == 0 ) {
                     // nothing to do
+                    $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
+                    echo $myBlocks->show();
                 } else {
                     $parms = $secondGump->sanitize( $_GET );
                     $secondGump->validation_rules( $validation_rules );
