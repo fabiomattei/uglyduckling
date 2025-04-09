@@ -205,33 +205,32 @@ class JsonResourceController {
      */
     public function check_post_request() {
         //if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
-            $this->secondGump = new \Gump;
+        $this->secondGump = new \Gump;
 
-            $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
-            $validation_rules = $parametersGetter->getPostValidationRoules();
-            $filter_rules = $parametersGetter->getPostFiltersRoules();
+        $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
+        $validation_rules = $parametersGetter->getPostValidationRoules();
+        $filter_rules = $parametersGetter->getPostFiltersRoules();
 
-            if ( count( $validation_rules ) == 0 ) {
-                return true;
+        if ( count( $validation_rules ) == 0 ) {
+            return true;
+        } else {
+            $this->secondGump->validation_rules($validation_rules);
+            //$gump->set_fields_error_messages($filter_rules);
+            $this->secondGump->filter_rules($filter_rules);
+            $this->postParameters = $this->secondGump->run(array_merge(
+                is_null($_GET) ? [] : $_GET,
+                is_null($_POST) ? [] : $_POST,
+                is_null($_FILES) ? [] : $_FILES
+            ));
+
+            if ($this->secondGump->errors()) {
+                $this->readableErrors = $this->secondGump->get_readable_errors(true);
+                return false;
             } else {
-                $parms = $this->secondGump->sanitize( array_merge(
-                        is_null($_GET) ? [] : $_GET,
-                        is_null($_POST) ? [] : $_POST,
-                        is_null($_FILES) ? [] : $_FILES
-                    )
-                );
-                $this->secondGump->validation_rules( $validation_rules );
-                $this->secondGump->filter_rules( $filter_rules );
-                $this->postParameters = $this->secondGump->run( $parms );
-                $this->pageStatus->setPostParameters( $this->postParameters );
-                $this->unvalidated_parameters = $parms;
-                if ( $this->postParameters === false ) {
-                    $this->readableErrors = $this->secondGump->get_readable_errors(true);
-                    return false;
-                } else {
-                    return true;
-                }
+                return true;
             }
+        }
+
         //} else {
         //    throw new \Exception('Illegal csrftoken Exception');
         //}
