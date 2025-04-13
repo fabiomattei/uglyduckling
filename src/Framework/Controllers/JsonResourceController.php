@@ -159,6 +159,14 @@ class JsonResourceController {
         // if resource->get->sessionupdates is set I need to update the session
         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
+        // performing usecases
+        if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
+            foreach ($this->resource->get->usecases as $jsonusecase) {
+                $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
+                $useCase->performAction();
+            }
+        }
+
         $this->title = APP_NAME . ' :: Dashboard';
         $this->templateFile = $this->resource->templatefile ?? TEMPLATE_FILE_NAME;
 
@@ -312,7 +320,7 @@ class JsonResourceController {
         // performing usecases
         if (isset($this->resource->post->usecases) and is_array($this->resource->post->usecases)) {
             foreach ($this->resource->post->usecases as $jsonusecase) {
-                $useCase = $this->pageStatus->getUseCasesIndex()->getUseCase($jsonusecase, $this->pageStatus, $this->applicationBuilder);
+                $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
                 $useCase->performAction();
             }
         }
