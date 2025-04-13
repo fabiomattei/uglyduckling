@@ -230,6 +230,7 @@ class JsonResourceController {
                 is_null($_POST) ? [] : $_POST,
                 is_null($_FILES) ? [] : $_FILES
             ));
+            $this->pageStatus->setPostParameters( $this->postParameters );
 
             if ($this->secondGump->errors()) {
                 $this->readableErrors = $this->secondGump->get_readable_errors(true);
