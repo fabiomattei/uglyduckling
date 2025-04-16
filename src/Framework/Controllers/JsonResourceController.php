@@ -12,6 +12,7 @@ use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Framework\Utils\FileUpload;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
@@ -234,6 +235,7 @@ class JsonResourceController {
 
             if ($this->secondGump->errors()) {
                 $this->readableErrors = $this->secondGump->get_readable_errors(true);
+                print_r($this->readableErrors);
                 return false;
             } else {
                 return true;
@@ -257,6 +259,41 @@ class JsonResourceController {
         $conn = $this->pageStatus->getDbconnection()->getDBH();
 
         $returnedIds = $this->pageStatus->getQueryReturnedValues();
+
+        if (isset($this->resource->post->fileuploads)) {
+            foreach ($this->resource->post->fileuploads as $metaFile) {
+
+                if ( isset($metaFile->path) ) {
+                    $folders = explode('/', $metaFile->path);
+                    echo $metaFile->path;
+                    print_r($folders);
+                    $path = getcwd().'/';
+                    foreach ($folders as $folder) {
+                        if ($folder != ''){
+                            $path .= $folder.'/';
+                            echo $path.'<br>';
+                            if (!is_dir($path)) {
+                                mkdir($path, 0755);
+                            }
+                        }
+                    }
+
+                    $file = FileUpload::uploadFile($metaFile->field, false, $metaFile->randomname,  $path);
+                    print_r($file);
+                    echo $metaFile->path.$file['filename'];
+                    $returnedIds->setValue($metaFile->field, $metaFile->path.$file['filename'] );
+                    //if (is_array($file['error'])) {
+                    //    $message = '';
+                    //    foreach ($file['error'] as $msg) {
+                    //        $message .= '<p>'.$msg.'</p>';
+                    //    }
+                    //} else {
+                    //    $message = "File uploaded successfully ".$file['filepath'].$file['filename'];
+                    //}
+                }
+
+            }
+        }
 
         // performing transactions
         if (isset($this->resource->post->transactions)) {
