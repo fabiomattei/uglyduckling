@@ -265,8 +265,8 @@ class JsonResourceController {
 
                 if ( isset($metaFile->path) ) {
                     $folders = explode('/', $metaFile->path);
-                    echo $metaFile->path;
-                    print_r($folders);
+                    //echo $metaFile->path;
+                    //print_r($folders);
                     $path = getcwd().'/';
                     foreach ($folders as $folder) {
                         if ($folder != ''){
@@ -279,8 +279,8 @@ class JsonResourceController {
                     }
 
                     $file = FileUpload::uploadFile($metaFile->field, false, $metaFile->randomname,  $path);
-                    print_r($file);
-                    echo $metaFile->path.$file['filename'];
+                    // print_r($file);
+                    // echo $metaFile->path.$file['filename'];
                     $returnedIds->setValue($metaFile->field, $metaFile->path.$file['filename'] );
                     //if (is_array($file['error'])) {
                     //    $message = '';
