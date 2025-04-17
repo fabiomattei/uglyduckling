@@ -271,7 +271,7 @@ class JsonResourceController {
                     foreach ($folders as $folder) {
                         if ($folder != ''){
                             $path .= $folder.'/';
-                            echo $path.'<br>';
+                            //echo $path.'<br>';
                             if (!is_dir($path)) {
                                 mkdir($path, 0755);
                             }
