@@ -281,7 +281,9 @@ class JsonResourceController {
                     $file = FileUpload::uploadFile($metaFile->field, false, $metaFile->randomname,  $path);
                     // print_r($file);
                     // echo $metaFile->path.$file['filename'];
-                    $returnedIds->setValue($metaFile->field, $metaFile->path.$file['filename'] );
+                    if (file['error'] == '') {
+                        $returnedIds->setValue($metaFile->field, $metaFile->path.$file['filename'] );
+                    }
                     //if (is_array($file['error'])) {
                     //    $message = '';
                     //    foreach ($file['error'] as $msg) {

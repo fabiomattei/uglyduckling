@@ -16,7 +16,7 @@ class DashboardParameterGetter implements ParameterGetter {
     }
 
     function getValidationRoules(): array {
-        $parameters = array();
+        $parameters = [];
         foreach( $this->resource->panels as $panel ) {
             if (JsonLoader::isJsonResourceIndexedAndFileExists( $this->resourceIndex, $panel->resource )) {
                 $json_resource = JsonLoader::loadResource( $this->resourceIndex, $panel->resource );
