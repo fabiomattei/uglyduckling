@@ -164,6 +164,7 @@ class JsonResourceController {
         if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
             foreach ($this->resource->get->usecases as $jsonusecase) {
                 $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
+                $useCase->loadParameters();
                 $useCase->performAction();
             }
         }
@@ -361,6 +362,7 @@ class JsonResourceController {
         if (isset($this->resource->post->usecases) and is_array($this->resource->post->usecases)) {
             foreach ($this->resource->post->usecases as $jsonusecase) {
                 $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
+                $useCase->loadParameters();
                 $useCase->performAction();
             }
         }
