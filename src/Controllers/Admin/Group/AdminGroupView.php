@@ -22,6 +22,8 @@ class AdminGroupView extends AdminController {
 
     public $get_validation_rules = array( 'res' => 'required|max_len,50' );
     public $get_filter_rules     = array( 'res' => 'trim' );
+    public $resource;
+    public $userGroupDao;
 
     /**
      * @throws GeneralException

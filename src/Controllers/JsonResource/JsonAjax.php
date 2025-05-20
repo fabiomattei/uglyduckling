@@ -13,6 +13,9 @@ use Fabiom\UglyDuckling\Common\Controllers\JsonResourceBasicController;
  */
 class JsonAjax extends JsonResourceBasicController {
 
+    public $fields;
+    public $join;
+
     const CONTROLLER_NAME = 'jsonajax';
 
     public /* array */ $post_validation_rules = array(
