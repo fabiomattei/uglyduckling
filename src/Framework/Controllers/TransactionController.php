@@ -10,7 +10,7 @@ use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 
-class TransactionController extends JsonResourceBasicController {
+class TransactionController {
 
     const CONTROLLER_NAME = 'transactioncontroller';
 

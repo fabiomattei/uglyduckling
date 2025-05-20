@@ -1,6 +1,7 @@
 <?php
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
+
 class HtmlTemplateController {
 
     public $get_validation_rules = array();
