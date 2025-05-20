@@ -33,7 +33,7 @@ class ButtonForm extends BaseHTMLBlock {
     /**
      *
      */
-    function get($url, $text, $csrftoken, $parameters, $properties = Button::COLOR_GRAY, $disabled = false) {
+    static function get($url, $text, $csrftoken, $parameters, $properties = Button::COLOR_GRAY, $disabled = false) {
         $pars = '';
         foreach( $parameters as $key => $value ) { $pars .= '<input type="hidden" name="'.$key.'" value="'.$value.'">'; }
         $pars .= '<input type="hidden" name="csrftoken" value="'.$csrftoken.'">';
