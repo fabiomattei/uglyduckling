@@ -2,8 +2,8 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
-use Fabiom\UglyDuckling\Framework\Database\QueryExecuter;
-use Fabiom\UglyDuckling\Framework\Database\QueryReturnedValues;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
+use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
 use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
 
 class JsonResourceBasicController extends Controller {
