@@ -127,7 +127,7 @@ class JsonResourceController {
             header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
         }
     }
-    
+
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
