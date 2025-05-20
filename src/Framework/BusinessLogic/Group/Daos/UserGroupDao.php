@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\BusinessLogic\Group\Daos;
 
-use Fabiom\UglyDuckling\Framework\Database\BasicDao;
+use Fabiom\UglyDuckling\Framework\DataBase\BasicDao;
 use PDO;
 use stdClass;
 
@@ -26,7 +26,7 @@ class UserGroupDao extends BasicDao {
 	 * it overloads the getEmpty method of the parent class
 	 */
 	public function getEmpty() {
-		$empty = new stdClass;
+		$empty = new \stdClass;
 		$empty->ug_id        = 0;
 		$empty->ug_groupslug = '';
 		$empty->ug_userid    = 0;

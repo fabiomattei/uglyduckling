@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\BusinessLogic\Ip\Daos;
 
-use Fabiom\UglyDuckling\Framework\Database\BasicDao;
+use Fabiom\UglyDuckling\Framework\DataBase\BasicDao;
 use PDO;
 use stdClass;
 
@@ -48,7 +48,7 @@ class SecurityLogDao extends BasicDao {
             $inserted_id = $this->DBH->lastInsertId();
             $this->DBH->commit();
             return $inserted_id;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }

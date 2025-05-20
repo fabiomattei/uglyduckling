@@ -2,7 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\BusinessLogic\Ip\Daos;
 
-use Fabiom\UglyDuckling\Framework\Database\BasicDao;
+use Fabiom\UglyDuckling\Framework\DataBase\BasicDao;
 use PDO;
 use stdClass;
 
@@ -28,7 +28,7 @@ class IpDao extends BasicDao {
 	 * it overloads the getEmpty method of the parent class
 	 */
 	public function getEmpty() {
-		$empty = new stdClass;
+		$empty = new \stdClass;
 		$empty->ip_id             = 0;
 		$empty->ip_ipaddress      = '0.0.0.0';
 		$empty->ip_failed_attepts = 0;
@@ -63,6 +63,7 @@ class IpDao extends BasicDao {
 		catch(\PDOException $e) {
 			$this->logger->write($e->getMessage(), __FILE__, __LINE__);
 		}
+        return false; // IP not contained
 	}
 
     /**
@@ -84,7 +85,7 @@ class IpDao extends BasicDao {
             $inserted_id = $this->DBH->lastInsertId();
             $this->DBH->commit();
             return $inserted_id;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
@@ -103,7 +104,7 @@ class IpDao extends BasicDao {
 			$STH->bindParam( ':ipid', $ip_id, PDO::PARAM_INT );
             $STH->execute();
             $this->DBH->commit();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }
@@ -122,7 +123,7 @@ class IpDao extends BasicDao {
             $STH->bindParam( ':ipid', $ip_id, PDO::PARAM_INT );
             $STH->execute();
             $this->DBH->commit();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
         }

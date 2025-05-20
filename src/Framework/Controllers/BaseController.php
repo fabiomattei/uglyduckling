@@ -52,6 +52,8 @@ class BaseController {
     public $controllerName;
     public PageStatus $pageStatus;
     public $readableErrors;
+    public $request;
+    public $flashvariable;
 
     public function __construct() {
         $this->gump = new \GUMP();
@@ -227,20 +229,20 @@ class BaseController {
      * This method has to be overriden, if id does not it throws an unhandled ErrorPageException
      * The ovverriding method need to show the page containing the errors that prevent the validation to pass
      *
-     * @throws ErrorPageException
+     * @throws Exception
      */
     public function show_get_error_page() {
-        throw new ErrorPageException('Error page exception function show_get_error_page()');
+        throw new \Exception('Error page exception function show_get_error_page()');
     }
 
     /**
      * This method has to be overriden, if id does not it throws an unhandled ErrorPageException
      * The ovverriding method need to show the page containing the errors that prevent the validation to pass
      *
-     * @throws ErrorPageException
+     * @throws Exception
      */
     public function show_post_error_page() {
-        throw new ErrorPageException('Error page exception function show_post_error_page()');
+        throw new \Exception('Error page exception function show_post_error_page()');
     }
 
     /**
@@ -450,7 +452,7 @@ class BaseController {
             $this->logger          = $logger;
     */
     public function getInfo(): string {
-        return '<br>' . $this->applicationBuilder->getRouterContainer()->getInfo() . '<br>' . $this->pageStatus->getRequest()->getInfo() . '<br>';
+        return '<br>' . $this->request . '<br>';
     }
 
     public function createCsrfToken() {
