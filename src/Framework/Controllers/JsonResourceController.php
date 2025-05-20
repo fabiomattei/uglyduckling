@@ -86,6 +86,48 @@ class JsonResourceController {
         $this->index_json_smallpartial_templates = $index_json_smallpartial_templates;
     }
 
+    public function show_get_authorization_error_page() {
+        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
+            $this->pageStatus->logger->write(
+                'ERROR :: show_get_authorization_error_page illegal access from user **' .
+                $_SESSION['username'] .
+                '** having group set to **' .
+                $_SESSION['group'] .
+                '** ', __FILE__, __LINE__);
+        } {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
+    }
+
+    public function show_post_authorization_error_page() {
+        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
+            $this->pageStatus->logger->write(
+                'ERROR :: show_get_authorization_error_page illegal access from user **' .
+                $_SESSION['username'] .
+                '** having group set to **' .
+                $_SESSION['group'] .
+                '** ', __FILE__, __LINE__);
+        } {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
+    }
+
+    public function show_get_error_page() {
+        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
+            print_r($this->readableErrors);
+        } {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
+    }
+
+    public function show_post_error_page() {
+        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
+            print_r($this->readableErrors);
+        } {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
+    }
+    
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
