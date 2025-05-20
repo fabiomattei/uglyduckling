@@ -102,7 +102,7 @@ class SessionWrapper {
         return $_SESSION['last_login'] ?? '';
     }
 
-    static public function setmMsgInfo( $msginfo ) {
+    static public function setMsgInfo($msginfo ) {
         $_SESSION['msginfo'] = $msginfo;
     }
 

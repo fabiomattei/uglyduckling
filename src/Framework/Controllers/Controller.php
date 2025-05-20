@@ -113,61 +113,6 @@ class Controller {
     }
 
     /**
-     * This method makes all necessary presets to activate a controller
-     *
-     * @param ApplicationBuilder $routerContainer
-     * @param PageStatus $PageStatus
-     * @throws \Exception
-     */
-    public function makeAllPresetsOld(
-        ApplicationBuilder $applicationBuilder,
-        PageStatus         $pageStatus
-    )
-    {
-        $this->applicationBuilder = $applicationBuilder;
-        $this->pageStatus = $pageStatus;
-        $this->gump = new \GUMP();
-
-        // setting an array containing all parameters
-        $this->parameters = array();
-
-        $this->title = $this->applicationBuilder->getSetup()->getAppNameForPageTitle();
-        $this->menucontainer = array();
-        $this->topcontainer = array();
-        $this->messagescontainer = array($this->applicationBuilder->getMessages());
-        $this->leftcontainer = array();
-        $this->rightcontainer = array();
-        $this->centralcontainer = array();
-        $this->secondcentralcontainer = array();
-        $this->thirdcentralcontainer = array();
-        $this->bottomcontainer = array();
-        $this->sidebarcontainer = array();
-        $this->templateFile = $this->applicationBuilder->getSetup()->getPrivateTemplateFileName();
-
-        $this->addToHead = '';
-        $this->addToFoot = '';
-        $this->subAddToHead = '';
-        $this->subAddToFoot = '';
-
-        $this->applicationBuilder->getMessages()->info = SessionWrapper::getMsgInfo();
-        $this->applicationBuilder->getMessages()->warning = SessionWrapper::getMsgWarning();
-        $this->applicationBuilder->getMessages()->error = SessionWrapper::getMsgError();
-        $this->applicationBuilder->getMessages()->success = SessionWrapper::getMsgSuccess();
-        $this->flashvariable = SessionWrapper::getFlashVariable();
-
-        if (!$this->applicationBuilder->getSecurityChecker()->isSessionValid(
-            SessionWrapper::getSessionLoggedIn(),
-            SessionWrapper::getSessionIp(),
-            SessionWrapper::getSessionUserAgent(),
-            SessionWrapper::getSessionLastLogin(),
-            $this->pageStatus->getServerWrapper()->getRemoteAddress(),
-            $this->pageStatus->getServerWrapper()->getHttpUserAgent())) {
-            $this->applicationBuilder->getRedirector()->setURL($this->applicationBuilder->getSetup()->getBasePath() . 'public/login.html');
-            $this->applicationBuilder->getRedirector()->redirect();
-        }
-    }
-
-    /**
      * Method to override (eventually)
      */
     public function getRequest()
@@ -344,7 +289,7 @@ class Controller {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->pageStatus->logger->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $this->pageStatus->logger->write('WARNING TIME :: TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 
@@ -528,7 +473,7 @@ class Controller {
     */
     public function getInfo(): string
     {
-        return '<br>' . $this->applicationBuilder->getRouterContainer()->getInfo() . '<br>' . $this->pageStatus->getRequest()->getInfo() . '<br>';
+        return '<br>Controller: ' . '<br>';
     }
 
 }
