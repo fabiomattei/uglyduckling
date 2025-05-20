@@ -6,10 +6,6 @@ class BaseHtmlDoc extends BaseHTMLBlock {
 
     protected $html = '';
 
-    public function setHtmlTemplateLoader($htmlTemplateLoader) {
-        $this->htmlTemplateLoader = $htmlTemplateLoader;
-    }
-
     function h1( string $text, array $attributes = [] ) {
         if (count($attributes) > 0) {
             $this->html .= '<h1 '.$this->addAttributes($attributes).'>'.$text.'</h1>';

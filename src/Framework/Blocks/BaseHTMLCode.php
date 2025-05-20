@@ -19,6 +19,7 @@ class BaseHTMLCode extends BaseHTMLBlock {
     private $addToHeadFile;
     private $addToFootFile;
     private $addToHeadOnceFile;
+    private $addToFootOnceFile;
     private $addToFootOnce;
 
     public function __construct() {

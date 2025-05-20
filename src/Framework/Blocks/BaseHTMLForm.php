@@ -9,7 +9,7 @@ use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 class BaseHTMLForm extends BaseHTMLBlock {
 
     protected $title;
-    protected $subtitle;
+    protected $subTitle;
     protected $action;
     protected $body;
     protected $method;
@@ -49,7 +49,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
     function show(): string {
         return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${title}', '${subtitle}', '${action}', '${body}', '${method}', '${formid}'),
-            array($this->title, $this->subtitle, $this->action, $this->body, $this->method, $this->formid),
+            array($this->title, $this->subTitle, $this->action, $this->body, $this->method, $this->formid),
             'Form/body.html');
     }
 

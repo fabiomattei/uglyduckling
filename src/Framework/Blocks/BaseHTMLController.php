@@ -22,6 +22,11 @@ class BaseHTMLController extends BaseHTMLBlock {
     private $templateFile;
 
     private PageStatus $pageStatus;
+    private $addToHeadFile;
+    private $addToFootFile;
+    private $addToHeadOnceFile;
+    private $addToFootOnceFile;
+
 
     public function __construct() {
         parent::__construct();

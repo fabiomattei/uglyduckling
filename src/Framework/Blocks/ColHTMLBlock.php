@@ -9,6 +9,7 @@
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLBlock;
+use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 
 /**
  * This class is a container
@@ -39,8 +40,8 @@ class ColHTMLBlock extends BaseHTMLBlock {
             $htmlbody .= $bl->show();
         }
         return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
-            array( '${htmlbody}' ),
-            array( $htmlbody ),
+            [ '${htmlbody}' ],
+            [ $htmlbody ],
             'RowBlock/body.html');;
     }
 

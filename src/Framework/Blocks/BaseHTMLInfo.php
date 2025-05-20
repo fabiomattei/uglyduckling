@@ -7,7 +7,7 @@ use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 class BaseHTMLInfo extends BaseHTMLBlock {
 
     private $title;
-    private $subtitle;
+    private $subTitle;
     private $body;
     private $htmlTemplateLoader;
 
@@ -31,7 +31,7 @@ class BaseHTMLInfo extends BaseHTMLBlock {
     function show(): string {
         return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
             array('${title}', '${subtitle}', '${body}'),
-            array($this->title, $this->subtitle, $this->body),
+            array($this->title, $this->subTitle, $this->body),
             'Info/body.html');
     }
 
