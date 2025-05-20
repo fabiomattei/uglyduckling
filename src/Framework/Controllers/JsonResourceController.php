@@ -6,7 +6,6 @@ use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
-use Fabiom\UglyDuckling\Framework\DataBase\QueryReturnedValues;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
@@ -215,7 +214,7 @@ class JsonResourceController {
      */
     public function check_post_request() {
         //if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
-        $this->secondGump = new \Gump;
+        $this->secondGump = new \GUMP;
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
         $validation_rules = $parametersGetter->getPostValidationRoules();
@@ -373,12 +372,6 @@ class JsonResourceController {
         // redirect
         if (isset($this->resource->post->redirect)) {
             $this->jsonRedirector($this->resource->post->redirect);
-        }
-
-        if (isset($this->resource->post->render)) {
-            $this->applicationBuilder->getHTMLBlock(
-                $this->applicationBuilder->loadResource(
-                    $this->resource->post->render->resource ) )->getHTML();
         }
 
         echo $out;

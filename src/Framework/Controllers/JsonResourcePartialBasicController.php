@@ -111,7 +111,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                 $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                 echo $myBlocks->show();
             } else {
-                $secondGump = new \Gump;
+                $secondGump = new \GUMP;
 
                 $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
                 $validation_rules = $parametersGetter->getValidationRoules();
@@ -160,7 +160,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         $returnedIds = $this->pageStatus->getQueryReturnedValues();
 
         // checking parameters
-        $secondGump = new \Gump;
+        $secondGump = new \GUMP;
         if( isset($this->resource->post->request) AND isset($this->resource->post->request->postparameters)) {
             $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
             $validation_rules = $parametersGetter->getPostValidationRoules();
