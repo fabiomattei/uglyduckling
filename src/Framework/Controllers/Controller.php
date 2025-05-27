@@ -12,11 +12,10 @@ use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
-use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 
-class Controller {
+class Controller extends CommonController {
 
     const CONTROLLER_NAME = 'controller';
 
@@ -65,35 +64,16 @@ class Controller {
     public $flashvariable;
     public $readableErrors;
     public DBConnection $dbconnection;
-    public Logger $logger;
-    public SecurityChecker $securityChecker;
-    public BaseMailer $mailer;
     public array $groupsIndex;
     public $controllerName;
-    public PageStatus $pageStatus;
 
     /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
      */
     public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
-        // setting an array containing all parameters
-        $this->parameters = [];
-        $this->logger = $logger;
-        $this->securityChecker = $securityChecker;
-        $this->mailer = $mailer;
-        $this->dbconnection = $dbconnection;
+        parent::makeAllPresets($dbconnection, $logger, $securityChecker, $mailer);
         $this->gump = new \GUMP();
-
-        if ( !$this->securityChecker->isSessionValid(
-            SessionWrapper::getSessionLoggedIn(),
-            SessionWrapper::getSessionIp(),
-            SessionWrapper::getSessionUserAgent(),
-            SessionWrapper::getSessionLastLogin(),
-            ServerWrapper::getRemoteAddress(),
-            ServerWrapper::getHttpUserAgent() ) ) {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        }
     }
 
     public function setDBConnection( DBConnection $dbconnection ) {
@@ -106,10 +86,6 @@ class Controller {
 
     public function setControllerName( $controllerName ) {
         $this->controllerName = $controllerName;
-    }
-
-    public function setPageStatus( PageStatus $pageStatus ) {
-        $this->pageStatus = $pageStatus;
     }
 
     /**
@@ -232,32 +208,6 @@ class Controller {
         return true;
     }
 
-    public function show_get_authorization_error_page()
-    {
-        /*
-         * $this->pageStatus->logger->write(
-            'ERROR :: show_get_authorization_error_page illegal access from user **' .
-            $_SESSION['username'] .
-            '** having group set to **' .
-            $_SESSION['group'] .
-            '** ', __FILE__, __LINE__);
-        */
-        $this->redirectToDefaultPage();
-    }
-
-    public function show_post_authorization_error_page()
-    {
-        /*
-         * $this->pageStatus->logger->write(
-            'ERROR :: show_get_authorization_error_page illegal access from user **' .
-            $_SESSION['username'] .
-            '** having group set to **' .
-            $_SESSION['group'] .
-            '** ', __FILE__, __LINE__);
-        */
-        $this->redirectToDefaultPage();
-    }
-
     public function showPage()
     {
         $time_start = microtime(true);
@@ -293,53 +243,6 @@ class Controller {
         }
     }
 
-    // ** next section load textual messages for messages block
-    function setSuccess(string $success)
-    {
-        SessionWrapper::setMsgSuccess($success);
-    }
-
-    function setError(string $error)
-    {
-        SessionWrapper::setMsgError($error);
-    }
-
-    function setInfo(string $info)
-    {
-        SessionWrapper::setMsgInfo($info);
-    }
-
-    function setWarning(string $warning)
-    {
-        SessionWrapper::setMsgWarning($warning);
-    }
-
-    /**
-     * This method give to the programmer the possibility of setting a flashvariable, a
-     * variable that will be active up the the next call.
-     * This is ment to be used for instance to send variable from a GET form request to a
-     * Post form request or in any case a variable is meant to last only to the next browser
-     * request.
-     * The variable as not a specific type, maybe it is better to use it with strings
-     *
-     * @param [string] $flashvariable [variable that last for a request in the same session]
-     */
-    function setFlashVariable(string $flashvariable)
-    {
-        SessionWrapper::setFlashVariable($flashvariable);
-    }
-
-    /**
-     * This method return a variable set in the prevoius broser request.
-     * To have a better understanging look at setFlashVariable description
-     *
-     * @return [string] [variable that last for a request in the same session]
-     */
-    function getFlashVariable(): string
-    {
-        return SessionWrapper::getFlashVariable();
-    }
-
     /**
      * Function for setting parameters array
      */
@@ -368,41 +271,6 @@ class Controller {
         if (is_array($parameters)) {
             $this->filesParameters = $parameters;
         }
-    }
-
-    /**
-     * Redirect the script to $_SESSION['prevrequest'] with a header request
-     * It send flash messages to new controller [info, warning, error, success]
-     */
-    public function redirectToPreviousPage() {
-        header('Location: ' . $_SESSION['prevrequest'] );
-        exit();
-    }
-
-    /**
-     * Redirect the script to $_SESSION['prevprevrequest'] with a header request
-     * It send flash messages to new controller [info, warning, error, success]
-     */
-    public function redirectToSecondPreviousPage() {
-        // avoid end of round here...
-        header('Location: ' . $_SESSION['prevprevrequest'] );
-        exit();
-    }
-
-    /**
-     * Redirect the script to a selected url
-     */
-    public function redirectToPage($url) {
-        header('Location: ' . $url );
-        exit();
-    }
-
-    /**
-     * Redirect the script to a selected url
-     */
-    public function redirectToDefaultPage() {
-        header('Location: login.html');
-        exit();
     }
 
     // taken from page script
