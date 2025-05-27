@@ -18,11 +18,12 @@ class BaseHTMLForm extends BaseHTMLBlock {
 
     function __construct() {
         parent::__construct();
-        $this->body = '';
         $this->formid = '';
 		$this->adddate = false;
 		$this->action = '';
         $this->method = 'POST';
+        $this->title = '';
+        $this->subTitle = '';
         $this->body = '';
     }
 	
