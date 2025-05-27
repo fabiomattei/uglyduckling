@@ -19,6 +19,7 @@ class CommonController {
     public array $useCasesIndex;
     protected $jsonTabTemplates;
     protected $jsonResourceTemplates;
+    protected $index_json_smallpartial_templates;
     public Logger $logger;
     public SecurityChecker $securityChecker;
     public BaseMailer $mailer;
