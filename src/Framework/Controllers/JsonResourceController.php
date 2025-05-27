@@ -4,37 +4,22 @@ namespace Fabiom\UglyDuckling\Framework\Controllers;
 
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonDefaultTemplateFactory;
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu\MenuJsonTemplate;
-use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
-use Fabiom\UglyDuckling\Framework\Loggers\Logger;
-use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
-use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\Utils\FileUpload;
-use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
-use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 
-class JsonResourceController {
+class JsonResourceController extends CommonController {
 
     protected $resource; // Json structure
     /* TODO remove following parameter */
     protected $internalGetParameters;
-    protected $resourceName;
 
     protected $secondGump;
     public /* array */ $parameters;
     public /* array */ $postParameters;
-    public array $resourceIndex;
-    public array $groupsIndex;
-    public array $useCasesIndex;
-    public DBConnection $dbconnection;
-    public Logger $logger;
-    public SecurityChecker $securityChecker;
-    public BaseMailer $mailer;
-    public PageStatus $pageStatus;
     public $queryExecutor;
     protected $menubuilder;
     protected string $title;
@@ -42,114 +27,9 @@ class JsonResourceController {
     protected $menucontainer;
     protected $leftcontainer;
     protected $centralcontainer;
-    protected $jsonTabTemplates;
-    protected $jsonResourceTemplates;
     public $unvalidated_parameters;
     public array $index_json_smallpartial_templates;
     public $readableErrors;
-
-    /**
-     * This function allows to set a resource name to load for a particular instance
-     * This helps in case a resource want to be set at programming time and not
-     * at run time.
-     * @param string $resourceName   the name of the json resource we want to load
-     */
-    public function setResourceName(string $resourceName) {
-        $this->resourceName = $resourceName;
-    }
-
-    public function setPageStatus($pageStatus) {
-        $this->pageStatus = $pageStatus;
-    }
-
-    public function setResourceIndex( $resourceIndex ) {
-        $this->resourceIndex = $resourceIndex;
-    }
-
-    public function setGroupsIndex( $groupsIndex ) {
-        $this->groupsIndex = $groupsIndex;
-    }
-
-    public function setUseCasesIndex( $useCasesIndex ) {
-        $this->useCasesIndex = $useCasesIndex;
-    }
-
-    public function setJsonTagTemplates( $index_json_tag_templates ) {
-        $this->jsonTabTemplates = $index_json_tag_templates;
-    }
-
-    public function setJsonResourceTemplates( $index_json_resource_templates ) {
-        $this->jsonResourceTemplates = $index_json_resource_templates;
-    }
-
-    public function setJsonSmallPartialTemplates( $index_json_smallpartial_templates ) {
-        $this->index_json_smallpartial_templates = $index_json_smallpartial_templates;
-    }
-
-    public function show_get_authorization_error_page() {
-        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
-            $this->pageStatus->logger->write(
-                'ERROR :: show_get_authorization_error_page illegal access from user **' .
-                $_SESSION['username'] .
-                '** having group set to **' .
-                $_SESSION['group'] .
-                '** ', __FILE__, __LINE__);
-        } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        }
-    }
-
-    public function show_post_authorization_error_page() {
-        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
-            $this->pageStatus->logger->write(
-                'ERROR :: show_get_authorization_error_page illegal access from user **' .
-                $_SESSION['username'] .
-                '** having group set to **' .
-                $_SESSION['group'] .
-                '** ', __FILE__, __LINE__);
-        } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        }
-    }
-
-    public function show_get_error_page() {
-        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
-            print_r($this->readableErrors);
-        } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        }
-    }
-
-    public function show_post_error_page() {
-        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
-            print_r($this->readableErrors);
-        } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        }
-    }
-
-    /**
-     * This method makes all necessary presets to activate a controller
-     * @throws \Exception
-     */
-    public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
-        // setting an array containing all parameters
-        $this->parameters = [];
-        $this->logger = $logger;
-        $this->securityChecker = $securityChecker;
-        $this->mailer = $mailer;
-        $this->dbconnection = $dbconnection;
-
-        if ( !$this->securityChecker->isSessionValid(
-            SessionWrapper::getSessionLoggedIn(),
-            SessionWrapper::getSessionIp(),
-            SessionWrapper::getSessionUserAgent(),
-            SessionWrapper::getSessionLastLogin(),
-            ServerWrapper::getRemoteAddress(),
-            ServerWrapper::getHttpUserAgent() ) ) {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        }
-    }
 
     /**
      * This method has to be implemented by inherited class
@@ -422,7 +302,7 @@ class JsonResourceController {
     public function showPage() {
         $time_start = microtime(true);
 
-        if (ServerWrapper::isGetRequest()) {
+        if ($this->isGetRequest()) {
             SessionWrapper::createCsrfToken();
             if ( $this->check_and_load_resource() ) {
                 if ( $this->check_authorization_resource_request() ) {
@@ -453,7 +333,7 @@ class JsonResourceController {
             }
         }
 
-        if (ServerWrapper::isGetRequest()) {
+        if ($this->isGetRequest()) {
             $this->loadTemplate();
         }
 
@@ -464,7 +344,11 @@ class JsonResourceController {
     }
 
     public function show_second_get_error_page() {
-        throw new \Exception('Mismatch with get parameters');
+        if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
+            print_r($this->readableErrors);
+        } {
+            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+        }
     }
 
     function loadTemplate() {
@@ -488,32 +372,5 @@ class JsonResourceController {
         } else {
             $this->redirectToPreviousPage();
         }
-    }
-
-    /**
-     * Redirect the script to $_SESSION['prevrequest'] with a header request
-     * It send flash messages to new controller [info, warning, error, success]
-     */
-    public function redirectToPreviousPage() {
-        header('Location: ' . $_SESSION['prevrequest'] );
-        exit();
-    }
-
-    /**
-     * Redirect the script to $_SESSION['prevprevrequest'] with a header request
-     * It send flash messages to new controller [info, warning, error, success]
-     */
-    public function redirectToSecondPreviousPage() {
-        // avoid end of round here...
-        header('Location: ' . $_SESSION['prevprevrequest'] );
-        exit();
-    }
-
-    /**
-     * Redirect the script to a selected url
-     */
-    public function redirectToPage($url) {
-        header('Location: ' . $url );
-        exit();
     }
 }
