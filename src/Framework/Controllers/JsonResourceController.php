@@ -28,7 +28,6 @@ class JsonResourceController extends CommonController {
     protected $leftcontainer;
     protected $centralcontainer;
     public $unvalidated_parameters;
-    public array $index_json_smallpartial_templates;
     public $readableErrors;
 
     /**
