@@ -166,7 +166,9 @@ class CommonController {
      */
     public function redirectToDefaultPage() {
         // header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
-        if (defined('BASE_PATH') AND defined('DEFAULT_PAGE')) {
+        if (defined('BASE_PATH') AND defined('PATH_TO_APP') AND defined('DEFAULT_PAGE')) {
+            header('Location: ' . BASE_PATH . PATH_TO_APP . DEFAULT_PAGE );
+        } else if (defined('BASE_PATH') AND defined('DEFAULT_PAGE')) {
             header('Location: ' . BASE_PATH . DEFAULT_PAGE );
         } else if (defined('BASE_PATH')) {
             header('Location: ' . BASE_PATH . 'index.html' );
@@ -186,7 +188,7 @@ class CommonController {
         if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
             print_r($this->readableErrors);
         } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+            $this->redirectToDefaultPage();
         }
     }
 
@@ -200,7 +202,7 @@ class CommonController {
         if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
             print_r($this->readableErrors);
         } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+            $this->redirectToDefaultPage();
         }
     }
 
