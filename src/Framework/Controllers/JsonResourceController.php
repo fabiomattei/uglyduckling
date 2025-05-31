@@ -122,6 +122,7 @@ class JsonResourceController extends CommonController {
             $this->unvalidated_parameters = $parms;
             if ( $this->internalGetParameters === false ) {
                 $this->readableErrors = $this->secondGump->get_readable_errors(true);
+                $this->setError($this->readableErrors);
                 return false;
             } else {
                 return true;
@@ -156,7 +157,7 @@ class JsonResourceController extends CommonController {
 
             if ($this->secondGump->errors()) {
                 $this->readableErrors = $this->secondGump->get_readable_errors(true);
-                print_r($this->readableErrors);
+                $this->setError($this->readableErrors);
                 return false;
             } else {
                 return true;
