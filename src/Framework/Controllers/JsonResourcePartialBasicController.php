@@ -24,9 +24,9 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
     public array $resourceIndex;
     public array $groupsIndex;
     public array $useCasesIndex;
-    protected $jsonTabTemplates;
-    protected $jsonResourceTemplates;
-    public array $index_json_smallpartial_templates;
+    public $jsonTabTemplates;
+    public $jsonResourceTemplates;
+    public $index_json_smallpartial_templates;
     public DBConnection $dbconnection;
     public Logger $logger;
     public SecurityChecker $securityChecker;
