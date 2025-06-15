@@ -87,13 +87,15 @@ class QueryExecuter {
                         }
                         if ( $cond->type == 'date' ) {
                             if ( $queryParameters[$cond->placeholder] == null OR $queryParameters[$cond->placeholder] == '' ) {
-                                $STH->bindParam($cond->placeholder,  null, \PDO::PARAM_STR );
+                                $null = Null;
+                                $STH->bindParam($cond->placeholder,  $null, PDO::PARAM_NULL );
                             } else {
                                 $dateTime = strtotime( $queryParameters[$cond->placeholder] );
                                 if ( checkdate(date('m', $dateTime), date('d', $dateTime), date('Y', $dateTime)) ) {
                                     $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
                                 } else {
-                                    $STH->bindParam($cond->placeholder,  null, \PDO::PARAM_STR );
+                                    $null = Null;
+                                    $STH->bindParam($cond->placeholder,  $null, \PDO::PARAM_STR );
                                 }
                             }
                         }
@@ -149,24 +151,33 @@ class QueryExecuter {
                             $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                         } else {
                             if ( $cond->type == 'long' OR $cond->type == 'int' ) {
-                                if ( isset( $cond->returnedid ) AND $this->pageStatus->getQueryReturnedValues()->isValueSet($cond->returnedid) ) {
-                                    $par =& $this->pageStatus->getQueryReturnedValues()->getPointerToValue($cond->returnedid);
-                                    $STH->bindParam($cond->placeholder, $par, PDO::PARAM_INT);
-                                } else {
-                                    $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
-                                }
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_INT );
                             }
                             if ( $cond->type == 'string' OR $cond->type == 'str' ) {
-                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_STR );
                             }
                             if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
-                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_BOOL );
                             }
                             if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
                                 if ( is_numeric($queryParameters[$cond->placeholder]) ) {
-                                    $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                    $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], \PDO::PARAM_STR );
                                 } else {
-                                    $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
+                                    $STH->bindParam($cond->placeholder,  "0", \PDO::PARAM_STR );
+                                }
+                            }
+                            if ( $cond->type == 'date' ) {
+                                if ( $queryParameters[$cond->placeholder] == null OR $queryParameters[$cond->placeholder] == '' ) {
+                                    $null = Null;
+                                    $STH->bindParam($cond->placeholder,  $null, PDO::PARAM_NULL );
+                                } else {
+                                    $dateTime = strtotime( $queryParameters[$cond->placeholder] );
+                                    if ( checkdate(date('m', $dateTime), date('d', $dateTime), date('Y', $dateTime)) ) {
+                                        $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                    } else {
+                                        $null = Null;
+                                        $STH->bindParam($cond->placeholder,  $null, \PDO::PARAM_STR );
+                                    }
                                 }
                             }
                         }
@@ -239,19 +250,33 @@ class QueryExecuter {
                         $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                     } else {
                         if ( $cond->type == 'long' OR $cond->type == 'int' ) {
-                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_INT );
                         }
                         if ( $cond->type == 'string' OR $cond->type == 'str' ) {
-                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_STR );
                         }
                         if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
-                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
+                            $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_BOOL );
                         }
                         if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
                             if ( is_numeric($queryParameters[$cond->placeholder]) ) {
-                                $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], \PDO::PARAM_STR );
                             } else {
-                                $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
+                                $STH->bindParam($cond->placeholder,  "0", \PDO::PARAM_STR );
+                            }
+                        }
+                        if ( $cond->type == 'date' ) {
+                            if ( $queryParameters[$cond->placeholder] == null OR $queryParameters[$cond->placeholder] == '' ) {
+                                $null = Null;
+                                $STH->bindParam($cond->placeholder,  $null, PDO::PARAM_NULL );
+                            } else {
+                                $dateTime = strtotime( $queryParameters[$cond->placeholder] );
+                                if ( checkdate(date('m', $dateTime), date('d', $dateTime), date('Y', $dateTime)) ) {
+                                    $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                } else {
+                                    $null = Null;
+                                    $STH->bindParam($cond->placeholder,  $null, \PDO::PARAM_STR );
+                                }
                             }
                         }
                     }
@@ -299,19 +324,33 @@ class QueryExecuter {
                             $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder]);
                         } else {
                             if ( $cond->type == 'long' OR $cond->type == 'int' ) {
-                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_INT );
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_INT );
                             }
                             if ( $cond->type == 'string' OR $cond->type == 'str' ) {
-                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_STR );
                             }
                             if ( $cond->type == 'bool' OR $cond->type == 'boolean' ) {
-                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], PDO::PARAM_BOOL );
+                                $STH->bindParam($cond->placeholder, $queryParameters[$cond->placeholder], \PDO::PARAM_BOOL );
                             }
                             if ( $cond->type == 'float' OR $cond->type == 'decimal' ) {
                                 if ( is_numeric($queryParameters[$cond->placeholder]) ) {
-                                    $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                    $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], \PDO::PARAM_STR );
                                 } else {
-                                    $STH->bindParam($cond->placeholder,  "0", PDO::PARAM_STR );
+                                    $STH->bindParam($cond->placeholder,  "0", \PDO::PARAM_STR );
+                                }
+                            }
+                            if ( $cond->type == 'date' ) {
+                                if ( $queryParameters[$cond->placeholder] == null OR $queryParameters[$cond->placeholder] == '' ) {
+                                    $null = Null;
+                                    $STH->bindParam($cond->placeholder,  $null, PDO::PARAM_NULL );
+                                } else {
+                                    $dateTime = strtotime( $queryParameters[$cond->placeholder] );
+                                    if ( checkdate(date('m', $dateTime), date('d', $dateTime), date('Y', $dateTime)) ) {
+                                        $STH->bindParam($cond->placeholder,  $queryParameters[$cond->placeholder], PDO::PARAM_STR );
+                                    } else {
+                                        $null = Null;
+                                        $STH->bindParam($cond->placeholder,  $null, \PDO::PARAM_STR );
+                                    }
                                 }
                             }
                         }
