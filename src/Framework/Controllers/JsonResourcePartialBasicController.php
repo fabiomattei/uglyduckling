@@ -148,6 +148,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
      * This means all json Resources act in the same way when there is a post request
      */
     public function postRequest() {
+        $this->templateFile = 'empty';
         // loading json resource
         if ( strlen( $this->resourceName ) > 0 ) {
             $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
