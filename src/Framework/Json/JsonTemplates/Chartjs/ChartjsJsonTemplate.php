@@ -54,4 +54,8 @@ class ChartjsJsonTemplate extends JsonTemplate {
         return $chartBlock;
     }
 
+    public function createHTMLBlock() {
+        return $this->createChart();
+    }
+
 }
