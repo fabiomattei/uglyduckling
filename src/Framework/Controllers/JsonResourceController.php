@@ -347,7 +347,8 @@ class JsonResourceController extends CommonController {
         if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
             print_r($this->readableErrors);
         } {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+            $this->redirectToPreviousPage();
+            // header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
         }
     }
 
