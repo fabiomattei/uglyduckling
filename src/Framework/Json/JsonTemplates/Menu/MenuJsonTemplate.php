@@ -58,6 +58,14 @@ class MenuJsonTemplate extends JsonTemplate {
             if ( isset($menuitem->submenu) ) {
                 // A submenu is present
                 $submenuItems = array();
+
+                if (is_string($menuitem->label)) {
+                    $labelString = $menuitem->label;
+                }
+                if (is_object($menuitem->label)) {
+                    $labelString = $this->pageStatus->getValue($menuitem);
+                }
+
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
                     $mi->label = $item->label ?? '';
@@ -70,13 +78,13 @@ class MenuJsonTemplate extends JsonTemplate {
                     }
                 }
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
-                    $menu->addNavItemWithDropdown( $menuitem->label,
+                    $menu->addNavItemWithDropdown( $labelString,
                         UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                         $active, $current,
                         $submenuItems, $this->controllerName, $this->resourceName
                     );
                 } else {
-                    $menu->addNavItemWithDropdown( $menuitem->label, '#', $active, $current, $submenuItems, $this->controllerName, $this->resourceName );
+                    $menu->addNavItemWithDropdown( $labelString, '#', $active, $current, $submenuItems, $this->controllerName, $this->resourceName );
                 }
             } else {
                 // there is no submenu
