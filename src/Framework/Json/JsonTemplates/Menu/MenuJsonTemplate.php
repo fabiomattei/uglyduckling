@@ -59,7 +59,7 @@ class MenuJsonTemplate extends JsonTemplate {
                 $labelString = $menuitem->label;
             }
             if (is_object($menuitem->label)) {
-                $labelString = $this->pageStatus->getValue($menuitem);
+                $labelString = $this->pageStatus->getValue($menuitem->label);
             }
             if ( isset($menuitem->submenu) ) {
                 // A submenu is present
