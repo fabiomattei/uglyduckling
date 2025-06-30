@@ -20,7 +20,7 @@ class StringUtils {
 	 */
 	static function validate_string( string $string_var ) : bool {
 		if ( strlen( $string_var ) == 0 ) return true;
-		if ( strlen( $string_var ) > 40 ) return false;
+		if ( strlen( $string_var ) > 200 ) return false;
 		if ( ctype_alnum( $string_var ) ) return true;
 		return false;
 	}
