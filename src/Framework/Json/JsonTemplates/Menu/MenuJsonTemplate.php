@@ -106,6 +106,12 @@ class MenuJsonTemplate extends JsonTemplate {
             foreach ($this->menuStructure->rightmenu as $menuitem) {
                 $active = false;
                 $current = false;
+                if (is_string($menuitem->label)) {
+                    $labelString = $menuitem->label;
+                }
+                if (is_object($menuitem->label)) {
+                    $labelString = $this->pageStatus->getValue($menuitem->label);
+                }
                 if ( isset($menuitem->submenu) ) {
                     // A submenu is present
                     $submenuItems = array();
@@ -136,12 +142,12 @@ class MenuJsonTemplate extends JsonTemplate {
                             $current = true;
                         }
 
-                        $menu->addNavItem( $menuitem->label,
+                        $menu->addNavItem( $labelString,
                             UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                             $active, $current, true
                         );
                     } else {
-                        $menu->addNavItem( $menuitem->label, '#',false, false, true );
+                        $menu->addNavItem( $labelString, '#',false, false, true );
                     }
                 }
             }

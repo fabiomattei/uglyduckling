@@ -23,7 +23,7 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     }
 
     function addBrand( string $brand, string $url ) {
-        $this->brand = HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+        $this->brand = HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
             array('${url}', '${title}'),
             array($url, $brand),
             'Menu/brand.html');
@@ -42,12 +42,12 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/current.html') : '';
 
         if ( $right ) {
-            $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+            $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                 array('${active}', '${current}', '${url}', '${label}'),
                 array($activestr, $currentstr, $url, $label),
                 'Menu/navitem.html');
         } else {
-            $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+            $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                 array('${active}', '${current}', '${url}', '${label}'),
                 array($activestr, $currentstr, $url, $label),
                 'Menu/navitem.html');
@@ -60,17 +60,17 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/submenuitemcurrent.html') : '';
         foreach ($submenuItems as $item) {
             if ( isset( $controllerName ) AND $item->controller == $controllerName ) {
-                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                     array('${active}', '${current}', '${url}', '${label}'),
                     array($activestr, $currentstr, $item->url, $item->label),
                     'Menu/submenuitem.html');
             } elseif ( isset( $resourceName ) AND $item->resource == $resourceName) {
-                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                     array('${active}', '${current}', '${url}', '${label}'),
                     array($activestr, $currentstr, $item->url, $item->label),
                     'Menu/submenuitem.html');
             } else {
-                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+                $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                     array('${active}', '${current}', '${url}', '${label}'),
                     array('', '', $item->url, $item->label),
                     'Menu/submenuitem.html');
@@ -81,12 +81,12 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/current.html') : '';
 
         if ( $right ) {
-            $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+            $this->rightBody .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                 array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
                 array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
                 'Menu/menuitem.html');
         } else {
-            $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+            $this->body .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                 array('${active}', '${current}', '${url}', '${label}', '${dropdownCounter}', '${submenu}'),
                 array($activestr, $currentstr, $url, $label, $this->dropdownCounter, $submenu),
                 'Menu/menuitem.html');
@@ -98,15 +98,15 @@ class BaseHTMLMenu extends BaseHTMLBlock {
     function show(): string {
         if ( isset($this->rightBody) AND $this->rightBody != '' ) {
             $rightSubmenu = $this->rightBody;
-            $rightSubmenu = HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
-                array('${rightbody}'),
-                array($rightSubmenu),
+            $rightSubmenu = HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
+                [ '${rightbody}' ],
+                [ $rightSubmenu ],
                 'Menu/rightbody.html');
         } else {
             $rightSubmenu = '';
         }
 
-        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
+        return HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
             array('${brand}', '${buttonToggler}', '${body}', '${rightbody}'),
             array($this->brand, $this->buttonToggler, $this->body, $rightSubmenu),
             'Menu/body.html');
