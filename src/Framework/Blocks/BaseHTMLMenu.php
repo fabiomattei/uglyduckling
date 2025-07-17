@@ -59,12 +59,12 @@ class BaseHTMLMenu extends BaseHTMLBlock {
         $activestr = $active ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/submenuitemactive.html') : '';
         $currentstr = $current ? HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'Menu/submenuitemcurrent.html') : '';
         foreach ($submenuItems as $item) {
-            if ( isset( $controllerName ) AND $item->controller == $controllerName ) {
+            if ( isset( $controllerName ) AND ($item->controller == $controllerName OR $item->resource == $controllerName) ) {
                 $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                     array('${active}', '${current}', '${url}', '${label}'),
                     array($activestr, $currentstr, $item->url, $item->label),
                     'Menu/submenuitem.html');
-            } elseif ( isset( $resourceName ) AND $item->resource == $resourceName) {
+            } elseif ( isset( $resourceName ) AND ($item->resource == $resourceName OR  $item->resource == $resourceName)) {
                 $submenu .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
                     array('${active}', '${current}', '${url}', '${label}'),
                     array($activestr, $currentstr, $item->url, $item->label),

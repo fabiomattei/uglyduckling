@@ -63,7 +63,7 @@ class MenuJsonTemplate extends JsonTemplate {
             }
             if ( isset($menuitem->submenu) ) {
                 // A submenu is present
-                $submenuItems = array();
+                $submenuItems = [];
 
                 foreach ($menuitem->submenu as $item) {
                     $mi = new stdClass;
@@ -72,8 +72,8 @@ class MenuJsonTemplate extends JsonTemplate {
                     $mi->resource = $item->resource ?? '';
                     $mi->url = UrlServices::make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
-                    if ( (isset($item->resource) AND $this->resourceName == $item->resource) OR (isset($item->controller) AND $this->controllerName == $item->controller) ) {
-                        $current = true;
+                    if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
+                        $active = true;
                     }
                 }
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
@@ -88,8 +88,8 @@ class MenuJsonTemplate extends JsonTemplate {
             } else {
                 // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
-                    if ( ( isset( $menuitem->resource ) AND $this->resourceName == $menuitem->resource) OR ( isset( $menuitem->controller ) AND $this->controllerName == $menuitem->controller) ) {
-                        $current = true;
+                    if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
+                        $active = true;
                     }
 
                     $menu->addNavItem( $labelString,
@@ -122,8 +122,8 @@ class MenuJsonTemplate extends JsonTemplate {
                         $mi->resource = $item->resource ?? '';
                         $mi->url = UrlServices::make_resource_url( $item, $this->pageStatus );
                         $submenuItems[] = $mi;
-                        if ( (isset($item->resource) AND $this->resourceName == $item->resource) OR (isset($item->controller) AND $this->controllerName == $item->controller) ) {
-                            $current = true;
+                        if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
+                            $active = true;
                         }
                     }
                     if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
@@ -137,9 +137,9 @@ class MenuJsonTemplate extends JsonTemplate {
                     }
                 } else {
                     // there is no submenu
-                    if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+                    if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
                         if ( ( isset( $menuitem->resource ) AND $this->resourceName == $menuitem->resource) OR ( isset( $menuitem->controller ) AND $this->controllerName == $menuitem->controller) ) {
-                            $current = true;
+                            $active = true;
                         }
 
                         $menu->addNavItem( $labelString,
