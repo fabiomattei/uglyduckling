@@ -83,12 +83,16 @@ class MenuJsonTemplate extends JsonTemplate {
                         $submenuItems, $this->controllerName, $this->resourceName
                     );
                 } else {
-                    $menu->addNavItemWithDropdown( $labelString, '#', $active, $current, $submenuItems, $this->controllerName, $this->resourceName );
+                    $menu->addNavItemWithDropdown( $labelString,
+                        '#',
+                        $active, $current,
+                        $submenuItems, $this->controllerName, $this->resourceName
+                    );
                 }
             } else {
                 // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
-                    if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
+                    if ( (isset($menuitem->resource) AND ($this->resourceName == $menuitem->resource OR $this->controllerName == $menuitem->resource)) OR (isset($menuitem->controller) AND ($this->controllerName == $menuitem->controller OR $this->resourceName == $menuitem->controller)) ) {
                         $active = true;
                     }
 
@@ -137,8 +141,8 @@ class MenuJsonTemplate extends JsonTemplate {
                     }
                 } else {
                     // there is no submenu
-                    if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
-                        if ( ( isset( $menuitem->resource ) AND $this->resourceName == $menuitem->resource) OR ( isset( $menuitem->controller ) AND $this->controllerName == $menuitem->controller) ) {
+                    if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+                        if ( (isset($menuitem->resource) AND ($this->resourceName == $menuitem->resource OR $this->controllerName == $menuitem->resource)) OR (isset($menuitem->controller) AND ($this->controllerName == $menuitem->controller OR $this->resourceName == $menuitem->controller)) ) {
                             $active = true;
                         }
 
