@@ -138,21 +138,8 @@ class Controller extends CommonController {
         } else {
             $out = false;
 
-            // checking get parameters in post request
-            $parms = $this->gump->sanitize($_GET);
-            $this->gump->validation_rules($this->post_get_validation_rules);
-            $this->gump->filter_rules($this->post_get_filter_rules);
-            $this->getParameters = $this->gump->run($parms);
-            $this->unvalidated_parameters = $parms;
-            if ($this->getParameters === false) {
-                $this->readableErrors = $this->gump->get_readable_errors(true);
-                $out = false;
-            } else {
-                $out = true;
-            }
-
-            // checking post parameters in post request
-            $parms = $this->gump->sanitize($_POST);
+            // checking get and post parameters in post request
+            $parms = $this->gump->sanitize(array_merge($_GET, $_POST));
             $this->gump->validation_rules($this->post_validation_rules);
             $this->gump->filter_rules($this->post_filter_rules);
             $this->postParameters = $this->gump->run($parms);
