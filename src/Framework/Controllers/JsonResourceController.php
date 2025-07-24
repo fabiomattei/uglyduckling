@@ -80,14 +80,21 @@ class JsonResourceController extends CommonController {
         // if resource->get->sessionupdates is set I need to update the session
         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
+        $returnedVariables = [];
+
         // performing usecases
         if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
             foreach ($this->resource->get->usecases as $jsonusecase) {
                 $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
                 $useCase->loadParameters();
                 $useCase->performAction();
+                if ( isset($jsonusecase->returnedvariable) ) {
+                    $returnedVariables[$jsonusecase->returnedvariable] = $useCase->returnValue();
+                }
             }
         }
+
+        $this->pageStatus->setReturnedVariables( $returnedVariables );
 
         $this->title = APP_NAME . ' :: Dashboard';
         $this->templateFile = $this->resource->templatefile ?? TEMPLATE_FILE_NAME;

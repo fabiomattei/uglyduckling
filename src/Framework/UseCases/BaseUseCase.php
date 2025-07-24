@@ -58,6 +58,14 @@ class BaseUseCase {
     }
 
     /**
+     * This method need to be overridden in order to hallow the child class to return a value
+     * @return string
+     */
+    function returnValue() {
+        return '';
+    }
+
+    /**
      * @return array of strings containing all error messages
      */
     function getErrors(): array {

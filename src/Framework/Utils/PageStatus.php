@@ -20,6 +20,7 @@ class PageStatus {
     public /* stdClass */ $lastEntity; // result of last query in database
     public DBConnection $dbconnection;
     public QueryReturnedValues $queryReturnedValues;
+    public /* array */ $returnedVariables;
     public /* array */ $errors;
     public /* array */ $warnings;
     public /* array */ $infos;
@@ -29,6 +30,7 @@ class PageStatus {
 
     public function __construct() {
         $this->queryReturnedValues = new QueryReturnedValues;
+        $this->returnedVariables = [];
         $this->errors = [];
         $this->warnings = [];
         $this->infos = [];
@@ -207,6 +209,10 @@ class PageStatus {
         $this->successes[] = $success;
     }
 
+    public function setReturnedVariables( array $returnedVariables ) {
+        $this->returnedVariables = $returnedVariables;
+    }
+
     /**
      * Get the value to populate a form, a table or a info panel or more.
      *
@@ -369,6 +375,11 @@ class PageStatus {
         if ( isset($field->returnedid) ) {
             if ( $this->queryReturnedValues->isValueSet( $field->returnedid ) ) {
                 return $this->queryReturnedValues->getValue( $field->returnedid );
+            }
+        }
+        if ( isset($field->returnedvariable) ) {
+            if ( array_key_exists( $field->returnedvariable, $this->returnedVariables ) ) {
+                return $this->returnedVariables[$field->returnedvariable];
             }
         }
         if ( isset($field->returnedentity) AND isset($field->returnedfield) ) {
