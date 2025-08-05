@@ -79,7 +79,7 @@ class FileUpload {
                     }
                     $newname = $tmp.'.'.$ext;
                 } else {
-                    $newname = $name.'.'.$ext;
+                    $newname = StringUtils::cleanFileName($name.'.'.$ext);
                 }
 
                 //Check if file already exists on server
