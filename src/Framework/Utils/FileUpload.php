@@ -31,7 +31,7 @@ class FileUpload {
      * @param $path            //Set file upload path with trailing slash
      * @return array|null[]|void
      */
-    static function uploadFile($file_field = null, $check_image = false, $random_name = false, $path = 'uploads/') {
+    static function uploadFile($file_field = null, $check_image = false, $random_name = false, $path = 'uploads/', $allowedExtentions = ['png','jpg','jpeg','webp','pdf','doc','docx','xls','xlsx']) {
         //The Validation
         // Create an array to hold any output
         $out = [];
@@ -57,48 +57,54 @@ class FileUpload {
             $name = $file_info['filename'];
             $ext = $file_info['extension'];
 
-            if (!is_uploaded_file($_FILES[$file_field]['tmp_name'])) {
-                $out['error'][] = "File upload error";
-            }
-
-            //If $check image is set as true
-            if ($check_image) {
-                if (!getimagesize($_FILES[$file_field]['tmp_name'])) {
-                    $out['error'][] = "Uploaded file is not a valid image";
+            if (in_array($ext, $allowedExtentions)) {
+                if (!is_uploaded_file($_FILES[$file_field]['tmp_name'])) {
+                    $out['error'][] = "File upload error";
                 }
-            }
 
-            //Create full filename including path
-            if ($random_name) {
-                // Generate random filename
-                $tmp = str_replace(['.',' '], ['',''], microtime());
-
-                if (!$tmp || $tmp == '') {
-                    $out['error'][] = "File must have a name";
+                //If $check image is set as true
+                if ($check_image) {
+                    if (!getimagesize($_FILES[$file_field]['tmp_name'])) {
+                        $out['error'][] = "Uploaded file is not a valid image";
+                    }
                 }
-                $newname = $tmp.'.'.$ext;
+
+                //Create full filename including path
+                if ($random_name) {
+                    // Generate random filename
+                    $tmp = str_replace(['.',' '], ['',''], microtime());
+
+                    if (!$tmp || $tmp == '') {
+                        $out['error'][] = "File must have a name";
+                    }
+                    $newname = $tmp.'.'.$ext;
+                } else {
+                    $newname = $name.'.'.$ext;
+                }
+
+                //Check if file already exists on server
+                if (file_exists($path.$newname)) {
+                    $out['error'][] = "A file with this name already exists";
+                }
+
+                if (count($out['error'])>0) {
+                    //The file has not correctly validated
+                    return $out;
+                }
+
+                if (move_uploaded_file($_FILES[$file_field]['tmp_name'], $path.$newname)) {
+                    //Success
+                    $out['filepath'] = $path;
+                    $out['filename'] = $newname;
+                    $out['filetype'] = $ext;
+                    $out['filesize'] = $_FILES[$file_field]['size'];
+                    return $out;
+                } else {
+                    $out['error'][] = "Server Error!";
+                    return $out;
+                }
             } else {
-                $newname = $name.'.'.$ext;
-            }
-
-            //Check if file already exists on server
-            if (file_exists($path.$newname)) {
-                $out['error'][] = "A file with this name already exists";
-            }
-
-            if (count($out['error'])>0) {
-                //The file has not correctly validated
-                return $out;
-            }
-
-            if (move_uploaded_file($_FILES[$file_field]['tmp_name'], $path.$newname)) {
-                //Success
-                $out['filepath'] = $path;
-                $out['filename'] = $newname;
-                return $out;
-            } else {
-                $out['error'][] = "Server Error!";
-                return $out;
+                $out['error'][] = "Extention not allowed!";
             }
 
         } else {
