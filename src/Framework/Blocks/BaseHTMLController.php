@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Blocks;
 
+use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Utils\HtmlTemplateLoader;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\PublicSecurityChecker;
@@ -55,25 +56,44 @@ class BaseHTMLController extends BaseHTMLBlock {
      * it return the HTML code for the web page
      */
     function getHTML(): string {
-        $controller = new $this->className;
-        //$controller->setGroupsIndex( $index_groups );
-        $controller->setGroupsIndex( [] );
-        $controller->setPageStatus($this->pageStatus);
-        $controller->setTemplateFile($this->templateFile);
-        //$controller->setControllerName($controllerName);
-        $controller->setControllerName($this->resourceName);
-        $controller->makeAllPresets(
-            $this->pageStatus->dbconnection,
-            $this->pageStatus->logger,
-            new PublicSecurityChecker,
-            new NullMailer('', '')
-        );
-        //if ( $this->bodyFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->bodyFile );
-        ob_start();
-        $controller->showPage(); //would normally get printed to the screen/output to browser
-        $output = ob_get_contents();
-        ob_end_clean();
-        return $output;
+        if (JsonLoader::isMobile()) {
+            if (class_exists($this->className.'Mobile')) {
+                $controller = new $this->className.'Mobile';
+            } elseif (class_exists($this->className)) {
+                $controller = new $this->className;
+            } else {
+                $controller = null;
+            }
+        } else {
+            if (class_exists($this->className)) {
+                $controller = new $this->className;
+            } else {
+                $controller = null;
+            }
+        }
+
+        if ($controller !== null) {
+            //$controller->setGroupsIndex( $index_groups );
+            $controller->setGroupsIndex( [] );
+            $controller->setPageStatus($this->pageStatus);
+            $controller->setTemplateFile($this->templateFile);
+            //$controller->setControllerName($controllerName);
+            $controller->setControllerName($this->resourceName);
+            $controller->makeAllPresets(
+                $this->pageStatus->dbconnection,
+                $this->pageStatus->logger,
+                new PublicSecurityChecker,
+                new NullMailer('', '')
+            );
+            //if ( $this->bodyFile != '' ) return HtmlTemplateLoader::loadTemplate( TEMPLATES_DIRECTORY, $this->bodyFile );
+            ob_start();
+            $controller->showPage(); //would normally get printed to the screen/output to browser
+            $output = ob_get_contents();
+            ob_end_clean();
+            return $output;
+        } else {
+            return '<p>Controller not defined</p>';
+        }
     }
 
     /**
