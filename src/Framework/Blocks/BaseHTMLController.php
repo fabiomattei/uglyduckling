@@ -58,7 +58,7 @@ class BaseHTMLController extends BaseHTMLBlock {
     function getHTML(): string {
         if (JsonLoader::isMobile()) {
             if (class_exists($this->className.'Mobile')) {
-                $controller = new $this->className.'Mobile';
+                $controller = new ($this->className.'Mobile');
             } elseif (class_exists($this->className)) {
                 $controller = new $this->className;
             } else {
