@@ -59,7 +59,7 @@ class JsonLoader {
      * @return string
      */
     static public function addMobileToResourceName( $resource ): string {
-        return substr($resource, 0, -4).'mobile.json';
+        return substr($resource, 0, -5).'-mobile.json';
     }
 
     /**
