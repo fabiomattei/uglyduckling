@@ -213,9 +213,10 @@ class BaseController extends CommonController {
         print_r(get_declared_classes());
         print_r(get_object_vars($this->controllerPointer));
         */
-        ob_start() && extract(get_object_vars($this->controllerPointer), EXTR_SKIP);
-        require_once 'src/Templates/' . $this->templateFile . '.php';
-        return ob_end_flush();
+        //ob_start() && extract(get_object_vars($this->controllerPointer), EXTR_SKIP);
+        extract(get_object_vars($this->controllerPointer), EXTR_SKIP);
+        require 'src/Templates/' . $this->templateFile . '.php';
+        //return ob_end_flush();
     }
 
     /*
