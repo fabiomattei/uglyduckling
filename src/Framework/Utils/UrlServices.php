@@ -92,7 +92,7 @@ class UrlServices {
                 }
                 $url_parameters = rtrim( $url_parameters, ($json_action->parameter_separator ?? '&') );
             }
-            return $json_action->url.$url_parameters;
+            return $json_action->url.($json_action->starting_parameters_symbol ?? '?').$url_parameters;
         }
 
         if ( isset( $json_action->resource ) AND isset( $json_action->controller ) AND $json_action->controller == 'partial') {
