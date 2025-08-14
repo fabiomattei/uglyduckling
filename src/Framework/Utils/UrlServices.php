@@ -85,7 +85,14 @@ class UrlServices {
      */
     public static function make_resource_url( $json_action, PageStatus $pageStatus ) {
         if ( isset( $json_action->url ) ) {
-            return $json_action->url;
+            $url_parameters = '';
+            if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+                foreach ($json_action->parameters as $par) {
+                    $url_parameters .= ($par->name??'').($json_action->parameter_assign_symbol??'=').UrlServices::urlencode($pageStatus->getValue($par)).($json_action->parameter_separator??'&');
+                }
+                $url_parameters = rtrim( $url_parameters, ($json_action->parameter_separator ?? '&') );
+            }
+            return $json_action->url.$url_parameters;
         }
 
         if ( isset( $json_action->resource ) AND isset( $json_action->controller ) AND $json_action->controller == 'partial') {
