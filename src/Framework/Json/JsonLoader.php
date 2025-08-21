@@ -17,7 +17,7 @@ class JsonLoader {
                 if ( file_exists( self::addMobileToResourceName($index_resources[$resourceName]) ) ) {
                     // try to load mobile resource if exists
                     $handle = fopen( self::addMobileToResourceName($index_resources[$resourceName]), 'r');
-                    return JsonLoader::json_decode_with_error_control(fread($handle, filesize($index_resources[$resourceName])), $index_resources[$resourceName] );
+                    return JsonLoader::json_decode_with_error_control(fread($handle, filesize(self::addMobileToResourceName($index_resources[$resourceName]))), $index_resources[$resourceName] );
                 } elseif ( file_exists( $index_resources[$resourceName] ) ) {
                     // if mobile resource does not exist load normal resource
                     $handle = fopen($index_resources[$resourceName], 'r');
