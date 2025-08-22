@@ -167,15 +167,18 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             $validation_rules = $parametersGetter->getPostValidationRoules();
             $filter_rules = $parametersGetter->getPostFiltersRoules();
 
-            $parms = $secondGump->sanitize( array_merge($_GET, $_POST) );
-            $secondGump->validation_rules( $validation_rules );
-            $secondGump->filter_rules( $filter_rules );
-            $cleanPostParameters = $secondGump->run( $parms );
-            $this->pageStatus->setPostParameters( $cleanPostParameters );
-            $this->unvalidated_parameters = $parms;
+            $secondGump->validation_rules($validation_rules);
+            //$gump->set_fields_error_messages($filter_rules);
+            $secondGump->filter_rules($filter_rules);
+            $this->postParameters = $secondGump->run(array_merge(
+                is_null($_GET) ? [] : $_GET,
+                is_null($_POST) ? [] : $_POST,
+                is_null($_FILES) ? [] : $_FILES
+            ));
+            $this->pageStatus->setPostParameters( $this->postParameters );
         }
         if ($secondGump->errors()) {
-            $this->pageStatus->addErrors( $secondGump->get_readable_errors() );
+            $this->pageStatus->addErrors( $secondGump->get_readable_errors(true) );
         } else {
             if (isset($this->resource->post->transactions)) {
                 try {
