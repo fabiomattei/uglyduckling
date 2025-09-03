@@ -198,12 +198,13 @@ class BasicDao {
     }
 
     /**
-     * This function updates a single row of the delared table.
-     * It uptades the row haveing id = $id
-     * @param $id :: integer id
-     * @param $fields :: array of fields to update
-     * Ex. array( 'field1' => 'value1', 'field2' => 'value2' )
+     * This function updates a single row of the declared table.
+     * It updates the row having id = $id
+     * @param $id :: type integer or string
+     * @param $fields :: array of fields to update Ex. [ 'field1' => 'value1', 'field2' => 'value2' ]
      *
+     * Ex:
+     * $myDao->update(5, ['name' => 'John', 'surname' => 'Doe' )
      */
     function update($id, $fields, $debug = false) {
         $presentmoment = date('Y-m-d H:i:s', time());
