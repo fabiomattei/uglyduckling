@@ -410,11 +410,23 @@ class BasicDao {
      * Example:
      * const DB_TABLE_PK = 'stp_id';
      */
-    function delete( $id ) {
+    function delete( $id, $debug = false ) {
         try {
-            $STH = $this->DBH->prepare('DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $this::DB_TABLE_PK . ' = :id');
+            $query = 'DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $this::DB_TABLE_PK . ' = :id';
+            $STH = $this->DBH->prepare($query);
             $STH->bindParam(':id', $id);
             $STH->execute();
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $query."<br />";
+                echo "id:<br />";
+                echo $id."<br />";
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -425,7 +437,7 @@ class BasicDao {
      * This function deletes a set of row from a table depending from the
      * parameters you set when calling it.
      *
-     * $tododao->delete( array( 'open' => '0', 'handling' => '1' ) );
+     * $tododao->delete( [ 'open' => '0', 'handling' => '1' ] );
      * this will delete the row having the field open set to 0 and the field handling set to 1.
      *
      * Remeber that you need to set the table name in the tabledao.php file
@@ -434,17 +446,31 @@ class BasicDao {
      * Example:
      * const DB_TABLE = 'mytablename';
      */
-    function deleteByFields( $fields ) {
+    function deleteByFields( $fields, $debug = false  ) {
         $filedslist = '';
         foreach ($fields as $key => $value) {
             $filedslist .= $key . ' = :' . $key . ' AND ';
         }
         $filedslist = substr($filedslist, 0, -4);
         try {
-            $STH = $this->DBH->prepare('DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $filedslist);
+            $query = 'DELETE FROM ' . $this::DB_TABLE . ' WHERE ' . $filedslist;
+            $STH = $this->DBH->prepare($query);
             foreach ($fields as $key => &$value) {
                 $STH->bindParam($key, $value);
             }
+
+            if ( $debug ) {
+                echo "query:<br />";
+                echo $query."<br />";
+                echo "fields:<br />";
+                echo $filedslist."<br />";
+                echo "<br />";
+                print_r($fields);
+                echo "<br />";
+                echo "debugDumpParams:<br />";
+                $STH->debugDumpParams();
+            }
+
             $STH->execute();
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
