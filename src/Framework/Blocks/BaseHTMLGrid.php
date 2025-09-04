@@ -19,11 +19,15 @@ class BaseHTMLGrid extends BaseHTMLBlock {
     function getHTML(): string {
         $htmlbody = '<div class="'.$this->cssClass.'">';
         foreach ($this->gridPanels as $panel) {
-            $id = $panel->id ?? '';
-            $cssclass = $panel->cssclass ?? '';
-            $htmlbody .= '<div id="'.$id.'" class="'.$cssclass.'">';
-            $htmlbody .= $this->gridBlocks[$panel->id]->show();
-            $htmlbody .= '</div>';
+            if (array_key_exists($panel->id, $this->gridBlocks) AND !is_null($this->gridBlocks[$panel->id])) {
+                $id = $panel->id ?? '';
+                $cssclass = $panel->cssclass ?? '';
+                $htmlbody .= '<div id="'.$id.'" class="'.$cssclass.'">';
+                $htmlbody .= $this->gridBlocks[$panel->id]->show();
+                $htmlbody .= '</div>';
+            } else {
+                echo "ERROR: cannot find resource ".$panel->resource." having id ".$panel->id;
+            }
         }
         $htmlbody .= '</div>';
         return $htmlbody;
