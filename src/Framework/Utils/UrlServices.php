@@ -154,6 +154,27 @@ class UrlServices {
     }
 
     /**
+     * @param mixed $json_action
+     * @param PageStatus $pageStatus
+     * @return mixed
+     *
+     * This function checks all parameter that are part of a json action and if one of the is not
+     * defined in return false.
+     * It performs the check going through all the list of parameters and checking the each one of
+     * them is not an empty string.
+     */
+    public static function check_all_parameters_have_a_value( $json_action, PageStatus $pageStatus ) {
+        if ( isset( $json_action->parameters ) AND is_array($json_action->parameters) ) {
+            foreach ($json_action->parameters as $par) {
+                if ($pageStatus->getValue($par) == '') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * It creates a URL appending the content of variable $_SESSION['office'] to BASEPATH
      * The URL created is relative and not absolute
      *
