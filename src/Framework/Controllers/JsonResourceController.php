@@ -292,6 +292,9 @@ class JsonResourceController extends CommonController {
                 $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
                 $useCase->loadParameters();
                 $useCase->performAction();
+                if ( isset($jsonusecase->returnedvariable) ) {
+                    $returnedIds->setValue($jsonusecase->returnedvariable, $useCase->returnValue());
+                }
             }
         }
 
