@@ -98,6 +98,30 @@ class UserDao extends BasicDao {
 	}
 
     /**
+     * Return true if email exists and usr_deactivated is equal to 0 and false otherwise
+     */
+    function checkUserIsActive($email) {
+        try {
+            $STH = $this->DBH->prepare('SELECT usr_hashedpsw FROM ud_users WHERE usr_email = :email AND usr_deactivated = 0;');
+            $STH->bindParam(':email', $email, PDO::PARAM_STR);
+            $STH->execute();
+
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $obj = $STH->fetch();
+
+            // user with given email does not exist
+            if ($obj == null) {
+                return false;
+            }
+
+            return true;
+        }
+        catch(\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+        }
+    }
+
+    /**
      * In order to save the password it uses the algorithms created by the community
      * password_hash("rasmuslerdorf", PASSWORD_DEFAULT);
      * password_verify('rasmuslerdorf', $hash)
