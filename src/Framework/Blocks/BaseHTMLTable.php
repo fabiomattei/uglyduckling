@@ -35,8 +35,13 @@ class BaseHTMLTable extends BaseHTMLBlock {
         $this->bottomActions = $bottomActions;
     }
 
-    function addRow() {
-        $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/openrow.html');
+    function addRow(string $id = '', string $cssClass = '') {
+        $idtag = ( $id == '' ? '' : 'id="'.$id.'"');
+        return HtmlTemplateLoader::loadTemplateAndReplace(
+            TEMPLATES_PATH,
+            ['${id}', '${cssClass}'],
+            [$idtag, $cssClass],
+            'BaseTable/openrow.html');
     }
 
     function closeRow() {
@@ -59,10 +64,10 @@ class BaseHTMLTable extends BaseHTMLBlock {
         $this->html .= HtmlTemplateLoader::loadTemplate( TEMPLATES_PATH,'BaseTable/closetbody.html');
     }
 
-    function addHeadLineColumn(string $value) {
-        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH, 
-            array('${value}'),
-            array($value),
+    function addHeadLineColumn(string $value, string $style = '') {
+        $this->html .= HtmlTemplateLoader::loadTemplateAndReplace(TEMPLATES_PATH,
+            ['${value}', '${style}'],
+            [$value, $style],
             'BaseTable/headlinecolumn.html');
     }
 
