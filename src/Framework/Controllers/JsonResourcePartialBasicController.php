@@ -178,7 +178,9 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             $this->pageStatus->setPostParameters( $this->postParameters );
         }
         if ($secondGump->errors()) {
-            $this->pageStatus->addErrors( $secondGump->get_readable_errors(true) );
+            $this->pageStatus->addErrors(
+                (is_array($secondGump->get_readable_errors(true)) ? join('', $secondGump->get_readable_errors(true)) : $secondGump->get_readable_errors(true))
+            );
         } else {
             if (isset($this->resource->post->transactions)) {
                 try {
