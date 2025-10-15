@@ -7,6 +7,7 @@ use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu\MenuJsonTemplate;
 use Fabiom\UglyDuckling\Framework\DataBase\QueryExecuter;
 use Fabiom\UglyDuckling\Framework\Json\JsonLoader;
 use Fabiom\UglyDuckling\Framework\Json\Parameters\BasicParameterGetter;
+use Fabiom\UglyDuckling\Framework\Status\Logics;
 use Fabiom\UglyDuckling\Framework\Utils\FileUpload;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
@@ -304,6 +305,11 @@ class JsonResourceController extends CommonController {
         // redirect
         if (isset($this->resource->post->redirect)) {
             $this->jsonRedirector($this->resource->post->redirect);
+        }
+
+        // ajax responses
+        if (isset($this->resource->post->ajaxreponses)) {
+            echo Logics::performAjaxCallPost( $this->pageStatus, $this->resource );
         }
 
         echo $out;
