@@ -106,7 +106,25 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
 
             // if json resource has parameters
             if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) {
+                // if resource->get->sessionupdates is set I need to update the session
                 if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+
+                $returnedVariables = [];
+
+                // performing usecases
+                if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
+                    foreach ($this->resource->get->usecases as $jsonusecase) {
+                        $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
+                        $useCase->loadParameters();
+                        $useCase->performAction();
+                        if ( isset($jsonusecase->returnedvariable) ) {
+                            $returnedVariables[$jsonusecase->returnedvariable] = $useCase->returnValue();
+                        }
+                    }
+                }
+
+                $this->pageStatus->setReturnedVariables( $returnedVariables );
+
 
                 $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                 echo $myBlocks->show();
@@ -118,7 +136,25 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                 $filter_rules = $parametersGetter->getFiltersRoules();
 
                 if ( count( $validation_rules ) == 0 ) {
-                    // nothing to do
+                    // if resource->get->sessionupdates is set I need to update the session
+                    if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
+
+                    $returnedVariables = [];
+
+                    // performing usecases
+                    if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
+                        foreach ($this->resource->get->usecases as $jsonusecase) {
+                            $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
+                            $useCase->loadParameters();
+                            $useCase->performAction();
+                            if ( isset($jsonusecase->returnedvariable) ) {
+                                $returnedVariables[$jsonusecase->returnedvariable] = $useCase->returnValue();
+                            }
+                        }
+                    }
+
+                    $this->pageStatus->setReturnedVariables( $returnedVariables );
+
                     $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                     echo $myBlocks->show();
                 } else {
@@ -131,8 +167,25 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
                     if ($secondGump->errors()) {
                         $this->readableErrors = $secondGump->get_readable_errors(true);
                     } else {
+                        // if resource->get->sessionupdates is set I need to update the session
                         if ( isset($this->resource->get->sessionupdates) ) $this->pageStatus->updateSession( $this->resource->get->sessionupdates );
 
+                        $returnedVariables = [];
+
+                        // performing usecases
+                        if (isset($this->resource->get->usecases) and is_array($this->resource->get->usecases)) {
+                            foreach ($this->resource->get->usecases as $jsonusecase) {
+                                $useCase = new $this->useCasesIndex[$jsonusecase->name]( $jsonusecase, $this->pageStatus );
+                                $useCase->loadParameters();
+                                $useCase->performAction();
+                                if ( isset($jsonusecase->returnedvariable) ) {
+                                    $returnedVariables[$jsonusecase->returnedvariable] = $useCase->returnValue();
+                                }
+                            }
+                        }
+
+                        $this->pageStatus->setReturnedVariables( $returnedVariables );
+                        
                         $myBlocks = JsonDefaultTemplateFactory::getHTMLBlock( $this->resourceIndex, $this->jsonResourceTemplates, $this->jsonTabTemplates, $this->pageStatus, $this->resourceName );
                         echo $myBlocks->show();
                     }
