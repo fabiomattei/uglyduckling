@@ -67,7 +67,7 @@ class BaseHTMLController extends BaseHTMLBlock
 
         if ($controller !== null) {
             //$controller->setGroupsIndex( $index_groups );
-            $controller->setGroupsIndex( [] );
+            // $controller->setGroupsIndex( [] );
             $controller->setPageStatus($this->pageStatus);
             $controller->setTemplateFile($this->templateFile);
             //$controller->setControllerName($controllerName);
