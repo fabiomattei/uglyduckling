@@ -10,6 +10,7 @@ namespace Fabiom\UglyDuckling\Common\Json\JsonTemplates;
 
 use Fabiom\UglyDuckling\Common\Blocks\CardHTMLBlock;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Chartjs\ChartjsJsonTemplate;
+use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Controller\ControllerJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Form\FormJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Grid\GridJsonTemplate;
 use Fabiom\UglyDuckling\Common\Json\JsonTemplates\Info\InfoJsonTemplate;
@@ -26,6 +27,7 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
     private /* DashboardJsonTemplate */ $dashboardJsonTemplate;
     private /* CodeJsonTemplate */ $uniformJsonTemplate;
     private /* GridJsonTemplate */ $gridJsonTemplate;
+    private /* ControllerJsonTemplate */ $controllerJsonTemplate;
 
     /**
      * PanelBuilder constructor.
@@ -39,6 +41,7 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
         $this->dashboardJsonTemplate = new DashboardJsonTemplate( $applicationBuilder, $pageStatus );
         $this->uniformJsonTemplate = new UniformJsonTemplate( $applicationBuilder, $pageStatus );
         $this->gridJsonTemplate = new GridJsonTemplate( $applicationBuilder, $pageStatus );
+        $this->controllerJsonTemplate = new ControllerJsonTemplate( $applicationBuilder, $pageStatus );
     }
 
     public function isResourceSupported( $resource ) {
@@ -49,7 +52,8 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
             ChartjsJsonTemplate::blocktype,
             InfoJsonTemplate::blocktype,
             FormJsonTemplate::blocktype,
-            GridJsonTemplate::blocktype
+            GridJsonTemplate::blocktype,
+            ControllerJsonTemplate::blocktype,
         ));
     }
 
@@ -95,6 +99,11 @@ class JsonDefaultTemplateFactory extends JsonTemplateFactory {
         if ( $resource->metadata->type == FormJsonTemplate::blocktype ) {
             $this->formBuilder->setResource($resource);
             return $this->formBuilder->createForm();
+        }
+
+        if ( $resource->metadata->type == ControllerJsonTemplate::blocktype ) {
+            $this->controllerJsonTemplate->setResource($resource);
+            return $this->controllerJsonTemplate->createHTMLBlock();
         }
 
     }
