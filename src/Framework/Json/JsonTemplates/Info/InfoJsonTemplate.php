@@ -15,7 +15,7 @@ class InfoJsonTemplate extends JsonTemplate {
 
     const blocktype = 'info';
 
-    public function createInfo() {
+    public function createHTMLBlock() {
         $queryExecutor = $this->pageStatus->getQueryExecutor();
 
         // If there are dummy data they take precedence in order to fill the info box
