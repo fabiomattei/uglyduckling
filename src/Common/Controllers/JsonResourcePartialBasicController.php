@@ -107,12 +107,10 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             $validation_rules = $parametersGetter->getPostValidationRoules();
             $filter_rules = $parametersGetter->getPostFiltersRoules();
 
-            $parms = $secondGump->sanitize( array_merge($_GET, $_POST) );
             $secondGump->validation_rules( $validation_rules );
             $secondGump->filter_rules( $filter_rules );
-            $cleanPostParameters = $secondGump->run( $parms );
+            $cleanPostParameters = $secondGump->run( array_merge($_GET, $_POST) );
             $this->pageStatus->setPostParameters( $cleanPostParameters );
-            $this->unvalidated_parameters = $parms;
         }
         if ($secondGump->errors()) {
             $this->pageStatus->addErrors( $secondGump->get_readable_errors() );
