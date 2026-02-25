@@ -97,8 +97,10 @@ class JsonResourceController extends CommonController {
 
         $this->pageStatus->setReturnedVariables( $returnedVariables );
 
-        if (!isset($this->title)) {
-            $this->title = APP_NAME;
+        if ( isset($this->resource->title) ) {
+            $this->title = $this->resource->title;
+        } else {
+            $this->title = APP_NAME ?? '';
         }
 
         $this->templateFile = $this->resource->templatefile ?? TEMPLATE_FILE_NAME;
