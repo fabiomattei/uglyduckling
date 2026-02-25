@@ -97,7 +97,10 @@ class JsonResourceController extends CommonController {
 
         $this->pageStatus->setReturnedVariables( $returnedVariables );
 
-        $this->title = APP_NAME . ' :: Dashboard';
+        if (!isset($this->title)) {
+            $this->title = APP_NAME;
+        }
+
         $this->templateFile = $this->resource->templatefile ?? TEMPLATE_FILE_NAME;
 
         $this->menucontainer    = [ $this->menubuilder->createMenu() ];
