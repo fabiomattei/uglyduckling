@@ -53,13 +53,8 @@ class JsonDefaultTemplateFactory {
         if ( array_key_exists( $resourceName, $resourcesIndex ) ) {
             $jsonResource = JsonLoader::loadResource($resourcesIndex, $resourceName);
             if ( array_key_exists( $jsonResource->metadata->type, $jsonResourceTemplates ) ) {
-                if ($jsonResource->metadata->type == 'grid') {
-                    $respourceJsonTemplate = new $jsonResourceTemplates[$jsonResource->metadata->type]( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTagTemplates );
-                    return $respourceJsonTemplate->createHTMLBlock();
-                } else {
-                    $respourceJsonTemplate = new $jsonResourceTemplates[$jsonResource->metadata->type]( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTagTemplates );
-                    return '<div class="row"><div class="col-12">'.$respourceJsonTemplate->createHTMLBlock().'</div></div>';
-                }
+                $respourceJsonTemplate = new $jsonResourceTemplates[$jsonResource->metadata->type]( $jsonResource, $pageStatus, $resourcesIndex, $jsonResourceTemplates, $jsonTagTemplates );
+                return $respourceJsonTemplate->createHTMLBlock();
             }
         }
     }
