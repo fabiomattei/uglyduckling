@@ -68,15 +68,15 @@ class UserGroupDao extends BasicDao {
      */
     function listGroupsUserHasAccessTo( string $usr_id ) {
         try {
-                $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :usrid ;');
-                $STH->bindParam( ':userid', $usr_id );
+            $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :usrid ;');
+            $STH->bindParam( ':usrid', $usr_id );
 
-                $STH->execute();
+            $STH->execute();
 
-                # setting the fetch mode
-                $STH->setFetchMode(\PDO::FETCH_OBJ);
+            # setting the fetch mode
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
-                return $STH;
+            return $STH;
         } catch(\PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
         }
