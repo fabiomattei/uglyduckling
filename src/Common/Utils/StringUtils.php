@@ -143,7 +143,7 @@ class StringUtils {
      * @return string
      */
     public static function stringMaxLenght(string $string, int $lenght, string $suspensionPoints = '...') {
-        return (strlen($string) > 13) ? substr($string,0,$lenght).$suspensionPoints : $string;
+        return (strlen($string) > $lenght) ? substr($string,0,$lenght).$suspensionPoints : $string;
     }
 
 }
