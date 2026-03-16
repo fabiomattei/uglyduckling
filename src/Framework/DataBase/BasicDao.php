@@ -124,7 +124,7 @@ class BasicDao {
             $inserted_id = $this->DBH->lastInsertId();
             return $inserted_id;
         } catch (\PDOException $e) {
-            echo strtr( $sqlstring, $fields );
+            //echo strtr( $sqlstring, $fields );
             $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
@@ -190,7 +190,7 @@ class BasicDao {
 
             return $newuuid;
         } catch (\PDOException $e) {
-            echo strtr( $sqlstring, $fields );
+            //echo strtr( $sqlstring, $fields );
             $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
             throw new \Exception('General malfuction!!!');
