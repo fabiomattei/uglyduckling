@@ -96,19 +96,23 @@ class CommonController {
 
     // ** next section load textual messages for messages block
     function setSuccess(string $success) {
-        $_SESSION['msgsuccess'] = $success;
+        if (!array_key_exists('msgsuccess', $_SESSION)) { $_SESSION['msgsuccess']=[]; }
+        $_SESSION['msgsuccess'][] = $success;
     }
 
     function setError(string $error) {
-        $_SESSION['msgerror'] = $error;
+        if (!array_key_exists('msgerror', $_SESSION)) { $_SESSION['msgerror']=[]; }
+        $_SESSION['msgerror'][] = $error;
     }
 
     function setInfo(string $info) {
-        $_SESSION['msginfo'] = $info;
+        if (!array_key_exists('msginfo', $_SESSION)) { $_SESSION['msginfo']=[]; }
+        $_SESSION['msginfo'][] = $info;
     }
 
     function setWarning(string $warning) {
-        $_SESSION['msgwarning'] = $warning;
+        if (!array_key_exists('msgwarning', $_SESSION)) { $_SESSION['msgwarning']=[]; }
+        $_SESSION['msgwarning'][] = $warning;
     }
 
     /**
