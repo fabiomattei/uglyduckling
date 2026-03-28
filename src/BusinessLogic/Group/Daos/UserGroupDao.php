@@ -69,7 +69,7 @@ class UserGroupDao extends BasicDao {
     function listGroupsUserHasAccessTo( string $usr_id ) {
         try {
             try {
-                $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :usrid ;');
+                $STH = $this->DBH->prepare('SELECT ug_groupslug FROM '.$this::DB_TABLE.' WHERE ug_userid = :userid ;');
                 $STH->bindParam( ':userid', $usr_id );
 
                 $STH->execute();
