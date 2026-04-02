@@ -51,6 +51,8 @@ class Translator {
      */
     protected $parameterEnclosingChars = array('{', '}');
 
+    public $loadedLocales;
+
     /**
      * Constructor of the class Translator
      * Call it as:
