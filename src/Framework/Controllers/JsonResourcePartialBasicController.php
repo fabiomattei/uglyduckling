@@ -232,7 +232,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         }
         if ($secondGump->errors()) {
             $this->pageStatus->addErrors(
-                (is_array($secondGump->get_readable_errors(true)) ? join('', $secondGump->get_readable_errors(true)) : $secondGump->get_readable_errors(true))
+                (is_array($secondGump->get_readable_errors(true)) ? $secondGump->get_readable_errors(true) : [$secondGump->get_readable_errors(true)])
             );
         } else {
             if (isset($this->resource->post->transactions)) {
