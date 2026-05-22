@@ -173,7 +173,7 @@ class Logics {
      */
     public static function performAjaxCallPost( PageStatus $pageStatus, $jsonResource ): string {
         if ( $pageStatus->areThereErrors() ) {
-            $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus);
+            $out = self::createErrorMessagesReadyForAjaxOutput($pageStatus, $jsonResource);
 
             return json_encode($out);
         } else if ( isset($jsonResource->post->ajaxreponses) and is_array($jsonResource->post->ajaxreponses)) {
@@ -250,10 +250,10 @@ class Logics {
                     $out[] = $myAjaxResponse;
                 }
 
-                $out = array_merge( $out, self::createErrorMessagesReadyForAjaxOutput($pageStatus) );
-                $out = array_merge( $out, self::createInfoMessagesReadyForAjaxOutput($pageStatus) );
-                $out = array_merge( $out, self::createWarningMessagesReadyForAjaxOutput($pageStatus) );
-                $out = array_merge( $out, self::createSuccessMessagesReadyForAjaxOutput($pageStatus) );
+                $out = array_merge( $out, self::createErrorMessagesReadyForAjaxOutput($pageStatus, $jsonResource) );
+                $out = array_merge( $out, self::createInfoMessagesReadyForAjaxOutput($pageStatus, $jsonResource) );
+                $out = array_merge( $out, self::createWarningMessagesReadyForAjaxOutput($pageStatus, $jsonResource) );
+                $out = array_merge( $out, self::createSuccessMessagesReadyForAjaxOutput($pageStatus, $jsonResource) );
 
             }
 
@@ -266,11 +266,11 @@ class Logics {
      * @param PageStatus $pageStatus
      * @return array|\stdClass[]
      */
-    public static function createErrorMessagesReadyForAjaxOutput(PageStatus $pageStatus ): array {
+    public static function createErrorMessagesReadyForAjaxOutput(PageStatus $pageStatus, $jsonResource = null): array {
         $out = [];
         if ($pageStatus->areThereErrors()) {
             $out = array_map(
-                function ($errorstring) {
+                function ($errorstring) use ($jsonResource) {
                     $msgBlock = new BaseHTMLMessages;
                     $msgBlock->setError($errorstring);
 
@@ -291,11 +291,11 @@ class Logics {
      * @param PageStatus $pageStatus
      * @return array|\stdClass[]
      */
-    public static function createInfoMessagesReadyForAjaxOutput(PageStatus $pageStatus): array {
+    public static function createInfoMessagesReadyForAjaxOutput(PageStatus $pageStatus, $jsonResource = null): array {
         $out = [];
         if ($pageStatus->areThereInfos()) {
             $out = array_map(
-                function ($infoString) {
+                function ($infoString) use ($jsonResource) {
                     $msgBlock = new BaseHTMLMessages;
                     $msgBlock->setInfo($infoString);
 
@@ -306,7 +306,7 @@ class Logics {
                     );
                     return $myAjaxResponse;
                 },
-                $pageStatus->getErrors()
+                $pageStatus->getInfos()
             );
         }
         return $out;
@@ -316,11 +316,11 @@ class Logics {
      * @param PageStatus $pageStatus
      * @return array|\stdClass[]
      */
-    public static function createWarningMessagesReadyForAjaxOutput(PageStatus $pageStatus): array {
+    public static function createWarningMessagesReadyForAjaxOutput(PageStatus $pageStatus, $jsonResource = null): array {
         $out = [];
         if ($pageStatus->areThereWarnings()) {
             $out = array_map(
-                function ($warningString) {
+                function ($warningString) use ($jsonResource) {
                     $msgBlock = new BaseHTMLMessages;
                     $msgBlock->setWarning($warningString);
 
@@ -331,7 +331,7 @@ class Logics {
                     );
                     return $myAjaxResponse;
                 },
-                $pageStatus->getErrors()
+                $pageStatus->getWarnings()
             );
         }
         return $out;
@@ -341,11 +341,11 @@ class Logics {
      * @param PageStatus $pageStatus
      * @return array|\stdClass[]
      */
-    public static function createSuccessMessagesReadyForAjaxOutput(PageStatus $pageStatus): array {
+    public static function createSuccessMessagesReadyForAjaxOutput(PageStatus $pageStatus, $jsonResource = null): array {
         $out = [];
         if ($pageStatus->areThereSuccesses()) {
             $out = array_map(
-                function ($successString) {
+                function ($successString) use ($jsonResource) {
                     $msgBlock = new BaseHTMLMessages;
                     $msgBlock->setSuccess($successString);
 
@@ -356,7 +356,7 @@ class Logics {
                     );
                     return $myAjaxResponse;
                 },
-                $pageStatus->getErrors()
+                $pageStatus->getSuccesses()
             );
         }
         return $out;
