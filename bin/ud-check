@@ -40,7 +40,7 @@ if ($indexPath === false || !file_exists($indexPath)) {
     exit(1);
 }
 
-$projectDir  = dirname($indexPath);
+$projectDir   = dirname($indexPath);
 $checkersPath = $projectDir . DIRECTORY_SEPARATOR . 'index_json_checkers.php';
 
 if (!file_exists($checkersPath)) {
@@ -51,7 +51,7 @@ if (!file_exists($checkersPath)) {
 // Change to the project directory so that relative paths in both index files resolve correctly
 chdir($projectDir);
 
-$index_resources    = null;
+$index_resources     = null;
 $index_json_checkers = null;
 
 require $indexPath;
@@ -121,13 +121,34 @@ foreach ($index_resources as $resourceName => $resourcePath) {
     }
 
     try {
-        $checker = new $checkerClass($resource);
-        if ($checker->isResourceBlockWellStructured()) {
+        $checker       = new $checkerClass($resource);
+        $structureOk   = $checker->isResourceBlockWellStructured();
+        $structureErrs = $checker->getErrors();
+
+        // Check that every action references a resource that exists in the index
+        $actionErrors = [];
+        foreach ($checker->getActionsDefinedInResource() as $action) {
+            if (is_string($action)) {
+                // GroupV1JsonChecker pushes the resource name string directly
+                $ref = $action;
+            } elseif (is_object($action) && property_exists($action, 'resource')) {
+                $ref = $action->resource;
+            } else {
+                continue;
+            }
+            if (!array_key_exists($ref, $index_resources)) {
+                $actionErrors[] = "Action references unknown resource '$ref'";
+            }
+        }
+
+        $allErrors = array_merge($structureErrs, $actionErrors);
+
+        if (empty($allErrors)) {
             echo "{$green}OK{$reset}\n";
             $okCount++;
         } else {
             echo "{$red}ERRORS{$reset}\n";
-            foreach ($checker->getErrors() as $error) {
+            foreach ($allErrors as $error) {
                 echo "      - $error\n";
             }
             $errCount++;
