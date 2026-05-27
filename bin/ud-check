@@ -21,14 +21,24 @@ if (!$autoloaded) {
     exit(1);
 }
 
-use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
+// Parse arguments:
+//   ud-check [index_json_resources.php | project-dir] [--factory=FullyQualifiedClassName]
+$indexArg   = null;
+$factoryClass = 'Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker';
+
+foreach (array_slice($argv, 1) as $arg) {
+    if (str_starts_with($arg, '--factory=')) {
+        $factoryClass = substr($arg, strlen('--factory='));
+    } else {
+        $indexArg = $arg;
+    }
+}
 
 // Resolve the path to index_json_resources.php
-if (isset($argv[1])) {
-    $arg = $argv[1];
-    $indexPath = is_dir($arg)
-        ? rtrim($arg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php'
-        : $arg;
+if ($indexArg !== null) {
+    $indexPath = is_dir($indexArg)
+        ? rtrim($indexArg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php'
+        : $indexArg;
 } else {
     $indexPath = getcwd() . DIRECTORY_SEPARATOR . 'index_json_resources.php';
 }
@@ -37,13 +47,17 @@ $indexPath = realpath($indexPath);
 
 if ($indexPath === false || !file_exists($indexPath)) {
     fwrite(STDERR, "Error: index_json_resources.php not found\n");
-    fwrite(STDERR, "Usage: ud-check [path/to/index_json_resources.php | project-dir]\n");
+    fwrite(STDERR, "Usage: ud-check [path/to/index_json_resources.php | project-dir] [--factory=ClassName]\n");
+    exit(1);
+}
+
+if (!class_exists($factoryClass)) {
+    fwrite(STDERR, "Error: factory class '$factoryClass' not found\n");
     exit(1);
 }
 
 // Change to the index file's directory so that relative paths inside it resolve correctly
-$projectDir = dirname($indexPath);
-chdir($projectDir);
+chdir(dirname($indexPath));
 
 // The file assigns $index_resources rather than returning it
 $index_resources = null;
@@ -65,7 +79,8 @@ $reset  = $isTty ? "\033[0m"    : '';
 $total                    = count($index_resources);
 $okCount = $errCount = $skipCount = 0;
 
-echo "{$bold}Checking {$total} JSON resource(s) from:{$reset} $indexPath\n\n";
+echo "{$bold}Checking {$total} JSON resource(s) from:{$reset} $indexPath\n";
+echo "{$bold}Factory:{$reset} $factoryClass\n\n";
 
 foreach ($index_resources as $resourceName => $resourcePath) {
     echo "  {$bold}{$resourceName}{$reset}: ";
@@ -92,7 +107,7 @@ foreach ($index_resources as $resourceName => $resourcePath) {
     }
 
     try {
-        $checker = BasicJsonChecker::basicJsonCheckerFactory($resource);
+        $checker = $factoryClass::basicJsonCheckerFactory($resource);
         if ($checker->isResourceBlockWellStructured()) {
             echo "{$green}OK{$reset}\n";
             $okCount++;
