@@ -51,9 +51,11 @@ if (!file_exists($checkersPath)) {
 // Change to the project directory so that relative paths in both index files resolve correctly
 chdir($projectDir);
 
-$index_resources     = null;
-$index_json_checkers = null;
-$index_controllers   = [];
+$index_resources         = null;
+$index_json_checkers     = null;
+$index_controllers       = [];
+$index_json_tag_checkers = [];
+$index_groups            = [];
 
 require $indexPath;
 require $checkersPath;
@@ -61,6 +63,16 @@ require $checkersPath;
 $controllersPath = $projectDir . DIRECTORY_SEPARATOR . 'index_controllers.php';
 if (file_exists($controllersPath)) {
     require $controllersPath;
+}
+
+$tagCheckersPath = $projectDir . DIRECTORY_SEPARATOR . 'index_json_tag_checkers.php';
+if (file_exists($tagCheckersPath)) {
+    require $tagCheckersPath;
+}
+
+$groupsPath = $projectDir . DIRECTORY_SEPARATOR . 'index_groups.php';
+if (file_exists($groupsPath)) {
+    require $groupsPath;
 }
 
 if (!is_array($index_resources)) {
@@ -81,8 +93,88 @@ $yellow = $isTty ? "\033[0;33m" : '';
 $bold   = $isTty ? "\033[1m"    : '';
 $reset  = $isTty ? "\033[0m"    : '';
 
-$total                    = count($index_resources);
+// ── Helper functions ──────────────────────────────────────────────────────
+
+function udIsRequired(string $rule): bool {
+    return in_array('required', explode('|', $rule));
+}
+
+function udActionParamNames($paramsObj): array {
+    $params = [];
+    foreach ($paramsObj->parameters ?? [] as $p) {
+        if (isset($p->name) && $p->name !== '') {
+            $params[] = $p->name;
+        }
+    }
+    return $params;
+}
+
+/** Return all :placeholder names found in a SQL string. */
+function udExtractSqlPlaceholders(string $sql): array {
+    preg_match_all('/:[a-zA-Z_][a-zA-Z0-9_]*/', $sql, $m);
+    return array_map(fn($p) => ltrim($p, ':'), $m[0]);
+}
+
+/** Recursively collect every "filter" string value found in a decoded JSON object. */
+function udCollectFilters(mixed $obj, array &$out): void {
+    if (is_object($obj)) {
+        foreach (get_object_vars($obj) as $key => $val) {
+            if ($key === 'filter' && is_string($val)) {
+                $out[] = $val;
+            } else {
+                udCollectFilters($val, $out);
+            }
+        }
+    } elseif (is_array($obj)) {
+        foreach ($obj as $val) {
+            udCollectFilters($val, $out);
+        }
+    }
+}
+
+/** Recursively collect every string value of a given property name. */
+function udCollectProperty(mixed $obj, string $prop, array &$out): void {
+    if (is_object($obj)) {
+        foreach (get_object_vars($obj) as $key => $val) {
+            if ($key === $prop && is_string($val)) {
+                $out[] = $val;
+            } else {
+                udCollectProperty($val, $prop, $out);
+            }
+        }
+    } elseif (is_array($obj)) {
+        foreach ($obj as $val) {
+            udCollectProperty($val, $prop, $out);
+        }
+    }
+}
+
+// ── Known filter names ────────────────────────────────────────────────────
+// Display filters (defined in CustomPageStatus::applyFilter / PageStatus::applyFilter)
+// plus GUMP input-sanitize filters used on form fields
+$knownFilters = [
+    // display filters
+        'substr', 'mysqltohumandate', 'mysqltime', 'maxcharnumber', 'isowner',
+        'filelink', 'striptags', 'whatsappphone', 'cleanurl', 'isPOC',
+        'getAnswerTypeNameFromId', 'getStatusForAssetInMaintenance',
+        'mntpmcheck', 'hideUnsetHours', 'maintenanceTimeUnitOfMeasure',
+    // GUMP sanitize filters
+        'sanitize_string', 'sanitize_email', 'sanitize_numbers', 'sanitize_floats',
+        'sanitize_stripped_tags', 'sanitize_special_chars', 'sanitize_encoded',
+        'sanitize_url', 'sanitize_integer', 'basic_tags', 'whole_number', 'trim',
+        'noise_words', 'htmlspecialchars', 'htmlspecialchars_decode', 'slug',
+        'rmpunctuation', 'alpha', 'alpha_numeric',
+];
+
+$validGroupSlugs = array_keys($index_groups);
+$templateDir     = $projectDir . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Templates';
+
+// ── Main loop ─────────────────────────────────────────────────────────────
+
+$total         = count($index_resources);
 $okCount = $errCount = $skipCount = 0;
+$resourceCache        = []; // avoid re-reading JSON files for cross-resource checks
+$referencedResources  = []; // for orphan detection
 
 echo "{$bold}Checking {$total} JSON resource(s) from:{$reset} $indexPath\n\n";
 
@@ -126,28 +218,211 @@ foreach ($index_resources as $resourceName => $resourcePath) {
         continue;
     }
 
+    // Cache this resource for cross-resource parameter checks
+    $resourceCache[$resourcePath] = $resource;
+
     try {
         $checker       = new $checkerClass($resource);
         $structureOk   = $checker->isResourceBlockWellStructured();
         $structureErrs = $checker->getErrors();
 
-        // Check that every action references a resource that exists in the index
-        $actionErrors = [];
-        foreach ($checker->getActionsDefinedInResource() as $action) {
-            if (is_string($action)) {
-                // GroupV1JsonChecker pushes the resource name string directly
-                $ref = $action;
-            } elseif (is_object($action) && property_exists($action, 'resource')) {
-                $ref = $action->resource;
-            } else {
-                continue;
-            }
-            if (!array_key_exists($ref, $index_resources) && !array_key_exists($ref, $index_controllers)) {
-                $actionErrors[] = "Action references unknown resource '$ref'";
+        $resourceErrors = [];
+
+        // ── Check: name field matches index key ───────────────────────────
+        if (isset($resource->name) && $resource->name !== $resourceName) {
+            $resourceErrors[] = "name field '{$resource->name}' does not match index key '$resourceName'";
+        }
+
+        // ── Check: allowedgroups entries are valid ────────────────────────
+        if (!empty($validGroupSlugs)) {
+            foreach ($resource->allowedgroups ?? [] as $group) {
+                if (!in_array($group, $validGroupSlugs)) {
+                    $resourceErrors[] = "allowedgroups: unknown group '$group'";
+                }
             }
         }
 
-        $allErrors = array_merge($structureErrs, $actionErrors);
+        // ── Check: SQL placeholders match declared query parameters ────────
+        $querySql = $resource->get->query->sql ?? '';
+        if ($querySql !== '') {
+            $sqlPlaceholders  = udExtractSqlPlaceholders($querySql);
+            $declaredPlaceholders = [];
+            foreach ($resource->get->query->parameters ?? [] as $p) {
+                if (isset($p->placeholder)) {
+                    $declaredPlaceholders[] = ltrim($p->placeholder, ':');
+                }
+            }
+            foreach ($sqlPlaceholders as $ph) {
+                if (!in_array($ph, $declaredPlaceholders)) {
+                    $resourceErrors[] = "SQL placeholder ':$ph' has no matching query parameter entry";
+                }
+            }
+            foreach ($declaredPlaceholders as $ph) {
+                if (!in_array($ph, $sqlPlaceholders)) {
+                    $resourceErrors[] = "Query parameter ':$ph' is declared but not used in SQL";
+                }
+            }
+        }
+
+        // ── Check: templateFile exists (controller type) ──────────────────
+        if ($type === 'controller') {
+            $templateFile = $resource->get->controller->templateFile ?? null;
+            if ($templateFile !== null) {
+                $tplPath = $templateDir . DIRECTORY_SEPARATOR . $templateFile . '.php';
+                if (!file_exists($tplPath)) {
+                    $resourceErrors[] = "templateFile '$templateFile' not found at src/Templates/{$templateFile}.php";
+                }
+            }
+        }
+
+        // ── Check: filter names are known ─────────────────────────────────
+        $usedFilters = [];
+        udCollectFilters($resource, $usedFilters);
+        foreach ($usedFilters as $filterStr) {
+            foreach (explode('|', $filterStr) as $part) {
+                $filterName = explode(',', trim($part))[0];
+                if (!in_array($filterName, $knownFilters)) {
+                    $resourceErrors[] = "Unknown filter '$filterName'";
+                }
+            }
+        }
+
+        // ── Action checks ─────────────────────────────────────────────────
+        $actionErrors = [];
+
+        // Collect declared GET and POST parameter names for this resource
+        $currentGetParamNames  = [];
+        foreach ($resource->get->request->parameters ?? [] as $rp) {
+            if (isset($rp->name)) $currentGetParamNames[] = $rp->name;
+        }
+        $currentPostParamNames = [];
+        foreach ($resource->post->request->parameters ?? [] as $rp) {
+            if (isset($rp->name)) $currentPostParamNames[] = $rp->name;
+        }
+
+        foreach ($checker->getActionsDefinedInResource() as $action) {
+            // Validate tag structure
+            if (is_object($action) && isset($action->type)) {
+                $tagType = $action->type;
+                if (!empty($index_json_tag_checkers)) {
+                    if (!array_key_exists($tagType, $index_json_tag_checkers)) {
+                        $actionErrors[] = "Unknown tag type '$tagType'";
+                    } else {
+                        $tagCheckerClass = $index_json_tag_checkers[$tagType];
+                        $tagChecker      = new $tagCheckerClass($action);
+                        if (!$tagChecker->isValid()) {
+                            foreach ($tagChecker->getErrors() as $tagErr) {
+                                $actionErrors[] = "Tag '$tagType': $tagErr";
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Build list of (resource-ref, params-source) pairs from this action
+            $refsToCheck = [];
+            if (is_string($action)) {
+                $refsToCheck[] = ['ref' => $action, 'paramsObj' => null];
+            } elseif (is_object($action)) {
+                if (property_exists($action, 'resource')) {
+                    $refsToCheck[] = ['ref' => $action->resource, 'paramsObj' => $action];
+                }
+                if (isset($action->dataudurl->resource)) {
+                    $refsToCheck[] = ['ref' => $action->dataudurl->resource, 'paramsObj' => $action->dataudurl];
+                }
+                if (isset($action->dataudurl->controller)
+                        && !isset($action->dataudurl->resource)
+                        && $action->dataudurl->controller !== 'partial'
+                ) {
+                    $refsToCheck[] = ['ref' => $action->dataudurl->controller, 'paramsObj' => $action->dataudurl];
+                }
+            }
+
+            foreach ($refsToCheck as ['ref' => $ref, 'paramsObj' => $paramsObj]) {
+                if ($ref === '#') continue;
+
+                $isKnownResource   = array_key_exists($ref, $index_resources);
+                $isKnownController = array_key_exists($ref, $index_controllers);
+
+                if (!$isKnownResource && !$isKnownController) {
+                    $actionErrors[] = "Action references unknown resource '$ref'";
+                    continue;
+                }
+
+                if ($isKnownResource) {
+                    $referencedResources[$ref] = true;
+                }
+
+                // Check: getparameter values declared in this resource's GET request parameters
+                foreach ($paramsObj->parameters ?? [] as $param) {
+                    if (!isset($param->getparameter)) continue;
+                    if (!in_array($param->getparameter, $currentGetParamNames)) {
+                        $actionErrors[] = "Action '$ref': getparameter '{$param->getparameter}' is not declared in this resource's request parameters";
+                    }
+                }
+
+                // Check: postparameter values declared in this resource's POST request parameters
+                foreach ($paramsObj->parameters ?? [] as $param) {
+                    if (!isset($param->postparameter)) continue;
+                    if (!empty($currentPostParamNames) && !in_array($param->postparameter, $currentPostParamNames)) {
+                        $actionErrors[] = "Action '$ref': postparameter '{$param->postparameter}' is not declared in this resource's post request parameters";
+                    }
+                }
+
+                // Check: passed parameter names must be expected by the target resource
+                if ($isKnownResource) {
+                    $targetPath = $index_resources[$ref];
+                    if (!isset($resourceCache[$targetPath]) && file_exists($targetPath)) {
+                        $resourceCache[$targetPath] = json_decode(file_get_contents($targetPath));
+                    }
+                    $targetResource = $resourceCache[$targetPath] ?? null;
+                    if ($targetResource !== null) {
+                        $targetGetParamNames = [];
+                        foreach ($targetResource->get->request->parameters ?? [] as $rp) {
+                            if (isset($rp->name)) $targetGetParamNames[] = $rp->name;
+                        }
+                        if (!empty($targetGetParamNames)) {
+                            foreach ($paramsObj->parameters ?? [] as $param) {
+                                if (!isset($param->name) || $param->name === '') continue;
+                                if (!in_array($param->name, $targetGetParamNames)) {
+                                    $actionErrors[] = "Action '$ref': parameter '{$param->name}' is not declared in target resource's request parameters";
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (!$isKnownController) continue;
+
+                // Check required GET parameters of the controller are passed
+                $controllerClass = $index_controllers[$ref];
+                if (!class_exists($controllerClass)) {
+                    $actionErrors[] = "Action '$ref': class $controllerClass not found";
+                    continue;
+                }
+                try {
+                    $_SESSION = $_SESSION ?? [];
+                    $prev       = error_reporting(0);
+                    $controller = new $controllerClass();
+                    error_reporting($prev);
+                } catch (\Throwable $e) {
+                    error_reporting($prev ?? E_ALL);
+                    $actionErrors[] = "Action '$ref': could not instantiate $controllerClass — " . $e->getMessage();
+                    continue;
+                }
+
+                $getRules = $controller->get_validation_rules ?? [];
+                $passed   = $paramsObj !== null ? udActionParamNames($paramsObj) : [];
+                foreach ($getRules as $field => $rule) {
+                    if (udIsRequired($rule) && !in_array($field, $passed)) {
+                        $actionErrors[] = "Action '$ref': required GET parameter '$field' is not passed";
+                    }
+                }
+
+            }
+        }
+
+        $allErrors = array_merge($structureErrs, $resourceErrors, $actionErrors);
 
         if (empty($allErrors)) {
             echo "{$green}OK{$reset}\n";
@@ -164,6 +439,30 @@ foreach ($index_resources as $resourceName => $resourcePath) {
         $errCount++;
     }
 }
+
+// ── Orphan resources ──────────────────────────────────────────────────────
+// Also scan group JSON files for resource references so navigation entry
+// points are not reported as orphans.
+foreach ($index_groups as $groupSlug => $groupPath) {
+    if (!file_exists($groupPath)) continue;
+    $groupData = json_decode(file_get_contents($groupPath));
+    if ($groupData === null) continue;
+    $groupRefs = [];
+    udCollectProperty($groupData, 'resource', $groupRefs);
+    foreach ($groupRefs as $ref) {
+        $referencedResources[$ref] = true;
+    }
+}
+
+$orphans = array_diff(array_keys($index_resources), array_keys($referencedResources));
+if (!empty($orphans)) {
+    echo "\n{$bold}Unreferenced resources:{$reset}\n";
+    foreach ($orphans as $orphan) {
+        echo "  {$yellow}{$orphan}{$reset}\n";
+    }
+}
+
+// ── Summary ───────────────────────────────────────────────────────────────
 
 echo "\n{$bold}Summary:{$reset} "
         . "{$green}{$okCount} OK{$reset}, "
