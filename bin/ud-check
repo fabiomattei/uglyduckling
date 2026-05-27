@@ -454,7 +454,30 @@ foreach ($index_groups as $groupSlug => $groupPath) {
     }
 }
 
+// Build a single blob of all PHP source for controller/view reference scanning
+$phpSourceBlob = '';
+$phpIt = new RecursiveIteratorIterator(new RecursiveDirectoryIterator('./src'));
+foreach ($phpIt as $phpFile) {
+    if ($phpFile->isFile() && $phpFile->getExtension() === 'php') {
+        $phpSourceBlob .= file_get_contents($phpFile->getPathname()) . "\n";
+    }
+}
+
 $orphans = array_diff(array_keys($index_resources), array_keys($referencedResources));
+$orphans = array_filter($orphans, function (string $slug) use ($referencedResources, $phpSourceBlob): bool {
+    // Mobile variant is implicitly covered if its base resource is referenced
+    if (str_ends_with($slug, '-mobile')) {
+        $base = substr($slug, 0, -7);
+        if (isset($referencedResources[$base])) {
+            return false;
+        }
+    }
+    // Referenced as a slug.html link inside a PHP controller or view
+    if (str_contains($phpSourceBlob, $slug . '.html')) {
+        return false;
+    }
+    return true;
+});
 if (!empty($orphans)) {
     echo "\n{$bold}Unreferenced resources:{$reset}\n";
     foreach ($orphans as $orphan) {
