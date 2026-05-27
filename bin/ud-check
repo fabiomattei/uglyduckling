@@ -21,20 +21,9 @@ if (!$autoloaded) {
     exit(1);
 }
 
-// Parse arguments:
-//   ud-check [index_json_resources.php | project-dir] [--factory=FullyQualifiedClassName]
-$indexArg   = null;
-$factoryClass = 'Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker';
+// Resolve project directory from optional argument (file or directory)
+$indexArg = $argv[1] ?? null;
 
-foreach (array_slice($argv, 1) as $arg) {
-    if (str_starts_with($arg, '--factory=')) {
-        $factoryClass = substr($arg, strlen('--factory='));
-    } else {
-        $indexArg = $arg;
-    }
-}
-
-// Resolve the path to index_json_resources.php
 if ($indexArg !== null) {
     $indexPath = is_dir($indexArg)
         ? rtrim($indexArg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php'
@@ -47,24 +36,34 @@ $indexPath = realpath($indexPath);
 
 if ($indexPath === false || !file_exists($indexPath)) {
     fwrite(STDERR, "Error: index_json_resources.php not found\n");
-    fwrite(STDERR, "Usage: ud-check [path/to/index_json_resources.php | project-dir] [--factory=ClassName]\n");
+    fwrite(STDERR, "Usage: ud-check [path/to/index_json_resources.php | project-dir]\n");
     exit(1);
 }
 
-if (!class_exists($factoryClass)) {
-    fwrite(STDERR, "Error: factory class '$factoryClass' not found\n");
+$projectDir  = dirname($indexPath);
+$checkersPath = $projectDir . DIRECTORY_SEPARATOR . 'index_json_checkers.php';
+
+if (!file_exists($checkersPath)) {
+    fwrite(STDERR, "Error: index_json_checkers.php not found in $projectDir\n");
     exit(1);
 }
 
-// Change to the index file's directory so that relative paths inside it resolve correctly
-chdir(dirname($indexPath));
+// Change to the project directory so that relative paths in both index files resolve correctly
+chdir($projectDir);
 
-// The file assigns $index_resources rather than returning it
-$index_resources = null;
+$index_resources    = null;
+$index_json_checkers = null;
+
 require $indexPath;
+require $checkersPath;
 
 if (!is_array($index_resources)) {
     fwrite(STDERR, "Error: index_json_resources.php must define \$index_resources as an array\n");
+    exit(1);
+}
+
+if (!is_array($index_json_checkers)) {
+    fwrite(STDERR, "Error: index_json_checkers.php must define \$index_json_checkers as an array\n");
     exit(1);
 }
 
@@ -79,8 +78,7 @@ $reset  = $isTty ? "\033[0m"    : '';
 $total                    = count($index_resources);
 $okCount = $errCount = $skipCount = 0;
 
-echo "{$bold}Checking {$total} JSON resource(s) from:{$reset} $indexPath\n";
-echo "{$bold}Factory:{$reset} $factoryClass\n\n";
+echo "{$bold}Checking {$total} JSON resource(s) from:{$reset} $indexPath\n\n";
 
 foreach ($index_resources as $resourceName => $resourcePath) {
     echo "  {$bold}{$resourceName}{$reset}: ";
@@ -100,14 +98,30 @@ foreach ($index_resources as $resourceName => $resourcePath) {
         continue;
     }
 
-    if (!isset($resource->metadata->type)) {
+    $type = $resource->metadata->type ?? null;
+
+    if ($type === null) {
         echo "{$yellow}SKIPPED{$reset} (no metadata.type field)\n";
         $skipCount++;
         continue;
     }
 
+    if (!isset($index_json_checkers[$type])) {
+        echo "{$yellow}SKIPPED{$reset} (no checker registered for type '$type')\n";
+        $skipCount++;
+        continue;
+    }
+
+    $checkerClass = $index_json_checkers[$type];
+
+    if (!class_exists($checkerClass)) {
+        echo "{$red}CHECKER CLASS NOT FOUND{$reset} ($checkerClass)\n";
+        $errCount++;
+        continue;
+    }
+
     try {
-        $checker = $factoryClass::basicJsonCheckerFactory($resource);
+        $checker = new $checkerClass($resource);
         if ($checker->isResourceBlockWellStructured()) {
             echo "{$green}OK{$reset}\n";
             $okCount++;
