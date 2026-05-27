@@ -103,6 +103,10 @@ class BasicJsonChecker {
 		return array();
 	}
 
+	public function getErrors(): array {
+        return $this->errors;
+    }
+
 	public function getErrorsString(): string {
 	    $errorString = '';
         foreach ( $this->errors as $error) {
