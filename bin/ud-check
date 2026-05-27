@@ -3,8 +3,8 @@
 
 // Locate vendor/autoload.php whether run from library root or installed as a dependency
 $autoloadCandidates = [
-    __DIR__ . '/../vendor/autoload.php',    // library development root
-    __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
+        __DIR__ . '/../vendor/autoload.php',    // library development root
+        __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
 ];
 
 $autoloaded = false;
@@ -26,8 +26,8 @@ $indexArg = $argv[1] ?? null;
 
 if ($indexArg !== null) {
     $indexPath = is_dir($indexArg)
-        ? rtrim($indexArg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php'
-        : $indexArg;
+            ? rtrim($indexArg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php'
+            : $indexArg;
 } else {
     $indexPath = getcwd() . DIRECTORY_SEPARATOR . 'index_json_resources.php';
 }
@@ -53,9 +53,15 @@ chdir($projectDir);
 
 $index_resources     = null;
 $index_json_checkers = null;
+$index_controllers   = [];
 
 require $indexPath;
 require $checkersPath;
+
+$controllersPath = $projectDir . DIRECTORY_SEPARATOR . 'index_controllers.php';
+if (file_exists($controllersPath)) {
+    require $controllersPath;
+}
 
 if (!is_array($index_resources)) {
     fwrite(STDERR, "Error: index_json_resources.php must define \$index_resources as an array\n");
@@ -136,7 +142,7 @@ foreach ($index_resources as $resourceName => $resourcePath) {
             } else {
                 continue;
             }
-            if (!array_key_exists($ref, $index_resources)) {
+            if (!array_key_exists($ref, $index_resources) && !array_key_exists($ref, $index_controllers)) {
                 $actionErrors[] = "Action references unknown resource '$ref'";
             }
         }
@@ -160,8 +166,8 @@ foreach ($index_resources as $resourceName => $resourcePath) {
 }
 
 echo "\n{$bold}Summary:{$reset} "
-    . "{$green}{$okCount} OK{$reset}, "
-    . "{$red}{$errCount} error(s){$reset}, "
-    . "{$yellow}{$skipCount} skipped{$reset}\n";
+        . "{$green}{$okCount} OK{$reset}, "
+        . "{$red}{$errCount} error(s){$reset}, "
+        . "{$yellow}{$skipCount} skipped{$reset}\n";
 
 exit($errCount > 0 ? 1 : 0);
