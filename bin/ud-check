@@ -26,38 +26,43 @@ use Fabiom\UglyDuckling\Common\Json\Checkers\BasicJsonChecker;
 // Resolve the path to index_json_resources.php
 if (isset($argv[1])) {
     $arg = $argv[1];
-    // Accept either the file directly or a directory containing it
-    if (is_dir($arg)) {
-        $indexPath = rtrim($arg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php';
-    } else {
-        $indexPath = $arg;
-    }
+    $indexPath = is_dir($arg)
+        ? rtrim($arg, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index_json_resources.php'
+        : $arg;
 } else {
     $indexPath = getcwd() . DIRECTORY_SEPARATOR . 'index_json_resources.php';
 }
 
-if (!file_exists($indexPath)) {
-    fwrite(STDERR, "Error: index_json_resources.php not found at: $indexPath\n");
-    fwrite(STDERR, "Usage: check-json-resources [path/to/index_json_resources.php | project-dir]\n");
+$indexPath = realpath($indexPath);
+
+if ($indexPath === false || !file_exists($indexPath)) {
+    fwrite(STDERR, "Error: index_json_resources.php not found\n");
+    fwrite(STDERR, "Usage: ud-check [path/to/index_json_resources.php | project-dir]\n");
     exit(1);
 }
 
-$index_resources = require $indexPath;
+// Change to the index file's directory so that relative paths inside it resolve correctly
+$projectDir = dirname($indexPath);
+chdir($projectDir);
+
+// The file assigns $index_resources rather than returning it
+$index_resources = null;
+require $indexPath;
 
 if (!is_array($index_resources)) {
-    fwrite(STDERR, "Error: index_json_resources.php must return an associative array\n");
+    fwrite(STDERR, "Error: index_json_resources.php must define \$index_resources as an array\n");
     exit(1);
 }
 
 // ANSI colours when writing to a real terminal
-$isTty = function_exists('posix_isatty') && posix_isatty(STDOUT);
+$isTty  = function_exists('posix_isatty') && posix_isatty(STDOUT);
 $green  = $isTty ? "\033[0;32m" : '';
 $red    = $isTty ? "\033[0;31m" : '';
 $yellow = $isTty ? "\033[0;33m" : '';
 $bold   = $isTty ? "\033[1m"    : '';
 $reset  = $isTty ? "\033[0m"    : '';
 
-$total   = count($index_resources);
+$total                    = count($index_resources);
 $okCount = $errCount = $skipCount = 0;
 
 echo "{$bold}Checking {$total} JSON resource(s) from:{$reset} $indexPath\n\n";
@@ -71,7 +76,7 @@ foreach ($index_resources as $resourceName => $resourcePath) {
         continue;
     }
 
-    $json = file_get_contents($resourcePath);
+    $json     = file_get_contents($resourcePath);
     $resource = json_decode($json);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
