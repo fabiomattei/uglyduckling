@@ -22,6 +22,9 @@
 	"autoload": {
       "psr-4": {
             "Fabiom\\UglyDuckling\\": "src/"
-        }
+        },
+        "files": [
+            "src/Framework/Utils/url_for.php"
+        ]
     }
 }
