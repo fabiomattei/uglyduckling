@@ -120,7 +120,7 @@ class JsonResourceController extends CommonController {
         // checking if resource defines any get parameter
         if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) return true;
 
-        $this->secondGump = new \GUMP();
+        $this->secondGump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
         $validation_rules = $parametersGetter->getValidationRoules();

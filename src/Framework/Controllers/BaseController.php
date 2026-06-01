@@ -36,7 +36,7 @@ class BaseController extends CommonController {
     public $flashvariable;
 
     public function __construct() {
-        $this->gump = new \GUMP();
+        $this->gump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
         $this->parameters = [];
     }
 
