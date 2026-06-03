@@ -155,8 +155,9 @@ class UserDao extends BasicDao {
         $presentmoment = date('Y-m-d H:i:s', time());
 
         try {
-            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET usr_hashedpsw = :hashedpsw, usr_password_updated = "' . $presentmoment . '" WHERE ' . $this::DB_TABLE_PK . ' = :id');
+            $STH = $this->DBH->prepare('UPDATE ' . $this::DB_TABLE . ' SET usr_hashedpsw = :hashedpsw, usr_password_updated = :presentmoment WHERE ' . $this::DB_TABLE_PK . ' = :id');
             $STH->bindParam(':hashedpsw', $hashedPassword);
+            $STH->bindParam(':presentmoment', $presentmoment);
             $STH->bindParam(':id', $id);
             $STH->execute();
         } catch (\PDOException $e) {
