@@ -206,10 +206,15 @@ class CommonController {
         if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
             print_r($this->readableErrors);
         } {
+            $url = $_SESSION['request'] ?? '';
+            if ( !\Fabiom\UglyDuckling\Framework\Utils\SessionWrapper::isInternalUrl($url) ) {
+                $this->redirectToDefaultPage();
+                return;
+            }
             if (defined('BASE_PATH')) {
-                header('Location: ' . BASE_PATH . $_SESSION['request']);
+                header('Location: ' . BASE_PATH . $url);
             } else {
-                header('Location: ' . $_SESSION['request']);
+                header('Location: ' . $url);
             }
             exit();
         }
@@ -220,10 +225,16 @@ class CommonController {
      * It send flash messages to new controller [info, warning, error, success]
      */
     public function redirectToPreviousPage() {
-        if (defined('BASE_PATH')) {
-            header('Location: ' . BASE_PATH . $_SESSION['prevrequest'] );
+        $url = $_SESSION['prevrequest'] ?? '';
+        if ( !\Fabiom\UglyDuckling\Framework\Utils\SessionWrapper::isInternalUrl($url) ) {
+            $this->redirectToDefaultPage();
+            return;
         }
-        header('Location: ' . $_SESSION['prevrequest'] );
+        if (defined('BASE_PATH')) {
+            header('Location: ' . BASE_PATH . $url );
+        } else {
+            header('Location: ' . $url );
+        }
         exit();
     }
 
