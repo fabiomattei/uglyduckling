@@ -192,7 +192,7 @@ class CommonController {
         if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
             print_r($this->readableErrors);
         } {
-            $this->redirectToDefaultPage();
+            $this->redirectToPreviousPage();
         }
     }
 
@@ -206,7 +206,12 @@ class CommonController {
         if ( defined('APPLICATION_ENVIRONMENT') and APPLICATION_ENVIRONMENT === 'development' ) {
             print_r($this->readableErrors);
         } {
-            $this->redirectToDefaultPage();
+            if (defined('BASE_PATH')) {
+                header('Location: ' . BASE_PATH . $_SESSION['request']);
+            } else {
+                header('Location: ' . $_SESSION['request']);
+            }
+            exit();
         }
     }
 
