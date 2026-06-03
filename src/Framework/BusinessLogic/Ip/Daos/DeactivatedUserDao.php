@@ -45,7 +45,7 @@ class DeactivatedUserDao extends BasicDao {
         }
     }
 
-    function checkIfIpIsDeactivated( string $username ) {
+    function checkIfIpIsDeactivated( string $username ): bool {
         try {
             $STH = $this->DBH->prepare('SELECT du_username FROM '.$this::DB_TABLE.' WHERE du_username = :username;');
             $STH->bindParam(':username', $username, \PDO::PARAM_STR);
@@ -54,7 +54,6 @@ class DeactivatedUserDao extends BasicDao {
             $STH->setFetchMode(\PDO::FETCH_OBJ);
             $obj = $STH->fetch();
 
-            // user with given email does not exist
             if ($obj == null) {
                 return false;
             }
@@ -63,6 +62,7 @@ class DeactivatedUserDao extends BasicDao {
         }
         catch(\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            return false;
         }
     }
 
