@@ -151,7 +151,7 @@ class JsonResourceController extends CommonController {
      */
     public function check_post_request() {
         //if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
-        $this->secondGump = new \GUMP;
+        $this->secondGump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
         $validation_rules = $parametersGetter->getPostValidationRoules();

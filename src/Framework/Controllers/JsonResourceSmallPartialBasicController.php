@@ -105,7 +105,7 @@ class JsonResourceSmallPartialBasicController extends ControllerNoCSRFTokenRenew
             if(isset($this->resource->get->smallpartials)) {
                 foreach ($this->resource->get->smallpartials as $smallpartial) {
                     if ($smallpartial->type == $_GET['udsmallpartial']) {
-                        $secondGump = new \GUMP;
+                        $secondGump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
                         $validation_rules = [];
                         $filter_rules = [];
                         if( isset($smallpartial->request->parameters) and is_array($smallpartial->request->parameters) ) {

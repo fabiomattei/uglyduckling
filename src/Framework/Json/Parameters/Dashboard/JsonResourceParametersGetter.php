@@ -42,7 +42,7 @@ class JsonResourceParametersGetter implements ParameterGetter {
 
     public function getPostFiltersRoules() {
         $filters = array();
-        if( is_array($this->resource->post->request->postparameters) ) {
+        if( isset($this->resource->post->request->postparameters) and is_array($this->resource->post->request->postparameters) ) {
             foreach ($this->resource->post->request->postparameters as $par) {
                 $filters[$par->name] = $par->filter ?? 'trim';
             }

@@ -170,6 +170,12 @@ class SessionWrapper {
      * @param $request STRING containing URL complete of parameters
      */
     static public function setRequestedURL( $requestedUrl ) {
+        if ( $_SERVER['REQUEST_METHOD'] !== 'GET' ) {
+            return;
+        }
+        if ( isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' ) {
+            return;
+        }
         $_SESSION['prevprevrequest'] = ( isset($_SESSION['prevrequest']) ? $_SESSION['prevrequest'] : '' );
         $_SESSION['prevrequest'] = ( isset($_SESSION['request']) ? $_SESSION['request'] : '' );
         $_SESSION['request'] = $requestedUrl;
