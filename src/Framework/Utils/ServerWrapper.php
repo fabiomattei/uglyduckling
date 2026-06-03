@@ -35,11 +35,41 @@ class ServerWrapper {
     }
 
     /**
-     * Return $_SERVER['REMOTE_ADDR']
-     * @return string
+     * Return the real client IP address.
+     * When behind a trusted reverse proxy, reads the first IP from
+     * HTTP_X_FORWARDED_FOR. Falls back to REMOTE_ADDR.
+     * Trusted proxy CIDRs can be set via the TRUSTED_PROXIES env var
+     * as a comma-separated list (e.g. "127.0.0.1,10.0.0.0/8").
      */
     static public function getRemoteAddress(): string {
-        return $_SERVER['REMOTE_ADDR'];
+        $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        $trustedProxies = array_filter(array_map('trim', explode(',', getenv('TRUSTED_PROXIES') ?: '')));
+
+        if ( !empty($trustedProxies) && self::ipMatchesCidrs($remoteAddr, $trustedProxies) ) {
+            if ( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+                $ips = array_map('trim', explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+                $clientIp = $ips[0];
+                if ( filter_var($clientIp, FILTER_VALIDATE_IP) ) {
+                    return $clientIp;
+                }
+            }
+        }
+
+        return $remoteAddr;
+    }
+
+    static private function ipMatchesCidrs( string $ip, array $cidrs ): bool {
+        foreach ($cidrs as $cidr) {
+            if ( strpos($cidr, '/') === false ) {
+                if ( $ip === $cidr ) return true;
+            } else {
+                [ $subnet, $bits ] = explode('/', $cidr);
+                $mask = ~((1 << (32 - (int)$bits)) - 1);
+                if ( (ip2long($ip) & $mask) === (ip2long($subnet) & $mask) ) return true;
+            }
+        }
+        return false;
     }
 
     /**
