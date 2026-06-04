@@ -16,6 +16,10 @@ class FormJsonTemplate extends JsonTemplate {
 
     const blocktype = 'form';
 
+    public function createHTMLBlock() {
+        return $this->createForm();
+    }
+
     public function createForm() {
         $logger = $this->pageStatus->logger;
         $queryExecutor = $this->pageStatus->getQueryExecutor();
