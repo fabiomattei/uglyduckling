@@ -45,7 +45,7 @@ class BaseController {
     public $unvalidated_parameters;
 
     public function __construct() {
-        $this->gump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
+        $this->gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
         $this->parameters = [];
     }
 

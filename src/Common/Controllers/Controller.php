@@ -13,7 +13,7 @@ use Fabiom\UglyDuckling\Common\Exceptions\AuthorizationException;
 use Fabiom\UglyDuckling\Common\Status\ApplicationBuilder;
 use Fabiom\UglyDuckling\Common\Status\PageStatus;
 use Fabiom\UglyDuckling\Common\Wrappers\SessionWrapper;
-use GUMP;
+use Fabiom\UglyDuckling\Framework\Validation\Validation;
 
 class Controller {
 
@@ -69,7 +69,7 @@ class Controller {
 		) {
 		$this->applicationBuilder    = $applicationBuilder;
         $this->pageStatus            = $pageStatus;
-        $this->gump                  = new GUMP();
+        $this->gump                  = new Validation();
 
         // setting an array containing all parameters
         $this->parameters = array();

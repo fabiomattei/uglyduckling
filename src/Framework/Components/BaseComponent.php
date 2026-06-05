@@ -68,7 +68,7 @@ abstract class BaseComponent {
         if (count($this->get_validation_rules) === 0) {
             return $_GET;
         }
-        $gump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
+        $gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
         $parms = $gump->sanitize($_GET);
         $gump->validation_rules($this->get_validation_rules);
         $gump->filter_rules($this->get_filter_rules);
@@ -85,7 +85,7 @@ abstract class BaseComponent {
             $this->postParameters = $_POST;
             return true;
         }
-        $gump = new \GUMP(defined('GUMP_LANG') ? GUMP_LANG : 'en');
+        $gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
         $parms = $gump->sanitize($_POST);
         $gump->validation_rules($this->post_validation_rules);
         $gump->filter_rules($this->post_filter_rules);
