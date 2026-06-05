@@ -45,17 +45,60 @@ namespace Fabiom\UglyDuckling\Framework\Validation;
  *   alpha_numeric        Only letters and digits allowed.
  *   numeric              Value must be numeric (integer or float).
  *   valid_email          Value must be a syntactically valid email address.
+ *   valid_url            Value must be a syntactically valid URL (http or https).
+ *   valid_date           Value must be a valid calendar date in YYYY-MM-DD format.
+ *   past_date            Value must be a valid YYYY-MM-DD date strictly before today.
+ *   future_date          Value must be a valid YYYY-MM-DD date strictly after today.
+ *   required_file        A file must have been uploaded without errors.
+ *   extension,ext1;ext2  The uploaded file's extension must be in the semicolon-separated list.
+ *
+ * FILE UPLOAD RULES
+ * -----------------
+ * File fields from $_FILES are merged into the input array by the framework
+ * before run() is called. Each file value is an array with the standard PHP
+ * keys (name, type, tmp_name, error, size). The file rules read from that
+ * array directly — do not pass the filename string.
+ *
+ * Required file — upload is mandatory:
+ *
+ *   $v->validation_rules([
+ *       'avatar' => 'required_file|extension,jpg;jpeg;png;gif',
+ *   ]);
+ *   $result = $v->run(array_merge($_POST, $_FILES));
+ *
+ * Optional file — upload may be skipped; if a file is provided its extension
+ * is still validated. Omit required_file and use extension alone:
+ *
+ *   $v->validation_rules([
+ *       'avatar' => 'extension,jpg;jpeg;png;gif',
+ *   ]);
+ *   $result = $v->run(array_merge($_POST, $_FILES));
+ *   float                Value must be a valid float number (decimals are allowed).
+ *   strong_password      Value must contain at least one uppercase letter, one lowercase
+ *                        letter, one digit and one special character (!@#$%^&* etc.).
+ *   integer              Value must be an integer (no decimals, no float notation).
+ *   integer_between,MIN;MAX  Value must be an integer and fall within [MIN, MAX] inclusive.
+ *   min_numeric,N        Value must be numeric and greater than or equal to N.
+ *   max_numeric,N        Value must be numeric and lower than or equal to N.
  *
  * FILTER RULES
  * ------------
  * Filters transform values before validation. Multiple filters per field are
  * separated by a pipe character and applied left to right.
  *
- *   trim             Remove leading and trailing whitespace.
- *   sanitize_string  Strip null bytes and HTML tags. Does NOT encode quotes.
- *   sanitize_email   Remove characters that are not valid in an email address.
- *   lowercase        Convert the value to lower case.
- *   uppercase        Convert the value to upper case.
+ *   trim              Remove leading and trailing whitespace.
+ *   sanitize_string   Strip null bytes and HTML tags. Does NOT encode quotes.
+ *   sanitize_email    Remove characters that are not valid in an email address.
+ *   sanitize_numbers  Remove all characters that are not digits.
+ *   sanitize_floats   Remove all characters that are not digits, dot, plus or minus.
+ *   rmpunctuation     Remove all punctuation characters from the string.
+ *   urlencode         Percent-encode the string for safe use in a URL.
+ *   htmlencode        Convert HTML special characters to their HTML entities.
+ *   boolean           Convert truthy values (1, 'true', 'yes', 'on') to true, everything else to false.
+ *   basic_tags        Strip all HTML tags except a safe subset (b, i, u, p, br, strong, em, a, ul, ol, li, span).
+ *   slug              Convert the value to a URL-friendly slug (e.g. "Hello World!" → "hello-world").
+ *   lowercase         Convert the value to lower case.
+ *   uppercase         Convert the value to upper case.
  *
  * MULTI-LANGUAGE
  * --------------
@@ -239,6 +282,15 @@ class Validation {
         return $template;
     }
 
+    private function toSlug(string $value): string {
+        // Transliterate accented/non-ASCII characters to ASCII equivalents.
+        $slug = transliterator_transliterate('Any-Latin; Latin-ASCII', $value) ?? $value;
+        $slug = strtolower($slug);
+        $slug = preg_replace('/[^a-z0-9\s\-]/', '', $slug);  // keep only letters, digits, spaces, hyphens
+        $slug = preg_replace('/[\s\-]+/', '-', $slug);        // collapse whitespace and hyphens
+        return trim($slug, '-');
+    }
+
     private function applyFilters(array $input): array {
         $result = $input;
         foreach ($this->filterRules as $field => $filterString) {
@@ -253,13 +305,24 @@ class Validation {
     }
 
     private function applyFilter(mixed $value, string $filter): mixed {
+        if (!is_string($value) && $filter !== 'boolean') {
+            return $value;
+        }
         return match ($filter) {
-            'trim'            => is_string($value) ? trim($value) : $value,
-            'sanitize_string' => is_string($value) ? preg_replace('/\x00|<[^>]*>?/', '', $value) : $value,
-            'sanitize_email'  => is_string($value) ? filter_var($value, FILTER_SANITIZE_EMAIL) : $value,
-            'lowercase'       => is_string($value) ? strtolower($value) : $value,
-            'uppercase'       => is_string($value) ? strtoupper($value) : $value,
-            default           => $value,
+            'trim'             => trim($value),
+            'sanitize_string'  => preg_replace('/\x00|<[^>]*>?/', '', $value),
+            'sanitize_email'   => filter_var($value, FILTER_SANITIZE_EMAIL),
+            'sanitize_numbers' => preg_replace('/[^0-9]/', '', $value),
+            'sanitize_floats'  => preg_replace('/[^0-9\.\+\-]/', '', $value),
+            'rmpunctuation'    => preg_replace('/\p{P}/u', '', $value),
+            'urlencode'        => urlencode($value),
+            'htmlencode'       => htmlspecialchars($value, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+            'boolean'          => in_array($value, [1, '1', 'true', true, 'yes', 'on'], true),
+            'basic_tags'       => strip_tags($value, '<b><i><u><p><br><strong><em><a><ul><ol><li><span>'),
+            'slug'             => $this->toSlug($value),
+            'lowercase'        => strtolower($value),
+            'uppercase'        => strtoupper($value),
+            default            => $value,
         };
     }
 
@@ -277,6 +340,18 @@ class Validation {
             'alpha_numeric'      => $this->validateAlphaNumeric($field, $value),
             'numeric'            => $this->validateNumeric($field, $value),
             'valid_email'        => $this->validateEmail($field, $value),
+            'valid_url'          => $this->validateUrl($field, $value),
+            'valid_date'         => $this->validateDate($field, $value),
+            'past_date'          => $this->validatePastDate($field, $value),
+            'future_date'        => $this->validateFutureDate($field, $value),
+            'required_file'      => $this->validateRequiredFile($field, $value),
+            'extension'          => $this->validateExtension($field, $value, $param),
+            'float'              => $this->validateFloat($field, $value),
+            'strong_password'    => $this->validateStrongPassword($field, $value),
+            'integer'            => $this->validateInteger($field, $value),
+            'integer_between'    => $this->validateIntegerBetween($field, $value, $param),
+            'min_numeric'        => $this->validateMinNumeric($field, $value, $param),
+            'max_numeric'        => $this->validateMaxNumeric($field, $value, $param),
             default              => null,
         };
     }
@@ -323,6 +398,119 @@ class Validation {
     private function validateNumeric(string $field, mixed $value): ?string {
         return ($value !== null && $value !== '' && !is_numeric($value))
             ? $this->msg('numeric', ['field' => $field])
+            : null;
+    }
+
+    private function validateRequiredFile(string $field, mixed $value): ?string {
+        if (!is_array($value)
+            || !isset($value['error'])
+            || $value['error'] !== UPLOAD_ERR_OK
+            || empty($value['size'])) {
+            return $this->msg('required_file', ['field' => $field]);
+        }
+        return null;
+    }
+
+    private function validateExtension(string $field, mixed $value, ?string $param): ?string {
+        // No file uploaded (optional) — skip validation.
+        if (!is_array($value) || $value['error'] !== UPLOAD_ERR_OK || $param === null) return null;
+        $allowed = array_map('strtolower', explode(';', $param));
+        $ext = strtolower(pathinfo($value['name'], PATHINFO_EXTENSION));
+        return in_array($ext, $allowed, true)
+            ? null
+            : $this->msg('extension', ['field' => $field, 'extensions' => implode(', ', $allowed)]);
+    }
+
+    private function validateFutureDate(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        $d = \DateTime::createFromFormat('Y-m-d', (string)$value);
+        if (!$d || $d->format('Y-m-d') !== (string)$value) {
+            return $this->msg('future_date', ['field' => $field]);
+        }
+        $today = new \DateTime('today');
+        return ($d > $today)
+            ? null
+            : $this->msg('future_date', ['field' => $field]);
+    }
+
+    private function validatePastDate(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        $d = \DateTime::createFromFormat('Y-m-d', (string)$value);
+        if (!$d || $d->format('Y-m-d') !== (string)$value) {
+            return $this->msg('past_date', ['field' => $field]);
+        }
+        $today = new \DateTime('today');
+        return ($d < $today)
+            ? null
+            : $this->msg('past_date', ['field' => $field]);
+    }
+
+    private function validateDate(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        $d = \DateTime::createFromFormat('Y-m-d', (string)$value);
+        return ($d && $d->format('Y-m-d') === (string)$value)
+            ? null
+            : $this->msg('valid_date', ['field' => $field]);
+    }
+
+    private function validateUrl(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        return filter_var($value, FILTER_VALIDATE_URL) !== false
+            ? null
+            : $this->msg('valid_url', ['field' => $field]);
+    }
+
+    private function validateStrongPassword(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        $v = (string)$value;
+        if (preg_match('/[A-Z]/', $v)
+            && preg_match('/[a-z]/', $v)
+            && preg_match('/[0-9]/', $v)
+            && preg_match('/[\W_]/', $v)) {
+            return null;
+        }
+        return $this->msg('strong_password', ['field' => $field]);
+    }
+
+    private function validateFloat(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        return filter_var($value, FILTER_VALIDATE_FLOAT) !== false
+            ? null
+            : $this->msg('float', ['field' => $field]);
+    }
+
+    private function validateInteger(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        return ctype_digit(ltrim((string)$value, '-'))
+            ? null
+            : $this->msg('integer', ['field' => $field]);
+    }
+
+    private function validateMinNumeric(string $field, mixed $value, ?string $param): ?string {
+        if ($value === null || $value === '' || $param === null) return null;
+        if (!is_numeric($value)) return $this->msg('min_numeric', ['field' => $field, 'min' => $param]);
+        return ((float)$value >= (float)$param)
+            ? null
+            : $this->msg('min_numeric', ['field' => $field, 'min' => $param]);
+    }
+
+    private function validateMaxNumeric(string $field, mixed $value, ?string $param): ?string {
+        if ($value === null || $value === '' || $param === null) return null;
+        if (!is_numeric($value)) return $this->msg('max_numeric', ['field' => $field, 'max' => $param]);
+        return ((float)$value <= (float)$param)
+            ? null
+            : $this->msg('max_numeric', ['field' => $field, 'max' => $param]);
+    }
+
+    private function validateIntegerBetween(string $field, mixed $value, ?string $param): ?string {
+        if ($param === null || $value === null || $value === '') return null;
+        [$min, $max] = explode(';', $param, 2);
+        if (!ctype_digit(ltrim((string)$value, '-')) || !is_numeric($value)) {
+            return $this->msg('integer_between', ['field' => $field, 'min' => $min, 'max' => $max]);
+        }
+        $int = (int)$value;
+        return ($int < (int)$min || $int > (int)$max)
+            ? $this->msg('integer_between', ['field' => $field, 'min' => $min, 'max' => $max])
             : null;
     }
 
