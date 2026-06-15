@@ -105,6 +105,7 @@ class FileUpload {
                 }
             } else {
                 $out['error'][] = "Extention not allowed!";
+                return $out;
             }
 
         } else {
