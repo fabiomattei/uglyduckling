@@ -68,11 +68,11 @@ abstract class BaseComponent {
         if (count($this->get_validation_rules) === 0) {
             return $_GET;
         }
-        $gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
-        $parms = $gump->sanitize($_GET);
-        $gump->validation_rules($this->get_validation_rules);
-        $gump->filter_rules($this->get_filter_rules);
-        $result = $gump->run($parms);
+        $validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $parms = $validation->sanitize($_GET);
+        $validation->validation_rules($this->get_validation_rules);
+        $validation->filter_rules($this->get_filter_rules);
+        $result = $validation->run($parms);
         if ($result === false) {
             return [];
         }
@@ -85,11 +85,11 @@ abstract class BaseComponent {
             $this->postParameters = $_POST;
             return true;
         }
-        $gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
-        $parms = $gump->sanitize($_POST);
-        $gump->validation_rules($this->post_validation_rules);
-        $gump->filter_rules($this->post_filter_rules);
-        $result = $gump->run($parms);
+        $validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $parms = $validation->sanitize($_POST);
+        $validation->validation_rules($this->post_validation_rules);
+        $validation->filter_rules($this->post_filter_rules);
+        $result = $validation->run($parms);
         if ($result === false) {
             return false;
         }

@@ -13,8 +13,7 @@ class BaseController {
     public ApplicationBuilder $applicationBuilder;
     public PageStatus $pageStatus;
     public string $templateFile;
-    public /* GUMP */
-        $gump;
+    public $validation;
     public /* array */
         $get_validation_rules = [];
     public /* array */
@@ -45,7 +44,7 @@ class BaseController {
     public $unvalidated_parameters;
 
     public function __construct() {
-        $this->gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
+        $this->validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
         $this->parameters = [];
     }
 
@@ -162,13 +161,13 @@ class BaseController {
         if (count($this->get_validation_rules) == 0) {
             return true;
         } else {
-            $parms = $this->gump->sanitize($_GET);
-            $this->gump->validation_rules($this->get_validation_rules);
-            $this->gump->filter_rules($this->get_filter_rules);
-            $this->getParameters = $this->gump->run($parms);
+            $parms = $this->validation->sanitize($_GET);
+            $this->validation->validation_rules($this->get_validation_rules);
+            $this->validation->filter_rules($this->get_filter_rules);
+            $this->getParameters = $this->validation->run($parms);
             $this->unvalidated_parameters = $parms;
             if ($this->getParameters === false) {
-                $this->readableErrors = $this->gump->get_readable_errors(true);
+                $this->readableErrors = $this->validation->get_readable_errors(true);
                 return false;
             } else {
                 return true;
@@ -188,13 +187,13 @@ class BaseController {
             $out = false;
 
             // checking post parameters in post request
-            $parms = $this->gump->sanitize($_POST);
-            $this->gump->validation_rules($this->post_validation_rules);
-            $this->gump->filter_rules($this->post_filter_rules);
-            $this->postParameters = $this->gump->run($parms);
+            $parms = $this->validation->sanitize($_POST);
+            $this->validation->validation_rules($this->post_validation_rules);
+            $this->validation->filter_rules($this->post_filter_rules);
+            $this->postParameters = $this->validation->run($parms);
             $this->unvalidated_parameters = $parms;
             if ($this->postParameters === false) {
-                $this->readableErrors = $this->gump->get_readable_errors(true);
+                $this->readableErrors = $this->validation->get_readable_errors(true);
                 $out = false;
             } else {
                 $out = true;

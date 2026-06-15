@@ -20,8 +20,7 @@ class Controller extends CommonController {
     const CONTROLLER_NAME = 'controller';
 
     public string $templateFile;
-    public /* GUMP */
-        $gump;
+    public $validation;
     public /* array */
         $get_validation_rules = array();
     public /* array */
@@ -73,7 +72,7 @@ class Controller extends CommonController {
      */
     public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
         parent::makeAllPresets($dbconnection, $logger, $securityChecker, $mailer);
-        $this->gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
+        $this->validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
     }
 
     public function setDBConnection( DBConnection $dbconnection ) {
@@ -113,13 +112,13 @@ class Controller extends CommonController {
         if (count($this->get_validation_rules) == 0) {
             return true;
         } else {
-            $parms = $this->gump->sanitize($_GET);
-            $this->gump->validation_rules($this->get_validation_rules);
-            $this->gump->filter_rules($this->get_filter_rules);
-            $this->getParameters = $this->gump->run($parms);
+            $parms = $this->validation->sanitize($_GET);
+            $this->validation->validation_rules($this->get_validation_rules);
+            $this->validation->filter_rules($this->get_filter_rules);
+            $this->getParameters = $this->validation->run($parms);
             $this->unvalidated_parameters = $parms;
             if ($this->getParameters === false) {
-                $this->readableErrors = $this->gump->get_readable_errors(true);
+                $this->readableErrors = $this->validation->get_readable_errors(true);
                 return false;
             } else {
                 return true;
@@ -139,13 +138,13 @@ class Controller extends CommonController {
             $out = false;
 
             // checking get and post parameters in post request
-            $parms = $this->gump->sanitize(array_merge($_GET, $_POST));
-            $this->gump->validation_rules($this->post_validation_rules);
-            $this->gump->filter_rules($this->post_filter_rules);
-            $this->postParameters = $this->gump->run($parms);
+            $parms = $this->validation->sanitize(array_merge($_GET, $_POST));
+            $this->validation->validation_rules($this->post_validation_rules);
+            $this->validation->filter_rules($this->post_filter_rules);
+            $this->postParameters = $this->validation->run($parms);
             $this->unvalidated_parameters = $parms;
             if ($this->postParameters === false) {
-                $this->readableErrors = $this->gump->get_readable_errors(true);
+                $this->readableErrors = $this->validation->get_readable_errors(true);
                 $out = false;
             } else {
                 $out = true;

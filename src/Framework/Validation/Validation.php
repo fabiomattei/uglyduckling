@@ -123,7 +123,7 @@ namespace Fabiom\UglyDuckling\Framework\Validation;
  * IN CONTROLLERS
  * --------------
  * Controllers that extend BaseController or Controller already have a
- * $this->gump property pre-wired to a Validation instance. Declare rules as
+ * $this->validation property pre-wired to a Validation instance. Declare rules as
  * public properties and the framework calls run() automatically:
  *
  *   public $post_validation_rules = ['name' => 'required|max_len,255'];

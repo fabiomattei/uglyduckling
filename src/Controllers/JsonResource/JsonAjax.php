@@ -33,13 +33,13 @@ class JsonAjax extends JsonResourceBasicController {
         $this->templateFile = 'empty';
 
         // checking post parameters in post request
-        $parms = $this->gump->sanitize( array_merge($this->getParameters, $this->postParameters) );
-        $this->gump->validation_rules( $this->post_validation_rules );
-        $this->gump->filter_rules( $this->post_filter_rules );
-        $this->filteredParameters = $this->gump->run( $parms );
+        $parms = $this->validation->sanitize( array_merge($this->getParameters, $this->postParameters) );
+        $this->validation->validation_rules( $this->post_validation_rules );
+        $this->validation->filter_rules( $this->post_filter_rules );
+        $this->filteredParameters = $this->validation->run( $parms );
         $this->unvalidated_parameters = $parms;
         if ( $this->postParameters === false ) {
-            $this->readableErrors = $this->gump->get_readable_errors(true);
+            $this->readableErrors = $this->validation->get_readable_errors(true);
             $out = false;
         } else {
 
