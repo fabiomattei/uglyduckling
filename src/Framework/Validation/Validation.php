@@ -46,6 +46,7 @@ namespace Fabiom\UglyDuckling\Framework\Validation;
  *   numeric              Value must be numeric (integer or float).
  *   valid_email          Value must be a syntactically valid email address.
  *   valid_url            Value must be a syntactically valid URL (http or https).
+ *   uuid                 Value must be a valid UUID (any version, 1–5).
  *   valid_date           Value must be a valid calendar date in YYYY-MM-DD format.
  *   past_date            Value must be a valid YYYY-MM-DD date strictly before today.
  *   future_date          Value must be a valid YYYY-MM-DD date strictly after today.
@@ -101,7 +102,7 @@ namespace Fabiom\UglyDuckling\Framework\Validation;
  *   uppercase         Convert the value to upper case.
  *
  * MULTI-LANGUAGE
- * --------------
+ * --------------rename
  * Pass a language code to the constructor. A matching file must exist under
  * src/Framework/Validation/lang/<code>.php. Falls back to 'en' if the file
  * is not found. Currently bundled: 'en', 'it'.
@@ -341,6 +342,7 @@ class Validation {
             'numeric'            => $this->validateNumeric($field, $value),
             'valid_email'        => $this->validateEmail($field, $value),
             'valid_url'          => $this->validateUrl($field, $value),
+            'uuid'               => $this->validateUuid($field, $value),
             'valid_date'         => $this->validateDate($field, $value),
             'past_date'          => $this->validatePastDate($field, $value),
             'future_date'        => $this->validateFutureDate($field, $value),
@@ -512,6 +514,13 @@ class Validation {
         return ($int < (int)$min || $int > (int)$max)
             ? $this->msg('integer_between', ['field' => $field, 'min' => $min, 'max' => $max])
             : null;
+    }
+
+    private function validateUuid(string $field, mixed $value): ?string {
+        if ($value === null || $value === '') return null;
+        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', (string)$value)
+            ? null
+            : $this->msg('uuid', ['field' => $field]);
     }
 
     private function validateEmail(string $field, mixed $value): ?string {

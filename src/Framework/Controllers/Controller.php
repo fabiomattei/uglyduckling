@@ -73,7 +73,7 @@ class Controller extends CommonController {
      */
     public function makeAllPresets(DBConnection $dbconnection, Logger $logger, SecurityChecker $securityChecker, BaseMailer $mailer) {
         parent::makeAllPresets($dbconnection, $logger, $securityChecker, $mailer);
-        $this->gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $this->gump = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
     }
 
     public function setDBConnection( DBConnection $dbconnection ) {

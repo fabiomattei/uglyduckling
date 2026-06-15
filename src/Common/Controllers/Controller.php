@@ -69,7 +69,7 @@ class Controller {
 		) {
 		$this->applicationBuilder    = $applicationBuilder;
         $this->pageStatus            = $pageStatus;
-        $this->gump                  = new Validation();
+        $this->gump                  = new Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
 
         // setting an array containing all parameters
         $this->parameters = array();

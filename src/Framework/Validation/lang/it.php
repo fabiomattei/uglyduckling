@@ -10,6 +10,7 @@ return [
     'numeric'            => 'Il campo {field} deve essere numerico.',
     'valid_email'        => 'Il campo {field} deve essere un indirizzo email valido.',
     'valid_url'          => 'Il campo {field} deve essere un URL valido.',
+    'uuid'               => 'Il campo {field} deve essere un UUID valido.',
     'float'              => 'Il campo {field} deve essere un numero decimale valido.',
     'strong_password'    => 'Il campo {field} deve contenere almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale.',
     'min_numeric'        => 'Il campo {field} deve essere maggiore o uguale a {min}.',
