@@ -68,7 +68,7 @@ abstract class BaseComponent {
         if (count($this->get_validation_rules) === 0) {
             return $_GET;
         }
-        $validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
         $parms = $validation->sanitize($_GET);
         $validation->validation_rules($this->get_validation_rules);
         $validation->filter_rules($this->get_filter_rules);
@@ -85,7 +85,7 @@ abstract class BaseComponent {
             $this->postParameters = $_POST;
             return true;
         }
-        $validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
         $parms = $validation->sanitize($_POST);
         $validation->validation_rules($this->post_validation_rules);
         $validation->filter_rules($this->post_filter_rules);

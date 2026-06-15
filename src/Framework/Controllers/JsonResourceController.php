@@ -120,7 +120,7 @@ class JsonResourceController extends CommonController {
         // checking if resource defines any get parameter
         if(!isset($this->resource->get->request) OR !isset($this->resource->get->request->parameters)) return true;
 
-        $this->secondGump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $this->secondGump = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
         $validation_rules = $parametersGetter->getValidationRoules();
@@ -151,7 +151,7 @@ class JsonResourceController extends CommonController {
      */
     public function check_post_request() {
         //if ( isset($_POST['csrftoken']) AND $_POST['csrftoken'] == $_SESSION['csrftoken'] ) {
-        $this->secondGump = new \Fabiom\UglyDuckling\Framework\Validation\Validation();
+        $this->secondGump = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
 
         $parametersGetter = BasicParameterGetter::parameterGetterFactory( $this->resource, $this->resourceIndex );
         $validation_rules = $parametersGetter->getPostValidationRoules();
