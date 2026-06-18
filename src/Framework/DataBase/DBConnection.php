@@ -39,10 +39,12 @@ class DBConnection {
 	}
 	
     /**
-     * Database connection handler getter
-     * I can use the already made connection for next database call
+     * Returns the PDO connection, opening it only once per request.
      */
     public function getDBH() {
+        if ( $this->DBH !== null ) {
+            return $this->DBH;
+        }
         try {
 			if ( isset( $this->pemFileName ) AND $this->pemFileName != '' ) {
 				$options = array(
@@ -51,8 +53,8 @@ class DBConnection {
 				$this->DBH = new PDO($this->host . $this->dbname, $this->username, $this->password, $options);
 			} else {
 				$this->DBH = new PDO($this->host . $this->dbname, $this->username, $this->password);
-			}            
-			
+			}
+
 			$this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return $this->DBH;
         } catch (PDOException $e) {
