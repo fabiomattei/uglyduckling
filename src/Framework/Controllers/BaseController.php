@@ -197,7 +197,8 @@ class BaseController extends CommonController {
 
         $time_end = microtime(true);
         if (($time_end - $time_start) > 5) {
-            $this->pageStatus->logger->write('WARNING TIME :: ' . $this->request->getInfo() . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
+            $label = $this->request !== null ? $this->request->getInfo() : 'unknown';
+            $this->pageStatus->logger->write('WARNING TIME :: ' . $label . ' - TIME: ' . ($time_end - $time_start) . ' sec', __FILE__, __LINE__);
         }
     }
 

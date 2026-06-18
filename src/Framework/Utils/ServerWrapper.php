@@ -77,7 +77,7 @@ class ServerWrapper {
      * @return string
      */
     static public function getHttpUserAgent(): string {
-        return $_SERVER['HTTP_USER_AGENT'];
+        return $_SERVER['HTTP_USER_AGENT'] ?? '';
     }
 
     /**
