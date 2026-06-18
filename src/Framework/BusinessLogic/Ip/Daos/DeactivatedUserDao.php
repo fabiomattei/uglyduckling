@@ -11,6 +11,7 @@ class DeactivatedUserDao extends BasicDao {
     const DB_TABLE = 'ud_deactivateduser';
     const DB_TABLE_PK = 'du_id';
     const DB_TABLE_CREATED_FLIED_NAME = 'du_created';
+    const DEACTIVATION_WINDOW_HOURS = 24;
 
     /*
     Elenco campi
@@ -47,21 +48,17 @@ class DeactivatedUserDao extends BasicDao {
 
     function checkIfIpIsDeactivated( string $username ): bool {
         try {
-            $STH = $this->DBH->prepare('SELECT du_username FROM '.$this::DB_TABLE.' WHERE du_username = :username;');
-            $STH->bindParam(':username', $username, \PDO::PARAM_STR);
+            $STH = $this->DBH->prepare(
+                'SELECT du_username FROM ' . $this::DB_TABLE .
+                ' WHERE du_username = :username AND ' . $this::DB_TABLE_CREATED_FLIED_NAME . ' > NOW() - INTERVAL ' . static::DEACTIVATION_WINDOW_HOURS . ' HOUR;'
+            );
+            $STH->bindParam( ':username', $username, PDO::PARAM_STR );
             $STH->execute();
-
-            $STH->setFetchMode(\PDO::FETCH_OBJ);
+            $STH->setFetchMode( PDO::FETCH_OBJ );
             $obj = $STH->fetch();
-
-            if ($obj == null) {
-                return false;
-            }
-
-            return true;
-        }
-        catch(\PDOException $e) {
-            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            return $obj !== null;
+        } catch ( \PDOException $e ) {
+            $this->logger->write( $e->getMessage(), __FILE__, __LINE__ );
             return false;
         }
     }
