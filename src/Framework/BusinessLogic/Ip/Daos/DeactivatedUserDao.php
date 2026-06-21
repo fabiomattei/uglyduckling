@@ -56,7 +56,7 @@ class DeactivatedUserDao extends BasicDao {
             $STH->execute();
             $STH->setFetchMode( PDO::FETCH_OBJ );
             $obj = $STH->fetch();
-            return $obj !== null;
+            return $obj !== false;
         } catch ( \PDOException $e ) {
             $this->logger->write( $e->getMessage(), __FILE__, __LINE__ );
             return false;
