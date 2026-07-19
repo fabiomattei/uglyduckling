@@ -10,6 +10,10 @@
         }
     ],
     "type": "library",
+    "bin": [
+        "bin/ud-check",
+        "bin/ud-migrate"
+    ],
     "require": {
 		"php": ">=8.1"
     },

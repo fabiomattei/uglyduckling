@@ -1,0 +1,127 @@
+#!/usr/bin/env php
+<?php
+
+use Fabiom\UglyDuckling\Framework\DataBase\Migrations\MigrationRepository;
+use Fabiom\UglyDuckling\Framework\DataBase\Migrations\Migrator;
+
+// Locate vendor/autoload.php whether run from library root or installed as a dependency
+$autoloadCandidates = [
+        __DIR__ . '/../vendor/autoload.php',    // library development root
+        __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
+];
+
+$autoloaded = false;
+foreach ($autoloadCandidates as $candidate) {
+    if (file_exists($candidate)) {
+        require $candidate;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, "Error: could not find vendor/autoload.php\n");
+    exit(1);
+}
+
+const UD_MIGRATE_USAGE = <<<USAGE
+Usage:
+  ud-migrate migrate  [config-file] [migrations-dir]   Run every pending migration
+  ud-migrate rollback [config-file] [migrations-dir]   Revert the last batch of migrations
+  ud-migrate status   [config-file] [migrations-dir]   Show which migrations have run
+  ud-migrate make <name> [migrations-dir]               Create a new migration file
+
+Defaults:
+  config-file     ./migrations-config.php  (a PHP file that must `return` a PDO instance)
+  migrations-dir  ./database/migrations
+
+USAGE;
+
+$command = $argv[1] ?? null;
+
+if (!in_array($command, ['migrate', 'rollback', 'status', 'make'], true)) {
+    fwrite(STDERR, UD_MIGRATE_USAGE);
+    exit(1);
+}
+
+if ($command === 'make') {
+    $name = $argv[2] ?? null;
+    if ($name === null || trim($name) === '') {
+        fwrite(STDERR, "Error: migration name required\n\n" . UD_MIGRATE_USAGE);
+        exit(1);
+    }
+
+    $migrationsDir = rtrim($argv[3] ?? getcwd() . '/database/migrations', DIRECTORY_SEPARATOR);
+    if (!is_dir($migrationsDir) && !mkdir($migrationsDir, 0777, true) && !is_dir($migrationsDir)) {
+        fwrite(STDERR, "Error: could not create migrations directory: $migrationsDir\n");
+        exit(1);
+    }
+
+    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9]+/', '_', $name), '_'));
+    $filename = date('Y_m_d_His') . '_' . $slug . '.php';
+    $path = $migrationsDir . DIRECTORY_SEPARATOR . $filename;
+
+    copy(__DIR__ . '/../src/Framework/DataBase/Migrations/stubs/migration.stub', $path);
+
+    echo "Created migration: $path\n";
+    exit(0);
+}
+
+$configPath = $argv[2] ?? getcwd() . DIRECTORY_SEPARATOR . 'migrations-config.php';
+$migrationsDir = $argv[3] ?? getcwd() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations';
+
+if (!file_exists($configPath)) {
+    fwrite(STDERR, "Error: config file not found: $configPath\n\n" . UD_MIGRATE_USAGE);
+    exit(1);
+}
+
+$pdo = require $configPath;
+
+if (!$pdo instanceof PDO) {
+    fwrite(STDERR, "Error: $configPath must `return` a PDO instance\n");
+    exit(1);
+}
+
+if (!is_dir($migrationsDir)) {
+    fwrite(STDERR, "Error: migrations directory not found: $migrationsDir\n");
+    exit(1);
+}
+
+$migrator = new Migrator($pdo, new MigrationRepository($pdo), $migrationsDir);
+
+try {
+    switch ($command) {
+        case 'migrate':
+            $ran = $migrator->migrate();
+            if (empty($ran)) {
+                echo "Nothing to migrate.\n";
+            } else {
+                foreach ($ran as $migrationName) {
+                    echo "Migrated:  $migrationName\n";
+                }
+            }
+            break;
+
+        case 'rollback':
+            $rolledBack = $migrator->rollback();
+            if (empty($rolledBack)) {
+                echo "Nothing to roll back.\n";
+            } else {
+                foreach ($rolledBack as $migrationName) {
+                    echo "Rolled back: $migrationName\n";
+                }
+            }
+            break;
+
+        case 'status':
+            foreach ($migrator->status() as $entry) {
+                echo '[' . ($entry['ran'] ? 'X' : ' ') . '] ' . $entry['migration'] . "\n";
+            }
+            break;
+    }
+} catch (\Throwable $e) {
+    fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
+    exit(1);
+}
+
+exit(0);

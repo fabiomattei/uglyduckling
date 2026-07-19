@@ -1,0 +1,15 @@
+<?php
+
+use Fabiom\UglyDuckling\Framework\DataBase\Migrations\Migration;
+
+return new class extends Migration {
+
+    public function up( PDO $pdo ): void {
+        //
+    }
+
+    public function down( PDO $pdo ): void {
+        //
+    }
+
+};
