@@ -35,6 +35,14 @@ class BasicDao {
     }
 
     /**
+     * Entry point for queries BasicDao's field-based methods can't express,
+     * mainly joins across tables. See QueryBuilder for the available methods.
+     */
+    public function newQuery(): QueryBuilder {
+        return new QueryBuilder($this->DBH, $this->logger, static::DB_TABLE);
+    }
+
+    /**
      * It gets all rows contained in a table
      */
     function getAll() {
@@ -45,6 +53,7 @@ class BasicDao {
             return $STH;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -70,7 +79,7 @@ class BasicDao {
             return $obj;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -124,10 +133,8 @@ class BasicDao {
             $inserted_id = $this->DBH->lastInsertId();
             return $inserted_id;
         } catch (\PDOException $e) {
-            //echo strtr( $sqlstring, $fields );
-            $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -143,14 +150,19 @@ class BasicDao {
      * array( 'field1' => 'content field 1', 'field2', 'content field 2' );
      */
     function insertWithUUID($fields, $debug = false) {
-        $sqlstringUUID = 'SELECT UUID() AS newuuid;';
-        $STH = $this->DBH->prepare( $sqlstringUUID );
-        $STH->execute();
-        $STH->setFetchMode(\PDO::FETCH_OBJ);
+        try {
+            $sqlstringUUID = 'SELECT UUID() AS newuuid;';
+            $STH = $this->DBH->prepare( $sqlstringUUID );
+            $STH->execute();
+            $STH->setFetchMode(\PDO::FETCH_OBJ);
 
-        $newuuid = '';
-        while ($item = $STH->fetch()) {
-            $newuuid = $item->newuuid;
+            $newuuid = '';
+            while ($item = $STH->fetch()) {
+                $newuuid = $item->newuuid;
+            }
+        } catch (\PDOException $e) {
+            $this->logger->write($e->getMessage(), __FILE__, __LINE__);
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
 
         $presentmoment = date('Y-m-d H:i:s', time());
@@ -190,10 +202,8 @@ class BasicDao {
 
             return $newuuid;
         } catch (\PDOException $e) {
-            //echo strtr( $sqlstring, $fields );
-            $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -239,9 +249,8 @@ class BasicDao {
             }
 
         } catch (\PDOException $e) {
-            $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -284,9 +293,8 @@ class BasicDao {
             }
 
         } catch (\PDOException $e) {
-            $STH->debugDumpParams();
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -339,7 +347,7 @@ class BasicDao {
 
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -392,7 +400,7 @@ class BasicDao {
 
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -429,7 +437,7 @@ class BasicDao {
 
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -474,7 +482,7 @@ class BasicDao {
             $STH->execute();
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -521,7 +529,7 @@ class BasicDao {
             return $STH;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -558,7 +566,7 @@ class BasicDao {
             return $STH;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -575,7 +583,7 @@ class BasicDao {
      */
     public function getByFieldList($fieldname, $ids, $conditionsfields, $orderby = 'none', $requestedfields = 'none') {
         if (count($ids) > 0) {
-            $ids_string = join(',', $ids);
+            [$ids_string, $idBindings] = $this->buildIdPlaceholders($ids);
 
             $filedslist = $this->organizeConditionsFields($conditionsfields);
 
@@ -594,6 +602,10 @@ class BasicDao {
 
                 $STH = $this->DBH->prepare($query);
 
+                foreach ($idBindings as $key => &$value) {
+                    $STH->bindParam($key, $value);
+                }
+
                 foreach ($conditionsfields as $key => &$value) {
                     $STH->bindParam($key, $value);
                 }
@@ -606,7 +618,7 @@ class BasicDao {
                 return $STH;
             } catch (\PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new \Exception('General malfuction!!!');
+                throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
             }
         } else {
             return array();
@@ -626,7 +638,7 @@ class BasicDao {
      */
     public function getArrayByFieldList($fieldname, $ids, $conditionsfields, $orderby = 'none', $requestedfields = 'none') {
         if (count($ids) > 0) {
-            $ids_string = join(',', $ids);
+            [$ids_string, $idBindings] = $this->buildIdPlaceholders($ids);
 
             $filedslist = $this->organizeConditionsFields($conditionsfields);
 
@@ -644,6 +656,10 @@ class BasicDao {
                 $query .= $orderbyfieldlist;
 
                 $STH = $this->DBH->prepare($query);
+
+                foreach ($idBindings as $key => &$value) {
+                    $STH->bindParam($key, $value);
+                }
 
                 foreach ($conditionsfields as $key => &$value) {
                     $STH->bindParam($key, $value);
@@ -663,7 +679,7 @@ class BasicDao {
                 return $out;
             } catch (\PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new \Exception('General malfuction!!!');
+                throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
             }
         } else {
             return array();
@@ -712,7 +728,7 @@ class BasicDao {
             return $obj;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -766,7 +782,7 @@ class BasicDao {
             return $out;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -809,7 +825,7 @@ class BasicDao {
             return $out;
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -827,7 +843,7 @@ class BasicDao {
      */
     public function countByFieldList($fieldname, $ids, $conditionsfields, $orderby = 'none', $requestedfields = 'none') {
         if (count($ids) > 0) {
-            $ids_string = join(',', $ids);
+            [$ids_string, $idBindings] = $this->buildIdPlaceholders($ids);
 
             $filedslist = $this->organizeConditionsFields($conditionsfields);
 
@@ -844,6 +860,10 @@ class BasicDao {
                 $query .= $orderbyfieldlist;
 
                 $STH = $this->DBH->prepare($query);
+
+                foreach ($idBindings as $key => &$value) {
+                    $STH->bindParam($key, $value);
+                }
 
                 foreach ($conditionsfields as $key => &$value) {
                     $STH->bindParam($key, $value);
@@ -862,7 +882,7 @@ class BasicDao {
                 return $out;
             } catch (\PDOException $e) {
                 $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-                throw new \Exception('General malfuction!!!');
+                throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
             }
         } else {
             return array();
@@ -910,7 +930,7 @@ class BasicDao {
 
         } catch (\PDOException $e) {
             $this->logger->write($e->getMessage(), __FILE__, __LINE__);
-            throw new \Exception('General malfuction!!!');
+            throw new \Exception('Database operation failed: ' . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
@@ -951,6 +971,23 @@ class BasicDao {
             $orderbyfields = '';
         }
         return $orderbyfields;
+    }
+
+    /**
+     * Turns a list of ids into bound placeholders for an IN (...) clause,
+     * instead of concatenating raw values into the SQL string.
+     *
+     * @return array{0: string, 1: array} [placeholder list for the IN clause, bindings map]
+     */
+    private function buildIdPlaceholders(array $ids): array {
+        $placeholders = [];
+        $bindings = [];
+        foreach (array_values($ids) as $index => $idValue) {
+            $placeholder = 'ud_id_' . $index;
+            $placeholders[] = ':' . $placeholder;
+            $bindings[$placeholder] = $idValue;
+        }
+        return [implode(',', $placeholders), $bindings];
     }
 
     public function putCache($query, $key, $stuff) {
