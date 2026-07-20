@@ -114,8 +114,8 @@ class BaseController extends CommonController {
         } else {
             $out = false;
 
-            // checking post parameters in post request
-            $parms = $this->validation->sanitize(array_merge($_POST, $_FILES));
+            // checking get and post parameters in post request
+            $parms = $this->validation->sanitize(array_merge($_GET, $_POST, $_FILES));
             $this->validation->validation_rules($this->post_validation_rules);
             $this->validation->filter_rules($this->post_filter_rules);
             $this->postParameters = $this->validation->run($parms);
