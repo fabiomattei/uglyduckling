@@ -17,6 +17,24 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
         $this->grammar = new MySqlGrammar();
     }
 
+    public function testIncrementsProducesAPlainIntegerPrimaryKeyNotBigint() {
+        $blueprint = new Blueprint( 'widgets' );
+        $blueprint->increments( 'wid_id' );
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString( '`wid_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY', $createStatement );
+    }
+
+    public function testIdProducesABigintPrimaryKey() {
+        $blueprint = new Blueprint( 'widgets' );
+        $blueprint->id();
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString( '`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY', $createStatement );
+    }
+
     public function testCreateOmitsTableOptionsByDefault() {
         $blueprint = new Blueprint( 'widgets' );
         $blueprint->id();

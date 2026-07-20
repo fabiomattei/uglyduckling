@@ -22,8 +22,16 @@ class MySqlGrammar extends Grammar {
         return 'SELECT table_name FROM information_schema.tables WHERE table_schema = DATABASE()';
     }
 
+    /**
+     * Respects whether the column was declared via id() ('bigInteger') or increments()
+     * ('integer') - autoIncrementPrimaryKeyColumn() used to hardcode BIGINT regardless,
+     * silently widening every increments() primary key to BIGINT on MySQL even though
+     * increments() is documented (and behaves, on SQLite) as producing a plain INTEGER.
+     */
     protected function autoIncrementPrimaryKeyColumn( ColumnDefinition $column ): string {
-        return $this->quoteIdentifier( $column->getName() ) . ' BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY';
+        $type = $column->getType() === 'integer' ? 'INT' : 'BIGINT';
+
+        return $this->quoteIdentifier( $column->getName() ) . ' ' . $type . ' UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY';
     }
 
     /**
