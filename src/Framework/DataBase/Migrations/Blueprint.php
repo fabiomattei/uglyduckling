@@ -12,6 +12,10 @@ class Blueprint {
     private array $columns = [];
     private array $indexes = [];
     private array $droppedColumns = [];
+    private ?array $primaryKey = null;
+    private ?string $engine = null;
+    private ?string $charset = null;
+    private ?string $collation = null;
 
     public function __construct( string $table ) {
         $this->table = $table;
@@ -87,8 +91,42 @@ class Blueprint {
         return $this->addColumn( $name, 'dateTime' );
     }
 
+    /**
+     * A time-of-day value with no date part (e.g. a scheduled arrival time).
+     * Distinct from dateTime() - there is no portable "just a time" type shared by
+     * every dialect, but both MySQL's TIME and SQLite's (untyped/NUMERIC affinity)
+     * column accept the same 'HH:MM:SS' string, so a literal TIME keyword works for both.
+     */
+    public function time( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'time' );
+    }
+
     public function timestamp( string $name ): ColumnDefinition {
         return $this->addColumn( $name, 'timestamp' );
+    }
+
+    /**
+     * Larger text storage than text() (MySQL's TEXT truncates at 64KB; MEDIUMTEXT
+     * doesn't). SQLite has no size-tiered text types, so this is a MySQL-motivated
+     * escape hatch - on SQLite it behaves exactly like text().
+     */
+    public function mediumText( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'mediumText' );
+    }
+
+    /**
+     * Raw binary storage (e.g. an uploaded file's bytes).
+     */
+    public function binary( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'blob' );
+    }
+
+    /**
+     * Fixed-length string, unlike string()/VARCHAR. Mainly useful for values with a
+     * known constant length (hashes, fixed tokens) where padding behavior doesn't matter.
+     */
+    public function char( string $name, int $length = 255 ): ColumnDefinition {
+        return $this->addColumn( $name, 'char', [ $length ] );
     }
 
     /**
@@ -129,6 +167,60 @@ class Blueprint {
      */
     public function dropColumn( $columns ): void {
         $this->droppedColumns = array_merge( $this->droppedColumns, (array) $columns );
+    }
+
+    /**
+     * Table-level primary key spanning one or more columns. Use this instead of
+     * ColumnDefinition::primary() whenever the key has no single-column id - e.g. a
+     * composite key - since a MySQL CREATE TABLE only allows one PRIMARY KEY clause
+     * and per-column ->primary() on two columns would emit two, which is invalid SQL.
+     *
+     * @param string|string[] $columns
+     */
+    public function primary( $columns, ?string $name = null ): void {
+        $this->primaryKey = [
+            'columns' => (array) $columns,
+            'name' => $name,
+        ];
+    }
+
+    public function getPrimaryKey(): ?array {
+        return $this->primaryKey;
+    }
+
+    /**
+     * Storage engine for the CREATE TABLE statement (MySQL only - SQLite ignores it).
+     * Unset by default so existing migrations keep generating exactly the SQL they did
+     * before this existed.
+     */
+    public function engine( string $engine ): void {
+        $this->engine = $engine;
+    }
+
+    public function getEngine(): ?string {
+        return $this->engine;
+    }
+
+    /**
+     * Default charset for the CREATE TABLE statement (MySQL only - SQLite ignores it).
+     */
+    public function charset( string $charset ): void {
+        $this->charset = $charset;
+    }
+
+    public function getCharset(): ?string {
+        return $this->charset;
+    }
+
+    /**
+     * Default collation for the CREATE TABLE statement (MySQL only - SQLite ignores it).
+     */
+    public function collation( string $collation ): void {
+        $this->collation = $collation;
+    }
+
+    public function getCollation(): ?string {
+        return $this->collation;
     }
 
     public function getTable(): string {

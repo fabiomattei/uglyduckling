@@ -44,4 +44,25 @@ class MySqlGrammar extends Grammar {
         return $statements;
     }
 
+    /**
+     * Only emits ENGINE/CHARSET/COLLATE clauses the migration explicitly set via
+     * Blueprint::engine()/charset()/collation() - a migration that calls none of them
+     * generates the exact same CREATE TABLE statement as before these options existed.
+     */
+    protected function compileTableOptions( Blueprint $blueprint ): string {
+        $sql = '';
+
+        if ( $blueprint->getEngine() !== null ) {
+            $sql .= ' ENGINE=' . $blueprint->getEngine();
+        }
+        if ( $blueprint->getCharset() !== null ) {
+            $sql .= ' DEFAULT CHARSET=' . $blueprint->getCharset();
+        }
+        if ( $blueprint->getCollation() !== null ) {
+            $sql .= ' COLLATE=' . $blueprint->getCollation();
+        }
+
+        return $sql;
+    }
+
 }

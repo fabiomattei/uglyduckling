@@ -29,11 +29,36 @@ abstract class Grammar {
             }
         }
 
+        if ( $blueprint->getPrimaryKey() !== null ) {
+            $lines[] = $this->compilePrimaryKeyClause( $blueprint->getPrimaryKey() );
+        }
+
         $statements = [
-            'CREATE TABLE ' . $this->quoteIdentifier( $blueprint->getTable() ) . ' (' . implode( ', ', $lines ) . ')',
+            'CREATE TABLE ' . $this->quoteIdentifier( $blueprint->getTable() ) . ' (' . implode( ', ', $lines ) . ')'
+                . $this->compileTableOptions( $blueprint ),
         ];
 
         return array_merge( $statements, $this->compileIndexes( $blueprint ) );
+    }
+
+    /**
+     * Table-level PRIMARY KEY clause for Blueprint::primary() - a composite key, or any
+     * key not tied to a single auto-increment/uuid column declared via ColumnDefinition::primary().
+     */
+    protected function compilePrimaryKeyClause( array $primaryKey ): string {
+        $columns = implode( ', ', array_map( fn( string $c ) => $this->quoteIdentifier( $c ), $primaryKey['columns'] ) );
+
+        return 'PRIMARY KEY (' . $columns . ')';
+    }
+
+    /**
+     * Trailing CREATE TABLE options (engine/charset/collation). Empty by default so
+     * dialects/migrations that don't set them keep generating identical SQL to before
+     * these existed; MySqlGrammar overrides this to emit whichever of engine()/charset()/
+     * collation() the migration actually called on the Blueprint.
+     */
+    protected function compileTableOptions( Blueprint $blueprint ): string {
+        return '';
     }
 
     /**
@@ -179,6 +204,14 @@ abstract class Grammar {
                 return 'DATETIME';
             case 'timestamp':
                 return 'TIMESTAMP';
+            case 'time':
+                return 'TIME';
+            case 'mediumText':
+                return 'MEDIUMTEXT';
+            case 'blob':
+                return 'BLOB';
+            case 'char':
+                return 'CHAR(' . ( $args[0] ?? 255 ) . ')';
             default:
                 throw new RuntimeException( 'Unsupported column type: ' . $column->getType() );
         }

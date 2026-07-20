@@ -177,6 +177,38 @@ class SchemaBlueprintTest extends PHPUnit\Framework\TestCase {
         $this->pdo->exec( "INSERT INTO authors (id, name) VALUES ('$uuid', 'Duplicate')" );
     }
 
+    public function testTimeMediumTextBinaryAndCharColumnsRoundTrip() {
+        Schema::create( 'shifts', function ( Blueprint $table ) {
+            $table->id();
+            $table->time( 'starts_at' );
+            $table->mediumText( 'notes' )->nullable();
+            $table->binary( 'badge' )->nullable();
+            $table->char( 'code', 8 );
+        } );
+
+        $this->pdo->exec(
+            "INSERT INTO shifts (starts_at, notes, badge, code) VALUES ('08:30:00', 'long notes', X'DEAD', 'AB12CD34')"
+        );
+
+        $row = $this->pdo->query( 'SELECT * FROM shifts' )->fetch( PDO::FETCH_ASSOC );
+        $this->assertSame( '08:30:00', $row['starts_at'] );
+        $this->assertSame( 'long notes', $row['notes'] );
+        $this->assertSame( 'AB12CD34', $row['code'] );
+    }
+
+    public function testCompositePrimaryKeyIsEnforced() {
+        Schema::create( 'sessions', function ( Blueprint $table ) {
+            $table->string( 'session_string', 20 );
+            $table->string( 'token', 32 );
+            $table->primary( [ 'session_string', 'token' ] );
+        } );
+
+        $this->pdo->exec( "INSERT INTO sessions (session_string, token) VALUES ('abc', 'xyz')" );
+
+        $this->expectException( PDOException::class );
+        $this->pdo->exec( "INSERT INTO sessions (session_string, token) VALUES ('abc', 'xyz')" );
+    }
+
     public function testForeignUuidReferencesAUuidPrimaryKey() {
         Schema::create( 'authors', function ( Blueprint $table ) {
             $table->uuid( 'id' )->primary();
