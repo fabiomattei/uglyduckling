@@ -1,0 +1,97 @@
+#!/usr/bin/env php
+<?php
+
+use Fabiom\UglyDuckling\Framework\Queue\QueueRepository;
+use Fabiom\UglyDuckling\Framework\Queue\QueueWorker;
+
+// Locate vendor/autoload.php whether run from library root or installed as a dependency
+$autoloadCandidates = [
+        __DIR__ . '/../vendor/autoload.php',    // library development root
+        __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
+];
+
+$autoloaded = false;
+foreach ($autoloadCandidates as $candidate) {
+    if (file_exists($candidate)) {
+        require $candidate;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, "Error: could not find vendor/autoload.php\n");
+    exit(1);
+}
+
+const UD_QUEUE_USAGE = <<<USAGE
+Usage:
+  ud-queue work   [config-file] [--queue=default] [--sleep=3] [--max-jobs=0]
+  ud-queue status [config-file] [--queue=default]
+
+Defaults:
+  config-file   ./migrations-config.php  (a PHP file that must `return` a PDO instance)
+  --queue       default
+  --sleep       seconds to wait between polls when the queue is empty (work only)
+  --max-jobs    stop after processing this many jobs (0 = run forever) (work only)
+
+USAGE;
+
+$command = $argv[1] ?? null;
+
+if (!in_array($command, ['work', 'status'], true)) {
+    fwrite(STDERR, UD_QUEUE_USAGE);
+    exit(1);
+}
+
+$positional = [];
+$options = ['queue' => 'default', 'sleep' => '3', 'max-jobs' => '0'];
+
+foreach (array_slice($argv, 2) as $arg) {
+    if (str_starts_with($arg, '--')) {
+        [$key, $value] = array_pad(explode('=', substr($arg, 2), 2), 2, '1');
+        $options[$key] = $value;
+    } else {
+        $positional[] = $arg;
+    }
+}
+
+$configPath = $positional[0] ?? getcwd() . DIRECTORY_SEPARATOR . 'migrations-config.php';
+
+if (!file_exists($configPath)) {
+    fwrite(STDERR, "Error: config file not found: $configPath\n\n" . UD_QUEUE_USAGE);
+    exit(1);
+}
+
+$pdo = require $configPath;
+
+if (!$pdo instanceof PDO) {
+    fwrite(STDERR, "Error: $configPath must `return` a PDO instance\n");
+    exit(1);
+}
+
+$repository = new QueueRepository($pdo);
+$repository->ensureTableExists();
+
+$queue = $options['queue'];
+
+try {
+    switch ($command) {
+        case 'work':
+            $maxJobs = (int) $options['max-jobs'];
+            $worker = new QueueWorker($repository);
+            echo "Working queue '$queue'" . ($maxJobs > 0 ? " (max $maxJobs jobs)" : ' (forever)') . "...\n";
+            $worker->work($queue, (int) $options['sleep'], $maxJobs > 0 ? $maxJobs : null);
+            break;
+
+        case 'status':
+            echo "Queue '$queue': " . $repository->countPending($queue) . " pending, "
+                . $repository->countFailed($queue) . " failed\n";
+            break;
+    }
+} catch (\Throwable $e) {
+    fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
+    exit(1);
+}
+
+exit(0);

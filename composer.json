@@ -12,7 +12,8 @@
     "type": "library",
     "bin": [
         "bin/ud-check",
-        "bin/ud-migrate"
+        "bin/ud-migrate",
+        "bin/ud-queue"
     ],
     "require": {
 		"php": ">=8.1"
