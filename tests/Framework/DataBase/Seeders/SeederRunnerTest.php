@@ -53,14 +53,32 @@ class SeederRunnerTest extends PHPUnit\Framework\TestCase {
         $this->seederRunner->runOne( 'does_not_exist' );
     }
 
+    /**
+     * @dataProvider classNameForSeederProvider
+     */
+    public function testClassNameForSeederStripsTimestampAndConvertsToStudlyCase( string $seederName, string $expectedClassName ) {
+        $this->assertEquals( $expectedClassName, SeederRunner::classNameForSeeder( $seederName ) );
+    }
+
+    public function classNameForSeederProvider(): array {
+        return [
+            [ '2026_07_20_180602_seed_authors', 'SeedAuthors' ],
+            [ 'seed_authors', 'SeedAuthors' ],
+            [ '2024_01_01_000000_seed_widgets', 'SeedWidgets' ],
+            [ 'seed-kebab-case', 'SeedKebabCase' ],
+        ];
+    }
+
     public function testFailingSeederRollsBackItsOwnTransaction() {
         $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid( 'ud_seeder_test_', true );
         mkdir( $tempDir );
         $failingSeederFile = $tempDir . DIRECTORY_SEPARATOR . 'failing_seeder.php';
         file_put_contents( $failingSeederFile, <<<'PHP'
 <?php
+namespace Database\Seeders;
 use Fabiom\UglyDuckling\Framework\DataBase\Seeders\Seeder;
-return new class extends Seeder {
+use PDO;
+class FailingSeeder extends Seeder {
     public function run( PDO $pdo ): void {
         $pdo->exec( "INSERT INTO widgets (name) VALUES ('bolt')" );
         throw new \RuntimeException( 'boom' );

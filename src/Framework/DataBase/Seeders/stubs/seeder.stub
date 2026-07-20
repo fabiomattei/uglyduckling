@@ -1,11 +1,14 @@
 <?php
 
-use Fabiom\UglyDuckling\Framework\DataBase\Seeders\Seeder;
+namespace Database\Seeders;
 
-return new class extends Seeder {
+use Fabiom\UglyDuckling\Framework\DataBase\Seeders\Seeder;
+use PDO;
+
+class {{className}} extends Seeder {
 
     public function run( PDO $pdo ): void {
         //
     }
 
-};
+}

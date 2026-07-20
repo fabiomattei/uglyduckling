@@ -144,7 +144,10 @@ if ($command === 'make-seeder') {
     $filename = date('Y_m_d_His') . '_' . $slug . '.php';
     $path = $seedersDir . DIRECTORY_SEPARATOR . $filename;
 
-    copy(__DIR__ . '/../src/Framework/DataBase/Seeders/stubs/seeder.stub', $path);
+    $className = SeederRunner::classNameForSeeder($slug);
+    $contents = file_get_contents(__DIR__ . '/../src/Framework/DataBase/Seeders/stubs/seeder.stub');
+    $contents = str_replace('{{className}}', $className, $contents);
+    file_put_contents($path, $contents);
 
     echo "Created seeder: $path\n";
     exit(0);
