@@ -196,6 +196,18 @@ class SchemaBlueprintTest extends PHPUnit\Framework\TestCase {
         $this->assertSame( 'AB12CD34', $row['code'] );
     }
 
+    public function testLongTextColumnRoundTrips() {
+        Schema::create( 'archives', function ( Blueprint $table ) {
+            $table->id();
+            $table->longText( 'payload' );
+        } );
+
+        $this->pdo->exec( "INSERT INTO archives (payload) VALUES ('a lot of json')" );
+
+        $row = $this->pdo->query( 'SELECT * FROM archives' )->fetch( PDO::FETCH_ASSOC );
+        $this->assertSame( 'a lot of json', $row['payload'] );
+    }
+
     public function testCompositePrimaryKeyIsEnforced() {
         Schema::create( 'sessions', function ( Blueprint $table ) {
             $table->string( 'session_string', 20 );

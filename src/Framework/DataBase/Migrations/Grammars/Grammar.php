@@ -208,6 +208,8 @@ abstract class Grammar {
                 return 'TIME';
             case 'mediumText':
                 return 'MEDIUMTEXT';
+            case 'longText':
+                return 'LONGTEXT';
             case 'blob':
                 return 'BLOB';
             case 'char':

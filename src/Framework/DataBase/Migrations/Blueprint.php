@@ -115,6 +115,15 @@ class Blueprint {
     }
 
     /**
+     * The largest text tier (MySQL's LONGTEXT, up to ~4GB). SQLite has no size-tiered
+     * text types, so this is a MySQL-motivated escape hatch - on SQLite it behaves
+     * exactly like text().
+     */
+    public function longText( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'longText' );
+    }
+
+    /**
      * Raw binary storage (e.g. an uploaded file's bytes).
      */
     public function binary( string $name ): ColumnDefinition {

@@ -60,6 +60,7 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
         $blueprint = new Blueprint( 'gsr_reports' );
         $blueprint->time( 'occurred_at' );
         $blueprint->mediumText( 'payload' );
+        $blueprint->longText( 'archive' );
         $blueprint->binary( 'attachment' );
         $blueprint->char( 'code', 8 );
 
@@ -67,6 +68,7 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
 
         $this->assertStringContainsString( '`occurred_at` TIME NOT NULL', $createStatement );
         $this->assertStringContainsString( '`payload` MEDIUMTEXT NOT NULL', $createStatement );
+        $this->assertStringContainsString( '`archive` LONGTEXT NOT NULL', $createStatement );
         $this->assertStringContainsString( '`attachment` BLOB NOT NULL', $createStatement );
         $this->assertStringContainsString( '`code` CHAR(8) NOT NULL', $createStatement );
     }
