@@ -104,6 +104,19 @@ class Migrator {
         return $this->migrate();
     }
 
+    /**
+     * MySQL/InnoDB implicitly commits the current transaction on every DDL statement
+     * (CREATE/ALTER/DROP TABLE) - unlike SQLite, which supports transactional DDL.
+     * So on MySQL, as soon as a migration's up()/down() runs its first DDL statement,
+     * $pdo->inTransaction() silently flips to false; calling commit()/rollBack() after
+     * that throws "There is no active transaction" even though everything up to that
+     * point already succeeded and was already durably written (each statement having
+     * auto-committed on its own). Guarding both calls on inTransaction() makes runUp()/
+     * runDown() behave correctly either way: real rollback on SQLite (or a MySQL
+     * migration that never runs DDL), and a graceful no-op on MySQL once DDL has already
+     * committed - at which point a mid-migration failure genuinely can't be undone, which
+     * is a MySQL limitation no migration tool can code around, not a bug in this one.
+     */
     private function runUp( string $migrationName, int $batch ): void {
         $migration = $this->loadMigration( $migrationName );
 
@@ -111,9 +124,13 @@ class Migrator {
         try {
             $migration->up( $this->pdo );
             $this->repository->log( $migrationName, $batch );
-            $this->pdo->commit();
+            if ( $this->pdo->inTransaction() ) {
+                $this->pdo->commit();
+            }
         } catch ( \Throwable $e ) {
-            $this->pdo->rollBack();
+            if ( $this->pdo->inTransaction() ) {
+                $this->pdo->rollBack();
+            }
             throw $e;
         }
     }
@@ -125,9 +142,13 @@ class Migrator {
         try {
             $migration->down( $this->pdo );
             $this->repository->delete( $migrationName );
-            $this->pdo->commit();
+            if ( $this->pdo->inTransaction() ) {
+                $this->pdo->commit();
+            }
         } catch ( \Throwable $e ) {
-            $this->pdo->rollBack();
+            if ( $this->pdo->inTransaction() ) {
+                $this->pdo->rollBack();
+            }
             throw $e;
         }
     }
