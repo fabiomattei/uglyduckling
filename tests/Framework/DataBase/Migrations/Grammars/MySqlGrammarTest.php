@@ -119,6 +119,9 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
         $blueprint->longText( 'archive' );
         $blueprint->binary( 'attachment' );
         $blueprint->char( 'code', 8 );
+        $blueprint->tinyInteger( 'flags' );
+        $blueprint->smallInteger( 'retry_count' );
+        $blueprint->json( 'metadata' );
 
         [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
 
@@ -127,6 +130,38 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
         $this->assertStringContainsString( '`archive` LONGTEXT NOT NULL', $createStatement );
         $this->assertStringContainsString( '`attachment` BLOB NOT NULL', $createStatement );
         $this->assertStringContainsString( '`code` CHAR(8) NOT NULL', $createStatement );
+        $this->assertStringContainsString( '`flags` TINYINT NOT NULL', $createStatement );
+        $this->assertStringContainsString( '`retry_count` SMALLINT NOT NULL', $createStatement );
+        $this->assertStringContainsString( '`metadata` JSON NOT NULL', $createStatement );
+    }
+
+    public function testUseCurrentAndUseCurrentOnUpdateCompileToTheExpectedClauses() {
+        $blueprint = new Blueprint( 'crm_support_messages' );
+        $blueprint->dateTime( 'sm_created' )->useCurrent();
+        $blueprint->dateTime( 'sm_updated' )->useCurrent()->useCurrentOnUpdate();
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString(
+            '`sm_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+            $createStatement
+        );
+        $this->assertStringContainsString(
+            '`sm_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+            $createStatement
+        );
+    }
+
+    public function testEnumCompilesToAQuotedValueList() {
+        $blueprint = new Blueprint( 'crm_messages' );
+        $blueprint->enum( 'ms_direction', [ 'outbound', 'inbound' ] )->default( 'outbound' );
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString(
+            "`ms_direction` ENUM('outbound','inbound') NOT NULL DEFAULT 'outbound'",
+            $createStatement
+        );
     }
 
 }

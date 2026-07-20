@@ -37,6 +37,19 @@ class Blueprint {
         return $this->addColumn( $name, 'text' );
     }
 
+    /**
+     * Distinct from boolean(): MySQL's TINYINT(1) is the conventional boolean idiom and
+     * is what boolean() emits, but a plain TINYINT (no width) is a genuinely different,
+     * wider-range column - e.g. a small counter or flag set - not a true/false value.
+     */
+    public function tinyInteger( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'tinyInteger' );
+    }
+
+    public function smallInteger( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'smallInteger' );
+    }
+
     public function integer( string $name ): ColumnDefinition {
         return $this->addColumn( $name, 'integer' );
     }
@@ -136,6 +149,27 @@ class Blueprint {
      */
     public function char( string $name, int $length = 255 ): ColumnDefinition {
         return $this->addColumn( $name, 'char', [ $length ] );
+    }
+
+    /**
+     * MySQL's native JSON type. SQLite has no such type; the column is created with
+     * type affinity "JSON" there but stores/returns the value as plain text, same as
+     * every other dynamically-typed SQLite column.
+     */
+    public function json( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'json' );
+    }
+
+    /**
+     * MySQL's native ENUM type, restricting the column to one of $values. SQLite has
+     * no such type; the column is created with type affinity "ENUM('a', 'b')" there,
+     * which SQLite ignores like any other unrecognized type name - it stores whatever
+     * text is written, without enforcing membership the way MySQL does.
+     *
+     * @param string[] $values
+     */
+    public function enum( string $name, array $values ): ColumnDefinition {
+        return $this->addColumn( $name, 'enum', $values );
     }
 
     /**

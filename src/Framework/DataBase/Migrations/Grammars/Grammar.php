@@ -129,7 +129,11 @@ abstract class Grammar {
 
         if ( $column->hasDefault() ) {
             $sql .= ' DEFAULT ' . $this->compileDefaultValue( $column->getDefault() );
+        } elseif ( $column->usesCurrentDefault() ) {
+            $sql .= ' DEFAULT CURRENT_TIMESTAMP';
         }
+
+        $sql .= $this->compileColumnOnUpdate( $column );
 
         if ( $column->isPrimary() ) {
             $sql .= ' PRIMARY KEY';
@@ -158,6 +162,14 @@ abstract class Grammar {
      * MySqlGrammar overrides this to honor ColumnDefinition::comment().
      */
     protected function compileColumnComment( ColumnDefinition $column ): string {
+        return '';
+    }
+
+    /**
+     * ON UPDATE CURRENT_TIMESTAMP clause. Empty by default - SQLite has no equivalent,
+     * so only MySqlGrammar overrides this to honor ColumnDefinition::useCurrentOnUpdate().
+     */
+    protected function compileColumnOnUpdate( ColumnDefinition $column ): string {
         return '';
     }
 
@@ -209,6 +221,10 @@ abstract class Grammar {
                 return 'VARCHAR(' . ( $args[0] ?? 255 ) . ')';
             case 'text':
                 return 'TEXT';
+            case 'tinyInteger':
+                return 'TINYINT';
+            case 'smallInteger':
+                return 'SMALLINT';
             case 'integer':
                 return 'INTEGER';
             case 'bigInteger':
@@ -235,6 +251,10 @@ abstract class Grammar {
                 return 'BLOB';
             case 'char':
                 return 'CHAR(' . ( $args[0] ?? 255 ) . ')';
+            case 'json':
+                return 'JSON';
+            case 'enum':
+                return 'ENUM(' . implode( ',', array_map( fn( $v ) => $this->compileDefaultValue( $v ), $args ) ) . ')';
             default:
                 throw new RuntimeException( 'Unsupported column type: ' . $column->getType() );
         }

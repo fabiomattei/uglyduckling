@@ -18,6 +18,8 @@ class ColumnDefinition {
     private bool $unique = false;
     private bool $hasDefault = false;
     private $default = null;
+    private bool $useCurrentDefault = false;
+    private bool $useCurrentOnUpdate = false;
     private ?string $charset = null;
     private ?string $collation = null;
     private ?string $comment = null;
@@ -40,6 +42,26 @@ class ColumnDefinition {
     public function default( $value ): self {
         $this->hasDefault = true;
         $this->default = $value;
+        return $this;
+    }
+
+    /**
+     * Defaults this column to CURRENT_TIMESTAMP, e.g. for a created_at column that
+     * should be set by the database itself rather than by application code. Emitted
+     * as the unquoted SQL keyword, unlike default() which always quotes its argument
+     * as a literal - a plain ->default('CURRENT_TIMESTAMP') would insert that string.
+     */
+    public function useCurrent(): self {
+        $this->useCurrentDefault = true;
+        return $this;
+    }
+
+    /**
+     * Re-sets this column to CURRENT_TIMESTAMP on every UPDATE, e.g. for an updated_at
+     * column (MySQL only - SQLite has no equivalent and silently ignores this).
+     */
+    public function useCurrentOnUpdate(): self {
+        $this->useCurrentOnUpdate = true;
         return $this;
     }
 
@@ -167,6 +189,14 @@ class ColumnDefinition {
 
     public function getDefault() {
         return $this->default;
+    }
+
+    public function usesCurrentDefault(): bool {
+        return $this->useCurrentDefault;
+    }
+
+    public function usesCurrentOnUpdate(): bool {
+        return $this->useCurrentOnUpdate;
     }
 
     public function getCharset(): ?string {

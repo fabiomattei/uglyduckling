@@ -82,6 +82,14 @@ class MySqlGrammar extends Grammar {
     }
 
     /**
+     * Emits ON UPDATE CURRENT_TIMESTAMP when the migration called
+     * ColumnDefinition::useCurrentOnUpdate().
+     */
+    protected function compileColumnOnUpdate( ColumnDefinition $column ): string {
+        return $column->usesCurrentOnUpdate() ? ' ON UPDATE CURRENT_TIMESTAMP' : '';
+    }
+
+    /**
      * Only emits ENGINE/CHARSET/COLLATE clauses the migration explicitly set via
      * Blueprint::engine()/charset()/collation() - a migration that calls none of them
      * generates the exact same CREATE TABLE statement as before these options existed.
