@@ -1,0 +1,11 @@
+<?php
+
+use Fabiom\UglyDuckling\Framework\DataBase\Seeders\Seeder;
+
+return new class extends Seeder {
+
+    public function run( PDO $pdo ): void {
+        //
+    }
+
+};

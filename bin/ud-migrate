@@ -3,6 +3,7 @@
 
 use Fabiom\UglyDuckling\Framework\DataBase\Migrations\MigrationRepository;
 use Fabiom\UglyDuckling\Framework\DataBase\Migrations\Migrator;
+use Fabiom\UglyDuckling\Framework\DataBase\Seeders\SeederRunner;
 
 // Locate vendor/autoload.php whether run from library root or installed as a dependency
 $autoloadCandidates = [
@@ -58,16 +59,20 @@ Usage:
   ud-migrate fresh    [config-file] [migrations-dir]   Drop every table, then migrate from scratch
   ud-migrate status   [config-file] [migrations-dir]   Show which migrations have run
   ud-migrate make <name> [migrations-dir]               Create a new migration file
+  ud-migrate seed [--class=Name] [config-file] [seeders-dir]
+                                                        Run every seeder, or just one with --class
+  ud-migrate make-seeder <name> [seeders-dir]           Create a new seeder file
 
 Defaults:
   config-file     ./migrations-config.php  (a PHP file that must `return` a PDO instance)
   migrations-dir  ./database/migrations
+  seeders-dir     ./database/seeders
 
 USAGE;
 
 $command = $argv[1] ?? null;
 
-if (!in_array($command, ['migrate', 'rollback', 'refresh', 'fresh', 'status', 'make'], true)) {
+if (!in_array($command, ['migrate', 'rollback', 'refresh', 'fresh', 'status', 'make', 'seed', 'make-seeder'], true)) {
     fwrite(STDERR, UD_MIGRATE_USAGE);
     exit(1);
 }
@@ -77,6 +82,17 @@ if ($command === 'rollback') {
     foreach ($argv as $index => $arg) {
         if (preg_match('/^--step=(\d+)$/', $arg, $matches)) {
             $steps = (int) $matches[1];
+            unset($argv[$index]);
+        }
+    }
+    $argv = array_values($argv);
+}
+
+$seederClass = null;
+if ($command === 'seed') {
+    foreach ($argv as $index => $arg) {
+        if (preg_match('/^--class=(.+)$/', $arg, $matches)) {
+            $seederClass = $matches[1];
             unset($argv[$index]);
         }
     }
@@ -111,8 +127,34 @@ if ($command === 'make') {
     exit(0);
 }
 
+if ($command === 'make-seeder') {
+    $name = $argv[2] ?? null;
+    if ($name === null || trim($name) === '') {
+        fwrite(STDERR, "Error: seeder name required\n\n" . UD_MIGRATE_USAGE);
+        exit(1);
+    }
+
+    $seedersDir = rtrim($argv[3] ?? getcwd() . '/database/seeders', DIRECTORY_SEPARATOR);
+    if (!is_dir($seedersDir) && !mkdir($seedersDir, 0777, true) && !is_dir($seedersDir)) {
+        fwrite(STDERR, "Error: could not create seeders directory: $seedersDir\n");
+        exit(1);
+    }
+
+    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9]+/', '_', $name), '_'));
+    $filename = date('Y_m_d_His') . '_' . $slug . '.php';
+    $path = $seedersDir . DIRECTORY_SEPARATOR . $filename;
+
+    copy(__DIR__ . '/../src/Framework/DataBase/Seeders/stubs/seeder.stub', $path);
+
+    echo "Created seeder: $path\n";
+    exit(0);
+}
+
 $configPath = $argv[2] ?? getcwd() . DIRECTORY_SEPARATOR . 'migrations-config.php';
-$migrationsDir = $argv[3] ?? getcwd() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations';
+$defaultResourceDir = $command === 'seed'
+    ? getcwd() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'seeders'
+    : getcwd() . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations';
+$migrationsDir = $argv[3] ?? $defaultResourceDir;
 
 if (!file_exists($configPath)) {
     fwrite(STDERR, "Error: config file not found: $configPath\n\n" . UD_MIGRATE_USAGE);
@@ -127,8 +169,34 @@ if (!$pdo instanceof PDO) {
 }
 
 if (!is_dir($migrationsDir)) {
-    fwrite(STDERR, "Error: migrations directory not found: $migrationsDir\n");
+    $label = $command === 'seed' ? 'seeders' : 'migrations';
+    fwrite(STDERR, "Error: $label directory not found: $migrationsDir\n");
     exit(1);
+}
+
+if ($command === 'seed') {
+    $seederRunner = new SeederRunner($pdo, $migrationsDir);
+
+    try {
+        if ($seederClass !== null) {
+            $seederRunner->runOne($seederClass);
+            echo "Seeded: $seederClass\n";
+        } else {
+            $ran = $seederRunner->run();
+            if (empty($ran)) {
+                echo "No seeders found.\n";
+            } else {
+                foreach ($ran as $seederName) {
+                    echo "Seeded: $seederName\n";
+                }
+            }
+        }
+    } catch (\Throwable $e) {
+        fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
+        exit(1);
+    }
+
+    exit(0);
 }
 
 $migrator = new Migrator($pdo, new MigrationRepository($pdo), $migrationsDir);

@@ -1,0 +1,7 @@
+{
+    "name": "invalid-resource",
+    "metadata": { "type": "table", "version": "1" },
+    "get": {
+        "query": { "sql": "SELECT id, nickname FROM widgets" }
+    }
+}
