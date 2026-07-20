@@ -46,11 +46,29 @@ class Blueprint {
     }
 
     /**
-     * Unsigned big integer column for a foreign key value. Does not create a
-     * FOREIGN KEY constraint - Schema/Grammar do not compile constraints yet.
+     * Unsigned big integer column for a foreign key value. Chain ->constrained($table)
+     * or ->references($column)->on($table) to also create the FOREIGN KEY constraint.
      */
     public function foreignId( string $name ): ColumnDefinition {
         return $this->unsignedBigInteger( $name );
+    }
+
+    /**
+     * CHAR(36) column for a UUID value, e.g. as a primary key: ->uuid('id')->primary().
+     * Nothing generates the UUID value itself - the application does that in PHP before
+     * inserting, the same way Laravel's HasUuids trait does; there is no portable
+     * DB-side UUID function shared by MySQL and SQLite.
+     */
+    public function uuid( string $name ): ColumnDefinition {
+        return $this->addColumn( $name, 'uuid' );
+    }
+
+    /**
+     * CHAR(36) column for a foreign key value that references a uuid() primary key.
+     * Chain ->constrained($table) or ->references($column)->on($table) as with foreignId().
+     */
+    public function foreignUuid( string $name ): ColumnDefinition {
+        return $this->uuid( $name );
     }
 
     public function boolean( string $name ): ColumnDefinition {

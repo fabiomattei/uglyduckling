@@ -90,4 +90,108 @@ class SchemaBlueprintTest extends PHPUnit\Framework\TestCase {
         $this->pdo->exec( "INSERT INTO tags (slug) VALUES ('sci-fi')" );
     }
 
+    public function testForeignKeyDeclaredWithConstrainedIsEnforcedOnCreate() {
+        Schema::create( 'authors', function ( Blueprint $table ) {
+            $table->id();
+        } );
+        Schema::create( 'books', function ( Blueprint $table ) {
+            $table->id();
+            $table->foreignId( 'author_id' )->constrained( 'authors' );
+        } );
+
+        $this->pdo->exec( 'INSERT INTO authors (id) VALUES (1)' );
+        $this->pdo->exec( 'INSERT INTO books (author_id) VALUES (1)' );
+
+        $this->expectException( PDOException::class );
+        $this->pdo->exec( 'INSERT INTO books (author_id) VALUES (999)' );
+    }
+
+    public function testForeignKeyDeclaredWithReferencesOnIsEnforcedOnCreate() {
+        Schema::create( 'authors', function ( Blueprint $table ) {
+            $table->id();
+        } );
+        Schema::create( 'books', function ( Blueprint $table ) {
+            $table->id();
+            $table->foreignId( 'author_id' )->references( 'id' )->on( 'authors' );
+        } );
+
+        $this->expectException( PDOException::class );
+        $this->pdo->exec( 'INSERT INTO books (author_id) VALUES (999)' );
+    }
+
+    public function testForeignKeyAddedThroughTableIsEnforced() {
+        Schema::create( 'authors', function ( Blueprint $table ) {
+            $table->id();
+        } );
+        Schema::create( 'books', function ( Blueprint $table ) {
+            $table->id();
+        } );
+
+        Schema::table( 'books', function ( Blueprint $table ) {
+            $table->foreignId( 'author_id' )->nullable()->constrained( 'authors' );
+        } );
+
+        $this->pdo->exec( 'INSERT INTO authors (id) VALUES (1)' );
+        $this->pdo->exec( 'INSERT INTO books (author_id) VALUES (1)' );
+
+        $this->expectException( PDOException::class );
+        $this->pdo->exec( 'INSERT INTO books (author_id) VALUES (999)' );
+    }
+
+    public function testOnDeleteCascadeDeletesDependentRows() {
+        Schema::create( 'authors', function ( Blueprint $table ) {
+            $table->id();
+        } );
+        Schema::create( 'books', function ( Blueprint $table ) {
+            $table->id();
+            $table->foreignId( 'author_id' )->constrained( 'authors' )->onDelete( 'cascade' );
+        } );
+
+        $this->pdo->exec( 'INSERT INTO authors (id) VALUES (1)' );
+        $this->pdo->exec( 'INSERT INTO books (author_id) VALUES (1)' );
+
+        $this->pdo->exec( 'DELETE FROM authors WHERE id = 1' );
+
+        $this->assertEquals( [], $this->pdo->query( 'SELECT * FROM books' )->fetchAll() );
+    }
+
+    public function testOnDeleteRejectsAnUnsupportedAction() {
+        $this->expectException( InvalidArgumentException::class );
+
+        ( new Blueprint( 'books' ) )->foreignId( 'author_id' )->onDelete( 'purge' );
+    }
+
+    public function testUuidPrimaryKeyIsQueryableAndUnique() {
+        Schema::create( 'authors', function ( Blueprint $table ) {
+            $table->uuid( 'id' )->primary();
+            $table->string( 'name' );
+        } );
+
+        $uuid = '4c1b9a3e-1111-4b6e-9a2b-000000000001';
+        $this->pdo->exec( "INSERT INTO authors (id, name) VALUES ('$uuid', 'Herbert')" );
+
+        $row = $this->pdo->query( 'SELECT * FROM authors' )->fetch( PDO::FETCH_ASSOC );
+        $this->assertSame( $uuid, $row['id'] );
+
+        $this->expectException( PDOException::class );
+        $this->pdo->exec( "INSERT INTO authors (id, name) VALUES ('$uuid', 'Duplicate')" );
+    }
+
+    public function testForeignUuidReferencesAUuidPrimaryKey() {
+        Schema::create( 'authors', function ( Blueprint $table ) {
+            $table->uuid( 'id' )->primary();
+        } );
+        Schema::create( 'books', function ( Blueprint $table ) {
+            $table->id();
+            $table->foreignUuid( 'author_id' )->constrained( 'authors' );
+        } );
+
+        $uuid = '4c1b9a3e-1111-4b6e-9a2b-000000000002';
+        $this->pdo->exec( "INSERT INTO authors (id) VALUES ('$uuid')" );
+        $this->pdo->exec( "INSERT INTO books (author_id) VALUES ('$uuid')" );
+
+        $this->expectException( PDOException::class );
+        $this->pdo->exec( "INSERT INTO books (author_id) VALUES ('not-a-real-author')" );
+    }
+
 }

@@ -18,13 +18,19 @@ abstract class Grammar {
      * @return string[] statements to run, in order
      */
     public function compileCreate( Blueprint $blueprint ): array {
-        $columnLines = array_map(
+        $lines = array_map(
             fn( ColumnDefinition $column ) => $this->compileColumn( $column ),
             $blueprint->getColumns()
         );
 
+        foreach ( $blueprint->getColumns() as $column ) {
+            if ( $column->hasForeignKey() ) {
+                $lines[] = $this->compileForeignKeyClause( $column, $this->foreignKeyConstraintName( $blueprint, $column ) );
+            }
+        }
+
         $statements = [
-            'CREATE TABLE ' . $this->quoteIdentifier( $blueprint->getTable() ) . ' (' . implode( ', ', $columnLines ) . ')',
+            'CREATE TABLE ' . $this->quoteIdentifier( $blueprint->getTable() ) . ' (' . implode( ', ', $lines ) . ')',
         ];
 
         return array_merge( $statements, $this->compileIndexes( $blueprint ) );
@@ -40,8 +46,7 @@ abstract class Grammar {
         $statements = [];
 
         foreach ( $blueprint->getColumns() as $column ) {
-            $statements[] = 'ALTER TABLE ' . $this->quoteIdentifier( $blueprint->getTable() )
-                . ' ADD COLUMN ' . $this->compileColumn( $column );
+            $statements = array_merge( $statements, $this->compileAddColumnStatements( $blueprint, $column ) );
         }
 
         foreach ( $blueprint->getDroppedColumns() as $columnName ) {
@@ -99,11 +104,55 @@ abstract class Grammar {
             $sql .= ' DEFAULT ' . $this->compileDefaultValue( $column->getDefault() );
         }
 
+        if ( $column->isPrimary() ) {
+            $sql .= ' PRIMARY KEY';
+        }
+
         if ( $column->isUnique() ) {
             $sql .= ' UNIQUE';
         }
 
         return $sql;
+    }
+
+    /**
+     * One or more ALTER TABLE statements that add this single column, wiring up its
+     * foreign key (if any). Split out because MySQL and SQLite handle a foreign key
+     * added after table creation differently - see MySqlGrammar/SQLiteGrammar.
+     *
+     * @return string[]
+     */
+    protected function compileAddColumnStatements( Blueprint $blueprint, ColumnDefinition $column ): array {
+        return [
+            'ALTER TABLE ' . $this->quoteIdentifier( $blueprint->getTable() )
+                . ' ADD COLUMN ' . $this->compileColumn( $column ),
+        ];
+    }
+
+    protected function compileForeignKeyClause( ColumnDefinition $column, ?string $constraintName = null ): string {
+        $sql = $constraintName !== null ? 'CONSTRAINT ' . $this->quoteIdentifier( $constraintName ) . ' ' : '';
+        $sql .= 'FOREIGN KEY (' . $this->quoteIdentifier( $column->getName() ) . ') REFERENCES '
+            . $this->quoteIdentifier( $column->getReferencesTable() )
+            . ' (' . $this->quoteIdentifier( $column->getReferencesColumn() ) . ')';
+
+        return $sql . $this->compileReferentialActions( $column );
+    }
+
+    protected function compileReferentialActions( ColumnDefinition $column ): string {
+        $sql = '';
+
+        if ( $column->getOnDelete() !== null ) {
+            $sql .= ' ON DELETE ' . $column->getOnDelete();
+        }
+        if ( $column->getOnUpdate() !== null ) {
+            $sql .= ' ON UPDATE ' . $column->getOnUpdate();
+        }
+
+        return $sql;
+    }
+
+    protected function foreignKeyConstraintName( Blueprint $blueprint, ColumnDefinition $column ): string {
+        return $blueprint->getTable() . '_' . $column->getName() . '_foreign';
     }
 
     protected function typeKeyword( ColumnDefinition $column ): string {
@@ -120,6 +169,8 @@ abstract class Grammar {
                 return 'BIGINT';
             case 'boolean':
                 return 'BOOLEAN';
+            case 'uuid':
+                return 'CHAR(36)';
             case 'decimal':
                 return 'DECIMAL(' . ( $args[0] ?? 8 ) . ', ' . ( $args[1] ?? 2 ) . ')';
             case 'date':

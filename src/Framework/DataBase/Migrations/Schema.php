@@ -21,6 +21,13 @@ class Schema {
 
     public static function setConnection( PDO $pdo ): void {
         self::$pdo = $pdo;
+
+        // SQLite ignores REFERENCES/FOREIGN KEY constraints unless this is enabled per
+        // connection; MySQL/InnoDB enforces them unconditionally, so this keeps behaviour
+        // consistent across dialects instead of silently no-op'ing constraints on SQLite.
+        if ( $pdo->getAttribute( PDO::ATTR_DRIVER_NAME ) === 'sqlite' ) {
+            $pdo->exec( 'PRAGMA foreign_keys = ON' );
+        }
     }
 
     public static function create( string $table, callable $callback ): void {
