@@ -5,6 +5,19 @@ namespace Fabiom\UglyDuckling\Framework\Json;
 class JsonLoader {
 
     /**
+     * Optional hook invoked with the decoded resource right after every
+     * JSON resource is parsed (both top-level and nested/panel loads route
+     * through json_decode_with_error_control, making this the single choke
+     * point for post-processing decoded resources, e.g. translation).
+     * @var callable|null
+     */
+    protected static $postDecodeHook = null;
+
+    public static function setPostDecodeHook( ?callable $hook ): void {
+        self::$postDecodeHook = $hook;
+    }
+
+    /**
      * Load a resource from file specified with array index
      *
      * @param string $resourceName
@@ -120,6 +133,9 @@ class JsonLoader {
             default:
                 throw new \InvalidArgumentException('[JsonLoader json_decode error] :: Unknown error ::'. $fileNameAndPath .' '. json_last_error_msg());
                 break;
+        }
+        if ( self::$postDecodeHook !== null ) {
+            (self::$postDecodeHook)( $loadeddata );
         }
         return $loadeddata;
     }

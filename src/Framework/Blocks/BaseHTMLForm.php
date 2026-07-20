@@ -134,7 +134,7 @@ class BaseHTMLForm extends BaseHTMLBlock {
     function addGenericField( $field, $fieldValue ) {
         $properties = '';
         foreach ($field as $key => $value) {
-            if (!in_array( $key, array('label', 'width', 'row', 'value', 'sqlfield', 'name') )) { // forbidden properties
+            if (!in_array( $key, array('label', 'width', 'row', 'value', 'sqlfield', 'name', 'default') )) { // forbidden properties
                 $properties .= $key . '=' .'"' . $value . '" ' ;
             }
         }

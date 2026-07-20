@@ -66,6 +66,14 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
     }
 
     /**
+     * Hook called right after the JSON resource is loaded into $this->resource,
+     * before it's validated/rendered. No-op by default; subclasses can
+     * override it to post-process the decoded resource (e.g. translation).
+     */
+    protected function afterResourceLoaded(): void {
+    }
+
+    /**
      * This method makes all necessary presets to activate a controller
      * @throws \Exception
      */
@@ -96,6 +104,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         // loading json resource
         if ( strlen( $this->resourceName ) > 0 ) {
             $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
+            $this->afterResourceLoaded();
         } else {
             throw new \Exception('Resource undefined');
         }
@@ -205,6 +214,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
         // loading json resource
         if ( strlen( $this->resourceName ) > 0 ) {
             $this->resource = JsonLoader::loadResource( $this->resourceIndex, $this->resourceName );
+            $this->afterResourceLoaded();
         } else {
             throw new \Exception('Resource undefined');
         }
