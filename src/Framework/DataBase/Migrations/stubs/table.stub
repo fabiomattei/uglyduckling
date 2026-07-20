@@ -7,14 +7,15 @@ use Fabiom\UglyDuckling\Framework\DataBase\Migrations\Schema;
 return new class extends Migration {
 
     public function up( PDO $pdo ): void {
-        Schema::create( 'table_name', function ( Blueprint $table ) {
-            $table->id();
-            $table->timestamps();
+        Schema::table( '{{table}}', function ( Blueprint $table ) {
+            //
         } );
     }
 
     public function down( PDO $pdo ): void {
-        Schema::dropIfExists( 'table_name' );
+        Schema::table( '{{table}}', function ( Blueprint $table ) {
+            //
+        } );
     }
 
 };

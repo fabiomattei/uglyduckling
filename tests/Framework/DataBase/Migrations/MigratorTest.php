@@ -60,6 +60,47 @@ class MigratorTest extends PHPUnit\Framework\TestCase {
         $this->assertTableDoesNotExist( 'gadgets' );
     }
 
+    public function testRollbackWithStepOnlyRevertsThatManyMigrationsRegardlessOfBatch() {
+        $this->migrator->migrate();
+
+        $rolledBack = $this->migrator->rollback( 1 );
+
+        $this->assertEquals( [ '2024_01_02_000000_create_gadgets_table' ], $rolledBack );
+        $this->assertTableExists( 'widgets' );
+        $this->assertTableDoesNotExist( 'gadgets' );
+    }
+
+    public function testRefreshRevertsEverythingThenMigratesAgain() {
+        $this->migrator->migrate();
+        $this->pdo->exec( "INSERT INTO widgets (name) VALUES ('bolt')" );
+
+        $ran = $this->migrator->refresh();
+
+        $this->assertEquals(
+            [ '2024_01_01_000000_create_widgets_table', '2024_01_02_000000_create_gadgets_table' ],
+            $ran
+        );
+        $this->assertTableExists( 'widgets' );
+        $this->assertTableExists( 'gadgets' );
+        // down() dropped and up() recreated the table, so old rows are gone
+        $this->assertEquals( [], $this->pdo->query( 'SELECT * FROM widgets' )->fetchAll() );
+    }
+
+    public function testFreshDropsEveryTableThenMigratesFromScratch() {
+        $this->migrator->migrate();
+        $this->pdo->exec( "INSERT INTO widgets (name) VALUES ('bolt')" );
+
+        $ran = $this->migrator->fresh();
+
+        $this->assertEquals(
+            [ '2024_01_01_000000_create_widgets_table', '2024_01_02_000000_create_gadgets_table' ],
+            $ran
+        );
+        $this->assertTableExists( 'widgets' );
+        $this->assertTableExists( 'gadgets' );
+        $this->assertEquals( [], $this->pdo->query( 'SELECT * FROM widgets' )->fetchAll() );
+    }
+
     public function testStatusReflectsARollback() {
         $this->migrator->migrate();
         $this->migrator->rollback();

@@ -68,6 +68,17 @@ class MigrationRepositoryTest extends PHPUnit\Framework\TestCase {
         );
     }
 
+    public function testGetLastMigrationsReturnsTheMostRecentNRegardlessOfBatch() {
+        $this->repository->log( '2024_01_01_000000_create_widgets_table', 1 );
+        $this->repository->log( '2024_01_02_000000_create_gadgets_table', 2 );
+        $this->repository->log( '2024_01_03_000000_create_gizmos_table', 3 );
+
+        $this->assertEquals(
+            [ '2024_01_03_000000_create_gizmos_table', '2024_01_02_000000_create_gadgets_table' ],
+            $this->repository->getLastMigrations( 2 )
+        );
+    }
+
     public function testDeleteRemovesAMigrationFromTheRanList() {
         $this->repository->log( '2024_01_01_000000_create_widgets_table', 1 );
         $this->repository->delete( '2024_01_01_000000_create_widgets_table' );

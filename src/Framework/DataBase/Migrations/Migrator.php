@@ -19,6 +19,10 @@ class Migrator {
         $this->pdo = $pdo;
         $this->repository = $repository;
         $this->migrationsPath = rtrim( $migrationsPath, DIRECTORY_SEPARATOR );
+
+        // Migration files call the static Schema facade directly, so it needs this
+        // Migrator's connection before any migration's up()/down() can run.
+        Schema::setConnection( $pdo );
     }
 
     /**
@@ -39,47 +43,93 @@ class Migrator {
         $batch = $this->repository->getNextBatchNumber();
 
         foreach ( $pending as $migrationName ) {
-            $migration = $this->loadMigration( $migrationName );
-
-            $this->pdo->beginTransaction();
-            try {
-                $migration->up( $this->pdo );
-                $this->repository->log( $migrationName, $batch );
-                $this->pdo->commit();
-            } catch ( \Throwable $e ) {
-                $this->pdo->rollBack();
-                throw $e;
-            }
+            $this->runUp( $migrationName, $batch );
         }
 
         return $pending;
     }
 
     /**
-     * Reverts every migration that ran in the most recent batch, in reverse order.
+     * Reverts previously run migrations.
      *
-     * @return string[] names of the migrations that were rolled back
+     * With no argument, reverts every migration from the most recent batch (Laravel's
+     * default `migrate:rollback` behaviour). With $steps, reverts that many individual
+     * migrations, most recently run first, regardless of which batch they belong to
+     * (Laravel's `migrate:rollback --step=N`).
+     *
+     * @return string[] names of the migrations that were rolled back, in the order reverted
      */
-    public function rollback(): array {
+    public function rollback( ?int $steps = null ): array {
         $this->repository->ensureTableExists();
 
-        $toRollback = $this->repository->getLastBatchMigrations();
+        $toRollback = $steps === null
+            ? $this->repository->getLastBatchMigrations()
+            : $this->repository->getLastMigrations( $steps );
 
         foreach ( $toRollback as $migrationName ) {
-            $migration = $this->loadMigration( $migrationName );
-
-            $this->pdo->beginTransaction();
-            try {
-                $migration->down( $this->pdo );
-                $this->repository->delete( $migrationName );
-                $this->pdo->commit();
-            } catch ( \Throwable $e ) {
-                $this->pdo->rollBack();
-                throw $e;
-            }
+            $this->runDown( $migrationName );
         }
 
         return $toRollback;
+    }
+
+    /**
+     * Reverts every migration that has ever run (via down(), most recent first), then
+     * migrates again from scratch. Equivalent to Laravel's `migrate:refresh`.
+     *
+     * @return string[] names of the migrations that were run by the final migrate() pass
+     */
+    public function refresh(): array {
+        $this->repository->ensureTableExists();
+
+        foreach ( array_reverse( $this->repository->getRan() ) as $migrationName ) {
+            $this->runDown( $migrationName );
+        }
+
+        return $this->migrate();
+    }
+
+    /**
+     * Drops every table in the database (including the migrations tracking table itself)
+     * without running any down(), then migrates from scratch. Equivalent to Laravel's
+     * `migrate:fresh` - faster than refresh() but does not exercise down() migrations.
+     *
+     * @return string[] names of the migrations that were run by the final migrate() pass
+     */
+    public function fresh(): array {
+        foreach ( Schema::allTableNames() as $tableName ) {
+            Schema::drop( $tableName );
+        }
+
+        return $this->migrate();
+    }
+
+    private function runUp( string $migrationName, int $batch ): void {
+        $migration = $this->loadMigration( $migrationName );
+
+        $this->pdo->beginTransaction();
+        try {
+            $migration->up( $this->pdo );
+            $this->repository->log( $migrationName, $batch );
+            $this->pdo->commit();
+        } catch ( \Throwable $e ) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+
+    private function runDown( string $migrationName ): void {
+        $migration = $this->loadMigration( $migrationName );
+
+        $this->pdo->beginTransaction();
+        try {
+            $migration->down( $this->pdo );
+            $this->repository->delete( $migrationName );
+            $this->pdo->commit();
+        } catch ( \Throwable $e ) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
     }
 
     /**

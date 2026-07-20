@@ -24,10 +24,38 @@ if (!$autoloaded) {
     exit(1);
 }
 
+/**
+ * Picks a migration stub and the table name to fill into it based on the migration
+ * name slug, mirroring Laravel's make:migration table inference:
+ *   create_books_table          -> create_table.stub, table "books"
+ *   add_isbn_to_books_table     -> table.stub,         table "books"
+ *   remove_isbn_from_books_table -> table.stub,        table "books"
+ *   anything else               -> migration.stub,     no table substitution
+ *
+ * @return array{0: string, 1: ?string} [stub file path, inferred table name]
+ */
+function ud_migrate_resolve_stub(string $slug): array {
+    $stubsDir = __DIR__ . '/../src/Framework/DataBase/Migrations/stubs';
+
+    if (preg_match('/^create_(.+)_table$/', $slug, $matches)) {
+        return [$stubsDir . '/create_table.stub', $matches[1]];
+    }
+
+    if (preg_match('/^(?:add|remove|drop)_.+_(?:to|from)_(.+)_table$/', $slug, $matches)) {
+        return [$stubsDir . '/table.stub', $matches[1]];
+    }
+
+    return [$stubsDir . '/migration.stub', null];
+}
+
 const UD_MIGRATE_USAGE = <<<USAGE
 Usage:
   ud-migrate migrate  [config-file] [migrations-dir]   Run every pending migration
-  ud-migrate rollback [config-file] [migrations-dir]   Revert the last batch of migrations
+  ud-migrate rollback [--step=N] [config-file] [migrations-dir]
+                                                        Revert the last batch of migrations,
+                                                        or the last N migrations with --step
+  ud-migrate refresh  [config-file] [migrations-dir]   Revert every migration (via down()), then migrate
+  ud-migrate fresh    [config-file] [migrations-dir]   Drop every table, then migrate from scratch
   ud-migrate status   [config-file] [migrations-dir]   Show which migrations have run
   ud-migrate make <name> [migrations-dir]               Create a new migration file
 
@@ -39,9 +67,20 @@ USAGE;
 
 $command = $argv[1] ?? null;
 
-if (!in_array($command, ['migrate', 'rollback', 'status', 'make'], true)) {
+if (!in_array($command, ['migrate', 'rollback', 'refresh', 'fresh', 'status', 'make'], true)) {
     fwrite(STDERR, UD_MIGRATE_USAGE);
     exit(1);
+}
+
+$steps = null;
+if ($command === 'rollback') {
+    foreach ($argv as $index => $arg) {
+        if (preg_match('/^--step=(\d+)$/', $arg, $matches)) {
+            $steps = (int) $matches[1];
+            unset($argv[$index]);
+        }
+    }
+    $argv = array_values($argv);
 }
 
 if ($command === 'make') {
@@ -61,7 +100,12 @@ if ($command === 'make') {
     $filename = date('Y_m_d_His') . '_' . $slug . '.php';
     $path = $migrationsDir . DIRECTORY_SEPARATOR . $filename;
 
-    copy(__DIR__ . '/../src/Framework/DataBase/Migrations/stubs/migration.stub', $path);
+    [$stub, $table] = ud_migrate_resolve_stub($slug);
+    $contents = file_get_contents($stub);
+    if ($table !== null) {
+        $contents = str_replace('{{table}}', $table, $contents);
+    }
+    file_put_contents($path, $contents);
 
     echo "Created migration: $path\n";
     exit(0);
@@ -103,13 +147,29 @@ try {
             break;
 
         case 'rollback':
-            $rolledBack = $migrator->rollback();
+            $rolledBack = $migrator->rollback($steps);
             if (empty($rolledBack)) {
                 echo "Nothing to roll back.\n";
             } else {
                 foreach ($rolledBack as $migrationName) {
                     echo "Rolled back: $migrationName\n";
                 }
+            }
+            break;
+
+        case 'refresh':
+            $ran = $migrator->refresh();
+            echo "Database refreshed.\n";
+            foreach ($ran as $migrationName) {
+                echo "Migrated:  $migrationName\n";
+            }
+            break;
+
+        case 'fresh':
+            $ran = $migrator->fresh();
+            echo "Database dropped and migrated fresh.\n";
+            foreach ($ran as $migrationName) {
+                echo "Migrated:  $migrationName\n";
             }
             break;
 

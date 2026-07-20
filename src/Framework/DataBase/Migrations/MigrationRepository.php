@@ -66,6 +66,22 @@ class MigrationRepository {
         return $statement->fetchAll( PDO::FETCH_COLUMN );
     }
 
+    /**
+     * Returns the names of the last N migrations that ran, most recent first,
+     * regardless of batch boundaries. Used for `rollback --step=N`.
+     *
+     * @return string[]
+     */
+    public function getLastMigrations( int $limit ): array {
+        $statement = $this->pdo->prepare(
+            'SELECT migration FROM ' . self::TABLE_NAME . ' ORDER BY id DESC LIMIT :limit'
+        );
+        $statement->bindValue( ':limit', $limit, PDO::PARAM_INT );
+        $statement->execute();
+
+        return $statement->fetchAll( PDO::FETCH_COLUMN );
+    }
+
     public function getNextBatchNumber(): int {
         return $this->getLastBatchNumber() + 1;
     }
