@@ -18,6 +18,9 @@ class ColumnDefinition {
     private bool $unique = false;
     private bool $hasDefault = false;
     private $default = null;
+    private ?string $charset = null;
+    private ?string $collation = null;
+    private ?string $comment = null;
     private ?string $referencesTable = null;
     private ?string $referencesColumn = null;
     private ?string $onDeleteAction = null;
@@ -47,6 +50,33 @@ class ColumnDefinition {
 
     public function unique( bool $value = true ): self {
         $this->unique = $value;
+        return $this;
+    }
+
+    /**
+     * Per-column character set override (MySQL only - other dialects ignore it).
+     * Distinct from Blueprint::charset(), which sets the table's default instead.
+     */
+    public function charset( string $charset ): self {
+        $this->charset = $charset;
+        return $this;
+    }
+
+    /**
+     * Per-column collation override (MySQL only - other dialects ignore it).
+     * Distinct from Blueprint::collation(), which sets the table's default instead.
+     */
+    public function collation( string $collation ): self {
+        $this->collation = $collation;
+        return $this;
+    }
+
+    /**
+     * Column comment stored in the database's own metadata (MySQL only - other
+     * dialects ignore it), visible via SHOW CREATE TABLE / information_schema.
+     */
+    public function comment( string $comment ): self {
+        $this->comment = $comment;
         return $this;
     }
 
@@ -137,6 +167,18 @@ class ColumnDefinition {
 
     public function getDefault() {
         return $this->default;
+    }
+
+    public function getCharset(): ?string {
+        return $this->charset;
+    }
+
+    public function getCollation(): ?string {
+        return $this->collation;
+    }
+
+    public function getComment(): ?string {
+        return $this->comment;
     }
 
     public function hasForeignKey(): bool {

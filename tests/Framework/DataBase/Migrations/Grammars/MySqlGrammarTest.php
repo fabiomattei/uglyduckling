@@ -74,6 +74,44 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
         $this->assertSame( 1, substr_count( $createStatement, 'PRIMARY KEY' ) );
     }
 
+    public function testColumnOmitsCharsetCollationAndCommentByDefault() {
+        $blueprint = new Blueprint( 'widgets' );
+        $blueprint->string( 'name' );
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString( '`name` VARCHAR(255) NOT NULL', $createStatement );
+        $this->assertStringNotContainsString( 'CHARACTER SET', $createStatement );
+        $this->assertStringNotContainsString( 'COLLATE', $createStatement );
+        $this->assertStringNotContainsString( 'COMMENT', $createStatement );
+    }
+
+    public function testColumnAppliesCharsetCollationAndCommentWhenSet() {
+        $blueprint = new Blueprint( 'crm_contacts' );
+        $blueprint->string( 'cn_coid', 36 )->collation( 'utf8mb4_bin' )->comment( 'link a company' );
+        $blueprint->string( 'cn_name', 255 )->charset( 'utf8mb3' )->collation( 'utf8mb3_bin' )->nullable();
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString(
+            "`cn_coid` VARCHAR(36) COLLATE utf8mb4_bin NOT NULL COMMENT 'link a company'",
+            $createStatement
+        );
+        $this->assertStringContainsString(
+            '`cn_name` VARCHAR(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL',
+            $createStatement
+        );
+    }
+
+    public function testColumnCommentEscapesSingleQuotes() {
+        $blueprint = new Blueprint( 'widgets' );
+        $blueprint->string( 'note' )->comment( "it's here" );
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString( "COMMENT 'it''s here'", $createStatement );
+    }
+
     public function testNewColumnTypesCompileToTheExpectedMySqlKeywords() {
         $blueprint = new Blueprint( 'gsr_reports' );
         $blueprint->time( 'occurred_at' );

@@ -53,6 +53,35 @@ class MySqlGrammar extends Grammar {
     }
 
     /**
+     * Emits CHARACTER SET/COLLATE only for whichever of ColumnDefinition::charset()/
+     * collation() the migration actually called - a column that sets neither generates
+     * the same SQL as before these existed.
+     */
+    protected function compileColumnCharsetAndCollation( ColumnDefinition $column ): string {
+        $sql = '';
+
+        if ( $column->getCharset() !== null ) {
+            $sql .= ' CHARACTER SET ' . $column->getCharset();
+        }
+        if ( $column->getCollation() !== null ) {
+            $sql .= ' COLLATE ' . $column->getCollation();
+        }
+
+        return $sql;
+    }
+
+    /**
+     * Emits a trailing COMMENT clause when the migration called ColumnDefinition::comment().
+     */
+    protected function compileColumnComment( ColumnDefinition $column ): string {
+        if ( $column->getComment() === null ) {
+            return '';
+        }
+
+        return ' COMMENT ' . $this->compileDefaultValue( $column->getComment() );
+    }
+
+    /**
      * Only emits ENGINE/CHARSET/COLLATE clauses the migration explicitly set via
      * Blueprint::engine()/charset()/collation() - a migration that calls none of them
      * generates the exact same CREATE TABLE statement as before these options existed.

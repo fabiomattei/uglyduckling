@@ -123,6 +123,8 @@ abstract class Grammar {
             $sql .= ' UNSIGNED';
         }
 
+        $sql .= $this->compileColumnCharsetAndCollation( $column );
+
         $sql .= $column->isNullable() ? ' NULL' : ' NOT NULL';
 
         if ( $column->hasDefault() ) {
@@ -137,7 +139,26 @@ abstract class Grammar {
             $sql .= ' UNIQUE';
         }
 
+        $sql .= $this->compileColumnComment( $column );
+
         return $sql;
+    }
+
+    /**
+     * Per-column CHARACTER SET/COLLATE clause. Empty by default - SQLite has no
+     * equivalent, so only MySqlGrammar overrides this to honor
+     * ColumnDefinition::charset()/collation().
+     */
+    protected function compileColumnCharsetAndCollation( ColumnDefinition $column ): string {
+        return '';
+    }
+
+    /**
+     * Trailing COMMENT clause. Empty by default - SQLite has no equivalent, so only
+     * MySqlGrammar overrides this to honor ColumnDefinition::comment().
+     */
+    protected function compileColumnComment( ColumnDefinition $column ): string {
+        return '';
     }
 
     /**
