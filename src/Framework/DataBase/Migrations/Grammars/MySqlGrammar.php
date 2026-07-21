@@ -27,11 +27,17 @@ class MySqlGrammar extends Grammar {
      * ('integer') - autoIncrementPrimaryKeyColumn() used to hardcode BIGINT regardless,
      * silently widening every increments() primary key to BIGINT on MySQL even though
      * increments() is documented (and behaves, on SQLite) as producing a plain INTEGER.
+     *
+     * Also respects ColumnDefinition::isUnsigned() rather than hardcoding UNSIGNED - both
+     * id() and increments() set it by default, but this used to ignore an explicit
+     * ->unsigned( false ) override for the rarer case of a plain (signed) auto-increment
+     * column.
      */
     protected function autoIncrementPrimaryKeyColumn( ColumnDefinition $column ): string {
         $type = $column->getType() === 'integer' ? 'INT' : 'BIGINT';
+        $unsigned = $column->isUnsigned() ? ' UNSIGNED' : '';
 
-        return $this->quoteIdentifier( $column->getName() ) . ' ' . $type . ' UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY';
+        return $this->quoteIdentifier( $column->getName() ) . ' ' . $type . $unsigned . ' NOT NULL AUTO_INCREMENT PRIMARY KEY';
     }
 
     /**

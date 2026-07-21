@@ -35,6 +35,16 @@ class MySqlGrammarTest extends PHPUnit\Framework\TestCase {
         $this->assertStringContainsString( '`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY', $createStatement );
     }
 
+    public function testIncrementsCanBeMadeSignedForLegacyTablesThatPredateTheUnsignedConvention() {
+        $blueprint = new Blueprint( 'widgets' );
+        $blueprint->increments( 'wid_id' )->unsigned( false );
+
+        [ $createStatement ] = $this->grammar->compileCreate( $blueprint );
+
+        $this->assertStringContainsString( '`wid_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY', $createStatement );
+        $this->assertStringNotContainsString( 'UNSIGNED', $createStatement );
+    }
+
     public function testCreateOmitsTableOptionsByDefault() {
         $blueprint = new Blueprint( 'widgets' );
         $blueprint->id();

@@ -25,8 +25,12 @@ class Blueprint {
         return $this->addColumn( $name, 'bigInteger' )->unsigned()->markAsAutoIncrementPrimaryKey();
     }
 
+    /**
+     * Unsigned by default, like id(). Chain ->unsigned( false ) for the rarer case of a
+     * plain (signed) auto-increment column.
+     */
     public function increments( string $name ): ColumnDefinition {
-        return $this->addColumn( $name, 'integer' )->markAsAutoIncrementPrimaryKey();
+        return $this->addColumn( $name, 'integer' )->unsigned()->markAsAutoIncrementPrimaryKey();
     }
 
     public function string( string $name, int $length = 255 ): ColumnDefinition {
