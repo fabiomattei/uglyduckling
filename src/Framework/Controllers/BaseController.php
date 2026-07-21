@@ -229,7 +229,9 @@ class BaseController extends CommonController {
     }
 
     public function createCsrfToken() {
-        $_SESSION['csrftoken'] = StringUtils::generateRandomString( 40 );
+        if ( empty( $_SESSION['csrftoken'] ) ) {
+            $_SESSION['csrftoken'] = StringUtils::generateRandomString( 40 );
+        }
     }
 
 }
