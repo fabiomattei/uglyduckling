@@ -13,6 +13,7 @@ class BasePageComponent extends BaseController {
         parent::__construct();
         $this->templateFile = 'template';
         $this->controllerPointer = $this;
+        $this->appTitle = defined('APP_NAME') ? APP_NAME : '';
     }
 
     public function showPage(): void {
