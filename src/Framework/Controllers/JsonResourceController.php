@@ -371,7 +371,6 @@ class JsonResourceController extends CommonController {
             print_r($this->readableErrors);
         } {
             $this->redirectToPreviousPage();
-            // header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
         }
     }
 

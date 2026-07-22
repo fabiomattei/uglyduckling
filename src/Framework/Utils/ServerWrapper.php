@@ -38,13 +38,13 @@ class ServerWrapper {
      * Return the real client IP address.
      * When behind a trusted reverse proxy, reads the first IP from
      * HTTP_X_FORWARDED_FOR. Falls back to REMOTE_ADDR.
-     * Trusted proxy CIDRs can be set via the TRUSTED_PROXIES env var
+     * Trusted proxy CIDRs can be set via the TRUSTED_PROXIES constant
      * as a comma-separated list (e.g. "127.0.0.1,10.0.0.0/8").
      */
     static public function getRemoteAddress(): string {
         $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
 
-        $trustedProxies = array_filter(array_map('trim', explode(',', getenv('TRUSTED_PROXIES') ?: '')));
+        $trustedProxies = array_filter(array_map('trim', explode(',', Config::get('TRUSTED_PROXIES', ''))));
 
         if ( !empty($trustedProxies) && self::ipMatchesCidrs($remoteAddr, $trustedProxies) ) {
             if ( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {

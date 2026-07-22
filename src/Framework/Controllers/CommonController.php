@@ -6,6 +6,7 @@ use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
+use Fabiom\UglyDuckling\Framework\Utils\Config;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
@@ -82,7 +83,7 @@ class CommonController {
             SessionWrapper::getSessionLastLogin(),
             ServerWrapper::getRemoteAddress(),
             ServerWrapper::getHttpUserAgent() ) ) {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+            header('Location: ' . Config::get('BASE_PATH') . Config::get('PATH_TO_APP'));
         }
     }
 
@@ -169,7 +170,6 @@ class CommonController {
      * Redirect the script to a selected url
      */
     public function redirectToDefaultPage() {
-        // header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
         if (defined('BASE_PATH') AND defined('PATH_TO_APP') AND defined('DEFAULT_PAGE')) {
             header('Location: ' . BASE_PATH . PATH_TO_APP . DEFAULT_PAGE );
         } else if (defined('BASE_PATH') AND defined('DEFAULT_PAGE')) {

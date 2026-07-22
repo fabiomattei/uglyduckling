@@ -11,6 +11,7 @@ use Fabiom\UglyDuckling\Framework\Loggers\Logger;
 use Fabiom\UglyDuckling\Framework\Mailer\BaseMailer;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\Status\Logics;
+use Fabiom\UglyDuckling\Framework\Utils\Config;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
@@ -93,7 +94,7 @@ class JsonResourcePartialBasicController extends ControllerNoCSRFTokenRenew {
             SessionWrapper::getSessionLastLogin(),
             ServerWrapper::getRemoteAddress(),
             ServerWrapper::getHttpUserAgent() ) ) {
-            header('Location: ' . getenv("BASE_PATH") . getenv("PATH_TO_APP"));
+            header('Location: ' . Config::get('BASE_PATH') . Config::get('PATH_TO_APP'));
         }
     }
 
