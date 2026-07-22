@@ -6,6 +6,8 @@ use Fabiom\UglyDuckling\Framework\Controllers\BaseController;
 
 class BasePageComponent extends BaseController {
 
+    use AllowedGroupsTrait;
+
     public string $addToHead = '';
     public string $addToFoot = '';
 
@@ -14,6 +16,14 @@ class BasePageComponent extends BaseController {
         $this->templateFile = 'template';
         $this->controllerPointer = $this;
         $this->appTitle = defined('APP_NAME') ? APP_NAME : '';
+    }
+
+    public function check_authorization_get_request(): bool {
+        return $this->isGroupAllowed();
+    }
+
+    public function check_authorization_post_request(): bool {
+        return $this->isGroupAllowed();
     }
 
     public function showPage(): void {
@@ -83,6 +93,17 @@ class BasePageComponent extends BaseController {
             echo '<div class="' . $css . '">';
             $child->renderAsPanel();
             echo '</div>';
+        } elseif (isset($node['embed'])) {
+            // renderPanels()/allPanels() are defined on this same base class for both
+            // BaseGridComponent and BaseTabsComponent, so embedding is type-agnostic and
+            // recursive: a grid can embed a tabs page and vice versa, nested arbitrarily deep.
+            $child = new $node['embed']();
+            $child->pageStatus = $this->pageStatus;
+            if ($child->check_authorization_get_request()) {
+                echo '<div class="' . $css . '">';
+                $child->renderPanels();
+                echo '</div>';
+            }
         } elseif (isset($node['panels'])) {
             echo '<div class="' . $css . '">';
             foreach ($node['panels'] as $subNode) {
@@ -131,6 +152,12 @@ class BasePageComponent extends BaseController {
         foreach ($nodes as $node) {
             if (isset($node['component'])) {
                 $result[] = $node;
+            } elseif (isset($node['embed'])) {
+                $embedded = new $node['embed']();
+                $embedded->pageStatus = $this->pageStatus;
+                if ($embedded->check_authorization_get_request()) {
+                    $result = array_merge($result, $embedded->allPanels());
+                }
             } elseif (isset($node['panels'])) {
                 $result = array_merge($result, $this->collectComponentNodes($node['panels']));
             } elseif (isset($node['tabs'])) {

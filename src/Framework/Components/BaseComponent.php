@@ -8,6 +8,8 @@ use PDOException;
 
 abstract class BaseComponent {
 
+    use AllowedGroupsTrait;
+
     public PageStatus $pageStatus;
 
     protected array $get_validation_rules = [];
@@ -40,7 +42,7 @@ abstract class BaseComponent {
     }
 
     protected function check_authorization_resource_request(): bool {
-        return true;
+        return $this->isGroupAllowed();
     }
 
     protected function get_request(): array {
@@ -59,6 +61,9 @@ abstract class BaseComponent {
     }
 
     public function handlePost(): void {
+        if (!$this->check_authorization_resource_request()) {
+            return;
+        }
         if ($this->validatePost()) {
             $this->post_request();
         }
