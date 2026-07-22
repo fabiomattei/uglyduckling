@@ -1,0 +1,67 @@
+#!/usr/bin/env php
+<?php
+
+use Fabiom\UglyDuckling\Framework\Routing\RouteTableGenerator;
+
+// Locate vendor/autoload.php whether run from library root or installed as a dependency
+$autoloadCandidates = [
+        __DIR__ . '/../vendor/autoload.php',    // library development root
+        __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
+];
+
+$autoloaded = false;
+foreach ($autoloadCandidates as $candidate) {
+    if (file_exists($candidate)) {
+        require $candidate;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, "Error: could not find vendor/autoload.php\n");
+    exit(1);
+}
+
+const UD_ROUTES_USAGE = <<<USAGE
+Usage:
+  ud-routes generate [config-file]   Scan configured directories for #[Route] attributes
+                                       and write the route table out to disk
+
+Defaults:
+  config-file  ./routes-config.php  (a PHP file that must `return` an array with
+                                      'scan' => [['namespace'=>.., 'directory'=>..], ...]
+                                      and 'output' => 'path/to/routes.php')
+
+USAGE;
+
+$command = $argv[1] ?? null;
+
+if ($command !== 'generate') {
+    fwrite(STDERR, UD_ROUTES_USAGE);
+    exit(1);
+}
+
+$configPath = $argv[2] ?? getcwd() . DIRECTORY_SEPARATOR . 'routes-config.php';
+
+if (!file_exists($configPath)) {
+    fwrite(STDERR, "Error: config file not found: $configPath\n\n" . UD_ROUTES_USAGE);
+    exit(1);
+}
+
+$config = require $configPath;
+
+if (!isset($config['scan'], $config['output'])) {
+    fwrite(STDERR, "Error: $configPath must `return` an array with 'scan' and 'output' keys\n");
+    exit(1);
+}
+
+try {
+    (new RouteTableGenerator())->generate($config['scan'], $config['output']);
+} catch (\Throwable $e) {
+    fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
+    exit(1);
+}
+
+echo "Route table written to {$config['output']}\n";
+exit(0);

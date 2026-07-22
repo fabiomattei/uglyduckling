@@ -35,6 +35,9 @@ class BaseController extends CommonController {
     public $request;
     public $flashvariable;
 
+    protected string $unauthorizedTemplateFile = 'application';
+    protected string $unauthorizedViewFile = 'errors/unauthorized';
+
     public function __construct() {
         $this->validation = new \Fabiom\UglyDuckling\Framework\Validation\Validation(defined('VALIDATION_LANG') ? VALIDATION_LANG : 'en');
         $this->parameters = [];
@@ -50,6 +53,22 @@ class BaseController extends CommonController {
 
     public function setTemplateFile( $templateFile ) {
         $this->templateFile = $templateFile;
+    }
+
+    public function setUnauthorizedView(string $templateFile, string $viewFile): void {
+        $this->unauthorizedTemplateFile = $templateFile;
+        $this->unauthorizedViewFile = $viewFile;
+    }
+
+    /**
+     * Renders the shared unauthorized page (distinct from an invalid-session redirect,
+     * which CommonController::makeAllPresets() already handles separately).
+     */
+    public function show_unauthorized_page(): void {
+        http_response_code(403);
+        $page = new StaticPageController($this->unauthorizedTemplateFile, $this->unauthorizedViewFile);
+        $page->makeAllPresets($this->dbconnection, $this->logger, $this->securityChecker, $this->mailer);
+        $page->showPage();
     }
 
     /**
@@ -177,7 +196,8 @@ class BaseController extends CommonController {
                     $this->viewFile .= 'GetError.php';
                 }
             } else {
-                $this->redirectToPage('index.html');
+                $this->show_unauthorized_page();
+                return;
             }
         } else {
             if ($this->check_authorization_post_request()) {
@@ -189,7 +209,8 @@ class BaseController extends CommonController {
                     $this->viewFile .= 'PostError.php';
                 }
             } else {
-                $this->redirectToPage('index.html');
+                $this->show_unauthorized_page();
+                return;
             }
         }
 
