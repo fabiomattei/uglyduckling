@@ -1,0 +1,124 @@
+#!/usr/bin/env php
+<?php
+
+// Locate vendor/autoload.php whether run from library root or installed as a dependency
+$autoloadCandidates = [
+        __DIR__ . '/../vendor/autoload.php',    // library development root
+        __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
+];
+
+$autoloaded = false;
+foreach ($autoloadCandidates as $candidate) {
+    if (file_exists($candidate)) {
+        require $candidate;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, "Error: could not find vendor/autoload.php\n");
+    exit(1);
+}
+
+/**
+ * Normalizes a user-supplied name into a StudlyCase class name,
+ * e.g. "book_controller" or "book-controller" -> "BookController".
+ * Already-StudlyCase input passes through unchanged.
+ */
+function ud_make_class_name(string $name): string {
+    return str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $name)));
+}
+
+// Suffixes BaseController::showPage() appends to $this->viewFile
+const UD_MAKE_VIEW_SUFFIXES = ['Get', 'GetError', 'Post', 'PostError'];
+
+const UD_MAKE_USAGE = <<<USAGE
+Usage:
+  ud-make controller <ClassName> [target-dir]   Create a new controller extending BaseController,
+                                                 plus its Get/GetError/Post/PostError view files
+  ud-make component <ClassName> [target-dir]    Create a new component extending BaseComponent
+
+Defaults:
+  target-dir (controller)  src/Custom/Controllers  (views go to the sibling src/Custom/Views)
+  target-dir (component)   src/Custom/Components
+
+USAGE;
+
+const UD_MAKE_SPECS = [
+    'controller' => [
+        'stub' => __DIR__ . '/../src/Framework/Controllers/stubs/controller.stub',
+        'defaultDir' => 'src/Custom/Controllers',
+        'label' => 'controller',
+    ],
+    'component' => [
+        'stub' => __DIR__ . '/../src/Framework/Components/stubs/component.stub',
+        'defaultDir' => 'src/Custom/Components',
+        'label' => 'component',
+    ],
+];
+
+$command = $argv[1] ?? null;
+
+if (!array_key_exists($command, UD_MAKE_SPECS)) {
+    fwrite(STDERR, UD_MAKE_USAGE);
+    exit(1);
+}
+
+$name = $argv[2] ?? null;
+if ($name === null || trim($name) === '') {
+    fwrite(STDERR, "Error: {$command} name required\n\n" . UD_MAKE_USAGE);
+    exit(1);
+}
+
+$spec = UD_MAKE_SPECS[$command];
+$className = ud_make_class_name(trim($name));
+
+// Kept relative (not resolved against getcwd()) so the same string can be
+// embedded as $this->viewFile and `require`d correctly at runtime.
+$targetDir = rtrim($argv[3] ?? $spec['defaultDir'], '/');
+$classPath = $targetDir . '/' . $className . '.php';
+
+$viewsDir = null;
+$viewPaths = [];
+if ($command === 'controller') {
+    $viewsDir = dirname($targetDir) . '/Views';
+    foreach (UD_MAKE_VIEW_SUFFIXES as $suffix) {
+        $viewPaths[$suffix] = $viewsDir . '/' . $className . $suffix . '.php';
+    }
+}
+
+foreach ([$classPath, ...array_values($viewPaths)] as $existingCheckPath) {
+    if (file_exists($existingCheckPath)) {
+        fwrite(STDERR, "Error: file already exists: $existingCheckPath\n");
+        exit(1);
+    }
+}
+
+if (!is_dir($targetDir) && !mkdir($targetDir, 0777, true) && !is_dir($targetDir)) {
+    fwrite(STDERR, "Error: could not create {$spec['label']} directory: $targetDir\n");
+    exit(1);
+}
+
+$classContents = str_replace('{{className}}', $className, file_get_contents($spec['stub']));
+if ($command === 'controller') {
+    $classContents = str_replace('{{viewFilePath}}', $viewsDir . '/' . $className, $classContents);
+}
+file_put_contents($classPath, $classContents);
+echo "Created {$spec['label']}: $classPath\n";
+
+if ($command === 'controller') {
+    if (!is_dir($viewsDir) && !mkdir($viewsDir, 0777, true) && !is_dir($viewsDir)) {
+        fwrite(STDERR, "Error: could not create views directory: $viewsDir\n");
+        exit(1);
+    }
+
+    $viewStub = file_get_contents(__DIR__ . '/../src/Framework/Controllers/stubs/view.stub');
+    foreach ($viewPaths as $suffix => $viewPath) {
+        $viewContents = str_replace(['{{className}}', '{{action}}'], [$className, $suffix], $viewStub);
+        file_put_contents($viewPath, $viewContents);
+        echo "Created view: $viewPath\n";
+    }
+}
+
+exit(0);

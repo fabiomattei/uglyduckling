@@ -1,0 +1,12 @@
+<?php
+
+namespace Custom\Components;
+
+use Fabiom\UglyDuckling\Framework\Components\BaseComponent;
+
+class {{className}} extends BaseComponent {
+
+    public function render(array $data): void {
+    }
+
+}

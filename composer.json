@@ -12,6 +12,7 @@
     "type": "library",
     "bin": [
         "bin/ud-check",
+        "bin/ud-make",
         "bin/ud-migrate",
         "bin/ud-queue"
     ],
