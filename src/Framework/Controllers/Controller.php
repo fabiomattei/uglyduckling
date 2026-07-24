@@ -8,6 +8,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Framework\Authorization\AllowedGroupsTrait;
 use Fabiom\UglyDuckling\Framework\SecurityCheckers\SecurityChecker;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Loggers\Logger;
@@ -16,6 +17,8 @@ use Fabiom\UglyDuckling\Framework\Utils\ServerWrapper;
 use Fabiom\UglyDuckling\Framework\Utils\SessionWrapper;
 
 class Controller extends CommonController {
+
+    use AllowedGroupsTrait;
 
     const CONTROLLER_NAME = 'controller';
 
@@ -177,21 +180,21 @@ class Controller extends CommonController {
     }
 
     /**
-     * This method has to be implemented by inerithed class
-     * It return true by defult for compatiblity issues
+     * Default authorization: open to every group unless $allowedGroups restricts it.
+     * Override in an inherited class for custom authorization logic.
      */
     public function check_authorization_get_request()
     {
-        return true;
+        return $this->isGroupAllowed();
     }
 
     /**
-     * This method has to be implemented by inerithed class
-     * It return true by defult for compatiblity issues
+     * Default authorization: open to every group unless $allowedGroups restricts it.
+     * Override in an inherited class for custom authorization logic.
      */
     public function check_authorization_post_request()
     {
-        return true;
+        return $this->isGroupAllowed();
     }
 
     public function showPage()

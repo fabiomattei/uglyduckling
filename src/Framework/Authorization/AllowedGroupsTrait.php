@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabiom\UglyDuckling\Framework\Components;
+namespace Fabiom\UglyDuckling\Framework\Authorization;
 
 trait AllowedGroupsTrait {
 

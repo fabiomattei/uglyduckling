@@ -2,6 +2,7 @@
 
 namespace Fabiom\UglyDuckling\Framework\Components;
 
+use Fabiom\UglyDuckling\Framework\Authorization\AllowedGroupsTrait;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use PDO;
 use PDOException;

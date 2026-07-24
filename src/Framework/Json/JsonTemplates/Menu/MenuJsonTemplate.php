@@ -4,6 +4,7 @@ namespace Fabiom\UglyDuckling\Framework\Json\JsonTemplates\Menu;
 
 use Fabiom\UglyDuckling\Framework\Json\JsonTemplates\JsonTemplate;
 use Fabiom\UglyDuckling\Framework\Blocks\BaseHTMLMenu;
+use Fabiom\UglyDuckling\Framework\Routing\RouteTable;
 use Fabiom\UglyDuckling\Framework\Utils\PageStatus;
 use Fabiom\UglyDuckling\Framework\Utils\UrlServices;
 use stdClass;
@@ -46,6 +47,19 @@ class MenuJsonTemplate extends JsonTemplate {
         $this->menuStructure = $menuStructure;
     }
 
+    /**
+     * A menu/submenu item is only shown if its target resource/controller is visible
+     * to the session's group (see RouteTable::isVisible()). Items with neither field
+     * (plain labels, dropdown containers) are always visible.
+     */
+    private function isItemVisible( ?string $resource, ?string $controller ): bool {
+        $slug = $resource ?: $controller;
+        if ( $slug === null || $slug === '' ) {
+            return true;
+        }
+        return RouteTable::isVisible( $slug );
+    }
+
     public function createMenu() {
 
         $menu = new BaseHTMLMenu;
@@ -66,17 +80,28 @@ class MenuJsonTemplate extends JsonTemplate {
                 $submenuItems = [];
 
                 foreach ($menuitem->submenu as $item) {
+                    $resource = $item->resource ?? null;
+                    $controller = $item->controller ?? null;
+                    if ( !$this->isItemVisible( $resource, $controller ) ) {
+                        continue;
+                    }
                     $mi = new stdClass;
                     $mi->label = $item->label ?? '';
-                    $mi->controller = $item->controller ?? '';
-                    $mi->resource = $item->resource ?? '';
+                    $mi->controller = $controller ?? '';
+                    $mi->resource = $resource ?? '';
                     $mi->url = UrlServices::make_resource_url( $item, $this->pageStatus );
                     $submenuItems[] = $mi;
-                    if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
+                    if ( ($resource !== null AND ($this->resourceName == $resource OR $this->controllerName == $resource)) OR ($controller !== null AND ($this->controllerName == $controller OR $this->resourceName == $controller)) ) {
                         $active = true;
                     }
                 }
-                if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+
+                $ownVisible = $this->isItemVisible( $menuitem->resource ?? null, $menuitem->controller ?? null );
+                if ( !$ownVisible AND $submenuItems === [] ) {
+                    continue;
+                }
+
+                if ( ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) AND $ownVisible ) {
                     $menu->addNavItemWithDropdown( $labelString,
                         UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                         $active, $current,
@@ -92,6 +117,10 @@ class MenuJsonTemplate extends JsonTemplate {
             } else {
                 // there is no submenu
                 if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+                    if ( !$this->isItemVisible( $menuitem->resource ?? null, $menuitem->controller ?? null ) ) {
+                        continue;
+                    }
+
                     if ( (isset($menuitem->resource) AND ($this->resourceName == $menuitem->resource OR $this->controllerName == $menuitem->resource)) OR (isset($menuitem->controller) AND ($this->controllerName == $menuitem->controller OR $this->resourceName == $menuitem->controller)) ) {
                         $active = true;
                     }
@@ -120,17 +149,28 @@ class MenuJsonTemplate extends JsonTemplate {
                     // A submenu is present
                     $submenuItems = array();
                     foreach ($menuitem->submenu as $item) {
+                        $resource = $item->resource ?? null;
+                        $controller = $item->controller ?? null;
+                        if ( !$this->isItemVisible( $resource, $controller ) ) {
+                            continue;
+                        }
                         $mi = new stdClass;
                         $mi->label = $item->label ?? '';
-                        $mi->controller = $item->controller ?? '';
-                        $mi->resource = $item->resource ?? '';
+                        $mi->controller = $controller ?? '';
+                        $mi->resource = $resource ?? '';
                         $mi->url = UrlServices::make_resource_url( $item, $this->pageStatus );
                         $submenuItems[] = $mi;
-                        if ( (isset($item->resource) AND ($this->resourceName == $item->resource OR $this->controllerName == $item->resource)) OR (isset($item->controller) AND ($this->controllerName == $item->controller OR $this->resourceName == $item->controller)) ) {
+                        if ( ($resource !== null AND ($this->resourceName == $resource OR $this->controllerName == $resource)) OR ($controller !== null AND ($this->controllerName == $controller OR $this->resourceName == $controller)) ) {
                             $active = true;
                         }
                     }
-                    if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+
+                    $ownVisible = $this->isItemVisible( $menuitem->resource ?? null, $menuitem->controller ?? null );
+                    if ( !$ownVisible AND $submenuItems === [] ) {
+                        continue;
+                    }
+
+                    if ( ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) AND $ownVisible ) {
                         $menu->addNavItemWithDropdown( $menuitem->label,
                             UrlServices::make_resource_url( $menuitem, $this->pageStatus ),
                             $active, $current,
@@ -142,6 +182,10 @@ class MenuJsonTemplate extends JsonTemplate {
                 } else {
                     // there is no submenu
                     if ( isset( $menuitem->resource ) OR isset( $menuitem->controller ) ) {
+                        if ( !$this->isItemVisible( $menuitem->resource ?? null, $menuitem->controller ?? null ) ) {
+                            continue;
+                        }
+
                         if ( (isset($menuitem->resource) AND ($this->resourceName == $menuitem->resource OR $this->controllerName == $menuitem->resource)) OR (isset($menuitem->controller) AND ($this->controllerName == $menuitem->controller OR $this->resourceName == $menuitem->controller)) ) {
                             $active = true;
                         }

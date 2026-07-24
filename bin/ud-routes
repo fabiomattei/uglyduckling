@@ -3,15 +3,21 @@
 
 use Fabiom\UglyDuckling\Framework\Routing\RouteTableGenerator;
 
-// Locate vendor/autoload.php whether run from library root or installed as a dependency
+// Locate vendor/autoload.php whether run from library root or installed as a dependency.
+// $GLOBALS['_composer_autoload_path'], when set, is populated by Composer's own generated
+// vendor/bin/ud-routes proxy and always points at the *consuming* app's autoloader - this
+// must win over the __DIR__-based guesses below, since __DIR__ follows symlinks back to
+// this package's own real path (e.g. a path-repo dev install), which would otherwise find
+// this library's own standalone vendor/autoload.php instead of the app's.
 $autoloadCandidates = [
-        __DIR__ . '/../vendor/autoload.php',    // library development root
+        $GLOBALS['_composer_autoload_path'] ?? null,
         __DIR__ . '/../../../autoload.php',     // installed inside vendor/fabiomattei/uglyduckling/
+        __DIR__ . '/../vendor/autoload.php',    // library development root
 ];
 
 $autoloaded = false;
 foreach ($autoloadCandidates as $candidate) {
-    if (file_exists($candidate)) {
+    if ($candidate !== null && file_exists($candidate)) {
         require $candidate;
         $autoloaded = true;
         break;
@@ -31,7 +37,9 @@ Usage:
 Defaults:
   config-file  ./routes-config.php  (a PHP file that must `return` an array with
                                       'scan' => [['namespace'=>.., 'directory'=>..], ...]
-                                      and 'output' => 'path/to/routes.php')
+                                      and 'output' => 'path/to/routes.php'; optionally
+                                      'jsonResources' => ['registry'=>.., 'variable'=>..]
+                                      to also merge in a legacy slug => JSON file registry)
 
 USAGE;
 
@@ -57,7 +65,7 @@ if (!isset($config['scan'], $config['output'])) {
 }
 
 try {
-    (new RouteTableGenerator())->generate($config['scan'], $config['output']);
+    (new RouteTableGenerator())->generate($config);
 } catch (\Throwable $e) {
     fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
     exit(1);

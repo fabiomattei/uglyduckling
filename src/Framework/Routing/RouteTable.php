@@ -33,4 +33,33 @@ final class RouteTable {
         return self::$bySlug[$slug];
     }
 
+    /**
+     * Whether the current session's group may see/open the route behind this slug.
+     * Used to filter links (e.g. menu items) by group, not as a request-time authorization
+     * check (controllers/components/resources still enforce that themselves).
+     *
+     * - Slug not in the table at all (not yet migrated to #[Route])  -> visible (fail-open)
+     * - allowedgroups is null (JSON resource with no "allowedgroups") -> hidden (fail-closed,
+     *   mirrors JsonResourceController::check_authorization_resource_request())
+     * - allowedgroups is []                                          -> visible to every group
+     * - allowedgroups is non-empty                                   -> visible only if the
+     *   session's group is in the list
+     */
+    public static function isVisible(string $slug): bool {
+        try {
+            $route = self::forSlug($slug);
+        } catch (\InvalidArgumentException) {
+            return true;
+        }
+
+        $allowedGroups = $route['allowedgroups'] ?? [];
+        if ($allowedGroups === null) {
+            return false;
+        }
+        if ($allowedGroups === []) {
+            return true;
+        }
+        return in_array($_SESSION['group'] ?? null, $allowedGroups, true);
+    }
+
 }

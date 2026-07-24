@@ -2,11 +2,14 @@
 
 namespace Fabiom\UglyDuckling\Framework\Controllers;
 
+use Fabiom\UglyDuckling\Framework\Authorization\AllowedGroupsTrait;
 use Fabiom\UglyDuckling\Framework\DataBase\DBConnection;
 use Fabiom\UglyDuckling\Framework\Utils\StringUtils;
 
 class BaseController extends CommonController {
-    
+
+    use AllowedGroupsTrait;
+
     public string $templateFile;
     public $validation;
     public /* array */ $get_validation_rules = [];
@@ -151,19 +154,19 @@ class BaseController extends CommonController {
     }
 
     /**
-     * This method has to be implemented by inerithed class
-     * It return true by defult for compatiblity issues
+     * Default authorization: open to every group unless $allowedGroups restricts it.
+     * Override in an inherited class for custom authorization logic.
      */
     public function check_authorization_get_request() {
-        return true;
+        return $this->isGroupAllowed();
     }
 
     /**
-     * This method has to be implemented by inerithed class
-     * It return true by defult for compatiblity issues
+     * Default authorization: open to every group unless $allowedGroups restricts it.
+     * Override in an inherited class for custom authorization logic.
      */
     public function check_authorization_post_request() {
-        return true;
+        return $this->isGroupAllowed();
     }
 
     /**
