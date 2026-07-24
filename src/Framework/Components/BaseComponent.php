@@ -46,6 +46,16 @@ abstract class BaseComponent {
         return $this->isGroupAllowed();
     }
 
+    /**
+     * Public accessor for callers outside this class's own hierarchy (e.g. a page
+     * embedding this component as a panel) that need to know whether it's authorized
+     * before deciding to render its wrapper at all - without reaching into the
+     * protected check_authorization_resource_request() directly.
+     */
+    public function isAuthorized(): bool {
+        return $this->check_authorization_resource_request();
+    }
+
     protected function get_request(): array {
         return [];
     }

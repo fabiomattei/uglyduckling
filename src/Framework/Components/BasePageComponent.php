@@ -6,8 +6,6 @@ use Fabiom\UglyDuckling\Framework\Controllers\BaseController;
 
 class BasePageComponent extends BaseController {
 
-    use AllowedGroupsTrait;
-
     public string $addToHead = '';
     public string $addToFoot = '';
 
@@ -90,9 +88,11 @@ class BasePageComponent extends BaseController {
         if (isset($node['component'])) {
             $child = new $node['component']();
             $child->pageStatus = $this->pageStatus;
-            echo '<div class="' . $css . '">';
-            $child->renderAsPanel();
-            echo '</div>';
+            if ($child->isAuthorized()) {
+                echo '<div class="' . $css . '">';
+                $child->renderAsPanel();
+                echo '</div>';
+            }
         } elseif (isset($node['embed'])) {
             // renderPanels()/allPanels() are defined on this same base class for both
             // BaseGridComponent and BaseTabsComponent, so embedding is type-agnostic and
@@ -118,9 +118,17 @@ class BasePageComponent extends BaseController {
     }
 
     protected function renderTabsNode(array $tabs): void {
+        // A tab whose every panel is an unauthorized component has nothing to show -
+        // collectComponentNodes() already resolves panels/embeds/nested tabs down to the
+        // authorized leaf components, so an empty result means the tab is entirely hidden.
+        $visibleTabs = array_values(array_filter(
+            $tabs,
+            fn($tab) => $this->collectComponentNodes($tab['panels']) !== []
+        ));
+
         echo '<nav><div class="nav nav-tabs" role="tablist">';
         $first = true;
-        foreach ($tabs as $tab) {
+        foreach ($visibleTabs as $tab) {
             $active = $first ? ' active' : '';
             echo '<button class="nav-link' . $active . '"'
                . ' id="' . htmlspecialchars($tab['id']) . '-tab"'
@@ -132,7 +140,7 @@ class BasePageComponent extends BaseController {
         }
         echo '</div></nav><div class="tab-content">';
         $first = true;
-        foreach ($tabs as $tab) {
+        foreach ($visibleTabs as $tab) {
             $active = $first ? ' show active' : '';
             echo '<div class="tab-pane fade' . $active . '"'
                . ' id="' . htmlspecialchars($tab['id']) . '"'
@@ -151,7 +159,11 @@ class BasePageComponent extends BaseController {
         $result = [];
         foreach ($nodes as $node) {
             if (isset($node['component'])) {
-                $result[] = $node;
+                $child = new $node['component']();
+                $child->pageStatus = $this->pageStatus;
+                if ($child->isAuthorized()) {
+                    $result[] = $node;
+                }
             } elseif (isset($node['embed'])) {
                 $embedded = new $node['embed']();
                 $embedded->pageStatus = $this->pageStatus;
