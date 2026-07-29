@@ -22,7 +22,7 @@ class StaticPageController {
         $this->templateFile = $templateFile;
         $this->viewFile = $staticPageFile;
         $this->controllerPointer = $this;
-        $this->appTitle = APP_NAME;
+        $this->appTitle = defined('APP_NAME') ? APP_NAME : '';
     }
 
     public function showPage() {

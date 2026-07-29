@@ -38,7 +38,7 @@ class BaseController extends CommonController {
     public $request;
     public $flashvariable;
 
-    protected string $unauthorizedTemplateFile = 'application';
+    protected string $unauthorizedTemplateFile = 'staticpage';
     protected string $unauthorizedViewFile = 'errors/unauthorized';
 
     public function __construct() {
