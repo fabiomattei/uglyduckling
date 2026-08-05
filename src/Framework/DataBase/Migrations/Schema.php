@@ -74,6 +74,14 @@ class Schema {
         return $statement->fetchAll( PDO::FETCH_COLUMN );
     }
 
+    public static function disableForeignKeyChecks(): void {
+        self::pdo()->exec( self::grammar()->compileDisableForeignKeyChecks() );
+    }
+
+    public static function enableForeignKeyChecks(): void {
+        self::pdo()->exec( self::grammar()->compileEnableForeignKeyChecks() );
+    }
+
     private static function pdo(): PDO {
         if ( self::$pdo === null ) {
             throw new RuntimeException( 'Schema::setConnection() must be called before using Schema.' );

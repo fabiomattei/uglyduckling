@@ -101,6 +101,15 @@ abstract class Grammar {
      */
     abstract public function compileTableNames(): string;
 
+    /**
+     * Disables/re-enables foreign key enforcement for the current connection, used by
+     * Migrator::fresh() to drop every table regardless of FK dependency order - without
+     * this, dropping a table still referenced by another table's foreign key fails.
+     */
+    abstract public function compileDisableForeignKeyChecks(): string;
+
+    abstract public function compileEnableForeignKeyChecks(): string;
+
     public function quoteIdentifier( string $name ): string {
         return '"' . str_replace( '"', '""', $name ) . '"';
     }

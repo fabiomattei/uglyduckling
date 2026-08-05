@@ -18,6 +18,14 @@ class SQLiteGrammar extends Grammar {
         return "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite\_%' ESCAPE '\'";
     }
 
+    public function compileDisableForeignKeyChecks(): string {
+        return 'PRAGMA foreign_keys = OFF';
+    }
+
+    public function compileEnableForeignKeyChecks(): string {
+        return 'PRAGMA foreign_keys = ON';
+    }
+
     /**
      * SQLite only wires up its AUTOINCREMENT rowid alias when the column type is the
      * literal token "INTEGER" (not "BIGINT", even though both share integer affinity),

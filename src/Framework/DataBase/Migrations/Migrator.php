@@ -97,8 +97,17 @@ class Migrator {
      * @return string[] names of the migrations that were run by the final migrate() pass
      */
     public function fresh(): array {
-        foreach ( Schema::allTableNames() as $tableName ) {
-            Schema::drop( $tableName );
+        // Tables can reference each other via foreign keys, so dropping them in
+        // whatever order allTableNames() returns can fail with a FK constraint error;
+        // disabling enforcement for the duration of the drop loop sidesteps ordering
+        // entirely instead of trying to topologically sort tables by their FKs.
+        Schema::disableForeignKeyChecks();
+        try {
+            foreach ( Schema::allTableNames() as $tableName ) {
+                Schema::drop( $tableName );
+            }
+        } finally {
+            Schema::enableForeignKeyChecks();
         }
 
         return $this->migrate();

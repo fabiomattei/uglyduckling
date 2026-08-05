@@ -22,6 +22,14 @@ class MySqlGrammar extends Grammar {
         return 'SELECT table_name FROM information_schema.tables WHERE table_schema = DATABASE()';
     }
 
+    public function compileDisableForeignKeyChecks(): string {
+        return 'SET FOREIGN_KEY_CHECKS=0';
+    }
+
+    public function compileEnableForeignKeyChecks(): string {
+        return 'SET FOREIGN_KEY_CHECKS=1';
+    }
+
     /**
      * Respects whether the column was declared via id() ('bigInteger') or increments()
      * ('integer') - autoIncrementPrimaryKeyColumn() used to hardcode BIGINT regardless,
