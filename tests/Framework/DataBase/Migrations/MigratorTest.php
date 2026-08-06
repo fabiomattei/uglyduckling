@@ -101,6 +101,41 @@ class MigratorTest extends PHPUnit\Framework\TestCase {
         $this->assertEquals( [], $this->pdo->query( 'SELECT * FROM widgets' )->fetchAll() );
     }
 
+    public function testMarkAsRanRecordsWithoutExecuting() {
+        $marked = $this->migrator->markAsRan( [ '2024_01_01_000000_create_widgets_table' ] );
+
+        $this->assertEquals( [ '2024_01_01_000000_create_widgets_table' ], $marked );
+        $this->assertTableDoesNotExist( 'widgets' );
+        $this->assertEquals(
+            [
+                [ 'migration' => '2024_01_01_000000_create_widgets_table', 'ran' => true ],
+                [ 'migration' => '2024_01_02_000000_create_gadgets_table', 'ran' => false ],
+            ],
+            $this->migrator->status()
+        );
+    }
+
+    public function testMarkAsRanIgnoresAlreadyRunAndUnknownNames() {
+        $this->migrator->migrate();
+
+        $marked = $this->migrator->markAsRan( [
+            '2024_01_01_000000_create_widgets_table', // already ran
+            'does_not_exist_on_disk',
+        ] );
+
+        $this->assertEquals( [], $marked );
+    }
+
+    public function testMigrateSkipsMigrationsMarkedAsRan() {
+        $this->migrator->markAsRan( [ '2024_01_01_000000_create_widgets_table' ] );
+
+        $ran = $this->migrator->migrate();
+
+        $this->assertEquals( [ '2024_01_02_000000_create_gadgets_table' ], $ran );
+        $this->assertTableDoesNotExist( 'widgets' );
+        $this->assertTableExists( 'gadgets' );
+    }
+
     public function testStatusReflectsARollback() {
         $this->migrator->migrate();
         $this->migrator->rollback();

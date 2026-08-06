@@ -50,6 +50,41 @@ class Migrator {
     }
 
     /**
+     * Records migrations as already applied without running their up().
+     *
+     * For bootstrapping the tracking table against a database whose schema was
+     * already brought up to date some other way (e.g. hand-run SQL, an older
+     * migration system) - so that a subsequent migrate() only picks up migrations
+     * that genuinely still need to run.
+     *
+     * Silently ignores names that don't correspond to a migration file on disk, and
+     * names that are already marked as run, so callers can pass a raw form submission
+     * through without pre-filtering it.
+     *
+     * @param string[] $migrationNames
+     * @return string[] names actually marked as run
+     */
+    public function markAsRan( array $migrationNames ): array {
+        $this->repository->ensureTableExists();
+
+        $ran = $this->repository->getRan();
+        $known = $this->getMigrationNames();
+
+        $toMark = array_values( array_intersect( array_unique( $migrationNames ), array_diff( $known, $ran ) ) );
+
+        if ( count( $toMark ) === 0 ) {
+            return [];
+        }
+
+        $batch = $this->repository->getNextBatchNumber();
+        foreach ( $toMark as $migrationName ) {
+            $this->repository->log( $migrationName, $batch );
+        }
+
+        return $toMark;
+    }
+
+    /**
      * Reverts previously run migrations.
      *
      * With no argument, reverts every migration from the most recent batch (Laravel's
