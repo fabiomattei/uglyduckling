@@ -149,6 +149,24 @@ class MigratorTest extends PHPUnit\Framework\TestCase {
         );
     }
 
+    public function testOrphanedMigrationsIsEmptyWhenTrackingTableMatchesDisk() {
+        $this->migrator->migrate();
+
+        $this->assertEquals( [], $this->migrator->orphanedMigrations() );
+    }
+
+    public function testOrphanedMigrationsReturnsRanEntriesWithNoMatchingFile() {
+        $this->migrator->markAsRan( [ '2024_01_01_000000_create_widgets_table' ] );
+        $this->pdo->exec(
+            "INSERT INTO migrations (migration, batch) VALUES ('2023_12_31_000000_ran_here_but_file_missing', 1)"
+        );
+
+        $this->assertEquals(
+            [ '2023_12_31_000000_ran_here_but_file_missing' ],
+            $this->migrator->orphanedMigrations()
+        );
+    }
+
     private function assertTableExists( string $tableName ): void {
         $statement = $this->pdo->prepare( "SELECT name FROM sqlite_master WHERE type = 'table' AND name = :name" );
         $statement->bindParam( ':name', $tableName );

@@ -219,6 +219,21 @@ class Migrator {
     }
 
     /**
+     * Returns migration names recorded as ran in this database's tracking table but with
+     * no matching file in the migrations directory - e.g. a migration ran here but its file
+     * was never deployed to this environment, or was deleted/renamed afterward. Surfaces
+     * drift between what this database says happened and what the deployed migrations
+     * directory actually contains.
+     *
+     * @return string[]
+     */
+    public function orphanedMigrations(): array {
+        $this->repository->ensureTableExists();
+
+        return array_values( array_diff( $this->repository->getRan(), $this->getMigrationNames() ) );
+    }
+
+    /**
      * @return string[] migration names (filename without extension), sorted ascending
      */
     private function getMigrationNames(): array {
